@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">WykopMobilny</string>
+    <string name="app_name">Wykop Mobilny</string>
+    <string name="period24">Gorące 24h</string>
+    <string name="period12">Gorące 12h</string>
+    <string name="period6">Gorące 6h</string>
+    <string name="newest">Najnowsze wpisy</string>
 </resources>

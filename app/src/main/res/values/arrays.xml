@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="hotPeriodSpinner">
+        <item>@string/period24</item>
+        <item>@string/period12</item>
+        <item>@string/period6</item>
+        <item>@string/newest</item>
+
+    </string-array>
+</resources>

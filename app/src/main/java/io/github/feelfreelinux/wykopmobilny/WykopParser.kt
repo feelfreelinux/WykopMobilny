@@ -11,6 +11,9 @@ import java.util.*
 fun parseEntry(json : JSONObject) : Entry {
     var embed = Embed("null", "null", "null", "null", false)
     if (!json.isNull("embed")) embed = parseEmbed(json.getJSONObject("embed"))
+
+    var comment_count = 0
+    if (json.has("comment_count")) comment_count = json.getInt("comment_count")
     return Entry(
             json.getInt("id"),
             User(
@@ -19,12 +22,13 @@ fun parseEntry(json : JSONObject) : Entry {
                     json.getString("author"),
                     json.getString("author_sex")),
             json.getInt("vote_count"),
-            json.getInt("comment_count"),
+            comment_count,
             json.getString("body"),
             parseDate(
                     json.getString("date")
             ),
-            embed
+            embed,
+            false
     )
 }
 

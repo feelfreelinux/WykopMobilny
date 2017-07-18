@@ -15,17 +15,19 @@
         card_view:cardCornerRadius="4dp">
         <LinearLayout
             android:orientation="vertical"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RelativeLayout
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/header"
                 android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_height="wrap_content">
                 <LinearLayout
                     android:orientation="vertical"
@@ -61,10 +63,19 @@
                     android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
-                <Button
+                <TextView
                     android:id="@+id/vote_count"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/mirko_control_button"
                     android:layout_alignParentRight="true"
-                    android:textSize="20dp"
+                    android:padding="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
@@ -85,10 +96,45 @@
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-                <Button
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <TextView
                     android:id="@+id/comment_count"
+                    android:padding="3dp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_toLeftOf="@id/vote_count_bottom"
+                    android:background="@drawable/mirko_control_button"
+                    android:includeFontPadding="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/comment"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical" />
+                <TextView
+                    android:id="@+id/vote_count_bottom"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/mirko_control_button"
+                    android:layout_alignParentRight="true"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+            </RelativeLayout>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

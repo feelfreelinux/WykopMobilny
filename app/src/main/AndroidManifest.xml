@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Mikroblog"/>
+        <activity android:name=".activities.MikroblogHotList" />
+        <activity android:name=".activities.MikroblogEntryView" />
     </application>
 
 </manifest>
