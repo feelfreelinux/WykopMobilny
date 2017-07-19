@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="cardListColor" format="color" />
+    <attr name="cardViewColor" format="color" />
+    <attr name="spacerColor" format="color" />
+    <attr name="drawablesColor" format="color" />
+    <attr name="mikroblogControlsColor" format="color" />
+</resources>

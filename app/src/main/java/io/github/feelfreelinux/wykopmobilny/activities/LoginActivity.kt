@@ -1,15 +1,17 @@
-package io.github.feelfreelinux.wykopmobilny
+package io.github.feelfreelinux.wykopmobilny.activities
 
 import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.github.kittinunf.fuel.android.core.Json
-import io.github.feelfreelinux.wykopmobilny.activities.MikroblogHotList
+import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -66,11 +68,13 @@ class LoginActivity : AppCompatActivity() {
 
     fun startApplication(login : String, accountKey : String) {
         // Yaay!
+        webView.visibility = View.INVISIBLE
         supportActionBar?.hide()
-        var wam = WykopApiManager(login, accountKey, secret, appkey)
+        var wam = WykopApiManager(login, accountKey, secret, appkey, this)
         wam.initAction = object : WykopApiManager.WykopApiAction() {
             override fun success(json: Json) {
-                val intent = Intent(this@LoginActivity, MikroblogHotList::class.java)
+                val intent = Intent(this@LoginActivity, MikroblogEntryView::class.java)
+                intent.putExtra("ENTRY_ID", 21862595)
                 intent.putExtra("wamData", wam.getData())
                 startActivity(intent)
                 finish()

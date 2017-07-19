@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny
+package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.graphics.Color
 import io.github.feelfreelinux.wykopmobilny.objects.Embed
@@ -11,7 +11,8 @@ import java.util.*
 fun parseEntry(json : JSONObject) : Entry {
     var embed = Embed("null", "null", "null", "null", false)
     if (!json.isNull("embed")) embed = parseEmbed(json.getJSONObject("embed"))
-
+    var voted = false
+    if (json.getInt("user_vote") > 0) voted = true
     var comment_count = 0
     if (json.has("comment_count")) comment_count = json.getInt("comment_count")
     return Entry(
@@ -28,7 +29,9 @@ fun parseEntry(json : JSONObject) : Entry {
                     json.getString("date")
             ),
             embed,
-            false
+            false,
+            voted,
+            null
     )
 }
 

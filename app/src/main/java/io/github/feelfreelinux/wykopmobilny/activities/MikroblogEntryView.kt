@@ -7,11 +7,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.github.kittinunf.fuel.android.core.Json
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApiManager
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.adapters.MikroblogListAdapter
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
-import io.github.feelfreelinux.wykopmobilny.parseEntry
+import io.github.feelfreelinux.wykopmobilny.utils.parseEntry
 import kotlinx.android.synthetic.main.activity_mikroblog.*
 
 class MikroblogEntryView : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener{
@@ -29,7 +29,7 @@ class MikroblogEntryView : AppCompatActivity(), SwipeRefreshLayout.OnRefreshList
         swiperefresh.setOnRefreshListener(this)
         title = "Wpis /" + intent.getIntExtra("ENTRY_ID", 1337)
         // Get WykopApiManager
-        wam = WykopApiManager(intent.getSerializableExtra("wamData") as WykopApiData)
+        wam = WykopApiManager(intent.getSerializableExtra("wamData") as WykopApiData, this)
 
         // Setup recycler view
         recyclerView.run {
@@ -49,8 +49,9 @@ class MikroblogEntryView : AppCompatActivity(), SwipeRefreshLayout.OnRefreshList
                 list.add(entry)
                 val comments = json.obj().getJSONArray("comments")
                 for (i in 0 .. comments.length()-1) {
-                    val comment =  parseEntry(comments.getJSONObject(i))
+                    val comment = parseEntry(comments.getJSONObject(i))
                     comment.isComment = true
+                    comment.entryId = entry.id
                     list.add(comment)
                 }
                 swiperefresh.isRefreshing = false

@@ -4,4 +4,5 @@
     <string name="period12">Gorące 12h</string>
     <string name="period6">Gorące 6h</string>
     <string name="newest">Najnowsze wpisy</string>
+    <string name="errorDialog">Wystąpił nieoczekiwany problem</string>
 </resources>

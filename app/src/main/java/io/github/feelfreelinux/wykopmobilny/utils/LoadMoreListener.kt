@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny
+package io.github.feelfreelinux.wykopmobilny.utils
 
 abstract class LoadMoreListener {
     var page = 1

@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny
+package io.github.feelfreelinux.wykopmobilny.utils
 
 import java.security.MessageDigest
 

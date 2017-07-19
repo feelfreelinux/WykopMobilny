@@ -4,7 +4,7 @@ import android.view.Menu
 import android.view.View
 import android.widget.Spinner
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApiManager
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import android.widget.ArrayAdapter
 import android.widget.AdapterView
 import kotlinx.android.synthetic.main.activity_mikroblog.*

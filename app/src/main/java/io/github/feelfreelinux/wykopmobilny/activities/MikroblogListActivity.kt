@@ -6,13 +6,13 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.github.kittinunf.fuel.android.core.Json
-import io.github.feelfreelinux.wykopmobilny.LoadMoreListener
+import io.github.feelfreelinux.wykopmobilny.utils.LoadMoreListener
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApiManager
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.adapters.MikroblogListAdapter
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
-import io.github.feelfreelinux.wykopmobilny.parseEntry
+import io.github.feelfreelinux.wykopmobilny.utils.parseEntry
 import kotlinx.android.synthetic.main.activity_mikroblog.*
 
 abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
@@ -25,7 +25,7 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
         setContentView(R.layout.activity_mikroblog)
 
         // Get WykopApiManager
-        wam = WykopApiManager(intent.getSerializableExtra("wamData") as WykopApiData)
+        wam = WykopApiManager(intent.getSerializableExtra("wamData") as WykopApiData, this)
 
         swiperefresh.setOnRefreshListener(this)
         // Setup recycler view
@@ -39,12 +39,12 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
     }
 
     fun createAdapter() {
+        list.clear()
         adapter = MikroblogListAdapter(list, object : LoadMoreListener() {
             override fun loadMore() {
                 loading = true
                 loadData(page,  object : WykopApiManager.WykopApiAction(){
                     override fun success(json: Json) {
-                        list.clear()
                         (0 .. json.array().length()-1).mapTo(list) { parseEntry(json.array().getJSONObject(it)) }
                         recyclerView.adapter.notifyDataSetChanged()
                         swiperefresh.isRefreshing = false

@@ -9,7 +9,6 @@ import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
@@ -20,10 +19,11 @@ import java.util.*
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.text.SpannableStringBuilder
-import android.text.style.ClickableSpan
 import android.widget.RelativeLayout
+import com.github.kittinunf.fuel.android.core.Json
 import io.github.feelfreelinux.wykopmobilny.activities.MikroblogEntryView
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
+import io.github.feelfreelinux.wykopmobilny.utils.*
 
 
 class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val loadMoreListener: LoadMoreListener?, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
@@ -34,8 +34,8 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val loadMoreListener: 
         val start = strBuilder.getSpanStart(span)
         val end = strBuilder.getSpanEnd(span)
         val flags = strBuilder.getSpanFlags(span)
-        val clickable = object : ClickableSpan() {
-            override fun onClick(view: View) {
+        val clickable = object : LinkSpan() {
+            override fun onClick(tv: View) {
                 if(span.url.first() == '#') printout("TAG CLICKED " + span.url)
             }
         }
@@ -63,18 +63,20 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val loadMoreListener: 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val entry = dataSet[position]
         val commentButton = holder?.itemView?.findViewById<TextView>(R.id.comment_count)
+        val votes : TextView
 
+        val wam = WykopApiManager(wamData, commentButton?.context!!)
         // detect load more, disable comment button
         if ( loadMoreListener != null ) {
             if (position == dataSet.size - 1 && !loadMoreListener.loading) loadMoreListener.loadMore()
             // Disable top mirko_control_button button, enable bottom button
             holder?.itemView?.findViewById<TextView>(R.id.vote_count)?.visibility = View.GONE
-            val votes = holder?.itemView?.findViewById<TextView>(R.id.vote_count_bottom)
-            votes?.visibility = View.VISIBLE
-            votes?.text = "+" + entry.votes_count.toString()
+            votes = holder?.itemView?.findViewById<TextView>(R.id.vote_count_bottom) as TextView
+            votes.visibility = View.VISIBLE
+            votes.text = "+" + entry.votes_count.toString()
             // comment button click action
-            commentButton?.isClickable = true
-            commentButton?.setOnClickListener {
+            commentButton.isClickable = true
+            commentButton.setOnClickListener {
                 val entryViewIntent = Intent(commentButton.context, MikroblogEntryView::class.java)
                 entryViewIntent.putExtra("wamData", wamData)
                 entryViewIntent.putExtra("ENTRY_ID", entry.id)
@@ -82,24 +84,57 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val loadMoreListener: 
             }
         }
         else {
-            commentButton?.isClickable = false
+            commentButton.isClickable = false
             // Disable bottom mirko_control_button button, enable top button
-            holder?.itemView?.findViewById<TextView>(R.id.vote_count_bottom)?.visibility = View.GONE
-            val votes = holder?.itemView?.findViewById<TextView>(R.id.vote_count)
-            votes?.visibility = View.VISIBLE
-            votes?.text = "+" + entry.votes_count.toString()
+            holder.itemView?.findViewById<TextView>(R.id.vote_count_bottom)?.visibility = View.GONE
+            votes = holder.itemView?.findViewById<TextView>(R.id.vote_count) as TextView
+            votes.visibility = View.VISIBLE
+            votes.text = "+" + entry.votes_count.toString()
 
-            val commentBtnLayout = commentButton?.layoutParams as RelativeLayout.LayoutParams
+            val commentBtnLayout = commentButton.layoutParams as RelativeLayout.LayoutParams
             commentBtnLayout.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-            commentButton?.layoutParams = commentBtnLayout
+            commentButton.layoutParams = commentBtnLayout
+        }
+        var drawable = R.drawable.mirko_control_button
+        if (entry.voted)
+            drawable = R.drawable.mirko_control_button_clicked
+        votes.setBackgroundResource(drawable)
+
+        votes.setOnClickListener{
+            var vote = true
+            if (drawable == R.drawable.mirko_control_button_clicked)
+                vote = false
+                var type = "entry"
+                if (entry.isComment && entry.entryId != null) {
+                    type = "comment"
+                    wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction(){
+                        override fun success(json: Json) {
+                            votes.text = "+" + json.obj().getInt("vote")
+                            if (vote) drawable = R.drawable.mirko_control_button_clicked
+                            else drawable = R.drawable.mirko_control_button
+                            votes.setBackgroundResource(drawable)
+                        }
+                    })
+                } else {
+                    wam.voteEntry(type, entry.id, null, vote, object : WykopApiManager.WykopApiAction(){
+                        override fun success(json: Json) {
+                            votes.text = "+" + json.obj().getInt("vote")
+                            if (vote) drawable = R.drawable.mirko_control_button_clicked
+                            else drawable = R.drawable.mirko_control_button
+                            votes.setBackgroundResource(drawable)
+                        }
+                    })
+                }
+
+            votes.setBackgroundResource(drawable)
         }
 
-        setTextViewHTML(holder?.itemView?.findViewById<TextView>(R.id.body)!!, entry.body)
+        setTextViewHTML(holder.itemView?.findViewById<TextView>(R.id.body)!!, entry.body)
         if(entry.isComment)
-            commentButton?.visibility = View.GONE
+            commentButton.visibility = View.GONE
         else {
-            commentButton?.text = entry.comments_count.toString()
-            commentButton?.visibility = View.VISIBLE
+            commentButton.text = entry.comments_count.toString()
+            commentButton.visibility = View.VISIBLE
         }
 
 
