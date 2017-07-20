@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".activities.MikroblogHotList" />
         <activity android:name=".activities.MikroblogEntryView" />
+        <activity android:name=".activities.TagViewActivity" />
     </application>
 
 </manifest>

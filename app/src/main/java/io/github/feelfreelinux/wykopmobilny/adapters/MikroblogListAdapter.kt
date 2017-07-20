@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.adapters
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -22,21 +23,29 @@ import android.text.SpannableStringBuilder
 import android.widget.RelativeLayout
 import com.github.kittinunf.fuel.android.core.Json
 import io.github.feelfreelinux.wykopmobilny.activities.MikroblogEntryView
+import io.github.feelfreelinux.wykopmobilny.activities.TagViewActivity
+import io.github.feelfreelinux.wykopmobilny.objects.SpoilerTagHandler
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import io.github.feelfreelinux.wykopmobilny.utils.*
+import org.json.JSONObject
 
 
-class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val loadMoreListener: LoadMoreListener?, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
+class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_wpis, parent, false))
 
-    fun makeLinkClickable(strBuilder: SpannableStringBuilder, span: URLSpan) {
+    fun makeLinkClickable(context: Context, strBuilder: SpannableStringBuilder, span: URLSpan) {
         val start = strBuilder.getSpanStart(span)
         val end = strBuilder.getSpanEnd(span)
         val flags = strBuilder.getSpanFlags(span)
         val clickable = object : LinkSpan() {
             override fun onClick(tv: View) {
-                if(span.url.first() == '#') printout("TAG CLICKED " + span.url)
+                if(span.url.first() == '#') {
+                    var tagIntent = Intent(context, TagViewActivity::class.java)
+                    tagIntent.putExtra("wamData", wamData)
+                    tagIntent.putExtra("TAG", span.url.removePrefix("#"))
+                    context.startActivity(tagIntent)
+                }
             }
         }
 
@@ -49,13 +58,13 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val loadMoreListener: 
 
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            sequence = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT) as Spannable
-        else  sequence = Html.fromHtml(html) as Spannable
+            sequence = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT, null, SpoilerTagHandler()) as Spannable
+        else  sequence = Html.fromHtml(html, null, SpoilerTagHandler()) as Spannable
 
         val strBuilder = SpannableStringBuilder(sequence)
         val urls = strBuilder.getSpans(0, sequence.length, URLSpan::class.java)
         for (span in urls) {
-            makeLinkClickable(strBuilder, span)
+            makeLinkClickable(text.context, strBuilder, span)
         }
         text.text = strBuilder
         text.movementMethod = LinkMovementMethod.getInstance()
@@ -67,8 +76,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val loadMoreListener: 
 
         val wam = WykopApiManager(wamData, commentButton?.context!!)
         // detect load more, disable comment button
-        if ( loadMoreListener != null ) {
-            if (position == dataSet.size - 1 && !loadMoreListener.loading) loadMoreListener.loadMore()
+        if ( isPager ) {
             // Disable top mirko_control_button button, enable bottom button
             holder?.itemView?.findViewById<TextView>(R.id.vote_count)?.visibility = View.GONE
             votes = holder?.itemView?.findViewById<TextView>(R.id.vote_count_bottom) as TextView
@@ -104,28 +112,30 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val loadMoreListener: 
             var vote = true
             if (drawable == R.drawable.mirko_control_button_clicked)
                 vote = false
-                var type = "entry"
-                if (entry.isComment && entry.entryId != null) {
-                    type = "comment"
-                    wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction(){
-                        override fun success(json: Json) {
-                            votes.text = "+" + json.obj().getInt("vote")
-                            if (vote) drawable = R.drawable.mirko_control_button_clicked
-                            else drawable = R.drawable.mirko_control_button
-                            votes.setBackgroundResource(drawable)
-                        }
-                    })
-                } else {
-                    wam.voteEntry(type, entry.id, null, vote, object : WykopApiManager.WykopApiAction(){
-                        override fun success(json: Json) {
-                            votes.text = "+" + json.obj().getInt("vote")
-                            if (vote) drawable = R.drawable.mirko_control_button_clicked
-                            else drawable = R.drawable.mirko_control_button
-                            votes.setBackgroundResource(drawable)
-                        }
-                    })
-                }
 
+            var type = "entry"
+            if (entry.isComment && entry.entryId != null) {
+                type = "comment"
+                wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction{
+                    override fun success(json: JSONObject) {
+                        votes.text = "+" + json.getInt("vote")
+                        entry.voted = vote
+                        if (vote) drawable = R.drawable.mirko_control_button_clicked
+                        else drawable = R.drawable.mirko_control_button
+                        votes.setBackgroundResource(drawable)
+                    }
+                })
+            } else {
+                wam.voteEntry(type, entry.id, null, vote, object : WykopApiManager.WykopApiAction{
+                    override fun success(json: JSONObject) {
+                        votes.text = "+" + json.getInt("vote")
+                        entry.voted = vote
+                        if (vote) drawable = R.drawable.mirko_control_button_clicked
+                        else drawable = R.drawable.mirko_control_button
+                        votes.setBackgroundResource(drawable)
+                    }
+                })
+            }
             votes.setBackgroundResource(drawable)
         }
 

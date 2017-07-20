@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.app.AlertDialog
 import android.content.Context
+import android.os.Build
 import com.github.kittinunf.fuel.android.core.Json
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.httpGet
@@ -9,6 +10,7 @@ import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
+import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
 
@@ -29,7 +31,13 @@ class NetworkUtils(val context: Context) {
             when (result) {
                 is Result.Success -> {
                     val jsonResult = result.get()
-                    if (checkResults(jsonResult)) action.success(jsonResult)
+                    val jsonObj =  JSONTokener(jsonResult.content).nextValue()
+                    if(checkResults(jsonObj)) {
+                        if (jsonObj is JSONObject)
+                            action.success(jsonObj)
+                        else if (jsonObj is JSONArray)
+                            action.success(jsonObj)
+                    }
                 }
                 is Result.Failure -> {
                     // @TODO Handle failures
@@ -48,7 +56,13 @@ class NetworkUtils(val context: Context) {
                 is Result.Success ->
                     try {
                         val jsonResult = result.get()
-                        if(checkResults(jsonResult)) action.success(jsonResult)
+                        val jsonObj =  JSONTokener(jsonResult.content).nextValue()
+                        if(checkResults(jsonObj)) {
+                            if (jsonObj is JSONObject)
+                                action.success(jsonObj)
+                            else if (jsonObj is JSONArray)
+                                action.success(jsonObj)
+                        }
                     } catch (e: Exception) {
                         printout("error " + e.message)
                     }
@@ -59,15 +73,20 @@ class NetworkUtils(val context: Context) {
         }
     }
 
-    fun checkResults(jsonResult : Json) : Boolean {
-        val json =  JSONTokener(jsonResult.content).nextValue()
-        if (json is JSONObject && json.has("error")) {
+    fun checkResults(jsonResult : Any) : Boolean {
+
+        if (jsonResult is JSONObject && jsonResult.has("error")) {
             // Create alert
-            val error = json.getJSONObject("error")
-            var alertBuilder = AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-            alertBuilder.setTitle(context.getString(R.string.errorDialog))
-            alertBuilder.setMessage(error.getString("message") + " (${error.getInt("code")})")
-            alertBuilder.create().show()
+            val error = jsonResult.getJSONObject("error")
+            val alertBuilder: AlertDialog.Builder
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+                alertBuilder = AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+            else alertBuilder = AlertDialog.Builder(context, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+            alertBuilder.run {
+                setTitle(context.getString(R.string.errorDialog))
+                setMessage(error.getString("message") + " (${error.getInt("code")})")
+                create().show()
+            }
             return false
         } else
             return true

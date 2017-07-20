@@ -23,6 +23,7 @@ class MikroblogHotList : MikroblogListActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Create hot peroid menu
         menuInflater.inflate(R.menu.hot_period, menu)
         val item = menu?.findItem(R.id.spinner)
         val spinner = item?.actionView as Spinner
@@ -33,8 +34,7 @@ class MikroblogHotList : MikroblogListActivity() {
         adapter.setDropDownViewResource(R.layout.actionbar_spinner_dropdown)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 when(position) {
@@ -43,7 +43,7 @@ class MikroblogHotList : MikroblogListActivity() {
                     2 -> period = "6"
                     3 -> period = "newest"
                 }
-                if (firstClicked) {
+                if (firstClicked) { // We don't want to use SwipeRefresh's progressbar on first load
                     swiperefresh.isRefreshing = true
                     onRefresh()
                 } else firstClicked = true

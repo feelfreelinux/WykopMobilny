@@ -9,10 +9,10 @@ import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.github.kittinunf.fuel.android.core.Json
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
     val appkey = ""
@@ -20,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        title = "Zaloguj się"
+        title = getString(R.string.login)
         // Get shared prefs, check is user connection data in memory
         val sharedPrefs = getSharedPreferences("io.github.feelfreelinux.wykopmobilny", 0) // 0 = MODE.Private
         if (sharedPrefs.contains("login") && sharedPrefs.contains("userkey"))
@@ -28,7 +28,6 @@ class LoginActivity : AppCompatActivity() {
         else { // if not, proceed to connection page
             // Set custom url loader to WebView
             webView.webViewClient = object : WebViewClient() {
-
                 @SuppressWarnings("deprecation")
                 override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                     if (url != null) parseUrl(url)
@@ -71,10 +70,9 @@ class LoginActivity : AppCompatActivity() {
         webView.visibility = View.INVISIBLE
         supportActionBar?.hide()
         var wam = WykopApiManager(login, accountKey, secret, appkey, this)
-        wam.initAction = object : WykopApiManager.WykopApiAction() {
-            override fun success(json: Json) {
-                val intent = Intent(this@LoginActivity, MikroblogEntryView::class.java)
-                intent.putExtra("ENTRY_ID", 21862595)
+        wam.initAction = object : WykopApiManager.WykopApiAction {
+            override fun success(json: JSONObject) {
+                val intent = Intent(this@LoginActivity, MikroblogHotList::class.java)
                 intent.putExtra("wamData", wam.getData())
                 startActivity(intent)
                 finish()

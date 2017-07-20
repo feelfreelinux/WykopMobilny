@@ -5,4 +5,5 @@
     <string name="period6">Gorące 6h</string>
     <string name="newest">Najnowsze wpisy</string>
     <string name="errorDialog">Wystąpił nieoczekiwany problem</string>
+    <string name="login">Zaloguj się</string>
 </resources>
