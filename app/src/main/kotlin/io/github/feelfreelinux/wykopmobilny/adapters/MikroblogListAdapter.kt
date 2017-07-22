@@ -7,27 +7,28 @@ import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import io.github.feelfreelinux.wykopmobilny.*
-import io.github.feelfreelinux.wykopmobilny.objects.Entry
-import org.ocpsoft.prettytime.PrettyTime
-import java.util.*
-import android.text.method.LinkMovementMethod
-import android.text.style.URLSpan
-import android.text.SpannableStringBuilder
-import android.widget.RelativeLayout
-import com.github.kittinunf.fuel.android.core.Json
+import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.activities.MikroblogEntryView
 import io.github.feelfreelinux.wykopmobilny.activities.TagViewActivity
+import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.objects.SpoilerTagHandler
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.LinkSpan
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
+import io.github.feelfreelinux.wykopmobilny.utils.getGroupColor
 import org.json.JSONObject
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 
 class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
