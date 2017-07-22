@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -12,6 +11,13 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+
+        def credentialsPropertiesFile = rootProject.file("credentials.properties")
+        def credentialsProperties = new Properties()
+        credentialsProperties.load(new FileInputStream(credentialsPropertiesFile))
+
+        buildConfigField 'String', 'APP_SECRET', credentialsProperties['apiSecret']
+        buildConfigField 'String', 'APP_KEY', credentialsProperties['apiKey']
     }
     buildTypes {
         release {
