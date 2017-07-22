@@ -23,10 +23,43 @@ import org.json.JSONObject
  * Extend it, and pass your data in overrided loadData() function
 */
 abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
-    lateinit var wam : WykopApiManager
-    lateinit var adapter : MikroblogListAdapter
-    lateinit var endlessScrollListener : EndlessScrollListener
-    lateinit var loadMoreAction : WykopApiManager.WykopApiAction
+    lateinit var wam: WykopApiManager
+    val adapter = MikroblogListAdapter(
+            commentVoteClickListener = {
+                entry, vote ->
+                val type = "comment"
+                wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction {
+                    override fun success(json: JSONObject) {
+//                        votes.text = "+" + json.getInt("vote")
+//                        entry.voted = vote
+//                        if (vote) drawable = R.drawable.mirko_control_button_clicked
+//                        else drawable = R.drawable.mirko_control_button
+//                        votes.setBackgroundResource(drawable)
+                    }
+                })
+            },
+            entryVoteClickListener = {
+                entry, vote ->
+                val type = "entry"
+                wam.voteEntry("entry", entry.id, null, vote, object : WykopApiManager.WykopApiAction {
+                    override fun success(json: JSONObject) {
+//                        votes.text = "+" + json.getInt("vote")
+//                        entry.voted = vote
+//                        if (vote) drawable = R.drawable.mirko_control_button_clicked
+//                        else drawable = R.drawable.mirko_control_button
+//                        votes.setBackgroundResource(drawable)
+                    }
+                })
+            },
+            tagClickListener = { tag ->
+                launchTagViewActivity(wam.getData(), tag)
+            },
+            commentClickListener = { id ->
+                launchMikroblogEntryView(wam.getData(), id)
+            }
+    )
+    lateinit var endlessScrollListener: EndlessScrollListener
+    lateinit var loadMoreAction: WykopApiManager.WykopApiAction
     var pagerEnabled = true
     var list = ArrayList<Entry>()
 
@@ -46,7 +79,7 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
         if (pagerEnabled) {
             loadMoreAction = object : WykopApiManager.WykopApiAction {
                 override fun success(json: JSONArray) {
-                    (0 .. json.length()-1).mapTo(list) { parseEntry(json.getJSONObject(it)) }
+                    (0..json.length() - 1).mapTo(list) { parseEntry(json.getJSONObject(it)) }
                     recyclerView.adapter.notifyDataSetChanged()
                     swiperefresh.isRefreshing = false
                     showProgress(false)
@@ -72,14 +105,16 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
         list.clear()
 
         if (pagerEnabled) {
-            adapter = MikroblogListAdapter(list, true, wam.getData())
+            adapter.dataSet = list
+            adapter.isPager = true
             recyclerView.adapter = adapter
             loadData(1, loadMoreAction)
             endlessScrollListener.resetState()
         } else {
-            adapter = MikroblogListAdapter(list, false, wam.getData())
+            adapter.dataSet = list
+            adapter.isPager = false
             recyclerView.adapter = adapter
-            loadData(0, object : WykopApiManager.WykopApiAction{ // Child class will handle parsing data by itself
+            loadData(0, object : WykopApiManager.WykopApiAction { // Child class will handle parsing data by itself
                 override fun success(json: JSONObject) {
                     recyclerView.adapter.notifyDataSetChanged()
                     swiperefresh.isRefreshing = false
@@ -91,14 +126,14 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
 
     abstract fun loadData(page: Int, action: WykopApiManager.WykopApiAction)
 
-    fun showProgress(shouldShow : Boolean) {
+    fun showProgress(shouldShow: Boolean) {
         if (shouldShow)
             progressHeader.visibility = View.VISIBLE
         else progressHeader.visibility = View.GONE
     }
 
     override fun onRefresh() =
-        createAdapter()
+            createAdapter()
 
     override fun onBackPressed() {
         finish()

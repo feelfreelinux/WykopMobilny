@@ -1,8 +1,18 @@
 package io.github.feelfreelinux.wykopmobilny.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import org.json.JSONObject
+
+fun Context.launchTagViewActivity(wamData: WykopApiData, tag: String) {
+    val tagIntent = Intent(this, TagViewActivity::class.java)
+    tagIntent.putExtra("wamData", wamData)
+    tagIntent.putExtra("TAG", tag)
+    startActivity(tagIntent)
+}
 
 class TagViewActivity : MikroblogListActivity() {
     lateinit var tag : String
