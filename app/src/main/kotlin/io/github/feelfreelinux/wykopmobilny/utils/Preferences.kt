@@ -30,8 +30,6 @@ abstract class Preferences {
     private val listeners = mutableListOf<SharedPrefsListener>()
 
     abstract class PrefDelegate<T>(val prefKey: String?) {
-
-
         abstract operator fun getValue(thisRef: Any?, property: KProperty<*>): T
         abstract operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T)
     }
