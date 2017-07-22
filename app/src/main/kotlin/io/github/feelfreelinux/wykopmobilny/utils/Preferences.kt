@@ -5,9 +5,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import kotlin.reflect.KProperty
 
+
 abstract class Preferences {
     companion object {
-        private var context: Context? = null
+        private var context: Context? = null //todo sole this with DI
 
         /**
          * Initialize PrefDelegate with a Context reference.
