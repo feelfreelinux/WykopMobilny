@@ -6,4 +6,5 @@
     <string name="newest">Najnowsze wpisy</string>
     <string name="errorDialog">Wystąpił nieoczekiwany problem</string>
     <string name="login">Zaloguj się</string>
+    <string name="votes_count">+ %1$d</string>
 </resources>

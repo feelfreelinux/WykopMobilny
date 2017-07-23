@@ -13,21 +13,21 @@ fun View.invisible(){
 }
 
 fun View.gone(){
-    visibility = View.INVISIBLE
+    visibility = View.GONE
 }
 
 fun View.visible(){
-    visibility = View.INVISIBLE
+    visibility = View.VISIBLE
 }
 
-fun SpannableStringBuilder.makeLinkClickable(context: Context, span: URLSpan, tagClickListener: TagClickListener) {
+fun SpannableStringBuilder.makeLinkClickable(context: Context, span: URLSpan, tagClickListener: TagClickListener?) {
     val start = getSpanStart(span)
     val end = getSpanEnd(span)
     val flags = getSpanFlags(span)
     val clickable = object : LinkSpan() {
         override fun onClick(tv: View) {
             if (span.isTag) {
-                tagClickListener.invoke(span.url.removePrefix("#"))
+                tagClickListener?.invoke(span.url.removePrefix("#"))
             }
         }
     }
@@ -35,7 +35,7 @@ fun SpannableStringBuilder.makeLinkClickable(context: Context, span: URLSpan, ta
     removeSpan(span)
 }
 
-fun TextView.setTagsClickable(html: String, tagClickListener: TagClickListener) {
+fun TextView.setTagsClickable(html: String, tagClickListener: TagClickListener? = null) {
     val sequence = html.toSpannable()
     val strBuilder = SpannableStringBuilder(sequence)
     val urls = strBuilder.getSpans(0, strBuilder.length, URLSpan::class.java)

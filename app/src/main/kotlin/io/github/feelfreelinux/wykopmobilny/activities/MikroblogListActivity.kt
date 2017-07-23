@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 
 import io.github.feelfreelinux.wykopmobilny.adapters.MikroblogListAdapter
@@ -58,6 +59,44 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
                 launchMikroblogEntryView(wam.getData(), id)
             }
     )
+
+    val feedAdapter = FeedAdapter(
+            commentVoteClickListener = {
+                entry, vote ->
+                val type = "comment"
+                wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction {
+                    override fun success(json: JSONObject) {
+//                        votes.text = "+" + json.getInt("vote")
+//                        entry.voted = vote
+//                        if (vote) drawable = R.drawable.mirko_control_button_clicked
+//                        else drawable = R.drawable.mirko_control_button
+//                        votes.setBackgroundResource(drawable)
+                    }
+                })
+            },
+            entryVoteClickListener = {
+                entry, vote ->
+                val type = "entry"
+                wam.voteEntry("entry", entry.id, null, vote, object : WykopApiManager.WykopApiAction {
+                    override fun success(json: JSONObject) {
+//                        votes.text = "+" + json.getInt("vote")
+//                        entry.voted = vote
+//                        if (vote) drawable = R.drawable.mirko_control_button_clicked
+//                        else drawable = R.drawable.mirko_control_button
+//                        votes.setBackgroundResource(drawable)
+                    }
+                })
+            },
+            tagClickListener = { tag ->
+                launchTagViewActivity(wam.getData(), tag)
+            },
+            commentClickListener = { id ->
+                launchMikroblogEntryView(wam.getData(), id)
+            }
+    )
+
+
+
     lateinit var endlessScrollListener: EndlessScrollListener
     lateinit var loadMoreAction: WykopApiManager.WykopApiAction
     var pagerEnabled = true
@@ -102,12 +141,13 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
     }
 
     fun createAdapter() {
-        list.clear()
+//        list.clear()
 
         if (pagerEnabled) {
             adapter.dataSet = list
             adapter.isPager = true
-            recyclerView.adapter = adapter
+            recyclerView.adapter = feedAdapter
+            feedAdapter.dataSet = list
             loadData(1, loadMoreAction)
             endlessScrollListener.resetState()
         } else {

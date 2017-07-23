@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary.Light</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark.Light</item>
@@ -14,7 +14,7 @@
         <item name="mikroblogControlsColor">@color/mikroblogControlsColor.Light</item>
     </style>
     <!-- Base application theme. -->
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.Dark" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:textColor">@android:color/white</item>
         <item name="android:windowBackground">@color/cardList.Dark</item>

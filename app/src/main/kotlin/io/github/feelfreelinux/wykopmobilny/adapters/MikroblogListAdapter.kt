@@ -53,6 +53,7 @@ class MikroblogListAdapter(
 
     override fun getItemCount() = dataSet.size
 
+
     class ViewHolder(itemView: View,
                      val commentVoteClickListener: VoteClickListener,
                      val entryVoteClickListener: VoteClickListener,
