@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        def credentialsPropertiesFile = rootProject.file("credentials.properties");
+        def credentialsPropertiesFile = rootProject.file("credentials.properties")
         def credentialsProperties = new Properties()
         credentialsProperties.load(new FileInputStream(credentialsPropertiesFile))
 
