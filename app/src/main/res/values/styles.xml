@@ -18,6 +18,7 @@
         <!-- Customize your theme here. -->
         <item name="android:textColor">@android:color/white</item>
         <item name="android:windowBackground">@color/cardList.Dark</item>
+        <item name="android:itemBackground">@color/cardList.Dark</item>
         <item name="colorPrimary">@color/colorPrimary.Dark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark.Dark</item>
         <item name="colorAccent">@color/colorAccent.Dark</item>
@@ -27,5 +28,4 @@
         <item name="drawablesColor">@color/drawablesColor.Dark</item>
         <item name="mikroblogControlsColor">@color/mikroblogControlsColor.Dark</item>
     </style>
-
 </resources>

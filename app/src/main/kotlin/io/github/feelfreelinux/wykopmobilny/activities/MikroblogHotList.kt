@@ -40,7 +40,6 @@ class MikroblogHotList : MikroblogListActivity() {
                 supportActionBar?.themedContext,
                 R.layout.actionbar_spinner,
                 R.id.text1, resources.getStringArray(R.array.hotPeriodSpinner))
-        adapter.setDropDownViewResource(R.layout.actionbar_spinner_dropdown)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -59,6 +58,6 @@ class MikroblogHotList : MikroblogListActivity() {
             }
         }
         spinner.adapter = adapter
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
 }

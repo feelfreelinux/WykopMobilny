@@ -22,7 +22,7 @@ import org.json.JSONObject
  * This is base class for every mikroblog - entry showing activities
  * Extend it, and pass your data in overrided loadData() function
 */
-abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
+abstract class MikroblogListActivity : WykopActivity(), SwipeRefreshLayout.OnRefreshListener {
     lateinit var wam : WykopApiManager
     lateinit var adapter : MikroblogListAdapter
     lateinit var endlessScrollListener : EndlessScrollListener

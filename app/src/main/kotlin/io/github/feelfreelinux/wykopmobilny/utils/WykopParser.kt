@@ -55,7 +55,7 @@ fun getGroupColor(role : Int) : Int {
         2 -> loginColor = Color.parseColor("#BB0000")
         3 -> loginColor = Color.parseColor("#ff0000")
         4 -> loginColor = Color.parseColor("#999999")
-        5 -> loginColor = Color.parseColor("#fff")
+        5 -> loginColor = Color.parseColor("#ffffff")
         6 -> loginColor = Color.parseColor("#367aa9")
     }
     return loginColor

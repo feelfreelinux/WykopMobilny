@@ -30,7 +30,6 @@ import org.json.JSONObject
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-
 class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_wpis, parent, false))
@@ -70,6 +69,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
         text.text = strBuilder
         text.movementMethod = LinkMovementMethod.getInstance()
     }
+
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val entry = dataSet[position]
         val commentButton = holder?.itemView?.findViewById<TextView>(R.id.comment_count)
@@ -173,6 +173,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
         holder.itemView?.findViewById<TextView>(R.id.date)?.text = prettyTime.format(entry.date)
 
         val embedView = holder.itemView?.findViewById<ImageView>(R.id.embed_image)
+
         when(entry.embed.type) {
             "image" -> {
                 embedView?.visibility = View.VISIBLE

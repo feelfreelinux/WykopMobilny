@@ -6,4 +6,7 @@
     <string name="newest">Najnowsze wpisy</string>
     <string name="errorDialog">Wystąpił nieoczekiwany problem</string>
     <string name="login">Zaloguj się</string>
+    <string name="share">Share</string>
+    <string name="save_image">Zapisz obraz</string>
+    <string name="copy_url">Skopiuj adres URL</string>
 </resources>

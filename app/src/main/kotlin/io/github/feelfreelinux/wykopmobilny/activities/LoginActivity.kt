@@ -9,7 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.invisible
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : WykopActivity() {
 
     private val apiPreferences = ApiPreferences()
     private val webViewClient = WykopWebViewClient()
