@@ -2,7 +2,9 @@ package io.github.feelfreelinux.wykopmobilny.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -27,10 +29,11 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
     lateinit var wam: WykopApiManager
     val adapter = MikroblogListAdapter(
             commentVoteClickListener = {
-                entry, vote ->
+                entry, vote, result ->
                 val type = "comment"
                 wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction {
                     override fun success(json: JSONObject) {
+                        result(true)
 //                        votes.text = "+" + json.getInt("vote")
 //                        entry.voted = vote
 //                        if (vote) drawable = R.drawable.mirko_control_button_clicked
@@ -40,10 +43,11 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
                 })
             },
             entryVoteClickListener = {
-                entry, vote ->
+                entry, vote, result ->
                 val type = "entry"
                 wam.voteEntry("entry", entry.id, null, vote, object : WykopApiManager.WykopApiAction {
                     override fun success(json: JSONObject) {
+                        result(true)
 //                        votes.text = "+" + json.getInt("vote")
 //                        entry.voted = vote
 //                        if (vote) drawable = R.drawable.mirko_control_button_clicked
@@ -62,28 +66,21 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
 
     val feedAdapter = FeedAdapter(
             commentVoteClickListener = {
-                entry, vote ->
+                entry, vote, result ->
+
                 val type = "comment"
-                wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction {
-                    override fun success(json: JSONObject) {
-//                        votes.text = "+" + json.getInt("vote")
-//                        entry.voted = vote
-//                        if (vote) drawable = R.drawable.mirko_control_button_clicked
-//                        else drawable = R.drawable.mirko_control_button
-//                        votes.setBackgroundResource(drawable)
-                    }
-                })
-            },
-            entryVoteClickListener = {
-                entry, vote ->
-                val type = "entry"
                 wam.voteEntry("entry", entry.id, null, vote, object : WykopApiManager.WykopApiAction {
                     override fun success(json: JSONObject) {
-//                        votes.text = "+" + json.getInt("vote")
-//                        entry.voted = vote
-//                        if (vote) drawable = R.drawable.mirko_control_button_clicked
-//                        else drawable = R.drawable.mirko_control_button
-//                        votes.setBackgroundResource(drawable)
+                        result(true)
+                    }
+                })
+
+            },
+            entryVoteClickListener = {
+                entry, vote, result ->
+                wam.voteEntry("entry", entry.id, null, vote, object : WykopApiManager.WykopApiAction {
+                    override fun success(json: JSONObject) {
+                        result(true)
                     }
                 })
             },
@@ -94,7 +91,6 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
                 launchMikroblogEntryView(wam.getData(), id)
             }
     )
-
 
 
     lateinit var endlessScrollListener: EndlessScrollListener
@@ -113,7 +109,11 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
         // Setup recycler view
         recyclerView.run {
             setHasFixedSize(true) // For better performance
-            layoutManager = LinearLayoutManager(this@MikroblogListActivity)
+            val layoutManager = LinearLayoutManager(this@MikroblogListActivity)
+            this.layoutManager = layoutManager
+            val divider = DividerItemDecoration(this@MikroblogListActivity, layoutManager.orientation)
+            divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.list_divider))
+            addItemDecoration(divider)
         }
         if (pagerEnabled) {
             loadMoreAction = object : WykopApiManager.WykopApiAction {
