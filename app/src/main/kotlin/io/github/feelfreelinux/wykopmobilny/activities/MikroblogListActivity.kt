@@ -65,17 +65,6 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
     )
 
     val feedAdapter = FeedAdapter(
-            commentVoteClickListener = {
-                entry, vote, result ->
-
-                val type = "comment"
-                wam.voteEntry("entry", entry.id, null, vote, object : WykopApiManager.WykopApiAction {
-                    override fun success(json: JSONObject) {
-                        result(true)
-                    }
-                })
-
-            },
             entryVoteClickListener = {
                 entry, vote, result ->
                 wam.voteEntry("entry", entry.id, null, vote, object : WykopApiManager.WykopApiAction {

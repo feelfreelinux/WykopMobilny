@@ -10,7 +10,6 @@ typealias VoteClickListener = (Entry, Boolean, (Boolean) -> Unit) -> Unit
 
 
 class FeedAdapter(
-        private val commentVoteClickListener: VoteClickListener,
         private val entryVoteClickListener: VoteClickListener,
         private val tagClickListener: TagClickListener,
         private val commentClickListener: CommentClickListener
