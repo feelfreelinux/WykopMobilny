@@ -2,12 +2,10 @@ package io.github.feelfreelinux.wykopmobilny.projectors
 
 import android.Manifest
 import android.content.Context
-import io.github.feelfreelinux.wykopmobilny.activities.IPhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import android.provider.MediaStore.Images
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import io.github.feelfreelinux.wykopmobilny.activities.PhotoViewActivity
 import kotlinx.android.synthetic.main.activity_photoview.*
@@ -15,21 +13,24 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Environment
-import android.provider.DocumentsContract
 import android.widget.Toast
+import com.squareup.picasso.Callback
 import java.io.File
 import java.io.FileOutputStream
 
 
-class PhotoViewActions(val context : Context) {
+class PhotoViewActions(val context : Context) : Callback {
+    var imageLoaded = false
+    override fun onError() { imageLoaded = false }
+    override fun onSuccess() { imageLoaded = true }
+
     val photoView = context as PhotoViewActivity
     fun shareImage() {
         val bitmap = getImageBitmap()
-        if (bitmap != null && checkForWriteReadPermission()) {
+        if (imageLoaded && bitmap != null && checkForWriteReadPermission()) {
             val path = Images.Media.insertImage(context.contentResolver, bitmap, "title", null)
             val uri = Uri.parse(path)
             val intent = Intent(Intent.ACTION_SEND)
@@ -49,7 +50,7 @@ class PhotoViewActions(val context : Context) {
 
     fun saveImage() {
         val bitmap = getImageBitmap()
-        if (checkForWriteReadPermission() && bitmap != null) {
+        if (bitmap != null && imageLoaded && checkForWriteReadPermission()) {
             val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OtwartyWykopMobilny")
             if (!file.exists()) file.mkdirs()
 

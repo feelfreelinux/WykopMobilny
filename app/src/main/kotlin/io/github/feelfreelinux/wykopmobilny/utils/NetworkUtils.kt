@@ -74,7 +74,6 @@ class NetworkUtils(val context: Context) {
     }
 
     fun checkResults(jsonResult : Any) : Boolean {
-
         if (jsonResult is JSONObject && jsonResult.has("error")) {
             // Create alert
             val error = jsonResult.getJSONObject("error")

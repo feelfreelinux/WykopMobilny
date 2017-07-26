@@ -17,11 +17,7 @@ fun parseEntry(json : JSONObject) : Entry {
     if (json.has("comment_count")) comment_count = json.getInt("comment_count")
     return Entry(
             json.getInt("id"),
-            User(
-                    json.getString("author_avatar_med"),
-                    json.getInt("author_group"),
-                    json.getString("author"),
-                    json.getString("author_sex")),
+            parseEntryUser(json),
             json.getInt("vote_count"),
             comment_count,
             json.getString("body"),
@@ -46,6 +42,18 @@ fun parseEmbed(json : JSONObject) : Embed {
 }
 
 fun parseDate(date : String) : Date = SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.GERMANY).parse(date)
+
+fun parseEntryUser(json : JSONObject) : User = User(
+        json.getString("author_avatar_med"),
+        json.getInt("author_group"),
+        json.getString("author"),
+        json.getString("author_sex"))
+
+fun parseUser(json : JSONObject) : User = User(
+        json.getString("avatar_big"),
+        json.getInt("author_group"),
+        json.getString("login"),
+        json.getString("sex"))
 
 fun getGroupColor(role : Int) : Int {
     var loginColor = Color.BLUE

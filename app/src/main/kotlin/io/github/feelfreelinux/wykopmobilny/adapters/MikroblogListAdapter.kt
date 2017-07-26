@@ -29,23 +29,22 @@ import io.github.feelfreelinux.wykopmobilny.utils.getGroupColor
 import org.json.JSONObject
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
+typealias tagClickListener = (String) -> Unit
+typealias entryOpenListener = (Int) -> Unit
 
-class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
+class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, val tagClickListener: tagClickListener, val entryOpenListener: entryOpenListener, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_wpis, parent, false))
 
-    fun makeLinkClickable(context: Context, strBuilder: SpannableStringBuilder, span: URLSpan) {
+    fun makeLinkClickable(strBuilder: SpannableStringBuilder, span: URLSpan) {
         val start = strBuilder.getSpanStart(span)
         val end = strBuilder.getSpanEnd(span)
         val flags = strBuilder.getSpanFlags(span)
         val clickable = object : LinkSpan() {
             override fun onClick(tv: View) {
-                if(span.url.first() == '#') {
-                    var tagIntent = Intent(context, TagViewActivity::class.java)
-                    tagIntent.putExtra("wamData", wamData)
-                    tagIntent.putExtra("TAG", span.url.removePrefix("#"))
-                    context.startActivity(tagIntent)
-                }
+                if(span.url.first() == '#')
+                    tagClickListener.invoke(span.url.replace("#", ""))
+
             }
         }
 
@@ -63,9 +62,9 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
 
         val strBuilder = SpannableStringBuilder(sequence)
         val urls = strBuilder.getSpans(0, sequence.length, URLSpan::class.java)
-        for (span in urls) {
-            makeLinkClickable(text.context, strBuilder, span)
-        }
+        for (span in urls)
+            makeLinkClickable(strBuilder, span)
+
         text.text = strBuilder
         text.movementMethod = LinkMovementMethod.getInstance()
     }
@@ -79,17 +78,14 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
         // detect load more, disable comment button
         if ( isPager ) {
             // Disable top mirko_control_button button, enable bottom button
-            holder?.itemView?.findViewById<TextView>(R.id.vote_count)?.visibility = View.GONE
-            votes = holder?.itemView?.findViewById<TextView>(R.id.vote_count_bottom) as TextView
+            holder.itemView?.findViewById<TextView>(R.id.vote_count)?.visibility = View.GONE
+            votes = holder.itemView?.findViewById<TextView>(R.id.vote_count_bottom) as TextView
             votes.visibility = View.VISIBLE
             votes.text = "+" + entry.votes_count.toString()
             // comment button click action
             commentButton.isClickable = true
             commentButton.setOnClickListener {
-                val entryViewIntent = Intent(commentButton.context, MikroblogEntryView::class.java)
-                entryViewIntent.putExtra("wamData", wamData)
-                entryViewIntent.putExtra("ENTRY_ID", entry.id)
-                commentButton.context.startActivity(entryViewIntent)
+                entryOpenListener(entry.id)
             }
         }
         else {
@@ -161,8 +157,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
         if (entry.author.gender == "male") {
             genderStrip?.visibility = View.VISIBLE
             genderStrip?.setBackgroundColor(Color.parseColor("#46abf2"))
-        }
-        else if (entry.author.gender == "female") {
+        } else if (entry.author.gender == "female") {
             genderStrip?.visibility = View.VISIBLE
             genderStrip?.setBackgroundColor(Color.parseColor("#f246d0"))
         }
@@ -173,6 +168,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
         holder.itemView?.findViewById<TextView>(R.id.date)?.text = prettyTime.format(entry.date)
 
         val embedView = holder.itemView?.findViewById<ImageView>(R.id.embed_image)
+
 
         when(entry.embed.type) {
             "image" -> {

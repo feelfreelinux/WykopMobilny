@@ -1,19 +1,20 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
-import com.github.kittinunf.fuel.android.core.Json
 import io.github.feelfreelinux.wykopmobilny.objects.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.objects.APP_SECRET
+import io.github.feelfreelinux.wykopmobilny.objects.User
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import org.json.JSONArray
 import org.json.JSONObject
 
-class WykopApiManager(val context: Context) {
+class WykopApiManager(context: Context) {
 
     var userToken = ""
 
     val apiPrefs = ApiPreferences()
     val login = apiPrefs.login!!
+    var user : User? = null
     val accountKey = apiPrefs.userKey!!
 
     lateinit var initAction: WykopApiAction
@@ -21,6 +22,7 @@ class WykopApiManager(val context: Context) {
 
     constructor(data: WykopApiData, context: Context) : this(context) {
         this.userToken = data.userToken as String
+        this.user = data.user
     }
 
 
@@ -29,7 +31,7 @@ class WykopApiManager(val context: Context) {
         fun success(json: JSONArray) {}
     }
 
-    fun getData(): WykopApiData = WykopApiData(login, accountKey, APP_SECRET, APP_KEY, userToken)
+    fun getData(): WykopApiData = WykopApiData(user, accountKey, APP_SECRET, APP_KEY, userToken)
     fun getUserSessionToken(successCallback: (JSONObject) -> Unit) {
         val params = ArrayList<Pair<String, String>>()
         params.add(Pair("accountkey", accountKey))
@@ -39,6 +41,7 @@ class WykopApiManager(val context: Context) {
                 object : WykopApiAction {
                     override fun success(json: JSONObject) {
                         userToken = json.getString("userkey")
+                        user = parseUser(json)
                         successCallback(json)
                     }
                 }

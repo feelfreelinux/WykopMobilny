@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Strona Główna" />
+        <item
+            android:id="@+id/nav_wykopalisko"
+            android:title="Wykopalisko" />
+        <item
+            android:id="@+id/nav_mikroblog"
+            android:title="Mikroblog" />
+
+        <item
+            android:id="@+id/nav_mojwykop"
+            android:title="Mój Wykop" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Ustawienia" />
+    </group>
+</menu>

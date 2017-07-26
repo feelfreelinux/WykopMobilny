@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.APP_KEY
@@ -47,7 +46,8 @@ class LoginActivity : WykopActivity() {
         webView.invisible()
         apiManager.getUserSessionToken(
                 successCallback = {
-                    launchMikroblogHotList(apiManager.getData())
+                    //launchMikroblogHotList(apiManager.getData())
+                    lauchMainNavigation(apiManager.getData())
                     finish()
                 })
     }

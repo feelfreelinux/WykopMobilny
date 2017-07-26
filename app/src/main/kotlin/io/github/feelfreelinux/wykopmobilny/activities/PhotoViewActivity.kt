@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.projectors.PhotoViewActions
 import kotlinx.android.synthetic.main.activity_photoview.*
-
-interface IPhotoViewActivity {
-    val url : String
-}
 
 fun Activity.launchPhotoView(imageUrl: String) {
     val intent = Intent(this, PhotoViewActivity::class.java)
@@ -21,15 +18,15 @@ fun Activity.launchPhotoView(imageUrl: String) {
     startActivity(intent)
 }
 
-class PhotoViewActivity : WykopActivity(), IPhotoViewActivity {
-    override val url by lazy {intent.getStringExtra("URL")}
+class PhotoViewActivity : WykopActivity() {
+    val url by lazy {intent.getStringExtra("URL")}
     val photoViewActions by lazy { PhotoViewActions(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photoview)
-        Picasso.with(this).load(url).into(image)
-        setTitle("Mikroblog")
+        Picasso.with(this).load(url).into(image, photoViewActions)
+        title = "Mikroblog"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
