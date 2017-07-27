@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 
-typealias VoteClickListener = (Entry, Boolean, (Boolean) -> Unit) -> Unit
+typealias VoteClickListener = (Entry, (Boolean, Int) -> Unit) -> Unit
 
 
 class FeedAdapter(
@@ -15,7 +15,7 @@ class FeedAdapter(
         private val commentClickListener: CommentClickListener
 ) : RecyclerView.Adapter<FeedViewHolder>() {
 
-    var dataSet = emptyList<Entry>()
+    var entryList = emptyList<Entry>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -27,11 +27,11 @@ class FeedAdapter(
     }
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
-        holder.bindItem(dataSet[position])
+        holder.bindItem(entryList[position])
         holder.commentClickListener = commentClickListener
         holder.tagClickListener = tagClickListener
         holder.entryVoteClickListener = entryVoteClickListener
     }
 
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = entryList.size
 }

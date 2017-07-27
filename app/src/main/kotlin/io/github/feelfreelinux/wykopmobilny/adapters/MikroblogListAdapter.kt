@@ -128,11 +128,11 @@ class MikroblogListAdapter(
                 if (drawable == R.drawable.mirko_control_button_clicked) vote = false
 
                 if (entry.isComment && entry.entryId != null) {
-                    commentVoteClickListener.invoke(entry, vote){
+                    commentVoteClickListener.invoke(entry){ success, voteCount ->
 
                     }
                 } else {
-                    entryVoteClickListener.invoke(entry, vote){
+                    entryVoteClickListener.invoke(entry){ success, voteCount ->
 
                     }
                 }

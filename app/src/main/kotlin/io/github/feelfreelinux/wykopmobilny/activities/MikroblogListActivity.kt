@@ -29,32 +29,12 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
     lateinit var wam: WykopApiManager
     val adapter = MikroblogListAdapter(
             commentVoteClickListener = {
-                entry, vote, result ->
+                entry, vote ->
                 val type = "comment"
-                wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction {
-                    override fun success(json: JSONObject) {
-                        result(true)
-//                        votes.text = "+" + json.getInt("vote")
-//                        entry.voted = vote
-//                        if (vote) drawable = R.drawable.mirko_control_button_clicked
-//                        else drawable = R.drawable.mirko_control_button
-//                        votes.setBackgroundResource(drawable)
-                    }
-                })
             },
             entryVoteClickListener = {
-                entry, vote, result ->
+                entry, vote ->
                 val type = "entry"
-                wam.voteEntry("entry", entry.id, null, vote, object : WykopApiManager.WykopApiAction {
-                    override fun success(json: JSONObject) {
-                        result(true)
-//                        votes.text = "+" + json.getInt("vote")
-//                        entry.voted = vote
-//                        if (vote) drawable = R.drawable.mirko_control_button_clicked
-//                        else drawable = R.drawable.mirko_control_button
-//                        votes.setBackgroundResource(drawable)
-                    }
-                })
             },
             tagClickListener = { tag ->
                 launchTagViewActivity(wam.getData(), tag)
@@ -66,12 +46,10 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
 
     val feedAdapter = FeedAdapter(
             entryVoteClickListener = {
-                entry, vote, result ->
-                wam.voteEntry("entry", entry.id, null, vote, object : WykopApiManager.WykopApiAction {
-                    override fun success(json: JSONObject) {
-                        result(true)
-                    }
-                })
+                entry, result ->
+                wam.entryVote(entry,
+                        successCallback = { result(true, it) },
+                        failureCallback = { result(false, 0) })
             },
             tagClickListener = { tag ->
                 launchTagViewActivity(wam.getData(), tag)
@@ -136,7 +114,7 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
             adapter.dataSet = list
             adapter.isPager = true
             recyclerView.adapter = feedAdapter
-            feedAdapter.dataSet = list
+            feedAdapter.entryList = list
             loadData(1, loadMoreAction)
             endlessScrollListener.resetState()
         } else {
