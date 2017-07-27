@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
+import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import io.github.feelfreelinux.wykopmobilny.projectors.NavigationActions
@@ -36,7 +37,8 @@ class NavigationActivity : WykopActivity() {
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
         wam = WykopApiManager(intent.getSerializableExtra("wamData") as WykopApiData, this)
-        navActions.setupNavigation()
+        if(savedInstanceState == null) navActions.setupNavigation()
+        else navActions.setupHeader()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -55,19 +57,21 @@ class NavigationActivity : WykopActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun showLoading(shouldShow : Boolean) {
-        if (shouldShow) {
-            contentView.gone()
-            loadingView.visible()
-        } else {
-            contentView.visible()
-            loadingView.gone()
+    var isLoading : Boolean
+        get() = loadingView.visibility == View.VISIBLE
+        set(shouldShow) {
+            if (shouldShow) {
+                contentView.gone()
+                loadingView.visible()
+            } else {
+                contentView.visible()
+                loadingView.gone()
+            }
         }
-    }
 
-    fun setRefreshing(isRefreshing : Boolean) {
-        swiperefresh.isRefreshing = isRefreshing
-    }
+    var isRefreshing : Boolean
+        get() = swiperefresh.isRefreshing
+        set(value) { swiperefresh.isRefreshing = value }
 
     fun setSwipeRefreshListener(swipeListener : SwipeRefreshLayout.OnRefreshListener) {
         swiperefresh.setOnRefreshListener(swipeListener)

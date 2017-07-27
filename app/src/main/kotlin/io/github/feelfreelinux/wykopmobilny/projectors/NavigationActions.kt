@@ -19,11 +19,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 class NavigationActions(val context : NavigationActivity) : NavigationView.OnNavigationItemSelectedListener {
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.nav_mikroblog -> {
+            R.id.nav_mikroblog -> 
                 openFragment(MikroblogHotList.newInstance(context.wam.getData()))
-            }
-            else -> {
-            }
         }
         item.isChecked = true
         context.drawer_layout.closeDrawers()

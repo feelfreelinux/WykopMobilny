@@ -27,8 +27,8 @@ class MikroblogEntryView : MikroblogListActivity() {
                     list.add(comment)
                 }
                 action.success(JSONObject())
-                navigationActivity.setRefreshing(false)
-                navigationActivity.showLoading(false)
+                navigationActivity.isRefreshing = false
+                navigationActivity.isLoading = false
             }
         })
 
