@@ -40,6 +40,7 @@ class WykopApiManager(context: Context) {
         networkUtils.sendPost("user/login", params, getData(),
                 object : WykopApiAction {
                     override fun success(json: JSONObject) {
+                        printout(json.toString())
                         userToken = json.getString("userkey")
                         user = parseUser(json)
                         successCallback(json)
@@ -62,6 +63,14 @@ class WykopApiManager(context: Context) {
 
     fun getTagEntries(page: Int, tag: String, action: WykopApiAction) {
         networkUtils.sendGet("tag/entries/$tag", "page/$page", getData(), action)
+    }
+
+    fun getNotificationCount(action : WykopApiAction) {
+        networkUtils.sendGet("mywykop/NotificationsCount", "", getData(), action)
+    }
+
+    fun getHashTagsNotificationsCount(action: WykopApiAction) {
+        networkUtils.sendGet("mywykop/HashTagsNotificationsCount", "", getData(), action)
     }
 
 

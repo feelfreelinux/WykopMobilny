@@ -25,6 +25,7 @@ fun Activity.lauchMainNavigation(data : WykopApiData) {
 
 class NavigationActivity : WykopActivity() {
     val navActions by lazy{ NavigationActions(this) }
+    val navHeader by lazy{ navigationView.getHeaderView(0) }
     val actionBarToggle by lazy { ActionBarDrawerToggle(this,
             drawer_layout,
             toolbar,

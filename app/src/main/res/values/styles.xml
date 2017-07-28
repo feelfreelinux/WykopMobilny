@@ -34,6 +34,18 @@
         <item name="mikroblogControlsColor">@color/mikroblogControlsColor.Dark</item>
     </style>
 
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="NavigationDrawerNotificationItem">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:text">0</item>
+        <item name="android:textSize">20sp</item>
+    </style>
     <style name="AppTheme.Dark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

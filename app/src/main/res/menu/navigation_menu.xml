@@ -2,20 +2,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="Strona Główna" />
+            android:title="@string/main_page" />
         <item
             android:id="@+id/nav_wykopalisko"
-            android:title="Wykopalisko" />
+            android:title="@string/wykopalisko" />
         <item
             android:id="@+id/nav_mikroblog"
-            android:title="Mikroblog" />
+            android:title="@string/mikroblog" />
 
         <item
             android:id="@+id/nav_mojwykop"
-            android:title="Mój Wykop" />
+            android:title="@string/mywykop" />
 
         <item
             android:id="@+id/nav_settings"
-            android:title="Ustawienia" />
+            android:title="@string/settings" />
     </group>
 </menu>

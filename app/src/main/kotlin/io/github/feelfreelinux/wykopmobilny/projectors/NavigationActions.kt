@@ -9,12 +9,14 @@ import com.squareup.picasso.Picasso
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.activities.MikroblogHotList
 import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.card_wpis.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.json.JSONObject
 
 class NavigationActions(val context : NavigationActivity) : NavigationView.OnNavigationItemSelectedListener {
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -35,11 +37,9 @@ class NavigationActions(val context : NavigationActivity) : NavigationView.OnNav
     }
 
     fun setupHeader() {
-        val navHeader = context.navigationView.getHeaderView(0)
         val user = context.wam.user!!
-        Picasso.with(context).load(user.avatarUrl).into(navHeader.img_profile)
-        navHeader.user_login.text = user.nick
-        navHeader.user_login.setTextColor(getGroupColor(user.role))
+        Picasso.with(context).load(user.avatarUrl).into(context.navHeader.img_profile)
+        getNotificationsCount()
     }
 
     fun openFragment(fragment : Fragment) {
@@ -49,5 +49,19 @@ class NavigationActions(val context : NavigationActivity) : NavigationView.OnNav
     fun openInitialFragment() {
         context.supportFragmentManager.beginTransaction().replace(R.id.contentView,
                 MikroblogHotList.newInstance(context.wam.getData())).commit()
+    }
+
+    fun getNotificationsCount() {
+        class NotificationCountAction(val isHashTag : Boolean) : WykopApiManager.WykopApiAction {
+            override fun success(json: JSONObject) {
+                val count = json.getInt("count").toString()
+                if (isHashTag)
+                    context.navHeader.nav_notifications_tag.text = count
+                else context.navHeader.nav_notifications.text = count
+            }
+        }
+
+        context.wam.getNotificationCount(NotificationCountAction(false))
+        context.wam.getHashTagsNotificationsCount(NotificationCountAction(true))
     }
 }
