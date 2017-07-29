@@ -27,6 +27,9 @@ class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private fun bindHeader(entry: Entry) {
         Picasso.with(context).load(entry.author.avatarUrl).fit().centerCrop().into(itemView.avatarImageView)
         itemView.entryDateTextView.text = prettyTime.format(entry.date)
+        if (entry.app != null) itemView.entryDateTextView.run {
+            text = text.toString() + " via ${entry.app}"
+        }
 
         itemView.userNameTextView.text = entry.author.nick
         itemView.userNameTextView.setTextColor(getGroupColor(entry.author.role))
@@ -40,7 +43,7 @@ class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private fun bindContent(entry: Entry) {
         itemView.entryContentTextView.prepareBody(entry.body, tagClickListener)
 
-        when (entry.embed.type) {
+        when (entry.embed?.type) {
             "image", "video" -> {
                 itemView.entryImageView.visible()
                 Picasso.with(context).load(entry.embed.preview).into(itemView.entryImageView)

@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.activities
 import android.os.Bundle
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.APP_KEY
+import io.github.feelfreelinux.wykopmobilny.projectors.WykopWebViewClient
 import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.invisible

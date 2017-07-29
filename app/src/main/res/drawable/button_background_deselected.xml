@@ -5,7 +5,7 @@
     <corners android:radius="3dp"/>
 
     <solid android:color="@color/cardView.Dark"/>
-    <stroke android:color="@color/cardList.Light"
+    <stroke android:color="?attr/spacerColor"
         android:width="1dp"/>
 
 </shape>

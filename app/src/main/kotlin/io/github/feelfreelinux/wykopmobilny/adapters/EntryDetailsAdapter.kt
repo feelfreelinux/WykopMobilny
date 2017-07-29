@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_entry_layout.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class EntryDetailsAdapter(val tagClickListener: TagClickListener) : RecyclerView.Adapter<EntryDetailsViewHolder>() {
+class EntryDetailsAdapter : RecyclerView.Adapter<EntryDetailsViewHolder>() {
 
     var entryData = emptyList<Entry>()
         set(value) {
@@ -21,7 +21,7 @@ class EntryDetailsAdapter(val tagClickListener: TagClickListener) : RecyclerView
         }
 
     override fun onBindViewHolder(holder: EntryDetailsViewHolder, position: Int) {
-        holder.tagClickListener = tagClickListener
+        // holder.tagClickListener = tagClickListener
         holder.bindView(entryData[position])
     }
 
@@ -59,7 +59,7 @@ class EntryDetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private fun bindContent(entry: Entry) {
         itemView.entryContentTextView.prepareBody(entry.body, tagClickListener)
-        when (entry.embed.type) {
+        when (entry.embed?.type) {
             "image", "video" -> {
                 itemView.entryImageView.visible()
                 Picasso.with(context).load(entry.embed.preview).into(itemView.entryImageView)

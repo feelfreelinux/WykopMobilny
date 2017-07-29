@@ -1,6 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
@@ -18,6 +20,11 @@ fun View.gone(){
 
 fun View.visible(){
     visibility = View.VISIBLE
+}
+
+fun RecyclerView.prepare() {
+    setHasFixedSize(true) // For better performance
+    layoutManager = LinearLayoutManager(context)
 }
 
 fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, tagClickListener: TagClickListener?) {

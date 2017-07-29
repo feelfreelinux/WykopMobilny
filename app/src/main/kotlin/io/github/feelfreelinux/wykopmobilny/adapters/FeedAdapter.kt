@@ -10,11 +10,13 @@ typealias VoteClickListener = (Entry, (Boolean, Int) -> Unit) -> Unit
 typealias TagClickListener = (String) -> Unit
 typealias CommentClickListener = (Int) -> Unit
 
-class FeedAdapter(
-        private val entryVoteClickListener: VoteClickListener,
-        private val tagClickListener: TagClickListener,
-        private val commentClickListener: CommentClickListener
-) : RecyclerView.Adapter<FeedViewHolder>() {
+interface IFeedAdapterActions {
+    val entryVoteClickListener: VoteClickListener
+    val tagClickListener: TagClickListener
+    val commentClickListener: CommentClickListener
+}
+
+class FeedAdapter(val actions : IFeedAdapterActions) : RecyclerView.Adapter<FeedViewHolder>() {
 
     var entryList = emptyList<Entry>()
         set(value) {
@@ -28,9 +30,9 @@ class FeedAdapter(
     }
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
-        holder.tagClickListener = tagClickListener
-        holder.commentClickListener = commentClickListener
-        holder.entryVoteClickListener = entryVoteClickListener
+        holder.tagClickListener = actions.tagClickListener
+        holder.commentClickListener = actions.commentClickListener
+        holder.entryVoteClickListener = actions.entryVoteClickListener
         holder.bindItem(entryList[position])
     }
 

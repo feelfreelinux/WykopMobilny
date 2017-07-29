@@ -4,7 +4,6 @@ import android.os.Build
 import android.text.Html
 import android.text.Spannable
 import android.text.style.URLSpan
-import io.github.feelfreelinux.wykopmobilny.objects.SpoilerTagHandler
 
 fun String.toSpannable(): Spannable {
     @Suppress("DEPRECATION")

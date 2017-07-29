@@ -10,7 +10,9 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.objects.SingleEntry
 import io.github.feelfreelinux.wykopmobilny.objects.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import org.json.JSONArray
@@ -127,6 +129,22 @@ class NetworkUtils(val context: Context) {
         }
 
     }
+    fun sendGetNew(resource : String, params : String, className: Class<*>, data: WykopApiData,  successCallback: (Any) -> Unit, failureCallback: () -> Unit) {
+        val url = "https://a.wykop.pl/$resource/$params/appkey/${data.appkey}/"
+
+        val md5sign = encryptMD5(data.secret + url)
+        printout(url)
+
+        url.httpGet().header(Pair("apisign", md5sign)).responseObject(Deserializer(className)) { _, _, result ->
+            when (result) {
+                is Result.Success ->
+                    successCallback(result.value)
+                is Result.Failure ->
+                    failureCallback()
+            }
+        }
+    }
+
 }
 
 class Deserializer<T : Any> (val javaclassname: Class<T>) : ResponseDeserializable<T> {

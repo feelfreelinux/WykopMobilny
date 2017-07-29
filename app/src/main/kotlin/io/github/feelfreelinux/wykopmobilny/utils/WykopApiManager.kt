@@ -13,8 +13,6 @@ class WykopApiManager(context: Context) {
     val login = apiPrefs.login!!
     var user : User? = null
     val accountKey = apiPrefs.userKey!!
-
-    lateinit var initAction: WykopApiAction
     var networkUtils: NetworkUtils = NetworkUtils(context)
 
     constructor(data: WykopApiData, context: Context) : this(context) {
@@ -46,20 +44,8 @@ class WykopApiManager(context: Context) {
         )
     }
 
-    fun getEntry(id: Int, action: WykopApiAction) {
-        networkUtils.sendGet("entries/index/$id", "", getData(), action)
-    }
-
-    fun getHot(page: Int, period: String, action: WykopApiAction) {
-        networkUtils.sendGet("stream/hot", "page/$page/period/$period", getData(), action)
-    }
-
-    fun getNewestMikroblog(page: Int, action: WykopApiAction) {
-        networkUtils.sendGet("stream/index", "page/$page", getData(), action)
-    }
-
-    fun getTagEntries(page: Int, tag: String, action: WykopApiAction) {
-        networkUtils.sendGet("tag/entries/$tag", "page/$page", getData(), action)
+    fun getTagEntries(page: Int, tag: String, successCallback: (Any) -> Unit) {
+        networkUtils.sendGetNew("tag/entries/$tag", "page/$page", TagFeedEntries::class.java, getData(), successCallback, {})
     }
 
     fun getNotificationCount(action : WykopApiAction) {
@@ -70,30 +56,11 @@ class WykopApiManager(context: Context) {
         networkUtils.sendGet("mywykop/HashTagsNotificationsCount", "", getData(), action)
     }
 
-
-    fun voteEntry(type: String, entryId: Int, commentId: Int?, vote: Boolean, action: WykopApiAction) {
-        if (commentId != null)
-            if (vote)
-                networkUtils.sendGet("entries/vote/$type/$entryId/$commentId", "", getData(), action)
-            else
-                networkUtils.sendGet("entries/unvote/$type/$entryId/$commentId", "", getData(), action)
-        else
-            if (vote)
-                networkUtils.sendGet("entries/vote/$type/$entryId", "", getData(), action)
-            else
-                networkUtils.sendGet("entries/unvote/$type/$entryId", "", getData(), action)
+    fun getMikroblogHot(page : Int, period : String, successCallback: (Any) -> Unit) {
+        networkUtils.sendGetNew("stream/hot", "page/$page/period/$period", Array<SingleEntry>::class.java, getData(), successCallback, {})
     }
 
-    fun entryVote(entry: Entry, successCallback: (Int) -> Unit, failureCallback: () -> Unit) {
-        if (entry.voted)
-            networkUtils.unvoteForComment(data = getData(),
-                    entryId = entry.id!!,
-                    successCallback = successCallback,
-                    failureCallback = failureCallback)
-        else
-            networkUtils.voteForComment(data = getData(),
-                    entryId = entry.id!!,
-                    successCallback = successCallback,
-                    failureCallback = failureCallback)
+    fun getEntryIndex(id : Int, successCallback: (Any) -> Unit) {
+        networkUtils.sendGetNew("entries/index", "$id", EntryDetails::class.java, getData(), successCallback, {})
     }
 }
