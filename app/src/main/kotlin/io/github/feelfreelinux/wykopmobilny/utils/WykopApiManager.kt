@@ -1,10 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
-import io.github.feelfreelinux.wykopmobilny.objects.APP_KEY
-import io.github.feelfreelinux.wykopmobilny.objects.APP_SECRET
-import io.github.feelfreelinux.wykopmobilny.objects.User
-import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
+import io.github.feelfreelinux.wykopmobilny.objects.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -87,16 +84,16 @@ class WykopApiManager(context: Context) {
                 networkUtils.sendGet("entries/unvote/$type/$entryId", "", getData(), action)
     }
 
-//    fun entryVote(entry: Entry, successCallback: (Int) -> Unit, failureCallback: () -> Unit) {
-//        if (entry.voted)
-//            networkUtils.unvoteForComment(data = getData(),
-//                    entryId = entry.id!!,
-//                    successCallback = successCallback,
-//                    failureCallback = failureCallback)
-//        else
-//            networkUtils.voteForComment(data = getData(),
-//                    entryId = entry.id!!,
-//                    successCallback = successCallback,
-//                    failureCallback = failureCallback)
-//    }
+    fun entryVote(entry: Entry, successCallback: (Int) -> Unit, failureCallback: () -> Unit) {
+        if (entry.voted)
+            networkUtils.unvoteForComment(data = getData(),
+                    entryId = entry.id!!,
+                    successCallback = successCallback,
+                    failureCallback = failureCallback)
+        else
+            networkUtils.voteForComment(data = getData(),
+                    entryId = entry.id!!,
+                    successCallback = successCallback,
+                    failureCallback = failureCallback)
+    }
 }

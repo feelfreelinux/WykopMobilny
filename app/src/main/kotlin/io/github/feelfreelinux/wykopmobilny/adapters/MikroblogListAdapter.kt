@@ -30,10 +30,15 @@ import org.json.JSONObject
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-typealias TagClickListener = (String) -> Unit
-typealias CommentClickListener = (Int) -> Unit
 
-class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, val tagClickListener: TagClickListener, val entryOpenListener: CommentClickListener, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
+
+class MikroblogListAdapter(
+        val dataSet: ArrayList<Entry>,
+        val isPager: Boolean,
+        val tagClickListener: TagClickListener,
+        val entryOpenListener: CommentClickListener,
+        val wamData: WykopApiData
+) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_wpis, parent, false))
 
@@ -43,7 +48,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
         val flags = strBuilder.getSpanFlags(span)
         val clickable = object : LinkSpan() {
             override fun onClick(tv: View) {
-                if(span.url.first() == '#')
+                if (span.url.first() == '#')
                     tagClickListener.invoke(span.url.replace("#", ""))
 
             }
@@ -54,12 +59,12 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
     }
 
     fun setTextViewHTML(text: TextView, html: String) {
-        val sequence : Spannable
+        val sequence: Spannable
 
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             sequence = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT, null, SpoilerTagHandler()) as Spannable
-        else  sequence = Html.fromHtml(html, null, SpoilerTagHandler()) as Spannable
+        else sequence = Html.fromHtml(html, null, SpoilerTagHandler()) as Spannable
 
         val strBuilder = SpannableStringBuilder(sequence)
         val urls = strBuilder.getSpans(0, sequence.length, URLSpan::class.java)
@@ -73,11 +78,11 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val entry = dataSet[position]
         val commentButton = holder?.itemView?.findViewById<TextView>(R.id.comment_count)
-        val votes : TextView
+        val votes: TextView
 
         val wam = WykopApiManager(wamData, commentButton?.context!!)
         // detect load more, disable comment button
-        if ( isPager ) {
+        if (isPager) {
             // Disable top mirko_control_button button, enable bottom button
             holder.itemView?.findViewById<TextView>(R.id.vote_count)?.visibility = View.GONE
             votes = holder.itemView?.findViewById<TextView>(R.id.vote_count_bottom) as TextView
@@ -88,8 +93,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
             commentButton.setOnClickListener {
                 entryOpenListener(entry.id)
             }
-        }
-        else {
+        } else {
             commentButton.isClickable = false
             // Disable bottom mirko_control_button button, enable top button
             holder.itemView?.findViewById<TextView>(R.id.vote_count_bottom)?.visibility = View.GONE
@@ -106,7 +110,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
             drawable = R.drawable.mirko_control_button_clicked
         votes.setBackgroundResource(drawable)
 
-        votes.setOnClickListener{
+        votes.setOnClickListener {
             var vote = true
             if (drawable == R.drawable.mirko_control_button_clicked)
                 vote = false
@@ -114,7 +118,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
             var type = "entry"
             if (entry.isComment && entry.entryId != null) {
                 type = "comment"
-                wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction{
+                wam.voteEntry(type, entry.entryId as Int, entry.id, vote, object : WykopApiManager.WykopApiAction {
                     override fun success(json: JSONObject) {
                         votes.text = "+" + json.getInt("vote")
                         entry.voted = vote
@@ -124,7 +128,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
                     }
                 })
             } else {
-                wam.voteEntry(type, entry.id, null, vote, object : WykopApiManager.WykopApiAction{
+                wam.voteEntry(type, entry.id, null, vote, object : WykopApiManager.WykopApiAction {
                     override fun success(json: JSONObject) {
                         votes.text = "+" + json.getInt("vote")
                         entry.voted = vote
@@ -138,7 +142,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
         }
 
         setTextViewHTML(holder.itemView?.findViewById<TextView>(R.id.body)!!, entry.body)
-        if(entry.isComment)
+        if (entry.isComment)
             commentButton.visibility = View.GONE
         else {
             commentButton.text = entry.comments_count.toString()
@@ -161,8 +165,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
         } else if (entry.author.gender == "female") {
             genderStrip?.visibility = View.VISIBLE
             genderStrip?.setBackgroundColor(Color.parseColor("#f246d0"))
-        }
-        else genderStrip?.visibility = View.INVISIBLE
+        } else genderStrip?.visibility = View.INVISIBLE
 
         val prettyTime = PrettyTime(Locale("pl"))
 
@@ -171,7 +174,7 @@ class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, 
         val embedView = holder.itemView?.findViewById<ImageView>(R.id.embed_image)
 
 
-        when(entry.embed.type) {
+        when (entry.embed.type) {
             "image" -> {
                 embedView?.visibility = View.VISIBLE
                 Picasso.with(embedView?.context)

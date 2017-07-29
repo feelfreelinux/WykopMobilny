@@ -7,7 +7,8 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 
 typealias VoteClickListener = (Entry, (Boolean, Int) -> Unit) -> Unit
-
+typealias TagClickListener = (String) -> Unit
+typealias CommentClickListener = (Int) -> Unit
 
 class FeedAdapter(
         private val entryVoteClickListener: VoteClickListener,

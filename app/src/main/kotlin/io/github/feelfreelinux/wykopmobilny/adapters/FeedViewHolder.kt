@@ -5,10 +5,7 @@ import android.view.View
 import com.squareup.picasso.Picasso
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
-import io.github.feelfreelinux.wykopmobilny.utils.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.gone
-import io.github.feelfreelinux.wykopmobilny.utils.setTagsClickable
-import io.github.feelfreelinux.wykopmobilny.utils.visible
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import kotlinx.android.synthetic.main.feed_layout.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
@@ -20,6 +17,12 @@ class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var commentClickListener: CommentClickListener? = null
     var tagClickListener: TagClickListener? = null
     var entryVoteClickListener: VoteClickListener? = null
+
+    fun bindItem(entry: Entry) {
+        bindHeader(entry)
+        bindContent(entry)
+        bindFooter(entry)
+    }
 
     private fun bindHeader(entry: Entry) {
         Picasso.with(context).load(entry.author.avatarUrl).fit().centerCrop().into(itemView.avatarImageView)
@@ -34,14 +37,8 @@ class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    fun bindItem(entry: Entry) {
-        bindHeader(entry)
-        bindContent(entry)
-        bindFooter(entry)
-    }
-
     private fun bindContent(entry: Entry) {
-        itemView.entryContentTextView.setTagsClickable(entry.body, tagClickListener)
+        itemView.entryContentTextView.prepareBody(entry.body, tagClickListener)
         when (entry.embed.type) {
             "image", "video" -> {
                 itemView.entryImageView.visible()
@@ -74,12 +71,4 @@ class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             commentClickListener?.invoke(entry.id)
         }
     }
-
-    fun View.disableFor(millis: Long){
-        isEnabled = false
-        postDelayed({
-            isEnabled = true
-        }, millis)
-    }
-
 }

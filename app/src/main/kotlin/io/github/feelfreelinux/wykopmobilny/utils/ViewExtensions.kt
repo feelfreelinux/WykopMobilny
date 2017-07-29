@@ -20,7 +20,7 @@ fun View.visible(){
     visibility = View.VISIBLE
 }
 
-fun SpannableStringBuilder.makeLinkClickable(context: Context, span: URLSpan, tagClickListener: TagClickListener?) {
+fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, tagClickListener: TagClickListener?) {
     val start = getSpanStart(span)
     val end = getSpanEnd(span)
     val flags = getSpanFlags(span)
@@ -35,13 +35,20 @@ fun SpannableStringBuilder.makeLinkClickable(context: Context, span: URLSpan, ta
     removeSpan(span)
 }
 
-fun TextView.setTagsClickable(html: String, tagClickListener: TagClickListener? = null) {
+fun TextView.prepareBody(html: String, tagClickListener: TagClickListener? = null) {
     val sequence = html.toSpannable()
     val strBuilder = SpannableStringBuilder(sequence)
     val urls = strBuilder.getSpans(0, strBuilder.length, URLSpan::class.java)
     urls.forEach {
-        span -> strBuilder.makeLinkClickable(context, span, tagClickListener)
+        span -> strBuilder.makeLinkClickable(span, tagClickListener)
     }
     text = strBuilder
     movementMethod = LinkMovementMethod.getInstance()
+}
+
+fun View.disableFor(millis: Long){
+    isEnabled = false
+    postDelayed({
+        isEnabled = true
+    }, millis)
 }
