@@ -29,10 +29,11 @@ import io.github.feelfreelinux.wykopmobilny.utils.getGroupColor
 import org.json.JSONObject
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
-typealias tagClickListener = (String) -> Unit
-typealias entryOpenListener = (Int) -> Unit
 
-class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, val tagClickListener: tagClickListener, val entryOpenListener: entryOpenListener, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
+typealias TagClickListener = (String) -> Unit
+typealias CommentClickListener = (Int) -> Unit
+
+class MikroblogListAdapter(val dataSet: ArrayList<Entry>, val isPager: Boolean, val tagClickListener: TagClickListener, val entryOpenListener: CommentClickListener, val wamData : WykopApiData) : RecyclerView.Adapter<MikroblogListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_wpis, parent, false))
 

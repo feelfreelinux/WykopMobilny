@@ -87,16 +87,16 @@ class WykopApiManager(context: Context) {
                 networkUtils.sendGet("entries/unvote/$type/$entryId", "", getData(), action)
     }
 
-    fun entryVote(entry: Entry, successCallback: (Int) -> Unit, failureCallback: () -> Unit) {
-        if (entry.voted)
-            networkUtils.unvoteForComment(data = getData(),
-                    entryId = entry.id!!,
-                    successCallback = successCallback,
-                    failureCallback = failureCallback)
-        else
-            networkUtils.voteForComment(data = getData(),
-                    entryId = entry.id!!,
-                    successCallback = successCallback,
-                    failureCallback = failureCallback)
-    }
+//    fun entryVote(entry: Entry, successCallback: (Int) -> Unit, failureCallback: () -> Unit) {
+//        if (entry.voted)
+//            networkUtils.unvoteForComment(data = getData(),
+//                    entryId = entry.id!!,
+//                    successCallback = successCallback,
+//                    failureCallback = failureCallback)
+//        else
+//            networkUtils.voteForComment(data = getData(),
+//                    entryId = entry.id!!,
+//                    successCallback = successCallback,
+//                    failureCallback = failureCallback)
+//    }
 }

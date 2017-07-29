@@ -1,8 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.activities
 
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -10,18 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
-
 import io.github.feelfreelinux.wykopmobilny.adapters.MikroblogListAdapter
-import io.github.feelfreelinux.wykopmobilny.adapters.entryOpenListener
-import io.github.feelfreelinux.wykopmobilny.adapters.tagClickListener
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import io.github.feelfreelinux.wykopmobilny.utils.EndlessScrollListener
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.parseEntry
-import io.github.feelfreelinux.wykopmobilny.utils.printout
-import kotlinx.android.synthetic.main.activity_mikroblog.*
-import kotlinx.android.synthetic.main.activity_navigation.*
 import org.json.JSONArray
 import org.json.JSONObject
 
