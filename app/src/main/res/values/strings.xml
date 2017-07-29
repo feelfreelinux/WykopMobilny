@@ -20,4 +20,5 @@
     <string name="mikroblog">Mikroblog</string>
     <string name="mywykop">Mój Wykop</string>
     <string name="settings">Ustawienia</string>
+    <string name="votes_count">+ %1$d</string>
 </resources>

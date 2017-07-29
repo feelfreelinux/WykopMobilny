@@ -1,26 +1,19 @@
 package io.github.feelfreelinux.wykopmobilny.activities
-import android.app.Activity
-import android.support.v4.app.Fragment
-import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.View
-import android.widget.Spinner
-import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
-import android.widget.ArrayAdapter
-import android.widget.AdapterView
+import android.support.v4.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
-import kotlinx.android.synthetic.main.activity_mikroblog.*
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 
 class MikroblogHotList : MikroblogListActivity() {
     var firstClicked = false
     var period = "24" // Default value
 
+
     override fun loadData(page: Int, action: WykopApiManager.WykopApiAction) {
         if (period == "newest") wam.getNewestMikroblog(page, action)
         else wam.getHot( page, period, action)
     }
+
 
     /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // Create hot peroid menu
@@ -51,6 +44,8 @@ class MikroblogHotList : MikroblogListActivity() {
         spinner.adapter = adapter
         return super.onCreateOptionsMenu(menu)
     }*/
+
+
     companion object {
         fun newInstance(data : WykopApiData) : Fragment {
             val fragmentData = Bundle()
