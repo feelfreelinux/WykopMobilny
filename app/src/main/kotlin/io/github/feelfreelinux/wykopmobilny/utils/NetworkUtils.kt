@@ -43,7 +43,7 @@ class NetworkUtils(val context: Context) {
                     }
                 }
                 is Result.Failure -> {
-                    printout("error")
+                    printout(result.error.toString())
                 }
             }
         }

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_entry_layout.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class EntryDetailsAdapter : RecyclerView.Adapter<EntryDetailsViewHolder>() {
+class EntryDetailsAdapter(val tagClickListener: TagClickListener) : RecyclerView.Adapter<EntryDetailsViewHolder>() {
 
     var entryData = emptyList<Entry>()
         set(value) {
@@ -28,11 +28,11 @@ class EntryDetailsAdapter : RecyclerView.Adapter<EntryDetailsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryDetailsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_entry_layout, parent, false)
-        return EntryDetailsViewHolder(view)
+        return EntryDetailsViewHolder(view, tagClickListener)
     }
 }
 
-class EntryDetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class EntryDetailsViewHolder(view: View, val tagClickListener: TagClickListener) : RecyclerView.ViewHolder(view) {
     val context = view.context!!
     val prettyTime = PrettyTime(Locale("pl"))
 
@@ -56,7 +56,7 @@ class EntryDetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun bindContent(entry: Entry) {
-        itemView.entryContentTextView.prepareBody(entry.body, {})
+        itemView.entryContentTextView.prepareBody(entry.body, tagClickListener)
         when (entry.embed.type) {
             "image", "video" -> {
                 itemView.entryImageView.visible()

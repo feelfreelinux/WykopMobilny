@@ -11,12 +11,12 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.adapters.EntryDetailsAdapter
 import io.github.feelfreelinux.wykopmobilny.adapters.FeedAdapter
-import io.github.feelfreelinux.wykopmobilny.adapters.MikroblogListAdapter
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import io.github.feelfreelinux.wykopmobilny.utils.EndlessScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.parseEntry
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -43,6 +43,7 @@ abstract class MikroblogListActivity : Fragment(), SwipeRefreshLayout.OnRefreshL
                         failureCallback = { result(false, 0) })
             },
             tagClickListener = { tag ->
+                printout(tag)
                 navigationActivity.navActions.openFragment(TagViewActivity.newInstance(wam.getData(), tag))
             },
             commentClickListener = { id ->
@@ -50,7 +51,9 @@ abstract class MikroblogListActivity : Fragment(), SwipeRefreshLayout.OnRefreshL
             }
     )
 
-    val entryDetailsAdapter = EntryDetailsAdapter()
+    val entryDetailsAdapter = EntryDetailsAdapter{
+        printout("chuj $it")
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater?.inflate(R.layout.activity_mikroblog, container, false)

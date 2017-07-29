@@ -39,6 +39,7 @@ class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private fun bindContent(entry: Entry) {
         itemView.entryContentTextView.prepareBody(entry.body, tagClickListener)
+
         when (entry.embed.type) {
             "image", "video" -> {
                 itemView.entryImageView.visible()

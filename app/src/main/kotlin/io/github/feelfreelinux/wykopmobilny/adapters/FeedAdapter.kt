@@ -28,10 +28,10 @@ class FeedAdapter(
     }
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
-        holder.bindItem(entryList[position])
-        holder.commentClickListener = commentClickListener
         holder.tagClickListener = tagClickListener
+        holder.commentClickListener = commentClickListener
         holder.entryVoteClickListener = entryVoteClickListener
+        holder.bindItem(entryList[position])
     }
 
     override fun getItemCount() = entryList.size

@@ -35,12 +35,13 @@ fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, tagClickListener: Ta
     removeSpan(span)
 }
 
-fun TextView.prepareBody(html: String, tagClickListener: TagClickListener? = null) {
+fun TextView.prepareBody(html: String, tagClickListener: TagClickListener?) {
     val sequence = html.toSpannable()
     val strBuilder = SpannableStringBuilder(sequence)
     val urls = strBuilder.getSpans(0, strBuilder.length, URLSpan::class.java)
     urls.forEach {
-        span -> strBuilder.makeLinkClickable(span, tagClickListener)
+        span ->
+        strBuilder.makeLinkClickable(span, tagClickListener)
     }
     text = strBuilder
     movementMethod = LinkMovementMethod.getInstance()
