@@ -25,7 +25,6 @@ import org.json.JSONObject
  * Extend it, and pass your data in overrided loadData() function
 */
 abstract class MikroblogListActivity : Fragment(), SwipeRefreshLayout.OnRefreshListener {
-    lateinit var endlessScrollListener: EndlessScrollListener
     lateinit var loadMoreAction: WykopApiManager.WykopApiAction
 
     val wam by lazy { WykopApiManager(arguments.getSerializable("wamData") as WykopApiData, activity) }
@@ -51,10 +50,18 @@ abstract class MikroblogListActivity : Fragment(), SwipeRefreshLayout.OnRefreshL
     )
 
     val entryDetailsAdapter = EntryDetailsAdapter(
-            tagClickListener = {
+            tagClickListener = { tag ->
                 navigationActivity.navActions.openFragment(TagViewActivity.newInstance(wam.getData(), tag))
             }
     )
+
+    val endlessScrollListener: EndlessScrollListener by lazy {
+        object : EndlessScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                loadData(page, loadMoreAction)
+            }
+        }
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -78,13 +85,6 @@ abstract class MikroblogListActivity : Fragment(), SwipeRefreshLayout.OnRefreshL
                     navigationActivity.isRefreshing = false
                     navigationActivity.isLoading = false
                 }
-            }
-
-            endlessScrollListener = object : EndlessScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
-                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                    loadData(page, loadMoreAction)
-                }
-
             }
 
             recyclerView.addOnScrollListener(endlessScrollListener)

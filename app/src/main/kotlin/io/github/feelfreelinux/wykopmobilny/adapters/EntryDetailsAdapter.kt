@@ -76,15 +76,6 @@ class EntryDetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.voteCountTextView.setOnClickListener {
             itemView.voteCountTextView.isSelected = !itemView.voteCountTextView.isSelected
             itemView.voteCountTextView.disableFor(1000)
-//            entryVoteClickListener?.invoke(entry) { isSuccess, voteCount ->
-//                if (isSuccess) {
-//                    entry.voted = !entry.voted
-//                    entry.votes_count = voteCount
-//                    itemView.voteCountTextView.text = context.getString(R.string.votes_count, voteCount)
-//                } else {
-//                    itemView.voteCountTextView.isSelected = !itemView.voteCountTextView.isSelected
-//                }
-//            }
         }
     }
 
