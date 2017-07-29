@@ -25,7 +25,6 @@ import org.json.JSONObject
  * Extend it, and pass your data in overrided loadData() function
 */
 abstract class MikroblogListActivity : Fragment(), SwipeRefreshLayout.OnRefreshListener {
-//    lateinit var adapter: MikroblogListAdapter
     lateinit var endlessScrollListener: EndlessScrollListener
     lateinit var loadMoreAction: WykopApiManager.WykopApiAction
 
@@ -51,9 +50,12 @@ abstract class MikroblogListActivity : Fragment(), SwipeRefreshLayout.OnRefreshL
             }
     )
 
-    val entryDetailsAdapter = EntryDetailsAdapter{
-        printout("chuj $it")
-    }
+    val entryDetailsAdapter = EntryDetailsAdapter(
+            tagClickListener = {
+                navigationActivity.navActions.openFragment(TagViewActivity.newInstance(wam.getData(), tag))
+            }
+    )
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater?.inflate(R.layout.activity_mikroblog, container, false)

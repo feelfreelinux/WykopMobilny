@@ -21,6 +21,7 @@ class EntryDetailsAdapter(val tagClickListener: TagClickListener) : RecyclerView
         }
 
     override fun onBindViewHolder(holder: EntryDetailsViewHolder, position: Int) {
+        holder.tagClickListener = tagClickListener
         holder.bindView(entryData[position])
     }
 
@@ -28,11 +29,12 @@ class EntryDetailsAdapter(val tagClickListener: TagClickListener) : RecyclerView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryDetailsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_entry_layout, parent, false)
-        return EntryDetailsViewHolder(view, tagClickListener)
+        return EntryDetailsViewHolder(view)
     }
 }
 
-class EntryDetailsViewHolder(view: View, val tagClickListener: TagClickListener) : RecyclerView.ViewHolder(view) {
+class EntryDetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    var tagClickListener: TagClickListener? = null
     val context = view.context!!
     val prettyTime = PrettyTime(Locale("pl"))
 
