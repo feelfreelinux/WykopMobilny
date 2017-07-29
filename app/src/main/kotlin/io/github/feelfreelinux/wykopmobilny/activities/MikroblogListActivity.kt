@@ -1,23 +1,27 @@
 package io.github.feelfreelinux.wykopmobilny.activities
 
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 
 import io.github.feelfreelinux.wykopmobilny.adapters.MikroblogListAdapter
+import io.github.feelfreelinux.wykopmobilny.adapters.entryOpenListener
+import io.github.feelfreelinux.wykopmobilny.adapters.tagClickListener
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import io.github.feelfreelinux.wykopmobilny.utils.EndlessScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.parseEntry
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_mikroblog.*
+import kotlinx.android.synthetic.main.activity_navigation.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -25,71 +29,36 @@ import org.json.JSONObject
  * This is base class for every mikroblog - entry showing activities
  * Extend it, and pass your data in overrided loadData() function
 */
-abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
-    lateinit var wam: WykopApiManager
-    val adapter = MikroblogListAdapter(
-            commentVoteClickListener = {
-                entry, vote ->
-                val type = "comment"
-            },
-            entryVoteClickListener = {
-                entry, vote ->
-                val type = "entry"
-            },
-            tagClickListener = { tag ->
-                launchTagViewActivity(wam.getData(), tag)
-            },
-            commentClickListener = { id ->
-                launchMikroblogEntryView(wam.getData(), id)
-            }
-    )
-
-    val feedAdapter = FeedAdapter(
-            entryVoteClickListener = {
-                entry, result ->
-                wam.entryVote(entry,
-                        successCallback = { result(true, it) },
-                        failureCallback = { result(false, 0) })
-            },
-            tagClickListener = { tag ->
-                launchTagViewActivity(wam.getData(), tag)
-            },
-            commentClickListener = { id ->
-                launchMikroblogEntryView(wam.getData(), id)
-            }
-    )
-
-
-    lateinit var endlessScrollListener: EndlessScrollListener
-    lateinit var loadMoreAction: WykopApiManager.WykopApiAction
+abstract class MikroblogListActivity : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+    lateinit var adapter : MikroblogListAdapter
+    lateinit var endlessScrollListener : EndlessScrollListener
+    lateinit var loadMoreAction : WykopApiManager.WykopApiAction
+    val wam by lazy {WykopApiManager(arguments.getSerializable("wamData") as WykopApiData, activity)}
+    val navigationActivity by lazy {activity as NavigationActivity}
+    lateinit var recyclerView : RecyclerView
     var pagerEnabled = true
     var list = ArrayList<Entry>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mikroblog)
-
-        // Get WykopApiManager
-        wam = WykopApiManager(intent.getSerializableExtra("wamData") as WykopApiData, this)
-
-        swiperefresh.setOnRefreshListener(this)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val view = inflater?.inflate(R.layout.activity_mikroblog, container, false)
         // Setup recycler view
+        if (savedInstanceState != null && savedInstanceState.containsKey("entryList")) list = savedInstanceState.getSerializable("entryList") as ArrayList<Entry>
+
+        recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
         recyclerView.run {
             setHasFixedSize(true) // For better performance
-            val layoutManager = LinearLayoutManager(this@MikroblogListActivity)
-            this.layoutManager = layoutManager
-            val divider = DividerItemDecoration(this@MikroblogListActivity, layoutManager.orientation)
-            divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.list_divider))
-            addItemDecoration(divider)
+            layoutManager = LinearLayoutManager(activity)
         }
+
+        navigationActivity.setSwipeRefreshListener(this)
+
         if (pagerEnabled) {
             loadMoreAction = object : WykopApiManager.WykopApiAction {
                 override fun success(json: JSONArray) {
-                    (0..json.length() - 1).mapTo(list) { parseEntry(json.getJSONObject(it)) }
+                    (0 .. json.length()-1).mapTo(list) { parseEntry(json.getJSONObject(it)) }
                     recyclerView.adapter.notifyDataSetChanged()
-                    swiperefresh.isRefreshing = false
-                    showProgress(false)
-                    // endlessScrollListener.resetState()
+                    navigationActivity.isRefreshing = false
+                    navigationActivity.isLoading = false
                 }
             }
 
@@ -102,47 +71,65 @@ abstract class MikroblogListActivity : AppCompatActivity(), SwipeRefreshLayout.O
 
             recyclerView.addOnScrollListener(endlessScrollListener)
         }
-        swiperefresh.isRefreshing = false
-        showProgress(true)
-        createAdapter()
+
+        if (list.size == 0) {
+            navigationActivity.isRefreshing = false
+            navigationActivity.isLoading = true
+            createAdapter()
+        } else {
+            adapter = getMikroblogAdapter()
+            recyclerView.adapter = adapter
+            recyclerView.adapter.notifyDataSetChanged()
+            endlessScrollListener.startingPageIndex = (list.size / 25) + 1
+            endlessScrollListener.resetState()
+        }
+        return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (savedInstanceState != null && savedInstanceState.containsKey("entryList")) {
+            /*val entryList = savedInstanceState.getSerializable("entryList") as ArrayList<Entry>
+            printout(entryList.size.toString())
+            list.addAll(entryList)*/
+        }
     }
 
     fun createAdapter() {
-//        list.clear()
+        list.clear()
+        adapter = getMikroblogAdapter()
 
         if (pagerEnabled) {
-            adapter.dataSet = list
-            adapter.isPager = true
-            recyclerView.adapter = feedAdapter
-            feedAdapter.entryList = list
+            recyclerView.adapter = adapter
             loadData(1, loadMoreAction)
             endlessScrollListener.resetState()
         } else {
-            adapter.dataSet = list
-            adapter.isPager = false
             recyclerView.adapter = adapter
-            loadData(0, object : WykopApiManager.WykopApiAction { // Child class will handle parsing data by itself
+            loadData(0, object : WykopApiManager.WykopApiAction{ // Child class will handle parsing data by itself
                 override fun success(json: JSONObject) {
                     recyclerView.adapter.notifyDataSetChanged()
-                    swiperefresh.isRefreshing = false
-                    showProgress(false)
+                    navigationActivity.isRefreshing = false
                 }
             })
         }
     }
 
+    fun getMikroblogAdapter() : MikroblogListAdapter =
+            MikroblogListAdapter(list, pagerEnabled, {
+                _tag -> navigationActivity.navActions.openFragment(TagViewActivity.newInstance(wam.getData(), _tag))
+            }, {
+                entryId -> navigationActivity.navActions.openFragment(MikroblogEntryView.newInstance(wam.getData(), entryId))
+            }, wam.getData())
+
+
     abstract fun loadData(page: Int, action: WykopApiManager.WykopApiAction)
 
-    fun showProgress(shouldShow: Boolean) {
-        if (shouldShow)
-            progressHeader.visibility = View.VISIBLE
-        else progressHeader.visibility = View.GONE
-    }
-
     override fun onRefresh() =
-            createAdapter()
+        createAdapter()
 
-    override fun onBackPressed() {
-        finish()
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        if (!navigationActivity.isLoading && !navigationActivity.isRefreshing)
+            outState?.putSerializable("entryList", list)
     }
 }

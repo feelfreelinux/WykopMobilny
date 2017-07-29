@@ -1,27 +1,28 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
-import com.github.kittinunf.fuel.android.core.Json
 import io.github.feelfreelinux.wykopmobilny.objects.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.objects.APP_SECRET
-import io.github.feelfreelinux.wykopmobilny.objects.Entry
+import io.github.feelfreelinux.wykopmobilny.objects.User
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import org.json.JSONArray
 import org.json.JSONObject
 
-class WykopApiManager(val context: Context) {
+class WykopApiManager(context: Context) {
 
     var userToken = ""
 
     val apiPrefs = ApiPreferences()
     val login = apiPrefs.login!!
+    var user : User? = null
     val accountKey = apiPrefs.userKey!!
 
     lateinit var initAction: WykopApiAction
-    var networkUtils: NetworkUtils = NetworkUtils()
+    var networkUtils: NetworkUtils = NetworkUtils(context)
 
     constructor(data: WykopApiData, context: Context) : this(context) {
         this.userToken = data.userToken as String
+        this.user = data.user
     }
 
 
@@ -30,7 +31,7 @@ class WykopApiManager(val context: Context) {
         fun success(json: JSONArray) {}
     }
 
-    fun getData(): WykopApiData = WykopApiData(login, accountKey, APP_SECRET, APP_KEY, apiPrefs.userToken)
+    fun getData(): WykopApiData = WykopApiData(user, accountKey, APP_SECRET, APP_KEY, userToken)
     fun getUserSessionToken(successCallback: (JSONObject) -> Unit) {
         val params = ArrayList<Pair<String, String>>()
         params.add(Pair("accountkey", accountKey))
@@ -39,7 +40,9 @@ class WykopApiManager(val context: Context) {
         networkUtils.sendPost("user/login", params, getData(),
                 object : WykopApiAction {
                     override fun success(json: JSONObject) {
-                        apiPrefs.userToken = json.getString("userkey")
+                        printout(json.toString())
+                        userToken = json.getString("userkey")
+                        user = parseUser(json)
                         successCallback(json)
                     }
                 }
@@ -47,9 +50,7 @@ class WykopApiManager(val context: Context) {
     }
 
     fun getEntry(id: Int, action: WykopApiAction) {
-//        networkUtils.sendGet("entries/index/$id", "", getData(), action)
-        networkUtils.getEntryDetails(id, successCallback = Unit, failureCallback = Unit)
-
+        networkUtils.sendGet("entries/index/$id", "", getData(), action)
     }
 
     fun getHot(page: Int, period: String, action: WykopApiAction) {
@@ -64,7 +65,16 @@ class WykopApiManager(val context: Context) {
         networkUtils.sendGet("tag/entries/$tag", "page/$page", getData(), action)
     }
 
-    fun entryVote(type: String, entryId: Int, commentId: Int?, vote: Boolean, action: WykopApiAction) {
+    fun getNotificationCount(action : WykopApiAction) {
+        networkUtils.sendGet("mywykop/NotificationsCount", "", getData(), action)
+    }
+
+    fun getHashTagsNotificationsCount(action: WykopApiAction) {
+        networkUtils.sendGet("mywykop/HashTagsNotificationsCount", "", getData(), action)
+    }
+
+
+    fun voteEntry(type: String, entryId: Int, commentId: Int?, vote: Boolean, action: WykopApiAction) {
         if (commentId != null)
             if (vote)
                 networkUtils.sendGet("entries/vote/$type/$entryId/$commentId", "", getData(), action)

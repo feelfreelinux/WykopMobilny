@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.adapters.TagClickListener
 
-fun View.invisible(){
+fun View.invisible() {
     visibility = View.INVISIBLE
 }
 

@@ -9,7 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
 
 typealias loginSuccessCallback = () -> Unit
 
-class WykopWebViewClient() : WebViewClient() {
+class WykopWebViewClient : WebViewClient() {
     private val apiPreferences = ApiPreferences()
     private var loginSuccessCallback: loginSuccessCallback? = null
 

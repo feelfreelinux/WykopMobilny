@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="4dp"
-        card_view:cardBackgroundColor="?attr/cardViewColor"
-        card_view:cardCornerRadius="4dp"
         card_view:cardElevation="1dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardBackgroundColor="?attr/cardViewColor">
         card_view:cardMaxElevation="1dp">
 
         <LinearLayout
@@ -140,7 +140,6 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
             </RelativeLayout>
-
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

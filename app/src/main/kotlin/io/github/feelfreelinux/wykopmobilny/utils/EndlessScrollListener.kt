@@ -16,7 +16,7 @@ abstract class EndlessScrollListener(val mLayoutManager : LinearLayoutManager) :
     // True if we are still waiting for the last set of data to load.
     private var loading = true
     // Sets the starting page index
-    private val startingPageIndex = 1
+    var startingPageIndex = 1
 
 
     fun getLastVisibleItem(lastVisibleItemPositions: IntArray): Int {

@@ -1,8 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.objects
 
+import java.io.Serializable
 import java.util.*
 
-class Entry(
+data class Entry(
         val id : Int,
         val author : User,
         var votes_count : Int,
