@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.squareup.picasso.Picasso
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.utils.*
@@ -21,7 +20,6 @@ class EntryDetailsAdapter : RecyclerView.Adapter<EntryDetailsViewHolder>() {
         }
 
     override fun onBindViewHolder(holder: EntryDetailsViewHolder, position: Int) {
-        // holder.tagClickListener = tagClickListener
         holder.bindView(entryData[position])
     }
 
@@ -45,11 +43,16 @@ class EntryDetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun bindHeader(entry: Entry) {
-        Picasso.with(context).load(entry.author.avatarUrl).fit().centerCrop().into(itemView.avatarImageView)
-        itemView.entryDateTextView.text = prettyTime.format(entry.date)
-
+        itemView.avatarImageView.loadImage(entry.author.avatarUrl)
+        itemView.entryDateTextView.run {
+            text = prettyTime.format(entry.date)
+            if (entry.app != null) itemView.entryDateTextView.run {
+                text = text.toString() + " via ${entry.app}"
+            }
+        }
         itemView.userNameTextView.text = entry.author.nick
         itemView.userNameTextView.setTextColor(getGroupColor(entry.author.role))
+
         when (entry.author.gender) {
             "male" -> itemView.genderStripImageView.setBackgroundResource(R.drawable.male_strip)
             "female" -> itemView.genderStripImageView.setBackgroundResource(R.drawable.female_strip)
@@ -61,8 +64,12 @@ class EntryDetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.entryContentTextView.prepareBody(entry.body, tagClickListener)
         when (entry.embed?.type) {
             "image", "video" -> {
-                itemView.entryImageView.visible()
-                Picasso.with(context).load(entry.embed.preview).into(itemView.entryImageView)
+                itemView.entryImageView.run {
+                    visible()
+                    loadImage(entry.embed.preview)
+                    setPhotoViewUrl(entry.embed.url)
+                }
+
             }
             else -> {
                 itemView.entryImageView.gone()
@@ -71,11 +78,13 @@ class EntryDetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun bindFooter(entry: Entry) {
-        itemView.voteCountTextView.text = context.getString(R.string.votes_count, entry.votes_count)
-        itemView.voteCountTextView.isSelected = entry.voted
-        itemView.voteCountTextView.setOnClickListener {
-            itemView.voteCountTextView.isSelected = !itemView.voteCountTextView.isSelected
-            itemView.voteCountTextView.disableFor(1000)
+        itemView.voteCountTextView.run {
+            text = context.getString(R.string.votes_count, entry.votes_count)
+            isSelected = entry.voted
+            setOnClickListener {
+                isSelected = !itemView.voteCountTextView.isSelected
+                disableFor(1000)
+            }
         }
     }
 

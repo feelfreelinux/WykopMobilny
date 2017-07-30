@@ -60,6 +60,10 @@ class WykopApiManager(context: Context) {
         networkUtils.sendGetNew("stream/hot", "page/$page/period/$period", Array<SingleEntry>::class.java, getData(), successCallback, {})
     }
 
+    fun getMikroblogIndex(page : Int, successCallback: (Any) -> Unit) {
+        networkUtils.sendGetNew("stream/index", "page/$page", Array<SingleEntry>::class.java, getData(), successCallback, {})
+    }
+
     fun getEntryIndex(id : Int, successCallback: (Any) -> Unit) {
         networkUtils.sendGetNew("entries/index", "$id", EntryDetails::class.java, getData(), successCallback, {})
     }

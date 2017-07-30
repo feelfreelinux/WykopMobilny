@@ -10,7 +10,7 @@ interface ILoadMore {
     fun onLoadMore(page: Int)
 }
 
-class EndlessScrollListener(val loadMoreListener : ILoadMore, val mLayoutManager : LinearLayoutManager) : RecyclerView.OnScrollListener() {
+class EndlessScrollListener(var loadMoreListener : ILoadMore, var mLayoutManager : LinearLayoutManager) : RecyclerView.OnScrollListener() {
     // The minimum amount of items to have below your current scroll position
     // before loading more.
     var visibleThreshold = 5

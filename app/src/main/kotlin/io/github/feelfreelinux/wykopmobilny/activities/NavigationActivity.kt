@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.activities
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -17,7 +18,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.visible
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-fun Activity.lauchMainNavigation(data : WykopApiData) {
+fun Context.lauchMainNavigation(data : WykopApiData) {
     val intent = Intent(this, NavigationActivity::class.java)
     intent.putExtra("wamData", data)
     startActivity(intent)
@@ -37,6 +38,7 @@ class NavigationActivity : WykopActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
+
         wam = WykopApiManager(intent.getSerializableExtra("wamData") as WykopApiData, this)
         if(savedInstanceState == null) navActions.setupNavigation()
         else navActions.setupHeader()

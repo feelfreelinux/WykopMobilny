@@ -7,7 +7,11 @@ import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
+import io.github.feelfreelinux.wykopmobilny.activities.PhotoViewActivity
+import io.github.feelfreelinux.wykopmobilny.activities.launchPhotoView
 import io.github.feelfreelinux.wykopmobilny.adapters.TagClickListener
 
 fun View.invisible() {
@@ -59,4 +63,16 @@ fun View.disableFor(millis: Long){
     postDelayed({
         isEnabled = true
     }, millis)
+}
+
+fun ImageView.loadImage(url : String) {
+    Picasso.with(context).load(url).into(this)
+}
+
+fun ImageView.setPhotoViewUrl( url : String) {
+    setOnClickListener {
+        context.run {
+            launchPhotoView(url)
+        }
+    }
 }

@@ -18,11 +18,11 @@ import io.github.feelfreelinux.wykopmobilny.utils.*
 
 abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefreshListener {
     lateinit var recyclerView : RecyclerView
-    lateinit var endlessScrollListener : EndlessScrollListener
+    var endlessScrollListener : EndlessScrollListener? = null
     val wamData by lazy { arguments.getSerializable("wamData") as WykopApiData }
     val wam by lazy { WykopApiManager(wamData, activity) }
     val navActivity by lazy { activity as NavigationActivity }
-    lateinit var feedAdapter : FeedAdapter
+    var feedAdapter : FeedAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.activity_mikroblog, container, false)
@@ -30,20 +30,31 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
         // Prepare RecyclerView, and EndlessScrollListener
         recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)!!
         recyclerView.prepare()
-        endlessScrollListener =
+
+        // Retrieve savedState endless scroll listener
+        if (endlessScrollListener == null) endlessScrollListener =
                 EndlessScrollListener(this, (recyclerView.layoutManager as LinearLayoutManager))
+        else {
+            endlessScrollListener?.mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
+            endlessScrollListener?.loadMoreListener = this
+        }
+
         recyclerView.addOnScrollListener(endlessScrollListener)
-
-        // Create adapter
-        feedAdapter = FeedAdapter(FeedClickActions(activity as NavigationActivity))
-        recyclerView.adapter = feedAdapter
-
-        // Set needed flags
-        navActivity.isLoading = true
         navActivity.setSwipeRefreshListener(this)
 
-        // Trigger data loading
-        onLoadMore(1)
+        // Create adapter if no data is saved
+        if(feedAdapter == null) {
+            feedAdapter = FeedAdapter(FeedClickActions(activity as NavigationActivity))
+            recyclerView.adapter = feedAdapter
+
+            // Set needed flags
+            navActivity.isLoading = true
+
+            // Trigger data loading
+            onLoadMore(1)
+        } else
+            recyclerView.adapter = feedAdapter // Get data from saved instance
+
         return view
     }
 
@@ -51,8 +62,8 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
         loadData(1, {
             result ->
             run {
-                feedAdapter.entryList = emptyList()
-                endlessScrollListener.resetState()
+                feedAdapter?.entryList = emptyList()
+                endlessScrollListener?.resetState()
                 addDataToAdapter(parseSingleEntryList(result as Array<SingleEntry>))
             }
         })
@@ -68,9 +79,9 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
 
     fun addDataToAdapter(list : List<Entry>) {
         val fullList = ArrayList<Entry>()
-        fullList.addAll(feedAdapter.entryList)
+        feedAdapter?.entryList?.let { fullList.addAll(it) }
         fullList.addAll(list)
-        feedAdapter.entryList = fullList
+        feedAdapter?.entryList = fullList
         (activity as NavigationActivity).run {
             isLoading = false
             isRefreshing = false

@@ -25,10 +25,12 @@ class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun bindHeader(entry: Entry) {
-        Picasso.with(context).load(entry.author.avatarUrl).fit().centerCrop().into(itemView.avatarImageView)
-        itemView.entryDateTextView.text = prettyTime.format(entry.date)
-        if (entry.app != null) itemView.entryDateTextView.run {
-            text = text.toString() + " via ${entry.app}"
+        itemView.avatarImageView.loadImage(entry.author.avatarUrl)
+        itemView.entryDateTextView.run {
+            text = prettyTime.format(entry.date)
+            if (entry.app != null) itemView.entryDateTextView.run {
+                text = text.toString() + " via ${entry.app}"
+            }
         }
 
         itemView.userNameTextView.text = entry.author.nick
@@ -45,34 +47,40 @@ class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         when (entry.embed?.type) {
             "image", "video" -> {
-                itemView.entryImageView.visible()
-                Picasso.with(context).load(entry.embed.preview).into(itemView.entryImageView)
+                itemView.entryImageView.run {
+                    visible()
+                    loadImage(entry.embed.preview)
+                    setPhotoViewUrl(entry.embed.url)
+                }
             }
-            else -> {
+            else ->
                 itemView.entryImageView.gone()
-            }
         }
     }
 
     private fun bindFooter(entry: Entry) {
-        itemView.voteCountTextView.text = context.getString(R.string.votes_count, entry.votes_count)
-        itemView.voteCountTextView.isSelected = entry.voted
-        itemView.voteCountTextView.setOnClickListener {
-            itemView.voteCountTextView.isSelected = !itemView.voteCountTextView.isSelected
-            itemView.voteCountTextView.disableFor(1000)
-            entryVoteClickListener?.invoke(entry) { isSuccess, voteCount ->
-                if (isSuccess){
-                    entry.voted = !entry.voted
-                    entry.votes_count = voteCount
-                    itemView.voteCountTextView.text = context.getString(R.string.votes_count, voteCount)
-                }else{
-                    itemView.voteCountTextView.isSelected = !itemView.voteCountTextView.isSelected
+        itemView.voteCountTextView.run {
+            text = context.getString(R.string.votes_count, entry.votes_count)
+            isSelected = entry.voted
+            setOnClickListener {
+                isSelected = !isSelected
+                disableFor(1000)
+                entryVoteClickListener?.invoke(entry) { isSuccess, voteCount ->
+                    if (isSuccess) {
+                        entry.voted = !entry.voted
+                        entry.votes_count = voteCount
+                        text = context.getString(R.string.votes_count, voteCount)
+                    } else {
+                        isSelected = !isSelected
+                    }
                 }
             }
         }
-        itemView.commentsCountTextView.text = entry.comments_count.toString()
-        itemView.commentsCountTextView.setOnClickListener {
-            commentClickListener?.invoke(entry.id)
+        itemView.commentsCountTextView.run {
+            text = entry.comments_count.toString()
+            setOnClickListener {
+                commentClickListener?.invoke(entry.id)
+            }
         }
     }
 }
