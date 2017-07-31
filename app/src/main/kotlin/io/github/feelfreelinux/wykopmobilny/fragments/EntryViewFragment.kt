@@ -11,7 +11,6 @@ import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.adapters.EntryDetailsAdapter
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.objects.EntryDetails
-import io.github.feelfreelinux.wykopmobilny.objects.SingleEntry
 import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import io.github.feelfreelinux.wykopmobilny.utils.*
 
@@ -26,7 +25,7 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     var entryAdapter = EntryDetailsAdapter()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.activity_mikroblog, container, false)
+        val view = inflater?.inflate(R.layout.recycler_view_layout, container, false)
 
         // Prepare RecyclerView, and EndlessScrollListener
         recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)!!

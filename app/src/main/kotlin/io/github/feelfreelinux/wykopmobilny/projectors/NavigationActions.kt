@@ -3,11 +3,11 @@ package io.github.feelfreelinux.wykopmobilny.projectors
 import android.support.v4.app.Fragment
 import android.support.design.widget.NavigationView
 import android.view.MenuItem
-import com.squareup.picasso.Picasso
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.fragments.HotFeedFragment
 import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import org.json.JSONObject
@@ -32,7 +32,7 @@ class NavigationActions(val context : NavigationActivity) : NavigationView.OnNav
 
     fun setupHeader() {
         val user = context.wam.user!!
-        Picasso.with(context).load(user.avatarUrl).into(context.navHeader.img_profile)
+        context.navHeader.img_profile.loadImage(user.avatarUrl)
         getNotificationsCount()
     }
 

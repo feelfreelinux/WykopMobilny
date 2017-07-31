@@ -9,10 +9,10 @@ import android.text.style.URLSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
 import io.github.feelfreelinux.wykopmobilny.activities.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.activities.launchPhotoView
 import io.github.feelfreelinux.wykopmobilny.adapters.TagClickListener
+import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 
 fun View.invisible() {
     visibility = View.INVISIBLE
@@ -66,7 +66,8 @@ fun View.disableFor(millis: Long){
 }
 
 fun ImageView.loadImage(url : String) {
-    Picasso.with(context).load(url).into(this)
+    GlideApp.with(context)
+            .load(url).into(this)
 }
 
 fun ImageView.setPhotoViewUrl( url : String) {

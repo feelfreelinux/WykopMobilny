@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.squareup.picasso.Picasso
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.projectors.PhotoViewActions
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_photoview.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -25,7 +25,7 @@ class PhotoViewActivity : WykopActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photoview)
         setSupportActionBar(toolbar)
-        Picasso.with(this).load(url).into(image, photoViewActions)
+        image.loadImage(url)
         title = "Mikroblog"
     }
 

@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
+import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.objects.*
 import org.json.JSONArray
 import org.json.JSONObject
