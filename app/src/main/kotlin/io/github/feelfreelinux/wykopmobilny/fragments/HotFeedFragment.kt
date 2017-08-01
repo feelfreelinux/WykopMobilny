@@ -7,7 +7,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 
 class HotFeedFragment : FeedFragment() {
     var period = "24"
@@ -23,16 +22,11 @@ class HotFeedFragment : FeedFragment() {
             "6", "12", "24" -> wam.getMikroblogHot(page, period, resultCallback)
             "newest" -> wam.getMikroblogIndex(page, resultCallback)
         }
-
     }
 
     companion object {
-        fun newInstance(data : WykopApiData) : Fragment {
-            val fragmentData = Bundle()
-            val fragment = HotFeedFragment()
-            fragmentData.putSerializable("wamData", data)
-            fragment.arguments = fragmentData
-            return fragment
+        fun newInstance() : Fragment {
+            return HotFeedFragment()
         }
     }
 

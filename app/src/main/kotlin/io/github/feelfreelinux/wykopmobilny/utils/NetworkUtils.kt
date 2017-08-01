@@ -12,73 +12,68 @@ import com.github.kittinunf.result.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.objects.SingleEntry
-import io.github.feelfreelinux.wykopmobilny.objects.VoteResponse
-import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
-import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
+import io.github.feelfreelinux.wykopmobilny.objects.*
+
 
 class NetworkUtils(val context: Context) {
-    fun sendPost(resource: String, params: ArrayList<Pair<String, String>>, data: WykopApiData, action: WykopApiManager.WykopApiAction) {
-        val url = "https://a.wykop.pl/$resource/appkey/${data.appkey}"
+    val apiPrefs = ApiPreferences()
+
+    fun sendGet(resource : String, params : String?, className: Class<*>, successCallback: (Any) -> Unit, failureCallback: () -> Unit) {
+        val url =
+                if (params == null) "https://a.wykop.pl/$resource/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
+                else "https://a.wykop.pl/$resource/$params/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
+
+        val md5sign = encryptMD5(APP_SECRET + url)
+        printout(url)
+
+        url.httpGet().header(Pair("apisign", md5sign)).responseObject(Deserializer(className, context)) { _, _, result ->
+            when (result) {
+                is Result.Success ->
+                    if(result.value != null) successCallback(result.value)
+                is Result.Failure ->
+                    failureCallback()
+            }
+        }
+    }
+
+    fun sendPost(resource : String, params : String?, postParams: ArrayList<Pair<String, String>>, className: Class<*>, successCallback: (Any) -> Unit, failureCallback: () -> Unit) {
+        val url =
+            if (params == null) "https://a.wykop.pl/$resource/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
+            else "https://a.wykop.pl/$resource/$params/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
 
         var paramsStringToSign = ""
-        params.forEachIndexed {
+        postParams.forEachIndexed {
             _, obj ->
             paramsStringToSign += obj.second + ","
         }
         paramsStringToSign = paramsStringToSign.substring(0, (paramsStringToSign.length - 1))
 
-        val md5sign = encryptMD5(data.secret + url + paramsStringToSign)
+        val md5sign = encryptMD5(APP_SECRET + url + paramsStringToSign)
 
-        url.httpPost(params).header(Pair("apisign", md5sign)).responseJson { _, _, result ->
-            when (result) {
-                is Result.Success -> {
-                    val jsonResult = result.get()
-                    val jsonObj =  JSONTokener(jsonResult.content).nextValue()
-                    if(checkResults(jsonObj)) {
-                        if (jsonObj is JSONObject)
-                            action.success(jsonObj)
-                        else if (jsonObj is JSONArray)
-                            action.success(jsonObj)
-                    }
-                }
-                is Result.Failure -> {
-                    printout(result.error.toString())
-                }
-            }
-        }
-    }
 
-    fun sendGet(resource: String, params: String, data: WykopApiData, action: WykopApiManager.WykopApiAction) {
-        val url = "https://a.wykop.pl/$resource/appkey/${data.appkey}/userkey/${data.userToken}/$params"
-
-        val md5sign = encryptMD5(data.secret + url)
-        printout(url)
-        url.httpGet().header(Pair("apisign", md5sign)).responseJson { request, response, result ->
+        url.httpPost(postParams).header(Pair("apisign", md5sign)).responseObject(Deserializer(className, context)) { _, _, result ->
             when (result) {
                 is Result.Success ->
-                    try {
-                        val jsonResult = result.get()
-                        val jsonObj =  JSONTokener(jsonResult.content).nextValue()
-                        if(checkResults(jsonObj)) {
-                            if (jsonObj is JSONObject)
-                                action.success(jsonObj)
-                            else if (jsonObj is JSONArray)
-                                action.success(jsonObj)
-                        }
-                    } catch (e: Exception) {
-                        printout("error " + e.message)
-                    }
-                is Result.Failure -> {
-                    // @TODO Handle failures
-                }
+                    if(result.value != null) successCallback(result.value)
+                is Result.Failure ->
+                    failureCallback()
             }
         }
     }
 
-    fun checkResults(jsonResult : Any) : Boolean {
+}
+
+class Deserializer<T : Any> (val javaclassname: Class<T>, val context: Context) : ResponseDeserializable<T> {
+    override fun deserialize(content: String) =
+        if (checkResults(content)) Gson().fromJson(content, javaclassname)
+        else null
+
+
+    fun checkResults(json : String) : Boolean {
+        val jsonResult = JSONTokener(json).nextValue()
+
         if (jsonResult is JSONObject && jsonResult.has("error")) {
             // Create alert
             val error = jsonResult.getJSONObject("error")
@@ -95,58 +90,4 @@ class NetworkUtils(val context: Context) {
         } else
             return true
     }
-
-    fun voteForComment(data: WykopApiData, entryId: Int, successCallback: (Int) -> Unit, failureCallback: () -> Unit) {
-        val url = "https://a.wykop.pl/entries/vote/entry/$entryId/appkey/${data.appkey}/userkey/${data.userToken}/"
-
-        val md5sign = encryptMD5(data.secret + url)
-        printout(url)
-        printout(md5sign)
-        url.httpGet().header(Pair("apisign", md5sign)).responseObject(Deserializer(VoteResponse::class.java)) { request, response, result ->
-            when (result) {
-                is Result.Success -> {
-                    successCallback(result.value.voters.size) }
-                is Result.Failure -> {
-                    failureCallback()
-                }
-            }
-        }
-    }
-
-    fun unvoteForComment(data: WykopApiData, entryId: Int, successCallback: (Int) -> Unit, failureCallback: () -> Unit) {
-        val url = "https://a.wykop.pl/entries/unvote/entry/$entryId/appkey/${data.appkey}/userkey/${data.userToken}/"
-
-        val md5sign = encryptMD5(data.secret + url)
-        printout(url)
-        url.httpGet().header(Pair("apisign", md5sign)).responseObject(Deserializer(VoteResponse::class.java)) { request, response, result ->
-            when (result) {
-                is Result.Success -> {
-                    successCallback(result.value.voters.size) }
-                is Result.Failure -> {
-                    failureCallback()
-                }
-            }
-        }
-
-    }
-    fun sendGetNew(resource : String, params : String, className: Class<*>, data: WykopApiData,  successCallback: (Any) -> Unit, failureCallback: () -> Unit) {
-        val url = "https://a.wykop.pl/$resource/$params/appkey/${data.appkey}/"
-
-        val md5sign = encryptMD5(data.secret + url)
-        printout(url)
-
-        url.httpGet().header(Pair("apisign", md5sign)).responseObject(Deserializer(className)) { _, _, result ->
-            when (result) {
-                is Result.Success ->
-                    successCallback(result.value)
-                is Result.Failure ->
-                    failureCallback()
-            }
-        }
-    }
-
-}
-
-class Deserializer<T : Any> (val javaclassname: Class<T>) : ResponseDeserializable<T> {
-    override fun deserialize(content: String) = Gson().fromJson(content, javaclassname)
 }

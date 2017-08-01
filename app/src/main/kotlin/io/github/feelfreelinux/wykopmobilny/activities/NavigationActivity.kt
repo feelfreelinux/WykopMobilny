@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.activities
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -10,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import io.github.feelfreelinux.wykopmobilny.projectors.NavigationActions
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.gone
@@ -18,10 +16,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.visible
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-fun Context.lauchMainNavigation(data : WykopApiData) {
-    val intent = Intent(this, NavigationActivity::class.java)
-    intent.putExtra("wamData", data)
-    startActivity(intent)
+fun Context.lauchMainNavigation() {
+    startActivity(Intent(this, NavigationActivity::class.java))
 }
 
 class NavigationActivity : WykopActivity() {
@@ -32,14 +28,13 @@ class NavigationActivity : WykopActivity() {
             toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close) }
-    lateinit var wam : WykopApiManager
+    val wam by lazy { WykopApiManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
 
-        wam = WykopApiManager(intent.getSerializableExtra("wamData") as WykopApiData, this)
         if(savedInstanceState == null) navActions.setupNavigation()
         else navActions.setupHeader()
     }

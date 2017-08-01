@@ -11,21 +11,21 @@ import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.adapters.EntryDetailsAdapter
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.objects.EntryDetails
-import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
+import io.github.feelfreelinux.wykopmobilny.projectors.FeedClickActions
 import io.github.feelfreelinux.wykopmobilny.utils.*
 
 class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     lateinit var recyclerView : RecyclerView
 
-    val wamData by lazy { arguments.getSerializable("wamData") as WykopApiData }
     val _id by lazy {arguments.getInt("ENTRY_ID")}
 
-    val wam by lazy { WykopApiManager(wamData, activity) }
+    lateinit var wam : WykopApiManager
     val navActivity by lazy { activity as NavigationActivity }
-    var entryAdapter = EntryDetailsAdapter()
+    val entryAdapter by lazy { EntryDetailsAdapter(FeedClickActions(navActivity)) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.recycler_view_layout, container, false)
+        wam = WykopApiManager(activity)
 
         // Prepare RecyclerView, and EndlessScrollListener
         recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)!!
@@ -80,10 +80,9 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     companion object {
-        fun newInstance(data : WykopApiData, id : Int) : Fragment {
+        fun newInstance(id : Int) : Fragment {
             val fragmentData = Bundle()
             val fragment = EntryViewFragment()
-            fragmentData.putSerializable("wamData", data)
             fragmentData.putInt("ENTRY_ID", id)
             fragment.arguments = fragmentData
             return fragment

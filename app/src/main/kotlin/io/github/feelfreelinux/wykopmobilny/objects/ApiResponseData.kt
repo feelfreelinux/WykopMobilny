@@ -1,8 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.objects
 
 data class VoteResponse(
-        val voteCount: Int,
-        val voters: List<Voter>)
+        val vote: Int,
+        val voters: List<Voter>
+)
 
 data class Voter(
         val author: String,
@@ -14,7 +15,8 @@ data class Voter(
         val authorSex: String,
         val date: String
 )
-data class EntryDetails (
+
+data class EntryDetails(
         var id: Int,
         var author: String,
         var author_avatar: String,
@@ -106,13 +108,55 @@ data class SingleEntry(
         var comment_count: Int,
         var voters: List<Voter>
 )
+
 data class TagMeta(
         var tag: String,
         var is_observed: Boolean?,
         var is_blocked: Boolean?,
         var counters: Any
 )
-data class TagFeedEntries (
-        var meta : TagMeta,
-        var items : Array<SingleEntry>
+
+data class TagFeedEntries(
+        var meta: TagMeta,
+        var items: Array<SingleEntry>
+)
+
+data class NotificationCountResponse(
+        val count: Int
+)
+
+data class UserSessionReponse(
+        var login : String,
+        var email : String,
+        var public_email : String,
+        var name : String,
+        var www : String,
+        var jabber : String,
+        var gg : String,
+        var city : String,
+        var about : String,
+        var author_group : Int,
+        var links_added : Int,
+        var links_published : Int,
+        var comments : Int,
+        var rank : Int,
+        var followers : Int,
+        var following : Int,
+        var entries : Int,
+        var entries_comments : Int,
+        var diggs : Int,
+        var buries : Int,
+        var groups : Int,
+        var related_links : Int,
+        var signup_date : String,
+        var avatar : String,
+        var avatar_big : String,
+        var avatar_med : String,
+        var avatar_lo : String,
+        var is_observed : Boolean?,
+        var is_blocked : Boolean?,
+        var sex : String,
+        var url : String,
+        var violation_url : String?,
+        var userkey : String
 )

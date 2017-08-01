@@ -77,3 +77,5 @@ fun ImageView.setPhotoViewUrl( url : String) {
         }
     }
 }
+
+fun Context.getApiPreferences() : ApiPreferences = ApiPreferences()

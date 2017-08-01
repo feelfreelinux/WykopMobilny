@@ -13,19 +13,18 @@ import io.github.feelfreelinux.wykopmobilny.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.projectors.FeedClickActions
 import io.github.feelfreelinux.wykopmobilny.objects.SingleEntry
-import io.github.feelfreelinux.wykopmobilny.objects.WykopApiData
 import io.github.feelfreelinux.wykopmobilny.utils.*
 
 abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefreshListener {
     lateinit var recyclerView : RecyclerView
     var endlessScrollListener : EndlessScrollListener? = null
-    val wamData by lazy { arguments.getSerializable("wamData") as WykopApiData }
-    val wam by lazy { WykopApiManager(wamData, activity) }
+    lateinit var wam : WykopApiManager
     val navActivity by lazy { activity as NavigationActivity }
     var feedAdapter : FeedAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.recycler_view_layout, container, false)
+        wam = WykopApiManager(activity)
 
         // Prepare RecyclerView, and EndlessScrollListener
         recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)!!
