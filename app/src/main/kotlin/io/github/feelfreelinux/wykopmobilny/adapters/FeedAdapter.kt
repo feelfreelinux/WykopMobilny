@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.adapters.holders.FeedViewHolder
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 
 typealias VoteClickListener = (Entry, (Boolean, Int) -> Unit) -> Unit
 typealias TagClickListener = (String) -> Unit
@@ -16,7 +17,7 @@ interface IFeedAdapterActions {
     val commentClickListener: CommentClickListener
 }
 
-class FeedAdapter(val actions : IFeedAdapterActions) : RecyclerView.Adapter<FeedViewHolder>() {
+class FeedAdapter(val actions : IFeedAdapterActions, val wam: WykopApiManager) : RecyclerView.Adapter<FeedViewHolder>() {
 
     var entryList = emptyList<Entry>()
         set(value) {
@@ -26,7 +27,7 @@ class FeedAdapter(val actions : IFeedAdapterActions) : RecyclerView.Adapter<Feed
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.feed_layout, parent, false)
-        return FeedViewHolder(view)
+        return FeedViewHolder(view, wam)
     }
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {

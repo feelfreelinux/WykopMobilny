@@ -1,7 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
+import android.content.Context
 
-class ApiPreferences : Preferences() {
+
+class ApiPreferences(context: Context) : Preferences(context) {
     var login by stringPref(defaultValue = "")
     var userKey by stringPref(defaultValue = "")
     var userToken by stringPref(defaultValue = "")

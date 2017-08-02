@@ -8,6 +8,7 @@ ext {
             fuel            : '1.9.0',
             glide           : '4.0.0-RC1',
             prettytime      : '4.0.1.Final',
-	        photoview       : '2.1.2'
+	        photoview       : '2.1.2',
+	        kodein          : '4.1.0'
     ]
 }

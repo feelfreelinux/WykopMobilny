@@ -2,22 +2,16 @@ package io.github.feelfreelinux.wykopmobilny.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.adapters.holders.EntryDetailsViewHolder
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
-import io.github.feelfreelinux.wykopmobilny.utils.*
-import kotlinx.android.synthetic.main.item_entry_layout.view.*
-import org.ocpsoft.prettytime.PrettyTime
-import java.util.*
 
 interface IEntryDetailsActions {
     val tagClickListener: TagClickListener
 }
 
-
-class EntryDetailsAdapter(val actions : FeedAdapter.IFeedAdapterActions) : RecyclerView.Adapter<EntryDetailsViewHolder>() {
+class EntryDetailsAdapter(val actions : IFeedAdapterActions) : RecyclerView.Adapter<EntryDetailsViewHolder>() {
 
     var entryData = emptyList<Entry>()
         set(value) {

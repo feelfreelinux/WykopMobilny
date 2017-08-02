@@ -12,7 +12,10 @@ import kotlinx.android.synthetic.main.feed_layout.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class FeedViewHolder(
+        view: View,
+        val wam: WykopApiManager
+) : RecyclerView.ViewHolder(view) {
     val context = view.context!!
     val prettyTime = PrettyTime(Locale("pl"))
 
@@ -65,8 +68,7 @@ class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             isSelected = entry.voted
             disableFor(1000)
             setOnClickListener {
-                val wam = WykopApiManager(context)
-                val voteAction : (Any) -> Unit = {
+                val voteAction: (Any) -> Unit = {
                     voteResponse ->
                     run {
                         isSelected = !isSelected

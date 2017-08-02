@@ -1,4 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.fragments
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -7,6 +8,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.salomonbrys.kodein.KodeinInjector
+import com.github.salomonbrys.kodein.LazyKodein
+import com.github.salomonbrys.kodein.android.FragmentInjector
+import com.github.salomonbrys.kodein.android.appKodein
+import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.adapters.FeedAdapter
@@ -16,15 +22,17 @@ import io.github.feelfreelinux.wykopmobilny.objects.SingleEntry
 import io.github.feelfreelinux.wykopmobilny.utils.*
 
 abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefreshListener {
-    lateinit var recyclerView : RecyclerView
-    var endlessScrollListener : EndlessScrollListener? = null
-    lateinit var wam : WykopApiManager
-    val navActivity by lazy { activity as NavigationActivity }
-    var feedAdapter : FeedAdapter? = null
+    private val kodein = LazyKodein(appKodein)
+
+    lateinit var recyclerView: RecyclerView
+    var endlessScrollListener: EndlessScrollListener? = null
+
+    protected val wam: WykopApiManager by kodein.instance()
+    protected val navActivity by lazy { activity as NavigationActivity }
+    protected var feedAdapter: FeedAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.recycler_view_layout, container, false)
-        wam = WykopApiManager(activity)
 
         // Prepare RecyclerView, and EndlessScrollListener
         recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)!!
@@ -42,8 +50,8 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
         navActivity.setSwipeRefreshListener(this)
 
         // Create adapter if no data is saved
-        if(feedAdapter == null) {
-            feedAdapter = FeedAdapter(FeedClickActions(activity as NavigationActivity))
+        if (feedAdapter == null) {
+            feedAdapter = FeedAdapter(FeedClickActions(activity as NavigationActivity), wam)
             recyclerView.adapter = feedAdapter
 
             // Set needed flags
@@ -70,13 +78,14 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
 
     override fun onLoadMore(page: Int) {
         loadData(page, {
-            result -> addDataToAdapter(parseSingleEntryList(result as Array<SingleEntry>))
+            result ->
+            addDataToAdapter(parseSingleEntryList(result as Array<SingleEntry>))
         })
     }
 
-    abstract fun loadData(page : Int, resultCallback : (Any) -> Unit)
+    abstract fun loadData(page: Int, resultCallback: (Any) -> Unit)
 
-    fun addDataToAdapter(list : List<Entry>) {
+    fun addDataToAdapter(list: List<Entry>) {
         val fullList = ArrayList<Entry>()
         feedAdapter?.entryList?.let { fullList.addAll(it) }
         fullList.addAll(list)
