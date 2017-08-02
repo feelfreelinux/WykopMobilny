@@ -1,12 +1,18 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import io.github.feelfreelinux.wykopmobilny.activities.PhotoViewActivity
+import io.github.feelfreelinux.wykopmobilny.activities.launchPhotoView
 import io.github.feelfreelinux.wykopmobilny.adapters.TagClickListener
+import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 
 fun View.invisible() {
     visibility = View.INVISIBLE
@@ -18,6 +24,11 @@ fun View.gone(){
 
 fun View.visible(){
     visibility = View.VISIBLE
+}
+
+fun RecyclerView.prepare() {
+    setHasFixedSize(true) // For better performance
+    layoutManager = LinearLayoutManager(context)
 }
 
 fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, tagClickListener: TagClickListener?) {
@@ -53,3 +64,18 @@ fun View.disableFor(millis: Long){
         isEnabled = true
     }, millis)
 }
+
+fun ImageView.loadImage(url : String) {
+    GlideApp.with(context)
+            .load(url).into(this)
+}
+
+fun ImageView.setPhotoViewUrl( url : String) {
+    setOnClickListener {
+        context.run {
+            launchPhotoView(url)
+        }
+    }
+}
+
+fun Context.getApiPreferences() : ApiPreferences = ApiPreferences()

@@ -1,18 +1,17 @@
 package io.github.feelfreelinux.wykopmobilny.activities
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.projectors.PhotoViewActions
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_photoview.*
+import kotlinx.android.synthetic.main.toolbar.*
 
-fun Activity.launchPhotoView(imageUrl: String) {
+fun Context.launchPhotoView(imageUrl: String) {
     val intent = Intent(this, PhotoViewActivity::class.java)
     intent.putExtra("URL", imageUrl)
     startActivity(intent)
@@ -25,13 +24,13 @@ class PhotoViewActivity : WykopActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photoview)
-        Picasso.with(this).load(url).into(image, photoViewActions)
+        setSupportActionBar(toolbar)
+        image.loadImage(url)
         title = "Mikroblog"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.photoview_menu, menu)
-
         return super.onCreateOptionsMenu(menu)
     }
 

@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.activities
+package io.github.feelfreelinux.wykopmobilny.projectors
 
 import android.annotation.TargetApi
 import android.os.Build

@@ -17,20 +17,16 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Environment
 import android.widget.Toast
-import com.squareup.picasso.Callback
 import java.io.File
 import java.io.FileOutputStream
 
 
-class PhotoViewActions(val context : Context) : Callback {
-    var imageLoaded = false
-    override fun onError() { imageLoaded = false }
-    override fun onSuccess() { imageLoaded = true }
+class PhotoViewActions(val context : Context) {
 
     val photoView = context as PhotoViewActivity
     fun shareImage() {
         val bitmap = getImageBitmap()
-        if (imageLoaded && bitmap != null && checkForWriteReadPermission()) {
+        if ( bitmap != null && checkForWriteReadPermission()) {
             val path = Images.Media.insertImage(context.contentResolver, bitmap, "title", null)
             val uri = Uri.parse(path)
             val intent = Intent(Intent.ACTION_SEND)
@@ -50,7 +46,7 @@ class PhotoViewActions(val context : Context) : Callback {
 
     fun saveImage() {
         val bitmap = getImageBitmap()
-        if (bitmap != null && imageLoaded && checkForWriteReadPermission()) {
+        if (bitmap != null && checkForWriteReadPermission()) {
             val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OtwartyWykopMobilny")
             if (!file.exists()) file.mkdirs()
 

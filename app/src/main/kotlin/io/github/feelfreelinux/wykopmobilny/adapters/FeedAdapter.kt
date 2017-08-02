@@ -4,17 +4,19 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.adapters.holders.FeedViewHolder
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 
 typealias VoteClickListener = (Entry, (Boolean, Int) -> Unit) -> Unit
 typealias TagClickListener = (String) -> Unit
 typealias CommentClickListener = (Int) -> Unit
 
-class FeedAdapter(
-        private val entryVoteClickListener: VoteClickListener,
-        private val tagClickListener: TagClickListener,
-        private val commentClickListener: CommentClickListener
-) : RecyclerView.Adapter<FeedViewHolder>() {
+interface IFeedAdapterActions {
+    val tagClickListener: TagClickListener
+    val commentClickListener: CommentClickListener
+}
+
+class FeedAdapter(val actions : IFeedAdapterActions) : RecyclerView.Adapter<FeedViewHolder>() {
 
     var entryList = emptyList<Entry>()
         set(value) {
@@ -28,9 +30,8 @@ class FeedAdapter(
     }
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
-        holder.tagClickListener = tagClickListener
-        holder.commentClickListener = commentClickListener
-        holder.entryVoteClickListener = entryVoteClickListener
+        holder.tagClickListener = actions.tagClickListener
+        holder.commentClickListener = actions.commentClickListener
         holder.bindItem(entryList[position])
     }
 

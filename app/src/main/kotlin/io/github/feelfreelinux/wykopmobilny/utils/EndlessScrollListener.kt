@@ -5,16 +5,21 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 
-abstract class EndlessScrollListener(val mLayoutManager : LinearLayoutManager) : RecyclerView.OnScrollListener() {
+interface ILoadMore {
+    // Defines the process for actually loading more data based on page
+    fun onLoadMore(page: Int)
+}
+
+class EndlessScrollListener(var loadMoreListener : ILoadMore, var mLayoutManager : LinearLayoutManager) : RecyclerView.OnScrollListener() {
     // The minimum amount of items to have below your current scroll position
     // before loading more.
-    private var visibleThreshold = 5
+    var visibleThreshold = 5
     // The current offset index of data you have loaded
-    private var currentPage = 0
+    var currentPage = 1
     // The total number of items in the dataset after the last load
-    private var previousTotalItemCount = 0
+    var previousTotalItemCount = 0
     // True if we are still waiting for the last set of data to load.
-    private var loading = true
+    var loading = true
     // Sets the starting page index
     var startingPageIndex = 1
 
@@ -71,7 +76,7 @@ abstract class EndlessScrollListener(val mLayoutManager : LinearLayoutManager) :
         // threshold should reflect how many total columns there are too
         if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
             currentPage++
-            onLoadMore(currentPage, totalItemCount, view!!)
+            loadMoreListener.onLoadMore(currentPage)
             loading = true
         }
     }
@@ -88,8 +93,4 @@ abstract class EndlessScrollListener(val mLayoutManager : LinearLayoutManager) :
         previousTotalItemCount = 0
         loading = false
     }
-
-    // Defines the process for actually loading more data based on page
-    abstract fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView)
-
 }

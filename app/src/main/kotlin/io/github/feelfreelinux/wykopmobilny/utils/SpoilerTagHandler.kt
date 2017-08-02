@@ -1,15 +1,12 @@
-package io.github.feelfreelinux.wykopmobilny.objects
+package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.app.AlertDialog
 import android.os.Build
 import android.text.*
 import android.text.style.ClickableSpan
 import android.view.View
-import android.widget.TextView
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import org.xml.sax.XMLReader
 import android.text.style.StrikethroughSpan
-import io.github.feelfreelinux.wykopmobilny.R
 
 
 class SpoilerTagHandler : Html.TagHandler {

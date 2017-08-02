@@ -6,7 +6,7 @@ ext {
             supportLibrary  : '26.0.0',
             constraintLayout: '1.0.2',
             fuel            : '1.9.0',
-            picasso         : '2.5.2',
+            glide           : '4.0.0-RC1',
             prettytime      : '4.0.1.Final',
 	        photoview       : '2.1.2'
     ]

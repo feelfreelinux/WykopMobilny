@@ -1,45 +1,79 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.graphics.Color
-import io.github.feelfreelinux.wykopmobilny.objects.Embed
-import io.github.feelfreelinux.wykopmobilny.objects.Entry
-import io.github.feelfreelinux.wykopmobilny.objects.User
+import io.github.feelfreelinux.wykopmobilny.objects.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun parseEntry(json : JSONObject) : Entry {
-    var embed = Embed("null", "null", "null", "null", false)
-    if (!json.isNull("embed")) embed = parseEmbed(json.getJSONObject("embed"))
-    var voted = false
-    if (json.getInt("user_vote") > 0) voted = true
-    var comment_count = 0
-    if (json.has("comment_count")) comment_count = json.getInt("comment_count")
+fun parseEntry(entry: SingleEntry) : Entry {
     return Entry(
-            json.getInt("id"),
-            parseEntryUser(json),
-            json.getInt("vote_count"),
-            comment_count,
-            json.getString("body"),
-            parseDate(
-                    json.getString("date")
+            entry.id,
+            User(
+                    entry.author_avatar_med,
+                    entry.author_group,
+                    entry.author,
+                    entry.author_sex
             ),
-            embed,
-            false,
-            voted,
-            null
+            entry.vote_count,
+            entry.comment_count,
+            entry.body,
+            entry.app,
+            parseDate(
+                    entry.date
+            ),
+            entry.embed,
+            (entry.user_vote > 0),
+            entry
     )
 }
 
-fun parseEmbed(json : JSONObject) : Embed {
-    return Embed(
-            json.getString("type"),
-            json.getString("preview"),
-            json.getString("url"),
-            json.getString("source"),
-            json.getBoolean("plus18")
+fun parseEntry(entry: Comment) : Entry {
+    return Entry(
+            entry.id,
+            User(
+                    entry.author_avatar_med,
+                    entry.author_group,
+                    entry.author,
+                    entry.author_sex
+            ),
+            entry.vote_count,
+            null,
+            entry.body,
+            entry.app,
+            parseDate(
+                    entry.date
+            ),
+            entry.embed,
+            (entry.user_vote > 0),
+            entry
     )
 }
+
+fun parseEntry(entry: EntryDetails) : Entry {
+    return Entry(
+            entry.id,
+            User(
+                    entry.author_avatar_med,
+                    entry.author_group,
+                    entry.author,
+                    entry.author_sex
+            ),
+            entry.vote_count,
+            entry.comment_count,
+            entry.body,
+            entry.app,
+            parseDate(
+                    entry.date
+            ),
+            entry.embed,
+            (entry.user_vote > 0),
+            entry
+    )
+}
+
+fun parseSingleEntryList(arr : Array<SingleEntry>) : List<Entry> = arr.map { parseEntry(it) }
+
 
 fun parseDate(date : String) : Date = SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.GERMANY).parse(date)
 
