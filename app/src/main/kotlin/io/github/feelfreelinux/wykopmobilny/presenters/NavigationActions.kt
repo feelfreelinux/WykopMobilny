@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.projectors
+package io.github.feelfreelinux.wykopmobilny.presenters
 
 import android.support.v4.app.Fragment
 import android.support.design.widget.NavigationView
@@ -35,7 +35,8 @@ class NavigationActions(val context : NavigationActivity) : NavigationView.OnNav
     }
 
     fun openFragment(fragment : Fragment) {
-        context.supportFragmentManager.beginTransaction().replace(R.id.contentView, fragment).addToBackStack(fragment.tag).commit()
+        context.supportFragmentManager.beginTransaction().replace(R.id.contentView,
+                fragment).addToBackStack(fragment.tag).commit()
     }
 
     fun openInitialFragment() {

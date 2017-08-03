@@ -5,35 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.adapters.holders.EntryDetailsListItem
 import io.github.feelfreelinux.wykopmobilny.adapters.holders.EntryDetailsViewHolder
+import io.github.feelfreelinux.wykopmobilny.objects.Comment
+import io.github.feelfreelinux.wykopmobilny.objects.Embed
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
+import io.github.feelfreelinux.wykopmobilny.presenters.EntryDetailsPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import kotlinx.android.synthetic.main.item_entry_layout.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-interface IEntryDetailsActions {
-    val tagClickListener: TagClickListener
-}
 
-
-class EntryDetailsAdapter(val actions : IFeedAdapterActions) : RecyclerView.Adapter<EntryDetailsViewHolder>() {
-
-    var entryData = emptyList<Entry>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
+class EntryDetailsAdapter(val presenter : EntryDetailsPresenter) : RecyclerView.Adapter<EntryDetailsViewHolder>() {
     override fun onBindViewHolder(holder: EntryDetailsViewHolder, position: Int) {
-        holder.tagClickListener = actions.tagClickListener
-        holder.bindView(entryData[position])
+        presenter.onBindListItem(position, holder)
     }
 
-    override fun getItemCount() = entryData.size
+    override fun getItemCount() = presenter.getItemsCount()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryDetailsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_entry_layout, parent, false)
-        return EntryDetailsViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryDetailsViewHolder =
+        EntryDetailsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_entry_layout, parent, false))
+
 }

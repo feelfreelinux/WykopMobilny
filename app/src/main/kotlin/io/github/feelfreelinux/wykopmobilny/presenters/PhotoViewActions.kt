@@ -1,8 +1,7 @@
-package io.github.feelfreelinux.wykopmobilny.projectors
+package io.github.feelfreelinux.wykopmobilny.presenters
 
 import android.Manifest
 import android.content.Context
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import android.provider.MediaStore.Images
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.Bitmap

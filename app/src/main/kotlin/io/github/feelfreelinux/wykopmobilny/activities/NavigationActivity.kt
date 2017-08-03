@@ -9,7 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.projectors.NavigationActions
+import io.github.feelfreelinux.wykopmobilny.presenters.NavigationActions
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.gone
 import io.github.feelfreelinux.wykopmobilny.utils.visible

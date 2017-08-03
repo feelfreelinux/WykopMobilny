@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.projectors.PhotoViewActions
+import io.github.feelfreelinux.wykopmobilny.presenters.PhotoViewActions
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_photoview.*
 import kotlinx.android.synthetic.main.toolbar.*

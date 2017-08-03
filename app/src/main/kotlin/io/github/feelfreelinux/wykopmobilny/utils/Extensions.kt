@@ -11,8 +11,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.activities.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.activities.launchPhotoView
-import io.github.feelfreelinux.wykopmobilny.adapters.TagClickListener
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 fun View.invisible() {
     visibility = View.INVISIBLE
@@ -31,28 +32,28 @@ fun RecyclerView.prepare() {
     layoutManager = LinearLayoutManager(context)
 }
 
-fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, tagClickListener: TagClickListener?) {
+fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, callback : TagClickedListener) {
     val start = getSpanStart(span)
     val end = getSpanEnd(span)
     val flags = getSpanFlags(span)
     val clickable = object : LinkSpan() {
         override fun onClick(tv: View) {
-            if (span.isTag) {
-                tagClickListener?.invoke(span.url.removePrefix("#"))
-            }
+            if (span.isTag)
+                callback.invoke(span.url.removePrefix("#"))
+
         }
     }
     setSpan(clickable, start, end, flags)
     removeSpan(span)
 }
 
-fun TextView.prepareBody(html: String, tagClickListener: TagClickListener?) {
+fun TextView.prepareBody(html: String, callback : TagClickedListener) {
     val sequence = html.toSpannable()
     val strBuilder = SpannableStringBuilder(sequence)
     val urls = strBuilder.getSpans(0, strBuilder.length, URLSpan::class.java)
     urls.forEach {
         span ->
-        strBuilder.makeLinkClickable(span, tagClickListener)
+        strBuilder.makeLinkClickable(span, callback)
     }
     text = strBuilder
     movementMethod = LinkMovementMethod.getInstance()
@@ -79,3 +80,5 @@ fun ImageView.setPhotoViewUrl( url : String) {
 }
 
 fun Context.getApiPreferences() : ApiPreferences = ApiPreferences()
+
+fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))

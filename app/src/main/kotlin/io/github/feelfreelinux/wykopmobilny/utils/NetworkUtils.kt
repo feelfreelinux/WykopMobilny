@@ -73,8 +73,9 @@ class Deserializer<T : Any> (val javaclassname: Class<T>, val context: Context) 
 
     fun checkResults(json : String) : Boolean {
         val jsonResult = JSONTokener(json).nextValue()
-
+        printout(json)
         if (jsonResult is JSONObject && jsonResult.has("error")) {
+            printout("DDD?")
             // Create alert
             val error = jsonResult.getJSONObject("error")
             val alertBuilder: AlertDialog.Builder
