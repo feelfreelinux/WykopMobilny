@@ -8,15 +8,12 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
-import com.github.salomonbrys.kodein.KodeinInjector
 import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.android.ActivityInjector
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.projectors.NavigationActions
-import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.presenters.NavigationActions
+import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.gone
 import io.github.feelfreelinux.wykopmobilny.utils.visible

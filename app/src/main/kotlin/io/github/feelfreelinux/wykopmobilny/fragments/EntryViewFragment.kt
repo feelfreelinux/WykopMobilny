@@ -13,22 +13,24 @@ import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.adapters.EntryDetailsAdapter
-import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
-import io.github.feelfreelinux.wykopmobilny.objects.Entry
-import io.github.feelfreelinux.wykopmobilny.presenters.EntryDetailsPresenter
 import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
+import io.github.feelfreelinux.wykopmobilny.presenters.EntryDetailsPresenter
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
+import io.github.feelfreelinux.wykopmobilny.utils.prepare
+
+private const val EXTRA_ENTRY_ID = "ENTRY_ID"
+
 
 class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private val kodein = LazyKodein(appKodein)
     lateinit var recyclerView: RecyclerView
 
-    private val entryId by lazy { arguments.getInt("ENTRY_ID") }
-
     private val apiManager: WykopApiManager by kodein.instance()
+    private val entryId by lazy { arguments.getInt(EXTRA_ENTRY_ID) }
     private val navActivity by lazy { activity as NavigationActivity }
-    val callbacks by lazy {FeedClickCallbacks(navActivity)}
-    val presenter by lazy { EntryDetailsPresenter(wam, callbacks) }
+    val callbacks by lazy {FeedClickCallbacks(navActivity, apiManager)}
+    val presenter by lazy { EntryDetailsPresenter(apiManager, callbacks) }
     val adapter by lazy { EntryDetailsAdapter(presenter) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,15 +60,14 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         return view
     }
 
-    override fun onRefresh() =
-            presenter.loadData(entryId)
+    override fun onRefresh() = presenter.loadData(entryId)
 
 
     companion object {
         fun newInstance(id: Int): Fragment {
             val fragmentData = Bundle()
             val fragment = EntryViewFragment()
-            fragmentData.putInt("ENTRY_ID", id)
+            fragmentData.putInt(EXTRA_ENTRY_ID, id)
             fragment.arguments = fragmentData
             return fragment
         }

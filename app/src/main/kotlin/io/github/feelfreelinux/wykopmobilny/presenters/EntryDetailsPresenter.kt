@@ -8,25 +8,22 @@ import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
 interface EntryDetailsCallbacks {
-    fun onTagClicked(tag : String)
-    fun onVote(type : String, id: Int, commentId : Int?, responseCallback : VoteResponseListener)
-    fun onUnvote(type : String, id: Int, commentId : Int?, responseCallback : VoteResponseListener)
-    fun onProfileClicked(login : String)
+    fun onTagClicked(tag: String)
+    fun onVote(type: String, id: Int, commentId: Int?, responseCallback: VoteResponseListener)
+    fun onUnvote(type: String, id: Int, commentId: Int?, responseCallback: VoteResponseListener)
+    fun onProfileClicked(login: String)
 }
 
-class EntryDetailsPresenter(val wam : WykopApiManager, val callbacks: EntryDetailsCallbacks) {
-    var entry : Entry? = null
+class EntryDetailsPresenter(val wam: WykopApiManager, val callbacks: EntryDetailsCallbacks) {
+    var entry: Entry? = null
     var dataLoadedCallback = {}
 
-    val responseCallback : ApiResponseCallback = {
-        result ->
-        run {
-            entry = result as Entry
-            dataLoadedCallback.invoke()
-        }
+    val responseCallback: ApiResponseCallback = {
+        entry = it as Entry
+        dataLoadedCallback()
     }
 
-    fun onBindListItem(position : Int, listItem : EntryDetailsListItem) {
+    fun onBindListItem(position: Int, listItem: EntryDetailsListItem) {
         entry?.let {
             // Set tag clicked listener
             listItem.tagClickListener = { tag -> callbacks.onTagClicked(tag) }
@@ -36,7 +33,7 @@ class EntryDetailsPresenter(val wam : WykopApiManager, val callbacks: EntryDetai
         }
     }
 
-    fun bindEntry(listItem : EntryDetailsListItem) {
+    fun bindEntry(listItem: EntryDetailsListItem) {
         entry?.let {
             val entry = entry as Entry
             listItem.setBody(entry.body, entry.embed)
@@ -69,7 +66,7 @@ class EntryDetailsPresenter(val wam : WykopApiManager, val callbacks: EntryDetai
         }
     }
 
-    fun bindComment(position: Int, listItem : EntryDetailsListItem) {
+    fun bindComment(position: Int, listItem: EntryDetailsListItem) {
         entry?.let {
             val comment = entry!!.comments!![position]
 
@@ -103,14 +100,14 @@ class EntryDetailsPresenter(val wam : WykopApiManager, val callbacks: EntryDetai
         }
     }
 
-    fun getItemsCount() : Int {
+    fun getItemsCount(): Int {
         entry?.let {
-            return entry?.comments!!.size + 1
+            return it.comments!!.size + 1
         }
         return 0
     }
 
-    fun loadData(entryId : Int) =
-        wam.getEntryIndex(entryId, responseCallback)
+    fun loadData(entryId: Int) =
+            wam.getEntryIndex(entryId, responseCallback)
 
 }

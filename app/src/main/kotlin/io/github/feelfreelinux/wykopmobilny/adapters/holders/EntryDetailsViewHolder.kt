@@ -8,9 +8,9 @@ import io.github.feelfreelinux.wykopmobilny.utils.*
 import kotlinx.android.synthetic.main.feed_layout.view.*
 
 interface EntryDetailsListItem {
-    fun setHeader(author : String, authorGroup : Int, authorSex: String, avatarUrl : String, dateSubtitle : String, app : String?)
-    fun setBody(body : String, embed : Embed?)
-    fun setupVoteButton(votesCount : Int, isVoted : Boolean)
+    fun setHeader(author: String, authorGroup: Int, authorSex: String, avatarUrl: String, dateSubtitle: String, app: String?)
+    fun setBody(body: String, embed: Embed?)
+    fun setupVoteButton(votesCount: Int, isVoted: Boolean)
     fun setupEmbed(embed: Embed)
     fun hideImage()
     var voteClickListener: EmptyListener
@@ -20,6 +20,7 @@ interface EntryDetailsListItem {
 class EntryDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view), EntryDetailsListItem {
     override var voteClickListener = {}
     override var tagClickListener: TagClickedListener = {}
+    val context = view.context
 
     override fun hideImage() = view.entryImageView.gone()
 
@@ -41,7 +42,7 @@ class EntryDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view), En
         view.entryContentTextView.prepareBody(body, tagClickListener)
     }
 
-    override fun setHeader(author: String, authorGroup : Int, authorSex : String, avatarUrl: String, dateSubtitle: String, app : String?) {
+    override fun setHeader(author: String, authorGroup: Int, authorSex: String, avatarUrl: String, dateSubtitle: String, app: String?) {
         view.userNameTextView.apply {
             text = author
             setTextColor(getGroupColor(authorGroup))
@@ -50,7 +51,7 @@ class EntryDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view), En
         view.avatarImageView.loadImage(avatarUrl)
         view.entryDateTextView.text = dateSubtitle
         app?.let {
-            view.entryDateTextView.text = dateSubtitle + " " + view.context.getString(R.string.user_app, app)
+            view.entryDateTextView.text = context.getString(R.string.date_with_user_app, dateSubtitle, app)
         }
 
         view.genderStripImageView.setBackgroundResource(getGenderStripResource(authorSex))

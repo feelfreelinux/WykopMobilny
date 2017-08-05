@@ -18,7 +18,7 @@ fun Context.launchPhotoView(imageUrl: String) {
 }
 
 class PhotoViewActivity : WykopActivity() {
-    private val url: String by lazy { intent.getStringExtra("URL") }
+    val url: String by lazy { intent.getStringExtra("URL") }
     private val photoViewActions by lazy { PhotoViewActions(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

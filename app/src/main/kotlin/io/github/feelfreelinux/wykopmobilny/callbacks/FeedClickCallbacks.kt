@@ -8,19 +8,18 @@ import io.github.feelfreelinux.wykopmobilny.presenters.FeedViewCallbacks
 import io.github.feelfreelinux.wykopmobilny.utils.VoteResponseListener
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 
-class FeedClickCallbacks(val context : NavigationActivity) : EntryDetailsCallbacks, FeedViewCallbacks {
-    val wam = WykopApiManager(context)
+class FeedClickCallbacks(val context : NavigationActivity, val apiManager: WykopApiManager) : EntryDetailsCallbacks, FeedViewCallbacks {
 
     override fun onCommentsClicked(entryId: Int) {
         context.navActions.openFragment(EntryViewFragment.newInstance(entryId))
     }
 
     override fun onVote(type: String, id: Int, commentId: Int?, responseCallback: VoteResponseListener) {
-        wam.voteEntry(id, commentId, responseCallback as (Any) -> Unit)
+        apiManager.voteEntry(id, commentId, responseCallback as (Any) -> Unit)
     }
 
     override fun onUnvote(type: String, id: Int, commentId: Int?, responseCallback: VoteResponseListener) {
-        wam.unvoteEntry(id, commentId, responseCallback as (Any) -> Unit)
+        apiManager.unvoteEntry(id, commentId, responseCallback as (Any) -> Unit)
     }
 
     override fun onTagClicked(tag: String) {

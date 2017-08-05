@@ -8,15 +8,15 @@ import io.github.feelfreelinux.wykopmobilny.utils.*
 import kotlinx.android.synthetic.main.feed_layout.view.*
 
 interface FeedViewItem {
-    fun setHeader(author : String, authorGroup : Int, authorSex: String, avatarUrl : String, dateSubtitle : String, app : String?)
-    fun setBody(body : String, embed : Embed?)
-    fun setupVoteButton(votesCount : Int, isVoted : Boolean)
-    fun setupCommentsButton(commentsCount : Int)
+    fun setHeader(author: String, authorGroup: Int, authorSex: String, avatarUrl: String, dateSubtitle: String, app: String?)
+    fun setBody(body: String, embed: Embed?)
+    fun setupVoteButton(votesCount: Int, isVoted: Boolean)
+    fun setupCommentsButton(commentsCount: Int)
     fun hideImage()
     fun setupEmbed(embed: Embed)
     var voteClickListener: EmptyListener
     var commentClickListener: EmptyListener
-    var tagClickListener : TagClickedListener
+    var tagClickListener: TagClickedListener
 }
 
 class FeedViewHolder(val view: View) : RecyclerView.ViewHolder(view), FeedViewItem {
@@ -51,7 +51,7 @@ class FeedViewHolder(val view: View) : RecyclerView.ViewHolder(view), FeedViewIt
         view.entryContentTextView.prepareBody(body, tagClickListener)
     }
 
-    override fun setHeader(author: String, authorGroup : Int, authorSex : String, avatarUrl: String, dateSubtitle: String, app : String?) {
+    override fun setHeader(author: String, authorGroup: Int, authorSex: String, avatarUrl: String, dateSubtitle: String, app: String?) {
         view.userNameTextView.apply {
             text = author
             setTextColor(getGroupColor(authorGroup))
@@ -61,7 +61,7 @@ class FeedViewHolder(val view: View) : RecyclerView.ViewHolder(view), FeedViewIt
         view.entryDateTextView.text = dateSubtitle
 
         app?.let {
-            view.entryDateTextView.text = dateSubtitle + " " + view.context.getString(R.string.user_app, app)
+            view.entryDateTextView.text = view.context.getString(R.string.date_with_user_app, dateSubtitle, app)
         }
 
         view.genderStripImageView.setBackgroundResource(getGenderStripResource(authorSex))

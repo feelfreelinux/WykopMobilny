@@ -20,13 +20,10 @@ class LoginActivity : WykopActivity() {
     private val webViewClient: WykopWebViewClient by kodein.instance()
     private val apiManager: WykopApiManager by kodein.instance()
 
-    val answerConstant: String by kodein.instance("serverURL")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         title = getString(R.string.login)
-        printout(answerConstant)
         setupLoginViewClient()
         checkIfUserIsLogged()
     }

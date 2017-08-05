@@ -24,7 +24,7 @@ class NetworkUtils(val context: Context, val apiPrefs: ApiPreferences) {
                 if (params == null) "https://a.wykop.pl/$resource/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
                 else "https://a.wykop.pl/$resource/$params/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
 
-        val md5sign = encryptMD5(APP_SECRET + url)
+        val md5sign = "$APP_SECRET$url".encryptMD5()
         printout(url)
 
         url.httpGet().header(Pair("apisign", md5sign)).responseObject(Deserializer(className, context)) { _, _, result ->
@@ -49,7 +49,7 @@ class NetworkUtils(val context: Context, val apiPrefs: ApiPreferences) {
         }
         paramsStringToSign = paramsStringToSign.substring(0, (paramsStringToSign.length - 1))
 
-        val md5sign = encryptMD5(APP_SECRET + url + paramsStringToSign)
+        val md5sign = "$APP_SECRET$url$paramsStringToSign".encryptMD5()
 
 
         url.httpPost(postParams).header(Pair("apisign", md5sign)).responseObject(Deserializer(className, context)) { _, _, result ->
