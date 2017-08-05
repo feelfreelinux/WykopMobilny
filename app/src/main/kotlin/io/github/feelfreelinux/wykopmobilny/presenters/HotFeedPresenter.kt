@@ -6,17 +6,18 @@ import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 
 class HotFeedPresenter(wam: WykopApiManager, callbacks: FeedViewCallbacks) : FeedPresenter(wam, callbacks) {
     var period = "24"
-    var resultCallback : ApiResponseCallback = {
-        result ->
-        run {
-            entryList.addAll(result as Array<Entry>)
-            dataLoadedListener.invoke()
-        }
-    }
 
     override fun loadData(page : Int) {
-        // For refresh actions, etc we should empty whole list
-        if (page == 1) entryList.clear()
+        val resultCallback : ApiResponseCallback = {
+            result ->
+            run {
+                // For refresh actions, etc we should empty whole list
+                if (page == 1) entryList.clear()
+
+                entryList.addAll(result as Array<Entry>)
+                dataLoadedListener.invoke(page == 1)
+            }
+        }
 
         when (period) {
             "24", "12", "6" ->
