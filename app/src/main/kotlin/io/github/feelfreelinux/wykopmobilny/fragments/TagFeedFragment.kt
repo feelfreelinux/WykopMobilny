@@ -3,21 +3,17 @@ package io.github.feelfreelinux.wykopmobilny.fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.objects.TagFeedEntries
+import io.github.feelfreelinux.wykopmobilny.presenters.HotFeedPresenter
 
 class TagFeedFragment : FeedFragment() {
-    val _tag by lazy { arguments.getString("TAG") }
-
-    override fun loadData(page: Int, resultCallback: (Any) -> Unit) {
-        wam.getTagEntries(page, _tag, {
-            result -> resultCallback((result as TagFeedEntries).items)
-        })
-    }
+    val entryTag by lazy { arguments.getString("TAG") }
+    override val feedPresenter by lazy { HotFeedPresenter(wam, callbacks) }
 
     companion object {
-        fun newInstance(_tag: String): Fragment {
+        fun newInstance(entryTag: String): Fragment {
             val fragmentData = Bundle()
             val fragment = TagFeedFragment()
-            fragmentData.putSerializable("TAG", _tag)
+            fragmentData.putSerializable("TAG", entryTag)
             fragment.arguments = fragmentData
             return fragment
         }

@@ -13,9 +13,10 @@ import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.adapters.EntryDetailsAdapter
+import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
-import io.github.feelfreelinux.wykopmobilny.objects.EntryDetails
-import io.github.feelfreelinux.wykopmobilny.projectors.FeedClickActions
+import io.github.feelfreelinux.wykopmobilny.presenters.EntryDetailsPresenter
+import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
 import io.github.feelfreelinux.wykopmobilny.utils.*
 
 class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -26,62 +27,40 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private val apiManager: WykopApiManager by kodein.instance()
     private val navActivity by lazy { activity as NavigationActivity }
-    private val entryAdapter by lazy { EntryDetailsAdapter(FeedClickActions(navActivity)) }
+    val callbacks by lazy {FeedClickCallbacks(navActivity)}
+    val presenter by lazy { EntryDetailsPresenter(wam, callbacks) }
+    val adapter by lazy { EntryDetailsAdapter(presenter) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.recycler_view_layout, container, false)
 
-        // Prepare RecyclerView, and EndlessScrollListener
+        // Prepare RecyclerView
         recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)!!
         recyclerView.prepare()
 
-        // Create adapter
-
-        recyclerView.adapter = entryAdapter
+        // Set margin, adapter
+        recyclerView.addItemDecoration(EntryCommentItemDecoration(resources.getDimensionPixelOffset(R.dimen.comment_section_left_margin)))
+        recyclerView.adapter = adapter
 
         // Set needed flags
         navActivity.isLoading = true
         navActivity.setSwipeRefreshListener(this)
 
+        // Setup presenter
+        presenter.dataLoadedCallback = {
+            navActivity.isLoading = false
+            navActivity.isRefreshing = false
+            adapter.notifyDataSetChanged()
+        }
+
         // Trigger data loading
-        onRefresh()
+        presenter.loadData(entryId)
         return view
     }
 
-    override fun onRefresh() {
-        loadData({
-            result ->
-            run {
-                entryAdapter.entryData = emptyList()
-                addDataToAdapter(result)
-            }
-        })
-    }
+    override fun onRefresh() =
+            presenter.loadData(entryId)
 
-    fun loadData(responseCallback: (List<Entry>) -> Unit) {
-        apiManager.getEntryIndex(entryId, {
-            result ->
-            run {
-                val list = ArrayList<Entry>()
-                val details = result as EntryDetails
-                list.add(parseEntry(details))
-                details.comments.mapTo(list) { parseEntry(it) }
-                responseCallback.invoke(list)
-            }
-        })
-    }
-
-    fun addDataToAdapter(list: List<Entry>) {
-        val fullList = ArrayList<Entry>()
-        fullList.addAll(entryAdapter.entryData)
-        fullList.addAll(list)
-        entryAdapter.entryData = fullList
-        (activity as NavigationActivity).run {
-            isLoading = false
-            isRefreshing = false
-        }
-
-    }
 
     companion object {
         fun newInstance(id: Int): Fragment {

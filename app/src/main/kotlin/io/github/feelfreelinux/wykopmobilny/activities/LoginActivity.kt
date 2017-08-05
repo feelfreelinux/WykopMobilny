@@ -6,8 +6,8 @@ import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.APP_KEY
-import io.github.feelfreelinux.wykopmobilny.objects.UserSessionReponse
-import io.github.feelfreelinux.wykopmobilny.projectors.WykopWebViewClient
+import io.github.feelfreelinux.wykopmobilny.objects.Profile
+import io.github.feelfreelinux.wykopmobilny.presenters.WykopWebViewClient
 import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.invisible
@@ -57,9 +57,9 @@ class LoginActivity : WykopActivity() {
         apiManager.getUserSessionToken(
                 { data ->
                     run {
-                        val userSession = data as UserSessionReponse
-                        apiPreferences.userToken = userSession.userkey
-                        apiPreferences.avatarUrl = userSession.avatar_med
+                        val userSession = data as Profile
+                        apiPreferences.userToken = userSession.userKey
+                        apiPreferences.avatarUrl = userSession.avatarMed
 
                         lauchMainNavigation()
                         finish()

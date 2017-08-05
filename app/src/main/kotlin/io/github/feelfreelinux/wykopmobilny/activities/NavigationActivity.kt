@@ -16,6 +16,7 @@ import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.projectors.NavigationActions
 import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
+import io.github.feelfreelinux.wykopmobilny.presenters.NavigationActions
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.gone
 import io.github.feelfreelinux.wykopmobilny.utils.visible

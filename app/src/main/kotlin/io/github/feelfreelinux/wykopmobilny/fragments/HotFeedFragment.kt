@@ -7,21 +7,15 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.presenters.HotFeedPresenter
 
 class HotFeedFragment : FeedFragment() {
-    var period = "24"
+    override val feedPresenter by lazy { HotFeedPresenter(wam, callbacks) }
     val supportActionBar by lazy{ (activity as AppCompatActivity).supportActionBar }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-    override fun loadData(page : Int, resultCallback : (Any) -> Unit) {
-        when(period) {
-            "6", "12", "24" -> wam.getMikroblogHot(page, period, resultCallback)
-            "newest" -> wam.getMikroblogIndex(page, resultCallback)
-        }
     }
 
     companion object {
@@ -45,10 +39,10 @@ class HotFeedFragment : FeedFragment() {
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 when(position) {
-                    0 -> period = "24"
-                    1 -> period = "12"
-                    2 -> period = "6"
-                    3 -> period = "newest"
+                    0 -> feedPresenter.period = "24"
+                    1 -> feedPresenter.period = "12"
+                    2 -> feedPresenter.period = "6"
+                    3 -> feedPresenter.period = "newest"
                 }
             }
         }
