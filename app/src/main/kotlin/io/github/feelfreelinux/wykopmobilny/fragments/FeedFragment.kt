@@ -44,9 +44,15 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
         navActivity.setSwipeRefreshListener(this)
 
         feedPresenter.dataLoadedListener = {
-            feedAdapter?.notifyDataSetChanged()
-            navActivity.isLoading = false
-            navActivity.isRefreshing = false
+            isRefreshed ->
+            run {
+                // if (isRefreshed) recyclerView.scrollToPosition(10)
+                feedAdapter?.notifyDataSetChanged()
+                navActivity.isLoading = false
+                navActivity.isRefreshing = false
+                // Scroll to top after loading
+                if (isRefreshed) recyclerView.smoothScrollToPosition(0)
+            }
         }
 
         // Create adapter if no data is saved

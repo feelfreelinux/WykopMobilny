@@ -7,3 +7,4 @@ typealias VoteResponseListener = (VoteResponse) -> Unit
 typealias CommentClickedListener = (Int) -> Unit
 typealias ApiResponseCallback = (Any) -> Unit
 typealias EmptyListener = () -> Unit
+typealias DataLoadedListener = (Boolean) -> Unit // Refreshed / Not Refreshed

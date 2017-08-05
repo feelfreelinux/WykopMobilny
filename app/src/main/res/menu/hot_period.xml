@@ -3,8 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/spinner"
-        android:title="ActionBar Spinner"
-        app:actionViewClass="android.widget.Spinner"
-        app:showAsAction="always" />
+        android:id="@+id/refresh"
+        android:title="@string/refresh"
+        android:icon="@drawable/refresh_icon"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/period6"
+        android:title="@string/period6"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/period12"
+        android:title="@string/period12"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/period24"
+        android:title="@string/period24"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/newest"
+        android:title="@string/newest_entries"
+        app:showAsAction="never" />
 </menu>

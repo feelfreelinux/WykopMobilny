@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.presenters
 import io.github.feelfreelinux.wykopmobilny.adapters.holders.FeedViewItem
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.objects.VoteResponse
+import io.github.feelfreelinux.wykopmobilny.utils.DataLoadedListener
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
@@ -16,7 +17,7 @@ interface FeedViewCallbacks {
 
 abstract class FeedPresenter(val wam : WykopApiManager, val callbacks: FeedViewCallbacks) {
     var entryList = ArrayList<Entry>()
-    var dataLoadedListener = {}
+    var dataLoadedListener : DataLoadedListener = {}
 
     fun onBindListItem(position : Int, listItem : FeedViewItem) {
         // Set tag clicked listener

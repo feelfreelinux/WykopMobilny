@@ -4,7 +4,6 @@
         <item>@string/period24</item>
         <item>@string/period12</item>
         <item>@string/period6</item>
-        <item>@string/newest</item>
-
+        <item>@string/newest_entries</item>
     </string-array>
 </resources>
