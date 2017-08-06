@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.presenters.TagFeedPresenter
 import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.presenters.HotFeedPresenter
 
 class TagFeedFragment : FeedFragment() {
     val entryTag by lazy { arguments.getString("TAG") }
-    override val feedPresenter by lazy { TagFeedPresenter(entryTag, wam, callbacks) }
+    override val feedPresenter by lazy { TagFeedPresenter(apiManager, callbacks) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)

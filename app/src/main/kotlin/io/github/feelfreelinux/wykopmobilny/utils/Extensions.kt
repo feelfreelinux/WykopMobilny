@@ -79,6 +79,4 @@ fun ImageView.setPhotoViewUrl( url : String) {
     }
 }
 
-fun Context.getApiPreferences() : ApiPreferences = ApiPreferences()
-
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))

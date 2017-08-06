@@ -7,11 +7,16 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.fragments.HotFeedFragment
 import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.objects.NotificationCountResponse
+import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 
-class NavigationActions(val context : NavigationActivity) : NavigationView.OnNavigationItemSelectedListener {
+class NavigationActions(
+        val context : NavigationActivity,
+        val apiPreferences: ApiPreferences,
+        val wykopApiManager: WykopApiManager) : NavigationView.OnNavigationItemSelectedListener {
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.nav_mikroblog -> 
@@ -30,7 +35,7 @@ class NavigationActions(val context : NavigationActivity) : NavigationView.OnNav
     }
 
     fun setupHeader() {
-        context.navHeader.img_profile.loadImage(context.wam.apiPrefs.avatarUrl!!)
+        context.navHeader.img_profile.loadImage(apiPreferences.avatarUrl!!)
         getNotificationsCount()
     }
 
@@ -45,10 +50,10 @@ class NavigationActions(val context : NavigationActivity) : NavigationView.OnNav
     }
 
     fun getNotificationsCount() {
-        context.wam.getNotificationCount({
+        wykopApiManager.getNotificationCount({
             result -> context.navHeader.nav_notifications.text =
                 (result as NotificationCountResponse).count.toString()})
-        context.wam.getHashTagsNotificationsCount({
+        wykopApiManager.getHashTagsNotificationsCount({
             result -> context.navHeader.nav_notifications_tag.text =
                 (result as NotificationCountResponse).count.toString()})    }
 }

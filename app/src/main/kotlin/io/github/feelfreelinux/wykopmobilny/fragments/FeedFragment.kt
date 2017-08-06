@@ -1,4 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.fragments
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -7,6 +8,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.salomonbrys.kodein.KodeinInjector
+import com.github.salomonbrys.kodein.LazyKodein
+import com.github.salomonbrys.kodein.android.FragmentInjector
+import com.github.salomonbrys.kodein.android.appKodein
+import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.adapters.FeedAdapter
@@ -17,12 +23,16 @@ import io.github.feelfreelinux.wykopmobilny.presenters.FeedViewCallbacks
 import io.github.feelfreelinux.wykopmobilny.utils.*
 
 abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefreshListener {
-    lateinit var recyclerView : RecyclerView
-    var endlessScrollListener : EndlessScrollListener? = null
-    val navActivity by lazy { activity as NavigationActivity }
-    val wam by lazy { navActivity.wam }
-    val callbacks by lazy { FeedClickCallbacks(navActivity) }
-    var feedAdapter : FeedAdapter? = null
+    private val kodein = LazyKodein(appKodein)
+
+    lateinit var recyclerView: RecyclerView
+    var endlessScrollListener: EndlessScrollListener? = null
+
+    protected val apiManager: WykopApiManager by kodein.instance()
+    protected val navActivity by lazy { activity as NavigationActivity }
+    protected var feedAdapter: FeedAdapter? = null
+    protected val callbacks by lazy { FeedClickCallbacks(navActivity, apiManager) }
+
     abstract val feedPresenter : FeedPresenter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,8 +43,9 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
         recyclerView.prepare()
 
         // Retrieve savedState endless scroll listener
-        if (endlessScrollListener == null) endlessScrollListener =
-                EndlessScrollListener(this, (recyclerView.layoutManager as LinearLayoutManager))
+        if (endlessScrollListener == null) {
+            endlessScrollListener = EndlessScrollListener(this, (recyclerView.layoutManager as LinearLayoutManager))
+        }
         else {
             endlessScrollListener?.mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
             endlessScrollListener?.loadMoreListener = this

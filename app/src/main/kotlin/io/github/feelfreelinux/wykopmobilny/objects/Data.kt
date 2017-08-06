@@ -10,7 +10,7 @@ data class Embed(
         val plus18 : Boolean,
         val source : String) : Serializable
 
-data class Entrys(
+data class Entries(
         val id: Int,
         val author: User,
         var votes_count: Int,

@@ -19,6 +19,6 @@
     <string name="mywykop">Mój Wykop</string>
     <string name="settings">Ustawienia</string>
     <string name="votes_count">+ %1$d</string>
-    <string name="user_app"> via %1$s</string>
+    <string name="date_with_user_app">%1$s via %2$s</string>
     <string name="refresh">Odśwież</string>
 </resources>

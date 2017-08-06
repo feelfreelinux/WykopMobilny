@@ -6,19 +6,7 @@ import android.content.SharedPreferences
 import kotlin.reflect.KProperty
 
 
-abstract class Preferences {
-    companion object {
-        private var context: Context? = null //todo sole this with DI
-
-        /**
-         * Initialize PrefDelegate with a Context reference.
-         *
-         * **This method needs to be called before any other usage of PrefDelegate!!**
-         */
-        fun init(context: Context) {
-            this.context = context
-        }
-    }
+abstract class Preferences(var context: Context? = null) {
 
     private val prefs: SharedPreferences by lazy {
         if (context != null)

@@ -17,31 +17,30 @@ import org.json.JSONTokener
 import io.github.feelfreelinux.wykopmobilny.objects.*
 
 
-class NetworkUtils(val context: Context) {
-    val apiPrefs = ApiPreferences()
+class NetworkUtils(val context: Context, val apiPrefs: ApiPreferences) {
 
-    fun sendGet(resource : String, params : String?, className: Class<*>, successCallback: (Any) -> Unit, failureCallback: () -> Unit) {
+    fun sendGet(resource: String, params: String?, className: Class<*>, successCallback: (Any) -> Unit, failureCallback: () -> Unit) {
         val url =
                 if (params == null) "https://a.wykop.pl/$resource/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
                 else "https://a.wykop.pl/$resource/$params/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
 
-        val md5sign = encryptMD5(APP_SECRET + url)
+        val md5sign = "$APP_SECRET$url".encryptMD5()
         printout(url)
 
         url.httpGet().header(Pair("apisign", md5sign)).responseObject(Deserializer(className, context)) { _, _, result ->
             when (result) {
                 is Result.Success ->
-                    if(result.value != null) successCallback(result.value)
+                    if (result.value != null) successCallback(result.value)
                 is Result.Failure ->
                     failureCallback()
             }
         }
     }
 
-    fun sendPost(resource : String, params : String?, postParams: ArrayList<Pair<String, String>>, className: Class<*>, successCallback: (Any) -> Unit, failureCallback: () -> Unit) {
+    fun sendPost(resource: String, params: String?, postParams: ArrayList<Pair<String, String>>, className: Class<*>, successCallback: (Any) -> Unit, failureCallback: () -> Unit) {
         val url =
-            if (params == null) "https://a.wykop.pl/$resource/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
-            else "https://a.wykop.pl/$resource/$params/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
+                if (params == null) "https://a.wykop.pl/$resource/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
+                else "https://a.wykop.pl/$resource/$params/appkey/$APP_KEY/userkey/${apiPrefs.userToken}"
 
         var paramsStringToSign = ""
         postParams.forEachIndexed {
@@ -50,13 +49,13 @@ class NetworkUtils(val context: Context) {
         }
         paramsStringToSign = paramsStringToSign.substring(0, (paramsStringToSign.length - 1))
 
-        val md5sign = encryptMD5(APP_SECRET + url + paramsStringToSign)
+        val md5sign = "$APP_SECRET$url$paramsStringToSign".encryptMD5()
 
 
         url.httpPost(postParams).header(Pair("apisign", md5sign)).responseObject(Deserializer(className, context)) { _, _, result ->
             when (result) {
                 is Result.Success ->
-                    if(result.value != null) successCallback(result.value)
+                    if (result.value != null) successCallback(result.value)
                 is Result.Failure ->
                     failureCallback()
             }
@@ -65,13 +64,13 @@ class NetworkUtils(val context: Context) {
 
 }
 
-class Deserializer<T : Any> (val javaclassname: Class<T>, val context: Context) : ResponseDeserializable<T> {
+class Deserializer<T : Any>(val javaclassname: Class<T>, val context: Context) : ResponseDeserializable<T> {
     override fun deserialize(content: String) =
-        if (checkResults(content)) Gson().fromJson(content, javaclassname)
-        else null
+            if (checkResults(content)) Gson().fromJson(content, javaclassname)
+            else null
 
 
-    fun checkResults(json : String) : Boolean {
+    fun checkResults(json: String): Boolean {
         val jsonResult = JSONTokener(json).nextValue()
         printout(json)
         if (jsonResult is JSONObject && jsonResult.has("error")) {
