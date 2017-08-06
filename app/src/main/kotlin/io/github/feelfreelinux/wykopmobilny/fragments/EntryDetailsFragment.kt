@@ -15,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.adapters.EntryDetailsAdapter
 import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
 import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
+import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.presenters.EntryDetailsPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
@@ -22,16 +23,16 @@ import io.github.feelfreelinux.wykopmobilny.utils.prepare
 private const val EXTRA_ENTRY_ID = "ENTRY_ID"
 
 
-class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, EntryDetailsPresenter.View {
     private val kodein = LazyKodein(appKodein)
     lateinit var recyclerView: RecyclerView
 
     private val apiManager: WykopApiManager by kodein.instance()
     private val entryId by lazy { arguments.getInt(EXTRA_ENTRY_ID) }
     private val navActivity by lazy { activity as NavigationActivity }
-    val callbacks by lazy {FeedClickCallbacks(navActivity, apiManager)}
-    val presenter by lazy { EntryDetailsPresenter(apiManager, callbacks) }
-    val adapter by lazy { EntryDetailsAdapter(presenter) }
+    val callbacks by lazy { FeedClickCallbacks(navActivity, apiManager) }
+    val presenter by lazy { EntryDetailsPresenter(entryId, this, apiManager) }
+    val adapter by lazy { EntryDetailsAdapter(callbacks) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.recycler_view_layout, container, false)
@@ -48,20 +49,19 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         navActivity.isLoading = true
         navActivity.setSwipeRefreshListener(this)
 
-        // Setup presenter
-        presenter.dataLoadedCallback = {
-            navActivity.isLoading = false
-            navActivity.isRefreshing = false
-            adapter.notifyDataSetChanged()
-        }
-
         // Trigger data loading
-        presenter.loadData(entryId)
+        presenter.loadData()
         return view
     }
 
-    override fun onRefresh() = presenter.loadData(entryId)
+    override fun onRefresh() = presenter.loadData()
 
+    override fun setAdapterEntry(entry: Entry) {
+        adapter.entry = entry
+        navActivity.isLoading = false
+        navActivity.isRefreshing = false
+        adapter.notifyDataSetChanged()
+    }
 
     companion object {
         fun newInstance(id: Int): Fragment {

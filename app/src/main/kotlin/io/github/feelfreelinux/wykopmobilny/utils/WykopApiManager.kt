@@ -17,31 +17,31 @@ class WykopApiManager(context: Context, apiPrefs: ApiPreferences) {
         networkUtils.sendPost("user/login", null, params, Profile::class.java, successCallback, {})
     }
 
-    fun getTagEntries(page: Int, tag: String, successCallback: (Any) -> Unit) =
+    fun getTagEntries(page: Int, tag: String, successCallback: ApiResponseCallback) =
             networkUtils.sendGet("tag/entries/$tag", "page/$page", TagFeedEntries::class.java, successCallback, {})
 
-    fun getNotificationCount(successCallback: (Any) -> Unit) =
+    fun getNotificationCount(successCallback: ApiResponseCallback) =
             networkUtils.sendGet("mywykop/NotificationsCount", null, NotificationCountResponse::class.java, successCallback, {})
 
-    fun getHashTagsNotificationsCount(successCallback: (Any) -> Unit) =
+    fun getHashTagsNotificationsCount(successCallback: ApiResponseCallback) =
             networkUtils.sendGet("mywykop/HashTagsNotificationsCount", null, NotificationCountResponse::class.java, successCallback, {})
 
-    fun getMikroblogHot(page: Int, period: String, successCallback: (Any) -> Unit) =
+    fun getMikroblogHot(page: Int, period: String, successCallback: ApiResponseCallback) =
             networkUtils.sendGet("stream/hot", "page/$page/period/$period", Array<Entry>::class.java, successCallback, {})
 
-    fun getMikroblogIndex(page: Int, successCallback: (Any) -> Unit) =
+    fun getMikroblogIndex(page: Int, successCallback: ApiResponseCallback) =
             networkUtils.sendGet("stream/index", "page/$page", Array<Entry>::class.java, successCallback, {})
 
-    fun getEntryIndex(id: Int, successCallback: (Any) -> Unit) =
+    fun getEntryIndex(id: Int, successCallback: ApiResponseCallback) =
             networkUtils.sendGet("entries/index", "$id", Entry::class.java, successCallback, {})
 
-    fun voteEntry(entryId: Int, commentId: Int?, successCallback: (Any) -> Unit) {
-        val params = if (commentId == null) "entry/$entryId" else "entry/$entryId/$commentId"
+    fun voteEntry(entryId: Int, commentId: Int?, successCallback: ApiResponseCallback) {
+        val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
         networkUtils.sendGet("entries/vote", params, VoteResponse::class.java, successCallback, {})
     }
 
-    fun unvoteEntry(entryId: Int, commentId: Int?, successCallback: (Any) -> Unit) {
-        val params = if (commentId == null) "entry/$entryId" else "entry/$entryId/$commentId"
+    fun unvoteEntry(entryId: Int, commentId: Int?, successCallback: ApiResponseCallback) {
+        val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
         networkUtils.sendGet("entries/unvote", params, VoteResponse::class.java, successCallback, {})
     }
 }

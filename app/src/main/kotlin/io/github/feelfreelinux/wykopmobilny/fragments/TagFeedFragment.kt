@@ -11,7 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.presenters.HotFeedPresenter
 
 class TagFeedFragment : FeedFragment() {
     val entryTag by lazy { arguments.getString("TAG") }
-    override val feedPresenter by lazy { TagFeedPresenter(apiManager, callbacks) }
+    override val feedPresenter by lazy { TagFeedPresenter(entryTag, this, apiManager) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)

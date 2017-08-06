@@ -4,19 +4,15 @@ import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.utils.ApiResponseCallback
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
 
-class HotFeedPresenter(wam: WykopApiManager, callbacks: FeedViewCallbacks) : FeedPresenter(wam, callbacks) {
+class HotFeedPresenter(view: FeedPresenter.View, wam: WykopApiManager) : FeedPresenter(view, wam) {
     var period = "24"
+
 
     override fun loadData(page : Int) {
         val resultCallback : ApiResponseCallback = {
             result ->
-            run {
-                // For refresh actions, etc we should empty whole list
-                if (page == 1) entryList.clear()
-
-                entryList.addAll(result as Array<Entry>)
-                dataLoadedListener.invoke(page == 1)
-            }
+            // For refresh actions, etc we should empty whole list
+            view.addDataToAdapter((result as Array<Entry>).asList(), page == 1)
         }
 
         when (period) {
