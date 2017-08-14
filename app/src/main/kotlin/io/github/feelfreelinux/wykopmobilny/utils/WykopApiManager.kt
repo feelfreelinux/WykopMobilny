@@ -1,47 +1,62 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
+import com.github.kittinunf.fuel.core.FuelError
+import com.github.kittinunf.result.Result
 import io.github.feelfreelinux.wykopmobilny.objects.*
+import io.reactivex.Single
 
-class WykopApiManager(context: Context, apiPrefs: ApiPreferences) {
+interface WykopApi {
+    fun getUserSessionToken(): Single<Result<Profile, FuelError>>
+    fun getTagEntries(page: Int, tag: String): Single<Result<TagFeedEntries, FuelError>>
+    fun getNotificationCount(): Single<Result<NotificationCountResponse, FuelError>>
+    fun getHashTagsNotificationsCount(): Single<Result<NotificationCountResponse, FuelError>>
+    fun getMikroblogHot(page: Int, period: String): Single<Result<Array<Entry>, FuelError>>
+    fun getMikroblogIndex(page: Int): Single<Result<Array<Entry>, FuelError>>
+    fun getEntryIndex(id: Int): Single<Result<Entry, FuelError>>
+    fun voteEntry(entryId: Int, commentId: Int?): Single<Result<VoteResponse, FuelError>>
+    fun unvoteEntry(entryId: Int, commentId: Int?): Single<Result<VoteResponse, FuelError>>
+}
 
-    val login = apiPrefs.login!!
-    val accountKey = apiPrefs.userKey!!
+
+class WykopApiManager(context: Context, val apiPrefs: ApiPreferences) : WykopApi {
+
     var networkUtils: NetworkUtils = NetworkUtils(context, apiPrefs)
 
-    fun getUserSessionToken(successCallback: ApiResponseCallback) {
+    override fun getUserSessionToken(): Single<Result<Profile, FuelError>> {
         val params = ArrayList<Pair<String, String>>()
-        params.add(Pair("accountkey", accountKey))
-        params.add(Pair("login", login))
+        params.add(Pair("accountkey", apiPrefs.userKey!!))
+        params.add(Pair("login", apiPrefs.login!!))
 
-        networkUtils.sendPost("user/login", null, params, Profile::class.java, successCallback, {})
+        return networkUtils.sendPost<Profile>("user/login", null, params)
     }
 
-    fun getTagEntries(page: Int, tag: String, successCallback: ApiResponseCallback) =
-            networkUtils.sendGet("tag/entries/$tag", "page/$page", TagFeedEntries::class.java, successCallback, {})
+    override fun getTagEntries(page: Int, tag: String): Single<Result<TagFeedEntries, FuelError>> =
+            networkUtils.sendGet<TagFeedEntries>("tag/entries/$tag", "page/$page")
 
-    fun getNotificationCount(successCallback: ApiResponseCallback) =
-            networkUtils.sendGet("mywykop/NotificationsCount", null, NotificationCountResponse::class.java, successCallback, {})
+    override fun getNotificationCount(): Single<Result<NotificationCountResponse, FuelError>> =
+            networkUtils.sendGet<NotificationCountResponse>("mywykop/NotificationsCount", null)
 
-    fun getHashTagsNotificationsCount(successCallback: ApiResponseCallback) =
-            networkUtils.sendGet("mywykop/HashTagsNotificationsCount", null, NotificationCountResponse::class.java, successCallback, {})
+    override fun getHashTagsNotificationsCount(): Single<Result<NotificationCountResponse, FuelError>> =
+            networkUtils.sendGet<NotificationCountResponse>("mywykop/HashTagsNotificationsCount", null)
 
-    fun getMikroblogHot(page: Int, period: String, successCallback: ApiResponseCallback) =
-            networkUtils.sendGet("stream/hot", "page/$page/period/$period", Array<Entry>::class.java, successCallback, {})
+    override fun getMikroblogHot(page: Int, period: String): Single<Result<Array<Entry>, FuelError>> =
+            networkUtils.sendGet<Array<Entry>>("stream/hot", "page/$page/period/$period")
 
-    fun getMikroblogIndex(page: Int, successCallback: ApiResponseCallback) =
-            networkUtils.sendGet("stream/index", "page/$page", Array<Entry>::class.java, successCallback, {})
+    override fun getMikroblogIndex(page: Int): Single<Result<Array<Entry>, FuelError>> =
+            networkUtils.sendGet<Array<Entry>>("stream/index", "page/$page")
 
-    fun getEntryIndex(id: Int, successCallback: ApiResponseCallback) =
-            networkUtils.sendGet("entries/index", "$id", Entry::class.java, successCallback, {})
+    override fun getEntryIndex(id: Int): Single<Result<Entry, FuelError>> =
+            networkUtils.sendGet<Entry>("entries/index", "$id")
 
-    fun voteEntry(entryId: Int, commentId: Int?, successCallback: ApiResponseCallback) {
+
+    override fun voteEntry(entryId: Int, commentId: Int?): Single<Result<VoteResponse, FuelError>> {
         val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
-        networkUtils.sendGet("entries/vote", params, VoteResponse::class.java, successCallback, {})
+        return networkUtils.sendGet<VoteResponse>("entries/vote", params)
     }
 
-    fun unvoteEntry(entryId: Int, commentId: Int?, successCallback: ApiResponseCallback) {
+    override fun unvoteEntry(entryId: Int, commentId: Int?): Single<Result<VoteResponse, FuelError>> {
         val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
-        networkUtils.sendGet("entries/unvote", params, VoteResponse::class.java, successCallback, {})
+        return networkUtils.sendGet<VoteResponse>("entries/unvote", params)
     }
 }

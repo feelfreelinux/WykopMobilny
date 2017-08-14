@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.presenters.TagFeedPresenter
 import kotlinx.android.synthetic.main.toolbar.*
-import io.github.feelfreelinux.wykopmobilny.presenters.HotFeedPresenter
 
 class TagFeedFragment : FeedFragment() {
     val entryTag by lazy { arguments.getString("TAG") }

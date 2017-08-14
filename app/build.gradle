@@ -48,6 +48,7 @@ dependencies {
     implementation "com.github.kittinunf.fuel:fuel:$versions.fuel"
     implementation "com.github.kittinunf.fuel:fuel-android:$versions.fuel"
     implementation "com.github.kittinunf.fuel:fuel-gson:$versions.fuel"
+    implementation "com.github.kittinunf.fuel:fuel-rxjava:$versions.fuel"
     implementation "org.ocpsoft.prettytime:prettytime:$versions.prettytime"
     implementation "com.github.chrisbanes:PhotoView:$versions.photoview"
     implementation "com.github.bumptech.glide:glide:$versions.glide"
@@ -56,6 +57,8 @@ dependencies {
     implementation "com.github.salomonbrys.kodein:kodein:$versions.kodein"
     implementation "com.github.salomonbrys.kodein:kodein-core:$versions.kodein"
     implementation "com.github.salomonbrys.kodein:kodein-android:$versions.kodein"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {

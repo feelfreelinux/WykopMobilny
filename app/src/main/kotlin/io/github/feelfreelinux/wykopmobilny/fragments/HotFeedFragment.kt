@@ -2,11 +2,9 @@ package io.github.feelfreelinux.wykopmobilny.fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.presenters.HotFeedPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.feed.mikrobloghot.HotFeedPresenter
 import kotlinx.android.synthetic.main.toolbar.*
 
 class HotFeedFragment : FeedFragment() {

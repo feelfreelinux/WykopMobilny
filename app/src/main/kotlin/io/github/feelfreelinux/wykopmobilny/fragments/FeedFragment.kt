@@ -8,13 +8,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.salomonbrys.kodein.KodeinInjector
 import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.android.FragmentInjector
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
+import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
@@ -27,7 +25,7 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
     lateinit var recyclerView: RecyclerView
     var endlessScrollListener: EndlessScrollListener? = null
 
-    protected val apiManager: WykopApiManager by kodein.instance()
+    protected val apiManager: WykopApi by kodein.instance()
     protected val navActivity by lazy { activity as NavigationActivity }
     protected val callbacks by lazy { FeedClickCallbacks(navActivity, apiManager) }
     protected val feedAdapter by lazy { FeedAdapter(callbacks) }

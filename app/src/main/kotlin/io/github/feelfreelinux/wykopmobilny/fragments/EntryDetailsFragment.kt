@@ -11,13 +11,13 @@ import com.github.salomonbrys.kodein.LazyKodein
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.activities.NavigationActivity
+import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.adapters.EntryDetailsAdapter
 import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
 import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.presenters.EntryDetailsPresenter
-import io.github.feelfreelinux.wykopmobilny.utils.WykopApiManager
+import io.github.feelfreelinux.wykopmobilny.utils.WykopApi
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 
 private const val EXTRA_ENTRY_ID = "ENTRY_ID"
@@ -27,7 +27,7 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, Entr
     private val kodein = LazyKodein(appKodein)
     lateinit var recyclerView: RecyclerView
 
-    private val apiManager: WykopApiManager by kodein.instance()
+    private val apiManager: WykopApi by kodein.instance()
     private val entryId by lazy { arguments.getInt(EXTRA_ENTRY_ID) }
     private val navActivity by lazy { activity as NavigationActivity }
     val callbacks by lazy { FeedClickCallbacks(navActivity, apiManager) }
@@ -54,7 +54,8 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, Entr
         return view
     }
 
-    override fun onRefresh() = presenter.loadData()
+    override fun onRefresh() {presenter.loadData()}
+
 
     override fun setAdapterEntry(entry: Entry) {
         adapter.entry = entry
