@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.presenters.PhotoViewActions
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_photoview.*
@@ -17,7 +18,7 @@ fun Context.launchPhotoView(imageUrl: String) {
     startActivity(intent)
 }
 
-class PhotoViewActivity : WykopActivity() {
+class PhotoViewActivity : BaseActivity() {
     val url: String by lazy { intent.getStringExtra("URL") }
     private val photoViewActions by lazy { PhotoViewActions(this) }
 

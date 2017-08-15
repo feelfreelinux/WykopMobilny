@@ -1,62 +1,57 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
-import android.content.Context
-import com.github.kittinunf.fuel.core.FuelError
-import com.github.kittinunf.result.Result
+import com.github.kittinunf.fuel.core.Request
 import io.github.feelfreelinux.wykopmobilny.objects.*
-import io.reactivex.Single
 
 interface WykopApi {
-    fun getUserSessionToken(): Single<Result<Profile, FuelError>>
-    fun getTagEntries(page: Int, tag: String): Single<Result<TagFeedEntries, FuelError>>
-    fun getNotificationCount(): Single<Result<NotificationCountResponse, FuelError>>
-    fun getHashTagsNotificationsCount(): Single<Result<NotificationCountResponse, FuelError>>
-    fun getMikroblogHot(page: Int, period: String): Single<Result<Array<Entry>, FuelError>>
-    fun getMikroblogIndex(page: Int): Single<Result<Array<Entry>, FuelError>>
-    fun getEntryIndex(id: Int): Single<Result<Entry, FuelError>>
-    fun voteEntry(entryId: Int, commentId: Int?): Single<Result<VoteResponse, FuelError>>
-    fun unvoteEntry(entryId: Int, commentId: Int?): Single<Result<VoteResponse, FuelError>>
+    fun getUserSessionToken(responseCallback: ApiResultCallback<Profile>): Request
+    fun getTagEntries(page: Int, tag: String, responseCallback: ApiResultCallback<TagFeedEntries>): Request
+    fun getNotificationCount(responseCallback: ApiResultCallback<NotificationCountResponse>): Request
+    fun getHashTagsNotificationsCount(responseCallback: ApiResultCallback<NotificationCountResponse>): Request
+    fun getMikroblogHot(page: Int, period: String, responseCallback: ApiResultCallback<Array<Entry>>): Request
+    fun getMikroblogIndex(page: Int, responseCallback: ApiResultCallback<Array<Entry>>): Request
+    fun getEntryIndex(id: Int, responseCallback: ApiResultCallback<Entry>): Request
+    fun voteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request
+    fun unvoteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request
 }
 
+class WykopApiManager(val apiPrefs: ApiPreferences) : WykopApi {
 
-class WykopApiManager(context: Context, val apiPrefs: ApiPreferences) : WykopApi {
+    var networkUtils: NetworkUtils = NetworkUtils(apiPrefs)
 
-    var networkUtils: NetworkUtils = NetworkUtils(context, apiPrefs)
-
-    override fun getUserSessionToken(): Single<Result<Profile, FuelError>> {
+    override fun getUserSessionToken(responseCallback: ApiResultCallback<Profile>): Request {
         val params = ArrayList<Pair<String, String>>()
         params.add(Pair("accountkey", apiPrefs.userKey!!))
         params.add(Pair("login", apiPrefs.login!!))
-
-        return networkUtils.sendPost<Profile>("user/login", null, params)
+        return networkUtils.sendPost("user/login", null, params, responseCallback)
     }
 
-    override fun getTagEntries(page: Int, tag: String): Single<Result<TagFeedEntries, FuelError>> =
-            networkUtils.sendGet<TagFeedEntries>("tag/entries/$tag", "page/$page")
+    override fun getTagEntries(page: Int, tag: String, responseCallback: ApiResultCallback<TagFeedEntries>): Request =
+            networkUtils.sendGet("tag/entries/$tag", "page/$page", responseCallback)
 
-    override fun getNotificationCount(): Single<Result<NotificationCountResponse, FuelError>> =
-            networkUtils.sendGet<NotificationCountResponse>("mywykop/NotificationsCount", null)
+    override fun getNotificationCount(responseCallback: ApiResultCallback<NotificationCountResponse>): Request =
+            networkUtils.sendGet("mywykop/NotificationsCount", null, responseCallback)
 
-    override fun getHashTagsNotificationsCount(): Single<Result<NotificationCountResponse, FuelError>> =
-            networkUtils.sendGet<NotificationCountResponse>("mywykop/HashTagsNotificationsCount", null)
+    override fun getHashTagsNotificationsCount(responseCallback: ApiResultCallback<NotificationCountResponse>): Request =
+            networkUtils.sendGet("mywykop/HashTagsNotificationsCount", null, responseCallback)
 
-    override fun getMikroblogHot(page: Int, period: String): Single<Result<Array<Entry>, FuelError>> =
-            networkUtils.sendGet<Array<Entry>>("stream/hot", "page/$page/period/$period")
+    override fun getMikroblogHot(page: Int, period: String, responseCallback: ApiResultCallback<Array<Entry>>): Request =
+            networkUtils.sendGet("stream/hot", "page/$page/period/$period", responseCallback)
 
-    override fun getMikroblogIndex(page: Int): Single<Result<Array<Entry>, FuelError>> =
-            networkUtils.sendGet<Array<Entry>>("stream/index", "page/$page")
+    override fun getMikroblogIndex(page: Int, responseCallback: ApiResultCallback<Array<Entry>>): Request =
+            networkUtils.sendGet("stream/index", "page/$page", responseCallback)
 
-    override fun getEntryIndex(id: Int): Single<Result<Entry, FuelError>> =
-            networkUtils.sendGet<Entry>("entries/index", "$id")
+    override fun getEntryIndex(id: Int, responseCallback: ApiResultCallback<Entry>): Request =
+            networkUtils.sendGet("entries/index", "$id", responseCallback)
 
 
-    override fun voteEntry(entryId: Int, commentId: Int?): Single<Result<VoteResponse, FuelError>> {
+    override fun voteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request {
         val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
-        return networkUtils.sendGet<VoteResponse>("entries/vote", params)
+        return networkUtils.sendGet("entries/vote", params, responseCallback)
     }
 
-    override fun unvoteEntry(entryId: Int, commentId: Int?): Single<Result<VoteResponse, FuelError>> {
+    override fun unvoteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request {
         val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
-        return networkUtils.sendGet<VoteResponse>("entries/unvote", params)
+        return networkUtils.sendGet("entries/unvote", params, responseCallback)
     }
 }

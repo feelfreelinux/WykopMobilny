@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary.Light">#039be5</color>
-    <color name="colorPrimaryDark.Light">#303F9F</color>
-    <color name="colorAccent.Light">#FF4081</color>
     <color name="colorAccent.Dark">#82b1ff</color>
     <color name="colorPrimary.Dark">#424242</color>
     <color name="colorPrimaryDark.Dark">#212121</color>
-    <color name="cardView.Light">#ffffff</color>
-    <color name="cardList.Light">#e0e0e0</color>
     <color name="cardView.Dark">#2c2c2c</color>
     <color name="cardList.Dark">#1c1c1c</color>
-    <color name="spacerColor.Light">#c0c0c0</color>
     <color name="spacerColor.Dark">#3b3b3b</color>
-    <color name="drawablesColor.Light">#313131</color>
     <color name="drawablesColor.Dark">#ffffff</color>
     <color name="mikroblogControlsColor.Dark">#424242</color>
-    <color name="mikroblogControlsColor.Light">#eeeeee</color>
     <color name="plusPressedColor">#27ae60</color>
 </resources>

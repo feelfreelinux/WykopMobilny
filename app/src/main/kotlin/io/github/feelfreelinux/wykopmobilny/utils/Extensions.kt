@@ -12,9 +12,6 @@ import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.activities.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.activities.launchPhotoView
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
@@ -83,4 +80,3 @@ fun ImageView.setPhotoViewUrl( url : String) {
 }
 
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
-fun <T : Any> Single<T>.setupSubscribeIOAndroid(): Single<T> = subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

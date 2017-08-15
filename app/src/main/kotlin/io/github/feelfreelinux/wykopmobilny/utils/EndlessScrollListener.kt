@@ -50,7 +50,7 @@ class EndlessScrollListener(var loadMoreListener : ILoadMore, var mLayoutManager
         } else if (mLayoutManager is GridLayoutManager) {
             lastVisibleItemPosition = (mLayoutManager as GridLayoutManager).findLastVisibleItemPosition()
         } else if (mLayoutManager is LinearLayoutManager) {
-            lastVisibleItemPosition = (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            lastVisibleItemPosition = (mLayoutManager).findLastVisibleItemPosition()
         }
 
         // If the total item count is zero and the previous isn't, assume the

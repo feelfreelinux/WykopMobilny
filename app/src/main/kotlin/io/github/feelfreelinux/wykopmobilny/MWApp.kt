@@ -13,7 +13,7 @@ class MWApp : Application(), KodeinAware {
 
     override val kodein by Kodein.lazy {
         bind() from singleton { ApiPreferences(this@MWApp)}
-        bind() from singleton { WykopApiManager(this@MWApp, instance()) as WykopApi }
+        bind() from singleton { WykopApiManager(instance()) as WykopApi }
        // bind() from singleton { WykopWebViewClient(instance()) }
     }
 }

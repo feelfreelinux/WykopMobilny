@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.adapters
+package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbackInterface
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 
 
-class EntryDetailsAdapter(val callbacks: FeedClickCallbackInterface) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EntryAdapter(val callbacks: FeedClickCallbackInterface) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var entry : Entry? = null
     val ENTRY_HOLDER = 0
     val COMMENT_HOLDER = 1

@@ -4,14 +4,9 @@
     <string name="period12">Gorące 12h</string>
     <string name="period6">Gorące 6h</string>
     <string name="newest_entries">Najnowsze wpisy</string>
-    <string name="errorDialog">Wystąpił nieoczekiwany problem</string>
-    <string name="login">Zaloguj się</string>
     <string name="share">Udostępnij</string>
     <string name="save_image">Zapisz obraz</string>
     <string name="copy_url">Skopiuj adres URL</string>
-
-    <string name="navigation_drawer_open">Otwórz pasek nawigacji</string>
-    <string name="navigation_drawer_close">Zamknij pasek nawigacji</string>
 
     <string name="main_page">Strona Główna</string>
     <string name="wykopalisko">Wykopalisko</string>
@@ -21,4 +16,7 @@
     <string name="votes_count">+ %1$d</string>
     <string name="date_with_user_app">%1$s via %2$s</string>
     <string name="refresh">Odśwież</string>
+    <string name="nav_drawer_open">Nawigacja otwarta</string>
+    <string name="nav_drawer_closed">Nawigacja zamknięta</string>
+
 </resources>

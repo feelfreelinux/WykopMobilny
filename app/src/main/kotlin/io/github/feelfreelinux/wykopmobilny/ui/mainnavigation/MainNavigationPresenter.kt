@@ -1,43 +1,44 @@
 package io.github.feelfreelinux.wykopmobilny.ui.mainnavigation
 
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.fragments.HotFeedFragment
+import io.github.feelfreelinux.wykopmobilny.base.Presenter
+import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApi
-import io.github.feelfreelinux.wykopmobilny.utils.setupSubscribeIOAndroid
-import io.reactivex.disposables.CompositeDisposable
 
-class MainNavigationPresenter(val apiManager : WykopApi, val apiPreferences: ApiPreferences, val view : MainNavigationContract.View) : MainNavigationContract.Presenter {
-    override var subscriptions = CompositeDisposable()
+class MainNavigationPresenter(val apiManager : WykopApi, val apiPreferences: ApiPreferences) : Presenter<MainNavigationContract.View>(), MainNavigationContract.Presenter {
+    override fun subscribe(view: MainNavigationContract.View) {
+        super.subscribe(view)
+        setupNavigation()
+    }
 
     override fun navigationItemClicked(itemId: Int) {
         when (itemId) {
-            R.id.nav_mikroblog -> view.openFragment(HotFeedFragment.newInstance())
+            R.id.nav_mikroblog -> view?.openFragment(HotFragment.newInstance())
         }
     }
 
-    override fun setupNavigation() {
-        apiPreferences.avatarUrl?.let { view.avatarUrl = it }
+    private fun setupNavigation() {
+        apiPreferences.avatarUrl?.let { view?.avatarUrl = it }
         getNotificationsCount()
-        view.openFragment(HotFeedFragment.newInstance())
+        view?.openFragment(HotFragment.newInstance())
     }
 
-    fun getNotificationsCount() {
-        subscriptions.add(
-                apiManager.getNotificationCount()
-                        .setupSubscribeIOAndroid()
-                        .subscribe {
-                            (result, _) ->
-                            result?.let { view.notificationCount = result.count }
-                        })
+    override fun getNotificationsCount() {
+        apiManager.apply {
+            getNotificationCount {
+                it.fold(
+                    { (count) -> view?.notificationCount = count },
+                    { view?.showErrorDialog(it) })
+            }
 
-        subscriptions.add(
-                apiManager.getHashTagsNotificationsCount()
-                        .setupSubscribeIOAndroid()
-                        .subscribe {
-                            (result, _) ->
-                            result?.let { view.hashTagNotificationCount = result.count }
-                        })
+            getHashTagsNotificationsCount {
+                it.fold(
+                        { (count) -> view?.hashTagNotificationCount = count },
+                        { view?.showErrorDialog(it) })
+            }
+        }
+
     }
 
 }

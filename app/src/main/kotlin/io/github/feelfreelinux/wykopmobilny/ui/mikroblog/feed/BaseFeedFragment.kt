@@ -1,7 +1,6 @@
-package io.github.feelfreelinux.wykopmobilny.fragments
+package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,13 +12,12 @@ import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
-import io.github.feelfreelinux.wykopmobilny.adapters.FeedAdapter
+import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
-import io.github.feelfreelinux.wykopmobilny.presenters.FeedPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.*
 
-abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefreshListener, FeedPresenter.View {
+abstract class BaseFeedFragment : BaseFragment(), ILoadMore, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {
     private val kodein = LazyKodein(appKodein)
 
     lateinit var recyclerView: RecyclerView
@@ -30,7 +28,7 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
     protected val callbacks by lazy { FeedClickCallbacks(navActivity, apiManager) }
     protected val feedAdapter by lazy { FeedAdapter(callbacks) }
 
-    abstract val feedPresenter : FeedPresenter
+    abstract val presenter: BaseFeedPresenter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.recycler_view_layout, container, false)
@@ -59,7 +57,7 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
             navActivity.isLoading = true
 
             // Trigger data loading
-            feedPresenter.loadData(1)
+            presenter.loadData(1)
         }
 
         return view
@@ -74,10 +72,10 @@ abstract class FeedFragment : Fragment(), ILoadMore, SwipeRefreshLayout.OnRefres
     }
 
     override fun onRefresh() {
-        feedPresenter.loadData(1)
+        presenter.loadData(1)
     }
 
     override fun onLoadMore(page: Int) {
-        feedPresenter.loadData(page)
+        presenter.loadData(page)
     }
 }

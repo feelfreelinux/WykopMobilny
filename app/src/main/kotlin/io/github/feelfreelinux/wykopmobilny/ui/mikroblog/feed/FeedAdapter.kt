@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.adapters
+package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

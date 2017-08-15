@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.fragments
+package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,19 +11,17 @@ import com.github.salomonbrys.kodein.LazyKodein
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
-import io.github.feelfreelinux.wykopmobilny.adapters.EntryDetailsAdapter
+import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
 import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
-import io.github.feelfreelinux.wykopmobilny.presenters.EntryDetailsPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApi
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 
-private const val EXTRA_ENTRY_ID = "ENTRY_ID"
+val EXTRA_ENTRY_ID = "ENTRY_ID"
 
-
-class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, EntryDetailsPresenter.View {
+class EntryFragment : BaseFragment(), EntryContract.View, SwipeRefreshLayout.OnRefreshListener {
     private val kodein = LazyKodein(appKodein)
     lateinit var recyclerView: RecyclerView
 
@@ -31,12 +29,12 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, Entr
     private val entryId by lazy { arguments.getInt(EXTRA_ENTRY_ID) }
     private val navActivity by lazy { activity as NavigationActivity }
     val callbacks by lazy { FeedClickCallbacks(navActivity, apiManager) }
-    val presenter by lazy { EntryDetailsPresenter(entryId, this, apiManager) }
-    val adapter by lazy { EntryDetailsAdapter(callbacks) }
+    val presenter by lazy { EntryPresenter(apiManager, entryId) }
+    val adapter by lazy { EntryAdapter(callbacks) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.recycler_view_layout, container, false)
-
+        presenter.subscribe(this)
         // Prepare RecyclerView
         recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)!!
         recyclerView.prepare()
@@ -57,7 +55,7 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, Entr
     override fun onRefresh() {presenter.loadData()}
 
 
-    override fun setAdapterEntry(entry: Entry) {
+    override fun showEntry(entry: Entry) {
         adapter.entry = entry
         navActivity.isLoading = false
         navActivity.isRefreshing = false
@@ -67,7 +65,7 @@ class EntryViewFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, Entr
     companion object {
         fun newInstance(id: Int): Fragment {
             val fragmentData = Bundle()
-            val fragment = EntryViewFragment()
+            val fragment = EntryFragment()
             fragmentData.putInt(EXTRA_ENTRY_ID, id)
             fragment.arguments = fragmentData
             return fragment

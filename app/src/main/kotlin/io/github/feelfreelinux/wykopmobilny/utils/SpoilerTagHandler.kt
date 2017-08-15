@@ -10,6 +10,7 @@ import android.text.style.StrikethroughSpan
 
 
 class SpoilerTagHandler : Html.TagHandler {
+    @Suppress("DEPRECATION")
     class SpoilerSpan(val spoilerText : String) : ClickableSpan() {
         override fun onClick(textView: View?) {
             /*val tv = (textView as TextView) [WIP] Replace text with spolier text

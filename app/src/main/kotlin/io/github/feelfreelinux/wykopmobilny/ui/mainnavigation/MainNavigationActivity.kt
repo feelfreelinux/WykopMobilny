@@ -14,7 +14,7 @@ import com.github.salomonbrys.kodein.LazyKodein
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.activities.WykopActivity
+import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
@@ -24,11 +24,7 @@ fun Context.lauchMainNavigation() {
     startActivity(Intent(this, NavigationActivity::class.java))
 }
 
-class NavigationActivity : WykopActivity(), MainNavigationContract.View, NavigationView.OnNavigationItemSelectedListener {
-    override fun showErrorDialog(e: Throwable) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
+class NavigationActivity : BaseActivity(), MainNavigationContract.View, NavigationView.OnNavigationItemSelectedListener {
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         presenter.navigationItemClicked(item.itemId)
         item.isChecked = true
@@ -42,7 +38,7 @@ class NavigationActivity : WykopActivity(), MainNavigationContract.View, Navigat
         val apiManager: WykopApi by kodein.instance()
         val apiPreferences: ApiPreferences by kodein.instance()
 
-        MainNavigationPresenter(apiManager, apiPreferences,this)
+        MainNavigationPresenter(apiManager, apiPreferences)
     }
 
     val navHeader by lazy { navigationView.getHeaderView(0) }
@@ -50,8 +46,8 @@ class NavigationActivity : WykopActivity(), MainNavigationContract.View, Navigat
         ActionBarDrawerToggle(this,
                 drawer_layout,
                 toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close)
+                R.string.nav_drawer_open,
+                R.string.nav_drawer_closed)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,10 +73,15 @@ class NavigationActivity : WykopActivity(), MainNavigationContract.View, Navigat
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribe()
+    }
+
     fun setupNavigation() {
         drawer_layout.addDrawerListener(actionBarToggle)
         navigationView.setNavigationItemSelectedListener(this)
-        presenter.setupNavigation()
+        presenter.subscribe(this)
     }
 
     override var isLoading: Boolean

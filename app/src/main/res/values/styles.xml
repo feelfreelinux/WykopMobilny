@@ -1,22 +1,6 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:itemBackground">@color/cardList.Light</item>
-        <item name="colorPrimary">@color/colorPrimary.Light</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark.Light</item>
-        <item name="colorAccent">@color/colorAccent.Light</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="cardListColor">@color/cardList.Light</item>
-        <item name="cardViewColor">@color/cardView.Light</item>
-        <item name="android:windowBackground">@color/cardList.Light</item>
-        <item name="spacerColor">@color/spacerColor.Light</item>
-        <item name="drawablesColor">@color/drawablesColor.Light</item>
-        <item name="mikroblogControlsColor">@color/mikroblogControlsColor.Light</item>
-    </style>
 
     <style name="AppTheme.Dark" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="android:textColor">@android:color/white</item>
@@ -46,13 +30,5 @@
         <item name="android:text">0</item>
         <item name="android:textSize">20sp</item>
     </style>
-    <style name="AppTheme.Dark.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 </resources>
