@@ -2,9 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.ui.mainnavigation
 
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.Presenter
+import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryFragment
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.WykopApi
+import io.github.feelfreelinux.wykopmobilny.utils.getWpisId
 
 class MainNavigationPresenter(val apiManager : WykopApi, val apiPreferences: ApiPreferences) : Presenter<MainNavigationContract.View>(), MainNavigationContract.Presenter {
     override fun subscribe(view: MainNavigationContract.View) {
@@ -21,7 +23,8 @@ class MainNavigationPresenter(val apiManager : WykopApi, val apiPreferences: Api
     private fun setupNavigation() {
         apiPreferences.avatarUrl?.let { view?.avatarUrl = it }
         getNotificationsCount()
-        view?.openFragment(HotFragment.newInstance())
+        if (view?.actionUrl == null) view?.openFragment(HotFragment.newInstance())
+        else view?.openFragment(EntryFragment.newInstance(view?.actionUrl!!.getWpisId()))
     }
 
     override fun getNotificationsCount() {

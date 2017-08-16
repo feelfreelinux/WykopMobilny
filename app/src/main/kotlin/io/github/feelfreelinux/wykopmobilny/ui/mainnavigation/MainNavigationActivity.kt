@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.mainnavigation
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -25,6 +26,8 @@ fun Context.lauchMainNavigation() {
 }
 
 class NavigationActivity : BaseActivity(), MainNavigationContract.View, NavigationView.OnNavigationItemSelectedListener {
+    override var actionUrl: Uri? = null
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         presenter.navigationItemClicked(item.itemId)
         item.isChecked = true
@@ -54,6 +57,7 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
+        actionUrl = intent.data
         setupNavigation()
     }
 

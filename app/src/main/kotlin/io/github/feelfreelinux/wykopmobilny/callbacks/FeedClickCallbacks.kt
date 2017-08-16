@@ -17,9 +17,19 @@ class FeedClickCallbacks(val context: NavigationActivity, val apiManager: WykopA
 
     override fun onVoteClicked(entryId: Int, commentId: Int?, isSelected: Boolean, responseCallback: VoteResponseListener) {
         if (!isSelected)
-            apiManager.voteEntry(entryId, commentId) {}
+            apiManager.voteEntry(entryId, commentId) {
+                it.fold(
+                    { responseCallback.invoke(it) },
+                    { context.showErrorDialog(it.exception) }
+                )
+            }
         else
-            apiManager.unvoteEntry(entryId, commentId) {}
+            apiManager.unvoteEntry(entryId, commentId) {
+                it.fold(
+                        { responseCallback.invoke(it) },
+                        { context.showErrorDialog(it) }
+                )
+            }
     }
 
     override fun onCommentsClicked(entryId: Int) {

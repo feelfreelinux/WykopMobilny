@@ -27,10 +27,9 @@ class SpoilerTagHandler : Html.TagHandler {
                 }
             }*/
 
-            val alertBuilder: AlertDialog.Builder
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-                alertBuilder = AlertDialog.Builder(textView?.context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-            else alertBuilder = AlertDialog.Builder(textView?.context, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+            val alertBuilder: AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+                AlertDialog.Builder(textView?.context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+            else AlertDialog.Builder(textView?.context, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
 
             alertBuilder.run {
                 setTitle("Spoiler")

@@ -22,7 +22,24 @@
         </activity>
         <activity android:name=".activities.PhotoViewActivity" />
 
-        <activity android:name=".ui.mainnavigation.NavigationActivity" />
+        <activity android:name=".ui.mainnavigation.NavigationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http"
+                    android:host="www.wykop.pl"
+                    android:pathPrefix="/wpis" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="www.wykop.pl"
+                    android:pathPrefix="/wpis" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

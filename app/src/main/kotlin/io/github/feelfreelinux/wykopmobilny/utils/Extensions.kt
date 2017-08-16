@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
+import android.net.Uri
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.SpannableStringBuilder
@@ -80,3 +81,8 @@ fun ImageView.setPhotoViewUrl( url : String) {
 }
 
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
+
+fun Uri.getWpisId(): Int {
+    val subUrl = toString().substringAfter("/wpis/")
+    return subUrl.substringBefore("/").toInt()
+}

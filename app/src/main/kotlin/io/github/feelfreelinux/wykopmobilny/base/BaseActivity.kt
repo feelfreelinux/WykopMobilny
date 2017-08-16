@@ -1,6 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
+import android.app.AlertDialog
 import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
@@ -15,5 +17,14 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun showErrorDialog(e : Throwable) {
         printout("Error occured - " + e.message)
+        val alertBuilder: AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+            AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+        else AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+
+        alertBuilder.run {
+            setTitle("Wystąpił nieoczekiwany problem")
+            setMessage(e.localizedMessage)
+            create().show()
+        }
     }
 }
