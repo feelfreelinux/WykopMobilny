@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.tag
 
 import io.github.feelfreelinux.wykopmobilny.base.Presenter
-import io.github.feelfreelinux.wykopmobilny.utils.WykopApi
+import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 
 class TagPresenter(val apiManager : WykopApi, val tag : String) : Presenter<TagContract.View>(), TagContract.Presenter {
     override fun loadData(page : Int) {

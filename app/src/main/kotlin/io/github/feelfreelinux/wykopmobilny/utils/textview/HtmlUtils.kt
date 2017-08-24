@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.utils
+package io.github.feelfreelinux.wykopmobilny.utils.textview
 
 import android.os.Build
 import android.text.Html

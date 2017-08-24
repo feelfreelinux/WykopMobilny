@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.PhotoViewActivity" />
+        <activity android:name=".ui.photoview.PhotoViewActivity" />
 
         <activity android:name=".ui.mainnavigation.NavigationActivity">
             <intent-filter>

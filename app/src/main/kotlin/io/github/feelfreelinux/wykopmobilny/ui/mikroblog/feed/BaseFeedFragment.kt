@@ -11,11 +11,14 @@ import com.github.salomonbrys.kodein.LazyKodein
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
 import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.EndlessScrollListener
+import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ILoadMore
 
 abstract class BaseFeedFragment : BaseFragment(), ILoadMore, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {
     private val kodein = LazyKodein(appKodein)

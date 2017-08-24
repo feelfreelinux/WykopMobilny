@@ -4,7 +4,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryFragment
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.tag.TagFragment
 import io.github.feelfreelinux.wykopmobilny.utils.VoteResponseListener
-import io.github.feelfreelinux.wykopmobilny.utils.WykopApi
+import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 
 interface FeedClickCallbackInterface {
     fun onVoteClicked(entryId : Int, commentId : Int?, isSelected : Boolean, responseCallback: VoteResponseListener)

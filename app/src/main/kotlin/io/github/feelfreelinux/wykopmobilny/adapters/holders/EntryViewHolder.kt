@@ -3,6 +3,8 @@ package io.github.feelfreelinux.wykopmobilny.adapters.holders
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
+import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbackInterface
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.utils.*

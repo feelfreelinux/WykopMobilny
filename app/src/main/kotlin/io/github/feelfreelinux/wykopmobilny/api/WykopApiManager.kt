@@ -1,7 +1,8 @@
-package io.github.feelfreelinux.wykopmobilny.utils
+package io.github.feelfreelinux.wykopmobilny.api
 
 import com.github.kittinunf.fuel.core.Request
 import io.github.feelfreelinux.wykopmobilny.objects.*
+import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
 
 interface WykopApi {
     fun getUserSessionToken(responseCallback: ApiResultCallback<Profile>): Request

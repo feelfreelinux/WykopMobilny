@@ -16,7 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
 import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
 import io.github.feelfreelinux.wykopmobilny.objects.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
-import io.github.feelfreelinux.wykopmobilny.utils.WykopApi
+import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 
 val EXTRA_ENTRY_ID = "ENTRY_ID"

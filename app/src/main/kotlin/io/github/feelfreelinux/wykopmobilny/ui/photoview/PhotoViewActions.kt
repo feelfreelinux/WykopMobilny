@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.presenters
+package io.github.feelfreelinux.wykopmobilny.ui.photoview
 
 import android.Manifest
 import android.content.Context
@@ -6,7 +6,6 @@ import android.provider.MediaStore.Images
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.Bitmap
 import android.net.Uri
-import io.github.feelfreelinux.wykopmobilny.activities.PhotoViewActivity
 import kotlinx.android.synthetic.main.activity_photoview.*
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -21,7 +20,6 @@ import java.io.FileOutputStream
 
 
 class PhotoViewActions(val context : Context) {
-
     val photoView = context as PhotoViewActivity
     fun shareImage() {
         val bitmap = getImageBitmap()
@@ -57,7 +55,7 @@ class PhotoViewActions(val context : Context) {
         }
     }
 
-    fun checkForWriteReadPermission() : Boolean {
+    private fun checkForWriteReadPermission() : Boolean {
         val writePermission = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
         val readPermission = ContextCompat.checkSelfPermission(context,
@@ -68,7 +66,7 @@ class PhotoViewActions(val context : Context) {
         } else return true
     }
 
-    fun showToastMessage(text : String) {
+    private fun showToastMessage(text : String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 }

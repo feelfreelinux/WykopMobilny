@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.loginscreen
 
 import io.github.feelfreelinux.wykopmobilny.base.Presenter
-import io.github.feelfreelinux.wykopmobilny.utils.ApiPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.WykopApi
+import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
+import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 
 class LoginScreenPresenter(val apiPreferences: ApiPreferences, val apiManager: WykopApi) : Presenter<LoginScreenContract.View>(), LoginScreenContract.Presenter {
 

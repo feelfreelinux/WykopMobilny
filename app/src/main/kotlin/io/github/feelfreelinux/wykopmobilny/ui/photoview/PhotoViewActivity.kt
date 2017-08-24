@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.activities
+package io.github.feelfreelinux.wykopmobilny.ui.photoview
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.presenters.PhotoViewActions
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_photoview.*
 import kotlinx.android.synthetic.main.toolbar.*

@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.utils
+package io.github.feelfreelinux.wykopmobilny.utils.recyclerview
 
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager

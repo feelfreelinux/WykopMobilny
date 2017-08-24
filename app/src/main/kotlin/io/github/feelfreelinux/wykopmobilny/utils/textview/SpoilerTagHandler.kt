@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.utils
+package io.github.feelfreelinux.wykopmobilny.utils.textview
 
 import android.app.AlertDialog
 import android.os.Build

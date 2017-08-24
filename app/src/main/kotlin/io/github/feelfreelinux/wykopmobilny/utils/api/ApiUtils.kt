@@ -1,10 +1,12 @@
-package io.github.feelfreelinux.wykopmobilny.utils
+package io.github.feelfreelinux.wykopmobilny.utils.api
 
 import android.graphics.Color
+import android.net.Uri
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.objects.*
 import kotlinx.android.synthetic.main.feed_layout.view.*
 import org.json.JSONObject
+import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,4 +32,18 @@ fun getGenderStripResource(authorSex : String) : Int {
         "female" -> return R.drawable.female_strip
         else -> return 0
     }
+}
+
+fun String.encryptMD5() : String{
+    val bytes = toByteArray()
+    val md = MessageDigest.getInstance("MD5")
+    val digest = md.digest(bytes)
+    var result = ""
+    for (byte in digest) result += "%02x".format(byte)
+    return result
+}
+
+fun Uri.getWpisId(): Int {
+    val subUrl = toString().substringAfter("/wpis/")
+    return subUrl.substringBefore("/").toInt()
 }

@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
-import android.content.Context
 import android.net.Uri
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -10,9 +9,12 @@ import android.text.style.URLSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import io.github.feelfreelinux.wykopmobilny.activities.PhotoViewActivity
-import io.github.feelfreelinux.wykopmobilny.activities.launchPhotoView
+import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
+import io.github.feelfreelinux.wykopmobilny.ui.photoview.launchPhotoView
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
+import io.github.feelfreelinux.wykopmobilny.utils.textview.LinkSpan
+import io.github.feelfreelinux.wykopmobilny.utils.textview.isTag
+import io.github.feelfreelinux.wykopmobilny.utils.textview.toSpannable
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
@@ -81,8 +83,3 @@ fun ImageView.setPhotoViewUrl( url : String) {
 }
 
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
-
-fun Uri.getWpisId(): Int {
-    val subUrl = toString().substringAfter("/wpis/")
-    return subUrl.substringBefore("/").toInt()
-}

@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.objects
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-
+import java.io.Serializable
 
 
 data class VoteResponse(
@@ -330,3 +330,20 @@ class Profile (
         @Expose
         var userKey: String?
 )
+
+data class Embed(
+        @SerializedName("type")
+        @Expose
+        val type : String,
+        @SerializedName("preview")
+        @Expose
+        val preview : String,
+        @SerializedName("url")
+        @Expose
+        val url : String,
+        @SerializedName("plus18")
+        @Expose
+        val plus18 : Boolean,
+        @SerializedName("source")
+        @Expose
+        val source : String) : Serializable

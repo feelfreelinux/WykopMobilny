@@ -5,10 +5,12 @@ import com.github.salomonbrys.kodein.LazyKodein
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.lauchMainNavigation
 import io.github.feelfreelinux.wykopmobilny.objects.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginScreenActivity : BaseActivity(), LoginScreenContract.View {
