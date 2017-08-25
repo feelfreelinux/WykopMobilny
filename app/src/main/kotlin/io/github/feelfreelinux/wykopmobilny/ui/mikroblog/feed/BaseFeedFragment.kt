@@ -19,17 +19,17 @@ import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.EndlessScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ILoadMore
+import kotlinx.android.synthetic.main.recycler_view_layout.view.*
 
 abstract class BaseFeedFragment : BaseFragment(), ILoadMore, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {
     private val kodein = LazyKodein(appKodein)
 
-    lateinit var recyclerView: RecyclerView
     var endlessScrollListener: EndlessScrollListener? = null
 
     protected val apiManager: WykopApi by kodein.instance()
     protected val navActivity by lazy { activity as NavigationActivity }
-    protected val callbacks by lazy { FeedClickCallbacks(navActivity, apiManager) }
-    protected val feedAdapter by lazy { FeedAdapter(callbacks) }
+    private val callbacks by lazy { FeedClickCallbacks(navActivity, apiManager) }
+    private val feedAdapter by lazy { FeedAdapter(callbacks) }
 
     abstract val presenter: BaseFeedPresenter
 
@@ -37,7 +37,7 @@ abstract class BaseFeedFragment : BaseFragment(), ILoadMore, SwipeRefreshLayout.
         val view = inflater?.inflate(R.layout.recycler_view_layout, container, false)
 
         // Prepare RecyclerView, and EndlessScrollListener
-        recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)!!
+        val recyclerView = view?.recyclerView!!
         recyclerView.prepare()
 
         // Retrieve savedState endless scroll listener
@@ -55,7 +55,7 @@ abstract class BaseFeedFragment : BaseFragment(), ILoadMore, SwipeRefreshLayout.
         recyclerView.adapter = feedAdapter
 
         // Create adapter if no data is saved
-        if(feedAdapter.entryList.size == 0) {
+        if(feedAdapter.dataset.isEmpty()) {
             // Set needed flags
             navActivity.isLoading = true
 
@@ -67,10 +67,18 @@ abstract class BaseFeedFragment : BaseFragment(), ILoadMore, SwipeRefreshLayout.
     }
 
     override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean) {
-        if (shouldClearAdapter) feedAdapter.entryList.clear()
         navActivity.isRefreshing = false
         navActivity.isLoading = false
-        feedAdapter.entryList.addAll(entryList)
+        feedAdapter.isLoading = false
+
+        if (shouldClearAdapter) feedAdapter.dataset.clear()
+        feedAdapter.dataset.addAll(entryList)
+
+        if(shouldClearAdapter) feedAdapter.notifyDataSetChanged()
+        else feedAdapter.notifyItemRangeInserted(
+                feedAdapter.dataset.size - entryList.size,
+                feedAdapter.dataset.size
+        )
         feedAdapter.notifyDataSetChanged()
     }
 
@@ -79,6 +87,7 @@ abstract class BaseFeedFragment : BaseFragment(), ILoadMore, SwipeRefreshLayout.
     }
 
     override fun onLoadMore(page: Int) {
+        feedAdapter.isLoading = true
         presenter.loadData(page)
     }
 }
