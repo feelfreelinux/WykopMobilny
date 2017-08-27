@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot
 
 import io.github.feelfreelinux.wykopmobilny.api.ApiResultCallback
 import io.github.feelfreelinux.wykopmobilny.base.Presenter
-import io.github.feelfreelinux.wykopmobilny.objects.Entry
+import io.github.feelfreelinux.wykopmobilny.api.Entry
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 
 class HotPresenter(val apiManager : WykopApi) : Presenter<HotContract.View>(), HotContract.Presenter {

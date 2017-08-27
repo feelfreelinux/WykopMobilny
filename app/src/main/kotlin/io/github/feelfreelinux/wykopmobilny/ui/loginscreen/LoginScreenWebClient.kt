@@ -8,7 +8,7 @@ import android.webkit.WebViewClient
 
 typealias UserLoggedCallback = (login : String, token : String) -> Unit
 
-class LoginActivityWebClient(val userLoggedCallback: UserLoggedCallback) : WebViewClient() {
+class LoginActivityWebClient(private val userLoggedCallback: UserLoggedCallback) : WebViewClient() {
     @Suppress("OverridingDeprecatedMember")
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         url?.let { parseReturnURL(it) }

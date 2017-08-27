@@ -1,10 +1,10 @@
-package io.github.feelfreelinux.wykopmobilny.callbacks
+package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed
 
-import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryFragment
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.tag.TagFragment
 import io.github.feelfreelinux.wykopmobilny.utils.VoteResponseListener
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
+import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.MainNavigationInterface
 
 interface FeedClickCallbackInterface {
     fun onVoteClicked(entryId : Int, commentId : Int?, isSelected : Boolean, responseCallback: VoteResponseListener)
@@ -13,7 +13,7 @@ interface FeedClickCallbackInterface {
     fun onTagClicked(tag : String)
 }
 
-class FeedClickCallbacks(val context: NavigationActivity, val apiManager: WykopApi) : FeedClickCallbackInterface {
+class FeedClickCallbacks(val context: MainNavigationInterface, val apiManager: WykopApi) : FeedClickCallbackInterface {
 
     override fun onVoteClicked(entryId: Int, commentId: Int?, isSelected: Boolean, responseCallback: VoteResponseListener) {
         if (!isSelected)

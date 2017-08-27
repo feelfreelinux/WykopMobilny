@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.objects
+package io.github.feelfreelinux.wykopmobilny.api
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

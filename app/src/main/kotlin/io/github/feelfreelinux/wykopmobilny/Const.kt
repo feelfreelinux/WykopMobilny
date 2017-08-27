@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.objects
+package io.github.feelfreelinux.wykopmobilny
 
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
 

@@ -3,33 +3,26 @@ package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.android.appKodein
-import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.api.WykopApi
-import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import io.github.feelfreelinux.wykopmobilny.objects.Entry
-import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbacks
+import io.github.feelfreelinux.wykopmobilny.api.Entry
+import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.EndlessScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ILoadMore
 import kotlinx.android.synthetic.main.recycler_view_layout.view.*
 
 abstract class BaseFeedFragment : BaseFragment(), ILoadMore, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {
-    private val kodein = LazyKodein(appKodein)
-
     var endlessScrollListener: EndlessScrollListener? = null
 
-    protected val apiManager: WykopApi by kodein.instance()
-    protected val navActivity by lazy { activity as NavigationActivity }
-    private val callbacks by lazy { FeedClickCallbacks(navActivity, apiManager) }
-    private val feedAdapter by lazy { FeedAdapter(callbacks) }
+    protected val navActivity by lazy { activity as MainNavigationInterface }
+
+    private val feedAdapter by lazy {
+        FeedAdapter(FeedClickCallbacks(navActivity, kodein.instanceValue()))
+    }
 
     abstract val presenter: BaseFeedPresenter
 
@@ -73,8 +66,8 @@ abstract class BaseFeedFragment : BaseFragment(), ILoadMore, SwipeRefreshLayout.
 
         if (shouldClearAdapter) feedAdapter.dataset.clear()
         feedAdapter.dataset.addAll(entryList)
-
         if(shouldClearAdapter) feedAdapter.notifyDataSetChanged()
+
         else feedAdapter.notifyItemRangeInserted(
                 feedAdapter.dataset.size - entryList.size,
                 feedAdapter.dataset.size

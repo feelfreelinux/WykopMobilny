@@ -1,12 +1,12 @@
-package io.github.feelfreelinux.wykopmobilny.adapters.holders
+package io.github.feelfreelinux.wykopmobilny.ui.holders
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.callbacks.FeedClickCallbackInterface
-import io.github.feelfreelinux.wykopmobilny.objects.Entry
+import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.FeedClickCallbackInterface
+import io.github.feelfreelinux.wykopmobilny.api.Entry
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import kotlinx.android.synthetic.main.entry_header.view.*
 import kotlinx.android.synthetic.main.feed_layout.view.*

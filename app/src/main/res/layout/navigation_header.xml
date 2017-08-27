@@ -25,7 +25,7 @@
             android:id="@+id/nav_notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/mail_icon"
+            android:drawableLeft="@drawable/ic_mail"
             android:theme="@style/NavigationDrawerNotificationItem"/>
 
         <View
@@ -38,7 +38,7 @@
             android:id="@+id/nav_notifications_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/notification_icon"
+            android:drawableLeft="@drawable/ic_notification"
             android:theme="@style/NavigationDrawerNotificationItem"/>
 </LinearLayout>
 </LinearLayout>

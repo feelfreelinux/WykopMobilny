@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.api
 
 import com.github.kittinunf.fuel.core.Request
-import io.github.feelfreelinux.wykopmobilny.objects.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
 
 interface WykopApi {
@@ -47,12 +46,12 @@ class WykopApiManager(val apiPrefs: ApiPreferences) : WykopApi {
 
 
     override fun voteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request {
-        val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
+        val params = if (commentId == null) "entry/$entryId" else "ic_comment/$entryId/$commentId"
         return networkUtils.sendGet("entries/vote", params, responseCallback)
     }
 
     override fun unvoteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request {
-        val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
+        val params = if (commentId == null) "entry/$entryId" else "ic_comment/$entryId/$commentId"
         return networkUtils.sendGet("entries/unvote", params, responseCallback)
     }
 }

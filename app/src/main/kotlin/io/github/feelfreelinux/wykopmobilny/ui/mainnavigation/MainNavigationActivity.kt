@@ -9,10 +9,9 @@ import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
-import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
@@ -27,8 +26,19 @@ fun Context.lauchMainNavigation() {
     startActivity(Intent(this, NavigationActivity::class.java))
 }
 
-class NavigationActivity : BaseActivity(), MainNavigationContract.View, NavigationView.OnNavigationItemSelectedListener {
+
+interface MainNavigationInterface {
+    var isLoading: Boolean
+    var isRefreshing: Boolean
+    val activityToolbar : Toolbar
+    fun setSwipeRefreshListener(swipeListener: SwipeRefreshLayout.OnRefreshListener)
+    fun openFragment(fragment: Fragment)
+    fun showErrorDialog(e: Throwable)
+}
+
+class NavigationActivity : BaseActivity(), MainNavigationContract.View, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override var actionUrl: Uri? = null
+    override val activityToolbar: Toolbar get() = toolbar
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         presenter.navigationItemClicked(item.itemId)
@@ -37,17 +47,13 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
         return true
     }
 
-    private val kodein = LazyKodein(appKodein)
 
     private val presenter by lazy {
-        val apiManager: WykopApi by kodein.instance()
-        val apiPreferences: ApiPreferences by kodein.instance()
-
-        MainNavigationPresenter(apiManager, apiPreferences)
+        MainNavigationPresenter(kodein.instanceValue(), kodein.instanceValue())
     }
 
-    val navHeader by lazy { navigationView.getHeaderView(0) }
-    val actionBarToggle by lazy {
+    private val navHeader by lazy { navigationView.getHeaderView(0) }
+    private val actionBarToggle by lazy {
         ActionBarDrawerToggle(this,
                 drawer_layout,
                 toolbar,
@@ -59,6 +65,7 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
+
         actionUrl = intent.data
         setupNavigation()
     }
@@ -84,7 +91,7 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
         presenter.unsubscribe()
     }
 
-    fun setupNavigation() {
+    private fun setupNavigation() {
         drawer_layout.addDrawerListener(actionBarToggle)
         navigationView.setNavigationItemSelectedListener(this)
         presenter.subscribe(this)
@@ -108,7 +115,7 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
             swiperefresh.isRefreshing = value
         }
 
-    fun setSwipeRefreshListener(swipeListener: SwipeRefreshLayout.OnRefreshListener) {
+    override fun setSwipeRefreshListener(swipeListener: SwipeRefreshLayout.OnRefreshListener) {
         swiperefresh.setOnRefreshListener(swipeListener)
     }
 

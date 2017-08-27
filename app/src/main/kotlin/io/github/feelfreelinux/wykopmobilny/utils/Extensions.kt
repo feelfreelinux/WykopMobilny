@@ -9,6 +9,8 @@ import android.text.style.URLSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.github.salomonbrys.kodein.LazyKodein
+import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import io.github.feelfreelinux.wykopmobilny.ui.photoview.launchPhotoView
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
@@ -81,5 +83,7 @@ fun ImageView.setPhotoViewUrl( url : String) {
         }
     }
 }
+
+inline fun<reified T : Any> LazyKodein.instanceValue() = instance<T>().value
 
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))

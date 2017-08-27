@@ -1,26 +1,19 @@
 package io.github.feelfreelinux.wykopmobilny.ui.loginscreen
 
 import android.os.Bundle
-import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.lauchMainNavigation
-import io.github.feelfreelinux.wykopmobilny.objects.APP_KEY
+import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
 import kotlinx.android.synthetic.main.activity_login.*
-
+const val CONNECT_URL : String = "https://a.wykop.pl/user/connect/appkey/${APP_KEY}"
 class LoginScreenActivity : BaseActivity(), LoginScreenContract.View {
-    val CONNECT_URL : String = "https://a.wykop.pl/user/connect/appkey/$APP_KEY"
-
-    private val kodein = LazyKodein(appKodein)
-    val apiPrefs : ApiPreferences by kodein.instance()
-    val apiManager : WykopApi by kodein.instance()
     private val presenter by lazy {
-        LoginScreenPresenter(apiPrefs, apiManager)
+        LoginScreenPresenter(kodein.instance<ApiPreferences>().value, kodein.instance<WykopApi>().value)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
