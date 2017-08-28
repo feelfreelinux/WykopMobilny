@@ -16,6 +16,7 @@
     <string name="votes_count">+ %1$d</string>
     <string name="date_with_user_app">%1$s via %2$s</string>
     <string name="refresh">Odśwież</string>
+    <string name="login">Zaloguj się</string>
     <string name="nav_drawer_open">Nawigacja otwarta</string>
     <string name="nav_drawer_closed">Nawigacja zamknięta</string>
 

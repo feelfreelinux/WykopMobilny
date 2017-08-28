@@ -14,5 +14,13 @@ fun String.toSpannable(): Spannable {
     )
 }
 
-val URLSpan.isTag
-    get() = url.first() == '#'
+const val SPAN_TAG = 0
+const val SPAN_PROFILE = 1
+const val SPAN_LINK = 2
+
+val URLSpan.type
+    get() = when (url.first()) {
+        '#'  -> SPAN_TAG
+        '@'  -> SPAN_PROFILE
+        else -> SPAN_LINK
+    }

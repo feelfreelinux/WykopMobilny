@@ -5,15 +5,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.tag.TagFragment
 import io.github.feelfreelinux.wykopmobilny.utils.VoteResponseListener
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.MainNavigationInterface
+import io.github.feelfreelinux.wykopmobilny.utils.textview.EntryTextViewCallbacks
 
-interface FeedClickCallbackInterface {
+interface FeedClickCallbackInterface : EntryTextViewCallbacks {
     fun onVoteClicked(entryId : Int, commentId : Int?, isSelected : Boolean, responseCallback: VoteResponseListener)
     fun onCommentsClicked(entryId : Int)
-    fun onProfileClicked(profile : String)
-    fun onTagClicked(tag : String)
 }
 
-class FeedClickCallbacks(val context: MainNavigationInterface, val apiManager: WykopApi) : FeedClickCallbackInterface {
+class FeedClickCallbacks(val context: MainNavigationInterface, private val apiManager: WykopApi) : FeedClickCallbackInterface {
 
     override fun onVoteClicked(entryId: Int, commentId: Int?, isSelected: Boolean, responseCallback: VoteResponseListener) {
         if (!isSelected)
@@ -41,7 +40,10 @@ class FeedClickCallbacks(val context: MainNavigationInterface, val apiManager: W
     }
 
     override fun onProfileClicked(profile: String) {
-        TODO("not implemented")
 
+    }
+
+    override fun onLinkClicked(link: String) {
+        context.openBrowser(link)
     }
 }

@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.FeedClickCallbackInterface
 import io.github.feelfreelinux.wykopmobilny.api.Entry
 import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import kotlinx.android.synthetic.main.entry_header.view.*
 import kotlinx.android.synthetic.main.feed_layout.view.*
 
@@ -22,7 +23,7 @@ class EntryViewHolder(val view: View, val callbacks : FeedClickCallbackInterface
         bindFooter(entry)
     }
 
-    fun bindHeader(entry : Entry) {
+    private fun bindHeader(entry : Entry) {
         val header = view.entryHeader
         header.userNameTextView.apply {
             text = entry.author
@@ -40,7 +41,7 @@ class EntryViewHolder(val view: View, val callbacks : FeedClickCallbackInterface
         view.genderStripImageView.setBackgroundResource(getGenderStripResource(entry.authorSex))
     }
 
-    fun bindFooter(entry : Entry) {
+    private fun bindFooter(entry : Entry) {
         view.commentsCountTextView.apply {
             text = entry.commentCount.toString()
 
@@ -62,10 +63,8 @@ class EntryViewHolder(val view: View, val callbacks : FeedClickCallbackInterface
         }
     }
 
-    fun bindBody(entry : Entry) {
-        view.entryContentTextView.prepareBody(entry.body, {
-            callbacks.onTagClicked(it)
-        })
+    private fun bindBody(entry : Entry) {
+        view.entryContentTextView.prepareBody(entry.body, callbacks)
 
         view.entryImageView.apply {
             gone()

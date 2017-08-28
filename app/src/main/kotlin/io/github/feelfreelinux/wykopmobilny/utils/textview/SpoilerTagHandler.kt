@@ -13,20 +13,6 @@ class SpoilerTagHandler : Html.TagHandler {
     @Suppress("DEPRECATION")
     class SpoilerSpan(val spoilerText : String) : ClickableSpan() {
         override fun onClick(textView: View?) {
-            /*val tv = (textView as TextView) [WIP] Replace text with spolier text
-            var text = tv.text as SpannableString
-            var spans = text.getSpans(0, text.length, SpoilerSpan::class.java)
-            for (span in spans) {
-                if (span == this) {
-                    val startPos = text.getSpanStart(span)
-                    val endPos = text.getSpanEnd(span)
-
-                    printout(startPos.toString() + " " + endPos.toString())
-
-                    tv.editableText.replace(startPos, endPos, spoilerText)
-                }
-            }*/
-
             val alertBuilder: AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
                 AlertDialog.Builder(textView?.context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
             else AlertDialog.Builder(textView?.context, AlertDialog.THEME_DEVICE_DEFAULT_DARK)

@@ -9,8 +9,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.lauchMainNavigatio
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
-import kotlinx.android.synthetic.main.activity_login.*
-const val CONNECT_URL : String = "https://a.wykop.pl/user/connect/appkey/${APP_KEY}"
+import kotlinx.android.synthetic.main.activity_webview.*
+import kotlinx.android.synthetic.main.toolbar.*
+
+const val CONNECT_URL : String = "https://a.wykop.pl/user/connect/appkey/$APP_KEY"
 class LoginScreenActivity : BaseActivity(), LoginScreenContract.View {
     private val presenter by lazy {
         LoginScreenPresenter(kodein.instance<ApiPreferences>().value, kodein.instance<WykopApi>().value)
@@ -18,7 +20,9 @@ class LoginScreenActivity : BaseActivity(), LoginScreenContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_webview)
+        setSupportActionBar(toolbar)
+        toolbar.title = getString(R.string.login)
         presenter.subscribe(this)
     }
 

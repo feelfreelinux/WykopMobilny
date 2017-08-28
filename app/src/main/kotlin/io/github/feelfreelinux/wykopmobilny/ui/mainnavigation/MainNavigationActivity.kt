@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -34,6 +35,7 @@ interface MainNavigationInterface {
     fun setSwipeRefreshListener(swipeListener: SwipeRefreshLayout.OnRefreshListener)
     fun openFragment(fragment: Fragment)
     fun showErrorDialog(e: Throwable)
+    fun openBrowser(url : String)
 }
 
 class NavigationActivity : BaseActivity(), MainNavigationContract.View, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
@@ -121,15 +123,21 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
 
     override var notificationCount: Int
         get() = navHeader.nav_notifications.text.toString().toInt()
-        set(value) { navHeader.nav_notifications.text = value.toString() }
+        set(value) {
+            navHeader.nav_notifications.text = value.toString()
+        }
 
     override var hashTagNotificationCount: Int
         get() = navHeader.nav_notifications_tag.text.toString().toInt()
-        set(value) { navHeader.nav_notifications_tag.text = value.toString() }
+        set(value) {
+            navHeader.nav_notifications_tag.text = value.toString()
+        }
 
     override var avatarUrl: String
         get() = TODO("not implemented")
-        set(value) { navHeader.img_profile.loadImage(value) }
+        set(value) {
+            navHeader.img_profile.loadImage(value)
+        }
 
 
     override fun openFragment(fragment: Fragment) {
@@ -138,5 +146,13 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
     }
 
     override fun closeDrawer() =
-        drawer_layout.closeDrawers()
+            drawer_layout.closeDrawers()
+
+    override fun openBrowser(url: String) {
+        // Start in-app browser, handled by Chrome Customs Tabs
+        val builder = CustomTabsIntent.Builder()
+        val customTabsIntent = builder.build()
+        builder.setToolbarColor(toolbar.solidColor)
+        customTabsIntent.launchUrl(this, Uri.parse(url))
+    }
 }

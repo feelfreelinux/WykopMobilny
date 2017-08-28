@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.FeedClickCallbackInterface
 import io.github.feelfreelinux.wykopmobilny.api.Comment
 import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import kotlinx.android.synthetic.main.entry_header.view.*
 import kotlinx.android.synthetic.main.feed_layout.view.*
 
@@ -52,9 +53,7 @@ class CommentViewHolder(val view: View, val callbacks : FeedClickCallbackInterfa
     }
 
     fun bindBody(comment : Comment) {
-        view.entryContentTextView.prepareBody(comment.body, {
-            callbacks.onTagClicked(it)
-        })
+        view.entryContentTextView.prepareBody(comment.body, callbacks)
 
         view.entryImageView.apply {
             gone()
