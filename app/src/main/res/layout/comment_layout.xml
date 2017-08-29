@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="4dp"
     app:contentPadding="8dp"
-    card_view:cardBackgroundColor="?attr/cardViewColor"
-    card_view:cardCornerRadius="5dp"
-    card_view:cardElevation="1dp"
-    card_view:cardMaxElevation="1dp">
+    style="@style/EntryCardView">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,12 +33,10 @@
         <ImageView
             android:id="@+id/entryImageView"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
             android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
-            android:adjustViewBounds="false"
-            android:scaleType="centerCrop"
+            style="@style/WykopImageView"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="wrap"

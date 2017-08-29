@@ -20,7 +20,7 @@ class CommentViewHolder(val view: View, val callbacks : FeedClickCallbackInterfa
         bindFooter(comment)
     }
 
-    fun bindHeader(comment : Comment) {
+    private fun bindHeader(comment : Comment) {
         val header = view.entryHeader
         header.userNameTextView.apply {
             text = comment.author
@@ -38,7 +38,7 @@ class CommentViewHolder(val view: View, val callbacks : FeedClickCallbackInterfa
         view.genderStripImageView.setBackgroundResource(getGenderStripResource(comment.authorSex))
     }
 
-    fun bindFooter(comment : Comment) {
+    private fun bindFooter(comment : Comment) {
         view.voteCountTextView.apply {
             isSelected = comment.userVote > 0
             text = context.getString(R.string.votes_count, comment.voteCount)
@@ -52,13 +52,13 @@ class CommentViewHolder(val view: View, val callbacks : FeedClickCallbackInterfa
         }
     }
 
-    fun bindBody(comment : Comment) {
+    private fun bindBody(comment : Comment) {
         view.entryContentTextView.prepareBody(comment.body, callbacks)
 
         view.entryImageView.apply {
-            gone()
+            isVisible = false
             comment.embed?.let {
-                visible()
+                isVisible = true
                 loadImage(comment.embed!!.preview)
                 if (comment.embed!!.type == "image") setPhotoViewUrl(comment.embed!!.url)
             }

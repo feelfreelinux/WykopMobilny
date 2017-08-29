@@ -7,7 +7,6 @@
     <string name="share">Udostępnij</string>
     <string name="save_image">Zapisz obraz</string>
     <string name="copy_url">Skopiuj adres URL</string>
-
     <string name="main_page">Strona Główna</string>
     <string name="wykopalisko">Wykopalisko</string>
     <string name="mikroblog">Mikroblog</string>
@@ -19,5 +18,26 @@
     <string name="login">Zaloguj się</string>
     <string name="nav_drawer_open">Nawigacja otwarta</string>
     <string name="nav_drawer_closed">Nawigacja zamknięta</string>
+    <string name="reply">Reply</string>
+    <string name="copy_entry_url">Skopiuj adres wpisu</string>
+    <string name="text_italic">Kursywa</string>
+    <string name="text_bold">Pogrubienie</string>
+    <string name="insert_photo">Dodaj zdjęcie</string>
+    <string name="insert_code">Wstaw kod</string>
+    <string name="insert_link">Wstaw link</string>
+    <string name="insert_spoiler">Wstaw spoiler</string>
+    <string name="text_quote">Cytat</string>
+    <string name="send">Wyślij</string>
+    <string name="insert_emoticon">Wstaw emotikonę</string>
+    <string name="add_comment">Dodaj komentarz</string>
+    <string name="add_new_entry">Dodaj nowy wpis</string>
+    <string name="edit_entry">Edytuj wpis</string>
+    <string name="edit_comment">Edytuj komentarz</string>
+    <string name="sending_entry">Wysyłanie wpisu…</string>
+    <string name="url_address">Adres url</string>
+    <string name="link_description">Opis linku</string>
+    <string name="insert_photo_galery">Wybierz z galerii</string>
+    <string name="insert_photo_url">Z adresu URL</string>
+    <string name="confirm_exit">Czy napewno chcesz wyjść?</string>
 
 </resources>

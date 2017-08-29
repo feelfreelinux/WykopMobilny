@@ -2,6 +2,8 @@ package io.github.feelfreelinux.wykopmobilny.api
 
 import com.github.kittinunf.fuel.core.Request
 import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.printout
+import java.io.InputStream
 
 interface WykopApi {
     fun getUserSessionToken(responseCallback: ApiResultCallback<Profile>): Request
@@ -13,6 +15,10 @@ interface WykopApi {
     fun getEntryIndex(id: Int, responseCallback: ApiResultCallback<Entry>): Request
     fun voteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request
     fun unvoteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request
+    fun addNewEntry(body : String, embed : String?, responseCallback: ApiResultCallback<Any>): Request
+    fun addNewEntryComment(entryId: Int, body: String, embed: String?, responseCallback: ApiResultCallback<Any>): Request
+    fun addNewEntry(body: String, embed: Pair<String, InputStream>, responseCallback: ApiResultCallback<Any>): Request
+    fun addNewEntryComment(entryId: Int, body: String, embed: Pair<String, InputStream>, responseCallback: ApiResultCallback<Any>): Request
 }
 
 class WykopApiManager(val apiPrefs: ApiPreferences) : WykopApi {
@@ -46,12 +52,42 @@ class WykopApiManager(val apiPrefs: ApiPreferences) : WykopApi {
 
 
     override fun voteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request {
-        val params = if (commentId == null) "entry/$entryId" else "ic_comment/$entryId/$commentId"
+        val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
         return networkUtils.sendGet("entries/vote", params, responseCallback)
     }
 
     override fun unvoteEntry(entryId: Int, commentId: Int?, responseCallback: ApiResultCallback<VoteResponse>): Request {
-        val params = if (commentId == null) "entry/$entryId" else "ic_comment/$entryId/$commentId"
+        val params = if (commentId == null) "entry/$entryId" else "comment/$entryId/$commentId"
         return networkUtils.sendGet("entries/unvote", params, responseCallback)
+    }
+
+    override fun addNewEntry(body : String, embed : String?, responseCallback: ApiResultCallback<Any>): Request {
+        val params = ArrayList<Pair<String, String>>()
+        params.add(Pair("body", body))
+        embed?.let {
+            params.add(Pair("embed", embed))
+        }
+        return networkUtils.sendPost("entries/add", null, params, responseCallback)
+    }
+
+    override fun addNewEntry(body : String, embed : Pair<String, InputStream>, responseCallback: ApiResultCallback<Any>): Request {
+        val params = ArrayList<Pair<String, String>>()
+        params.add(Pair("body", body))
+        return networkUtils.sendPostWithFile("entries/add", null, params, "embed", embed, responseCallback)
+    }
+
+    override fun addNewEntryComment(entryId: Int, body: String, embed: String?, responseCallback: ApiResultCallback<Any>): Request {
+        val params = ArrayList<Pair<String, String>>()
+        params.add(Pair("body", body))
+        embed?.let {
+            params.add(Pair("embed", embed))
+        }
+        return networkUtils.sendPost("entries/addcomment", entryId.toString(), params, responseCallback)
+    }
+
+    override fun addNewEntryComment(entryId: Int, body: String, embed : Pair<String, InputStream>, responseCallback: ApiResultCallback<Any>): Request {
+        val params = ArrayList<Pair<String, String>>()
+        params.add(Pair("body", body))
+        return networkUtils.sendPostWithFile("entries/addcomment", entryId.toString(), params, "embed", embed, responseCallback)
     }
 }

@@ -12,18 +12,15 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.view.View
-import com.github.salomonbrys.kodein.instance
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.*
 import io.github.feelfreelinux.wykopmobilny.utils.*
-import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-fun Context.lauchMainNavigation() {
+fun Context.launchNavigationActivity() {
     startActivity(Intent(this, NavigationActivity::class.java))
 }
 
@@ -31,15 +28,20 @@ fun Context.lauchMainNavigation() {
 interface MainNavigationInterface {
     var isLoading: Boolean
     var isRefreshing: Boolean
+    var shouldShowFab: Boolean
+    var onFabClickListener: () -> Unit
     val activityToolbar : Toolbar
     fun setSwipeRefreshListener(swipeListener: SwipeRefreshLayout.OnRefreshListener)
     fun openFragment(fragment: Fragment)
     fun showErrorDialog(e: Throwable)
     fun openBrowser(url : String)
+    fun openNewEntryUserInput(receiver : String?)
+    fun openNewEntryCommentUserInput(entryId : Int, receiver: String?)
 }
 
 class NavigationActivity : BaseActivity(), MainNavigationContract.View, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override var actionUrl: Uri? = null
+    override var onFabClickListener = {}
     override val activityToolbar: Toolbar get() = toolbar
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -67,6 +69,11 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
+        toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
+
+        fab.setOnClickListener {
+            onFabClickListener.invoke()
+        }
 
         actionUrl = intent.data
         setupNavigation()
@@ -100,22 +107,20 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
     }
 
     override var isLoading: Boolean
-        get() = loadingView.visibility == View.VISIBLE
+        get() = loadingView.isVisible
         set(shouldShow) {
-            if (shouldShow) {
-                contentView.gone()
-                loadingView.visible()
-            } else {
-                contentView.visible()
-                loadingView.gone()
-            }
+            contentView.isVisible = !shouldShow
+            loadingView.isVisible = shouldShow
         }
 
     override var isRefreshing: Boolean
         get() = swiperefresh.isRefreshing
-        set(value) {
-            swiperefresh.isRefreshing = value
-        }
+        set(value) { swiperefresh.isRefreshing = value }
+
+    override var shouldShowFab: Boolean
+        get() = fab.isVisible
+        set(value) { if (value) fab.show() else fab.hide() }
+
 
     override fun setSwipeRefreshListener(swipeListener: SwipeRefreshLayout.OnRefreshListener) {
         swiperefresh.setOnRefreshListener(swipeListener)
@@ -123,15 +128,11 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
 
     override var notificationCount: Int
         get() = navHeader.nav_notifications.text.toString().toInt()
-        set(value) {
-            navHeader.nav_notifications.text = value.toString()
-        }
+        set(value) { navHeader.nav_notifications.text = value.toString() }
 
     override var hashTagNotificationCount: Int
         get() = navHeader.nav_notifications_tag.text.toString().toInt()
-        set(value) {
-            navHeader.nav_notifications_tag.text = value.toString()
-        }
+        set(value) { navHeader.nav_notifications_tag.text = value.toString() }
 
     override var avatarUrl: String
         get() = TODO("not implemented")
@@ -154,5 +155,19 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
         val customTabsIntent = builder.build()
         builder.setToolbarColor(toolbar.solidColor)
         customTabsIntent.launchUrl(this, Uri.parse(url))
+    }
+
+    override fun openNewEntryUserInput(receiver: String?) {
+        launchNewEntryUserInput(receiver)
+    }
+
+    override fun openNewEntryCommentUserInput(entryId : Int, receiver: String?) {
+        launchEntryCommentUserInput(entryId, receiver)
+    }
+
+    override fun onBackPressed() {
+        printout(supportFragmentManager.backStackEntryCount.toString())
+        if (supportFragmentManager.backStackEntryCount == 1) finish()
+        else supportFragmentManager.popBackStack()
     }
 }

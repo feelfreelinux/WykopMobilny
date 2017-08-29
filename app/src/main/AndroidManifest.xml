@@ -40,7 +40,8 @@
                     android:pathPrefix="/wpis" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.browser.BrowserActivity" />
+        <activity android:name=".ui.add_user_input.AddCommentActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

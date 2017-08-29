@@ -5,7 +5,7 @@
             android:title="@string/main_page" />
         <item
             android:id="@+id/nav_wykopalisko"
-            android:title="@string/wykopalisko" />
+            android:title="@string/wykopalisko" ></item>
         <item
             android:id="@+id/nav_mikroblog"
             android:title="@string/mikroblog" />
@@ -13,10 +13,11 @@
         <item
             android:id="@+id/nav_mojwykop"
             android:title="@string/mywykop" />
-
-        <item
-            android:id="@+id/nav_settings"
-            android:title="@string/settings" />
+        <group>
+            <item
+                android:id="@+id/nav_settings"
+                android:title="@string/settings" />
+        </group>
 
     </group>
 
