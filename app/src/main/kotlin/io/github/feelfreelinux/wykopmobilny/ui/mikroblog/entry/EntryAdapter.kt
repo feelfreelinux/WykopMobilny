@@ -10,7 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.FeedClickCallbackI
 import io.github.feelfreelinux.wykopmobilny.api.Entry
 
 
-class EntryAdapter(val callbacks: FeedClickCallbackInterface) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EntryAdapter(private val callbacks: FeedClickCallbackInterface) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var entry : Entry? = null
     private val ENTRY_HOLDER = 0
     private val COMMENT_HOLDER = 1
@@ -23,8 +23,8 @@ class EntryAdapter(val callbacks: FeedClickCallbackInterface) : RecyclerView.Ada
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position == 0) return ENTRY_HOLDER
-        else return COMMENT_HOLDER
+        return if (position == 0) ENTRY_HOLDER
+        else COMMENT_HOLDER
     }
 
     override fun getItemCount() : Int {

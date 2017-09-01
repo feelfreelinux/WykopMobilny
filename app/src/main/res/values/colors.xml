@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="textColor.Dark">#ffffff</color>
     <color name="colorAccent.Dark">#82b1ff</color>
     <color name="colorPrimary.Dark">#424242</color>
     <color name="colorPrimaryDark.Dark">#212121</color>

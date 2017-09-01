@@ -6,8 +6,7 @@
         android:id="@+id/refresh"
         android:title="@string/refresh"
         android:icon="@drawable/ic_refresh"
-        app:showAsAction="ifRoom"
-        />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/period6"
         android:title="@string/period6"

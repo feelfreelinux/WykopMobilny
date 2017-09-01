@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/reply"
+        android:title="@string/reply"
+        android:icon="@drawable/ic_pen"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/copyUrl"
+        android:title="@string/copy_entry_url"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/share"
+        android:title="@string/share"
+        app:showAsAction="never" />
+</menu>

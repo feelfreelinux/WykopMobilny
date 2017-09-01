@@ -67,9 +67,9 @@ class EntryViewHolder(val view: View, val callbacks : FeedClickCallbackInterface
         view.entryContentTextView.prepareBody(entry.body, callbacks)
 
         view.entryImageView.apply {
-            gone()
+            isVisible = false
             entry.embed?.let {
-                visible()
+                isVisible = true
                 loadImage(entry.embed!!.preview)
                 if (entry.embed!!.type == "image") setPhotoViewUrl(entry.embed!!.url)
             }

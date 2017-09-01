@@ -4,7 +4,7 @@ import io.github.feelfreelinux.wykopmobilny.base.Presenter
 import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 
-class LoginScreenPresenter(val apiPreferences: ApiPreferences, val apiManager: WykopApi) : Presenter<LoginScreenContract.View>(), LoginScreenContract.Presenter {
+class LoginScreenPresenter(private val apiPreferences: ApiPreferences, private val apiManager: WykopApi) : Presenter<LoginScreenContract.View>(), LoginScreenContract.Presenter {
 
     override fun subscribe(view: LoginScreenContract.View) {
         super.subscribe(view)
@@ -23,7 +23,7 @@ class LoginScreenPresenter(val apiPreferences: ApiPreferences, val apiManager: W
         else view?.setupWebView()
     }
 
-    fun getUserToken() {
+    private fun getUserToken() {
         view?.hideWebView()
         apiManager.getUserSessionToken {
             it.fold({

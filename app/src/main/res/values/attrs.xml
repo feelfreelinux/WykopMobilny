@@ -5,4 +5,5 @@
     <attr name="spacerColor" format="color" />
     <attr name="drawablesColor" format="color" />
     <attr name="mikroblogControlsColor" format="color" />
+    <attr name="textColor" format="color"/>
 </resources>
