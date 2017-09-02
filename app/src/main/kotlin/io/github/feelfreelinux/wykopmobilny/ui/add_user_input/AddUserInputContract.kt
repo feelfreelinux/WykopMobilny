@@ -8,17 +8,18 @@ import java.io.InputStream
 interface AddUserInputContract {
     interface View : BaseView {
         val receiver : String?
-        var textBody : String?
+        var textBody : String
         var photo : Uri?
         var showNotification : Boolean
         val entryId : Int?
         val inputType : Int
         var photoUrl : String?
         fun getPhotoInputStreamWithName() : Pair<String, InputStream>
-        fun setEditTextSelection(pos : Int)
+        var selectionPosition : Int
         fun exitActivity()
     }
     interface Presenter : BasePresenter<View> {
         fun sendInput()
+        var formatText : formatDialogCallback
     }
 }

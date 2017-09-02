@@ -19,7 +19,7 @@ fun Context.launchPhotoView(imageUrl: String) {
 
 class PhotoViewActivity : BaseActivity() {
     val url: String by lazy { intent.getStringExtra("URL") }
-    private val photoViewActions by lazy { PhotoViewActions(this) }
+    private val photoViewActions by lazy { PhotoViewActions(this) as PhotoViewCallbacks }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

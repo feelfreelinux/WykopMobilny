@@ -3,26 +3,36 @@ package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
 import io.github.feelfreelinux.wykopmobilny.api.ApiResultCallback
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.base.Presenter
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 class AddUserInputPresenter(private val apiManager: WykopApi) : AddUserInputContract.Presenter, Presenter<AddUserInputContract.View>() {
-    val postSendCallback : ApiResultCallback<Any> = {
+    override var formatText: formatDialogCallback = {
+        view?.apply {
+            textBody.apply {
+                val prefix = substring(0, selectionPosition)
+                textBody = prefix + it + substring(selectionPosition, length)
+                view!!.selectionPosition = prefix.length + it.length
+            }
+        }
+    }
+
+    private val postSendCallback : ApiResultCallback<Any> = {
         view?.showNotification = false
     }
 
-    val preSendCallback = {
+    private val preSendCallback = {
         view?.showNotification = true
         view?.exitActivity()
     }
 
     override fun subscribe(view: AddUserInputContract.View) {
         super.subscribe(view)
-        // Add `@user: ` when replying to comment
+
         view.apply {
+            // Add `@user: ` when replying to comment
             receiver?.let {
-                if (textBody.isNullOrBlank()) {
+                if (textBody.isBlank()) {
                     textBody = "@$receiver: "
-                    setEditTextSelection(textBody!!.length)
+                    view.selectionPosition = textBody.length
                 }
             }
         }

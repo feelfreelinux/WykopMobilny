@@ -19,9 +19,16 @@ import java.io.File
 import java.io.FileOutputStream
 
 
-class PhotoViewActions(val context : Context) {
+interface PhotoViewCallbacks {
+    fun shareImage()
+    fun getImageBitmap(): Bitmap?
+    fun copyURL()
+    fun saveImage()
+}
+
+class PhotoViewActions(val context : Context) : PhotoViewCallbacks {
     val photoView = context as PhotoViewActivity
-    fun shareImage() {
+    override fun shareImage() {
         val bitmap = getImageBitmap()
         if ( bitmap != null && checkForWriteReadPermission()) {
             val path = Images.Media.insertImage(context.contentResolver, bitmap, "title", null)
@@ -33,15 +40,15 @@ class PhotoViewActions(val context : Context) {
         }
     }
 
-    fun getImageBitmap() : Bitmap? = (photoView.image.drawable as BitmapDrawable).bitmap
+    override fun getImageBitmap() : Bitmap? = (photoView.image.drawable as BitmapDrawable).bitmap
 
-    fun copyURL() {
+    override fun copyURL() {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.primaryClip = ClipData.newPlainText("imageUrl", photoView.url)
         showToastMessage("Skopiowano do schowka")
     }
 
-    fun saveImage() {
+    override fun saveImage() {
         val bitmap = getImageBitmap()
         if (bitmap != null && checkForWriteReadPermission()) {
             val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OtwartyWykopMobilny")
@@ -60,10 +67,10 @@ class PhotoViewActions(val context : Context) {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
         val readPermission = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
-        if (writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED) {
+        return if (writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(photoView, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-            return false
-        } else return true
+            false
+        } else true
     }
 
     private fun showToastMessage(text : String) {

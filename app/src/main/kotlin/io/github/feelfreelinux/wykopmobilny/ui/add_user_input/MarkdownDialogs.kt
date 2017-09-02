@@ -4,11 +4,11 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
+import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.LinearLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.markdownLink
-import kotlinx.android.synthetic.main.activity_navigation.*
 
 typealias formatDialogCallback = (String) -> Unit
 fun EditTextFormatDialog(titleId : Int, context : Context, callback: formatDialogCallback): AlertDialog? {
@@ -71,20 +71,19 @@ fun ExitConfirmationDialog(context : Context, callback : () -> Unit) : AlertDial
     }
 }
 
-fun MarkDownLinkDialog(context : Activity, callback: formatDialogCallback): AlertDialog? {
+fun MarkDownLinkDialog(context : Context, layoutInflater : LayoutInflater, callback: formatDialogCallback): AlertDialog? {
     val alertBuilder: android.app.AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
         android.app.AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
     else android.app.AlertDialog.Builder(context, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
 
-    val view = context.layoutInflater.inflate(R.layout.dialog_insert_link, null)
-    val descriptionEditText = view.findViewById<EditText>(R.id.title)
-    val linkEditText = view.findViewById<EditText>(R.id.description)
+    val view = layoutInflater.inflate(R.layout.dialog_insert_link, null)
+    val descriptionEditText = view.findViewById<EditText>(R.id.description)
+    val linkEditText = view.findViewById<EditText>(R.id.title)
 
     alertBuilder.run {
         setTitle(R.string.insert_link)
         setView(view)
         setPositiveButton(android.R.string.ok, {_, _ ->
-            if ((linkEditText.text != null) and (descriptionEditText != null))
                 callback.invoke(
                     linkEditText.text.toString().markdownLink(
                         descriptionEditText.text.toString()
