@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
 
@@ -20,8 +20,13 @@
         <item name="android:editTextColor">@android:color/white</item>
     </style>
 
+    <style name="AppTheme.Dark.NavigationView">
+        <item name="android:listDivider">@color/navigationSeparator</item>
+        <item name="android:textColorSecondary">@color/textColor.Dark</item>
+    </style>
+
     <style name="NavigationDrawerStyle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="NavigationDrawerNotificationItem">
