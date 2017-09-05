@@ -100,6 +100,8 @@ fun AppExitConfirmationDialog(context: Context, callback: () -> Unit) : AlertDia
 
     alertBuilder.run {
         setMessage(R.string.confirm_app_exit)
+        setPositiveButton(R.string.yes) { p0, p1 -> callback.invoke() }
+        setNegativeButton(R.string.no) { p0, p1 -> p0.cancel() }
         setCancelable(true)
 
         return create()

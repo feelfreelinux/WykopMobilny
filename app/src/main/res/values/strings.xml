@@ -7,15 +7,26 @@
     <string name="share">Udostępnij</string>
     <string name="save_image">Zapisz obraz</string>
     <string name="copy_url">Skopiuj adres URL</string>
+    <!-- NAVIGATION -->
     <string name="main_page">Strona Główna</string>
     <string name="wykopalisko">Wykopalisko</string>
     <string name="mikroblog">Mikroblog</string>
     <string name="mywykop">Mój Wykop</string>
+    <string name="hits">Hity</string>
+    <string name="search">Szukaj</string>
+    <string name="user">Użytkownik</string>
+    <string name="your_profile">Twój profil</string>
+    <string name="favourite">Ulubione</string>
+    <string name="messages">Wiadomości</string>
+    <string name="application">Aplikacja</string>
     <string name="settings">Ustawienia</string>
+    <string name="about">O aplikacji</string>
+    <string name="login">Zaloguj się</string>
+    <string name="logout">Wyloguj się</string>
+    <!--- END NAVIGATION -->
     <string name="votes_count">+ %1$d</string>
     <string name="date_with_user_app">%1$s via %2$s</string>
     <string name="refresh">Odśwież</string>
-    <string name="login">Zaloguj się</string>
     <string name="nav_drawer_open">Nawigacja otwarta</string>
     <string name="nav_drawer_closed">Nawigacja zamknięta</string>
     <string name="reply">Reply</string>
@@ -38,6 +49,9 @@
     <string name="link_description">Opis linku</string>
     <string name="insert_photo_galery">Wybierz z galerii</string>
     <string name="insert_photo_url">Z adresu URL</string>
-    <string name="confirm_exit">Czy napewno chcesz wyjść?</string>
+    <string name="confirm_exit">Czy na pewno chcesz wyjść?</string>
+    <string name="confirm_app_exit">Czy na pewno chcesz zamknąć aplikację?</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
 
 </resources>
