@@ -66,9 +66,7 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
                 R.string.nav_drawer_open,
                 R.string.nav_drawer_closed)
     }
-
-    private val markdownDialogCallbacks by lazy { MarkdownDialogActions(this, layoutInflater) as MarkdownDialogCallbacks}
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
@@ -170,10 +168,9 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
     }
 
     override fun onBackPressed() {
-        printout(supportFragmentManager.backStackEntryCount.toString())
         if (supportFragmentManager.backStackEntryCount == 1) {
             if(drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
-            else markdownDialogCallbacks.showAppExitConfirmationDialog( { finish() } )
+            else AppExitConfirmationDialog(this,  { finish() } )?.show()
         }
         else supportFragmentManager.popBackStack()
     }
