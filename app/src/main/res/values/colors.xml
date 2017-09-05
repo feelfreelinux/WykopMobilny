@@ -10,4 +10,5 @@
     <color name="drawablesColor.Dark">#ffffff</color>
     <color name="mikroblogControlsColor.Dark">#424242</color>
     <color name="plusPressedColor">#27ae60</color>
+    <color name="navigationSeparator">#404040</color>
 </resources>
