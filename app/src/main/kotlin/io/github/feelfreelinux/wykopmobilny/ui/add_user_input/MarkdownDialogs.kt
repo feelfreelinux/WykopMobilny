@@ -92,6 +92,20 @@ fun MarkDownLinkDialog(context : Context, layoutInflater : LayoutInflater, callb
     }
 }
 
+fun AppExitConfirmationDialog(context: Context, callback: () -> Unit) : AlertDialog? {
+    val alertBuilder: android.app.AlertDialog.Builder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+                android.app.AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+            else android.app.AlertDialog.Builder(context, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+
+    alertBuilder.run {
+        setMessage(R.string.confirm_app_exit)
+        setCancelable(true)
+
+        return create()
+    }
+}
+
 
 fun getEditTextView(context : Context): EditText {
     val editText = EditText(context)
