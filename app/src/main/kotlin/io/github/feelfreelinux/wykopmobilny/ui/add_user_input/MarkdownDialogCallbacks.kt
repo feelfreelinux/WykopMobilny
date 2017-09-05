@@ -15,6 +15,7 @@ interface MarkdownDialogCallbacks {
     fun showMarkdownSpoilerDialog(callback : formatDialogCallback): Unit?
     fun showLennyfaceDialog(callback : formatDialogCallback): Unit?
     fun showUploadPhotoDialog(formatCallback : formatDialogCallback, insertGalleryImageCallback : () -> Unit): Unit?
+    fun showAppExitConfirmationDialog(callback : () -> Unit)
 }
 
 class MarkdownDialogActions(val context : Context, private val layoutInflater : LayoutInflater) : MarkdownDialogCallbacks {
@@ -42,5 +43,7 @@ class MarkdownDialogActions(val context : Context, private val layoutInflater : 
             LennyfaceDialog(context, callback)?.show()
 
     override fun showUploadPhotoDialog(formatCallback : formatDialogCallback, insertGalleryImageCallback : () -> Unit) =
-        UploadPhotoDialog(context, insertGalleryImageCallback, formatCallback)?.show()
+            UploadPhotoDialog(context, insertGalleryImageCallback, formatCallback)?.show()
+
+    override fun showAppExitConfirmationDialog(callback : () -> Unit) { AppExitConfirmationDialog(context, callback)?.show() }
 }

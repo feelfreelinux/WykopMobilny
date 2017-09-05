@@ -1,24 +1,72 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="@string/main_page" />
-        <item
-            android:id="@+id/nav_wykopalisko"
-            android:title="@string/wykopalisko" ></item>
+            android:icon="@drawable/ic_navi_links"
+            android:title="@string/main_page"/>
         <item
             android:id="@+id/nav_mikroblog"
-            android:title="@string/mikroblog" />
-
+            android:icon="@drawable/ic_navi_mirko"
+            android:title="@string/mikroblog"/>
+        <item
+            android:id="@+id/nav_wykopalisko"
+            android:icon="@drawable/ic_navi_wykopalisko"
+            android:title="@string/wykopalisko"/>
         <item
             android:id="@+id/nav_mojwykop"
-            android:title="@string/mywykop" />
-        <group>
+            android:icon="@drawable/ic_navi_moj_wykop_2"
+            android:title="@string/mywykop"/>
+        <item
+            android:id="@+id/hits"
+            android:icon="@drawable/ic_navi_hits"
+            android:title="@string/hits"/>
+        <item
+            android:id="@+id/search"
+            android:icon="@drawable/ic_navi_search_3"
+            android:title="@string/search"/>
+    </group>
+
+    <item
+        android:title="@string/user"
+        android:id="@+id/user">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/profile"
+                    android:icon="@drawable/ic_navi_profile"
+                    android:title="@string/your_profile"/>
+                <item
+                    android:id="@+id/favourite"
+                    android:icon="@drawable/ic_navi_favourite_2"
+                    android:title="@string/favourite"/>
+                <item
+                    android:id="@+id/messages"
+                    android:icon="@drawable/ic_navi_messages"
+                    android:title="@string/messages"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/application">
+        <menu>
             <item
                 android:id="@+id/nav_settings"
-                android:title="@string/settings" />
-        </group>
-
-    </group>
+                android:icon="@drawable/ic_navi_settings"
+                android:title="@string/settings"/>
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/ic_navi_about"
+                android:title="@string/about"/>
+            <item
+                android:id="@+id/login"
+                android:icon="@drawable/ic_navi_login"
+                android:title="@string/login"/>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_navi_logout"
+                android:title="@string/logout"/>
+        </menu>
+    </item>
 
 </menu>

@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
@@ -64,6 +66,8 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
                 R.string.nav_drawer_open,
                 R.string.nav_drawer_closed)
     }
+
+    private val markdownDialogCallbacks by lazy { MarkdownDialogActions(this, layoutInflater) as MarkdownDialogCallbacks}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,7 +171,10 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
 
     override fun onBackPressed() {
         printout(supportFragmentManager.backStackEntryCount.toString())
-        if (supportFragmentManager.backStackEntryCount == 1) finish()
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            if(drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
+            else markdownDialogCallbacks.showAppExitConfirmationDialog( { finish() } )
+        }
         else supportFragmentManager.popBackStack()
     }
 }
