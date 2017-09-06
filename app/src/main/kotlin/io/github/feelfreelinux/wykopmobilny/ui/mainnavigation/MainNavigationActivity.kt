@@ -66,7 +66,7 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
                 R.string.nav_drawer_open,
                 R.string.nav_drawer_closed)
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
