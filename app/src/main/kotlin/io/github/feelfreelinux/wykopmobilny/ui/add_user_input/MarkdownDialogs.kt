@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
@@ -11,10 +10,15 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.markdownLink
 
 typealias formatDialogCallback = (String) -> Unit
+
+@Suppress("DEPRECATION")
+fun Context.createAlertBuilder() : AlertDialog.Builder =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+            AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+        else AlertDialog.Builder(this, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+
 fun EditTextFormatDialog(titleId : Int, context : Context, callback: formatDialogCallback): AlertDialog? {
-    val alertBuilder: android.app.AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-        android.app.AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-    else android.app.AlertDialog.Builder(context, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+    val alertBuilder = context.createAlertBuilder()
 
     val editText = getEditTextView(context)
     alertBuilder.run {
@@ -26,9 +30,7 @@ fun EditTextFormatDialog(titleId : Int, context : Context, callback: formatDialo
 }
 
 fun UploadPhotoDialog(context : Context, galleryUploadCallback: () -> Unit, urlUploadCallback: formatDialogCallback): AlertDialog? {
-    val alertBuilder: android.app.AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-        android.app.AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-    else android.app.AlertDialog.Builder(context, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+    val alertBuilder = context.createAlertBuilder()
 
     alertBuilder.run {
         setTitle(R.string.insert_photo)
@@ -44,9 +46,7 @@ fun UploadPhotoDialog(context : Context, galleryUploadCallback: () -> Unit, urlU
 }
 
 fun LennyfaceDialog(context : Context, callback: formatDialogCallback): AlertDialog? {
-    val alertBuilder: android.app.AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-        android.app.AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-    else android.app.AlertDialog.Builder(context, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+    val alertBuilder = context.createAlertBuilder()
 
     alertBuilder.run {
         setTitle(R.string.insert_emoticon)
@@ -59,9 +59,7 @@ fun LennyfaceDialog(context : Context, callback: formatDialogCallback): AlertDia
 }
 
 fun ExitConfirmationDialog(context : Context, callback : () -> Unit) : AlertDialog? {
-    val alertBuilder: android.app.AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-        android.app.AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-    else android.app.AlertDialog.Builder(context, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+    val alertBuilder = context.createAlertBuilder()
 
     alertBuilder.run {
         setTitle(R.string.confirm_exit)
@@ -72,9 +70,7 @@ fun ExitConfirmationDialog(context : Context, callback : () -> Unit) : AlertDial
 }
 
 fun MarkDownLinkDialog(context : Context, layoutInflater : LayoutInflater, callback: formatDialogCallback): AlertDialog? {
-    val alertBuilder: android.app.AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-        android.app.AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-    else android.app.AlertDialog.Builder(context, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+    val alertBuilder = context.createAlertBuilder()
 
     val view = layoutInflater.inflate(R.layout.dialog_insert_link, null)
     val descriptionEditText = view.findViewById<EditText>(R.id.description)
@@ -84,24 +80,21 @@ fun MarkDownLinkDialog(context : Context, layoutInflater : LayoutInflater, callb
         setTitle(R.string.insert_link)
         setView(view)
         setPositiveButton(android.R.string.ok, {_, _ ->
-                callback.invoke(
+            callback.invoke(
                     linkEditText.text.toString().markdownLink(
-                        descriptionEditText.text.toString()
+                            descriptionEditText.text.toString()
                     ))})
         return create()
     }
 }
 
 fun AppExitConfirmationDialog(context: Context, callback: () -> Unit) : AlertDialog? {
-    val alertBuilder: android.app.AlertDialog.Builder =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-                android.app.AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-            else android.app.AlertDialog.Builder(context, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+    val alertBuilder = context.createAlertBuilder()
 
     alertBuilder.run {
         setMessage(R.string.confirm_app_exit)
-        setPositiveButton(android.R.string.yes) { p0, p1 -> callback.invoke() }
-        setNegativeButton(android.R.string.no) { p0, p1 -> p0.cancel() }
+        setPositiveButton(android.R.string.yes) { _, _ -> callback.invoke() }
+        setNegativeButton(android.R.string.no, null)
         setCancelable(true)
 
         return create()
