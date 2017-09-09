@@ -1,90 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <include
         layout="@layout/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/markupToolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@+id/markupToolbar">
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:layout_height="wrap_content">
             <android.support.v7.widget.CardView
-                android:id="@+id/cardView"
-                style="@style/EntryCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                app:contentPadding="8dp">
-
+                app:contentPadding="8dp"
+                style="@style/EntryCardView">
                 <EditText
                     android:id="@+id/body"
+                    android:autoSizeTextType="uniform"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine|textCapSentences" />
+                    android:layout_height="wrap_content"/>
             </android.support.v7.widget.CardView>
-
             <android.support.v7.widget.CardView
                 android:id="@+id/imageCardView"
-                style="@style/EntryCardView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:contentPadding="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/include"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include">
-
+                android:visibility="gone"
+                style="@style/EntryCardView">
                 <ImageView
+                    android:layout_gravity="center_horizontal"
                     android:id="@+id/image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
                     android:adjustViewBounds="true"
-                    android:scaleType="fitXY" />
-
+                    android:layout_width="wrap_content"/>
                 <ImageView
                     android:id="@+id/removeImage"
+                    android:layout_gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="TODO"
                     android:src="@drawable/ic_delete" />
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>
 
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/markupToolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <android.support.v7.widget.ActionMenuView
-            android:id="@+id/amvMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.ActionMenuView
+                android:id="@+id/amvMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"/>
+        </HorizontalScrollView>
     </android.support.v7.widget.Toolbar>
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

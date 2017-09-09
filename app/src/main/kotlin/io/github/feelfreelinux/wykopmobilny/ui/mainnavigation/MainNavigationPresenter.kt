@@ -6,9 +6,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryFragment
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
+import io.github.feelfreelinux.wykopmobilny.utils.api.IApiPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
 
-class MainNavigationPresenter(val apiManager : WykopApi, val apiPreferences: ApiPreferences) : Presenter<MainNavigationContract.View>(), MainNavigationContract.Presenter {
+class MainNavigationPresenter(val apiManager : WykopApi, val apiPreferences: IApiPreferences) : Presenter<MainNavigationContract.View>(), MainNavigationContract.Presenter {
     override fun subscribe(view: MainNavigationContract.View) {
         super.subscribe(view)
         setupNavigation()

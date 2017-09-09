@@ -1,14 +1,15 @@
-package io.github.feelfreelinux.wykopmobilny.ui.loginscreen
+package io.github.feelfreelinux.wykopmobilny.ui.splashscreen
 
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.BaseView
 
-interface LoginScreenContract {
+interface SplashScreenContract {
     interface View : BaseView {
-        fun goBackToSplashScreen()
+        fun startLoginActivity()
+        fun startNavigationActivity()
     }
 
     interface Presenter : BasePresenter<View> {
-        fun handleUrl(url : String)
+        fun checkIsUserLoggedIn()
     }
 }

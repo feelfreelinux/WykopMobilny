@@ -1,38 +1,41 @@
 package io.github.feelfreelinux.wykopmobilny.ui.loginscreen
 
 import io.github.feelfreelinux.wykopmobilny.base.Presenter
-import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
+import io.github.feelfreelinux.wykopmobilny.utils.api.IApiPreferences
 
-class LoginScreenPresenter(private val apiPreferences: ApiPreferences, private val apiManager: WykopApi) : Presenter<LoginScreenContract.View>(), LoginScreenContract.Presenter {
+class LoginScreenPresenter(private val apiPreferences: IApiPreferences, private val apiManager: WykopApi) : Presenter<LoginScreenContract.View>(), LoginScreenContract.Presenter {
 
     override fun subscribe(view: LoginScreenContract.View) {
         super.subscribe(view)
-        checkIsUserLoggedIn()
     }
 
-    override val userLoggedCallback : UserLoggedCallback = {
-        login, token ->
-        apiPreferences.login = login
-        apiPreferences.userKey = token
-        getUserToken()
-    }
-
-    private fun checkIsUserLoggedIn() {
-        if (apiPreferences.isUserAuthorized()) getUserToken()
-        else view?.setupWebView()
-    }
-
-    private fun getUserToken() {
-        view?.hideWebView()
-        apiManager.getUserSessionToken {
-            it.fold({
-                        apiPreferences.userToken = it.userKey
-                        apiPreferences.avatarUrl = it.avatarBig
-                        view?.startNavigationActivity()
-                    },
-                    { view?.showErrorDialog(it) })
+    override fun handleUrl(url: String) {
+        extractToken(url)?.apply {
+            saveUserCredentials(first, second)
+            view?.goBackToSplashScreen()
         }
     }
+    fun extractToken(url: String) : Pair<String, String>? {
+        url.apply {
+            if (!contains("/token/") and !contains("/login/")) {
+                view?.showErrorDialog(IllegalStateException("Redirect url ($url) doesn't contain userData"))
+                return null
+            }
+        }
 
+        val login = url
+                .split("/token/").first()
+                .substringAfterLast("/login/")
+        val token = url
+                .split("/token/").last()
+                .replace("/", "")
+
+        return Pair(login, token)
+    }
+
+    fun saveUserCredentials(login : String, token : String) {
+        apiPreferences.login = login
+        apiPreferences.userKey = token
+    }
 }

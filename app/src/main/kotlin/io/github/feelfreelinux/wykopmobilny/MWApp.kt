@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.api.WykopApiManager
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManager
+import io.github.feelfreelinux.wykopmobilny.utils.api.IApiPreferences
 
 class MWApp : Application(), KodeinAware {
     override fun onCreate() {
@@ -15,7 +16,7 @@ class MWApp : Application(), KodeinAware {
     }
 
     override val kodein by Kodein.lazy {
-        bind() from singleton { ApiPreferences(this@MWApp) }
+        bind() from singleton { ApiPreferences(this@MWApp) as IApiPreferences }
         bind() from singleton { WykopApiManager(instance()) as WykopApi }
         bind() from singleton { WykopNotificationManager(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager) }
     }

@@ -9,7 +9,7 @@ kapt {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion versions.buildTools
+    buildToolsVersion '26.0.0'
     defaultConfig {
         applicationId "io.github.feelfreelinux.wykopmobilny"
         minSdkVersion 19
@@ -33,6 +33,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
     }
 }
 
@@ -56,6 +57,8 @@ dependencies {
     implementation "com.github.salomonbrys.kodein:kodein:$versions.kodein"
     implementation "com.github.salomonbrys.kodein:kodein-core:$versions.kodein"
     implementation "com.github.salomonbrys.kodein:kodein-android:$versions.kodein"
+    testImplementation "org.mockito:mockito-core:$versions.mockito"
+    testImplementation "com.nhaarman:mockito-kotlin:$versions.mockito_kotlin"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

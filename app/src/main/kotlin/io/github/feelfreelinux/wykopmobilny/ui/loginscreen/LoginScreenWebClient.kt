@@ -6,33 +6,18 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 
-typealias UserLoggedCallback = (login : String, token : String) -> Unit
+typealias TokenUrlCallback = (url : String) -> Unit
 
-class LoginActivityWebClient(private val userLoggedCallback: UserLoggedCallback) : WebViewClient() {
+class LoginActivityWebClient(private val tokenUrlCallback: TokenUrlCallback) : WebViewClient() {
     @Suppress("OverridingDeprecatedMember")
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-        url?.let { parseReturnURL(it) }
+        url?.let { tokenUrlCallback.invoke(it) }
         return false
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-        request?.let { parseReturnURL(it.url.toString()) }
+        request?.let { tokenUrlCallback.invoke(it.url.toString()) }
         return false
-    }
-
-    fun parseReturnURL(redirectUrl : String) {
-        redirectUrl.apply {
-            if (!contains("/token/") and !contains("/login/"))
-                throw IllegalStateException("Redirect url ($redirectUrl) doesn't contain userData")
-        }
-
-        val login = redirectUrl
-                .split("/token/").first()
-                .substringAfterLast("/login/")
-        val token = redirectUrl
-                .split("/token/").last()
-                .replace("/", "")
-        userLoggedCallback.invoke(login, token)
     }
 }

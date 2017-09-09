@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.APP_SECRET
 import org.json.JSONObject
 import org.json.JSONTokener
 import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.api.IApiPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.encryptMD5
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import java.io.InputStream
@@ -16,7 +17,7 @@ import java.io.InputStream
 typealias ApiResultCallback<T> = (Result<T, FuelError>) -> Unit
 
 const val BASE_URL = "https://a.wykop.pl"
-class NetworkUtils(val apiPrefs: ApiPreferences) {
+class NetworkUtils(val apiPrefs: IApiPreferences) {
     private fun ApiSignInterceptor() =
             { next: (Request) -> Request ->
                 { r: Request ->

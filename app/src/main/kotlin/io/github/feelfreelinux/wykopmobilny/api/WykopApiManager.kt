@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.api
 
 import com.github.kittinunf.fuel.core.Request
 import io.github.feelfreelinux.wykopmobilny.utils.api.ApiPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.api.IApiPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import java.io.InputStream
 
@@ -21,7 +22,7 @@ interface WykopApi {
     fun addNewEntryComment(entryId: Int, body: String, embed: Pair<String, InputStream>, responseCallback: ApiResultCallback<Any>): Request
 }
 
-class WykopApiManager(val apiPrefs: ApiPreferences) : WykopApi {
+class WykopApiManager(val apiPrefs: IApiPreferences) : WykopApi {
 
     var networkUtils: NetworkUtils = NetworkUtils(apiPrefs)
 
