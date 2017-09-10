@@ -1,11 +1,30 @@
 language: android
+jdk: oraclejdk8
 android:
   components:
-    - tools # to get the new `repository-11.xml`
-    - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
+    - tools
     - platform-tools
     - build-tools-26.0.1
     - android-26
+    - extra-android-m2repository
+    
+licenses:
+   - 'android-sdk-preview-license-.+'
+   - 'android-sdk-license-.+'
+   - 'google-gdk-license-.+'
+    
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+    
+before_script:
+   - echo -e "apiKey=\"example_key\"\napiSecret=\"example_secret\"" >> credentials.properties
+   
 script:
    - ./gradlew build connectedCheck
