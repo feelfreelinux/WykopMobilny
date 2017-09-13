@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
 import android.content.Context
 import android.view.LayoutInflater
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.*
 import io.github.feelfreelinux.wykopmobilny.utils.*
 
 interface MarkdownDialogCallbacks {

@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
+package io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,11 +11,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.markdownLink
 
 typealias formatDialogCallback = (String) -> Unit
 
-@Suppress("DEPRECATION")
-fun Context.createAlertBuilder() : AlertDialog.Builder =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-            AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-        else AlertDialog.Builder(this, android.app.AlertDialog.THEME_DEVICE_DEFAULT_DARK)
 
 fun EditTextFormatDialog(titleId : Int, context : Context, callback: formatDialogCallback): AlertDialog? {
     val alertBuilder = context.createAlertBuilder()
@@ -54,17 +49,6 @@ fun LennyfaceDialog(context : Context, callback: formatDialogCallback): AlertDia
         setItems(lennyArray, {
             _, pos -> callback.invoke(lennyArray[pos])
         })
-        return create()
-    }
-}
-
-fun ExitConfirmationDialog(context : Context, callback : () -> Unit) : AlertDialog? {
-    val alertBuilder = context.createAlertBuilder()
-
-    alertBuilder.run {
-        setTitle(R.string.confirm_exit)
-        setPositiveButton(android.R.string.yes, {_, _ -> callback.invoke() })
-        setNeutralButton(android.R.string.no, null)
         return create()
     }
 }

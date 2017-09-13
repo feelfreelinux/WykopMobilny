@@ -4,19 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.*
+import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
@@ -28,14 +26,9 @@ fun Context.launchNavigationActivity() {
 
 
 interface MainNavigationInterface {
-    var isLoading: Boolean
-    var isRefreshing: Boolean
-    var shouldShowFab: Boolean
-    var onFabClickListener: () -> Unit
     val activityToolbar : Toolbar
-    fun setSwipeRefreshListener(swipeListener: SwipeRefreshLayout.OnRefreshListener)
     fun openFragment(fragment: Fragment)
-    fun showErrorDialog(e: Throwable)
+    fun showErrorDialog(e: Exception)
     fun openBrowser(url : String)
     fun openNewEntryUserInput(receiver : String?)
     fun openNewEntryCommentUserInput(entryId : Int, receiver: String?)
@@ -43,7 +36,6 @@ interface MainNavigationInterface {
 
 class NavigationActivity : BaseActivity(), MainNavigationContract.View, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override var actionUrl: Uri? = null
-    override var onFabClickListener = {}
     override val activityToolbar: Toolbar get() = toolbar
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -72,10 +64,6 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
-
-        fab.setOnClickListener {
-            onFabClickListener.invoke()
-        }
 
         actionUrl = intent.data
         setupNavigation()
@@ -108,25 +96,6 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
         presenter.subscribe(this)
     }
 
-    override var isLoading: Boolean
-        get() = loadingView.isVisible
-        set(shouldShow) {
-            contentView.isVisible = !shouldShow
-            loadingView.isVisible = shouldShow
-        }
-
-    override var isRefreshing: Boolean
-        get() = swiperefresh.isRefreshing
-        set(value) { swiperefresh.isRefreshing = value }
-
-    override var shouldShowFab: Boolean
-        get() = fab.isVisible
-        set(value) { if (value) fab.show() else fab.hide() }
-
-
-    override fun setSwipeRefreshListener(swipeListener: SwipeRefreshLayout.OnRefreshListener) {
-        swiperefresh.setOnRefreshListener(swipeListener)
-    }
 
     override var notificationCount: Int
         get() = navHeader.nav_notifications.text.toString().toInt()
@@ -152,11 +121,7 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
             drawer_layout.closeDrawers()
 
     override fun openBrowser(url: String) {
-        // Start in-app browser, handled by Chrome Customs Tabs
-        val builder = CustomTabsIntent.Builder()
-        val customTabsIntent = builder.build()
-        builder.setToolbarColor(toolbar.solidColor)
-        customTabsIntent.launchUrl(this, Uri.parse(url))
+
     }
 
     override fun openNewEntryUserInput(receiver: String?) {
@@ -170,7 +135,7 @@ class NavigationActivity : BaseActivity(), MainNavigationContract.View, Navigati
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {
             if(drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
-            else AppExitConfirmationDialog(this,  { finish() } )?.show()
+            else AppExitConfirmationDialog(this, { finish() })?.show()
         }
         else supportFragmentManager.popBackStack()
     }

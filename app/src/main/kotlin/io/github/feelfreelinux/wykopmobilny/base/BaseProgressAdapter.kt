@@ -35,6 +35,7 @@ abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Recyc
         if (dataset[position] == null) ITEM_PROGRESS
         else ITEM_TYPE
 
+    @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (dataset[position] != null) bindHolder(holder as T, position)
     }

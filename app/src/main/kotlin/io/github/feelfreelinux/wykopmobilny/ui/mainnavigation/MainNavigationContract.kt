@@ -7,8 +7,6 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 
 interface MainNavigationContract {
     interface View : BaseView {
-        var isLoading : Boolean
-        var isRefreshing : Boolean
         var notificationCount : Int
         var hashTagNotificationCount : Int
         var avatarUrl : String

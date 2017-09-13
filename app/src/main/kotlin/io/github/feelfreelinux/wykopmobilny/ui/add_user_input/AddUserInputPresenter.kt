@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
 import io.github.feelfreelinux.wykopmobilny.api.ApiResultCallback
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.base.Presenter
+import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.formatDialogCallback
 
 class AddUserInputPresenter(private val apiManager: WykopApi) : AddUserInputContract.Presenter, Presenter<AddUserInputContract.View>() {
     override var formatText: formatDialogCallback = {

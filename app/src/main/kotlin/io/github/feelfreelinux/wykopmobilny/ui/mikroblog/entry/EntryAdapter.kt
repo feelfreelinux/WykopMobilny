@@ -4,13 +4,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.ui.holders.CommentViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.holders.EntryViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.FeedClickCallbackInterface
+import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.CommentViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.api.Entry
+import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
 
 
-class EntryAdapter(private val callbacks: FeedClickCallbackInterface) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EntryAdapter(private val actionHandler: WykopActionHandler) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var entry : Entry? = null
     private val ENTRY_HOLDER = 0
     private val COMMENT_HOLDER = 1
@@ -36,8 +36,8 @@ class EntryAdapter(private val callbacks: FeedClickCallbackInterface) : Recycler
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ENTRY_HOLDER -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.feed_layout, parent, false), callbacks)
-            else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_layout, parent, false), callbacks)
+            ENTRY_HOLDER -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.feed_layout, parent, false), actionHandler)
+            else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_layout, parent, false), actionHandler)
         }
     }
 }

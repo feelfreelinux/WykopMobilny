@@ -40,18 +40,10 @@ class EndlessScrollListener(var loadMoreListener : ILoadMore, var mLayoutManager
     // We are given a few useful parameters to help us work out if we need to load some more data,
     // but first we check if we are waiting for the previous load to finish.
     override fun onScrolled(view: RecyclerView?, dx: Int, dy: Int) {
-        var lastVisibleItemPosition = 0
+
         val totalItemCount = mLayoutManager.itemCount
 
-        if (mLayoutManager is StaggeredGridLayoutManager) {
-            val lastVisibleItemPositions = (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
-            // get maximum element within the list
-            lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions)
-        } else if (mLayoutManager is GridLayoutManager) {
-            lastVisibleItemPosition = (mLayoutManager as GridLayoutManager).findLastVisibleItemPosition()
-        } else if (mLayoutManager is LinearLayoutManager) {
-            lastVisibleItemPosition = (mLayoutManager).findLastVisibleItemPosition()
-        }
+        val lastVisibleItemPosition = (mLayoutManager).findLastVisibleItemPosition()
 
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state

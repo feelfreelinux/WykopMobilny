@@ -42,6 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.mikroblog.entry.EntryActivity"
+            android:parentActivityName=".ui.mainnavigation.NavigationActivity"/>
+        <activity android:name=".ui.mikroblog.feed.tag.TagActivity" />
     </application>
 
 </manifest>

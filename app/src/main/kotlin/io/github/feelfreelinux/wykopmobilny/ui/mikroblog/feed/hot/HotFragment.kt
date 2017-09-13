@@ -4,17 +4,29 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedFragment
+import io.github.feelfreelinux.wykopmobilny.api.Entry
+import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
+import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedRecyclerView
 import io.github.feelfreelinux.wykopmobilny.utils.instanceValue
+import kotlinx.android.synthetic.main.fragment_feed.view.*
 
-class HotFragment : BaseFeedFragment(), HotContract.View {
-    override val presenter by lazy { HotPresenter(kodein.instanceValue()) }
+class HotFragment : BaseNavigationFragment(), HotContract.View {
+    val presenter by lazy { HotPresenter(kodein.instanceValue()) }
+    lateinit var feedRecyclerView : BaseFeedRecyclerView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
+        val view = inflater?.inflate(R.layout.fragment_feed, container, false)
         navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity, R.drawable.ic_clock)
         presenter.subscribe(this)
-        return super.onCreateView(inflater, container, savedInstanceState)
+
+        view?.feedRecyclerView.apply {
+            feedRecyclerView = this@apply!!
+            this.presenter = this@HotFragment.presenter
+            initAdapter()
+        }
+
+        return view
     }
 
     companion object {
@@ -48,11 +60,11 @@ class HotFragment : BaseFeedFragment(), HotContract.View {
             }
         }
 
-        // Acts as refresh action
-        navigation.isRefreshing = true
+        feedRecyclerView.isRefreshing = true
         presenter.loadData(1)
         return true
     }
 
-
+    override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean)
+        = feedRecyclerView.addDataToAdapter(entryList, shouldClearAdapter)
 }

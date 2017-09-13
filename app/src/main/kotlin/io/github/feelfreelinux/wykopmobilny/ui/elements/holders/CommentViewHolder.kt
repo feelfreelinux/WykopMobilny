@@ -1,19 +1,19 @@
-package io.github.feelfreelinux.wykopmobilny.ui.holders
+package io.github.feelfreelinux.wykopmobilny.ui.elements.holders
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.FeedClickCallbackInterface
 import io.github.feelfreelinux.wykopmobilny.api.Comment
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
+import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
 import kotlinx.android.synthetic.main.entry_header.view.*
 import kotlinx.android.synthetic.main.feed_layout.view.*
 
 
-class CommentViewHolder(val view: View, val callbacks : FeedClickCallbackInterface) : RecyclerView.ViewHolder(view) {
+class CommentViewHolder(val view: View, val callbacks : WykopActionHandler) : RecyclerView.ViewHolder(view) {
     fun bindView(comment : Comment) {
         bindHeader(comment)
         bindBody(comment)

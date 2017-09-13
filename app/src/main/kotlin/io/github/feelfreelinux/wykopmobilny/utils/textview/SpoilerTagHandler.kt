@@ -73,6 +73,7 @@ class SpoilerTagHandler : Html.TagHandler {
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun XMLReader.getAttribute(attr: String): String? {
         val elementField = javaClass.getDeclaredField("theNewElement")
         elementField.isAccessible = true

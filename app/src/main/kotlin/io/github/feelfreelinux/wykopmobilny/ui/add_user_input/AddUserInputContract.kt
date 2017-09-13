@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
 import android.net.Uri
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.BaseView
+import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.formatDialogCallback
 import java.io.InputStream
 
 interface AddUserInputContract {

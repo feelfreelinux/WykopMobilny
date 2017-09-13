@@ -21,14 +21,6 @@ import android.provider.OpenableColumns
 
 
 
-fun View.invisible() {
-    visibility = View.INVISIBLE
-}
-
-fun View.gone(){
-    visibility = View.GONE
-}
-
 var View.isVisible : Boolean
     get() = visibility == View.VISIBLE
     set(value) { visibility = if (value) View.VISIBLE else View.GONE }
@@ -47,7 +39,9 @@ fun View.disableFor(millis: Long){
 
 fun ImageView.loadImage(url : String) {
     GlideApp.with(context)
-            .load(url).into(this)
+            .load(url)
+            .centerCrop()
+            .into(this)
 }
 
 fun ImageView.setPhotoViewUrl( url : String) {
