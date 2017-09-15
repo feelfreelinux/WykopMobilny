@@ -14,7 +14,7 @@ import org.junit.Test
 
 class SplashScreenPresenterTest {
     lateinit var systemUnderTest: SplashScreenPresenter
-    val mockOfView = mock<SplashScreenContract.View>()
+    val mockOfView = mock<SplashScreenView>()
     val mockOfWykopApi = mock<WykopApi>()
     val mockOfApiPreferences = mock<IApiPreferences>()
 

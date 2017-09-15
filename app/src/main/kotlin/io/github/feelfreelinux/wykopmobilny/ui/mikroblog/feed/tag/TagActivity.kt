@@ -18,7 +18,7 @@ fun Context.launchTagActivity(tag : String) {
     startActivity(intent)
 }
 
-class TagActivity : BaseActivity(), TagContract.View {
+class TagActivity : BaseActivity(), TagView {
     private val entryTag by lazy { intent.getStringExtra(EXTRA_TAG) }
     val presenter by lazy { TagPresenter(kodein.instanceValue(), entryTag) }
 

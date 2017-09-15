@@ -50,17 +50,9 @@ class EntryViewHolder(val view: View, val callbacks : WykopActionHandler) : Recy
             }
         }
 
-        view.voteCountTextView.apply {
-            isSelected = entry.userVote > 0
-            text = context.getString(R.string.votes_count, entry.voteCount)
-            setOnClickListener {
-                callbacks.onVoteClicked(entry.id, null, isSelected, {
-                    text = context.getString(R.string.votes_count, it.vote)
-                    isSelected = !isSelected
-                    entry.userVote = if (isSelected) 1 else 0
-                })
-            }
-        }
+        view.voteCountTextView.setEntryData(entry.id, entry.voteCount)
+        view.voteCountTextView.isButtonSelected = entry.userVote > 0
+        view.voteCountTextView.voteCount = entry.voteCount
     }
 
     private fun bindBody(entry : Entry) {

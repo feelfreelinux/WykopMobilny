@@ -16,9 +16,8 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.OpenableColumns
-
-
-
+import com.bumptech.glide.GenericTransitionOptions
+import io.github.feelfreelinux.wykopmobilny.R
 
 
 var View.isVisible : Boolean
@@ -40,7 +39,7 @@ fun View.disableFor(millis: Long){
 fun ImageView.loadImage(url : String) {
     GlideApp.with(context)
             .load(url)
-            .centerCrop()
+            .transition(GenericTransitionOptions.with(R.anim.fade_in))
             .into(this)
 }
 
@@ -56,15 +55,6 @@ inline fun<reified T : Any> LazyKodein.instanceValue() = instance<T>().value
 
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
 
-fun Uri.getFullPath(contentResolver: ContentResolver): String {
-    val projection = arrayOf(MediaStore.Images.Media.DATA)
-    val cursor = contentResolver.query(this, projection, null, null, null)
-    val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-    cursor.moveToFirst()
-    val path = cursor.getString(column_index)
-    cursor.close()
-    return path
-}
 
 fun Uri.queryFileName(contentResolver: ContentResolver) : String {
     val returnCursor = contentResolver.query(this, null, null, null, null)!!

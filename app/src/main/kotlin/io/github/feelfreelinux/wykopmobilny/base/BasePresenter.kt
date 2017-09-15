@@ -1,6 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
-interface BasePresenter<in V: BaseView> {
-    fun subscribe(view: V)
-    fun unsubscribe()
+open class BasePresenter<T : BaseView> {
+    var view : T? = null
+
+    open fun subscribe(view: T) {
+        this.view = view
+    }
+
+    open fun unsubscribe() {
+        view = null
+    }
 }

@@ -10,7 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedRecyclerVi
 import io.github.feelfreelinux.wykopmobilny.utils.instanceValue
 import kotlinx.android.synthetic.main.fragment_feed.view.*
 
-class HotFragment : BaseNavigationFragment(), HotContract.View {
+class HotFragment : BaseNavigationFragment(), HotView {
     val presenter by lazy { HotPresenter(kodein.instanceValue()) }
     lateinit var feedRecyclerView : BaseFeedRecyclerView
 

@@ -44,7 +44,7 @@ fun Context.launchEntryCommentUserInput(entryId : Int, receiver : String?) {
     startActivity(intent)
 }
 
-class AddUserInputActivity : BaseActivity(), AddUserInputContract.View {
+class AddUserInputActivity : BaseActivity(), AddUserInputView {
     override val inputType by lazy { intent.getIntExtra(EXTRA_INPUT_TYPE, -1) }
     override val receiver: String? by lazy { intent.getStringExtra(EXTRA_RECEIVER) }
     override val entryId: Int? by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }

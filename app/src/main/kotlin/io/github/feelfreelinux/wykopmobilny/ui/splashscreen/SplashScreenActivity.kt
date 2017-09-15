@@ -8,7 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.USER_LOGGED_IN
 import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.launchNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.utils.instanceValue
 
-class SplashScreenActivity : BaseActivity(), SplashScreenContract.View {
+class SplashScreenActivity : BaseActivity(), SplashScreenView {
     val LOGIN_REQUEST_CODE = 114
     private val presenter by lazy {
         SplashScreenPresenter(kodein.instanceValue(), kodein.instanceValue())
@@ -26,6 +26,7 @@ class SplashScreenActivity : BaseActivity(), SplashScreenContract.View {
 
     override fun startNavigationActivity() {
         launchNavigationActivity()
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

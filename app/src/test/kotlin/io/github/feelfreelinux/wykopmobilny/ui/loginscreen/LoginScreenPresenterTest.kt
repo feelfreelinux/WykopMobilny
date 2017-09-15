@@ -8,7 +8,7 @@ import org.junit.Test
 
 class LoginScreenPresenterTest {
     lateinit var systemUnderTest: LoginScreenPresenter
-    val mockOfView = mock<LoginScreenContract.View>()
+    val mockOfView = mock<LoginScreenView>()
     val mockOfWykopApi = mock<WykopApi>()
     val mockOfApiPreferences = mock<IApiPreferences>()
 

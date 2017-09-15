@@ -34,7 +34,7 @@ interface MainNavigationInterface {
     fun openNewEntryCommentUserInput(entryId : Int, receiver: String?)
 }
 
-class NavigationActivity : BaseActivity(), MainNavigationContract.View, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
+class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override var actionUrl: Uri? = null
     override val activityToolbar: Toolbar get() = toolbar
 

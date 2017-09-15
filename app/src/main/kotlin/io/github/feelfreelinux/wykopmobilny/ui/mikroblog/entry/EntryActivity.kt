@@ -25,7 +25,7 @@ fun Context.openEntryActivity(entryId : Int) {
 }
 
 val EXTRA_ENTRY_ID = "ENTRY_ID"
-class EntryActivity : BaseActivity(), EntryContract.View, SwipeRefreshLayout.OnRefreshListener {
+class EntryActivity : BaseActivity(), EntryView, SwipeRefreshLayout.OnRefreshListener {
     private val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
 
     val presenter by lazy { EntryPresenter(kodein.instanceValue(), entryId) }

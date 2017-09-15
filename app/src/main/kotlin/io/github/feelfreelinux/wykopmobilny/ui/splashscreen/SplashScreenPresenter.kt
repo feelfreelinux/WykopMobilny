@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.splashscreen
-import io.github.feelfreelinux.wykopmobilny.base.Presenter
 import io.github.feelfreelinux.wykopmobilny.api.WykopApi
+import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.utils.api.IApiPreferences
 
-class SplashScreenPresenter(private val apiPreferences: IApiPreferences, private val apiManager: WykopApi) : Presenter<SplashScreenContract.View>(), SplashScreenContract.Presenter {
-    override fun checkIsUserLoggedIn() {
+class SplashScreenPresenter(private val apiPreferences: IApiPreferences, private val apiManager: WykopApi) : BasePresenter<SplashScreenView>() {
+    fun checkIsUserLoggedIn() {
         if (apiPreferences.isUserAuthorized()) {
             getUserToken()
         } else {

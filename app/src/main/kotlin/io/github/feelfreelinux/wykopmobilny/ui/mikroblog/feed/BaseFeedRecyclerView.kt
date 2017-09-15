@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed
 
 import android.content.Context
+import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -23,7 +24,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopAction
 import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandlerImpl
 import kotlinx.android.synthetic.main.feed_recyclerview.view.*
 
-class BaseFeedRecyclerView : FrameLayout, ILoadMore, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {
+class BaseFeedRecyclerView : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
