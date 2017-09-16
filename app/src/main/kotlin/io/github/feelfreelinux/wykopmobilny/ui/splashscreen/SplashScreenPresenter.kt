@@ -1,9 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.splashscreen
-import io.github.feelfreelinux.wykopmobilny.api.WykopApi
+import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
-import io.github.feelfreelinux.wykopmobilny.utils.api.IApiPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.api.enqueue
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 
-class SplashScreenPresenter(private val apiPreferences: IApiPreferences, private val apiManager: WykopApi) : BasePresenter<SplashScreenView>() {
+class SplashScreenPresenter(private val apiPreferences: CredentialsPreferencesApi, private val userApi: UserApi) : BasePresenter<SplashScreenView>() {
     fun checkIsUserLoggedIn() {
         if (apiPreferences.isUserAuthorized()) {
             getUserToken()
@@ -13,12 +15,14 @@ class SplashScreenPresenter(private val apiPreferences: IApiPreferences, private
     }
 
     fun getUserToken() {
-        apiManager.getUserSessionToken {
-            it.fold({
-                apiPreferences.userToken = it.userKey
-                apiPreferences.avatarUrl = it.avatarBig
-                view?.startNavigationActivity()
-            }, { view?.showErrorDialog(it) })
-        }
+        userApi.getUserSessionToken().enqueue(
+                {
+                    val user = it.body()!!
+                    printout(user.userKey!!)
+                    apiPreferences.userToken = user.userKey
+                    apiPreferences.avatarUrl = user.avatarBig
+                    view?.startNavigationActivity()
+                }, { view?.showErrorDialog(it) }
+        )
     }
 }

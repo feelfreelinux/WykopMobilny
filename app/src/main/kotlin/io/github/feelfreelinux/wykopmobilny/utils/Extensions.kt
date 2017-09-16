@@ -1,23 +1,21 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.ContentResolver
+import android.net.Uri
+import android.provider.OpenableColumns
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.webkit.MimeTypeMap
 import android.widget.ImageView
-import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.instance
-import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
-import io.github.feelfreelinux.wykopmobilny.ui.photoview.launchPhotoView
-import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
-import org.ocpsoft.prettytime.PrettyTime
-import java.util.*
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.provider.MediaStore
-import android.provider.OpenableColumns
 import com.bumptech.glide.GenericTransitionOptions
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
+import io.github.feelfreelinux.wykopmobilny.ui.photoview.launchPhotoView
+import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 
 var View.isVisible : Boolean
@@ -51,8 +49,6 @@ fun ImageView.setPhotoViewUrl( url : String) {
     }
 }
 
-inline fun<reified T : Any> LazyKodein.instanceValue() = instance<T>().value
-
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
 
 
@@ -63,4 +59,18 @@ fun Uri.queryFileName(contentResolver: ContentResolver) : String {
     val name = returnCursor.getString(nameIndex)
     returnCursor.close()
     return name
+}
+
+val CredentialsPreferencesApi.userSessionToken : String
+    get() = if (userToken != null) "userkey/$userToken" else ""
+
+fun Uri.getMimeType(contentResolver: ContentResolver): String {
+    return if (scheme == ContentResolver.SCHEME_CONTENT) {
+        contentResolver.getType(this)
+    } else {
+        val fileExtension = MimeTypeMap.getFileExtensionFromUrl(this
+                .toString())
+        MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+                fileExtension.toLowerCase())
+    }
 }

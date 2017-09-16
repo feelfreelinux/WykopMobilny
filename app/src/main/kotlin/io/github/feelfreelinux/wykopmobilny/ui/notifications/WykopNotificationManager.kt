@@ -9,7 +9,13 @@ import java.util.concurrent.atomic.AtomicInteger
 const val NOTIFICATION_TAG = "io.github.com.feelfreelinux.wykopmobilny"
 const val UPLOADING_NOTIFICATION_CHANNEL_ID = "wykopmobilny-uploading"
 
-class WykopNotificationManager(private val notificationManager : NotificationManager) {
+interface WykopNotificationManagerApi {
+    fun getNewId() : Int
+    fun updateNotification(id : Int, notification : Notification)
+    fun cancelNotification(id : Int)
+}
+
+class WykopNotificationManager(private val notificationManager : NotificationManager) : WykopNotificationManagerApi {
     private val ids = AtomicInteger(0)
 
     init {
@@ -20,11 +26,11 @@ class WykopNotificationManager(private val notificationManager : NotificationMan
                             NotificationManager.IMPORTANCE_DEFAULT))
     }
 
-    fun getNewId() : Int = ids.incrementAndGet()
+    override fun getNewId() : Int = ids.incrementAndGet()
 
-    fun updateNotification(id : Int, notification : Notification) {
+    override fun updateNotification(id : Int, notification : Notification) {
         notificationManager.notify(NOTIFICATION_TAG, id, notification)
     }
 
-    fun cancelNotification(id : Int) = notificationManager.cancel(NOTIFICATION_TAG, id)
+    override fun cancelNotification(id : Int) = notificationManager.cancel(NOTIFICATION_TAG, id)
 }

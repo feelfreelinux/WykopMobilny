@@ -1,11 +1,15 @@
 package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
 
-import io.github.feelfreelinux.wykopmobilny.api.ApiResultCallback
-import io.github.feelfreelinux.wykopmobilny.api.WykopApi
+import io.github.feelfreelinux.wykopmobilny.api.enqueue
+import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.formatDialogCallback
+import android.webkit.MimeTypeMap
+import android.content.ContentResolver
+import android.net.Uri
 
-class AddUserInputPresenter(private val apiManager: WykopApi) : BasePresenter<AddUserInputView>() {
+
+class AddUserInputPresenter(private val entriesApi: EntriesApi) : BasePresenter<AddUserInputView>() {
     var formatText: formatDialogCallback = {
         view?.apply {
             textBody.apply {
@@ -16,7 +20,7 @@ class AddUserInputPresenter(private val apiManager: WykopApi) : BasePresenter<Ad
         }
     }
 
-    private val postSendCallback : ApiResultCallback<Any> = {
+    private val postSendCallback = {
         view?.showNotification = false
     }
 
@@ -51,14 +55,18 @@ class AddUserInputPresenter(private val apiManager: WykopApi) : BasePresenter<Ad
 
     }
     private fun createNewEntry() {
-        if (view?.photo != null)
-            apiManager.addNewEntry(view?.textBody!!, view?.getPhotoInputStreamWithName()!!, postSendCallback)
-        else apiManager.addNewEntry(view?.textBody!!, view?.photoUrl, postSendCallback)
+        if (view?.photo != null) {
+            entriesApi.addEntry(view?.textBody!!, view?.getPhotoTypedInputStream()!!).enqueue(
+                    { postSendCallback.invoke() },
+                    { view?.showErrorDialog(it) }
+            )
+        }
+//        else apiManager.addNewEntry(view?.textBody!!, view?.photoUrl, postSendCallback)*/
     }
 
     private fun createEntryComment() {
-        if (view?.photo != null)
+        /*if (view?.photo != null)
             apiManager.addNewEntryComment(view?.entryId!!, view?.textBody!!, view?.getPhotoInputStreamWithName()!!, postSendCallback)
-        else apiManager.addNewEntryComment(view?.entryId!!, view?.textBody!!, view?.photoUrl, postSendCallback)
+        else apiManager.addNewEntryComment(view?.entryId!!, view?.textBody!!, view?.photoUrl, postSendCallback)*/
     }
 }

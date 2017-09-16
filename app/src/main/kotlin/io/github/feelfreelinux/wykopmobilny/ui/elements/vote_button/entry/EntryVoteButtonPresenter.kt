@@ -1,16 +1,32 @@
 package io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.entry
 
+import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.base.BaseVoteButtonPresenter
+import io.github.feelfreelinux.wykopmobilny.api.enqueue
 
-class EntryVoteButtonPresenter : BasePresenter<EntryVoteButtonView>(), BaseVoteButtonPresenter  {
+class EntryVoteButtonPresenter(val entriesApi : EntriesApi) : BasePresenter<EntryVoteButtonView>(), BaseVoteButtonPresenter  {
     var entryId = 0
 
     override fun unvote() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        entriesApi.unvoteEntry(entryId).enqueue(
+                {
+                    val voteCount = it.body()!!.vote
+                    view?.voteCount = voteCount
+                    view?.isButtonSelected = false
+                },
+                { view?.showErrorDialog(it) }
+        )
     }
 
     override fun vote() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        entriesApi.voteEntry(entryId).enqueue(
+                {
+                    val voteCount = it.body()!!.vote
+                    view?.voteCount = voteCount
+                    view?.isButtonSelected = true
+                },
+                { view?.showErrorDialog(it) }
+        )
     }
 }

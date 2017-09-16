@@ -4,26 +4,32 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
+import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchNewEntryUserInput
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedRecyclerView
-import io.github.feelfreelinux.wykopmobilny.utils.instanceValue
 import kotlinx.android.synthetic.main.fragment_feed.view.*
+import javax.inject.Inject
 
 class HotFragment : BaseNavigationFragment(), HotView {
-    val presenter by lazy { HotPresenter(kodein.instanceValue()) }
+    @Inject lateinit var presenter : HotPresenter
     lateinit var feedRecyclerView : BaseFeedRecyclerView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         val view = inflater?.inflate(R.layout.fragment_feed, container, false)
         navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity, R.drawable.ic_clock)
+        WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
 
         view?.feedRecyclerView.apply {
             feedRecyclerView = this@apply!!
             this.presenter = this@HotFragment.presenter
             initAdapter()
+            onFabClickedListener = {
+                this@HotFragment.context.launchNewEntryUserInput(null)
+            }
         }
 
         return view

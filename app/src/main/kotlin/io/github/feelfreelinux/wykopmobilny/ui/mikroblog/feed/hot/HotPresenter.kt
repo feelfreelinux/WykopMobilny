@@ -1,28 +1,33 @@
 package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot
 
-import io.github.feelfreelinux.wykopmobilny.api.ApiResultCallback
 import io.github.feelfreelinux.wykopmobilny.api.Entry
-import io.github.feelfreelinux.wykopmobilny.api.WykopApi
+import io.github.feelfreelinux.wykopmobilny.api.stream.StreamApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedPresenter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class HotPresenter(val apiManager : WykopApi) : BasePresenter<HotView>(), BaseFeedPresenter {
+class HotPresenter(val streamApi: StreamApi) : BasePresenter<HotView>(), BaseFeedPresenter {
     var period = "24"
 
     override fun loadData(page : Int) {
-        val callback : ApiResultCallback<Array<Entry>> = {
-            it.fold(
-                    { view?.addDataToAdapter(it.asList(), page == 1) },
-                    { view?.showErrorDialog(it) }
-            )
+        val callback = object : Callback<List<Entry>> {
+            override fun onResponse(call: Call<List<Entry>>?, response: Response<List<Entry>>?) {
+                view?.addDataToAdapter(response!!.body()!!, page == 1)
+            }
+
+            override fun onFailure(call: Call<List<Entry>>?, t: Throwable?) {
+                view?.showErrorDialog(t!!)
+            }
         }
 
         when (period) {
             "24", "12", "6" -> {
-                apiManager.getMikroblogHot(page, period, callback)
+                streamApi.getMirkoblogHot(page, period.toInt()).enqueue(callback)
             }
             "newest" ->
-                apiManager.getMikroblogIndex(page, callback)
+                streamApi.getMikroblogIndex(page).enqueue(callback)
             }
     }
 }

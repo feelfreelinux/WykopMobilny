@@ -1,5 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 interface BaseView {
-    fun showErrorDialog(e : Exception)
+    fun showErrorDialog(e : Throwable)
 }

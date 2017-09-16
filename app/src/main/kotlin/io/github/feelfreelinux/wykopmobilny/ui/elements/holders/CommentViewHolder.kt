@@ -3,14 +3,17 @@ package io.github.feelfreelinux.wykopmobilny.ui.elements.holders
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.api.Comment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.api.Comment
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
+import io.github.feelfreelinux.wykopmobilny.utils.setPhotoViewUrl
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
+import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
+import kotlinx.android.synthetic.main.comment_layout.view.*
 import kotlinx.android.synthetic.main.entry_header.view.*
-import kotlinx.android.synthetic.main.feed_layout.view.*
 
 
 class CommentViewHolder(val view: View, val callbacks : WykopActionHandler) : RecyclerView.ViewHolder(view) {
@@ -40,15 +43,9 @@ class CommentViewHolder(val view: View, val callbacks : WykopActionHandler) : Re
 
     private fun bindFooter(comment : Comment) {
         view.voteCountTextView.apply {
-            isSelected = comment.userVote > 0
-            text = context.getString(R.string.votes_count, comment.voteCount)
-            setOnClickListener {
-                callbacks.onVoteClicked(comment.entryId, comment.id, isSelected, {
-                    text = context.getString(R.string.votes_count, it.vote)
-                    isSelected = !isSelected
-                    comment.userVote = if (isSelected) 1 else 0
-                })
-            }
+            setCommentData(comment.entryId, comment.id, comment.voteCount)
+            isButtonSelected = comment.userVote > 0
+            voteCount = comment.voteCount
         }
     }
 

@@ -1,9 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.utils.recyclerview
 
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
+import android.support.v7.widget.RecyclerView
 
 interface ILoadMore {
     // Defines the process for actually loading more data based on page

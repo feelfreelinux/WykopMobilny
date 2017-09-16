@@ -8,19 +8,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.ProgressBar
-import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.android.appKodein
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.utils.instanceValue
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.EndlessScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ILoadMore
-import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
 import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandlerImpl
 import kotlinx.android.synthetic.main.feed_recyclerview.view.*
 
@@ -31,17 +26,17 @@ class BaseFeedRecyclerView : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.On
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    val kodein = LazyKodein(appKodein)
     private var endlessScrollListener : EndlessScrollListener? = null
 
     var presenter : BaseFeedPresenter? = null
     var recyclerView : RecyclerView
     var fab : FloatingActionButton
     var loadingView : ProgressBar
+    var onFabClickedListener = {}
 
     private val feedAdapter by lazy {
         FeedAdapter(
-                WykopActionHandlerImpl(context, kodein.instanceValue()) as WykopActionHandler
+                WykopActionHandlerImpl(context)
         )
     }
 
@@ -66,9 +61,8 @@ class BaseFeedRecyclerView : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.On
     fun initAdapter() {
         // Add endlessScrolListener, and FabAutohide to recyclerview
         recyclerView.addOnScrollListener(endlessScrollListener)
-        // recyclerView.addOnScrollListener(AutoHideFabListener({ navigation.shouldShowFab = it }))
         fab.isVisible = false // We'll show it later.
-
+        fab.setOnClickListener { onFabClickedListener.invoke() }
 
         recyclerView.adapter = feedAdapter
 
@@ -97,7 +91,7 @@ class BaseFeedRecyclerView : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.On
         if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
     }
 
-    override fun showErrorDialog(e: Exception) =
+    override fun showErrorDialog(e: Throwable) =
         context.showExceptionDialog(e)
 
     var isLoading : Boolean

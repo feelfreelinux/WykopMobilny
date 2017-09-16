@@ -1,10 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.loginscreen
 
-import io.github.feelfreelinux.wykopmobilny.api.WykopApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
-import io.github.feelfreelinux.wykopmobilny.utils.api.IApiPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 
-class LoginScreenPresenter(private val apiPreferences: IApiPreferences, private val apiManager: WykopApi) : BasePresenter<LoginScreenView>() {
+class LoginScreenPresenter(private val apiPreferences: CredentialsPreferencesApi) : BasePresenter<LoginScreenView>() {
     fun handleUrl(url: String) {
         extractToken(url)?.apply {
             saveUserCredentials(first, second)

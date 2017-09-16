@@ -1,23 +1,27 @@
 package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
 
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.NotificationCompat
 import android.view.Menu
 import android.view.MenuItem
+import android.webkit.MimeTypeMap
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.activity_write_comment.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-import android.net.Uri
-import android.support.v4.app.NotificationCompat
-import com.github.salomonbrys.kodein.instance
-import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManager
-import io.github.feelfreelinux.wykopmobilny.utils.*
 import java.io.InputStream
+import javax.inject.Inject
 
 
 const val EXTRA_INPUT_TYPE = "INPUT_TYLE"
@@ -49,7 +53,7 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
     override val receiver: String? by lazy { intent.getStringExtra(EXTRA_RECEIVER) }
     override val entryId: Int? by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
 
-    private val notificationManager by kodein.instance<WykopNotificationManager>()
+    @Inject lateinit var notificationManager : WykopNotificationManagerApi
     private val notificationId by lazy { notificationManager.getNewId() }
     private val markdownDialogCallbacks by lazy { MarkdownDialogActions(this, layoutInflater) as MarkdownDialogCallbacks}
 
@@ -64,7 +68,7 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
     override var photo: Uri? = null
     override var photoUrl: String? = null
 
-    val presenter by lazy { AddUserInputPresenter(kodein.instanceValue()) }
+    @Inject lateinit var presenter : AddUserInputPresenter
     override var textBody: String
         get() = body.text.toString()
         set(value) { body.setText(value, TextView.BufferType.EDITABLE) }
@@ -74,6 +78,7 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
         setContentView(R.layout.activity_write_comment)
         setSupportActionBar(toolbar)
         setToolbarTitle()
+        WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
 
         removeImage.setOnClickListener {
@@ -140,15 +145,19 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
             when (requestCode) {
                 // Gallery chooser's callback
                 USER_ACTION_INSERT_PHOTO -> {
-                    data?.data?.apply { insertImageFromContentUri(this) }
+                    data?.data?.apply {
+                        insertImageFromContentUri(this)
+                    }
                 }
             }
         }
     }
 
     // Returns resolved photo output stream
-    override fun getPhotoInputStreamWithName(): Pair<String, InputStream> =
-        Pair(photo?.queryFileName(contentResolver)!!, contentResolver.openInputStream(photo))
+    override fun getPhotoTypedInputStream(): TypedInputStream =
+        TypedInputStream(photo?.queryFileName(contentResolver)!!,
+                photo?.getMimeType(contentResolver)!!,
+                contentResolver.openInputStream(photo))
 
     // Shows "sending entry" progress in notification
     override var showNotification : Boolean

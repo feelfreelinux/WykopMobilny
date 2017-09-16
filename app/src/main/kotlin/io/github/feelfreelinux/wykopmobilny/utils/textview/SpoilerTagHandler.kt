@@ -2,13 +2,16 @@ package io.github.feelfreelinux.wykopmobilny.utils.textview
 
 import android.app.AlertDialog
 import android.os.Build
-import android.text.*
+import android.text.Editable
+import android.text.Html
+import android.text.Spannable
+import android.text.TextPaint
+import android.text.style.CharacterStyle
 import android.text.style.ClickableSpan
+import android.text.style.StrikethroughSpan
+import android.text.style.TypefaceSpan
 import android.view.View
 import org.xml.sax.XMLReader
-import android.text.style.StrikethroughSpan
-import android.text.style.CharacterStyle
-import android.text.style.TypefaceSpan
 
 
 class SpoilerTagHandler : Html.TagHandler {

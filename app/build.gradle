@@ -47,19 +47,31 @@ dependencies {
     implementation "com.android.support:support-v4:$versions.supportLibrary"
     implementation "com.android.support:customtabs:$versions.supportLibrary"
     implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
-    implementation "com.github.feelfreelinux.Fuel:fuel-android:$versions.fuel"
-    implementation "com.github.feelfreelinux.Fuel:fuel-gson:$versions.fuel"
-    implementation "com.github.feelfreelinux.Fuel:fuel:$versions.fuel"
+
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+
     implementation "org.ocpsoft.prettytime:prettytime:$versions.prettytime"
     implementation "com.github.chrisbanes:PhotoView:$versions.photoview"
     implementation "com.github.bumptech.glide:glide:$versions.glide"
+    // Dagger 2
+    implementation 'com.google.dagger:dagger:2.11'
+    kapt 'com.google.dagger:dagger-compiler:2.11'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+
+
     kapt "com.github.bumptech.glide:compiler:$versions.glide"
-    implementation "com.github.salomonbrys.kodein:kodein:$versions.kodein"
-    implementation "com.github.salomonbrys.kodein:kodein-core:$versions.kodein"
-    implementation "com.github.salomonbrys.kodein:kodein-android:$versions.kodein"
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6-SNAPSHOT'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6-SNAPSHOT'
+
     testImplementation "org.mockito:mockito-core:$versions.mockito"
     testImplementation "com.nhaarman:mockito-kotlin:$versions.mockito_kotlin"
     testImplementation 'junit:junit:4.12'
+
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

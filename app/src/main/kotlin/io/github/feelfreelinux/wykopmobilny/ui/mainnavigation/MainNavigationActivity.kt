@@ -12,13 +12,16 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.*
+import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchEntryCommentUserInput
+import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchNewEntryUserInput
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.AppExitConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 fun Context.launchNavigationActivity() {
     startActivity(Intent(this, NavigationActivity::class.java))
@@ -28,7 +31,7 @@ fun Context.launchNavigationActivity() {
 interface MainNavigationInterface {
     val activityToolbar : Toolbar
     fun openFragment(fragment: Fragment)
-    fun showErrorDialog(e: Exception)
+    fun showErrorDialog(e: Throwable)
     fun openBrowser(url : String)
     fun openNewEntryUserInput(receiver : String?)
     fun openNewEntryCommentUserInput(entryId : Int, receiver: String?)
@@ -45,10 +48,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         return true
     }
 
-
-    private val presenter by lazy {
-        MainNavigationPresenter(kodein.instanceValue(), kodein.instanceValue())
-    }
+    @Inject lateinit var presenter : MainNavigationPresenter
 
     private val navHeader by lazy { navigationView.getHeaderView(0) }
     private val actionBarToggle by lazy {
@@ -63,6 +63,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
+        WykopApp.uiInjector.inject(this)
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
 
         actionUrl = intent.data

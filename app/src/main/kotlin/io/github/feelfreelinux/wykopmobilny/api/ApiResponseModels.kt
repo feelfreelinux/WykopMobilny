@@ -1,349 +1,345 @@
 package io.github.feelfreelinux.wykopmobilny.api
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 import java.io.Serializable
 
 
 data class VoteResponse(
         val vote: Int,
-        val voters: Array<Voter>
+        val voters: List<Voter>
 )
 
 data class Voter (
-        @SerializedName("author")
-        @Expose
+        @Json(name="author")
+
         var author : String,
-        @SerializedName("author_group")
-        @Expose
+        @Json(name="author_group")
+
         var authorGroup : Int,
-        @SerializedName("author_avatar")
-        @Expose
+        @Json(name="author_avatar")
+
         var authorAvatar : String,
-        @SerializedName("author_avatar_big")
-        @Expose
+        @Json(name="author_avatar_big")
+
         var authorAvatarBig : String,
-        @SerializedName("author_avatar_med")
-        @Expose
+        @Json(name="author_avatar_med")
+
         var authorAvatarMed : String,
-        @SerializedName("author_avatar_lo")
-        @Expose
+        @Json(name="author_avatar_lo")
+
         var authorAvatarLo : String,
-        @SerializedName("author_sex")
-        @Expose
+        @Json(name="author_sex")
+
         var authorSex : String,
-        @SerializedName("date")
-        @Expose
+        @Json(name="date")
+
         var date : String
 )
 
 
 data class Comment (
-        @SerializedName("id")
-        @Expose
+        @Json(name="id")
+
         var id : Int,
-        @SerializedName("author")
-        @Expose
+        @Json(name="author")
+
         var author : String,
-        @SerializedName("author_avatar")
-        @Expose
+        @Json(name="author_avatar")
+
         var authorAvatar : String,
-        @SerializedName("author_avatar_big")
-        @Expose
+        @Json(name="author_avatar_big")
+
         var authorAvatarBig : String,
-        @SerializedName("author_avatar_med")
-        @Expose
+        @Json(name="author_avatar_med")
+
         var authorAvatarMed : String,
-        @SerializedName("author_avatar_lo")
-        @Expose
+        @Json(name="author_avatar_lo")
+
         var authorAvatarLo : String,
-        @SerializedName("author_group")
-        @Expose
+        @Json(name="author_group")
+
         var authorGroup : Int,
-        @SerializedName("author_sex")
-        @Expose
+        @Json(name="author_sex")
+
         var authorSex : String,
-        @SerializedName("date")
-        @Expose
+        @Json(name="date")
+
         var date : String,
-        @SerializedName("body")
-        @Expose
+        @Json(name="body")
+
         var body : String,
-        @SerializedName("source")
-        @Expose
+        @Json(name="source")
+
         var source : String?,
-        @SerializedName("entry_id")
-        @Expose
+        @Json(name="entry_id")
+
         var entryId : Int,
-        @SerializedName("blocked")
-        @Expose
+        @Json(name="blocked")
+
         var blocked : Boolean,
-        @SerializedName("deleted")
-        @Expose
+        @Json(name="deleted")
+
         var deleted : Boolean,
-        @SerializedName("vote_count")
-        @Expose
+        @Json(name="vote_count")
+
         var voteCount : Int,
-        @SerializedName("user_vote")
-        @Expose
+        @Json(name="user_vote")
+
         var userVote : Int,
-        @SerializedName("voters")
-        @Expose
+        @Json(name="voters")
+
         var voters : List<Voter>,
-        @SerializedName("embed")
-        @Expose
+        @Json(name="embed")
+
         var embed : Embed?,
-        @SerializedName("type")
-        @Expose
+        @Json(name="type")
+
         var type : String,
-        @SerializedName("app")
-        @Expose
+        @Json(name="app")
+
         var app : String?,
-        @SerializedName("violation_url")
-        @Expose
+        @Json(name="violation_url")
+
         var violationUrl : String?
 )
 
 
 data class Entry (
-        @SerializedName("id")
-        @Expose
+        @Json(name="id")
+
         var id : Int,
-        @SerializedName("author")
-        @Expose
+        @Json(name="author")
+
         var author : String,
-        @SerializedName("author_avatar")
-        @Expose
+        @Json(name="author_avatar")
+
         var authorAvatar : String,
-        @SerializedName("author_avatar_big")
-        @Expose
+        @Json(name="author_avatar_big")
+
         var authorAvatarBig : String,
-        @SerializedName("author_avatar_med")
-        @Expose
+        @Json(name="author_avatar_med")
+
         var authorAvatarMed : String,
-        @SerializedName("author_avatar_lo")
-        @Expose
+        @Json(name="author_avatar_lo")
+
         var authorAvatarLo : String,
-        @SerializedName("author_group")
-        @Expose
+        @Json(name="author_group")
+
         var authorGroup : Int,
-        @SerializedName("author_sex")
-        @Expose
+        @Json(name="author_sex")
+
         var authorSex : String,
-        @SerializedName("date")
-        @Expose
+        @Json(name="date")
+
         var date : String,
-        @SerializedName("body")
-        @Expose
+        @Json(name="body")
+
         var body : String,
-        @SerializedName("source")
-        @Expose
+        @Json(name="source")
+
         var source : String?,
-        @SerializedName("url")
-        @Expose
+        @Json(name="url")
+
         var url : String,
-        @SerializedName("receiver")
-        @Expose
+        @Json(name="receiver")
+
         var receiver : String?,
-        @SerializedName("receiver_avatar")
-        @Expose
+        @Json(name="receiver_avatar")
+
         var receiverAvatar : String?,
-        @SerializedName("receiver_avatar_big")
-        @Expose
+        @Json(name="receiver_avatar_big")
+
         var receiverAvatarBig : String?,
-        @SerializedName("receiver_avatar_med")
-        @Expose
+        @Json(name="receiver_avatar_med")
+
         var receiverAvatarMed : String?,
-        @SerializedName("receiver_avatar_lo")
-        @Expose
+        @Json(name="receiver_avatar_lo")
+
         var receiverAvatarLo : String?,
-        @SerializedName("receiver_group")
-        @Expose
+        @Json(name="receiver_group")
+
         var receiverGroup : Int?,
-        @SerializedName("receiver_sex")
-        @Expose
+        @Json(name="receiver_sex")
+
         var receiverSex : String?,
-        @SerializedName("comments")
-        @Expose
-        var comments : Array<Comment>?,
-        @SerializedName("type")
-        @Expose
+        @Json(name="comments")
+
+        var comments : List<Comment>?,
+        @Json(name="type")
+
         var type : String,
-        @SerializedName("embed")
-        @Expose
+        @Json(name="embed")
+
         var embed : Embed?,
-        @SerializedName("deleted")
-        @Expose
+        @Json(name="deleted")
+
         var deleted : Boolean,
-        @SerializedName("vote_count")
-        @Expose
+        @Json(name="vote_count")
+
         var voteCount : Int,
-        @SerializedName("user_vote")
-        @Expose
+        @Json(name="user_vote")
+
         var userVote : Int,
-        @SerializedName("voters")
-        @Expose
-        var voters : Array<Voter>,
-        @SerializedName("violation_url")
-        @Expose
+        @Json(name="voters")
+
+        var voters : List<Voter>,
+        @Json(name="violation_url")
+
         var violationUrl : String?,
-        @SerializedName("can_comment")
-        @Expose
-        var canComment : Boolean,
-        @SerializedName("app")
-        @Expose
+        @Json(name="can_comment")
+
+        var canComment : Boolean?,
+        @Json(name="app")
+
         var app : String?,
-        @SerializedName("comment_count")
-        @Expose
+        @Json(name="comment_count")
+
         var commentCount : Int
 )
 
 
 data class TagMeta(
-        @SerializedName("tag")
-        @Expose
+        @Json(name="tag")
+
         var tag: String,
-        @SerializedName("is_observed")
-        @Expose
+        @Json(name="is_observed")
+
         var isObserved: Boolean?,
-        @SerializedName("is_blocked")
-        @Expose
+        @Json(name="is_blocked")
+
         var isBlocked: Boolean?,
-        @SerializedName("counters")
-        @Expose
+        @Json(name="counters")
+
         var counters: Any?
 )
 
 data class TagFeedEntries (
-        @SerializedName("counters")
-        @Expose
+        @Json(name="counters")
         var meta: TagMeta,
-        @SerializedName("items")
-        @Expose
-        var items: Array<Entry>
+
+        @Json(name="items")
+        var items: List<Entry>
 )
 
 data class NotificationCountResponse(
-        @SerializedName("count")
-        @Expose
+        @Json(name="count")
+
         val count: Int
 )
 
 class Profile (
-        @SerializedName("login")
-        @Expose
+        @Json(name = "login")
         var login: String,
-        @SerializedName("email")
-        @Expose
+        @Json(name="email")
+
         var email: String,
-        @SerializedName("public_email")
-        @Expose
+        @Json(name="public_email")
+
         var publicEmail: String,
-        @SerializedName("name")
-        @Expose
+        @Json(name="name")
+
         var name: String,
-        @SerializedName("www")
-        @Expose
+        @Json(name="www")
+
         var www: String,
-        @SerializedName("jabber")
-        @Expose
+        @Json(name="jabber")
+
         var jabber: String,
-        @SerializedName("gg")
-        @Expose
+        @Json(name="gg")
+
         var gg: String,
-        @SerializedName("city")
-        @Expose
+        @Json(name="city")
+
         var city: String,
-        @SerializedName("about")
-        @Expose
+        @Json(name="about")
+
         var about: String,
-        @SerializedName("author_group")
-        @Expose
+        @Json(name="author_group")
+
         var authorGroup: Int,
-        @SerializedName("links_added")
-        @Expose
+        @Json(name="links_added")
+
         var linksAdded: Int,
-        @SerializedName("links_published")
-        @Expose
+        @Json(name="links_published")
+
         var linksPublished: Int,
-        @SerializedName("comments")
-        @Expose
+        @Json(name="comments")
+
         var comments: Int,
-        @SerializedName("rank")
-        @Expose
+        @Json(name="rank")
+
         var rank: Int,
-        @SerializedName("followers")
-        @Expose
+        @Json(name="followers")
+
         var followers: Int,
-        @SerializedName("following")
-        @Expose
+        @Json(name="following")
+
         var following: Int,
-        @SerializedName("entries")
-        @Expose
+        @Json(name="entries")
+
         var entries: Int,
-        @SerializedName("entries_comments")
-        @Expose
+        @Json(name="entries_comments")
+
         var entriesComments: Int,
-        @SerializedName("diggs")
-        @Expose
+        @Json(name="diggs")
+
         var diggs: Int,
-        @SerializedName("buries")
-        @Expose
+        @Json(name="buries")
+
         var buries: Int,
-        @SerializedName("groups")
-        @Expose
+        @Json(name="groups")
+
         var groups: Int,
-        @SerializedName("related_links")
-        @Expose
+        @Json(name="related_links")
+
         var relatedLinks: Int,
-        @SerializedName("signup_date")
-        @Expose
+        @Json(name="signup_date")
+
         var signupDate: String,
-        @SerializedName("avatar")
-        @Expose
+        @Json(name="avatar")
+
         var avatar: String,
-        @SerializedName("avatar_big")
-        @Expose
+        @Json(name="avatar_big")
+
         var avatarBig: String,
-        @SerializedName("avatar_med")
-        @Expose
+        @Json(name="avatar_med")
+
         var avatarMed: String,
-        @SerializedName("avatar_lo")
-        @Expose
+        @Json(name="avatar_lo")
+
         var avatarLo: String,
-        @SerializedName("is_observed")
-        @Expose
+        @Json(name="is_observed")
+
         var isObserved: Boolean?,
-        @SerializedName("is_blocked")
-        @Expose
+        @Json(name="is_blocked")
+
         var isBlocked: Boolean?,
-        @SerializedName("sex")
-        @Expose
+        @Json(name="sex")
+
         var sex: String,
-        @SerializedName("url")
-        @Expose
+        @Json(name="url")
+
         var url: String,
-        @SerializedName("violation_url")
-        @Expose
+        @Json(name="violation_url")
+
         var violationUrl: String?,
-        @SerializedName("userkey")
-        @Expose
+        @Json(name = "userkey")
         var userKey: String?
 )
 
 data class Embed(
-        @SerializedName("type")
-        @Expose
+        @Json(name="type")
+
         val type : String,
-        @SerializedName("preview")
-        @Expose
+        @Json(name="preview")
+
         val preview : String,
-        @SerializedName("url")
-        @Expose
+        @Json(name="url")
+
         val url : String,
-        @SerializedName("plus18")
-        @Expose
+        @Json(name="plus18")
+
         val plus18 : Boolean,
-        @SerializedName("source")
-        @Expose
+        @Json(name="source")
+
         val source : String) : Serializable
