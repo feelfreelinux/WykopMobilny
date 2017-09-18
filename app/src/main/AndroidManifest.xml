@@ -16,35 +16,40 @@
         <activity android:name=".ui.loginscreen.LoginScreenActivity"/>
         <activity android:name=".ui.photoview.PhotoViewActivity" />
 
-        <activity android:name=".ui.mainnavigation.NavigationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http"
-                    android:host="www.wykop.pl"
-                    android:pathPrefix="/wpis" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https"
-                    android:host="www.wykop.pl"
-                    android:pathPrefix="/wpis" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.mainnavigation.NavigationActivity" />
+
         <activity android:name=".ui.add_user_input.AddUserInputActivity"
             android:windowSoftInputMode="adjustResize"/>
+
         <activity android:name=".ui.splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.mikroblog.entry.EntryActivity"
-            android:parentActivityName=".ui.mainnavigation.NavigationActivity"/>
-        <activity android:name=".ui.mikroblog.feed.tag.TagActivity" />
-    </application>
+            android:parentActivityName=".ui.mainnavigation.NavigationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="https"
+                    android:host="www.wykop.pl"
+                    android:pathPrefix="/wpis" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.mikroblog.feed.tag.TagActivity"
+            android:parentActivityName=".ui.mainnavigation.NavigationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="https"
+                    android:host="www.wykop.pl"
+                    android:pathPrefix="/tag" />
+            </intent-filter>
+        </activity>    </application>
 
 </manifest>

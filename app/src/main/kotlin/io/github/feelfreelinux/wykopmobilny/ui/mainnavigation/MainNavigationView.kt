@@ -8,7 +8,6 @@ interface MainNavigationView : BaseView {
     var notificationCount : Int
     var hashTagNotificationCount : Int
     var avatarUrl : String
-    var actionUrl : Uri?
 
     fun openFragment(fragment : Fragment)
     fun closeDrawer()

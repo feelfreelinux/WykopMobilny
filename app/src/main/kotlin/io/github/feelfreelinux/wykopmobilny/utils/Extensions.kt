@@ -51,7 +51,6 @@ fun ImageView.setPhotoViewUrl( url : String) {
 
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
 
-
 fun Uri.queryFileName(contentResolver: ContentResolver) : String {
     val returnCursor = contentResolver.query(this, null, null, null, null)!!
     val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)

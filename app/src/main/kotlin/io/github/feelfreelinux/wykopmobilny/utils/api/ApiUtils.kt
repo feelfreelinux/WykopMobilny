@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.utils.api
 import android.graphics.Color
 import android.net.Uri
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,13 +24,12 @@ fun getGroupColor(role : Int) : Int {
     return loginColor
 }
 
-fun getGenderStripResource(authorSex : String) : Int {
+fun getGenderStripResource(authorSex : String) : Int =
     when (authorSex) {
-        "male" -> return R.drawable.male_strip
-        "female" -> return R.drawable.female_strip
-        else -> return 0
+        "male" -> R.drawable.male_strip
+        "female" -> R.drawable.female_strip
+        else -> 0
     }
-}
 
 fun String.encryptMD5() : String{
     val bytes = toByteArray()
@@ -43,4 +43,11 @@ fun String.encryptMD5() : String{
 fun Uri.getWpisId(): Int {
     val subUrl = toString().substringAfter("/wpis/")
     return subUrl.substringBefore("/").toInt()
+}
+
+fun Uri.getTag(): String {
+    var subUrl = toString().substringAfter("/tag/")
+    if (subUrl.last() == '/') subUrl = subUrl.substring(0, subUrl.length - 1)
+    printout(subUrl)
+    return subUrl.substringAfterLast("/")
 }

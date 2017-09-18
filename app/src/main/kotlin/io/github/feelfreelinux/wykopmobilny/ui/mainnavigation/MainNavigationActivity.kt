@@ -38,7 +38,6 @@ interface MainNavigationInterface {
 }
 
 class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
-    override var actionUrl: Uri? = null
     override val activityToolbar: Toolbar get() = toolbar
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -66,7 +65,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         WykopApp.uiInjector.inject(this)
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
 
-        actionUrl = intent.data
         setupNavigation()
     }
 

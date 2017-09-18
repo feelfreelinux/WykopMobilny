@@ -12,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.api.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchEntryCommentUserInput
+import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
@@ -28,7 +29,7 @@ fun Context.openEntryActivity(entryId : Int) {
 
 val EXTRA_ENTRY_ID = "ENTRY_ID"
 class EntryActivity : BaseActivity(), EntryView, SwipeRefreshLayout.OnRefreshListener {
-    private val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
+    var entryId = 0
 
     @Inject lateinit var presenter : EntryPresenter
     val wykopActions by lazy { WykopActionHandlerImpl(this) as WykopActionHandler }
@@ -38,6 +39,7 @@ class EntryActivity : BaseActivity(), EntryView, SwipeRefreshLayout.OnRefreshLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
         setSupportActionBar(toolbar)
+        entryId = intent.data?.getWpisId() ?: intent.getIntExtra(EXTRA_ENTRY_ID, -1)
 
         supportActionBar?.apply {
             title = null
@@ -47,6 +49,7 @@ class EntryActivity : BaseActivity(), EntryView, SwipeRefreshLayout.OnRefreshLis
         WykopApp.uiInjector.inject(this)
         presenter.entryId = entryId
         presenter.subscribe(this)
+
         // Prepare RecyclerView
         recyclerView.apply {
             prepare()
