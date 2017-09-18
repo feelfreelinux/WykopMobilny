@@ -1,19 +1,19 @@
 package io.github.feelfreelinux.wykopmobilny.ui.loginscreen
 
 import com.nhaarman.mockito_kotlin.*
+import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import org.junit.Before
 import org.junit.Test
 
 class LoginScreenPresenterTest {
     lateinit var systemUnderTest: LoginScreenPresenter
-    val mockOfView = mock<LoginScreenView>()
-    val mockOfWykopApi = mock<WykopApi>()
-    val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
+    private val mockOfView = mock<LoginScreenView>()
+    private val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
 
     @Before
     fun setup() {
-        systemUnderTest = LoginScreenPresenter(mockOfApiPreferences, mockOfWykopApi)
+        systemUnderTest = LoginScreenPresenter(mockOfApiPreferences)
         systemUnderTest.subscribe(mockOfView)
     }
 

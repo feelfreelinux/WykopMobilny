@@ -39,17 +39,17 @@ interface EntriesRetrofitApi {
                  @Field("embed") embed : String,
                  @Path("userkey", encoded = true) userKey : String) : Call<AddResponse>
 
-    // ADD
     @Multipart
-    @POST("/entries/add/appkey/$APP_KEY/{userkey}")
+    @POST("/entries/addcomment/{entryId}/appkey/$APP_KEY/{userkey}")
     fun addEntryComment(@Part("body") body: RequestBody,
-                 @Path("userkey", encoded = true) userKey : String,
-                 @Part file : MultipartBody.Part) : Call<AddResponse>
+                        @Path("entryId") entryId : Int,
+                        @Path("userkey", encoded = true) userKey : String,
+                        @Part file : MultipartBody.Part) : Call<AddResponse>
 
-    // ADD
     @FormUrlEncoded
-    @POST("/entries/add/appkey/$APP_KEY/{userkey}")
+    @POST("/entries/addcomment/{entryId}/appkey/$APP_KEY/{userkey}")
     fun addEntryComment(@Field("body") body: String,
-                 @Field("embed") embed : String,
-                 @Path("userkey", encoded = true) userKey : String) : Call<AddResponse>
+                        @Field("embed") embed : String,
+                        @Path("entryId") entryId : Int,
+                        @Path("userkey", encoded = true) userKey : String) : Call<AddResponse>
 }

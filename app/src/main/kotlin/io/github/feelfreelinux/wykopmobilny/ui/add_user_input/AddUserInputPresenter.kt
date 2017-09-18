@@ -61,12 +61,26 @@ class AddUserInputPresenter(private val entriesApi: EntriesApi) : BasePresenter<
                     { view?.showErrorDialog(it) }
             )
         }
-//        else apiManager.addNewEntry(view?.textBody!!, view?.photoUrl, postSendCallback)*/
+        else {
+            entriesApi.addEntry(view?.textBody!!, view?.photoUrl!!).enqueue(
+                    { postSendCallback.invoke() },
+                    { view?.showErrorDialog(it) }
+            )
+        }
     }
 
     private fun createEntryComment() {
-        /*if (view?.photo != null)
-            apiManager.addNewEntryComment(view?.entryId!!, view?.textBody!!, view?.getPhotoInputStreamWithName()!!, postSendCallback)
-        else apiManager.addNewEntryComment(view?.entryId!!, view?.textBody!!, view?.photoUrl, postSendCallback)*/
+        if (view?.photo != null) {
+            entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, view?.getPhotoTypedInputStream()!!).enqueue(
+                    { postSendCallback.invoke() },
+                    { view?.showErrorDialog(it) }
+            )
+        }
+        else {
+            entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, view?.photoUrl!!).enqueue(
+                    { postSendCallback.invoke() },
+                    { view?.showErrorDialog(it) }
+            )
+        }
     }
 }

@@ -45,6 +45,7 @@ class BaseFeedRecyclerView : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.On
         recyclerView = view.recyclerView
         fab = view.fab
         loadingView = view.loadingView
+        view.swiperefresh.setOnRefreshListener(this)
 
         recyclerView.prepare()
 
@@ -74,7 +75,10 @@ class BaseFeedRecyclerView : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.On
     }
 
     override fun onLoadMore(page: Int) {
-        feedAdapter.isLoading = true
+        recyclerView.post {
+            feedAdapter.isLoading = true
+        }
+
         presenter?.loadData(page)
     }
 
@@ -85,10 +89,12 @@ class BaseFeedRecyclerView : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.On
     override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean) {
         isRefreshing = false
         isLoading = false
-        feedAdapter.addData(entryList, shouldClearAdapter)
+        recyclerView.post {
+            feedAdapter.addData(entryList, shouldClearAdapter)
 
-        if (feedAdapter.dataset.size == entryList.size) fab.isVisible = true // First time add only.
-        if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
+            if (feedAdapter.dataset.size == entryList.size) fab.isVisible = true // First time add only.
+            if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
+        }
     }
 
     override fun showErrorDialog(e: Throwable) =

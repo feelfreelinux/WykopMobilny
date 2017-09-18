@@ -3,7 +3,6 @@ import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.api.enqueue
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 class SplashScreenPresenter(private val apiPreferences: CredentialsPreferencesApi, private val userApi: UserApi) : BasePresenter<SplashScreenView>() {
     fun checkIsUserLoggedIn() {
@@ -18,7 +17,7 @@ class SplashScreenPresenter(private val apiPreferences: CredentialsPreferencesAp
         userApi.getUserSessionToken().enqueue(
                 {
                     val user = it.body()!!
-                    printout(user.userKey!!)
+
                     apiPreferences.userToken = user.userKey
                     apiPreferences.avatarUrl = user.avatarBig
                     view?.startNavigationActivity()

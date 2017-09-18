@@ -18,6 +18,9 @@ interface EntriesApi {
     fun voteComment(entryId: Int, commentId: Int): Call<VoteResponse>
     fun unvoteComment(entryId: Int, commentId: Int): Call<VoteResponse>
     fun addEntry(body : String, inputStream: TypedInputStream): Call<AddResponse>
+    fun addEntry(body: String, embed: String): Call<AddResponse>
+    fun addEntryComment(body: String, entryId: Int, embed: String): Call<AddResponse>
+    fun addEntryComment(body: String, entryId: Int, inputStream: TypedInputStream): Call<AddResponse>
 }
 
 data class TypedInputStream(val fileName : String, val mimeType : String, val inputStream: InputStream)
@@ -35,9 +38,17 @@ class EntriesRepository(val retrofit: Retrofit, private val apiPreferences: Cred
 
     override fun unvoteComment(entryId: Int, commentId: Int) = entriesApi.unvoteComment(entryId, commentId, apiPreferences.userSessionToken)
 
-    override fun addEntry(body : String, inputStream: TypedInputStream): Call<AddResponse> {
-        return entriesApi.addEntry(body.toRequestBody(), apiPreferences.userSessionToken, inputStream.getFileMultipart())
-    }
+    override fun addEntry(body : String, inputStream: TypedInputStream): Call<AddResponse> =
+        entriesApi.addEntry(body.toRequestBody(), apiPreferences.userSessionToken, inputStream.getFileMultipart())
+
+    override fun addEntry(body : String, embed: String): Call<AddResponse> =
+            entriesApi.addEntry(body, embed, apiPreferences.userSessionToken)
+
+    override fun addEntryComment(body : String, entryId: Int, inputStream: TypedInputStream): Call<AddResponse> =
+            entriesApi.addEntryComment(body.toRequestBody(), entryId, apiPreferences.userSessionToken, inputStream.getFileMultipart())
+
+    override fun addEntryComment(body : String, entryId: Int, embed: String): Call<AddResponse> =
+            entriesApi.addEntryComment(body, embed, entryId, apiPreferences.userSessionToken)
 
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!

@@ -21,7 +21,6 @@ fun <T> Call<T>.enqueue(success: (response: Response<T>) -> Unit,
             success(response)
         }
         override fun onFailure(call: Call<T>?, t: Throwable) {
-            printout("ASDASD")
             failure(t)
         }
     })

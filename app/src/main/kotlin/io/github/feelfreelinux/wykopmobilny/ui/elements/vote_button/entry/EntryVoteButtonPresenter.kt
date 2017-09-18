@@ -5,7 +5,7 @@ import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.base.BaseVoteButtonPresenter
 import io.github.feelfreelinux.wykopmobilny.api.enqueue
 
-class EntryVoteButtonPresenter(val entriesApi : EntriesApi) : BasePresenter<EntryVoteButtonView>(), BaseVoteButtonPresenter  {
+class EntryVoteButtonPresenter(private val entriesApi : EntriesApi) : BasePresenter<EntryVoteButtonView>(), BaseVoteButtonPresenter  {
     var entryId = 0
 
     override fun unvote() {

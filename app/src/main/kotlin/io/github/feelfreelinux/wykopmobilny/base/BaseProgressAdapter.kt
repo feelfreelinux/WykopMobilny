@@ -20,6 +20,7 @@ abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Recyc
         if(shouldShow) {
             if (!isLoading) {
                 dataset.add(null)
+
                 notifyItemInserted(dataset.size)
             }
         }
