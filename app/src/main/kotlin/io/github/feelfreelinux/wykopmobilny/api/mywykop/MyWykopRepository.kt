@@ -3,12 +3,13 @@ package io.github.feelfreelinux.wykopmobilny.api.mywykop
 import io.github.feelfreelinux.wykopmobilny.api.NotificationCountResponse
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Retrofit
 
 interface MyWykopApi {
-    fun getNotificationCount(): Call<NotificationCountResponse>
-    fun getHashTagNotificationCount(): Call<NotificationCountResponse>
+    fun getNotificationCount(): Single<NotificationCountResponse>
+    fun getHashTagNotificationCount(): Single<NotificationCountResponse>
 }
 
 class MyWykopRepository(val retrofit: Retrofit, private val apiPreferences: CredentialsPreferencesApi) : MyWykopApi {

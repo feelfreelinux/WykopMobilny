@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry
 
 import io.github.feelfreelinux.wykopmobilny.api.Entry
+import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.base.BaseView
 
 /**

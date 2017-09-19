@@ -3,8 +3,9 @@ import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.api.enqueue
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
-class SplashScreenPresenter(private val apiPreferences: CredentialsPreferencesApi, private val userApi: UserApi) : BasePresenter<SplashScreenView>() {
+class SplashScreenPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val apiPreferences: CredentialsPreferencesApi, private val userApi: UserApi) : BasePresenter<SplashScreenView>() {
     fun checkIsUserLoggedIn() {
         if (apiPreferences.isUserAuthorized()) {
             getUserToken()
@@ -14,14 +15,13 @@ class SplashScreenPresenter(private val apiPreferences: CredentialsPreferencesAp
     }
 
     fun getUserToken() {
-        userApi.getUserSessionToken().enqueue(
-                {
-                    val user = it.body()!!
-
-                    apiPreferences.userToken = user.userKey
-                    apiPreferences.avatarUrl = user.avatarBig
-                    view?.startNavigationActivity()
-                }, { view?.showErrorDialog(it) }
+        subscriptions.add(
+                subscriptionHelper.subscribeOnSchedulers(userApi.getUserSessionToken())
+                        .subscribe({
+                            apiPreferences.userToken = it.userKey
+                            apiPreferences.avatarUrl = it.avatarBig
+                            view?.startNavigationActivity()
+                        }, { view?.showErrorDialog(it) })
         )
     }
 }

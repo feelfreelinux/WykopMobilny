@@ -9,6 +9,7 @@ import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.Entry
+import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchEntryCommentUserInput
@@ -73,7 +74,7 @@ class EntryActivity : BaseActivity(), EntryView, SwipeRefreshLayout.OnRefreshLis
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.reply -> adapter.entry?.let { launchEntryCommentUserInput(entryId, adapter.entry?.author) }
+            R.id.reply -> adapter.entry?.let { launchEntryCommentUserInput(entryId, adapter.entry!!.author.nick) }
             android.R.id.home -> finish()
         }
         return true

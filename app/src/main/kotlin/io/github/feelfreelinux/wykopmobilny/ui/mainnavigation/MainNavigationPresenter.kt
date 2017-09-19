@@ -6,8 +6,9 @@ import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.api.enqueue
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
-class MainNavigationPresenter(private val apiPreferences: CredentialsPreferencesApi, private val myWykopApi: MyWykopApi) : BasePresenter<MainNavigationView>() {
+class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val apiPreferences: CredentialsPreferencesApi, private val myWykopApi: MyWykopApi) : BasePresenter<MainNavigationView>() {
 
     fun navigationItemClicked(itemId: Int) {
         when (itemId) {
@@ -28,15 +29,13 @@ class MainNavigationPresenter(private val apiPreferences: CredentialsPreferences
 
     fun getNotificationsCount() {
         myWykopApi.apply {
-            getNotificationCount().enqueue (
-                { view?.notificationCount = it.body()!!.count },
-                { view?.showErrorDialog(it) }
-            )
+            subscriptions.add(
+                    subscriptionHelper.subscribeOnSchedulers(getNotificationCount())
+                            .subscribe({ view?.notificationCount = it.count }, { view?.showErrorDialog(it) }))
 
-            getHashTagNotificationCount().enqueue(
-                    { view?.hashTagNotificationCount = it.body()!!.count },
-                    { view?.showErrorDialog(it) }
-            )
+            subscriptions.add(
+                    subscriptionHelper.subscribeOnSchedulers(getHashTagNotificationCount())
+                            .subscribe({ view?.hashTagNotificationCount = it.count }, { view?.showErrorDialog(it) }))
         }
     }
 

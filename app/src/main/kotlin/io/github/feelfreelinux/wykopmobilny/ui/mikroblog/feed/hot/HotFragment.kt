@@ -6,6 +6,7 @@ import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.Entry
+import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchNewEntryUserInput
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedRecyclerView

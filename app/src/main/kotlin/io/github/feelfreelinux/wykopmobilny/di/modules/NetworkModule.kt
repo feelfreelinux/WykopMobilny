@@ -10,9 +10,12 @@ import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationMa
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -53,6 +56,11 @@ class NetworkModule(private val baseUrl : String) {
                 .client(client)
                 .baseUrl(baseUrl)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideSubscriptionHandler() : SubscriptionHelperApi = SubscriptionHelper()
 }

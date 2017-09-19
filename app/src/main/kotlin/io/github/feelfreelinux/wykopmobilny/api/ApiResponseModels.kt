@@ -37,16 +37,16 @@ data class Voter (
 )
 
 
-data class Comment (
+data class CommentResponse(
         @Json(name="id")
-
         var id : Int,
+
         @Json(name="author")
-
         var author : String,
-        @Json(name="author_avatar")
 
+        @Json(name="author_avatar")
         var authorAvatar : String,
+
         @Json(name="author_avatar_big")
 
         var authorAvatarBig : String,
@@ -104,7 +104,7 @@ data class Comment (
 )
 
 
-data class Entry (
+data class EntryResponse(
         @Json(name="id")
 
         var id : Int,
@@ -164,7 +164,7 @@ data class Entry (
         var receiverSex : String?,
         @Json(name="comments")
 
-        var comments : List<Comment>?,
+        var comments : List<CommentResponse>?,
         @Json(name="type")
 
         var type : String,
@@ -198,9 +198,8 @@ data class Entry (
 )
 
 
-data class TagMeta(
+data class TagMetaResponse(
         @Json(name="tag")
-
         var tag: String,
         @Json(name="is_observed")
 
@@ -213,12 +212,11 @@ data class TagMeta(
         var counters: Any?
 )
 
-data class TagFeedEntries (
-        @Json(name="counters")
-        var meta: TagMeta,
-
+data class TagEntriesResponse (
+        @Json(name="meta")
+        var meta: TagMetaResponse,
         @Json(name="items")
-        var items: List<Entry>
+        var items: List<EntryResponse>
 )
 
 data class NotificationCountResponse(
@@ -326,20 +324,3 @@ class Profile (
         @Json(name = "userkey")
         var userKey: String?
 )
-
-data class Embed(
-        @Json(name="type")
-
-        val type : String,
-        @Json(name="preview")
-
-        val preview : String,
-        @Json(name="url")
-
-        val url : String,
-        @Json(name="plus18")
-
-        val plus18 : Boolean,
-        @Json(name="source")
-
-        val source : String) : Serializable

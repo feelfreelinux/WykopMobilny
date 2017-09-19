@@ -1,15 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
 
-import io.github.feelfreelinux.wykopmobilny.api.enqueue
+import io.github.feelfreelinux.wykopmobilny.api.entries.AddResponse
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.formatDialogCallback
-import android.webkit.MimeTypeMap
-import android.content.ContentResolver
-import android.net.Uri
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
 
-class AddUserInputPresenter(private val entriesApi: EntriesApi) : BasePresenter<AddUserInputView>() {
+class AddUserInputPresenter(val subscriptionHelper: SubscriptionHelperApi, private val entriesApi: EntriesApi) : BasePresenter<AddUserInputView>() {
     var formatText: formatDialogCallback = {
         view?.apply {
             textBody.apply {
@@ -20,13 +18,17 @@ class AddUserInputPresenter(private val entriesApi: EntriesApi) : BasePresenter<
         }
     }
 
-    private val postSendCallback = {
+    private val postSendCallback : (AddResponse) -> Unit = {
         view?.showNotification = false
     }
 
     private val preSendCallback = {
         view?.showNotification = true
         view?.exitActivity()
+    }
+
+    private val failureCallback: (Throwable) -> Unit = {
+        view?.showErrorDialog(it)
     }
 
     override fun subscribe(view: AddUserInputView) {
@@ -56,31 +58,23 @@ class AddUserInputPresenter(private val entriesApi: EntriesApi) : BasePresenter<
     }
     private fun createNewEntry() {
         if (view?.photo != null) {
-            entriesApi.addEntry(view?.textBody!!, view?.getPhotoTypedInputStream()!!).enqueue(
-                    { postSendCallback.invoke() },
-                    { view?.showErrorDialog(it) }
-            )
+            subscriptionHelper.subscribeOnSchedulers(entriesApi.addEntry(view?.textBody!!, view?.getPhotoTypedInputStream()!!))
+                    .subscribe(postSendCallback, failureCallback)
         }
         else {
-            entriesApi.addEntry(view?.textBody!!, view?.photoUrl!!).enqueue(
-                    { postSendCallback.invoke() },
-                    { view?.showErrorDialog(it) }
-            )
+            subscriptionHelper.subscribeOnSchedulers(entriesApi.addEntry(view?.textBody!!, view?.photoUrl!!))
+                    .subscribe(postSendCallback, failureCallback)
         }
     }
 
     private fun createEntryComment() {
         if (view?.photo != null) {
-            entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, view?.getPhotoTypedInputStream()!!).enqueue(
-                    { postSendCallback.invoke() },
-                    { view?.showErrorDialog(it) }
-            )
+            subscriptionHelper.subscribeOnSchedulers(entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, view?.getPhotoTypedInputStream()!!))
+                    .subscribe(postSendCallback, failureCallback)
         }
         else {
-            entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, view?.photoUrl!!).enqueue(
-                    { postSendCallback.invoke() },
-                    { view?.showErrorDialog(it) }
-            )
+            subscriptionHelper.subscribeOnSchedulers(entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, view?.photoUrl!!))
+                    .subscribe(postSendCallback, failureCallback)
         }
     }
 }

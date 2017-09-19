@@ -18,7 +18,7 @@ class EntryAdapter(private val actionHandler: WykopActionHandler) : RecyclerView
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         when (holder?.itemViewType) {
             ENTRY_HOLDER -> (holder as EntryViewHolder).bindView(entry!!)
-            COMMENT_HOLDER -> (holder as CommentViewHolder).bindView(entry!!.comments!![position - 1])
+            COMMENT_HOLDER -> (holder as CommentViewHolder).bindView(entry!!.comments[position - 1])
         }
     }
 

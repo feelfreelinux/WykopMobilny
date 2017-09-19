@@ -5,6 +5,7 @@ import android.content.Context
 
 fun Context.showExceptionDialog(e : Throwable) {
     ExceptionDialog(this, e)?.show()
+    throw e
 }
 
 fun ExceptionDialog(context : Context, e: Throwable) : AlertDialog? {

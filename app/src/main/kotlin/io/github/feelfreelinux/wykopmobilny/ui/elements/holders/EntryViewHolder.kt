@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.Entry
+import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -28,25 +29,27 @@ class EntryViewHolder(val view: View, val callbacks : WykopActionHandler) : Recy
 
     private fun bindHeader(entry : Entry) {
         val header = view.entryHeader
-        header.userNameTextView.apply {
-            text = entry.author
-            setTextColor(getGroupColor(entry.authorGroup))
+        entry.author.apply {
+            header.userNameTextView.apply {
+                text = nick
+                setTextColor(getGroupColor(group))
+            }
+
+            header.avatarImageView.loadImage(entry.author.avatarUrl)
+            val date = entry.date.toPrettyDate()
+            header.entryDateTextView.text = date
+
+            app?.let {
+                header.entryDateTextView.text = view.context.getString(R.string.date_with_user_app, date, app)
+            }
+
+            view.genderStripImageView.setBackgroundResource(getGenderStripResource(sex))
         }
-
-        header.avatarImageView.loadImage(entry.authorAvatarMed)
-        val date = entry.date.toPrettyDate()
-        header.entryDateTextView.text = date
-
-        entry.app?.let {
-            header.entryDateTextView.text = view.context.getString(R.string.date_with_user_app, date, entry.app)
-        }
-
-        view.genderStripImageView.setBackgroundResource(getGenderStripResource(entry.authorSex))
     }
 
     private fun bindFooter(entry : Entry) {
         view.commentsCountTextView.apply {
-            text = entry.commentCount.toString()
+            text = entry.commentsCount.toString()
 
             setOnClickListener {
                 callbacks.onCommentsClicked(entry.id)
@@ -55,7 +58,7 @@ class EntryViewHolder(val view: View, val callbacks : WykopActionHandler) : Recy
 
         view.voteCountTextView.apply {
             setEntryData(entry.id, entry.voteCount)
-            isButtonSelected = entry.userVote > 0
+            isButtonSelected = entry.isVoted
             voteCount = entry.voteCount
         }
 
@@ -66,10 +69,10 @@ class EntryViewHolder(val view: View, val callbacks : WykopActionHandler) : Recy
 
         view.entryImageView.apply {
             isVisible = false
-            entry.embed?.let {
+            entry.embed?.apply {
                 isVisible = true
-                loadImage(entry.embed!!.preview)
-                if (entry.embed!!.type == "image") setPhotoViewUrl(entry.embed!!.url)
+                loadImage(preview)
+                if (type == "image") setPhotoViewUrl(url)
             }
         }
     }

@@ -6,7 +6,9 @@ import io.github.feelfreelinux.wykopmobilny.api.Profile
 import io.github.feelfreelinux.wykopmobilny.api.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
+import io.github.feelfreelinux.wykopmobilny.ui.SubscribeHelperTest
 import io.github.feelfreelinux.wykopmobilny.ui.splashscreen.SplashScreenPresenter
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Call
@@ -21,22 +23,17 @@ class EntryVoteButtonPresenterTest {
 
     @Before
     fun setup() {
-        systemUnderTest = EntryVoteButtonPresenter(mockOfEntriesApi)
+        systemUnderTest = EntryVoteButtonPresenter(SubscribeHelperTest(), mockOfEntriesApi)
         systemUnderTest.subscribe(mockOfView)
     }
 
     @Test
     fun shouldUpdateButtonOnVoteResponse() {
         val EXPECTED_VOTES = 211
-        val response = Response.success(VoteResponse(EXPECTED_VOTES, emptyList()))
-        val mockOfCall = mock<Call<VoteResponse>>()
 
         systemUnderTest.entryId = 12
 
-        whenever(mockOfCall.enqueue(any())).thenAnswer {
-            (it.arguments.first() as Callback<VoteResponse>).onResponse(null, response)
-        }
-        whenever(mockOfEntriesApi.voteEntry(any())).thenReturn(mockOfCall)
+        whenever(mockOfEntriesApi.voteEntry(any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES, emptyList())))
         systemUnderTest.vote()
 
         verify(mockOfView).apply {
@@ -48,15 +45,10 @@ class EntryVoteButtonPresenterTest {
     @Test
     fun shouldUpdateButtonOnUnVoteResponse() {
         val EXPECTED_VOTES = 115
-        val response = Response.success(VoteResponse(EXPECTED_VOTES, emptyList()))
-        val mockOfCall = mock<Call<VoteResponse>>()
 
         systemUnderTest.entryId = 12
 
-        whenever(mockOfCall.enqueue(any())).thenAnswer {
-            (it.arguments.first() as Callback<VoteResponse>).onResponse(null, response)
-        }
-        whenever(mockOfEntriesApi.unvoteEntry(any())).thenReturn(mockOfCall)
+        whenever(mockOfEntriesApi.unvoteEntry(any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES, emptyList())))
         systemUnderTest.unvote()
 
         verify(mockOfView).apply {
@@ -67,15 +59,9 @@ class EntryVoteButtonPresenterTest {
 
     @Test
     fun shouldShowErrorDialog() {
-        val mockOfCall = mock<Call<VoteResponse>>()
-
         systemUnderTest.entryId = 12
-
-        whenever(mockOfCall.enqueue(any())).thenAnswer {
-            (it.arguments.first() as Callback<VoteResponse>).onFailure(null, IOException())
-        }
-        whenever(mockOfEntriesApi.voteEntry(any())).thenReturn(mockOfCall)
-        whenever(mockOfEntriesApi.unvoteEntry(any())).thenReturn(mockOfCall)
+        whenever(mockOfEntriesApi.voteEntry(any())).thenReturn(Single.error(IOException()))
+        whenever(mockOfEntriesApi.unvoteEntry(any())).thenReturn(Single.error(IOException()))
 
         systemUnderTest.vote()
         systemUnderTest.unvote()

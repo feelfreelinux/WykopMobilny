@@ -6,10 +6,9 @@ import android.os.Bundle
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.Entry
+import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EXTRA_ENTRY_ID
 import io.github.feelfreelinux.wykopmobilny.utils.api.getTag
-import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject

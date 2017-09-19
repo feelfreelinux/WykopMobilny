@@ -24,27 +24,29 @@ class CommentViewHolder(val view: View, val callbacks : WykopActionHandler) : Re
     }
 
     private fun bindHeader(comment : Comment) {
-        val header = view.entryHeader
-        header.userNameTextView.apply {
-            text = comment.author
-            setTextColor(getGroupColor(comment.authorGroup))
+        comment.author.apply {
+            val header = view.entryHeader
+            header.userNameTextView.apply {
+                text = nick
+                setTextColor(getGroupColor(group))
+            }
+
+            header.avatarImageView.loadImage(avatarUrl)
+            val date = comment.date.toPrettyDate()
+            header.entryDateTextView.text = date
+
+            app?.let {
+                header.entryDateTextView.text = view.context.getString(R.string.date_with_user_app, date, app)
+            }
+
+            view.genderStripImageView.setBackgroundResource(getGenderStripResource(sex))
         }
-
-        header.avatarImageView.loadImage(comment.authorAvatarMed)
-        val date = comment.date.toPrettyDate()
-        header.entryDateTextView.text = date
-
-        comment.app?.let {
-            header.entryDateTextView.text = view.context.getString(R.string.date_with_user_app, date, comment.app)
-        }
-
-        view.genderStripImageView.setBackgroundResource(getGenderStripResource(comment.authorSex))
     }
 
     private fun bindFooter(comment : Comment) {
         view.voteCountTextView.apply {
             setCommentData(comment.entryId, comment.id, comment.voteCount)
-            isButtonSelected = comment.userVote > 0
+            isButtonSelected = comment.isVoted
             voteCount = comment.voteCount
         }
     }
@@ -54,10 +56,10 @@ class CommentViewHolder(val view: View, val callbacks : WykopActionHandler) : Re
 
         view.entryImageView.apply {
             isVisible = false
-            comment.embed?.let {
+            comment.embed?.apply {
                 isVisible = true
-                loadImage(comment.embed!!.preview)
-                if (comment.embed!!.type == "image") setPhotoViewUrl(comment.embed!!.url)
+                loadImage(preview)
+                if (type == "image") setPhotoViewUrl(url)
             }
         }
     }
