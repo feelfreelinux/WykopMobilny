@@ -1,9 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.api.user
 
-import io.github.feelfreelinux.wykopmobilny.api.Profile
+import io.github.feelfreelinux.wykopmobilny.models.pojo.Profile
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.Retrofit
 
 interface UserApi {

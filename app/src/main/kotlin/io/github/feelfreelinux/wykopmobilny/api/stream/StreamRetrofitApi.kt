@@ -1,9 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.api.stream
 
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
-import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.EntryResponse
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 

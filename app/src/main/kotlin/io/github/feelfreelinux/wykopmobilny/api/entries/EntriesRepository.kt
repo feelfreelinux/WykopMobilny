@@ -1,12 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.api.entries
 
 import io.github.feelfreelinux.wykopmobilny.api.*
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
 import retrofit2.Retrofit
 import java.io.InputStream
 

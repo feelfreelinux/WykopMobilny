@@ -3,8 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.api.Entry
-import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler

@@ -1,12 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.api.stream
 
-import io.github.feelfreelinux.wykopmobilny.api.Entry
-import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.api.mapToEntry
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.Retrofit
 
 interface StreamApi {

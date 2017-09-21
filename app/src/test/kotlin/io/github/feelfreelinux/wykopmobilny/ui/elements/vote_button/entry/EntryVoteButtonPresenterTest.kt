@@ -1,19 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.entry
 
 import com.nhaarman.mockito_kotlin.*
-import com.squareup.moshi.Moshi
-import io.github.feelfreelinux.wykopmobilny.api.Profile
-import io.github.feelfreelinux.wykopmobilny.api.VoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
-import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
 import io.github.feelfreelinux.wykopmobilny.ui.SubscribeHelperTest
-import io.github.feelfreelinux.wykopmobilny.ui.splashscreen.SplashScreenPresenter
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.IOException
 
 class EntryVoteButtonPresenterTest {

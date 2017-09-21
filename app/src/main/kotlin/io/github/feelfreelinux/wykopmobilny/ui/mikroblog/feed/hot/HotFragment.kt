@@ -5,41 +5,57 @@ import android.support.v4.content.ContextCompat
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.api.Entry
-import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
+import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
+import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
+import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchNewEntryUserInput
-import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedRecyclerView
+import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedList
+import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.fragment_feed.view.*
 import javax.inject.Inject
 
 class HotFragment : BaseNavigationFragment(), HotView {
     @Inject lateinit var presenter : HotPresenter
-    lateinit var feedRecyclerView : BaseFeedRecyclerView
+    lateinit var feedRecyclerView : BaseFeedList
+    lateinit var entriesDataFragment : DataFragment<List<Entry>>
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         val view = inflater?.inflate(R.layout.fragment_feed, container, false)
         navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity, R.drawable.ic_clock)
         WykopApp.uiInjector.inject(this)
+        entriesDataFragment = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         presenter.subscribe(this)
 
         view?.feedRecyclerView.apply {
             feedRecyclerView = this@apply!!
             this.presenter = this@HotFragment.presenter
-            initAdapter()
             onFabClickedListener = {
                 this@HotFragment.context.launchNewEntryUserInput(null)
             }
+            initAdapter(entriesDataFragment.data)
         }
 
         return view
     }
 
     companion object {
+        val DATA_FRAGMENT_TAG = "HOT_DATA_FRAGMENT"
         fun newInstance() : Fragment {
             return HotFragment()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        entriesDataFragment.data = feedRecyclerView.entries
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (isRemoving) fragmentManager.removeDataFragment(entriesDataFragment)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

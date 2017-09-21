@@ -1,7 +1,7 @@
-package io.github.feelfreelinux.wykopmobilny.api
+package io.github.feelfreelinux.wykopmobilny.models.pojo
 
 import com.squareup.moshi.Json
-import java.io.Serializable
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
 
 
 data class VoteResponse(

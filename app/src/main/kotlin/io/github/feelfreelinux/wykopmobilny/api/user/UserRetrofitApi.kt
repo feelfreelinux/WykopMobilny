@@ -1,9 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.api.user
 
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
-import io.github.feelfreelinux.wykopmobilny.api.Profile
+import io.github.feelfreelinux.wykopmobilny.models.pojo.Profile
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST

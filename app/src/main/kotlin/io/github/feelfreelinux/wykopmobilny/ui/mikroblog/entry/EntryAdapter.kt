@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.api.Entry
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.CommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler

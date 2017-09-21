@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.entry.comment
 
 import com.nhaarman.mockito_kotlin.*
-import io.github.feelfreelinux.wykopmobilny.api.VoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.ui.SubscribeHelperTest
 import io.reactivex.Single

@@ -54,33 +54,24 @@ dependencies {
     implementation "org.ocpsoft.prettytime:prettytime:$versions.prettytime"
     implementation "com.github.chrisbanes:PhotoView:$versions.photoview"
     implementation "com.github.bumptech.glide:glide:$versions.glide"
-
     // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.3.0"
-    implementation "com.squareup.retrofit2:converter-moshi:2.3.0"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
-    implementation "com.squareup.okhttp3:logging-interceptor:3.9.0"
-
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     // RxJava
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
-    implementation "io.reactivex.rxjava2:rxjava:2.1.3"
-
-
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
     // Dagger 2
     implementation 'com.google.dagger:dagger:2.11'
     kapt 'com.google.dagger:dagger-compiler:2.11'
     provided 'org.glassfish:javax.annotation:10.0-b28'
-
-
     kapt "com.github.bumptech.glide:compiler:$versions.glide"
-
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6-SNAPSHOT'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6-SNAPSHOT'
-
     testImplementation "org.mockito:mockito-core:$versions.mockito"
     testImplementation "com.nhaarman:mockito-kotlin:$versions.mockito_kotlin"
     testImplementation 'junit:junit:4.12'
-
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

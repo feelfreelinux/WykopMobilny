@@ -1,12 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.api.entries
 
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
-import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
-import io.github.feelfreelinux.wykopmobilny.api.VoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.EntryResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
 import retrofit2.http.*
 data class AddResponse(val id : Int)
 interface EntriesRetrofitApi {

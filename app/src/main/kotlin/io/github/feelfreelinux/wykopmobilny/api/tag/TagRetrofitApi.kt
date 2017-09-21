@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.tag
 
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
-import io.github.feelfreelinux.wykopmobilny.api.TagEntriesResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.TagEntriesResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

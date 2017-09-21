@@ -8,10 +8,12 @@ import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.api.Entry
-import io.github.feelfreelinux.wykopmobilny.api.EntryResponse
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
+import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
+import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
+import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchEntryCommentUserInput
 import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -24,15 +26,19 @@ import javax.inject.Inject
 
 fun Context.openEntryActivity(entryId : Int) {
     val intent = Intent(this, EntryActivity::class.java)
-    intent.putExtra(EXTRA_ENTRY_ID, entryId)
+    intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
     startActivity(intent)
 }
 
-val EXTRA_ENTRY_ID = "ENTRY_ID"
 class EntryActivity : BaseActivity(), EntryView, SwipeRefreshLayout.OnRefreshListener {
     var entryId = 0
+    companion object {
+        val EXTRA_ENTRY_ID = "ENTRY_ID"
+        val EXTRA_FRAGMENT_KEY = "ENTRY_ACTIVITY_#"
+    }
 
     @Inject lateinit var presenter : EntryPresenter
+    private lateinit var entryFragmentData : DataFragment<Entry>
     val wykopActions by lazy { WykopActionHandlerImpl(this) as WykopActionHandler }
     private val adapter by lazy { EntryAdapter(wykopActions) }
 
@@ -59,17 +65,32 @@ class EntryActivity : BaseActivity(), EntryView, SwipeRefreshLayout.OnRefreshLis
             this.adapter = this@EntryActivity.adapter
         }
 
-        // Set needed flags
-        loadingView.isVisible = true
         swiperefresh.setOnRefreshListener(this)
+        entryFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + entryId)
 
-        // Trigger data loading
-        presenter.loadData()
+        if (entryFragmentData.data != null)
+            adapter.entry = entryFragmentData.data
+        else {
+            // Trigger data loading
+            loadingView.isVisible = true
+            presenter.loadData()
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater?.inflate(R.menu.entry_fragment_menu, menu)
         return true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        entryFragmentData.data = adapter.entry
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (isFinishing) supportFragmentManager.removeDataFragment(entryFragmentData)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
