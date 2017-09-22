@@ -24,7 +24,6 @@ class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelper
     private fun setupNavigation() {
         apiPreferences.avatarUrl?.let { view?.avatarUrl = it }
         getNotificationsCount()
-        view?.openFragment(HotFragment.newInstance())
     }
 
     fun getNotificationsCount() {

@@ -30,17 +30,16 @@ fun Context.openEntryActivity(entryId : Int) {
     startActivity(intent)
 }
 
-class EntryActivity : BaseActivity(), EntryView, SwipeRefreshLayout.OnRefreshListener {
+class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefreshListener {
     var entryId = 0
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
         val EXTRA_FRAGMENT_KEY = "ENTRY_ACTIVITY_#"
     }
 
-    @Inject lateinit var presenter : EntryPresenter
+    @Inject lateinit var presenter : EntryDetailPresenter
     private lateinit var entryFragmentData : DataFragment<Entry>
-    val wykopActions by lazy { WykopActionHandlerImpl(this) as WykopActionHandler }
-    private val adapter by lazy { EntryAdapter(wykopActions) }
+    private val adapter by lazy { EntryDetailAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -10,7 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.AddUserInputPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.LoginScreenPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.MainNavigationPresenter
-import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryDetailPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.tag.TagPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.splashscreen.SplashScreenPresenter
@@ -39,8 +39,8 @@ class PresentersModule {
             = TagPresenter(subscriptionHelperApi, tagApi)
 
     @Provides
-    fun provideEntryPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi)
-            = EntryPresenter(subscriptionHelperApi, entriesApi)
+    fun provideEntryDetailPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi)
+            = EntryDetailPresenter(subscriptionHelperApi, entriesApi)
 
     @Provides
     fun provideAddUserInputPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi)

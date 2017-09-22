@@ -8,7 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
 
-class FeedAdapter(val callbacks : WykopActionHandler) : BaseProgressAdapter<EntryViewHolder, Entry>() {
+class FeedAdapter : BaseProgressAdapter<EntryViewHolder, Entry>() {
     override fun bindHolder(holder: EntryViewHolder, position: Int) {
         holder.bindView(dataset[position]!!)
     }
@@ -28,5 +28,5 @@ class FeedAdapter(val callbacks : WykopActionHandler) : BaseProgressAdapter<Entr
     }
 
     override fun createViewHolder(parent: ViewGroup): EntryViewHolder =
-            EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.feed_layout, parent, false), callbacks)
+            EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false))
 }

@@ -9,8 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.CommentViewHolde
 import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
 
-
-class EntryAdapter(private val actionHandler: WykopActionHandler) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EntryDetailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var entry : Entry? = null
     private val ENTRY_HOLDER = 0
     private val COMMENT_HOLDER = 1
@@ -36,8 +35,8 @@ class EntryAdapter(private val actionHandler: WykopActionHandler) : RecyclerView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ENTRY_HOLDER -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.feed_layout, parent, false), actionHandler)
-            else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_layout, parent, false), actionHandler)
+            ENTRY_HOLDER -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false))
+            else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_layout, parent, false))
         }
     }
 }

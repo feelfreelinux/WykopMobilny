@@ -17,6 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchEntryCommentUserInput
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchNewEntryUserInput
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.AppExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
@@ -66,6 +67,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
 
         setupNavigation()
+        if (savedInstanceState == null) openMainFragment()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -95,6 +97,9 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         presenter.subscribe(this)
     }
 
+    fun openMainFragment() {
+        openFragment(HotFragment())
+    }
 
     override var notificationCount: Int
         get() = navHeader.nav_notifications.text.toString().toInt()
