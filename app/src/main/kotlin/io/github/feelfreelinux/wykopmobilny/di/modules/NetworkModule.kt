@@ -6,6 +6,8 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.ApiSignInterceptor
+import io.github.feelfreelinux.wykopmobilny.api.CustomHeadersCheckInterceptor
+import io.github.feelfreelinux.wykopmobilny.api.WykopRequestBodyConverterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
@@ -29,6 +31,7 @@ class NetworkModule(private val baseUrl : String) {
         return OkHttpClient.Builder()
                 .addInterceptor(ApiSignInterceptor())
                 .addInterceptor(httpLogging)
+                .addInterceptor(CustomHeadersCheckInterceptor())
                 .build()
     }
 
@@ -55,7 +58,7 @@ class NetworkModule(private val baseUrl : String) {
         return Retrofit.Builder()
                 .client(client)
                 .baseUrl(baseUrl)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .addConverterFactory(WykopRequestBodyConverterFactory(moshi))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
     }

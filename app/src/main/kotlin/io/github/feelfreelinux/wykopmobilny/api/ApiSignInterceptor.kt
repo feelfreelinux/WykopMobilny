@@ -10,15 +10,9 @@ import okhttp3.Response
 import okio.Okio
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.util.*
 
-class ApiException(apiExceptionMessage : String, code : Int) : IOException() {
-    override val message: String = "$apiExceptionMessage ($code)"
-}
-
 class ApiSignInterceptor : Interceptor {
-    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain?): Response? {
         val API_SIGN_HEADER = "apisign"
         val request = chain!!.request()
@@ -49,23 +43,6 @@ class ApiSignInterceptor : Interceptor {
         }
 
         builder.addHeader(API_SIGN_HEADER, encodeUrl.encryptMD5())
-
-        val res = chain.proceed(builder.build())
-        checkForException(res)
-        return res
-    }
-
-    // @TODO Replace with TypeAdapter
-    private fun checkForException(response : Response) {
-        if (response.peekBody(10).string().contains("{\"error\":{")) {
-            val json = JSONObject(response.body()!!.string())
-            if (json.has("error")) {
-                val error = json.getJSONObject("error")
-                throw ApiException(
-                        error.getString("message"),
-                        error.getInt("code")
-                )
-            }
-        }
+        return chain.proceed(builder.build())
     }
 }

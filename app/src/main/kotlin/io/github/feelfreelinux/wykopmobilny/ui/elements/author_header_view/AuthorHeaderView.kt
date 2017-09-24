@@ -32,10 +32,10 @@ class AuthorHeaderView : ConstraintLayout {
 
             avatarImageView.loadImage(avatarUrl)
             val prettyDate = date.toPrettyDate()
-            entryDateTextView.text = date
+            entryDateTextView.text = prettyDate
 
             app?.let {
-                entryDateTextView.text = context.getString(R.string.date_with_user_app, date, app)
+                entryDateTextView.text = context.getString(R.string.date_with_user_app, prettyDate, app)
             }
 
             genderStripImageView.setBackgroundResource(getGenderStripResource(sex))
