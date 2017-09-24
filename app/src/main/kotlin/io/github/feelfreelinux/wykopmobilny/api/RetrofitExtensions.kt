@@ -14,18 +14,6 @@ import java.io.IOException
 import java.io.InputStream
 
 
-fun <T> Call<T>.enqueue(success: (response: Response<T>) -> Unit,
-                                  failure: (t: Throwable) -> Unit) {
-    enqueue(object : Callback<T> {
-        override fun onResponse(call: Call<T>?, response: Response<T>) {
-            success(response)
-        }
-        override fun onFailure(call: Call<T>?, t: Throwable) {
-            failure(t)
-        }
-    })
-}
-
 fun InputStream.getRequestBody(mimetype : String) =
     object : RequestBody() {
         override fun contentType(): MediaType? = MediaType.parse(mimetype)

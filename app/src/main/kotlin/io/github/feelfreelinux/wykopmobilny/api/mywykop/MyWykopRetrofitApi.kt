@@ -15,6 +15,6 @@ interface MyWykopRetrofitApi {
     fun getNotificationCount(@Path("userkey", encoded = true) userkey : String) : Single<NotificationCountResponse>
 
     @Headers("@: $REQUIRES_LOGIN_HEADER")
-    @GET("/mywykop/HashTagsNotificationsCount/appkey/kod/$APP_KEY/{userkey}")
+    @GET("/mywykop/HashTagsNotificationsCount/appkey/$APP_KEY/{userkey}")
     fun getHashTagsNotificationsCount(@Path("userkey", encoded = true) userkey : String) : Single<NotificationCountResponse>
 }

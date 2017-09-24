@@ -8,7 +8,6 @@ import io.github.feelfreelinux.wykopmobilny.api.WykopUserNotLoggedInException
 
 fun Context.showExceptionDialog(e : Throwable) {
     ExceptionDialog(this, e)?.show()
-    throw e
 }
 
 fun ExceptionDialog(context : Context, e: Throwable) : AlertDialog? {
