@@ -18,8 +18,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchEntryComment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
-import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandlerImpl
 import kotlinx.android.synthetic.main.feed_recyclerview.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject

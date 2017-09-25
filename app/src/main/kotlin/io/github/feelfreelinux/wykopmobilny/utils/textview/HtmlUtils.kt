@@ -3,7 +3,10 @@ package io.github.feelfreelinux.wykopmobilny.utils.textview
 import android.os.Build
 import android.text.Html
 import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.style.URLSpan
+import android.view.View
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 
 fun String.toSpannable(): Spannable {
     @Suppress("DEPRECATION")
@@ -14,13 +17,15 @@ fun String.toSpannable(): Spannable {
     )
 }
 
-const val SPAN_TAG = 0
-const val SPAN_PROFILE = 1
-const val SPAN_LINK = 2
-
-val URLSpan.type
-    get() = when (url.first()) {
-        '#'  -> SPAN_TAG
-        '@'  -> SPAN_PROFILE
-        else -> SPAN_LINK
+fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, handler : WykopLinkHandlerApi) {
+    val start = getSpanStart(span)
+    val end = getSpanEnd(span)
+    val flags = getSpanFlags(span)
+    val clickable = object : LinkSpan() {
+        override fun onClick(tv: View) {
+            handler.handleUrl(span.url)
+        }
     }
+    setSpan(clickable, start, end, flags)
+    removeSpan(span)
+}

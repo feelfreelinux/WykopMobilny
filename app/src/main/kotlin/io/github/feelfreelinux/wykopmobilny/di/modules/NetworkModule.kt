@@ -14,11 +14,12 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -51,6 +52,10 @@ class NetworkModule(private val baseUrl : String) {
     @Provides
     @Singleton
     fun provideWykopNotificationManager(mgr: NotificationManager) : WykopNotificationManagerApi = WykopNotificationManager(mgr)
+
+    @Provides
+    @Singleton
+    fun provideWykopLinkHandlerApi(context : Context) : WykopLinkHandlerApi = WykopLinkHandler(context)
 
     @Provides
     @Singleton

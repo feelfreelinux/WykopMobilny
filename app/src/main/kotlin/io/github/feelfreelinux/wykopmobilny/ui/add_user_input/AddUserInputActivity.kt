@@ -78,6 +78,7 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
         setContentView(R.layout.activity_write_comment)
         setSupportActionBar(toolbar)
         setToolbarTitle()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
 
@@ -136,6 +137,7 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.send -> presenter.sendInput()
+            android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }

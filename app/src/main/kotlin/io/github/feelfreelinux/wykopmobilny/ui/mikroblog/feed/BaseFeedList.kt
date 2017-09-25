@@ -1,10 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed
 
 import android.content.Context
-import android.os.Bundle
-import android.os.Parcelable
 import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.util.AttributeSet
@@ -16,7 +13,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.EndlessScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ILoadMore
-import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandlerImpl
 import kotlinx.android.synthetic.main.feed_recyclerview.view.*
 
 class BaseFeedList : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {

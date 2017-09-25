@@ -5,17 +5,12 @@ import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Comment
-import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
-import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
-import io.github.feelfreelinux.wykopmobilny.utils.setPhotoViewUrl
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
-import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
-import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandlerImpl
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.comment_layout.view.*
-import kotlinx.android.synthetic.main.entry_header.view.*
+import javax.inject.Inject
 
 class CommentView : CardView {
     constructor(context: Context) : super(context)
@@ -24,9 +19,10 @@ class CommentView : CardView {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    val callbacks = WykopActionHandlerImpl(context)
+    @Inject lateinit var linkHandler : WykopLinkHandlerApi
 
     init {
+        WykopApp.uiInjector.inject(this)
         View.inflate(context, R.layout.comment_layout, this)
         val dpAsPixels = (8 * resources.displayMetrics.density + 0.5f).toInt()
         setContentPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels)
@@ -51,15 +47,7 @@ class CommentView : CardView {
     }
 
     private fun setupBody(comment : Comment) {
-        entryContentTextView.prepareBody(comment.body, callbacks)
-
-        entryImageView.apply {
-            isVisible = false
-            comment.embed?.apply {
-                isVisible = true
-                loadImage(preview)
-                if (type == "image") setPhotoViewUrl(url)
-            }
-        }
+        entryContentTextView.prepareBody(comment.body, linkHandler)
+        entryImageView.setEmbed(comment.embed)
     }
 }

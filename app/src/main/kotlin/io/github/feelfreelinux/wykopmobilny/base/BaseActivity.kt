@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.showExceptionDialog
 
 // This class should be extended in all activities in this app. Place global-activity settings here

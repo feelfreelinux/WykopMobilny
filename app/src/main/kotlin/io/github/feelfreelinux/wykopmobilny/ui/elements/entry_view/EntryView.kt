@@ -5,13 +5,13 @@ import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
-import io.github.feelfreelinux.wykopmobilny.utils.setPhotoViewUrl
+import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.openEntryActivity
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
-import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandlerImpl
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.feed_layout.view.*
+import javax.inject.Inject
 
 class EntryView : CardView {
     constructor(context: Context) : super(context)
@@ -20,9 +20,10 @@ class EntryView : CardView {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    val callbacks = WykopActionHandlerImpl(context)
+    @Inject lateinit var linkHandler : WykopLinkHandlerApi
 
     init {
+        WykopApp.uiInjector.inject(this)
         View.inflate(context, R.layout.feed_layout, this)
         val dpAsPixels = (8 * resources.displayMetrics.density + 0.5f).toInt()
         setContentPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels)
@@ -43,7 +44,7 @@ class EntryView : CardView {
             text = entry.commentsCount.toString()
 
             setOnClickListener {
-                callbacks.onCommentsClicked(entry.id)
+                context.openEntryActivity(entry.id)
             }
         }
 
@@ -56,16 +57,8 @@ class EntryView : CardView {
     }
 
     private fun setupBody(entry : Entry) {
-        entryContentTextView.prepareBody(entry.body, callbacks)
-
-        entryImageView.apply {
-            isVisible = false
-            entry.embed?.apply {
-                isVisible = true
-                loadImage(preview)
-                if (type == "image") setPhotoViewUrl(url)
-            }
-        }
+        entryContentTextView.prepareBody(entry.body, linkHandler)
+        entryImageView.setEmbed(entry.embed)
     }
 
 }

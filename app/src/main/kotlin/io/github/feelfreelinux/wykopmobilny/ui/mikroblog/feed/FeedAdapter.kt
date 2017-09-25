@@ -6,7 +6,6 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.EntryViewHolder
-import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
 
 class FeedAdapter : BaseProgressAdapter<EntryViewHolder, Entry>() {
     override fun bindHolder(holder: EntryViewHolder, position: Int) {

@@ -13,12 +13,15 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 fun Context.launchPhotoView(imageUrl: String) {
     val intent = Intent(this, PhotoViewActivity::class.java)
-    intent.putExtra("URL", imageUrl)
+    intent.putExtra(PhotoViewActivity.URL_EXTRA, imageUrl)
     startActivity(intent)
 }
 
 class PhotoViewActivity : BaseActivity() {
-    val url: String by lazy { intent.getStringExtra("URL") }
+    companion object {
+        val URL_EXTRA = "URL"
+    }
+    val url: String by lazy { intent.getStringExtra(URL_EXTRA) }
     private val photoViewActions by lazy { PhotoViewActions(this) as PhotoViewCallbacks }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +29,8 @@ class PhotoViewActivity : BaseActivity() {
         setContentView(R.layout.activity_photoview)
         setSupportActionBar(toolbar)
         image.loadImage(url)
-        title = "Mikroblog"
+        title = null
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -39,6 +43,7 @@ class PhotoViewActivity : BaseActivity() {
             R.id.action_share -> photoViewActions.shareImage()
             R.id.action_save_image -> photoViewActions.saveImage()
             R.id.action_copy_url -> photoViewActions.copyURL()
+            android.R.id.home -> finish()
             else -> return super.onOptionsItemSelected(item)
         }
         return true

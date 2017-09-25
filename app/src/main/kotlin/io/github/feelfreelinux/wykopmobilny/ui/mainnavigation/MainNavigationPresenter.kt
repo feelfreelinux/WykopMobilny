@@ -6,7 +6,6 @@ import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
-import io.reactivex.functions.Consumer
 
 class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val apiPreferences: CredentialsPreferencesApi, private val myWykopApi: MyWykopApi) : BasePresenter<MainNavigationView>() {
 

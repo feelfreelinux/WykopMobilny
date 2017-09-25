@@ -18,12 +18,9 @@ fun ExceptionDialog(context : Context, e: Throwable) : AlertDialog? {
     }
     val alertBuilder = context.createAlertBuilder()
 
-
-
     alertBuilder.run {
         setTitle(context.getString(R.string.unexpected_error_occured))
         setMessage(message)
-        setPositiveButton(android.R.string.ok, null)
         return create()
     }
 }

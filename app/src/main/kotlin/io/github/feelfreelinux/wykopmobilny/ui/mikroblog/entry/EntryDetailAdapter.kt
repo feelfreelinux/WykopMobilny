@@ -7,7 +7,6 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.CommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.elements.holders.EntryViewHolder
-import io.github.feelfreelinux.wykopmobilny.utils.wykopactionhandler.WykopActionHandler
 
 class EntryDetailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var entry : Entry? = null
