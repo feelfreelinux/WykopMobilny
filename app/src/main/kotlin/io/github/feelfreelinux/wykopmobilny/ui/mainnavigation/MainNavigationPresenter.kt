@@ -12,7 +12,14 @@ class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelper
     fun navigationItemClicked(itemId: Int) {
         when (itemId) {
             R.id.nav_mikroblog -> view?.openFragment(HotFragment.newInstance())
+            R.id.login -> view?.openLoginActivity()
+            R.id.logout -> logoutUser()
         }
+    }
+
+    private fun logoutUser() {
+        apiPreferences.logoutUser()
+        view?.restartActivity()
     }
 
     override fun subscribe(view: MainNavigationView) {
@@ -21,8 +28,11 @@ class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelper
     }
 
     private fun setupNavigation() {
-        apiPreferences.avatarUrl?.let { view?.avatarUrl = it }
-        getNotificationsCount()
+        if (apiPreferences.isUserAuthorized()) {
+            view?.showUsersMenu(true)
+            apiPreferences.avatarUrl?.let { view?.avatarUrl = it }
+            getNotificationsCount()
+        } else view?.showUsersMenu(false)
     }
 
     fun getNotificationsCount() {

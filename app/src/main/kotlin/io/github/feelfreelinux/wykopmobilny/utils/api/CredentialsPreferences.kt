@@ -10,6 +10,7 @@ interface CredentialsPreferencesApi {
     var avatarUrl: String?
     var timeStamp: String?
     fun isUserAuthorized(): Boolean
+    fun logoutUser()
 }
 
 class CredentialsPreferences(context: Context) : Preferences(context), CredentialsPreferencesApi {
@@ -20,6 +21,11 @@ class CredentialsPreferences(context: Context) : Preferences(context), Credentia
     override var timeStamp by stringPref(defaultValue = "")
 
     override fun isUserAuthorized(): Boolean {
-        return !login.isNullOrBlank() and !userKey.isNullOrBlank() and !userToken.isNullOrBlank() and !avatarUrl.isNullOrBlank()
+        return !login.isNullOrBlank() and !userKey.isNullOrBlank()
     } //todo move to some kind of validator
+
+    override fun logoutUser() {
+        login = ""
+        userKey = ""
+    }
 }

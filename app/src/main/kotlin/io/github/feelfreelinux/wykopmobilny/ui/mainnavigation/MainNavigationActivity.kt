@@ -17,7 +17,11 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchEntryCommentUserInput
 import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchNewEntryUserInput
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.AppExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.LoginScreenActivity
+import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.USER_LOGGED_IN
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
+import io.github.feelfreelinux.wykopmobilny.ui.splashscreen.SplashScreenActivity
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
@@ -40,6 +44,7 @@ interface MainNavigationInterface {
 
 class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override val activityToolbar: Toolbar get() = toolbar
+    val LOGIN_REQUEST_CODE = 142
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         presenter.navigationItemClicked(item.itemId)
@@ -65,7 +70,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         setSupportActionBar(toolbar)
         WykopApp.uiInjector.inject(this)
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
-
         setupNavigation()
         if (savedInstanceState == null) openMainFragment()
     }
@@ -95,6 +99,16 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         drawer_layout.addDrawerListener(actionBarToggle)
         navigationView.setNavigationItemSelectedListener(this)
         presenter.subscribe(this)
+    }
+
+    override fun showUsersMenu(value : Boolean) {
+        navigationView.menu.apply {
+            findItem(R.id.nav_user).isVisible = value
+            findItem(R.id.nav_mojwykop).isVisible = value
+            findItem(R.id.login).isVisible = !value
+            findItem(R.id.logout).isVisible = value
+        }
+        navHeader.isVisible = value
     }
 
     fun openMainFragment() {
@@ -142,5 +156,25 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             else AppExitConfirmationDialog(this, { finish() })?.show()
         }
         else supportFragmentManager.popBackStack()
+    }
+
+    override fun openLoginActivity() {
+        startActivityForResult(Intent(this, LoginScreenActivity::class.java), LOGIN_REQUEST_CODE)
+    }
+
+    override fun restartActivity() {
+        launchNavigationActivity()
+        finish()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            LOGIN_REQUEST_CODE -> {
+                if (resultCode == USER_LOGGED_IN) {
+                    startActivity(Intent(this, SplashScreenActivity::class.java))
+                    finish()
+                }
+            }
+        }
     }
 }

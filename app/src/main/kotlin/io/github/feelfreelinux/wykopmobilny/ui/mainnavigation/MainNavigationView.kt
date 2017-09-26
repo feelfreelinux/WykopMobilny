@@ -11,4 +11,7 @@ interface MainNavigationView : BaseView {
 
     fun openFragment(fragment : Fragment)
     fun closeDrawer()
+    fun showUsersMenu(value : Boolean)
+    fun openLoginActivity()
+    fun restartActivity()
 }

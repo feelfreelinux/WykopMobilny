@@ -8,9 +8,7 @@ class SplashScreenPresenter(private val subscriptionHelper: SubscriptionHelperAp
     fun checkIsUserLoggedIn() {
         if (apiPreferences.isUserAuthorized()) {
             getUserToken()
-        } else {
-            view?.startLoginActivity()
-        }
+        } else view?.startNavigationActivity()
     }
 
     fun getUserToken() {

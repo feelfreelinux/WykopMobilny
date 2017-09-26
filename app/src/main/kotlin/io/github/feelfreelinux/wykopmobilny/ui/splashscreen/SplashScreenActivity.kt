@@ -10,7 +10,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.launchNavigationAc
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity(), SplashScreenView {
-    val LOGIN_REQUEST_CODE = 114
     @Inject lateinit var presenter : SplashScreenPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,21 +19,9 @@ class SplashScreenActivity : BaseActivity(), SplashScreenView {
         presenter.checkIsUserLoggedIn()
     }
 
-    override fun startLoginActivity() {
-        startActivityForResult(Intent(this, LoginScreenActivity::class.java), LOGIN_REQUEST_CODE)
-    }
-
     override fun startNavigationActivity() {
         launchNavigationActivity()
         finish()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            LOGIN_REQUEST_CODE -> {
-                if (resultCode == USER_LOGGED_IN) presenter.getUserToken()
-            }
-        }
     }
 }
 
