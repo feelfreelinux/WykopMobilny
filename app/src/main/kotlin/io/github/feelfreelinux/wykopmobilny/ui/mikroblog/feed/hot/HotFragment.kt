@@ -10,9 +10,8 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchNewEntryUserInput
+import io.github.feelfreelinux.wykopmobilny.ui.input.entry.add.createNewEntry
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedList
-import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.fragment_feed.view.*
 import javax.inject.Inject
 
@@ -33,7 +32,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
             feedRecyclerView = this@apply!!
             this.presenter = this@HotFragment.presenter
             onFabClickedListener = {
-                this@HotFragment.context.launchNewEntryUserInput(null)
+                this@HotFragment.context.createNewEntry(null)
             }
             initAdapter(entriesDataFragment.data)
         }

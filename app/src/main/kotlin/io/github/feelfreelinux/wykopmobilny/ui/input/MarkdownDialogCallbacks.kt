@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
+package io.github.feelfreelinux.wykopmobilny.ui.input
 
 import android.content.Context
 import android.view.LayoutInflater

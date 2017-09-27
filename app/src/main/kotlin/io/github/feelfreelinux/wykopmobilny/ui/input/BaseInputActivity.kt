@@ -1,61 +1,37 @@
-package io.github.feelfreelinux.wykopmobilny.ui.add_user_input
+package io.github.feelfreelinux.wykopmobilny.ui.input
 
 import android.app.Activity
-import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.webkit.MimeTypeMap
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
-import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.getMimeType
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
+import io.github.feelfreelinux.wykopmobilny.utils.queryFileName
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.activity_write_comment.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.io.InputStream
 import javax.inject.Inject
 
-
-const val EXTRA_INPUT_TYPE = "INPUT_TYLE"
-const val EXTRA_ENTRY_ID = "ENTRY_ID"
-const val EXTRA_RECEIVER = "PROFILE_RECEIVER"
-const val USER_INPUT_NEW_ENTRY = 0
-const val USER_INPUT_ENTRY_COMMENT = 1
-const val USER_EDIT_ENTRY = 2
-const val USER_EDIT_ENTRY_COMMENT = 3
-const val USER_ACTION_INSERT_PHOTO = 4
-
-fun Context.launchNewEntryUserInput(receiver: String?) {
-    val intent = Intent(this, AddUserInputActivity::class.java)
-    intent.putExtra(EXTRA_INPUT_TYPE, USER_INPUT_NEW_ENTRY)
-    intent.putExtra(EXTRA_RECEIVER, receiver)
-    startActivity(intent)
-}
-
-fun Context.launchEntryCommentUserInput(entryId : Int, receiver : String?) {
-    val intent = Intent(this, AddUserInputActivity::class.java)
-    intent.putExtra(EXTRA_INPUT_TYPE, USER_INPUT_ENTRY_COMMENT)
-    intent.putExtra(EXTRA_ENTRY_ID, entryId)
-    intent.putExtra(EXTRA_RECEIVER, receiver)
-    startActivity(intent)
-}
-
-class AddUserInputActivity : BaseActivity(), AddUserInputView {
-    override val inputType by lazy { intent.getIntExtra(EXTRA_INPUT_TYPE, -1) }
-    override val receiver: String? by lazy { intent.getStringExtra(EXTRA_RECEIVER) }
-    override val entryId: Int? by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
-
+abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), BaseInputView {
     @Inject lateinit var notificationManager : WykopNotificationManagerApi
     private val notificationId by lazy { notificationManager.getNewId() }
-    private val markdownDialogCallbacks by lazy { MarkdownDialogActions(this, layoutInflater) as MarkdownDialogCallbacks}
+    private val markdownDialogCallbacks by lazy { MarkdownDialogActions(this, layoutInflater) as MarkdownDialogCallbacks }
+
+    companion object {
+        val EXTRA_RECEIVER = "EXTRA_RECEIVER"
+        val EXTRA_BODY = "EXTRA_BODY"
+        val USER_ACTION_INSERT_PHOTO = 142
+    }
 
     private val progressNotification : NotificationCompat.Builder by lazy {
         NotificationCompat.Builder(this, "wykopmobilny-uploading")
@@ -65,10 +41,10 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
                 .setOngoing(true)
     }
 
-    override var photo: Uri? = null
-    override var photoUrl: String? = null
+    var photo: Uri? = null
+    var photoUrl: String? = null
 
-    @Inject lateinit var presenter : AddUserInputPresenter
+    abstract var presenter : T
     override var textBody: String
         get() = body.text.toString()
         set(value) { body.setText(value, TextView.BufferType.EDITABLE) }
@@ -77,16 +53,25 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write_comment)
         setSupportActionBar(toolbar)
-        setToolbarTitle()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        WykopApp.uiInjector.inject(this)
-        presenter.subscribe(this)
 
         removeImage.setOnClickListener {
             image.setImageBitmap(null)
             imageCardView.isVisible = false
             photo = null
             photoUrl = null
+        }
+
+        intent.apply {
+            getStringExtra(EXTRA_RECEIVER)?.apply {
+                textBody += "$this: "
+                selectionPosition = this.length + 2
+            }
+
+            getStringExtra(EXTRA_BODY)?.apply {
+                textBody += this
+                selectionPosition = this.length
+            }
         }
 
         menuInflater.inflate(R.menu.markdown_menu, markupToolbar.amvMenu.menu)
@@ -112,18 +97,6 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
         true
     }
 
-    private fun setToolbarTitle() {
-        // Sets title for different input types
-        supportActionBar?.apply {
-            title = when (inputType) {
-                USER_INPUT_ENTRY_COMMENT -> getString(R.string.add_comment)
-                USER_INPUT_NEW_ENTRY -> getString(R.string.add_new_entry)
-                USER_EDIT_ENTRY -> getString(R.string.edit_entry)
-                USER_EDIT_ENTRY_COMMENT -> getString(R.string.edit_comment)
-                else -> null
-            }
-        }
-    }
 
     override var selectionPosition : Int
         get() = body.selectionStart
@@ -136,7 +109,10 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.send -> presenter.sendInput()
+            R.id.send -> {
+                if (photo != null) presenter.sendWithPhoto(getPhotoTypedInputStream())
+                else presenter.sendWithPhotoUrl(if (photoUrl == null) "" else photoUrl!!)
+            }
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
@@ -156,10 +132,10 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
     }
 
     // Returns resolved photo output stream
-    override fun getPhotoTypedInputStream(): TypedInputStream =
-        TypedInputStream(photo?.queryFileName(contentResolver)!!,
-                photo?.getMimeType(contentResolver)!!,
-                contentResolver.openInputStream(photo))
+    fun getPhotoTypedInputStream(): TypedInputStream =
+            TypedInputStream(photo?.queryFileName(contentResolver)!!,
+                    photo?.getMimeType(contentResolver)!!,
+                    contentResolver.openInputStream(photo))
 
     // Shows "sending entry" progress in notification
     override var showNotification : Boolean
@@ -206,4 +182,6 @@ class AddUserInputActivity : BaseActivity(), AddUserInputView {
                 getString(R.string.insert_photo_galery)), USER_ACTION_INSERT_PHOTO)
     }
 
+    override fun showErrorDialog(e: Throwable) =
+        showExceptionDialog(e)
 }

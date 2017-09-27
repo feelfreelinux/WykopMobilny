@@ -10,6 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
+import io.github.feelfreelinux.wykopmobilny.ui.input.entry.add.createNewEntry
 import io.github.feelfreelinux.wykopmobilny.utils.api.getTag
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -45,8 +46,13 @@ class TagActivity : BaseActivity(), TagView {
         WykopApp.uiInjector.inject(this)
         presenter.tag = entryTag
         presenter.subscribe(this)
-        feedRecyclerView.presenter = presenter
-        feedRecyclerView.initAdapter(tagDataFragment.data)
+        feedRecyclerView.apply {
+            presenter = this@TagActivity.presenter
+            initAdapter(tagDataFragment.data)
+            onFabClickedListener = {
+                context.createNewEntry(null)
+            }
+        }
         setSupportActionBar(toolbar)
     }
 

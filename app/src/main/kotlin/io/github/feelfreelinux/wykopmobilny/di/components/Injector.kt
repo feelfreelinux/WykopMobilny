@@ -6,11 +6,13 @@ import io.github.feelfreelinux.wykopmobilny.di.modules.NetworkModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.PresentersModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.RepositoryModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.ViewPresentersModule
-import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.AddUserInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.elements.comment_view.CommentView
 import io.github.feelfreelinux.wykopmobilny.ui.elements.entry_view.EntryView
 import io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.entry.EntryVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.entry.comment.EntryCommentVoteButton
+import io.github.feelfreelinux.wykopmobilny.ui.input.BaseInputActivity
+import io.github.feelfreelinux.wykopmobilny.ui.input.entry.add.AddEntryActivity
+import io.github.feelfreelinux.wykopmobilny.ui.input.entry.comment.add.AddEntryCommentActivity
 import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryActivity
@@ -36,5 +38,6 @@ interface Injector {
     fun inject(entryCommentVoteButton: EntryCommentVoteButton)
     fun inject(entryView: EntryView)
     fun inject(commentView : CommentView)
-    fun inject(addUserInputActivity: AddUserInputActivity)
+    fun inject(addEntryActivity: AddEntryActivity)
+    fun inject(addEntryCommentActivity: AddEntryCommentActivity)
 }

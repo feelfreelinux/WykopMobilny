@@ -18,9 +18,6 @@
 
         <activity android:name=".ui.mainnavigation.NavigationActivity" />
 
-        <activity android:name=".ui.add_user_input.AddUserInputActivity"
-            android:windowSoftInputMode="adjustResize"/>
-
         <activity android:name=".ui.splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,6 +47,9 @@
                     android:host="www.wykop.pl"
                     android:pathPrefix="/tag" />
             </intent-filter>
-        </activity>    </application>
+        </activity>
+        <activity android:name=".ui.input.entry.add.AddEntryActivity" />
+        <activity android:name=".ui.input.entry.comment.add.AddEntryCommentActivity" />
+    </application>
 
 </manifest>

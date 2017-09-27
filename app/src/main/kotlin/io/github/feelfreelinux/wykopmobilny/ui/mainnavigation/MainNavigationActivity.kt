@@ -14,8 +14,6 @@ import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchEntryCommentUserInput
-import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchNewEntryUserInput
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.USER_LOGGED_IN
@@ -38,8 +36,6 @@ interface MainNavigationInterface {
     fun openFragment(fragment: Fragment)
     fun showErrorDialog(e: Throwable)
     fun openBrowser(url : String)
-    fun openNewEntryUserInput(receiver : String?)
-    fun openNewEntryCommentUserInput(entryId : Int, receiver: String?)
 }
 
 class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
@@ -140,14 +136,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
 
     override fun openBrowser(url: String) {
 
-    }
-
-    override fun openNewEntryUserInput(receiver: String?) {
-        launchNewEntryUserInput(receiver)
-    }
-
-    override fun openNewEntryCommentUserInput(entryId : Int, receiver: String?) {
-        launchEntryCommentUserInput(entryId, receiver)
     }
 
     override fun onBackPressed() {

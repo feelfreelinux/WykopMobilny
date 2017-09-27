@@ -25,11 +25,10 @@ class SplashScreenPresenterTest {
     }
 
     @Test
-    fun shouldOpenLoginScreenWhenNotLoggedIn() {
+    fun shouldOpenNavigatuinScreenWhenNotLoggedIn() {
         whenever(mockOfApiPreferences.isUserAuthorized()).thenReturn(false)
         systemUnderTest.checkIsUserLoggedIn()
-
-        verify(mockOfView).startLoginActivity()
+        verify(mockOfView).startNavigationActivity()
     }
 
     @Test

@@ -14,7 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoratio
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.add_user_input.launchEntryCommentUserInput
+import io.github.feelfreelinux.wykopmobilny.ui.input.entry.comment.add.createNewEntryComment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
@@ -92,7 +92,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.reply -> adapter.entry?.let { launchEntryCommentUserInput(entryId, adapter.entry!!.author.nick) }
+            R.id.reply -> adapter.entry?.let { createNewEntryComment(entryId, adapter.entry!!.author.nick) }
             android.R.id.home -> finish()
         }
         return true
