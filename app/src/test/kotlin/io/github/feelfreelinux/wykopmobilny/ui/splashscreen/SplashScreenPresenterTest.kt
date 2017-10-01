@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.Profile
 import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
@@ -16,19 +17,19 @@ class SplashScreenPresenterTest {
     lateinit var systemUnderTest: SplashScreenPresenter
     val mockOfView = mock<SplashScreenView>()
     val mockOfUserApi = mock<UserApi>()
-    val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
+    val mockOfUserManager = mock<UserManagerApi>()
     val subscribeHelper = SubscriptionHelper(Schedulers.trampoline(), Schedulers.trampoline())
 
     @Before
     fun setup() {
-        systemUnderTest = SplashScreenPresenter(subscribeHelper, mockOfApiPreferences, mockOfUserApi)
+        systemUnderTest = SplashScreenPresenter(subscribeHelper, mockOfUserManager, mockOfUserApi)
         systemUnderTest.subscribe(mockOfView)
 
     }
 
     @Test
     fun shouldOpenNavigatuinScreenWhenNotLoggedIn() {
-        whenever(mockOfApiPreferences.isUserAuthorized()).thenReturn(false)
+        whenever(mockOfUserManager.isUserAuthorized()).thenReturn(false)
         systemUnderTest.checkIsUserLoggedIn()
         verify(mockOfView).startNavigationActivity()
     }
@@ -40,13 +41,12 @@ class SplashScreenPresenterTest {
         testProfile.userKey = "samplekey"
 
         whenever(mockOfUserApi.getUserSessionToken()).thenReturn(Single.just(testProfile))
-        whenever(mockOfApiPreferences.isUserAuthorized()).thenReturn(true)
+        whenever(mockOfUserManager.isUserAuthorized()).thenReturn(true)
 
         systemUnderTest.checkIsUserLoggedIn()
 
         verify(mockOfView).startNavigationActivity()
-        verify(mockOfApiPreferences).avatarUrl = testProfile.avatarBig
-        verify(mockOfApiPreferences).userToken = testProfile.userKey
+        verify(mockOfUserManager).saveCredentials(testProfile)
 
     }
 }

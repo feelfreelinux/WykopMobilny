@@ -156,11 +156,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         finish()
     }
 
-    override fun onPause() {
-        super.onPause()
-        presenter.unsubscribe()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             LOGIN_REQUEST_CODE -> {

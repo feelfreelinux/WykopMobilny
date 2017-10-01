@@ -85,9 +85,13 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
         entryFragmentData.data = adapter.entry
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribe()
+    }
+
     override fun onPause() {
         super.onPause()
-        presenter.unsubscribe()
         if (isFinishing) supportFragmentManager.removeDataFragment(entryFragmentData)
     }
 

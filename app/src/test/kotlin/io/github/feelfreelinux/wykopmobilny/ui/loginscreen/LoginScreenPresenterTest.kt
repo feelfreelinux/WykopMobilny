@@ -2,43 +2,36 @@ package io.github.feelfreelinux.wykopmobilny.ui.loginscreen
 
 import com.nhaarman.mockito_kotlin.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.LoginCredentials
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import org.junit.Before
 import org.junit.Test
 
 class LoginScreenPresenterTest {
     lateinit var systemUnderTest: LoginScreenPresenter
     private val mockOfView = mock<LoginScreenView>()
+    private val mockOfUserManager = mock<UserManagerApi>()
     private val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
 
     @Before
     fun setup() {
-        systemUnderTest = LoginScreenPresenter(mockOfApiPreferences)
+        systemUnderTest = LoginScreenPresenter(mockOfUserManager)
         systemUnderTest.subscribe(mockOfView)
     }
 
     @Test
-    fun shouldSaveToken() {
-        val expectedToken = "example_token"
+    fun shouldSaveCredentials() {
+        val expectedCredentials = LoginCredentials("feuer", "example_token")
 
-        val url = "https://a.wykop.pl/user/ConnectSuccess/appkey/example_key/login/example_login/token/$expectedToken/"
+        val url = "https://a.wykop.pl/user/ConnectSuccess/appkey/example_key/login/${expectedCredentials.login}/token/${expectedCredentials.token}/"
         systemUnderTest.handleUrl(url)
-
-        verify(mockOfApiPreferences).userKey = expectedToken
-    }
-
-    @Test
-    fun shouldSaveLogin() {
-        val expectedLogin = "example_login"
-        val url = "https://a.wykop.pl/user/ConnectSuccess/appkey/example_key/login/$expectedLogin/token/example_token/"
-        systemUnderTest.handleUrl(url)
-
-        verify(mockOfApiPreferences).login = expectedLogin
+        verify(mockOfUserManager).loginUser(expectedCredentials)
     }
 
     @Test
     fun shouldShowErrorOnEmptyUrl() {
         systemUnderTest.handleUrl("")
-        verify(mockOfView, times(1)).showErrorDialog(any())
+        verify(mockOfView).showErrorDialog(any())
         verifyNoMoreInteractions(mockOfApiPreferences)
     }
 
