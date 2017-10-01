@@ -1,16 +1,21 @@
 ext {
     versions = [
-            buildTools      : '26.0.1',
-            androidPlugin   : '2.3.3',
-            kotlin          : '1.1.4-3',
-            supportLibrary  : '26.1.0',
-            constraintLayout: '1.0.2',
-            fuel            : '1.9.3',
-            glide           : '4.1.1',
-            prettytime      : '4.0.1.Final',
-            photoview       : '2.1.2',
-            kodein          : '4.1.0',
-            mockito         : '2.9.0',
-            mockito_kotlin  : '1.5.0'
+            buildTools        : '26.0.1',
+            androidPlugin     : '2.3.3',
+            kotlin            : '1.1.4-3',
+            supportLibrary    : '26.1.0',
+            constraintLayout  : '1.0.2',
+            glide             : '4.1.1',
+            prettytime        : '4.0.1.Final',
+            photoview         : '2.1.2',
+            mockito           : '2.9.0',
+            mockito_kotlin    : '1.5.0',
+            dagger2           : '2.11',
+            javax_annotations : '10.0-b28',
+            retrofit          : '2.3.0',
+            okhttp_interceptor: '3.9.0',
+            rxjava            : '2.1.3',
+            rxandroid         : '2.0.1',
+            leakcanary        : '1.6-SNAPSHOT'
     ]
 }

@@ -1,10 +1,11 @@
-package io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.entry
+package io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.entry
 
 import com.nhaarman.mockito_kotlin.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
-import io.github.feelfreelinux.wykopmobilny.ui.SubscribeHelperTest
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
@@ -13,10 +14,11 @@ class EntryVoteButtonPresenterTest {
     lateinit var systemUnderTest: EntryVoteButtonPresenter
     val mockOfView = mock<EntryVoteButtonView>()
     val mockOfEntriesApi = mock<EntriesApi>()
+    val subscribeHelper = SubscriptionHelper(Schedulers.trampoline(), Schedulers.trampoline())
 
     @Before
     fun setup() {
-        systemUnderTest = EntryVoteButtonPresenter(SubscribeHelperTest(), mockOfEntriesApi)
+        systemUnderTest = EntryVoteButtonPresenter(subscribeHelper, mockOfEntriesApi)
         systemUnderTest.subscribe(mockOfView)
     }
 

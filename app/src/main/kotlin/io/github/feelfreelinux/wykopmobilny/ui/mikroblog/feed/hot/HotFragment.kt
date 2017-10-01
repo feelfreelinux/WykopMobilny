@@ -57,6 +57,11 @@ class HotFragment : BaseNavigationFragment(), HotView {
         if (isRemoving) fragmentManager.removeDataFragment(entriesDataFragment)
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        presenter.unsubscribe()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.hot_period, menu)
         navigation.activityToolbar.setTitle(R.string.period24)

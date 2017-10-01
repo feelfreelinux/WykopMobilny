@@ -16,18 +16,17 @@ class HotPresenter(private val subscriptionHelper: SubscriptionHelperApi, privat
 
         when (period) {
             "24", "12", "6" -> {
-                subscriptions.add(
-                    subscriptionHelper.subscribeOnSchedulers(
-                        streamApi.getMirkoblogHot(page, period.toInt())
-                    ).subscribe(success, failure)
-                )
+                subscriptionHelper.subscribe(
+                        streamApi.getMirkoblogHot(page, period.toInt()), success, failure, this)
             }
             "newest" ->
-                subscriptions.add(
-                        subscriptionHelper.subscribeOnSchedulers(
-                                streamApi.getMikroblogIndex(page)
-                        ).subscribe(success, failure)
-                )
-            }
+                subscriptionHelper.subscribe(
+                        streamApi.getMikroblogIndex(page), success, failure, this)
+        }
+    }
+
+    override fun unsubscribe() {
+        super.unsubscribe()
+        subscriptionHelper.dispose(this)
     }
 }

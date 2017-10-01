@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api.entries
 import io.github.feelfreelinux.wykopmobilny.api.*
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.entries.FavoriteEntryResponse
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
@@ -22,6 +23,7 @@ interface EntriesApi {
     fun addEntry(body: String, embed: String): Single<AddResponse>
     fun addEntryComment(body: String, entryId: Int, embed: String): Single<AddResponse>
     fun addEntryComment(body: String, entryId: Int, inputStream: TypedInputStream): Single<AddResponse>
+    fun markFavorite(entryId: Int) : Single<FavoriteEntryResponse>
 }
 
 data class TypedInputStream(val fileName : String, val mimeType : String, val inputStream: InputStream)
@@ -50,6 +52,9 @@ class EntriesRepository(val retrofit: Retrofit, private val apiPreferences: Cred
 
     override fun addEntryComment(body : String, entryId: Int, embed: String) =
             entriesApi.addEntryComment(body, embed, entryId, apiPreferences.userSessionToken)
+
+    override fun markFavorite(entryId: Int) =
+            entriesApi.markFavorite(entryId, apiPreferences.userSessionToken)
 
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!

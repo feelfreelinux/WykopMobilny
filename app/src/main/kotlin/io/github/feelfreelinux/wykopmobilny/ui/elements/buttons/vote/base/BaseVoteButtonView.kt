@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.base
+package io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.base
 
 import io.github.feelfreelinux.wykopmobilny.base.BaseView
 

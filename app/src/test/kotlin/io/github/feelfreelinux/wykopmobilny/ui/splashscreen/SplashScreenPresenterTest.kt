@@ -5,9 +5,10 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.github.feelfreelinux.wykopmobilny.models.pojo.Profile
 import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
-import io.github.feelfreelinux.wykopmobilny.ui.SubscribeHelperTest
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Test
 
@@ -16,10 +17,11 @@ class SplashScreenPresenterTest {
     val mockOfView = mock<SplashScreenView>()
     val mockOfUserApi = mock<UserApi>()
     val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
+    val subscribeHelper = SubscriptionHelper(Schedulers.trampoline(), Schedulers.trampoline())
 
     @Before
     fun setup() {
-        systemUnderTest = SplashScreenPresenter(SubscribeHelperTest(), mockOfApiPreferences, mockOfUserApi)
+        systemUnderTest = SplashScreenPresenter(subscribeHelper, mockOfApiPreferences, mockOfUserApi)
         systemUnderTest.subscribe(mockOfView)
 
     }

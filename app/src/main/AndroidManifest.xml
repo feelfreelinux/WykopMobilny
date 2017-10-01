@@ -34,6 +34,9 @@
                 <data android:scheme="https"
                     android:host="www.wykop.pl"
                     android:pathPrefix="/wpis" />
+                <data android:scheme="http"
+                    android:host="www.wykop.pl"
+                    android:pathPrefix="/wpis" />
             </intent-filter>
         </activity>
 
@@ -44,6 +47,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="https"
+                    android:host="www.wykop.pl"
+                    android:pathPrefix="/tag" />
+                <data android:scheme="http"
                     android:host="www.wykop.pl"
                     android:pathPrefix="/tag" />
             </intent-filter>

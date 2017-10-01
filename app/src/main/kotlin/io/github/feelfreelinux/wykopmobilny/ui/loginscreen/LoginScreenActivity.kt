@@ -1,15 +1,17 @@
 package io.github.feelfreelinux.wykopmobilny.ui.loginscreen
 
+import android.os.Build
 import android.os.Bundle
+import android.webkit.CookieManager
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.activity_webview.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
+
+
 
 const val CONNECT_URL : String = "https://a.wykop.pl/user/connect/appkey/$APP_KEY"
 const val USER_LOGGED_IN = 21
@@ -35,9 +37,17 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
 
 
     fun setupWebView() {
-        webView.isVisible = true
-        webView.webViewClient = LoginActivityWebClient({ presenter.handleUrl(it) })
-        webView.loadUrl(CONNECT_URL)
+        webView.apply {
+            val cookieManager = CookieManager.getInstance()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                cookieManager.removeAllCookies(null)
+            } else {
+                cookieManager.removeAllCookie()
+            }
+            cookieManager.setAcceptCookie(false)
+            webViewClient = LoginActivityWebClient({ presenter.handleUrl(it) })
+            loadUrl(CONNECT_URL)
+        }
     }
 
     override fun onDestroy() {

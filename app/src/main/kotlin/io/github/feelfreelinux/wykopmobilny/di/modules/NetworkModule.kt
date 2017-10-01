@@ -6,7 +6,6 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.ApiSignInterceptor
-import io.github.feelfreelinux.wykopmobilny.api.CustomHeadersCheckInterceptor
 import io.github.feelfreelinux.wykopmobilny.api.WykopRequestBodyConverterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManagerApi
@@ -14,8 +13,12 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -32,7 +35,6 @@ class NetworkModule(private val baseUrl : String) {
         return OkHttpClient.Builder()
                 .addInterceptor(ApiSignInterceptor())
                 .addInterceptor(httpLogging)
-                .addInterceptor(CustomHeadersCheckInterceptor())
                 .build()
     }
 
@@ -44,6 +46,10 @@ class NetworkModule(private val baseUrl : String) {
     @Provides
     @Singleton
     fun provideCredentialsPreferences(context: Context) : CredentialsPreferencesApi = CredentialsPreferences(context)
+
+    @Provides
+    @Singleton
+    fun provideUserManagerApi(credentialsPreferencesApi: CredentialsPreferencesApi) : UserManagerApi = UserManager(credentialsPreferencesApi)
 
     @Provides
     @Singleton
@@ -70,5 +76,5 @@ class NetworkModule(private val baseUrl : String) {
 
     @Provides
     @Singleton
-    fun provideSubscriptionHandler() : SubscriptionHelperApi = SubscriptionHelper()
+    fun provideSubscriptionHandler() : SubscriptionHelperApi = SubscriptionHelper(AndroidSchedulers.mainThread(), Schedulers.io())
 }

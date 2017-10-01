@@ -178,11 +178,14 @@ data class EntryResponse(
 
         var voteCount : Int,
         @Json(name="user_vote")
-
         var userVote : Int,
-        @Json(name="voters")
 
+        @Json(name="user_favorite")
+        var userFavorite : Boolean?,
+
+        @Json(name="voters")
         var voters : List<Voter>,
+
         @Json(name="violation_url")
 
         var violationUrl : String?,

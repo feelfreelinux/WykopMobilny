@@ -4,7 +4,6 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.NotificationCountRespons
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
 import io.reactivex.Single
-import retrofit2.Response
 import retrofit2.Retrofit
 
 interface MyWykopApi {

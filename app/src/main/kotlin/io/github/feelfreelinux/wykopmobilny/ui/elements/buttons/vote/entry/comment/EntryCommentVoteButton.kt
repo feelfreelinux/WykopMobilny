@@ -1,9 +1,9 @@
-package io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.entry.comment
+package io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.entry.comment
 
 import android.content.Context
 import android.util.AttributeSet
 import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.base.BaseVoteButton
+import io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.base.BaseVoteButton
 import javax.inject.Inject
 
 class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {

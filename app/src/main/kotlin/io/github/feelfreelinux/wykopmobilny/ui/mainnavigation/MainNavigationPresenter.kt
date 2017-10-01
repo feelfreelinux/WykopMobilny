@@ -4,22 +4,20 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
-class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val apiPreferences: CredentialsPreferencesApi, private val myWykopApi: MyWykopApi) : BasePresenter<MainNavigationView>() {
+class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val userManager: UserManagerApi, private val myWykopApi: MyWykopApi) : BasePresenter<MainNavigationView>() {
 
     fun navigationItemClicked(itemId: Int) {
         when (itemId) {
             R.id.nav_mikroblog -> view?.openFragment(HotFragment.newInstance())
             R.id.login -> view?.openLoginActivity()
-            R.id.logout -> logoutUser()
+            R.id.logout -> {
+                userManager.logoutUser()
+                view?.restartActivity()
+            }
         }
-    }
-
-    private fun logoutUser() {
-        apiPreferences.logoutUser()
-        view?.restartActivity()
     }
 
     override fun subscribe(view: MainNavigationView) {
@@ -28,23 +26,28 @@ class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelper
     }
 
     private fun setupNavigation() {
-        if (apiPreferences.isUserAuthorized()) {
+        if (userManager.isUserAuthorized()) {
             view?.showUsersMenu(true)
-            apiPreferences.avatarUrl?.let { view?.avatarUrl = it }
+            userManager.getUserCredentials()?.let { view?.avatarUrl = it.avatarUrl }
             getNotificationsCount()
         } else view?.showUsersMenu(false)
     }
 
     fun getNotificationsCount() {
         myWykopApi.apply {
-            subscriptions.add(
-                    subscriptionHelper.subscribeOnSchedulers(getNotificationCount())
-                            .subscribe({ view?.notificationCount = it.count }, { view?.showErrorDialog(it) }))
+            subscriptionHelper.subscribe(getNotificationCount(),
+                    { view?.notificationCount = it.count },
+                    { view?.showErrorDialog(it) },
+                    this@MainNavigationPresenter)
 
-            subscriptions.add(
-                    subscriptionHelper.subscribeOnSchedulers(getHashTagNotificationCount())
-                            .subscribe({ view?.hashTagNotificationCount = it.count }, { view?.showErrorDialog(it) }))
+            subscriptionHelper.subscribe(getHashTagNotificationCount(), { view?.hashTagNotificationCount = it.count },
+                    { view?.showErrorDialog(it) },
+                    this@MainNavigationPresenter)
         }
     }
 
+    override fun unsubscribe() {
+        super.unsubscribe()
+        subscriptionHelper.dispose(this)
+    }
 }

@@ -39,7 +39,7 @@ class CommentView : CardView {
     }
 
     private fun setupFooter(comment : Comment) {
-        voteCountTextView.apply {
+        voteButton.apply {
             setCommentData(comment.entryId, comment.id, comment.voteCount)
             isButtonSelected = comment.isVoted
             voteCount = comment.voteCount

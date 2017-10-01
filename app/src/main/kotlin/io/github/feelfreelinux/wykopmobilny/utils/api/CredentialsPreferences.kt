@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.utils.api
 
 import android.content.Context
+import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.Preferences
 
 interface CredentialsPreferencesApi {
@@ -9,8 +10,6 @@ interface CredentialsPreferencesApi {
     var userToken: String?
     var avatarUrl: String?
     var timeStamp: String?
-    fun isUserAuthorized(): Boolean
-    fun logoutUser()
 }
 
 class CredentialsPreferences(context: Context) : Preferences(context), CredentialsPreferencesApi {
@@ -20,12 +19,4 @@ class CredentialsPreferences(context: Context) : Preferences(context), Credentia
     override var avatarUrl by stringPref(defaultValue = "")
     override var timeStamp by stringPref(defaultValue = "")
 
-    override fun isUserAuthorized(): Boolean {
-        return !login.isNullOrBlank() and !userKey.isNullOrBlank()
-    } //todo move to some kind of validator
-
-    override fun logoutUser() {
-        login = ""
-        userKey = ""
-    }
 }

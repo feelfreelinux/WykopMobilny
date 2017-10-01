@@ -21,6 +21,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.splashscreen.SplashScreenActivity
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -153,6 +154,11 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     override fun restartActivity() {
         launchNavigationActivity()
         finish()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.unsubscribe()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

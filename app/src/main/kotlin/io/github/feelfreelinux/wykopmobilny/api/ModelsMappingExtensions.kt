@@ -21,6 +21,7 @@ fun EntryResponse.mapToEntry() : Entry {
             body,
             date,
             userVote > 0,
+            !(userFavorite == null || !userFavorite!!),
             embed,
             voteCount,
             commentCount,

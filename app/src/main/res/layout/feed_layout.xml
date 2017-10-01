@@ -2,21 +2,27 @@
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.support.v7.widget.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/EntryCardView">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_margin="8dp">
+
         <io.github.feelfreelinux.wykopmobilny.ui.elements.author_header_view.AuthorHeaderView
             android:id="@+id/authorHeaderView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/entryContentTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,37 +32,30 @@
 
         <io.github.feelfreelinux.wykopmobilny.ui.elements.wykop_image_view.WykopImageView
             android:id="@+id/entryImageView"
+            style="@style/WykopImageView"
             android:layout_width="wrap_content"
             android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
-            style="@style/WykopImageView"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="wrap"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/entryContentTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/entryContentTextView" />
 
         <TextView
             android:id="@+id/commentsCountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_background_deselected"
-            android:drawablePadding="8dp"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:layout_marginTop="@dimen/button_margin"
             android:drawableStart="@drawable/ic_comment"
-            android:gravity="center"
-            android:padding="4dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            style="@style/MikroButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/voteCountTextView"
+            app:layout_constraintEnd_toStartOf="@+id/voteButton"
             app:layout_constraintTop_toBottomOf="@+id/entryImageView"
             tools:text="3" />
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.entry.EntryVoteButton
-            android:id="@+id/voteCountTextView"
+        <io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.entry.EntryVoteButton
+            android:id="@+id/voteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -64,5 +63,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/entryImageView" />
+
+        <io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.favorite.entry.EntryFavoriteButton
+            android:id="@+id/favoriteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </merge>

@@ -10,12 +10,18 @@ import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
 class AddEntryPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val entriesApi: EntriesApi) : InputPresenter<BaseInputView>() {
     override fun sendWithPhoto(photo: TypedInputStream) {
-            subscriptionHelper.subscribeOnSchedulers(entriesApi.addEntry(view?.textBody!!, photo))
-                    .subscribe(postSendCallback, { view?.showErrorDialog(it) })
+            subscriptionHelper.subscribe(entriesApi.addEntry(view?.textBody!!, photo),
+                    postSendCallback, { view?.showErrorDialog(it) },
+                    this)
     }
 
     override fun sendWithPhotoUrl(photo: String) {
-        subscriptionHelper.subscribeOnSchedulers(entriesApi.addEntry(view?.textBody!!, photo))
-                .subscribe(postSendCallback, { view?.showErrorDialog(it) })
+        subscriptionHelper.subscribe(entriesApi.addEntry(view?.textBody!!, photo),
+                postSendCallback, { view?.showErrorDialog(it) }, this)
+    }
+
+    override fun unsubscribe() {
+        super.unsubscribe()
+        subscriptionHelper.dispose(this)
     }
 }

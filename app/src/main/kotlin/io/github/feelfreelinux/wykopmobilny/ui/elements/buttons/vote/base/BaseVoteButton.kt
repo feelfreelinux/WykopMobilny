@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.base
+package io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.base
 
 import android.content.Context
 import android.graphics.Typeface
@@ -7,30 +7,35 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import javax.inject.Inject
 
 @Suppress("LeakingThis")
 abstract class BaseVoteButton : TextView {
     constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs, R.attr.MirkoButtonStyle)
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    @Inject lateinit var userManager : UserManagerApi
 
     abstract fun vote()
     abstract fun unvote()
 
     init {
+        WykopApp.uiInjector.inject(this)
+
         setBackgroundResource(R.drawable.button_background_state_list)
         setOnClickListener {
-            if (isSelected) unvote()
-            else vote()
+            userManager.runIfLoggedIn(context) {
+                if (isSelected) unvote()
+                else vote()
+            }
         }
-        setTypeface(null, Typeface.BOLD)
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-        val dpAsPixels = (4 * resources.displayMetrics.density + 0.5f).toInt()
-        setPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels)
-        gravity = Gravity.CENTER
     }
 
     var voteCount : Int

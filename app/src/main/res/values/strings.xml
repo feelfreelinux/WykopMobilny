@@ -7,7 +7,7 @@
     <string name="share">Udostępnij</string>
     <string name="save_image">Zapisz obraz</string>
     <string name="copy_url">Skopiuj adres URL</string>
-    <string name="unexpected_error_occured">Wystąpił nieoczekiwany problem.</string>
+    <string name="error_occured">Błąd.</string>
     <string name="user_not_logged_in">Aby tego dokonać, musisz się zalogować.</string>
     <!-- NAVIGATION -->
     <string name="main_page">Strona Główna</string>

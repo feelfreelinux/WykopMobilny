@@ -15,21 +15,21 @@ import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryDetailPresen
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.tag.TagPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.splashscreen.SplashScreenPresenter
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
 @Module
 class PresentersModule {
     @Provides
-    fun provideLoginPresenter(preferences: CredentialsPreferencesApi) = LoginScreenPresenter(preferences)
+    fun provideLoginPresenter(userManagerApi : UserManagerApi) = LoginScreenPresenter(userManagerApi)
 
     @Provides
-    fun provideSplashScreenPresenter(subscriptionHelperApi: SubscriptionHelperApi, preferences: CredentialsPreferencesApi, userApi: UserApi)
-            = SplashScreenPresenter(subscriptionHelperApi, preferences, userApi)
+    fun provideSplashScreenPresenter(subscriptionHelperApi: SubscriptionHelperApi, userManagerApi: UserManagerApi, userApi: UserApi)
+            = SplashScreenPresenter(subscriptionHelperApi, userManagerApi, userApi)
 
     @Provides
-    fun provideMainNavigationPresenter(subscriptionHelperApi: SubscriptionHelperApi, preferences: CredentialsPreferencesApi, myWykopApi: MyWykopApi)
-            = MainNavigationPresenter(subscriptionHelperApi, preferences, myWykopApi)
+    fun provideMainNavigationPresenter(subscriptionHelperApi: SubscriptionHelperApi, userManagerApi: UserManagerApi, myWykopApi: MyWykopApi)
+            = MainNavigationPresenter(subscriptionHelperApi, userManagerApi, myWykopApi)
 
     @Provides
     fun provideHotPresenter(subscriptionHelperApi: SubscriptionHelperApi, streamApi: StreamApi)

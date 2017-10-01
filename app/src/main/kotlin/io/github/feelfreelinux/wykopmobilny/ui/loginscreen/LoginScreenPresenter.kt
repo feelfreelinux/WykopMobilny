@@ -1,16 +1,18 @@
 package io.github.feelfreelinux.wykopmobilny.ui.loginscreen
 
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.LoginCredentials
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
-class LoginScreenPresenter(private val apiPreferences: CredentialsPreferencesApi) : BasePresenter<LoginScreenView>() {
+class LoginScreenPresenter(private val userManager: UserManagerApi) : BasePresenter<LoginScreenView>() {
     fun handleUrl(url: String) {
         extractToken(url)?.apply {
-            saveUserCredentials(first, second)
+            userManager.loginUser(this)
             view?.goBackToSplashScreen()
         }
     }
-    fun extractToken(url: String) : Pair<String, String>? {
+
+    private fun extractToken(url: String) : LoginCredentials? {
         url.apply {
             if (!contains("/token/") and !contains("/login/")) {
                 view?.showErrorDialog(IllegalStateException("Redirect url ($url) doesn't contain userData"))
@@ -25,11 +27,8 @@ class LoginScreenPresenter(private val apiPreferences: CredentialsPreferencesApi
                 .split("/token/").last()
                 .replace("/", "")
 
-        return Pair(login, token)
-    }
-
-    fun saveUserCredentials(login : String, token : String) {
-        apiPreferences.login = login
-        apiPreferences.userKey = token
+        return if (login.isNotEmpty() && token.isNotEmpty())
+            LoginCredentials(login, token)
+        else null
     }
 }

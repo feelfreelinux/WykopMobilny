@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
         android:layout_marginStart="8dp"
+        android:textColor="?attr/authorHeader_date_color"
         android:text="TextView"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/avatarImageView"

@@ -9,12 +9,19 @@ import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
 class AddEntryCommentPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val entriesApi: EntriesApi) : InputPresenter<AddEntryCommentView>() {
     override fun sendWithPhoto(photo: TypedInputStream) {
-        subscriptionHelper.subscribeOnSchedulers(entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, photo))
-                .subscribe(postSendCallback, { view?.showErrorDialog(it) })
+        subscriptionHelper.subscribe(
+                entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, photo),
+                postSendCallback, { view?.showErrorDialog(it) }, this)
     }
 
     override fun sendWithPhotoUrl(photo: String) {
-        subscriptionHelper.subscribeOnSchedulers(entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, photo))
-                .subscribe(postSendCallback, { view?.showErrorDialog(it) })
+        subscriptionHelper.subscribe(
+                entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, photo),
+                postSendCallback, { view?.showErrorDialog(it) }, this)
+    }
+
+    override fun unsubscribe() {
+        super.unsubscribe()
+        subscriptionHelper.dispose(this)
     }
 }

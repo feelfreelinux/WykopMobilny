@@ -25,8 +25,6 @@ class EntryView : CardView {
     init {
         WykopApp.uiInjector.inject(this)
         View.inflate(context, R.layout.feed_layout, this)
-        val dpAsPixels = (8 * resources.displayMetrics.density + 0.5f).toInt()
-        setContentPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels)
     }
 
     fun setEntryData(entry : Entry) {
@@ -48,12 +46,13 @@ class EntryView : CardView {
             }
         }
 
-        voteCountTextView.apply {
+        voteButton.apply {
             setEntryData(entry.id, entry.voteCount)
             isButtonSelected = entry.isVoted
             voteCount = entry.voteCount
         }
 
+        favoriteButton.setEntryData(entry)
     }
 
     private fun setupBody(entry : Entry) {

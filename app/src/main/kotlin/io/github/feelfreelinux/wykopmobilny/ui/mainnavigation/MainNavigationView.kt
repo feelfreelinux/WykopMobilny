@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.mainnavigation
 
-import android.net.Uri
 import android.support.v4.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseView
 

@@ -7,13 +7,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.AttributeSet
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.EndlessScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ILoadMore
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.feed_recyclerview.view.*
+import javax.inject.Inject
 
 class BaseFeedList : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {
     constructor(context: Context) : super(context)
@@ -23,14 +26,18 @@ class BaseFeedList : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.OnRefreshL
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     private var endlessScrollListener : EndlessScrollListener? = null
+    @Inject lateinit var userManager : UserManagerApi
     var presenter : BaseFeedPresenter? = null
     var onFabClickedListener = {}
+    var shouldShowFab = true
 
     private val feedAdapter by lazy { FeedAdapter() }
 
     init {
         View.inflate(context, R.layout.feed_recyclerview, this)
         swiperefresh.setOnRefreshListener(this)
+        WykopApp.uiInjector.inject(this)
+        shouldShowFab = userManager.isUserAuthorized()
 
         recyclerView.prepare()
 
@@ -82,7 +89,7 @@ class BaseFeedList : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.OnRefreshL
         recyclerView.post {
             feedAdapter.addData(entryList, shouldClearAdapter)
 
-            if (feedAdapter.dataset.size == entryList.size) fab.isVisible = true // First time add only.
+            if (feedAdapter.dataset.size == entryList.size) fab.isVisible = shouldShowFab // First time add only.
             if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
         }
     }

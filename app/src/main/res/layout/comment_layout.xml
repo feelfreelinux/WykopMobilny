@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/EntryCardView"
     tools:parentTag="android.support.v7.widget.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -19,12 +20,9 @@
 
         <TextView
             android:id="@+id/entryContentTextView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/authorHeaderView"
             tools:text="Text text text" />
@@ -32,8 +30,6 @@
         <io.github.feelfreelinux.wykopmobilny.ui.elements.wykop_image_view.WykopImageView
             android:id="@+id/entryImageView"
             android:layout_width="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
             style="@style/WykopImageView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,8 +39,8 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.vote_button.entry.comment.EntryCommentVoteButton
-            android:id="@+id/voteCountTextView"
+        <io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.entry.comment.EntryCommentVoteButton
+            android:id="@+id/voteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+ 2"
