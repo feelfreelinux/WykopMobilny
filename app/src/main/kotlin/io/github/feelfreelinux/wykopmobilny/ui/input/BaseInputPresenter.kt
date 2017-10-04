@@ -6,23 +6,13 @@ import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.formatDialogCallback
 
 interface BaseInputPresenter {
-    var formatText : formatDialogCallback
     val postSendCallback : (AddResponse) -> Unit
     val preSendCallback : () -> Unit?
     fun sendWithPhoto(photo : TypedInputStream)
-    fun sendWithPhotoUrl(photo : String)
+    fun sendWithPhotoUrl(photo : String?)
 }
 
 abstract class InputPresenter<T : BaseInputView> : BasePresenter<T>(), BaseInputPresenter {
-    override var formatText: formatDialogCallback = {
-        view?.apply {
-            textBody.apply {
-                val prefix = substring(0, selectionPosition)
-                textBody = prefix + it + substring(selectionPosition, length)
-                view!!.selectionPosition = prefix.length + it.length
-            }
-        }
-    }
 
     override val postSendCallback : (AddResponse) -> Unit = {
         view?.showNotification = false
@@ -35,5 +25,5 @@ abstract class InputPresenter<T : BaseInputView> : BasePresenter<T>(), BaseInput
 
     abstract override fun sendWithPhoto(photo : TypedInputStream)
 
-    abstract override fun sendWithPhotoUrl(photo : String)
+    abstract override fun sendWithPhotoUrl(photo : String?)
 }

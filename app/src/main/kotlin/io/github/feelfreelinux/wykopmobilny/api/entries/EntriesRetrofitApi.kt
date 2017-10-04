@@ -38,7 +38,7 @@ interface EntriesRetrofitApi {
     @FormUrlEncoded
     @POST("/entries/add/appkey/$APP_KEY/{userkey}")
     fun addEntry(@Field("body") body: String,
-                 @Field("embed") embed : String,
+                 @Field("embed") embed : String?,
                  @Path("userkey", encoded = true) userKey : String) : Single<AddResponse>
 
     @Multipart
@@ -51,7 +51,7 @@ interface EntriesRetrofitApi {
     @FormUrlEncoded
     @POST("/entries/addcomment/{entryId}/appkey/$APP_KEY/{userkey}")
     fun addEntryComment(@Field("body") body: String,
-                        @Field("embed") embed : String,
+                        @Field("embed") embed : String?,
                         @Path("entryId") entryId : Int,
                         @Path("userkey", encoded = true) userKey : String) : Single<AddResponse>
 }

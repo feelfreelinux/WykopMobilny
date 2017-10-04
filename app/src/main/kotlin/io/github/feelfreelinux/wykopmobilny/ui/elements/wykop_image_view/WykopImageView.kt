@@ -10,8 +10,9 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
 import io.github.feelfreelinux.wykopmobilny.ui.photoview.launchPhotoView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
+import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 
-class WykopImageView : PhotoView {
+class WykopImageView : ImageView {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -29,7 +30,10 @@ class WykopImageView : PhotoView {
             loadImage(preview)
             // @TODO We should put +18 check here and handle video embed type
             setOnClickListener {
-                context.launchPhotoView(url)
+                when (type) {
+                    "image" -> context.launchPhotoView(url)
+                    "video" -> context.openBrowser(url) // @TODO replace with some nice implementation
+                }
             }
         }
     }

@@ -18,7 +18,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.input.entry.comment.add.createNew
 import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.feed_recyclerview.*
+import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -43,6 +43,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
         setSupportActionBar(toolbar)
+
         entryId = intent.data?.getWpisId() ?: intent.getIntExtra(EXTRA_ENTRY_ID, -1)
 
         supportActionBar?.apply {
@@ -51,6 +52,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
         }
         supportActionBar?.title = null
         WykopApp.uiInjector.inject(this)
+
         presenter.entryId = entryId
         presenter.subscribe(this)
 
@@ -62,6 +64,16 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
             this.adapter = this@EntryActivity.adapter
         }
 
+        // Prepare InputToolbar
+        inputToolbar.sendPhotoListener = {
+            photo, body -> presenter.addComment(body, photo)
+        }
+
+        inputToolbar.sendPhotoUrlListener = {
+            photo, body -> presenter.addComment(body, photo)
+        }
+
+
         swiperefresh.setOnRefreshListener(this)
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + entryId)
 
@@ -72,7 +84,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
             loadingView.isVisible = true
             presenter.loadData()
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -103,12 +114,20 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
         return true
     }
 
-    override fun onRefresh() {presenter.loadData()}
+    override fun onRefresh() { presenter.loadData() }
 
     override fun showEntry(entry: Entry) {
         adapter.entry = entry
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
         adapter.notifyDataSetChanged()
+    }
+
+    override fun hideInputbarProgress() {
+        inputToolbar.showProgress(false)
+    }
+
+    override fun resetInputbarState() {
+        inputToolbar.resetState()
     }
 }

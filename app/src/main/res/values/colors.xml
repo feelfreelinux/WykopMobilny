@@ -8,9 +8,12 @@
     <color name="cardList.Dark">#1c1c1c</color>
     <color name="mirkobutton_fill.Dark">#383838</color>
     <color name="mirkobutton_frame.Dark">#434343</color>
+    <color name="separatorColor.Dark">#404040</color>
     <color name="drawablesColor.Dark">#ffffff</color>
     <color name="mikroblogControlsColor.Dark">#424242</color>
     <color name="plusPressedColor">#27ae60</color>
     <color name="navigationSeparator">#404040</color>
     <color name="authorHeader_date.Dark">#757575</color>
+    <color name="hintColor.Dark">#9e9e9e</color>
+
 </resources>

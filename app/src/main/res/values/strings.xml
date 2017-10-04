@@ -53,5 +53,6 @@
     <string name="insert_photo_url">Z adresu URL</string>
     <string name="confirm_exit">Czy na pewno chcesz wyjść?</string>
     <string name="confirm_app_exit">Czy na pewno chcesz zamknąć aplikację?</string>
+    <string name="write_comment">Napisz komentarz…</string>
 
 </resources>

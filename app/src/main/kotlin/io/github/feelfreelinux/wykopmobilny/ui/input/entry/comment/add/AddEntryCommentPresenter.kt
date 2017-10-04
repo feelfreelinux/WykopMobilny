@@ -14,7 +14,7 @@ class AddEntryCommentPresenter(private val subscriptionHelper: SubscriptionHelpe
                 postSendCallback, { view?.showErrorDialog(it) }, this)
     }
 
-    override fun sendWithPhotoUrl(photo: String) {
+    override fun sendWithPhotoUrl(photo: String?) {
         subscriptionHelper.subscribe(
                 entriesApi.addEntryComment(view?.textBody!!, view?.entryId!!, photo),
                 postSendCallback, { view?.showErrorDialog(it) }, this)

@@ -20,6 +20,10 @@
         <item name="textColor">@color/textColor.Dark</item>
         <item name="android:editTextColor">@android:color/white</item>
         <item name="MirkoButtonStyle">@style/MikroButton</item>
+        <item name="colorControlNormal">@color/mirkobutton_fill.Dark</item>
+        <item name="android:textColorHint">@color/hintColor.Dark</item>
+
+
     </style>
 
     <style name="AppTheme.Dark.NavigationView">
@@ -62,5 +66,13 @@
         <item name="android:layout_height">200dp</item>
         <item name="android:adjustViewBounds">true</item>
         <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="MarkdownButton">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:src">@drawable/ic_format_bold</item>
+        <item name="android:layout_height">@dimen/markdown_item_size</item>
+        <item name="android:layout_width">@dimen/markdown_item_size</item>
+        <item name="android:layout_margin">4dp</item>
     </style>
 </resources>

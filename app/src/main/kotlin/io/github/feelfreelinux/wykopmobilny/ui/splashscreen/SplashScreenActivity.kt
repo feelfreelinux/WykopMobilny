@@ -23,5 +23,10 @@ class SplashScreenActivity : BaseActivity(), SplashScreenView {
         launchNavigationActivity()
         finish()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribe()
+    }
 }
 

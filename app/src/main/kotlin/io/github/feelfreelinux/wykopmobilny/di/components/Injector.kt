@@ -13,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.elements.comment_view.CommentView
 import io.github.feelfreelinux.wykopmobilny.ui.elements.entry_view.EntryView
 import io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.entry.EntryVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.entry.comment.EntryCommentVoteButton
+import io.github.feelfreelinux.wykopmobilny.ui.elements.input_toolbar.InputToolbar
 import io.github.feelfreelinux.wykopmobilny.ui.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.input.entry.comment.add.AddEntryCommentActivity
 import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.LoginScreenActivity
@@ -47,4 +48,5 @@ interface Injector {
     fun inject(baseVoteButton: BaseVoteButton)
     fun inject(favoriteButton: FavoriteButton)
     fun inject(baseFeedList: BaseFeedList)
+    fun inject(inputToolbar: InputToolbar)
 }

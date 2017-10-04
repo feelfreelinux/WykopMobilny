@@ -21,9 +21,9 @@ class ApiSignInterceptor : Interceptor {
         val encodeUrl : String = when(request.body()) {
             is FormBody -> {
                 val formBody = request.body() as FormBody
-                val paramList = ArrayList<String>()
-
-                (0 until formBody.size()).mapTo(paramList) { formBody.value(it) }
+                val paramList = (0 until formBody.size())
+                        .filter { !formBody.value(it).isNullOrEmpty() }
+                        .mapTo(ArrayList<String>()) { formBody.value(it) }
                 paramList.sort()
 
                 APP_SECRET + request.url().toString() + paramList.joinToString(",")
@@ -35,13 +35,13 @@ class ApiSignInterceptor : Interceptor {
                 // Get body from multipart
                 val bufferedSink = Okio.buffer(Okio.sink(ByteArrayOutputStream()))
                 part.writeTo(bufferedSink)
-                val body = bufferedSink.buffer().readUtf8()
+                val text_body = bufferedSink.buffer().readUtf8()
 
-                APP_SECRET + request.url().toString() + body
+                APP_SECRET + request.url().toString() + text_body
             }
             else -> APP_SECRET + request.url().toString()
         }
-
+        printout(encodeUrl)
         builder.addHeader(API_SIGN_HEADER, encodeUrl.encryptMD5())
         return chain.proceed(builder.build())
     }

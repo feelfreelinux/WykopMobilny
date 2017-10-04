@@ -10,22 +10,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
+import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.ui.elements.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.getMimeType
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
-import io.github.feelfreelinux.wykopmobilny.utils.queryFileName
 import kotlinx.android.synthetic.main.activity_write_comment.*
-import kotlinx.android.synthetic.main.activity_write_comment.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), BaseInputView {
+abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), BaseInputView, MarkdownToolbarListener {
     @Inject lateinit var notificationManager : WykopNotificationManagerApi
     private val notificationId by lazy { notificationManager.getNewId() }
-    private val markdownDialogCallbacks by lazy { MarkdownDialogActions(this, layoutInflater) as MarkdownDialogCallbacks }
 
     companion object {
         val EXTRA_RECEIVER = "EXTRA_RECEIVER"
@@ -41,9 +36,6 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), 
                 .setOngoing(true)
     }
 
-    var photo: Uri? = null
-    var photoUrl: String? = null
-
     abstract var presenter : T
     override var textBody: String
         get() = body.text.toString()
@@ -54,13 +46,6 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), 
         setContentView(R.layout.activity_write_comment)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        removeImage.setOnClickListener {
-            image.setImageBitmap(null)
-            imageCardView.isVisible = false
-            photo = null
-            photoUrl = null
-        }
 
         intent.apply {
             getStringExtra(EXTRA_RECEIVER)?.apply {
@@ -74,33 +59,13 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), 
             }
         }
 
-        menuInflater.inflate(R.menu.markdown_menu, markupToolbar.amvMenu.menu)
-        markupToolbar.amvMenu.setOnMenuItemClickListener(onMarkdownMenuItemSelected)
-    }
-
-    private val onMarkdownMenuItemSelected : (MenuItem) -> Boolean = {
-        // This handles title bar action's callbacks
-        markdownDialogCallbacks.apply {
-            when (it.itemId) {
-                R.id.insert_photo -> showUploadPhotoDialog(
-                        { insertImageFromUrl(it) },
-                        { openGalleryImageChooser() })
-                R.id.insert_emoticon -> showLennyfaceDialog(presenter.formatText)
-                R.id.format_bold -> showMarkdownBoldDialog(presenter.formatText)
-                R.id.format_italic -> showMarkdownItalicDialog(presenter.formatText)
-                R.id.format_quote -> showMarkdownQuoteDialog(presenter.formatText)
-                R.id.insert_link -> showMarkdownLinkDialog(presenter.formatText)
-                R.id.insert_code -> showMarkdownSourceCodeDialog(presenter.formatText)
-                R.id.insert_spoiler -> showMarkdownSpoilerDialog(presenter.formatText)
-            }
-        }
-        true
+        markupToolbar.markdownListener = this
     }
 
 
     override var selectionPosition : Int
         get() = body.selectionStart
-        set(pos) {body.setSelection(pos)}
+        set(pos) { body.setSelection(pos) }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_add_comment, menu)
@@ -110,8 +75,12 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.send -> {
-                if (photo != null) presenter.sendWithPhoto(getPhotoTypedInputStream())
-                else presenter.sendWithPhotoUrl(if (photoUrl == null) "" else photoUrl!!)
+                val typedInputStream = markupToolbar.getPhotoTypedInputStream()
+                if (typedInputStream != null) {
+                    presenter.sendWithPhoto(typedInputStream)
+                } else {
+                    presenter.sendWithPhotoUrl(markupToolbar.photoUrl)
+                }
             }
             android.R.id.home -> onBackPressed()
         }
@@ -123,19 +92,11 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), 
             when (requestCode) {
                 // Gallery chooser's callback
                 USER_ACTION_INSERT_PHOTO -> {
-                    data?.data?.apply {
-                        insertImageFromContentUri(this)
-                    }
+                    markupToolbar.photo = data?.data
                 }
             }
         }
     }
-
-    // Returns resolved photo output stream
-    fun getPhotoTypedInputStream(): TypedInputStream =
-            TypedInputStream(photo?.queryFileName(contentResolver)!!,
-                    photo?.getMimeType(contentResolver)!!,
-                    contentResolver.openInputStream(photo))
 
     // Shows "sending entry" progress in notification
     override var showNotification : Boolean
@@ -152,29 +113,14 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), 
     }
 
     override fun onBackPressed() {
-        if (!hasUserEditedContent()) exitActivity()
-        else markdownDialogCallbacks.showUnsavedDialog( { exitActivity() } )
+        if (!markupToolbar.hasUserEditedContent()) exitActivity()
+        else
+            ExitConfirmationDialog(this) {
+                exitActivity()
+            }?.show()
     }
 
-    private fun hasUserEditedContent() : Boolean = !textBody.isNullOrEmpty() || photo != null
-
-    private fun insertImageFromUrl(url : String) {
-        if (!url.isEmpty() && url.contains("http")) {
-            photo = null
-            photoUrl = url
-            imageCardView.isVisible = true
-            image.loadImage(url)
-        }
-    }
-
-    private fun insertImageFromContentUri(uri : Uri) {
-        photo = uri
-        photoUrl = null
-        imageCardView.isVisible = true
-        image.setImageURI(uri)
-    }
-
-    private fun openGalleryImageChooser() {
+    override fun openGalleryImageChooser() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT

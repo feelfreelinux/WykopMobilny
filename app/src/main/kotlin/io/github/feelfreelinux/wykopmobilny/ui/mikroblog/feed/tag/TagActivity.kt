@@ -66,6 +66,11 @@ class TagActivity : BaseActivity(), TagView {
         if (isFinishing) supportFragmentManager.removeDataFragment(tagDataFragment)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribe()
+    }
+
     override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean) =
         feedRecyclerView.addDataToAdapter(entryList, shouldClearAdapter)
 }

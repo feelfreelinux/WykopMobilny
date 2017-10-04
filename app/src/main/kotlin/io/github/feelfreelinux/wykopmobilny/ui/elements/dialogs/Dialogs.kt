@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import io.github.feelfreelinux.wykopmobilny.R
@@ -13,8 +14,8 @@ typealias formatDialogCallback = (String) -> Unit
 
 fun EditTextFormatDialog(titleId : Int, context : Context, callback: formatDialogCallback): AlertDialog? {
     val alertBuilder = context.createAlertBuilder()
-
     val editText = getEditTextView(context)
+
     alertBuilder.run {
         setTitle(titleId)
         setView(editText)
@@ -52,10 +53,13 @@ fun LennyfaceDialog(context : Context, callback: formatDialogCallback): AlertDia
     }
 }
 
-fun MarkDownLinkDialog(context : Context, layoutInflater : LayoutInflater, callback: formatDialogCallback): AlertDialog? {
+fun MarkDownLinkDialog(context : Context, callback: formatDialogCallback): AlertDialog? {
     val alertBuilder = context.createAlertBuilder()
 
-    val view = layoutInflater.inflate(R.layout.dialog_insert_link, null)
+    val view = View.inflate(context, R.layout.dialog_insert_link, null)
+    val padding = context.resources.getDimension(R.dimen.dialog_edittext_padding).toInt()
+    view.setPadding(padding, padding, padding, padding)
+
     val descriptionEditText = view.findViewById<EditText>(R.id.description)
     val linkEditText = view.findViewById<EditText>(R.id.title)
 
@@ -87,8 +91,12 @@ fun AppExitConfirmationDialog(context: Context, callback: () -> Unit) : AlertDia
 
 fun getEditTextView(context : Context): EditText {
     val editText = EditText(context)
-    editText.layoutParams = LinearLayout.LayoutParams(
+    val margin = context.resources.getDimension(R.dimen.dialog_edittext_padding).toInt()
+    val params = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT)
+            LinearLayout.LayoutParams.WRAP_CONTENT)
+
+    params.setMargins(margin, margin, margin, margin)
+    editText.layoutParams = params
     return editText
 }

@@ -15,7 +15,7 @@ class AddEntryPresenter(private val subscriptionHelper: SubscriptionHelperApi, p
                     this)
     }
 
-    override fun sendWithPhotoUrl(photo: String) {
+    override fun sendWithPhotoUrl(photo: String?) {
         subscriptionHelper.subscribe(entriesApi.addEntry(view?.textBody!!, photo),
                 postSendCallback, { view?.showErrorDialog(it) }, this)
     }
