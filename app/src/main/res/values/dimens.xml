@@ -10,5 +10,8 @@
     <dimen name="cardview_margin_vertical">8dp</dimen>
     <dimen name="cardview_margin_horizontal">4dp</dimen>
     <dimen name="markdown_item_size">36dp</dimen>
+    <dimen name="input_toolbar_item_size">28dp</dimen>
+    <dimen name="input_toolbar_item_margin">8dp</dimen>
+
 
 </resources>

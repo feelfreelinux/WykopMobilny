@@ -7,7 +7,7 @@
     <color name="cardView.Dark">#2c2c2c</color>
     <color name="cardList.Dark">#1c1c1c</color>
     <color name="mirkobutton_fill.Dark">#383838</color>
-    <color name="mirkobutton_frame.Dark">#434343</color>
+    <color name="toolbarItemsColor.Dark">#434343</color>
     <color name="separatorColor.Dark">#404040</color>
     <color name="drawablesColor.Dark">#ffffff</color>
     <color name="mikroblogControlsColor.Dark">#424242</color>

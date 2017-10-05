@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,17 +9,23 @@ import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.decorators.EntryCommentItemDecoration
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
+import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.ExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.elements.input_toolbar.InputToolbarListener
+import io.github.feelfreelinux.wykopmobilny.ui.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.input.entry.comment.add.createNewEntryComment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_entry.*
+import kotlinx.android.synthetic.main.activity_write_comment.*
+import kotlinx.android.synthetic.main.input_toolbar.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -28,7 +35,7 @@ fun Context.openEntryActivity(entryId : Int) {
     startActivity(intent)
 }
 
-class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefreshListener {
+class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener {
     var entryId = 0
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
@@ -65,13 +72,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
         }
 
         // Prepare InputToolbar
-        inputToolbar.sendPhotoListener = {
-            photo, body -> presenter.addComment(body, photo)
-        }
-
-        inputToolbar.sendPhotoUrlListener = {
-            photo, body -> presenter.addComment(body, photo)
-        }
+        inputToolbar.inputToolbarListener = this
 
 
         swiperefresh.setOnRefreshListener(this)
@@ -108,19 +109,25 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.reply -> adapter.entry?.let { createNewEntryComment(entryId, adapter.entry!!.author.nick) }
-            android.R.id.home -> finish()
+            android.R.id.home -> onBackPressed()
         }
         return true
     }
 
-    override fun onRefresh() { presenter.loadData() }
+    override fun onRefresh() {
+        presenter.loadData()
+    }
 
     override fun showEntry(entry: Entry) {
         adapter.entry = entry
+        inputToolbar.isVisible = true
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
         adapter.notifyDataSetChanged()
+    }
+
+    override fun hideInputToolbar() {
+        inputToolbar.isVisible = false
     }
 
     override fun hideInputbarProgress() {
@@ -129,5 +136,39 @@ class EntryActivity : BaseActivity(), EntryDetailView, SwipeRefreshLayout.OnRefr
 
     override fun resetInputbarState() {
         inputToolbar.resetState()
+    }
+
+    override fun openGalleryImageChooser() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent,
+                getString(R.string.insert_photo_galery)), BaseInputActivity.USER_ACTION_INSERT_PHOTO)
+    }
+
+    override fun onBackPressed() {
+        if (inputToolbar.hasUserEditedContent()) {
+            ExitConfirmationDialog(this, {
+                finish()
+            })?.show()
+        } else finish()
+    }
+
+    override fun sendPhoto(photo: String?, body: String) {
+        presenter.addComment(body, photo)
+    }
+
+    override fun sendPhoto(photo: TypedInputStream, body: String) {
+        presenter.addComment(body, photo)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                BaseInputActivity.USER_ACTION_INSERT_PHOTO -> {
+                    inputToolbar.setPhoto(data?.data)
+                }
+            }
+        }
     }
 }

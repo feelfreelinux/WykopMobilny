@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 class EntryDetailPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val entriesApi: EntriesApi) : BasePresenter<EntryDetailView>() {
     var entryId = 0
     fun loadData() {
+        view?.hideInputToolbar()
         subscriptionHelper.subscribe(
                 entriesApi.getEntryIndex(entryId),
                 { view?.showEntry(it) },

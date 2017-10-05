@@ -4,6 +4,7 @@
     <attr name="cardViewColor" format="color" />
     <attr name="spacerColor" format="color" />
     <attr name="drawablesColor" format="color" />
+    <attr name="inputToolbarDrawables" format="color"/>
     <attr name="mirkobutton_fill_color" format="color" />
     <attr name="authorHeader_date_color" format="color" />
     <attr name="textColor" format="color"/>

@@ -11,26 +11,27 @@
         android:layout_width="wrap_content"
         android:layout_height="0.25dp"
         android:background="@color/separatorColor.Dark"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/markdownToolbarHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:id="@+id/markdownToolbarHolder"
         app:layout_constraintTop_toTopOf="@id/separator">
 
         <io.github.feelfreelinux.wykopmobilny.ui.elements.markdown_toolbar.MarkdownToolbar
             android:id="@+id/markdownToolbar"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             app:layout_constraintEnd_toStartOf="@+id/markdown_close" />
 
         <ImageView
             android:id="@+id/markdown_close"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_margin="4dp"
+            android:layout_width="@dimen/markdown_item_size"
+            android:layout_height="@dimen/markdown_item_size"
+            android:layout_margin="@dimen/input_toolbar_item_margin"
             android:animateLayoutChanges="true"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_close"
@@ -52,6 +53,7 @@
         android:layout_toStartOf="@id/send"
         android:hint="@string/write_comment"
         android:maxLines="5"
+        android:inputType="textMultiLine|textCapSentences"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/show_markdown_menu"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +61,10 @@
 
     <ImageView
         android:id="@+id/show_markdown_menu"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:visibility="gone"
+        android:layout_width="@dimen/input_toolbar_item_size"
+        android:layout_height="@dimen/input_toolbar_item_size"
         android:layout_alignParentEnd="true"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/input_toolbar_item_margin"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_arrow_upward"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -73,9 +74,9 @@
 
     <ImageView
         android:id="@+id/send"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_margin="8dp"
+        android:layout_width="@dimen/input_toolbar_item_size"
+        android:layout_height="@dimen/input_toolbar_item_size"
+        android:layout_margin="@dimen/input_toolbar_item_margin"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_send"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,9 +85,9 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_margin="8dp"
+        android:layout_width="@dimen/input_toolbar_item_size"
+        android:layout_height="@dimen/input_toolbar_item_size"
+        android:layout_margin="@dimen/input_toolbar_item_margin"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

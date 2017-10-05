@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 const val ITEM_TYPE = 0
 const val ITEM_PROGRESS = 1
@@ -19,8 +20,8 @@ abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Recyc
     private fun showProgress(shouldShow : Boolean) {
         if(shouldShow) {
             if (!isLoading) {
+                // Show progress footer
                 dataset.add(null)
-
                 notifyItemInserted(dataset.size)
             }
         }

@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.elements.input_toolbar
 
 import android.content.Context
+import android.net.Uri
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
@@ -13,6 +14,11 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
 import javax.inject.Inject
 
+interface InputToolbarListener {
+    fun sendPhoto(photo : TypedInputStream, body : String)
+    fun sendPhoto(photo : String?, body : String)
+    fun openGalleryImageChooser()
+}
 
 class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     override var selectionPosition: Int
@@ -28,7 +34,11 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     var defaultText = ""
 
     override fun openGalleryImageChooser() {
-        // @TODO add image handler
+        inputToolbarListener?.openGalleryImageChooser()
+    }
+
+    fun setPhoto(photo : Uri?) {
+        markdownToolbar.photo = photo
     }
 
     constructor(context: Context) : super(context)
@@ -37,8 +47,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    var sendPhotoListener : ((TypedInputStream, String) -> Unit)? = null
-    var sendPhotoUrlListener : ((String?, String) -> Unit)? = null
+    var inputToolbarListener : InputToolbarListener? = null
 
 
     init {
@@ -61,17 +70,17 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
             closeMarkdownToolbar()
         }
 
-        body.setOnFocusChangeListener {
+        /*body.setOnFocusChangeListener {
             _, focus -> if (focus) showMarkdownToolbar()
-        }
+        }*/
 
         send.setOnClickListener {
             showProgress(true)
             val typedInputStream = markdownToolbar.getPhotoTypedInputStream()
             if (typedInputStream != null) {
-                sendPhotoListener?.invoke(typedInputStream, body.text.toString())
+                inputToolbarListener?.sendPhoto(typedInputStream, body.text.toString())
             } else {
-                sendPhotoUrlListener?.invoke(markdownToolbar.photoUrl, body.text.toString())
+                inputToolbarListener?.sendPhoto(markdownToolbar.photoUrl, body.text.toString())
             }
         }
     }
@@ -101,4 +110,6 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         closeMarkdownToolbar()
         body.clearFocus()
     }
+
+    fun hasUserEditedContent() = markdownToolbar.hasUserEditedContent()
 }

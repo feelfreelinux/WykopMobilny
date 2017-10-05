@@ -7,4 +7,5 @@ interface EntryDetailView : BaseView {
     fun showEntry(entry: Entry)
     fun hideInputbarProgress()
     fun resetInputbarState()
+    fun hideInputToolbar()
 }

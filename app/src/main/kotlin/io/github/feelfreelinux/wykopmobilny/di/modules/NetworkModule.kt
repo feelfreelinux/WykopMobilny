@@ -75,6 +75,5 @@ class NetworkModule(private val baseUrl : String) {
     }
 
     @Provides
-    @Singleton
     fun provideSubscriptionHandler() : SubscriptionHelperApi = SubscriptionHelper(AndroidSchedulers.mainThread(), Schedulers.io())
 }

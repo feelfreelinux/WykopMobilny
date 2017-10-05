@@ -84,13 +84,15 @@ class BaseFeedList : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.OnRefreshL
     }
 
     override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean) {
-        isRefreshing = false
-        isLoading = false
-        recyclerView.post {
-            feedAdapter.addData(entryList, shouldClearAdapter)
+        if (entryList.isNotEmpty()) {
+            isRefreshing = false
+            isLoading = false
+            recyclerView.post {
+                feedAdapter.addData(entryList, shouldClearAdapter)
 
-            if (feedAdapter.dataset.size == entryList.size) fab.isVisible = shouldShowFab // First time add only.
-            if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
+                if (feedAdapter.dataset.size == entryList.size) fab.isVisible = shouldShowFab // First time add only.
+                if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
+            }
         }
     }
 

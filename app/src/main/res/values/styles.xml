@@ -13,7 +13,7 @@
         <item name="windowNoTitle">true</item>
         <item name="cardListColor">@color/cardList.Dark</item>
         <item name="cardViewColor">@color/cardView.Dark</item>
-        <item name="spacerColor">@color/mirkobutton_frame.Dark</item>
+        <item name="spacerColor">@color/toolbarItemsColor.Dark</item>
         <item name="drawablesColor">@color/drawablesColor.Dark</item>
         <item name="mirkobutton_fill_color">@color/mirkobutton_fill.Dark</item>
         <item name="authorHeader_date_color">@color/authorHeader_date.Dark</item>
@@ -22,6 +22,7 @@
         <item name="MirkoButtonStyle">@style/MikroButton</item>
         <item name="colorControlNormal">@color/mirkobutton_fill.Dark</item>
         <item name="android:textColorHint">@color/hintColor.Dark</item>
+        <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
 
 
     </style>
@@ -70,7 +71,6 @@
 
     <style name="MarkdownButton">
         <item name="android:scaleType">centerCrop</item>
-        <item name="android:src">@drawable/ic_format_bold</item>
         <item name="android:layout_height">@dimen/markdown_item_size</item>
         <item name="android:layout_width">@dimen/markdown_item_size</item>
         <item name="android:layout_margin">4dp</item>
