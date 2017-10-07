@@ -4,13 +4,10 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.models.pojo.entries.FavoriteEntryResponse
-import io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.favorite.FavoriteButtonView
-import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
@@ -18,12 +15,12 @@ import java.io.IOException
 class EntryFavoriteButtonPresenterTest {
     lateinit var systemUnderTest : EntryFavoriteButtonPresenter
     val mockOfEntriesApi = mock<EntriesApi>()
-    val subscriptionHelper = SubscriptionHelper(Schedulers.trampoline(), Schedulers.trampoline())
+    val subscribeHelper = TestSubscriptionHelper()
     val mockOfView = mock<EntryFavoriteButtonView>()
 
     @Before
     fun setup() {
-        systemUnderTest = EntryFavoriteButtonPresenter(subscriptionHelper, mockOfEntriesApi)
+        systemUnderTest = EntryFavoriteButtonPresenter(subscribeHelper, mockOfEntriesApi)
         systemUnderTest.subscribe(mockOfView)
     }
 

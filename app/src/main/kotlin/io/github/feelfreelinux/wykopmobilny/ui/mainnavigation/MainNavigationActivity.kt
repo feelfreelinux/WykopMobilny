@@ -18,7 +18,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.AppExitConfirmat
 import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.loginscreen.USER_LOGGED_IN
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
-import io.github.feelfreelinux.wykopmobilny.ui.splashscreen.SplashScreenActivity
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.printout
@@ -160,8 +159,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         when (requestCode) {
             LOGIN_REQUEST_CODE -> {
                 if (resultCode == USER_LOGGED_IN) {
-                    startActivity(Intent(this, SplashScreenActivity::class.java))
-                    finish()
+                    restartActivity()
                 }
             }
         }

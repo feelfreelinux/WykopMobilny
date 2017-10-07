@@ -16,9 +16,7 @@
         <activity android:name=".ui.loginscreen.LoginScreenActivity"/>
         <activity android:name=".ui.photoview.PhotoViewActivity" />
 
-        <activity android:name=".ui.mainnavigation.NavigationActivity" />
-
-        <activity android:name=".ui.splashscreen.SplashScreenActivity">
+        <activity android:name=".ui.mainnavigation.NavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,6 +32,7 @@
                 <data android:scheme="https"
                     android:host="www.wykop.pl"
                     android:pathPrefix="/wpis" />
+
                 <data android:scheme="http"
                     android:host="www.wykop.pl"
                     android:pathPrefix="/wpis" />

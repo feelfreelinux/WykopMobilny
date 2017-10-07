@@ -7,12 +7,14 @@ import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.ApiSignInterceptor
 import io.github.feelfreelinux.wykopmobilny.api.WykopRequestBodyConverterFactory
+import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
+import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
@@ -75,5 +77,8 @@ class NetworkModule(private val baseUrl : String) {
     }
 
     @Provides
-    fun provideSubscriptionHandler() : SubscriptionHelperApi = SubscriptionHelper(AndroidSchedulers.mainThread(), Schedulers.io())
+    fun provideUserTokenRefresher(userApi : UserApi, userManagerApi: UserManagerApi) = UserTokenRefresher(userApi, userManagerApi)
+
+    @Provides
+    fun provideSubscriptionHandler(userTokenRefresher: UserTokenRefresher) : SubscriptionHelperApi = SubscriptionHelper(AndroidSchedulers.mainThread(), Schedulers.io(), userTokenRefresher)
 }

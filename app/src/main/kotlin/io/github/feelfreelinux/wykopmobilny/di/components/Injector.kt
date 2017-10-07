@@ -22,7 +22,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedList
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.tag.TagActivity
-import io.github.feelfreelinux.wykopmobilny.ui.splashscreen.SplashScreenActivity
 import javax.inject.Singleton
 
 @Singleton
@@ -33,7 +32,6 @@ import javax.inject.Singleton
         ViewPresentersModule::class) )
 interface Injector {
     fun inject(loginScreenActivity: LoginScreenActivity)
-    fun inject(splashScreenActivity: SplashScreenActivity)
     fun inject(mainNavigationActivity: NavigationActivity)
     fun inject(hotFragment: HotFragment)
     fun inject(entryActivity: EntryActivity)

@@ -14,7 +14,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.mainnavigation.MainNavigationPres
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.entry.EntryDetailPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.hot.HotPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.tag.TagPresenter
-import io.github.feelfreelinux.wykopmobilny.ui.splashscreen.SplashScreenPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
@@ -22,10 +21,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 class PresentersModule {
     @Provides
     fun provideLoginPresenter(userManagerApi : UserManagerApi) = LoginScreenPresenter(userManagerApi)
-
-    @Provides
-    fun provideSplashScreenPresenter(subscriptionHelperApi: SubscriptionHelperApi, userManagerApi: UserManagerApi, userApi: UserApi)
-            = SplashScreenPresenter(subscriptionHelperApi, userManagerApi, userApi)
 
     @Provides
     fun provideMainNavigationPresenter(subscriptionHelperApi: SubscriptionHelperApi, userManagerApi: UserManagerApi, myWykopApi: MyWykopApi)

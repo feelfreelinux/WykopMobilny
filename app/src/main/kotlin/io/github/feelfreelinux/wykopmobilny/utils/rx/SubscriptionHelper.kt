@@ -1,28 +1,33 @@
 package io.github.feelfreelinux.wykopmobilny.utils.rx
 
+import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Function
+import org.reactivestreams.Publisher
 
 interface SubscriptionHelperApi {
     fun <T> subscribe(single : Single<T>, success : (T) -> Unit, exception: (Throwable) -> Unit, subscriber: Any)
     fun dispose(subscriber: Any)
 }
 
-class SubscriptionHelper(private val observeScheduler: Scheduler,
-                         private val subscribeScheduler: Scheduler) : SubscriptionHelperApi {
+open class SubscriptionHelper(internal val observeScheduler: Scheduler,
+                              internal val subscribeScheduler: Scheduler,
+                              internal val userTokenRefresher: Function<Flowable<Throwable>, Publisher<*>>) : SubscriptionHelperApi {
     private val subscriptions = HashMap<String, MutableList<Disposable>>()
 
     override fun <T> subscribe(single : Single<T>, success : (T) -> Unit, exception: (Throwable) -> Unit, subscriber: Any) {
         val disposable = getSubscriberCompositeDisposable(subscriber)
         disposable.add(
                 single.observeOn(observeScheduler)
+                        .retryWhen(userTokenRefresher)
                         .subscribeOn(subscribeScheduler)
                         .subscribe(success, exception)
         )
     }
 
-    private fun getSubscriberCompositeDisposable(subscriber: Any): MutableList<Disposable> {
+    internal fun getSubscriberCompositeDisposable(subscriber: Any): MutableList<Disposable> {
         var objectSubscriptions = subscriptions[subscriber.uniqueTag]
 
         if (objectSubscriptions == null) {
