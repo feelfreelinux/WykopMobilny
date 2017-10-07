@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.elements.author_header_view
 
 import android.content.Context
+import android.content.Intent
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
@@ -39,6 +40,7 @@ class AuthorHeaderView : ConstraintLayout {
             }
 
             genderStripImageView.setBackgroundResource(getGenderStripResource(sex))
+
         }
     }
 

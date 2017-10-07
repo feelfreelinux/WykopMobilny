@@ -49,4 +49,13 @@
         app:layout_constraintBottom_toBottomOf="@+id/avatarImageView"
         app:layout_constraintEnd_toEndOf="@+id/avatarImageView"
         app:layout_constraintStart_toStartOf="@+id/avatarImageView" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/spacerColor"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/entryDateTextView"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </merge>

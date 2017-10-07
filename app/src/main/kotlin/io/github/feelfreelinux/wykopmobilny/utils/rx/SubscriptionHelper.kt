@@ -20,8 +20,9 @@ open class SubscriptionHelper(internal val observeScheduler: Scheduler,
     override fun <T> subscribe(single : Single<T>, success : (T) -> Unit, exception: (Throwable) -> Unit, subscriber: Any) {
         val disposable = getSubscriberCompositeDisposable(subscriber)
         disposable.add(
-                single.observeOn(observeScheduler)
+                single
                         .retryWhen(userTokenRefresher)
+                        .observeOn(observeScheduler)
                         .subscribeOn(subscribeScheduler)
                         .subscribe(success, exception)
         )

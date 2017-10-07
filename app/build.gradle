@@ -55,12 +55,14 @@ dependencies {
 
     implementation "org.ocpsoft.prettytime:prettytime:$versions.prettytime"
     implementation "com.github.chrisbanes:PhotoView:$versions.photoview"
+    implementation "de.hdodenhof:circleimageview:2.1.0"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_interceptor"
+
     // RxJava
     implementation "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
     implementation "io.reactivex.rxjava2:rxjava:$versions.rxjava"
