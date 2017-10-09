@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.utils.api
 
 import android.content.Context
-import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.Preferences
 
 interface CredentialsPreferencesApi {

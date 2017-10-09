@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.github.feelfreelinux.wykopmobilny.ui.elements.entry_view.EntryView
+<io.github.feelfreelinux.wykopmobilny.ui.widgets.EntryView
     xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/EntryCardView"
     android:id="@+id/entry"

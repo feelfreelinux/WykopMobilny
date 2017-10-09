@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.utils.usermanager
 
 import android.content.Context
 import io.github.feelfreelinux.wykopmobilny.models.pojo.Profile
-import io.github.feelfreelinux.wykopmobilny.ui.elements.dialogs.UserNotLoggedInDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.UserNotLoggedInDialog
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 
 data class LoginCredentials(val login : String, val token : String)

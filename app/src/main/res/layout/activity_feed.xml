@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include layout="@layout/toolbar"/>
-    <io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.BaseFeedList
+    <io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedList
         android:id="@+id/feedRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

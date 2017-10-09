@@ -19,7 +19,7 @@ abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Recyc
 
     private fun showProgress(shouldShow : Boolean) {
         if(shouldShow) {
-            if (!isLoading) {
+            if (!isLoading && dataset.size > 0) {
                 // Show progress footer
                 dataset.add(null)
                 notifyItemInserted(dataset.size)

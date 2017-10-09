@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:layout_margin="8dp">
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.author_header_view.AuthorHeaderView
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -30,7 +30,7 @@
             app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
             tools:text="Text text text" />
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.wykop_image_view.WykopImageView
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
             android:id="@+id/entryImageView"
             style="@style/WykopImageView"
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/entryImageView"
             tools:text="3" />
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.entry.EntryVoteButton
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.EntryVoteButton
             android:id="@+id/voteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/entryImageView" />
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.favorite.entry.EntryFavoriteButton
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButton
             android:id="@+id/favoriteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

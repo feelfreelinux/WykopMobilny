@@ -20,7 +20,7 @@
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/separator">
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.markdown_toolbar.MarkdownToolbar
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbar
             android:id="@+id/markdownToolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

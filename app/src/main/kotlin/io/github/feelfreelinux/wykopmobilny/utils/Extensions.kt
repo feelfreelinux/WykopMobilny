@@ -11,7 +11,7 @@ import android.widget.ImageView
 import com.bumptech.glide.GenericTransitionOptions
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
-import io.github.feelfreelinux.wykopmobilny.ui.photoview.launchPhotoView
+import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.launchPhotoView
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import org.ocpsoft.prettytime.PrettyTime

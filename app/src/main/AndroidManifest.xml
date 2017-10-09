@@ -13,18 +13,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme.Dark">
-        <activity android:name=".ui.loginscreen.LoginScreenActivity"/>
-        <activity android:name=".ui.photoview.PhotoViewActivity" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"/>
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity" />
 
-        <activity android:name=".ui.mainnavigation.NavigationActivity">
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.mikroblog.entry.EntryActivity"
-            android:parentActivityName=".ui.mainnavigation.NavigationActivity">
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
+            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -39,8 +39,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.mikroblog.feed.tag.TagActivity"
-            android:parentActivityName=".ui.mainnavigation.NavigationActivity">
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity"
+            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -53,8 +53,10 @@
                     android:pathPrefix="/tag" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.input.entry.add.AddEntryActivity" />
-        <activity android:name=".ui.input.entry.comment.add.AddEntryCommentActivity" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.add.AddEntryCommentActivity" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListActivity" />
+        <activity android:name=".ui.modules.notificationslist.hashtags.HashTagsNotificationsListActivity" />
     </application>
 
 </manifest>

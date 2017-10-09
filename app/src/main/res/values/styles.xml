@@ -23,8 +23,6 @@
         <item name="colorControlNormal">@color/mirkobutton_fill.Dark</item>
         <item name="android:textColorHint">@color/hintColor.Dark</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
-
-
     </style>
 
     <style name="AppTheme.Dark.NavigationView">
@@ -45,9 +43,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="EntryCardView" parent="CardView">
+    <style name="BaseCardView" parent="CardView">
         <item name="cardBackgroundColor">?attr/cardViewColor</item>
         <item name="cardCornerRadius">5dp</item>
+    </style>
+
+    <style name="EntryCardView" parent="BaseCardView">
         <item name="android:layout_marginRight">@dimen/cardview_margin_vertical</item>
         <item name="android:layout_marginLeft">@dimen/cardview_margin_vertical</item>
         <item name="android:layout_marginBottom">@dimen/cardview_margin_horizontal</item>

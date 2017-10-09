@@ -6,16 +6,12 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:parentTag="android.support.constraint.ConstraintLayout">
-    <ImageView
-        android:id="@+id/avatarImageView"
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
+        android:id="@+id/authorAvatarView"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:foregroundGravity="clip_horizontal|bottom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_foreground" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/userNameTextView"
@@ -24,8 +20,8 @@
         android:layout_marginStart="8dp"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/avatarImageView"
-        app:layout_constraintTop_toTopOf="@+id/avatarImageView"
+        app:layout_constraintStart_toEndOf="@+id/authorAvatarView"
+        app:layout_constraintTop_toTopOf="@+id/authorAvatarView"
         tools:text="Username" />
 
     <TextView
@@ -37,25 +33,7 @@
         android:textColor="?attr/authorHeader_date_color"
         android:text="TextView"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarImageView"
-        app:layout_constraintStart_toEndOf="@+id/avatarImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/authorAvatarView"
+        app:layout_constraintStart_toEndOf="@+id/authorAvatarView"
         tools:text="1 minute ago" />
-    <ImageView
-        android:id="@+id/genderStripImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarImageView"
-        app:layout_constraintEnd_toEndOf="@+id/avatarImageView"
-        app:layout_constraintStart_toStartOf="@+id/avatarImageView" />
-
-    <View
-        android:id="@+id/separator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?attr/spacerColor"
-        android:layout_marginTop="4dp"
-        app:layout_constraintTop_toBottomOf="@id/entryDateTextView"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 </merge>

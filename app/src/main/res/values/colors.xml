@@ -15,5 +15,5 @@
     <color name="navigationSeparator">#404040</color>
     <color name="authorHeader_date.Dark">#757575</color>
     <color name="hintColor.Dark">#9e9e9e</color>
-
+    <color name="unreadGold">#caba2f</color>
 </resources>

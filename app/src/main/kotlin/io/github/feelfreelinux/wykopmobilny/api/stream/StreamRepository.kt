@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.stream
 
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.api.mapToEntry
+import io.github.feelfreelinux.wykopmobilny.models.mapToEntry
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
 import io.reactivex.Single

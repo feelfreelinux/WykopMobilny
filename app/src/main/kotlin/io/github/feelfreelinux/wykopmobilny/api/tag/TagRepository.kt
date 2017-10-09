@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.tag
 
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.TagEntries
-import io.github.feelfreelinux.wykopmobilny.api.mapToTagEntries
+import io.github.feelfreelinux.wykopmobilny.models.mapToTagEntries
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
 import io.reactivex.Single

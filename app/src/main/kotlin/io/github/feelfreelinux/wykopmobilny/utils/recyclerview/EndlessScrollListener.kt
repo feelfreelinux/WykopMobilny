@@ -18,21 +18,9 @@ class EndlessScrollListener(var loadMoreListener : ILoadMore, var mLayoutManager
     var previousTotalItemCount = 0
     // True if we are still waiting for the last set of data to load.
     var loading = true
+
     // Sets the starting page index
     var startingPageIndex = 1
-
-
-    fun getLastVisibleItem(lastVisibleItemPositions: IntArray): Int {
-        var maxSize = 0
-        for (i in lastVisibleItemPositions.indices) {
-            if (i == 0) {
-                maxSize = lastVisibleItemPositions[i]
-            } else if (lastVisibleItemPositions[i] > maxSize) {
-                maxSize = lastVisibleItemPositions[i]
-            }
-        }
-        return maxSize
-    }
 
     // This happens many times a second during a scroll, so be wary of the code you place here.
     // We are given a few useful parameters to help us work out if we need to load some more data,
@@ -46,8 +34,8 @@ class EndlessScrollListener(var loadMoreListener : ILoadMore, var mLayoutManager
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state
         if (totalItemCount < previousTotalItemCount) {
-            this.currentPage = this.startingPageIndex
-            this.previousTotalItemCount = totalItemCount
+            currentPage = startingPageIndex
+            previousTotalItemCount = totalItemCount
             if (totalItemCount == 0) {
                 this.loading = true
             }
@@ -73,14 +61,8 @@ class EndlessScrollListener(var loadMoreListener : ILoadMore, var mLayoutManager
 
     // Call this method whenever performing new searches
     fun resetState() {
-        this.currentPage = this.startingPageIndex
-        this.previousTotalItemCount = 0
-        this.loading = true
-    }
-
-    fun reset() {
-        currentPage = 0
+        currentPage = startingPageIndex
         previousTotalItemCount = 0
-        loading = false
+        loading = true
     }
 }

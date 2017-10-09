@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler
 
 import android.content.Context
-import io.github.feelfreelinux.wykopmobilny.ui.mikroblog.feed.tag.launchTagActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.launchTagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 
 interface WykopLinkHandlerApi {

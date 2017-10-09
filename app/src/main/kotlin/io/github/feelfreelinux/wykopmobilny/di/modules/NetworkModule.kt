@@ -8,8 +8,8 @@ import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.ApiSignInterceptor
 import io.github.feelfreelinux.wykopmobilny.api.WykopRequestBodyConverterFactory
 import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
-import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManager
-import io.github.feelfreelinux.wykopmobilny.ui.notifications.WykopNotificationManagerApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper

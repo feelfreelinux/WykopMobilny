@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/cardView.Dark">
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.author_header_view.AuthorHeaderView
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toBottomOf="@+id/authorHeaderView"
             tools:text="Text text text" />
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.wykop_image_view.WykopImageView
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
             android:id="@+id/entryImageView"
             android:layout_width="wrap_content"
             android:layout_marginTop="8dp"
@@ -39,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
 
-        <io.github.feelfreelinux.wykopmobilny.ui.elements.buttons.vote.entry.comment.EntryCommentVoteButton
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
             android:id="@+id/voteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

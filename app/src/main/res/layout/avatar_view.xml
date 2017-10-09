@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/avatarImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foregroundGravity="clip_horizontal|bottom"
+        app:srcCompat="@mipmap/ic_launcher_foreground" />
+
+
+    <ImageView
+        android:id="@+id/genderStripImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="0dp"
+        android:background="@drawable/male_strip"
+        android:scaleType="centerCrop"/>
+</merge>

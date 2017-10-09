@@ -54,5 +54,10 @@
     <string name="confirm_exit">Czy na pewno chcesz wyjść?</string>
     <string name="confirm_app_exit">Czy na pewno chcesz zamknąć aplikację?</string>
     <string name="write_comment">Napisz komentarz…</string>
+    <string name="markAsRead">Oznacz jako odczytane</string>
+    <string name="read_notifications">Odczytano powiadomienia</string>
+    <string name="notifications_title">Powiadomienia</string>
+    <string name="hashtags_notifications_title">Obserwowane tagi</string>
+
 
 </resources>
