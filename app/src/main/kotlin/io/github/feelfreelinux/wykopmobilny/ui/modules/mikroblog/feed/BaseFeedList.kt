@@ -15,18 +15,19 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.EndlessScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ILoadMore
+import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.android.synthetic.main.entry_list_item.view.*
 import kotlinx.android.synthetic.main.feed_recyclerview.view.*
 import javax.inject.Inject
 
-class BaseFeedList : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {
+class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, BaseFeedView {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    private var endlessScrollListener : EndlessScrollListener? = null
     @Inject lateinit var userManager : UserManagerApi
     var presenter : BaseFeedPresenter? = null
     var onFabClickedListener = {}
@@ -39,49 +40,33 @@ class BaseFeedList : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.OnRefreshL
         swiperefresh.setOnRefreshListener(this)
         WykopApp.uiInjector.inject(this)
         shouldShowFab = userManager.isUserAuthorized()
-
         recyclerView.prepare()
-
-        // Retrieve savedState endless scroll listener
-        if (endlessScrollListener == null) {
-            endlessScrollListener = EndlessScrollListener(this, (recyclerView.layoutManager as LinearLayoutManager))
-        }
-        else {
-            endlessScrollListener?.mLayoutManager = (recyclerView.layoutManager as LinearLayoutManager)
-            endlessScrollListener?.loadMoreListener = this
-        }
     }
 
     fun initAdapter(feedList: List<Entry>? = emptyList()) {
         // Add endlessScrolListener, and FabAutohide to recyclerview
-        recyclerView.addOnScrollListener(endlessScrollListener)
         fab.isVisible = false // We'll show it later.
         fab.setOnClickListener { onFabClickedListener.invoke() }
 
-        recyclerView.adapter = feedAdapter
-
+        recyclerView.apply {
+            adapter = feedAdapter
+            clearOnScrollListeners()
+            addOnScrollListener(InfiniteScrollListener({ presenter?.loadData(false) }, layoutManager as LinearLayoutManager))
+        }
         if (feedList == null || feedList.isEmpty()) {
             // Create adapter if no data is saved
-            if (feedAdapter.dataset.isEmpty()) {
+            if (feedAdapter.data.isEmpty()) {
                 isLoading = true
-                presenter?.loadData(1) // Trigger data loading
+                presenter?.loadData(true) // Trigger data loading
             }
         } else {
-            feedAdapter.dataset.addAll(feedList)
+            feedAdapter.addData(feedList, true)
             isLoading = false
         }
     }
 
-    override fun onLoadMore(page: Int) {
-        recyclerView.post {
-            feedAdapter.isLoading = true
-        }
-
-        presenter?.loadData(page)
-    }
-
     override fun onRefresh() {
-        presenter?.loadData(1)
+        presenter?.loadData(true)
     }
 
     override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean) {
@@ -91,14 +76,14 @@ class BaseFeedList : CoordinatorLayout, ILoadMore, SwipeRefreshLayout.OnRefreshL
             recyclerView.post {
                 feedAdapter.addData(entryList, shouldClearAdapter)
 
-                if (feedAdapter.dataset.size == entryList.size) fab.isVisible = shouldShowFab // First time add only.
+                if (feedAdapter.data.size == entryList.size) fab.isVisible = shouldShowFab // First time add only.
                 if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
             }
         }
     }
 
     val entries : List<Entry>
-        get() = feedAdapter.dataset.filterNotNull()
+        get() = feedAdapter.data
 
     override fun showErrorDialog(e: Throwable) =
         context.showExceptionDialog(e)

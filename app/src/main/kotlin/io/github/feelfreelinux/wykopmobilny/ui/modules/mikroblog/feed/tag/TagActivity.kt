@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
+import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.createNewEntry
@@ -24,19 +25,23 @@ fun Context.launchTagActivity(tag : String) {
 
 class TagActivity : BaseActivity(), TagView {
     private lateinit var entryTag : String
-    lateinit var tagDataFragment : DataFragment<List<Entry>>
+    lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
     @Inject lateinit var presenter : TagPresenter
 
     companion object {
         val EXTRA_TAG = "EXTRA_TAG"
         val EXTRA_TAG_DATA_FRAGMENT = "DATA_FRAGMENT_#"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
         setSupportActionBar(toolbar)
         entryTag = intent.data?.getTag() ?: intent.getStringExtra(EXTRA_TAG)
         tagDataFragment = supportFragmentManager.getDataFragmentInstance(EXTRA_TAG_DATA_FRAGMENT + entryTag)
+        tagDataFragment.data?.apply {
+            presenter.page = page
+        }
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -48,7 +53,8 @@ class TagActivity : BaseActivity(), TagView {
         presenter.subscribe(this)
         feedRecyclerView.apply {
             presenter = this@TagActivity.presenter
-            initAdapter(tagDataFragment.data)
+            initAdapter(tagDataFragment.data?.model)
+
             onFabClickedListener = {
                 context.createNewEntry(null)
             }
@@ -58,7 +64,7 @@ class TagActivity : BaseActivity(), TagView {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        tagDataFragment.data = feedRecyclerView.entries
+        tagDataFragment.data = PagedDataModel(presenter.page, feedRecyclerView.entries)
     }
 
     override fun onPause() {

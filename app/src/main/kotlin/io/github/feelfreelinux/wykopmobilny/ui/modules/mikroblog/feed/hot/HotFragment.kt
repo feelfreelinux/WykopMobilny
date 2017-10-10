@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
+import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.createNewEntry
@@ -18,7 +19,7 @@ import javax.inject.Inject
 class HotFragment : BaseNavigationFragment(), HotView {
     @Inject lateinit var presenter : HotPresenter
     lateinit var feedRecyclerView : BaseFeedList
-    lateinit var entriesDataFragment : DataFragment<List<Entry>>
+    lateinit var entriesDataFragment : DataFragment<PagedDataModel<List<Entry>>>
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -27,6 +28,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
         WykopApp.uiInjector.inject(this)
         entriesDataFragment = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         presenter.subscribe(this)
+        entriesDataFragment.data?.apply { presenter.page = page }
 
         view?.feedRecyclerView.apply {
             feedRecyclerView = this@apply!!
@@ -34,7 +36,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
             onFabClickedListener = {
                 this@HotFragment.context.createNewEntry(null)
             }
-            initAdapter(entriesDataFragment.data)
+            initAdapter(entriesDataFragment.data?.model)
         }
 
         return view
@@ -49,7 +51,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        entriesDataFragment.data = feedRecyclerView.entries
+        entriesDataFragment.data = PagedDataModel(presenter.page , feedRecyclerView.entries)
     }
 
     override fun onPause() {
@@ -88,7 +90,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
         }
 
         feedRecyclerView.isRefreshing = true
-        presenter.loadData(1)
+        presenter.loadData(true)
         return true
     }
 

@@ -9,21 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHol
 
 class FeedAdapter : BaseProgressAdapter<EntryViewHolder, Entry>() {
     override fun bindHolder(holder: EntryViewHolder, position: Int) {
-        holder.bindView(dataset[position]!!)
-    }
-
-    fun addData(entries : List<Entry>, shouldClearAdapter : Boolean) {
-        isLoading = false
-
-        if (shouldClearAdapter) dataset.clear()
-        dataset.addAll(entries)
-
-        if(shouldClearAdapter) notifyDataSetChanged()
-        else notifyItemRangeInserted(
-                dataset.size,
-                dataset.size + entries.size
-        )
-
+        holder.bindView(data[position])
     }
 
     override fun createViewHolder(parent: ViewGroup): EntryViewHolder =

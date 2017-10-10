@@ -9,67 +9,34 @@ import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
-import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
-import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
-import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.printout
-import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.EndlessScrollListener
-import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ILoadMore
+import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-abstract class BaseNotificationsListActivity : BaseActivity(), ILoadMore, NotificationsListView, SwipeRefreshLayout.OnRefreshListener {
-    val adapter by lazy { NotificationsListAdapter() }
-
-    private lateinit var entryFragmentData : DataFragment<List<Notification>>
-
-    companion object {
-        val DATA_FRAGMENT_TAG = "NOTIFICATIONS_LIST_ACTIVITY"
-    }
-
-    abstract fun loadData(page : Int)
+abstract class BaseNotificationsListActivity : BaseActivity(), NotificationsListView, SwipeRefreshLayout.OnRefreshListener {
+    val notificationAdapter by lazy { NotificationsListAdapter() }
 
     abstract fun markAsRead()
 
-    override fun onLoadMore(page: Int) {
-        adapter.isLoading = true
-        loadData(page)
-    }
-
-    override fun onRefresh() {
-        loadData(1)
-        endlessScrollListener.resetState()
-        adapter.isLoading = false
-    }
-
-    lateinit var endlessScrollListener : EndlessScrollListener
+    abstract fun loadMore()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications_list)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        recyclerView.adapter = adapter
-        recyclerView.prepare()
-
-        endlessScrollListener = EndlessScrollListener(this, recyclerView.layoutManager as LinearLayoutManager)
-        recyclerView.addOnScrollListener(endlessScrollListener)
         swiperefresh.setOnRefreshListener(this)
-        entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
 
-        swiperefresh.isRefreshing = false
-
-        if (entryFragmentData.data != null && entryFragmentData.data!!.isNotEmpty()) {
-            loadingView.isVisible = false
-            adapter.addDataToAdapter(entryFragmentData.data!!, true)
-        } else {
-            loadingView.isVisible = true
-            onRefresh()
+        recyclerView.apply {
+            prepare()
+            adapter = notificationAdapter
+            clearOnScrollListeners()
+            addOnScrollListener(InfiniteScrollListener({ loadMore() }, layoutManager as LinearLayoutManager))
         }
+        swiperefresh.isRefreshing = false
     }
 
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter : Boolean) {
@@ -77,7 +44,7 @@ abstract class BaseNotificationsListActivity : BaseActivity(), ILoadMore, Notifi
             recyclerView.post {
                 loadingView.isVisible = false
                 swiperefresh.isRefreshing = false
-                adapter.addDataToAdapter(notifications, shouldClearAdapter)
+                notificationAdapter.addData(notifications, shouldClearAdapter)
             }
         }
     }
@@ -98,23 +65,6 @@ abstract class BaseNotificationsListActivity : BaseActivity(), ILoadMore, Notifi
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (isFinishing) supportFragmentManager.removeDataFragment(entryFragmentData)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        entryFragmentData.data = adapter.dataset.filterNotNull()
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        entryFragmentData.data?.apply {
-            adapter.addDataToAdapter(this, true)
-        }
     }
 
 }

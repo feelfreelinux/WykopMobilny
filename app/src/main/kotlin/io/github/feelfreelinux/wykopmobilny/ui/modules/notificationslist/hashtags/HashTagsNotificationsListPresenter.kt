@@ -6,9 +6,17 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.Notific
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
 class HashTagsNotificationsListPresenter(val subscriptionHelper: SubscriptionHelperApi, val myWykopApi: MyWykopApi) : BasePresenter<NotificationsListView>() {
-    fun loadData(page : Int) {
+    var page = 1
+
+    fun loadData(shouldRefresh : Boolean) {
+        if (shouldRefresh) page = 1
         subscriptionHelper.subscribe(myWykopApi.getHashTagNotifications(page),
-                { view?.addNotifications(it, page == 1) }, { view?.showErrorDialog(it) }, this)
+                {
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addNotifications(it, shouldRefresh)
+                    }
+                }, { view?.showErrorDialog(it) }, this)
     }
 
     fun readNotifications() {

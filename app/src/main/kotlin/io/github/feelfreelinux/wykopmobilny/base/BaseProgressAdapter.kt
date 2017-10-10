@@ -5,29 +5,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 const val ITEM_TYPE = 0
 const val ITEM_PROGRESS = 1
 
 abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val dataset = ArrayList<A?>()
+    private val dataset = arrayListOf<A?>()
 
-    var isLoading : Boolean
-        get() = if (dataset.size > 0) dataset.last() == null else false
-        set(value) = showProgress(value)
+    val data : List<A>
+        get() = dataset.filterNotNull()
 
-    private fun showProgress(shouldShow : Boolean) {
-        if(shouldShow) {
-            if (!isLoading && dataset.size > 0) {
-                // Show progress footer
-                dataset.add(null)
-                notifyItemInserted(dataset.size)
+    fun addData(items : List<A>, shouldClearAdapter : Boolean) {
+        if (shouldClearAdapter) {
+            dataset.apply {
+                clear()
+                addAll(items)
+                add(null)
             }
-        }
-        else if(isLoading) dataset.removeAt(dataset.size - 1)
+            notifyDataSetChanged()
+        } else {
+            if (dataset.last() == null) {
+                val size = dataset.size - 1
+                dataset.removeAt(size)
+                notifyItemRemoved(size)
+            }
+            dataset.addAll(items)
+            dataset.add(null) // LoadingView
 
+            notifyItemRangeInserted(dataset.size - items.size, items.size + 1)
+        }
     }
+
+
 
     override fun getItemCount() = dataset.size
 
