@@ -13,8 +13,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.EndlessScrollListener
-import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ILoadMore
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.entry_list_item.view.*

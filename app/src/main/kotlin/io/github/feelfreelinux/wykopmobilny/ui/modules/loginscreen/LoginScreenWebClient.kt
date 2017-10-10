@@ -5,6 +5,7 @@ import android.os.Build
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 typealias TokenUrlCallback = (url : String) -> Unit
 
@@ -17,7 +18,9 @@ class LoginActivityWebClient(private val tokenUrlCallback: TokenUrlCallback) : W
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-        request?.let { tokenUrlCallback.invoke(it.url.toString()) }
+        request?.let {
+            tokenUrlCallback.invoke(it.url.toString())
+        }
         return false
     }
 }

@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_webview.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -44,7 +45,7 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
             } else {
                 cookieManager.removeAllCookie()
             }
-            cookieManager.setAcceptCookie(false)
+
             webViewClient = LoginActivityWebClient({ presenter.handleUrl(it) })
             loadUrl(CONNECT_URL)
         }
