@@ -22,6 +22,7 @@ abstract class FavoriteButton : ImageView, FavoriteButtonView {
 
     init {
         WykopApp.uiInjector.inject(this)
+        setBackgroundResource(R.drawable.button_background_state_list)
         isVisible = userManager.isUserAuthorized()
     }
 

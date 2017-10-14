@@ -25,7 +25,7 @@ abstract class BaseVoteButton : TextView {
     init {
         WykopApp.uiInjector.inject(this)
 
-        setBackgroundResource(R.drawable.button_background_state_list)
+        setBackgroundResource(R.drawable.button_vote_background_state_list)
         setOnClickListener {
             userManager.runIfLoggedIn(context) {
                 if (isSelected) unvote()

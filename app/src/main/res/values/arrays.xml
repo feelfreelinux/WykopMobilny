@@ -4,6 +4,24 @@
         <item>@string/insert_photo_galery</item>
         <item>@string/insert_photo_url</item>
     </string-array>
+
+    <string-array name="entry_menu">
+        <item>@string/copy_content</item>
+        <item>@string/report</item>
+    </string-array>
+
+    <string-array name="entry_menu_canedit">
+        <item>@string/copy_content</item>
+        <item>@string/edit</item>
+        <item>@string/report</item>
+        <item>@string/delete</item>
+    </string-array>
+
+    <string-array name="entry_menu_notlogged">
+        <item>@string/copy_content</item>
+    </string-array>
+
+
     <string-array name="lenny_face_array">
         <item>( ͡° ͜ʖ ͡°)</item>
         <item>( ͡° ʖ̯ ͡°)</item>

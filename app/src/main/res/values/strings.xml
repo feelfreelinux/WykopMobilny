@@ -33,6 +33,8 @@
     <string name="nav_drawer_closed">Nawigacja zamknięta</string>
     <string name="reply">Reply</string>
     <string name="copy_entry_url">Skopiuj adres wpisu</string>
+    <string name="copied_to_clipboard">Skopiowano do schowka</string>
+
     <string name="text_italic">Kursywa</string>
     <string name="text_bold">Pogrubienie</string>
     <string name="insert_photo">Dodaj zdjęcie</string>
@@ -51,6 +53,7 @@
     <string name="link_description">Opis linku</string>
     <string name="insert_photo_galery">Wybierz z galerii</string>
     <string name="insert_photo_url">Z adresu URL</string>
+    <string name="confirmation">Jesteś pewien?</string>
     <string name="confirm_exit">Czy na pewno chcesz wyjść?</string>
     <string name="confirm_app_exit">Czy na pewno chcesz zamknąć aplikację?</string>
     <string name="write_comment">Napisz komentarz…</string>
@@ -58,6 +61,12 @@
     <string name="read_notifications">Odczytano powiadomienia</string>
     <string name="notifications_title">Powiadomienia</string>
     <string name="hashtags_notifications_title">Obserwowane tagi</string>
+    <string name="voters">Plusujący</string>
+    <string name="edit">Edytuj</string>
+    <string name="copy_content">Kopiuj treść</string>
+    <string name="delete">Usuń</string>
+    <string name="report">Zgłoś</string>
+    <string name="entryRemoved">[Wpis usunięty]</string>
 
 
 </resources>

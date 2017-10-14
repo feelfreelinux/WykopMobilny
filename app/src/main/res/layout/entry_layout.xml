@@ -11,8 +11,10 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:addStatesFromChildren="true"
         android:layout_gravity="center"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:clickable="false">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"
@@ -25,10 +27,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
+            android:clickable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
-            tools:text="Text text text" />
+            app:layout_constraintTop_toBottomOf="@id/authorHeaderView"/>
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
             android:id="@+id/entryImageView"
@@ -48,6 +50,7 @@
             android:layout_marginEnd="@dimen/button_margin"
             android:layout_marginTop="@dimen/button_margin"
             android:drawableStart="@drawable/ic_comment"
+            android:background="@drawable/button_vote_background_state_list"
             style="@style/MikroButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/voteButton"

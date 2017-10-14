@@ -10,8 +10,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/cardView.Dark">
+        android:layout_height="wrap_content">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"

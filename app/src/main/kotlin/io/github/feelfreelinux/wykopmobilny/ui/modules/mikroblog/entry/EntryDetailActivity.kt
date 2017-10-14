@@ -72,7 +72,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         // Prepare InputToolbar
         inputToolbar.inputToolbarListener = this
 
-
         swiperefresh.setOnRefreshListener(this)
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + entryId)
 
@@ -118,6 +117,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     override fun showEntry(entry: Entry) {
         adapter.entry = entry
+        inputToolbar.setDefaultAddressant(entry.author.nick)
         inputToolbar.isVisible = true
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false

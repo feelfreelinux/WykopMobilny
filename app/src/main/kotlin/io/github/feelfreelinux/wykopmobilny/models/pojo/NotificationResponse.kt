@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class NotificationResponse(
         @Json(name = "author")
-        val author : String,
+        val author : String?,
 
         @Json(name = "author_avatar")
         val authorAvatar : String,

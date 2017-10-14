@@ -17,6 +17,7 @@ import javax.inject.Inject
 const val CONNECT_URL : String = "https://a.wykop.pl/user/connect/appkey/$APP_KEY"
 const val USER_LOGGED_IN = 21
 
+@Suppress("DEPRECATION")
 class LoginScreenActivity : BaseActivity(), LoginScreenView {
     @Inject lateinit var presenter : LoginScreenPresenter
 
@@ -40,11 +41,9 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     fun setupWebView() {
         webView.apply {
             val cookieManager = CookieManager.getInstance()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                 cookieManager.removeAllCookies(null)
-            } else {
-                cookieManager.removeAllCookie()
-            }
+            else cookieManager.removeAllCookie()
 
             webViewClient = LoginActivityWebClient({ presenter.handleUrl(it) })
             loadUrl(CONNECT_URL)

@@ -20,21 +20,21 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideEntriesApi(retrofit: Retrofit, apiPreferences: CredentialsPreferencesApi) : EntriesApi = EntriesRepository(retrofit, apiPreferences)
+    fun provideEntriesApi(retrofit: Retrofit) : EntriesApi = EntriesRepository(retrofit)
 
     @Provides
     @Singleton
-    fun provideMyWykopApi(retrofit: Retrofit, apiPreferences: CredentialsPreferencesApi) : MyWykopApi = MyWykopRepository(retrofit, apiPreferences)
+    fun provideMyWykopApi(retrofit: Retrofit) : MyWykopApi = MyWykopRepository(retrofit)
 
     @Provides
     @Singleton
-    fun provideStreamApi(retrofit: Retrofit, apiPreferences: CredentialsPreferencesApi) : StreamApi = StreamRepository(retrofit, apiPreferences)
+    fun provideStreamApi(retrofit: Retrofit) : StreamApi = StreamRepository(retrofit)
 
     @Provides
     @Singleton
-    fun proviteTagApi(retrofit: Retrofit, apiPreferences: CredentialsPreferencesApi) : TagApi = TagRepository(retrofit, apiPreferences)
+    fun proviteTagApi(retrofit: Retrofit) : TagApi = TagRepository(retrofit)
 
     @Provides
     @Singleton
-    fun provideUserApi(retrofit: Retrofit, apiPreferences: CredentialsPreferencesApi) : UserApi = UserRepository(retrofit, apiPreferences)
+    fun provideUserApi(retrofit: Retrofit, credentialsPreferencesApi : CredentialsPreferencesApi) : UserApi = UserRepository(retrofit, credentialsPreferencesApi)
 }

@@ -21,6 +21,7 @@ fun EntryResponse.mapToEntry() : Entry {
             !(userFavorite == null || !userFavorite!!),
             embed,
             voteCount,
+            voters.map { Author(it.author, it.authorAvatarMed, it.authorGroup, it.authorSex, null) },
             commentCount,
             commentList.toList()
     )
@@ -28,7 +29,7 @@ fun EntryResponse.mapToEntry() : Entry {
 
 fun NotificationResponse.mapToNotification() : Notification
     = Notification(
-        Author(author, authorAvatar, authorGroup, authorSex, null),
+        Author(author ?: "", authorAvatar, authorGroup, authorSex, null),
         body,
         date,
         url,
@@ -50,6 +51,7 @@ fun CommentResponse.mapToComment() : Comment
         date,
         userVote > 0,
         embed,
+        voters.map { Author(it.author, it.authorAvatarMed, it.authorGroup, it.authorSex, null) },
         voteCount
 )
 

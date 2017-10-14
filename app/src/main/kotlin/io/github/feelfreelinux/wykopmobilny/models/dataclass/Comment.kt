@@ -7,4 +7,5 @@ data class Comment(val id : Int,
                    val date : String,
                    val isVoted : Boolean,
                    val embed : Embed?,
+                   val voters : List<Author>,
                    val voteCount: Int)

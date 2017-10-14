@@ -7,9 +7,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface StreamRetrofitApi {
-    @GET("/stream/index/appkey/$APP_KEY/page/{page}/{userkey}")
-    fun getMikroblogIndex(@Path("page") page : Int, @Path("userkey", encoded = true) userkey : String) : Single<List<EntryResponse>>
+    @GET("/stream/index/appkey/$APP_KEY/page/{page}")
+    fun getMikroblogIndex(@Path("page") page : Int) : Single<List<EntryResponse>>
 
-    @GET("/stream/hot/appkey/$APP_KEY/page/{page}/period/{period}/{userkey}")
-    fun getMikroblogHot(@Path("page") page : Int, @Path("period") period: Int, @Path("userkey", encoded = true) userkey : String) : Single<List<EntryResponse>>
+    @GET("/stream/hot/appkey/$APP_KEY/page/{page}/period/{period}")
+    fun getMikroblogHot(@Path("page") page : Int, @Path("period") period: Int) : Single<List<EntryResponse>>
 }

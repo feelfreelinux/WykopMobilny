@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api
 import io.github.feelfreelinux.wykopmobilny.APP_SECRET
 import io.github.feelfreelinux.wykopmobilny.utils.api.encryptMD5
 import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import okhttp3.FormBody
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
@@ -12,11 +13,17 @@ import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.util.*
 
-class ApiSignInterceptor : Interceptor {
+const val REMOVE_USERKEY_HEADER = "REMOVE_USERKEY"
+class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
     override fun intercept(chain: Interceptor.Chain?): Response? {
         val API_SIGN_HEADER = "apisign"
         val request = chain!!.request()
         val builder = request.newBuilder()
+        var url = request.url().toString()
+
+        val customHeaders = request.headers("@")
+        if (userManagerApi.isUserAuthorized() && !customHeaders.contains(REMOVE_USERKEY_HEADER))
+            url += "/userkey/${userManagerApi.getUserCredentials()!!.userKey}"
 
         val encodeUrl : String = when(request.body()) {
             is FormBody -> {
@@ -26,7 +33,7 @@ class ApiSignInterceptor : Interceptor {
                         .mapTo(ArrayList<String>()) { formBody.value(it) }
                 paramList.sort()
 
-                APP_SECRET + request.url().toString() + paramList.joinToString(",")
+                APP_SECRET + url+ paramList.joinToString(",")
             }
             is MultipartBody -> {
                 val multipart = request.body() as MultipartBody
@@ -37,12 +44,17 @@ class ApiSignInterceptor : Interceptor {
                 part.writeTo(bufferedSink)
                 val text_body = bufferedSink.buffer().readUtf8()
 
-                APP_SECRET + request.url().toString() + text_body
+                APP_SECRET + url + text_body
             }
-            else -> APP_SECRET + request.url().toString()
+            else -> APP_SECRET + url
         }
         printout(encodeUrl)
-        builder.addHeader(API_SIGN_HEADER, encodeUrl.encryptMD5())
+
+        builder.apply {
+            url(url)
+            addHeader(API_SIGN_HEADER, encodeUrl.encryptMD5())
+            removeHeader("@")
+        }
         return chain.proceed(builder.build())
     }
 }

@@ -6,6 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButtonPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.EntryVoteButtonPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButtonPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
 @Module
@@ -18,4 +19,7 @@ class ViewPresentersModule {
 
     @Provides
     fun providesEntryFavoriteButtonPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi) = EntryFavoriteButtonPresenter(subscriptionHelperApi, entriesApi)
+
+    @Provides
+    fun providesEntryPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi) = EntryPresenter(subscriptionHelperApi, entriesApi)
 }

@@ -14,6 +14,7 @@ import android.provider.MediaStore.Images
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
+import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import kotlinx.android.synthetic.main.activity_photoview.*
 import java.io.File
 import java.io.FileOutputStream
@@ -22,11 +23,10 @@ import java.io.FileOutputStream
 interface PhotoViewCallbacks {
     fun shareImage()
     fun getImageBitmap(): Bitmap?
-    fun copyURL()
     fun saveImage()
 }
 
-class PhotoViewActions(val context : Context) : PhotoViewCallbacks {
+class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelperApi) : PhotoViewCallbacks {
     val photoView = context as PhotoViewActivity
     override fun shareImage() {
         val bitmap = getImageBitmap()
@@ -41,12 +41,6 @@ class PhotoViewActions(val context : Context) : PhotoViewCallbacks {
     }
 
     override fun getImageBitmap() : Bitmap? = (photoView.image.drawable as BitmapDrawable).bitmap
-
-    override fun copyURL() {
-        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.primaryClip = ClipData.newPlainText("imageUrl", photoView.url)
-        showToastMessage("Skopiowano do schowka")
-    }
 
     override fun saveImage() {
         val bitmap = getImageBitmap()

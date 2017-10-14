@@ -35,7 +35,7 @@ class HashTagsNotificationsListActivity : BaseNotificationsListActivity() {
         WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
         super.onCreate(savedInstanceState)
-        supportActionBar?.setTitle(R.string.notifications_title)
+        supportActionBar?.setTitle(R.string.hashtags_notifications_title)
 
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         val pagedModel = entryFragmentData.data

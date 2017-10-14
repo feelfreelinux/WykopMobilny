@@ -18,18 +18,18 @@ interface MyWykopApi {
     fun readHashTagNotifications(): Single<List<NotificationResponse>>
 }
 
-class MyWykopRepository(val retrofit: Retrofit, private val apiPreferences: CredentialsPreferencesApi) : MyWykopApi {
+class MyWykopRepository(val retrofit: Retrofit) : MyWykopApi {
     private val mywykopApi by lazy { retrofit.create(MyWykopRetrofitApi::class.java) }
 
-    override fun readNotifications() = mywykopApi.readNotifications(apiPreferences.userSessionToken)
+    override fun readNotifications() = mywykopApi.readNotifications()
 
-    override fun getNotifications(page : Int) = mywykopApi.getNotifications(page, apiPreferences.userSessionToken).map { it.map { it.mapToNotification() } }
+    override fun getNotifications(page : Int) = mywykopApi.getNotifications(page).map { it.map { it.mapToNotification() } }
 
-    override fun getNotificationCount() = mywykopApi.getNotificationCount(apiPreferences.userSessionToken)
+    override fun getNotificationCount() = mywykopApi.getNotificationCount()
 
-    override fun readHashTagNotifications() = mywykopApi.readHashTagsNotifications(apiPreferences.userSessionToken)
+    override fun readHashTagNotifications() = mywykopApi.readHashTagsNotifications()
 
-    override fun getHashTagNotifications(page : Int) = mywykopApi.getHashTagsNotifications(page, apiPreferences.userSessionToken).map { it.map { it.mapToNotification() } }
+    override fun getHashTagNotifications(page : Int) = mywykopApi.getHashTagsNotifications(page).map { it.map { it.mapToNotification() } }
 
-    override fun getHashTagNotificationCount() = mywykopApi.getHashTagsNotificationsCount(apiPreferences.userSessionToken)
+    override fun getHashTagNotificationCount() = mywykopApi.getHashTagsNotificationsCount()
 }

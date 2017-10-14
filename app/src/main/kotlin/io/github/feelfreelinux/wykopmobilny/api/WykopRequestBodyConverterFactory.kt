@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.api
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Converter
@@ -20,8 +21,8 @@ class WykopRequestBodyConverterFactory(private val moshi : Moshi) : Converter.Fa
 
     private class WykopBodyConverter<T : Any>(val adapter : JsonAdapter<T>) : Converter<ResponseBody, T> {
         @Throws(IOException::class)
-        override fun convert(value: ResponseBody): T {
-            try {
+        override fun convert(response: ResponseBody): T {
+            response.use { value ->
                 val json = value.string()
                 if (json.length < 200 && json.contains("{\"error\":{")) {
                     val jsonObj = JSONObject(json)
@@ -34,8 +35,6 @@ class WykopRequestBodyConverterFactory(private val moshi : Moshi) : Converter.Fa
                     }
                 }
                 return adapter.fromJson(json)
-            } finally {
-                value.close()
             }
         }
     }

@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_photoview.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 fun Context.launchPhotoView(imageUrl: String) {
     val intent = Intent(this, PhotoViewActivity::class.java)
@@ -22,12 +25,14 @@ class PhotoViewActivity : BaseActivity() {
         val URL_EXTRA = "URL"
     }
     val url: String by lazy { intent.getStringExtra(URL_EXTRA) }
-    private val photoViewActions by lazy { PhotoViewActions(this) as PhotoViewCallbacks }
+    @Inject lateinit var clipboardHelper : ClipboardHelperApi
+    private val photoViewActions by lazy { PhotoViewActions(this, clipboardHelper) as PhotoViewCallbacks }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photoview)
         setSupportActionBar(toolbar)
+        WykopApp.uiInjector.inject(this)
         image.loadImage(url)
         title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -42,7 +47,7 @@ class PhotoViewActivity : BaseActivity() {
         when (item.itemId) {
             R.id.action_share -> photoViewActions.shareImage()
             R.id.action_save_image -> photoViewActions.saveImage()
-            R.id.action_copy_url -> photoViewActions.copyURL()
+            R.id.action_copy_url -> clipboardHelper.copyTextToClipboard(url, "imageUrl")
             android.R.id.home -> finish()
             else -> return super.onOptionsItemSelected(item)
         }

@@ -15,6 +15,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
+import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelper
+import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
@@ -31,11 +33,11 @@ import javax.inject.Singleton
 class NetworkModule(private val baseUrl : String) {
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(userManagerApi: UserManagerApi): OkHttpClient {
         val httpLogging = HttpLoggingInterceptor()
         httpLogging.level = HttpLoggingInterceptor.Level.BASIC
         return OkHttpClient.Builder()
-                .addInterceptor(ApiSignInterceptor())
+                .addInterceptor(ApiSignInterceptor(userManagerApi))
                 .addInterceptor(httpLogging)
                 .build()
     }
@@ -46,15 +48,12 @@ class NetworkModule(private val baseUrl : String) {
             Moshi.Builder().build()
 
     @Provides
-    @Singleton
     fun provideCredentialsPreferences(context: Context) : CredentialsPreferencesApi = CredentialsPreferences(context)
 
     @Provides
-    @Singleton
     fun provideUserManagerApi(credentialsPreferencesApi: CredentialsPreferencesApi) : UserManagerApi = UserManager(credentialsPreferencesApi)
 
     @Provides
-    @Singleton
     fun provideNotificationManager(context: Context) : NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     @Provides
@@ -62,7 +61,6 @@ class NetworkModule(private val baseUrl : String) {
     fun provideWykopNotificationManager(mgr: NotificationManager) : WykopNotificationManagerApi = WykopNotificationManager(mgr)
 
     @Provides
-    @Singleton
     fun provideWykopLinkHandlerApi(context : Context) : WykopLinkHandlerApi = WykopLinkHandler(context)
 
     @Provides
@@ -81,4 +79,7 @@ class NetworkModule(private val baseUrl : String) {
 
     @Provides
     fun provideSubscriptionHandler(userTokenRefresher: UserTokenRefresher) : SubscriptionHelperApi = SubscriptionHelper(AndroidSchedulers.mainThread(), Schedulers.io(), userTokenRefresher)
+
+    @Provides
+    fun provideClipboardHelper(context: Context) : ClipboardHelperApi = ClipboardHelper(context)
 }

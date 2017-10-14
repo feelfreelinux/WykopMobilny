@@ -11,9 +11,9 @@ interface TagApi {
     fun getTagEntries(tag : String, page : Int) : Single<TagEntries>
 }
 
-class TagRepository(retrofit: Retrofit, private val apiPreferences: CredentialsPreferencesApi) : TagApi {
+class TagRepository(retrofit: Retrofit) : TagApi {
     private val tagApi by lazy { retrofit.create(TagRetrofitApi::class.java) }
 
     override fun getTagEntries(tag : String, page : Int)
-            = tagApi.getTagEntries(tag, page, apiPreferences.userSessionToken).map { it.mapToTagEntries() }
+            = tagApi.getTagEntries(tag, page).map { it.mapToTagEntries() }
 }

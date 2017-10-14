@@ -15,12 +15,12 @@
         <item name="cardViewColor">@color/cardView.Dark</item>
         <item name="spacerColor">@color/toolbarItemsColor.Dark</item>
         <item name="drawablesColor">@color/drawablesColor.Dark</item>
-        <item name="mirkobutton_fill_color">@color/mirkobutton_fill.Dark</item>
+        <item name="cardViewSelected">@color/cardViewSelected.Dark</item>
         <item name="authorHeader_date_color">@color/authorHeader_date.Dark</item>
         <item name="textColor">@color/textColor.Dark</item>
         <item name="android:editTextColor">@android:color/white</item>
         <item name="MirkoButtonStyle">@style/MikroButton</item>
-        <item name="colorControlNormal">@color/mirkobutton_fill.Dark</item>
+        <item name="colorControlNormal">@color/cardViewSelected.Dark</item>
         <item name="android:textColorHint">@color/hintColor.Dark</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
     </style>

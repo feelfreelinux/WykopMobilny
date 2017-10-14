@@ -23,11 +23,12 @@ class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             date.text = notification.date.toPrettyDate()
             newNotificationMark.isVisible = notification.new
 
-            // Color nickname
-            val nickName = notification.body.substringBefore(" ") // nick
-            val spannable = body.text as Spannable
-            spannable.setSpan(ForegroundColorSpan(getGroupColor(notification.author.group)), 0, nickName.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
+            if (notification.author.nick.isNotEmpty()) {
+                // Color nickname
+                val nickName = notification.body.substringBefore(" ") // nick
+                val spannable = body.text as Spannable
+                spannable.setSpan(ForegroundColorSpan(getGroupColor(notification.author.group)), 0, nickName.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
             cardView.setOnClickListener {
                 wykopLinkHandler.handleUrl(notification.url)
             }

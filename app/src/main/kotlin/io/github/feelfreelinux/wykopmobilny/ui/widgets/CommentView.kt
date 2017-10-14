@@ -26,6 +26,10 @@ class CommentView : CardView {
         View.inflate(context, R.layout.comment_layout, this)
         val dpAsPixels = (8 * resources.displayMetrics.density + 0.5f).toInt()
         setContentPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels)
+
+        isClickable = true
+        isFocusable = true
+        setBackgroundResource(R.drawable.cardview_background_statelist)
     }
 
     fun setCommentData(comment: Comment) {
@@ -40,7 +44,7 @@ class CommentView : CardView {
 
     private fun setupFooter(comment : Comment) {
         voteButton.apply {
-            setCommentData(comment.entryId, comment.id, comment.voteCount)
+            setCommentData(comment)
             isButtonSelected = comment.isVoted
             voteCount = comment.voteCount
         }

@@ -70,9 +70,12 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
             closeMarkdownToolbar()
         }
 
-        /*body.setOnFocusChangeListener {
-            _, focus -> if (focus) showMarkdownToolbar()
-        }*/
+        body.setOnFocusChangeListener {
+            _, focused ->
+            if (focused && !hasUserEditedContent()) {
+                textBody = defaultText
+            }
+        }
 
         send.setOnClickListener {
             showProgress(true)
@@ -102,7 +105,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
     fun resetState() {
         textBody = defaultText
-        selectionPosition = defaultText.length
+        selectionPosition = textBody.length
         markdownToolbar.apply {
             photo = null
             photoUrl = null
@@ -111,5 +114,14 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         body.clearFocus()
     }
 
-    fun hasUserEditedContent() = markdownToolbar.hasUserEditedContent()
+    fun setDefaultAddressant(user : String) {
+        defaultText = "@$user: "
+    }
+
+    fun addAddressant(user : String) {
+        textBody += "@$user: "
+        selectionPosition = textBody.length
+    }
+
+    fun hasUserEditedContent() = textBody != defaultText && markdownToolbar.hasUserEditedContent()
 }

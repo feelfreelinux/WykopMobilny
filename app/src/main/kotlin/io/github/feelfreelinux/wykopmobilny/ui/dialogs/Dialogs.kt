@@ -4,26 +4,27 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import android.widget.EditText
-import android.widget.LinearLayout
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.utils.markdownLink
+import kotlinx.android.synthetic.main.dialog_edittext.view.*
 
 typealias formatDialogCallback = (String) -> Unit
 
 
-fun EditTextFormatDialog(titleId : Int, context : Context, callback: formatDialogCallback): AlertDialog? {
+fun EditTextFormatDialog(titleId : Int, context : Context, callback: formatDialogCallback): AlertDialog {
     val alertBuilder = context.createAlertBuilder()
-    val editText = getEditTextView(context)
+    val editTextLayout = getEditTextView(context)
 
     alertBuilder.run {
         setTitle(titleId)
-        setView(editText)
-        setPositiveButton(android.R.string.ok, {_, _ -> callback.invoke(editText.text.toString())})
+        setView(editTextLayout)
+        setPositiveButton(android.R.string.ok, { _, _ -> callback.invoke(editTextLayout.editText.text.toString())})
         return create()
     }
 }
 
-fun UploadPhotoDialog(context : Context, galleryUploadCallback: () -> Unit, urlUploadCallback: formatDialogCallback): AlertDialog? {
+fun UploadPhotoDialog(context : Context, galleryUploadCallback: () -> Unit, urlUploadCallback: formatDialogCallback): AlertDialog {
     val alertBuilder = context.createAlertBuilder()
 
     alertBuilder.run {
@@ -32,14 +33,14 @@ fun UploadPhotoDialog(context : Context, galleryUploadCallback: () -> Unit, urlU
             _, pos ->
             when(pos) {
                 0 -> galleryUploadCallback.invoke()
-                1 -> EditTextFormatDialog(R.string.insert_photo_url, context, urlUploadCallback)?.show()
+                1 -> EditTextFormatDialog(R.string.insert_photo_url, context, urlUploadCallback).show()
             }
         })
         return create()
     }
 }
 
-fun LennyfaceDialog(context : Context, callback: formatDialogCallback): AlertDialog? {
+fun LennyfaceDialog(context : Context, callback: formatDialogCallback): AlertDialog {
     val alertBuilder = context.createAlertBuilder()
 
     alertBuilder.run {
@@ -52,7 +53,18 @@ fun LennyfaceDialog(context : Context, callback: formatDialogCallback): AlertDia
     }
 }
 
-fun MarkDownLinkDialog(context : Context, callback: formatDialogCallback): AlertDialog? {
+fun VotersDialog(context : Context, voters : List<Author>): AlertDialog {
+    val alertBuilder = context.createAlertBuilder()
+
+    alertBuilder.run {
+        setTitle(R.string.voters)
+        val usersArray = voters.map { it.nick }
+        setItems(usersArray.toTypedArray(), null)
+        return create()
+    }
+}
+
+fun MarkDownLinkDialog(context : Context, callback: formatDialogCallback): AlertDialog {
     val alertBuilder = context.createAlertBuilder()
 
     val view = View.inflate(context, R.layout.dialog_insert_link, null)
@@ -74,7 +86,7 @@ fun MarkDownLinkDialog(context : Context, callback: formatDialogCallback): Alert
     }
 }
 
-fun AppExitConfirmationDialog(context: Context, callback: () -> Unit) : AlertDialog? {
+fun AppExitConfirmationDialog(context: Context, callback: () -> Unit) : AlertDialog {
     val alertBuilder = context.createAlertBuilder()
 
     alertBuilder.run {
@@ -87,15 +99,19 @@ fun AppExitConfirmationDialog(context: Context, callback: () -> Unit) : AlertDia
     }
 }
 
+fun ConfirmationDialog(context: Context, callback: () -> Unit) : AlertDialog {
+    val alertBuilder = context.createAlertBuilder()
 
-fun getEditTextView(context : Context): EditText {
-    val editText = EditText(context)
-    val margin = context.resources.getDimension(R.dimen.dialog_edittext_padding).toInt()
-    val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT)
+    alertBuilder.run {
+        setMessage(context.resources.getString(R.string.confirmation))
+        setPositiveButton(android.R.string.yes) { _, _ -> callback.invoke() }
+        setNegativeButton(android.R.string.no, null)
+        setCancelable(true)
 
-    params.setMargins(margin, margin, margin, margin)
-    editText.layoutParams = params
-    return editText
+        return create()
+    }
+}
+
+fun getEditTextView(context : Context): View {
+    return View.inflate(context, R.layout.dialog_edittext, null)
 }

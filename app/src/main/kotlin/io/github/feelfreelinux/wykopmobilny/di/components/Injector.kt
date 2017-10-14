@@ -10,12 +10,12 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.Favorite
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.CommentView
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.EntryView
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.EntryVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.add.AddEntryCommentActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
@@ -24,6 +24,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFra
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import javax.inject.Singleton
 
 @Singleton
@@ -40,10 +41,9 @@ interface Injector {
     fun inject(tagActivity: TagActivity)
     fun inject(entryVoteButton: EntryVoteButton)
     fun inject(entryCommentVoteButton: EntryCommentVoteButton)
-    fun inject(entryView: EntryView)
+    fun inject(entryView: EntryWidget)
     fun inject(commentView : CommentView)
     fun inject(addEntryActivity: AddEntryActivity)
-    fun inject(addEntryCommentActivity: AddEntryCommentActivity)
     fun inject(entryFavoriteButton: EntryFavoriteButton)
     fun inject(baseVoteButton: BaseVoteButton)
     fun inject(favoriteButton: FavoriteButton)
@@ -51,4 +51,6 @@ interface Injector {
     fun inject(inputToolbar: InputToolbar)
     fun inject(notificationsListActivity: NotificationsListActivity)
     fun inject(hashTagsNotificationsListActivity: HashTagsNotificationsListActivity)
+    fun inject(photoViewActivity: PhotoViewActivity)
+    fun inject(editEntryActivity: EditEntryActivity)
 }

@@ -3,6 +3,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry
 import android.content.Context
 import android.util.AttributeSet
 import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVoteButton
 import javax.inject.Inject
 
@@ -23,10 +25,15 @@ class EntryVoteButton : BaseVoteButton, EntryVoteButtonView {
         presenter.vote()
     }
 
-    fun setEntryData(entryId : Int, entryVotes : Int) {
+    fun setEntryData(entry : Entry) {
         WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
-        presenter.entryId = entryId
-        voteCount = entryVotes
+        presenter.entryId = entry.id
+        voteCount = entry.voteCount
+
+        setOnLongClickListener {
+            VotersDialog(context, entry.voters).show()
+            true
+        }
     }
 }

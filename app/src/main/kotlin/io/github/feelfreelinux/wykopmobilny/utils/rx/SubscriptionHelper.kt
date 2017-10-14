@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.utils.rx
 
+import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -14,7 +15,7 @@ interface SubscriptionHelperApi {
 
 open class SubscriptionHelper(internal val observeScheduler: Scheduler,
                               internal val subscribeScheduler: Scheduler,
-                              internal val userTokenRefresher: Function<Flowable<Throwable>, Publisher<*>>) : SubscriptionHelperApi {
+                              internal val userTokenRefresher: UserTokenRefresher) : SubscriptionHelperApi {
     private val subscriptions = HashMap<String, MutableList<Disposable>>()
 
     override fun <T> subscribe(single : Single<T>, success : (T) -> Unit, exception: (Throwable) -> Unit, subscriber: Any) {

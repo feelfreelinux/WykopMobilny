@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api.entries
 import io.github.feelfreelinux.wykopmobilny.api.*
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.mapToEntry
+import io.github.feelfreelinux.wykopmobilny.models.pojo.DeleteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.entries.FavoriteEntryResponse
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
@@ -24,37 +25,43 @@ interface EntriesApi {
     fun addEntryComment(body: String, entryId: Int, embed: String?): Single<AddResponse>
     fun addEntryComment(body: String, entryId: Int, inputStream: TypedInputStream): Single<AddResponse>
     fun markFavorite(entryId: Int) : Single<FavoriteEntryResponse>
+    fun deleteEntry(entryId: Int): Single<DeleteResponse>
+    fun editEntry(body: String, entryId: Int): Single<AddResponse>
 }
 
 data class TypedInputStream(val fileName : String, val mimeType : String, val inputStream: InputStream)
 
-class EntriesRepository(val retrofit: Retrofit, private val apiPreferences: CredentialsPreferencesApi) : EntriesApi {
+class EntriesRepository(val retrofit: Retrofit) : EntriesApi {
     private val entriesApi by lazy { retrofit.create(EntriesRetrofitApi::class.java) }
 
-    override fun getEntryIndex(entryId : Int) = entriesApi.getEntryIndex(entryId, apiPreferences.userSessionToken).map { it.mapToEntry() }
+    override fun getEntryIndex(entryId : Int) = entriesApi.getEntryIndex(entryId).map { it.mapToEntry() }
 
-    override fun voteEntry(entryId: Int) = entriesApi.voteEntry(entryId, apiPreferences.userSessionToken)
+    override fun voteEntry(entryId: Int) = entriesApi.voteEntry(entryId)
 
-    override fun unvoteEntry(entryId: Int) = entriesApi.unvoteEntry(entryId, apiPreferences.userSessionToken)
+    override fun unvoteEntry(entryId: Int) = entriesApi.unvoteEntry(entryId)
 
-    override fun voteComment(entryId: Int, commentId: Int) = entriesApi.voteComment(entryId, commentId, apiPreferences.userSessionToken)
+    override fun voteComment(entryId: Int, commentId: Int) = entriesApi.voteComment(entryId, commentId)
 
-    override fun unvoteComment(entryId: Int, commentId: Int) = entriesApi.unvoteComment(entryId, commentId, apiPreferences.userSessionToken)
+    override fun unvoteComment(entryId: Int, commentId: Int) = entriesApi.unvoteComment(entryId, commentId)
 
     override fun addEntry(body : String, inputStream: TypedInputStream) =
-        entriesApi.addEntry(body.toRequestBody(), apiPreferences.userSessionToken, inputStream.getFileMultipart())
+        entriesApi.addEntry(body.toRequestBody(), inputStream.getFileMultipart())
 
     override fun addEntry(body : String, embed: String?) =
-            entriesApi.addEntry(body, embed, apiPreferences.userSessionToken)
+            entriesApi.addEntry(body, embed)
 
     override fun addEntryComment(body : String, entryId: Int, inputStream: TypedInputStream) =
-            entriesApi.addEntryComment(body.toRequestBody(), entryId, apiPreferences.userSessionToken, inputStream.getFileMultipart())
+            entriesApi.addEntryComment(body.toRequestBody(), entryId, inputStream.getFileMultipart())
 
     override fun addEntryComment(body : String, entryId: Int, embed: String?) =
-            entriesApi.addEntryComment(body, embed, entryId, apiPreferences.userSessionToken)
+            entriesApi.addEntryComment(body, embed, entryId)
+
+    override fun editEntry(body : String, entryId: Int) = entriesApi.editEntry(body, entryId)
 
     override fun markFavorite(entryId: Int) =
-            entriesApi.markFavorite(entryId, apiPreferences.userSessionToken)
+            entriesApi.markFavorite(entryId)
+
+    override fun deleteEntry(entryId: Int) = entriesApi.deleteEntry(entryId)
 
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!

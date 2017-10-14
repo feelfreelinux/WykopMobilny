@@ -12,10 +12,10 @@ interface StreamApi {
     fun getMirkoblogHot(page : Int, period : Int): Single<List<Entry>>
 }
 
-class StreamRepository(val retrofit: Retrofit, private val apiPreferences: CredentialsPreferencesApi) : StreamApi {
+class StreamRepository(val retrofit: Retrofit) : StreamApi {
     private val streamApi by lazy { retrofit.create(StreamRetrofitApi::class.java) }
 
-    override fun getMikroblogIndex(page : Int) = streamApi.getMikroblogIndex(page, apiPreferences.userSessionToken).map { it.map { it.mapToEntry() } }
+    override fun getMikroblogIndex(page : Int) = streamApi.getMikroblogIndex(page).map { it.map { it.mapToEntry() } }
 
-    override fun getMirkoblogHot(page : Int, period : Int) = streamApi.getMikroblogHot(page, period, apiPreferences.userSessionToken).map { it.map { it.mapToEntry() } }
+    override fun getMirkoblogHot(page : Int, period : Int) = streamApi.getMikroblogHot(page, period).map { it.map { it.mapToEntry() } }
 }

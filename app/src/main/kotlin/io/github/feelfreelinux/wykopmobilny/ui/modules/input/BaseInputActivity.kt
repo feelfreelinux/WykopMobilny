@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
@@ -13,6 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -25,14 +27,6 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), 
         val EXTRA_RECEIVER = "EXTRA_RECEIVER"
         val EXTRA_BODY = "EXTRA_BODY"
         val USER_ACTION_INSERT_PHOTO = 142
-    }
-
-    private val progressNotification : NotificationCompat.Builder by lazy {
-        NotificationCompat.Builder(this, "wykopmobilny-uploading")
-                .setSmallIcon(R.drawable.ic_upload)
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.sending_entry))
-                .setOngoing(true)
     }
 
     abstract var presenter : T
@@ -98,13 +92,12 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), 
     }
 
     // Shows "sending entry" progress in notification
-    override var showNotification : Boolean
-        get() = false
+    override var showProgressBar: Boolean
+        get() = progressBar.isVisible
         set(value) {
-            if (value) {
-                progressNotification.setProgress(0, 0, true)
-                notificationManager.updateNotification(notificationId, progressNotification.build())
-            } else notificationManager.cancelNotification(notificationId)
+            progressBar.isVisible = value
+            contentView.isVisible = !value
+            markupToolbar.isVisible = !value
         }
 
     override fun exitActivity() {

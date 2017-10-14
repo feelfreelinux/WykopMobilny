@@ -12,6 +12,6 @@ class NotificationsListAdapter : BaseProgressAdapter<NotificationViewHolder, Not
             = NotificationViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, parent, false))
 
     override fun bindHolder(holder: NotificationViewHolder, position: Int) {
-        holder.bindNotification(data[position]!!)
+        holder.bindNotification(data[position])
     }
 }

@@ -3,7 +3,11 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comme
 import android.content.Context
 import android.util.AttributeSet
 import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Comment
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVoteButton
+import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
 import javax.inject.Inject
 
 class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
@@ -23,11 +27,18 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
         presenter.vote()
     }
 
-    fun setCommentData(entryId : Int, commentId : Int, entryVotes : Int) {
+    fun setCommentData(comment : Comment) {
         WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
-        presenter.entryId = entryId
-        presenter.commentId = commentId
-        voteCount = entryVotes
+        presenter.entryId = comment.entryId
+        presenter.commentId = comment.id
+        voteCount = comment.voteCount
+
+        setOnLongClickListener {
+            val credentials = CredentialsPreferences(context)
+            credentials.userToken = "cqAcD:fbAgb:fudKN:8ExCW:1T5oV:37vt"
+            VotersDialog(context, comment.voters).show()
+            true
+        }
     }
 }
