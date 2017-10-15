@@ -22,6 +22,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedList
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
@@ -53,4 +54,5 @@ interface Injector {
     fun inject(hashTagsNotificationsListActivity: HashTagsNotificationsListActivity)
     fun inject(photoViewActivity: PhotoViewActivity)
     fun inject(editEntryActivity: EditEntryActivity)
+    fun inject(wykopNotificationsJob: WykopNotificationsJob)
 }

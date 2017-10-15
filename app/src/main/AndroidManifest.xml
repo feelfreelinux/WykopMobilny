@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.feelfreelinux.wykopmobilny">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -54,11 +55,14 @@
             </intent-filter>
         </activity>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity" />
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.add.AddEntryCommentActivity" />
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListActivity" />
         <activity android:name=".ui.modules.notificationslist.hashtags.HashTagsNotificationsListActivity" />
-        <activity android:name=".ui.modules.input.entry.add.EditEntryActivity" />
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity" />
+        <receiver android:name=".ui.modules.notifications.WykopNotificationsBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

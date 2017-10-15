@@ -67,6 +67,7 @@
     <string name="delete">Usuń</string>
     <string name="report">Zgłoś</string>
     <string name="entryRemoved">[Wpis usunięty]</string>
+    <string name="notificationsCountMessage">Posiadasz %1$d nowych powiadomień.</string>
 
 
 </resources>

@@ -47,6 +47,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
 
     // Support library
+    implementation "com.google.android.gms:play-services-gcm:11.4.2"
     implementation "com.android.support:appcompat-v7:$versions.supportLibrary"
     implementation "com.android.support:recyclerview-v7:$versions.supportLibrary"
     implementation "com.android.support:cardview-v7:$versions.supportLibrary"
@@ -82,7 +83,7 @@ dependencies {
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
 
-    compile 'com.github.traex.rippleeffect:library:1.3'
+    compile 'com.evernote:android-job:1.2.0'
     // Unit tests
     testImplementation "org.mockito:mockito-core:$versions.mockito"
     testImplementation "com.nhaarman:mockito-kotlin:$versions.mockito_kotlin"

@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import com.evernote.android.job.util.JobUtil
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -17,6 +18,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.USER_LOGGED_IN
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationJobCreator
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.startHashTagsNotificationListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.startNotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -65,6 +68,10 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
         WykopApp.uiInjector.inject(this)
+
+        WykopNotificationsJob.shedule()
+        JobUtil.hasBootPermission(this)
+
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
         if (savedInstanceState == null) openMainFragment()

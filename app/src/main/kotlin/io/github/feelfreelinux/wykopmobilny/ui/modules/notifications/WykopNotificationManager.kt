@@ -7,7 +7,8 @@ import android.os.Build
 import java.util.concurrent.atomic.AtomicInteger
 
 const val NOTIFICATION_TAG = "io.github.com.feelfreelinux.wykopmobilny"
-const val UPLOADING_NOTIFICATION_CHANNEL_ID = "wykopmobilny-uploading"
+
+
 
 interface WykopNotificationManagerApi {
     fun getNewId() : Int
@@ -18,11 +19,15 @@ interface WykopNotificationManagerApi {
 class WykopNotificationManager(private val notificationManager : NotificationManager) : WykopNotificationManagerApi {
     private val ids = AtomicInteger(0)
 
+    companion object {
+        val NOTIFICATION_CHANNEL_ID = "wykopmobilny-notification"
+    }
+
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             notificationManager.createNotificationChannel(
-                    NotificationChannel(UPLOADING_NOTIFICATION_CHANNEL_ID,
-                            UPLOADING_NOTIFICATION_CHANNEL_ID,
+                    NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                            NOTIFICATION_CHANNEL_ID,
                             NotificationManager.IMPORTANCE_DEFAULT))
     }
 

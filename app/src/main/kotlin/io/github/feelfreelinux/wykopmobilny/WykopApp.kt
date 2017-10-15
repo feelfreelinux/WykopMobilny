@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny
 
 import android.app.Application
 import android.content.Context
+import com.evernote.android.job.JobManager
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import io.github.feelfreelinux.wykopmobilny.di.AppModule
@@ -11,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.di.modules.NetworkModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.PresentersModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.RepositoryModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.ViewPresentersModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationJobCreator
 
 
 class WykopApp : Application() {
@@ -28,7 +30,7 @@ class WykopApp : Application() {
     override fun onCreate() {
         super.onCreate()
         refWatcher = LeakCanary.install(this)
-
+        JobManager.create(this).addJobCreator(WykopNotificationJobCreator())
 
         uiInjector = DaggerInjector.builder()
                 .appModule(AppModule(this))
