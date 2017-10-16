@@ -18,10 +18,11 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.USER_LOGGED_IN
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationJobCreator
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationsJob
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.startHashTagsNotificationListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.startNotificationsListActivity
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_navigation.*
@@ -53,6 +54,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     }
 
     @Inject lateinit var presenter : MainNavigationPresenter
+    @Inject lateinit var settingsApi : SettingsPreferencesApi
 
     private val navHeader by lazy { navigationView.getHeaderView(0) }
     private val actionBarToggle by lazy {
@@ -68,9 +70,10 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
         WykopApp.uiInjector.inject(this)
-
-        WykopNotificationsJob.shedule()
         JobUtil.hasBootPermission(this)
+
+        // Schedules notification service
+        WykopNotificationsJob.shedule(settingsApi)
 
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
