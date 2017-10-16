@@ -83,7 +83,9 @@ dependencies {
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
 
-    compile 'com.evernote:android-job:1.2.0'
+    // Android-Job
+    implementation "com.evernote:android-job:$versions.androidjob"
+
     // Unit tests
     testImplementation "org.mockito:mockito-core:$versions.mockito"
     testImplementation "com.nhaarman:mockito-kotlin:$versions.mockito_kotlin"
