@@ -98,7 +98,7 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
         context.editEntry(entry.body, entry.id)
     }
 
-    override fun copyEntry() {
+    override fun copyContent() {
         clipboardHelper.copyTextToClipboard(entry.body)
     }
 }

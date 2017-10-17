@@ -29,4 +29,9 @@ class EditEntryActivity : BaseInputActivity<EditEntryPresenter>(), EditEntryView
         presenter.subscribe(this)
         supportActionBar?.setTitle(R.string.edit_entry)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribe()
+    }
 }

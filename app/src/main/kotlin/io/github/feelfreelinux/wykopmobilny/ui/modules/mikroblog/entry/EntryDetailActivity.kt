@@ -42,7 +42,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     @Inject lateinit var presenter : EntryDetailPresenter
     private lateinit var entryFragmentData : DataFragment<Entry>
-    private val adapter by lazy { EntryDetailAdapter() }
+    private val adapter by lazy { EntryDetailAdapter( { inputToolbar.addAddressant(it.nick) } ) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

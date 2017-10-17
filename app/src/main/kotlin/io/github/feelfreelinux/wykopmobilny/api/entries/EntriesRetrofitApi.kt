@@ -52,10 +52,18 @@ interface EntriesRetrofitApi {
                         @Path("entryId") entryId : Int) : Single<AddResponse>
 
     @FormUrlEncoded
-    @POST("/entries/edit/{entryId}/appkey/$APP_KEY")
+    @POST("/entries/editEntry/{entryId}/appkey/$APP_KEY")
     fun editEntry(@Field("body") body: String,
                         @Path("entryId") entryId : Int) : Single<AddResponse>
 
     @GET("/entries/delete/{entryId}/appkey/$APP_KEY")
     fun deleteEntry(@Path("entryId") entryId: Int) : Single<DeleteResponse>
+
+    @FormUrlEncoded
+    @POST("/entries/editcomment/{entryId}/{commentId}/appkey/$APP_KEY")
+    fun editEntryComment(@Field("body") body: String,
+                         @Path("entryId") entryId: Int, @Path("commentId") commentId: Int) : Single<AddResponse>
+
+    @GET("/entries/deletecomment/{entryId}/{commentId}/appkey/$APP_KEY")
+    fun deleteEntryComment(@Path("entryId") entryId: Int, @Path("commentId") commentId: Int) : Single<DeleteResponse>
 }

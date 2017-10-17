@@ -4,11 +4,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.CommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 
-class EntryDetailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EntryDetailAdapter(val addReceiverListener : (Author) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var entry : Entry? = null
     private val ENTRY_HOLDER = 0
     private val COMMENT_HOLDER = 1
@@ -18,6 +19,7 @@ class EntryDetailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ENTRY_HOLDER -> (holder as EntryViewHolder).bindView(entry!!)
             COMMENT_HOLDER -> (holder as CommentViewHolder).bindView(entry!!.comments[position - 1])
         }
+
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -35,7 +37,7 @@ class EntryDetailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ENTRY_HOLDER -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false))
-            else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false))
+            else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false), addReceiverListener)
         }
     }
 }

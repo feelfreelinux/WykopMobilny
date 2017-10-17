@@ -27,6 +27,8 @@ interface EntriesApi {
     fun markFavorite(entryId: Int) : Single<FavoriteEntryResponse>
     fun deleteEntry(entryId: Int): Single<DeleteResponse>
     fun editEntry(body: String, entryId: Int): Single<AddResponse>
+    fun editEntryComment(body : String, entryId: Int, commentId: Int): Single<AddResponse>
+    fun deleteEntryComment(entryId: Int, commentId: Int): Single<DeleteResponse>
 }
 
 data class TypedInputStream(val fileName : String, val mimeType : String, val inputStream: InputStream)
@@ -62,6 +64,10 @@ class EntriesRepository(val retrofit: Retrofit) : EntriesApi {
             entriesApi.markFavorite(entryId)
 
     override fun deleteEntry(entryId: Int) = entriesApi.deleteEntry(entryId)
+
+    override fun editEntryComment(body: String, entryId: Int, commentId: Int) = entriesApi.editEntryComment(body, entryId, commentId)
+
+    override fun deleteEntryComment(entryId: Int, commentId: Int) = entriesApi.deleteEntryComment(entryId, commentId)
 
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!

@@ -37,6 +37,9 @@ class TagActivity : BaseActivity(), TagView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
         setSupportActionBar(toolbar)
+
+        WykopApp.uiInjector.inject(this)
+
         entryTag = intent.data?.getTag() ?: intent.getStringExtra(EXTRA_TAG)
         tagDataFragment = supportFragmentManager.getDataFragmentInstance(EXTRA_TAG_DATA_FRAGMENT + entryTag)
         tagDataFragment.data?.apply {
@@ -48,7 +51,6 @@ class TagActivity : BaseActivity(), TagView {
             title = "#" + entryTag
         }
 
-        WykopApp.uiInjector.inject(this)
         presenter.tag = entryTag
         presenter.subscribe(this)
         feedRecyclerView.apply {

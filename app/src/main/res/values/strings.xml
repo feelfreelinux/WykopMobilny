@@ -31,7 +31,7 @@
     <string name="refresh">Odśwież</string>
     <string name="nav_drawer_open">Nawigacja otwarta</string>
     <string name="nav_drawer_closed">Nawigacja zamknięta</string>
-    <string name="reply">Reply</string>
+    <string name="reply">Odpowiedz</string>
     <string name="copy_entry_url">Skopiuj adres wpisu</string>
     <string name="copied_to_clipboard">Skopiowano do schowka</string>
 
@@ -66,6 +66,7 @@
     <string name="copy_content">Kopiuj treść</string>
     <string name="delete">Usuń</string>
     <string name="report">Zgłoś</string>
+    <string name="add_receiver">Dodaj do odbiorców</string>
     <string name="entryRemoved">[Wpis usunięty]</string>
     <string name="notificationsCountMessage">Posiadasz %1$d nowych powiadomień.</string>
 
