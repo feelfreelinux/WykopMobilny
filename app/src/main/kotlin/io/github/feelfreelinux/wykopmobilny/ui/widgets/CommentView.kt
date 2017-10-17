@@ -29,7 +29,7 @@ class CommentView : CardView {
 
         isClickable = true
         isFocusable = true
-        setBackgroundResource(R.drawable.cardview_background_statelist)
+        setBackgroundResource(R.drawable.comment_background_state_list)
     }
 
     fun setCommentData(comment: Comment) {

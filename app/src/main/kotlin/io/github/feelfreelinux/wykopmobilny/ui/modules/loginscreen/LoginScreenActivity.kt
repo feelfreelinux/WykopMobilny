@@ -27,6 +27,9 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
         WykopApp.uiInjector.inject(this)
         toolbar.title = getString(R.string.login)
         setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
 
         presenter.subscribe(this)
         setupWebView()
@@ -53,6 +56,11 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 }
 

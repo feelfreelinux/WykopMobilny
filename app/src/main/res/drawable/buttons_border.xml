@@ -2,12 +2,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/plusPressedColor" />
+            <solid android:color="#383838" />
         </shape>
     </item>
     <item android:top="1px">
         <shape android:shape="rectangle">
-            <solid android:color="?attr/spacerColor" />
+            <solid android:color="@color/cardView.Dark" />
         </shape>
     </item>
 </layer-list>

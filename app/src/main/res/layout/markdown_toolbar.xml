@@ -11,47 +11,54 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/format_bold"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_format_bold" />
+                android:src="@drawable/ic_format_bold"/>
 
             <ImageView
                 android:id="@+id/format_quote"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_format_quote" />
+                android:src="@drawable/ic_format_quote"/>
 
             <ImageView
                 android:id="@+id/format_italic"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_format_italic" />
+                android:src="@drawable/ic_format_italic"/>
 
             <ImageView
                 android:id="@+id/insert_link"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_insert_link" />
+                android:src="@drawable/ic_insert_link"/>
 
             <ImageView
                 android:id="@+id/insert_code"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_code" />
+                android:src="@drawable/ic_code"/>
 
             <ImageView
                 android:id="@+id/insert_spoiler"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_spoiler" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_spoiler"/>
 
             <ImageView
                 android:id="@+id/insert_emoticon"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_insert_emoticon" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_insert_emoticon"/>
 
             <ImageView
                 android:id="@+id/insert_photo"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_photo" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_photo"/>
         </LinearLayout>
     </HorizontalScrollView>
 </LinearLayout>
