@@ -55,6 +55,7 @@ class TagActivity : BaseActivity(), TagView {
             presenter = this@TagActivity.presenter
             initAdapter(tagDataFragment.data?.model)
 
+            fab = this@TagActivity.fab
             onFabClickedListener = {
                 context.createNewEntry(null)
             }

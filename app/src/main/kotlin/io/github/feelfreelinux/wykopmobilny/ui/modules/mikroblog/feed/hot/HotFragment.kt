@@ -33,6 +33,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
         view?.feedRecyclerView.apply {
             feedRecyclerView = this@apply!!
             this.presenter = this@HotFragment.presenter
+            fab = this@HotFragment.fab
             onFabClickedListener = {
                 this@HotFragment.context.createNewEntry(null)
             }

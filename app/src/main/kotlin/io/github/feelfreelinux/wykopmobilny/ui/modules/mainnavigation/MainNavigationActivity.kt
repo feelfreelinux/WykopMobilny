@@ -14,6 +14,7 @@ import com.evernote.android.job.util.JobUtil
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.USER_LOGGED_IN
@@ -145,6 +146,11 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
 
 
     override fun openFragment(fragment: Fragment) {
+        fab.isVisible = false
+        fab.setOnClickListener(null)
+
+        if (fragment is BaseNavigationFragment) fragment.fab = fab
+
         supportFragmentManager.beginTransaction().replace(R.id.contentView,
                 fragment).addToBackStack(fragment.tag).commit()
     }

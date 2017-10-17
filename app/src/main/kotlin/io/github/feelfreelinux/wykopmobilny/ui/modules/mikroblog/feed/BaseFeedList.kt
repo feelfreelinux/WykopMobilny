@@ -30,6 +30,7 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
     var presenter : BaseFeedPresenter? = null
     var onFabClickedListener = {}
     var shouldShowFab = true
+    var fab : View? = null
 
     private val feedAdapter by lazy { FeedAdapter() }
 
@@ -43,8 +44,8 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
 
     fun initAdapter(feedList: List<Entry>? = emptyList()) {
         // Add endlessScrolListener, and FabAutohide to recyclerview
-        fab.isVisible = false // We'll show it later.
-        fab.setOnClickListener { onFabClickedListener.invoke() }
+        fab?.isVisible = false // We'll show it later.
+        fab?.setOnClickListener { onFabClickedListener.invoke() }
 
         recyclerView.apply {
             adapter = feedAdapter
@@ -74,7 +75,7 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
             recyclerView.post {
                 feedAdapter.addData(entryList, shouldClearAdapter)
 
-                if (feedAdapter.data.size == entryList.size) fab.isVisible = shouldShowFab // First time add only.
+                if (feedAdapter.data.size == entryList.size) fab?.isVisible = shouldShowFab // First time add only.
                 if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
             }
         }
