@@ -34,7 +34,7 @@
             android:layout_margin="@dimen/input_toolbar_item_margin"
             android:animateLayoutChanges="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_close"
+            android:src="@drawable/ic_arrow_downward"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

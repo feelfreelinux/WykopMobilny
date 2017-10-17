@@ -12,8 +12,15 @@
     <color name="drawablesColor.Dark">#ffffff</color>
     <color name="mikroblogControlsColor.Dark">#424242</color>
     <color name="plusPressedColor">#27ae60</color>
+    <color name="buttonFocused">#3e3e3e</color>
     <color name="navigationSeparator">#404040</color>
     <color name="authorHeader_date.Dark">#757575</color>
     <color name="hintColor.Dark">#9e9e9e</color>
     <color name="unreadGold">#caba2f</color>
+
+
+    <!-- POST HIGHTLIGHST -->
+    <color name="hightlightAuthor.Dark">#bdc3c7</color>
+    <color name="hightlightYours.Dark">#3498db</color>
+    <color name="hightlightReference.Dark">#27ae60</color>
 </resources>

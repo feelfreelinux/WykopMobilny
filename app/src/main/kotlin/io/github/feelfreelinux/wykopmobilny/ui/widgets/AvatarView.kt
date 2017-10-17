@@ -25,6 +25,9 @@ class AvatarView : FrameLayout {
         author.apply {
             avatarImageView.loadImage(avatarUrl)
             genderStripImageView.setBackgroundResource(getGenderStripResource(sex))
+            if(!(sex.equals("male") || sex.equals("famale"))) {
+                genderStripImageView.visibility = View.GONE
+            }
         }
     }
 }

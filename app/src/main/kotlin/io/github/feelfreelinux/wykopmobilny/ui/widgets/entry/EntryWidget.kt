@@ -82,6 +82,17 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
         entryImageView.setEmbed(entry.embed)
     }
 
+    private fun setupHightlightStrip(entry : Entry) {
+        hightlightStripImageView.apply {
+            // @TODO if user is author of entry set proper strip color
+        }
+    }
+
+    private fun setupVoteStrip(entry: Entry) {
+
+    }
+
+
     override fun showErrorDialog(e: Throwable) =
             context.showExceptionDialog(e)
 

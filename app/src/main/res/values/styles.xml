@@ -44,15 +44,18 @@
     </style>
 
     <style name="BaseCardView" parent="CardView">
-        <item name="cardBackgroundColor">?attr/cardViewColor</item>
-        <item name="cardCornerRadius">5dp</item>
+        <item name="android:layout_marginTop">@dimen/cardview_margin_horizontal</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:selectable">true</item>
     </style>
 
     <style name="EntryCardView" parent="BaseCardView">
-        <item name="android:layout_marginRight">@dimen/cardview_margin_vertical</item>
-        <item name="android:layout_marginLeft">@dimen/cardview_margin_vertical</item>
-        <item name="android:layout_marginBottom">@dimen/cardview_margin_horizontal</item>
-        <item name="android:layout_marginTop">@dimen/cardview_margin_horizontal</item>
+        <item name="cardBackgroundColor">?attr/cardViewColor</item>
+    </style>
+
+    <style name="CommentCardView" parent="BaseCardView">
+        <item name="cardBackgroundColor">?attr/cardListColor</item>
+        <item name="cardElevation">0dp</item>
     </style>
 
     <style name="MikroButton">
@@ -62,6 +65,9 @@
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/button_background_deselected</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_marginRight">@dimen/button_margin</item>
+        <item name="android:layout_marginEnd">@dimen/button_margin</item>
     </style>
 
     <style name="WykopImageView">
