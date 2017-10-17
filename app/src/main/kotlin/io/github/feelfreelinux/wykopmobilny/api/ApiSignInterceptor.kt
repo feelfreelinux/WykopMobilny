@@ -30,8 +30,8 @@ class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
                 val formBody = request.body() as FormBody
                 val paramList = (0 until formBody.size())
                         .filter { !formBody.value(it).isNullOrEmpty() }
+                        .sortedWith(compareBy({ formBody.name(it) }))
                         .mapTo(ArrayList<String>()) { formBody.value(it) }
-                paramList.sort()
 
                 APP_SECRET + url+ paramList.joinToString(",")
             }
