@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
@@ -27,6 +28,7 @@ class TagActivity : BaseActivity(), TagView {
     private lateinit var entryTag : String
     lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
     @Inject lateinit var presenter : TagPresenter
+    var fab : View? = null
 
     companion object {
         val EXTRA_TAG = "EXTRA_TAG"

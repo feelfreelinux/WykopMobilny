@@ -144,7 +144,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             navHeader.img_profile.loadImage(value)
         }
 
-
     override fun openFragment(fragment: Fragment) {
         fab.isVisible = false
         fab.setOnClickListener(null)

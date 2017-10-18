@@ -19,6 +19,11 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
 
     @Inject lateinit var presenter : EntryCommentVoteButtonPresenter
 
+    init {
+        WykopApp.uiInjector.inject(this)
+        presenter.subscribe(this)
+    }
+
     override fun unvote() {
         presenter.unvote()
     }
@@ -28,8 +33,6 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
     }
 
     fun setCommentData(comment : Comment) {
-        WykopApp.uiInjector.inject(this)
-        presenter.subscribe(this)
         presenter.entryId = comment.entryId
         presenter.commentId = comment.id
         voteCount = comment.voteCount
@@ -40,5 +43,10 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
             VotersDialog(context, comment.voters).show()
             true
         }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        presenter.unsubscribe()
     }
 }

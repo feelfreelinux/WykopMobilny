@@ -15,7 +15,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.editE
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
+import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.comment_layout.view.*
@@ -39,6 +41,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
 
     init {
         WykopApp.uiInjector.inject(this)
+        presenter.subscribe(this)
         View.inflate(context, R.layout.comment_layout, this)
         isClickable = true
         isFocusable = true
@@ -79,11 +82,11 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     }
 
     override fun copyContent() {
-        clipboardHelper.copyTextToClipboard(comment.body)
+        clipboardHelper.copyTextToClipboard(comment.body.removeHtml())
     }
 
     override fun editComment() {
-        context.editEntryComment(comment.body, comment.entryId, comment.id)
+        context.editEntryComment(comment.body.removeHtml(), comment.entryId, comment.id)
     }
 
     override fun removeComment() {
@@ -91,7 +94,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     }
 
     override fun markCommentAsRemoved() {
-        entryContentTextView.setText(R.string.entryRemoved)
+        entryContentTextView.setText(R.string.commentRemoved)
         entryImageView.isVisible = false
     }
 

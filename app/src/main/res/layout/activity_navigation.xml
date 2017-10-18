@@ -38,6 +38,7 @@
             app:fabSize="normal"
             app:layout_anchor="@id/contentView"
             app:layout_anchorGravity="bottom|right" />
+
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

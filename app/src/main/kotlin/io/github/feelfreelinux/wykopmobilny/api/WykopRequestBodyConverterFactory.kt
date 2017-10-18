@@ -2,7 +2,6 @@ package io.github.feelfreelinux.wykopmobilny.api
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Converter

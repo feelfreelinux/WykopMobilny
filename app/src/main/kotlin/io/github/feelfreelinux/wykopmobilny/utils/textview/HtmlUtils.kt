@@ -29,3 +29,10 @@ fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, handler : WykopLinkH
     setSpan(clickable, start, end, flags)
     removeSpan(span)
 }
+
+@Suppress("DEPRECATION")
+fun String.removeHtml() : String {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY).toString()
+    } else Html.fromHtml(this).toString()
+}
