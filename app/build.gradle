@@ -78,6 +78,7 @@ dependencies {
     // Glide
     implementation "com.github.bumptech.glide:glide:$versions.glide"
     kapt "com.github.bumptech.glide:compiler:$versions.glide"
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     // Leak Canary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
@@ -85,6 +86,7 @@ dependencies {
 
     // Android-Job
     implementation "com.evernote:android-job:$versions.androidjob"
+
 
     // Unit tests
     testImplementation "org.mockito:mockito-core:$versions.mockito"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_observe"
+        android:icon="@drawable/ic_observe"
+        android:visible="false"
+        android:title="@string/observe_tag"
+        app:showAsAction="always"/>
+    <item android:id="@+id/action_unobserve"
+        android:icon="@drawable/ic_unobserve"
+        android:visible="false"
+        android:title="@string/unobserve_tag"
+        app:showAsAction="always"/>
+    <item android:id="@+id/action_block"
+        android:icon="@drawable/ic_lock"
+        android:title="@string/block_tag"
+        android:visible="false"
+        app:showAsAction="always"/>
+    <item android:id="@+id/action_unblock"
+        android:icon="@drawable/ic_lock_open"
+        android:visible="false"
+        android:title="@string/unblock_tag"
+        app:showAsAction="always"/>
+</menu>

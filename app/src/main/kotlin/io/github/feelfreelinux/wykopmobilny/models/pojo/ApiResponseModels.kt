@@ -4,6 +4,8 @@ import com.squareup.moshi.Json
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
 
 
+typealias BooleanResponse = List<Boolean>
+
 data class VoteResponse(
         val vote: Int,
         val voters: List<Voter>

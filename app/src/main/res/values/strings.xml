@@ -70,6 +70,10 @@
     <string name="entryRemoved">[Wpis usunięty]</string>
     <string name="commentRemoved">[Komentarz usunięty]</string>
     <string name="notificationsCountMessage">Posiadasz %1$d nowych powiadomień.</string>
+    <string name="observe_tag">Obserwuj tag</string>
+    <string name="unobserve_tag">Przestań obserwować tag</string>
+    <string name="block_tag">Zablokuj tag</string>
+    <string name="unblock_tag">Odblokuj tag</string>
 
 
 </resources>

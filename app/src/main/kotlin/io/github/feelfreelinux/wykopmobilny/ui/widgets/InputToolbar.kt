@@ -115,7 +115,9 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     }
 
     fun setDefaultAddressant(user : String) {
-        defaultText = "@$user: "
+        if (!userManager.isUserAuthorized() || userManager.getUserCredentials()!!.login != user) {
+            defaultText = "@$user: "
+        }
     }
 
     fun addAddressant(user : String) {

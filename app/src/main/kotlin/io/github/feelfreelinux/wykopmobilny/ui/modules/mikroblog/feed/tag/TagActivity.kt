@@ -3,11 +3,14 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.TagMeta
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
@@ -28,6 +31,8 @@ class TagActivity : BaseActivity(), TagView {
     private lateinit var entryTag : String
     lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
     @Inject lateinit var presenter : TagPresenter
+    private var tagMeta : TagMeta? = null
+
     var fab : View? = null
 
     companion object {
@@ -67,9 +72,42 @@ class TagActivity : BaseActivity(), TagView {
         setSupportActionBar(toolbar)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.tag_menu, menu)
+
+        tagMeta?.apply {
+            menu.apply {
+                if (isObserved) {
+                    findItem(R.id.action_unobserve).isVisible = true
+                } else if (!isBlocked) {
+                    findItem(R.id.action_observe).isVisible = true
+                    findItem(R.id.action_block).isVisible = true
+                } else if (isBlocked) {
+                    findItem(R.id.action_unblock).isVisible = true
+                }
+            }
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_observe -> presenter.observeTag()
+            R.id.action_unobserve -> presenter.unobserveTag()
+            R.id.action_block -> presenter.blockTag()
+            R.id.action_unblock -> presenter.unblockTag()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         tagDataFragment.data = PagedDataModel(presenter.page, feedRecyclerView.entries)
+    }
+
+    override fun setMeta(tagMeta: TagMeta) {
+        this.tagMeta = tagMeta
+        invalidateOptionsMenu()
     }
 
     override fun onPause() {
