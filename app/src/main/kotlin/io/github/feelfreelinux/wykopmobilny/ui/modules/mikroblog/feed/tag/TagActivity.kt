@@ -17,6 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.createNewEntry
 import io.github.feelfreelinux.wykopmobilny.utils.api.getTag
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -30,6 +31,7 @@ fun Context.launchTagActivity(tag : String) {
 class TagActivity : BaseActivity(), TagView {
     private lateinit var entryTag : String
     lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
+    @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var presenter : TagPresenter
     private var tagMeta : TagMeta? = null
 
@@ -75,15 +77,17 @@ class TagActivity : BaseActivity(), TagView {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.tag_menu, menu)
 
-        tagMeta?.apply {
-            menu.apply {
-                if (isObserved) {
-                    findItem(R.id.action_unobserve).isVisible = true
-                } else if (!isBlocked) {
-                    findItem(R.id.action_observe).isVisible = true
-                    findItem(R.id.action_block).isVisible = true
-                } else if (isBlocked) {
-                    findItem(R.id.action_unblock).isVisible = true
+        if (userManager.isUserAuthorized()) {
+            tagMeta?.apply {
+                menu.apply {
+                    if (isObserved) {
+                        findItem(R.id.action_unobserve).isVisible = true
+                    } else if (!isBlocked) {
+                        findItem(R.id.action_observe).isVisible = true
+                        findItem(R.id.action_block).isVisible = true
+                    } else if (isBlocked) {
+                        findItem(R.id.action_unblock).isVisible = true
+                    }
                 }
             }
         }
