@@ -106,14 +106,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         drawer_layout.addDrawerListener(actionBarToggle)
         navigationView.setNavigationItemSelectedListener(this)
         presenter.subscribe(this)
-
-        navHeader.nav_notifications.setOnClickListener {
-            startNotificationsListActivity()
-        }
-
-        navHeader.nav_notifications_tag.setOnClickListener {
-            startHashTagsNotificationListActivity()
-        }
     }
 
     override fun showUsersMenu(value : Boolean) {
@@ -123,26 +115,12 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             findItem(R.id.login).isVisible = !value
             findItem(R.id.logout).isVisible = value
         }
-        navHeader.isVisible = value
+        navHeader.view_container.checkIsUserLoggedIn()
     }
 
     fun openMainFragment() {
         openFragment(HotFragment())
     }
-
-    override var notificationCount: Int
-        get() = navHeader.nav_notifications.text.toString().toInt()
-        set(value) { navHeader.nav_notifications.text = value.toString() }
-
-    override var hashTagNotificationCount: Int
-        get() = navHeader.nav_notifications_tag.text.toString().toInt()
-        set(value) { navHeader.nav_notifications_tag.text = value.toString() }
-
-    override var avatarUrl: String
-        get() = TODO("not implemented")
-        set(value) {
-            navHeader.img_profile.loadImage(value)
-        }
 
     override fun openFragment(fragment: Fragment) {
         fab.isVisible = false

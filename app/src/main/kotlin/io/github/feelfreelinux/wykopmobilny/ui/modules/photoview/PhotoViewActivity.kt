@@ -2,12 +2,18 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.photoview
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_photoview.*
@@ -33,7 +39,6 @@ class PhotoViewActivity : BaseActivity() {
         setContentView(R.layout.activity_photoview)
         setSupportActionBar(toolbar)
         WykopApp.uiInjector.inject(this)
-        image.loadImage(url)
         title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
