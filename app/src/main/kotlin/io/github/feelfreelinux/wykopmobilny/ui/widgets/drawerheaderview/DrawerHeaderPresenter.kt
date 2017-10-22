@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class DrawerHeaderPresenter(val subscriptionHelper: SubscriptionHelperApi, val myWykopApi: MyWykopApi) : BasePresenter<DrawerHeaderView>() {
     fun fetchNotifications() {
+        subscriptionHelper.dispose(this)
         val disposable = subscriptionHelper.getSubscriberCompositeDisposable(this)
         disposable.add(
                         Observable.interval(0, 5, TimeUnit.MINUTES)

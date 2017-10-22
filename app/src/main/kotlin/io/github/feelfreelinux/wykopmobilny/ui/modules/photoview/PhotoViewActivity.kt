@@ -40,6 +40,7 @@ class PhotoViewActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         WykopApp.uiInjector.inject(this)
         title = null
+        image.loadImage(url)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

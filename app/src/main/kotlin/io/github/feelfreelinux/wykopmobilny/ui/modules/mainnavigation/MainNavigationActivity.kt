@@ -23,6 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificatio
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.startHashTagsNotificationListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.startNotificationsListActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.pmlist.openConversationsList
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
@@ -48,7 +49,13 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     val LOGIN_REQUEST_CODE = 142
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        presenter.navigationItemClicked(item.itemId)
+        when (item.itemId) {
+            R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
+            R.id.login -> { openLoginActivity() }
+            R.id.messages -> { openConversationsList() }
+            else -> presenter.navigationItemClicked(item.itemId)
+        }
+
         item.isChecked = true
         drawer_layout.closeDrawers()
         return true

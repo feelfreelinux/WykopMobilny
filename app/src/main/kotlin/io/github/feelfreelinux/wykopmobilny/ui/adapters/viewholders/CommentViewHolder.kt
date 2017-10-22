@@ -11,6 +11,5 @@ class CommentViewHolder(val view: View, val addReceiverListener : (Author) -> Un
     fun bindView(comment : Comment) {
         view.comment.addReceiverListener = addReceiverListener
         view.comment.setCommentData(comment)
-
     }
 }

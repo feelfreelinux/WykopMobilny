@@ -16,8 +16,6 @@ class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelper
 
     fun navigationItemClicked(itemId: Int) {
         when (itemId) {
-            R.id.nav_mikroblog -> view?.openFragment(HotFragment.newInstance())
-            R.id.login -> { view?.openLoginActivity() }
             R.id.logout -> {
                 userManager.logoutUser()
                 view?.restartActivity()

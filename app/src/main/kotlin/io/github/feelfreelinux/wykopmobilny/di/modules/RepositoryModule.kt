@@ -6,6 +6,9 @@ import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesRepository
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopRepository
+import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
+import io.github.feelfreelinux.wykopmobilny.api.pm.PMRepository
+import io.github.feelfreelinux.wykopmobilny.api.pm.PMRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.api.stream.StreamApi
 import io.github.feelfreelinux.wykopmobilny.api.stream.StreamRepository
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
@@ -37,4 +40,8 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideUserApi(retrofit: Retrofit, credentialsPreferencesApi : CredentialsPreferencesApi) : UserApi = UserRepository(retrofit, credentialsPreferencesApi)
+
+    @Provides
+    @Singleton
+    fun providePMApi(retrofit: Retrofit) : PMApi = PMRepository(retrofit)
 }

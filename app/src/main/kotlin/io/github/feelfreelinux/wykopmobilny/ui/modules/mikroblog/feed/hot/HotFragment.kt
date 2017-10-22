@@ -25,6 +25,11 @@ class HotFragment : BaseNavigationFragment(), HotView {
         setHasOptionsMenu(true)
         val view = inflater?.inflate(R.layout.fragment_feed, container, false)
         navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity, R.drawable.ic_clock)
+        return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         WykopApp.uiInjector.inject(this)
         entriesDataFragment = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         presenter.subscribe(this)
@@ -39,8 +44,6 @@ class HotFragment : BaseNavigationFragment(), HotView {
             }
             initAdapter(entriesDataFragment.data?.model)
         }
-
-        return view
     }
 
     companion object {

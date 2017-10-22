@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -28,6 +29,13 @@ fun Context.launchTagActivity(tag : String) {
     startActivity(intent)
 }
 
+fun Uri.getTagFromUrl() : String {
+    val data = toString().substringAfter("/tag/")
+    return if (data.substringBefore("/") == "znaleziska" || data.substringBefore("/") == "wpisy")
+        data.substringAfter("/").substringBefore("/")
+    else data.substringBefore("/")
+}
+
 class TagActivity : BaseActivity(), TagView {
     private lateinit var entryTag : String
     lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
@@ -49,7 +57,7 @@ class TagActivity : BaseActivity(), TagView {
 
         WykopApp.uiInjector.inject(this)
 
-        entryTag = intent.data?.getTag() ?: intent.getStringExtra(EXTRA_TAG)
+        entryTag = intent.data?.getTagFromUrl() ?: intent.getStringExtra(EXTRA_TAG)
         tagDataFragment = supportFragmentManager.getDataFragmentInstance(EXTRA_TAG_DATA_FRAGMENT + entryTag)
         tagDataFragment.data?.apply {
             presenter.page = page
