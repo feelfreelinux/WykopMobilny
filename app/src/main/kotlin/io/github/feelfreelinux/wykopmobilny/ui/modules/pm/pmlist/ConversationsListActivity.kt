@@ -66,8 +66,12 @@ class ConversationsListActivity : BaseActivity(), ConversationsListView, SwipeRe
 
     }
 
-    fun loadMore() {
+    private fun loadMore() {
         presenter.loadConversations(false)
+    }
+
+    override fun disableLoading() {
+        conversationsAdapter.disableLoading()
     }
 
     override fun showConversations(items : List<Conversation>, shouldCleanAdapter : Boolean) {

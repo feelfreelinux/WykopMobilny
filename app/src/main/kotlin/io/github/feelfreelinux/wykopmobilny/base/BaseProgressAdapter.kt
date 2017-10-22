@@ -17,6 +17,14 @@ abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Recyc
     val data : List<A>
         get() = dataset.filterNotNull()
 
+    fun disableLoading() {
+        if (dataset.last() == null) {
+            val size = dataset.size - 1
+            dataset.removeAt(size)
+            notifyItemRemoved(size)
+        }
+    }
+
     fun addData(items : List<A>, shouldClearAdapter : Boolean) {
         if (shouldClearAdapter) {
             dataset.apply {
@@ -26,11 +34,7 @@ abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Recyc
             }
             notifyDataSetChanged()
         } else {
-            if (dataset.last() == null) {
-                val size = dataset.size - 1
-                dataset.removeAt(size)
-                notifyItemRemoved(size)
-            }
+            disableLoading()
             dataset.addAll(items)
             dataset.add(null) // LoadingView
 
