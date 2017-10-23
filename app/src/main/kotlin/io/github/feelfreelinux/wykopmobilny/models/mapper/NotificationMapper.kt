@@ -12,6 +12,7 @@ class NotificationMapper {
                         Author(author ?: "", authorAvatar, authorGroup, authorSex, null),
                         body,
                         date,
+                        type,
                         url,
                         new)
             }

@@ -5,6 +5,7 @@ import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -12,10 +13,17 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopNotificationLinkHandler
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopNotificationLinkHandlerApi
 import kotlinx.android.synthetic.main.notifications_list_item.view.*
+import javax.inject.Inject
 
 class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
-    val wykopLinkHandler = WykopLinkHandler(view.context)
+    @Inject lateinit var notificationLinkHandler : WykopNotificationLinkHandlerApi
+
+    init {
+        WykopApp.uiInjector.inject(this)
+    }
 
     fun bindNotification(notification: Notification) {
         view.apply {
@@ -32,7 +40,7 @@ class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
                 spannable.setSpan(ForegroundColorSpan(getGroupColor(notification.author.group)), 0, nickName.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
             cardView.setOnClickListener {
-                wykopLinkHandler.handleUrl(notification.url)
+                notificationLinkHandler.handleNotificationLink(notification.type, notification.url)
             }
         }
 

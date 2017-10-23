@@ -24,6 +24,9 @@ data class NotificationResponse(
         @Json(name = "date")
         val date : String,
 
+        @Json(name = "type")
+        val type : String,
+
         @Json(name = "body")
         val body : String,
 

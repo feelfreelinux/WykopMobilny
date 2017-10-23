@@ -23,6 +23,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopNotificationLinkHandler
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopNotificationLinkHandlerApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -67,6 +69,9 @@ class NetworkModule(private val baseUrl : String) {
 
     @Provides
     fun provideWykopLinkHandlerApi(context : Context) : WykopLinkHandlerApi = WykopLinkHandler(context)
+
+    @Provides
+    fun provideWykopNotificationLinkHandlerApi(context : Context) : WykopNotificationLinkHandlerApi = WykopNotificationLinkHandler(context)
 
     @Provides
     @Singleton

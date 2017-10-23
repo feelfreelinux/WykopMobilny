@@ -31,6 +31,11 @@ fun Context.openConversationActivity(user : String) {
     startActivity(intent)
 }
 
+fun String.getConversationUserFromUrl(): String {
+    val part = substringAfter("wiadomosc-prywatna/konwersacja/")
+    return part.substringBefore("/")
+}
+
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
     val conversationAdapter by lazy { PMMessageAdapter() }
     val user by lazy { intent.getStringExtra(EXTRA_USER) }

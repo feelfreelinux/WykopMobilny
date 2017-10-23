@@ -6,6 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.di.modules.NetworkModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.PresentersModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.RepositoryModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.ViewPresentersModule
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.NotificationViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.FavoriteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVoteButton
@@ -65,4 +66,5 @@ interface Injector {
     fun inject(drawerHeaderWidget: DrawerHeaderWidget)
     fun inject(conversationsListActivity: ConversationsListActivity)
     fun inject(conversationActivity: ConversationActivity)
+    fun inject(notificationViewHolder: NotificationViewHolder)
 }
