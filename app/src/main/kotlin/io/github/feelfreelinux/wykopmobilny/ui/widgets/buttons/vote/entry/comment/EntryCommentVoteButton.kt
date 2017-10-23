@@ -38,8 +38,6 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
         voteCount = comment.voteCount
 
         setOnLongClickListener {
-            val credentials = CredentialsPreferences(context)
-            credentials.userToken = "cqAcD:fbAgb:fudKN:8ExCW:1T5oV:37vt"
             VotersDialog(context, comment.voters).show()
             true
         }
