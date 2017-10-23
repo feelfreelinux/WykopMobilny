@@ -16,17 +16,18 @@ interface PMRetrofitApi {
 
     @GET("/pm/Conversation/{user}/appkey/$APP_KEY")
     fun getConversation(@Path("user") user : String) : Single<List<PMMessageResponse>>
+
     @Multipart
     @POST("/pm/SendMessage/{user}/appkey/$APP_KEY")
     fun sendMessage(@Part("body") body: RequestBody,
                         @Path("user") user : String,
-                        @Part file : MultipartBody.Part) : Single<AddResponse>
+                        @Part file : MultipartBody.Part) : Single<BooleanResponse>
 
     @FormUrlEncoded
     @POST("/pm/SendMessage/{user}/appkey/$APP_KEY")
     fun sendMessage(@Field("body") body: String,
                         @Path("user") user : String,
-                        @Field("embed") embed : String?) : Single<AddResponse>
+                        @Field("embed") embed : String?) : Single<BooleanResponse>
 
     @GET("/pm/DeleteConversation/{user}/appkey/$APP_KEY")
     fun deleteConversation(@Path("user") user : String) : Single<BooleanResponse>

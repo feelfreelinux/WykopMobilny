@@ -18,7 +18,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagPre
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJobPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListPresenter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.pmlist.ConversationsListPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
@@ -62,6 +63,10 @@ class PresentersModule {
     @Provides
     fun provideConversationsListPresenter(subscriptionHelperApi: SubscriptionHelperApi, pmApi: PMApi)
             = ConversationsListPresenter(subscriptionHelperApi, pmApi)
+
+    @Provides
+    fun provideConversationPresenter(subscriptionHelperApi: SubscriptionHelperApi, pmApi: PMApi)
+            = ConversationPresenter(subscriptionHelperApi, pmApi)
 
     @Provides
     fun provideHashTagsNotificationListPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi)

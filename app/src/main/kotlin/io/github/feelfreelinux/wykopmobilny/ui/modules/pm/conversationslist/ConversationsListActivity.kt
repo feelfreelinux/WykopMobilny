@@ -1,9 +1,8 @@
-package io.github.feelfreelinux.wykopmobilny.ui.modules.pm.pmlist
+package io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
@@ -54,9 +53,10 @@ class ConversationsListActivity : BaseActivity(), ConversationsListView, SwipeRe
             addOnScrollListener(InfiniteScrollListener({ loadMore() }, layoutManager as LinearLayoutManager))
         }
         swiperefresh.isRefreshing = false
-
         presenter.subscribe(this)
+
         if (conversationsDataFragment.data == null) {
+            loadingView.isVisible = true
             onRefresh()
         } else {
             conversationsAdapter.addData(conversationsDataFragment.data!!.model, true)

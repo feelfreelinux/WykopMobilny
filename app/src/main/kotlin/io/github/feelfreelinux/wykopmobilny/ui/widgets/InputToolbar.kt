@@ -126,5 +126,9 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         selectionPosition = textBody.length
     }
 
+    fun setCustomHint(hint : String) {
+        body.hint = hint
+    }
+
     fun hasUserEditedContent() = textBody != defaultText && markdownToolbar.hasUserEditedContent()
 }

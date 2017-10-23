@@ -19,14 +19,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.USER_LOGGED_IN
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.startHashTagsNotificationListActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.startNotificationsListActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.pmlist.openConversationsList
+import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.openConversationsList
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*

@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.ui.modules.pm.pmlist
+package io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist
 
 import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
