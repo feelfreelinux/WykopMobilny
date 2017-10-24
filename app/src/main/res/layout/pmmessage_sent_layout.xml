@@ -33,8 +33,8 @@
                 android:textColor="?attr/authorHeader_date_color"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/body"
-                app:layout_constraintBottom_toTopOf="@id/embedImage"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/embedImage"
                 tools:text="1 minute ago via Android" />
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
@@ -44,8 +44,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/date"
+                app:layout_constraintTop_toBottomOf="@id/body"
+                app:layout_constraintBottom_toTopOf="@id/date"
                 android:layout_marginTop="4dp"
                 android:maxHeight="200dp" />
         </android.support.constraint.ConstraintLayout>
@@ -57,6 +57,5 @@
         android:layout_height="42dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"/>
+        android:layout_alignParentEnd="true"/>
 </RelativeLayout>

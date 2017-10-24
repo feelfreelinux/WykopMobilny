@@ -145,7 +145,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {
             if(drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
-            else AppExitConfirmationDialog(this, { finish() })?.show()
+            else AppExitConfirmationDialog(this, { finish() }).show()
         }
         else supportFragmentManager.popBackStack()
     }

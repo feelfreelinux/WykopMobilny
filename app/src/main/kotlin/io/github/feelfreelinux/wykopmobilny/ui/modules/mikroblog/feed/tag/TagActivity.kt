@@ -19,6 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.createNewEntry
 import io.github.feelfreelinux.wykopmobilny.utils.api.getTag
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -27,13 +28,6 @@ fun Context.launchTagActivity(tag : String) {
     val intent = Intent(this, TagActivity::class.java)
     intent.putExtra(TagActivity.EXTRA_TAG, tag)
     startActivity(intent)
-}
-
-fun Uri.getTagFromUrl() : String {
-    val data = toString().substringAfter("/tag/")
-    return if (data.substringBefore("/") == "znaleziska" || data.substringBefore("/") == "wpisy")
-        data.substringAfter("/").substringBefore("/")
-    else data.substringBefore("/")
 }
 
 class TagActivity : BaseActivity(), TagView {
@@ -57,7 +51,7 @@ class TagActivity : BaseActivity(), TagView {
 
         WykopApp.uiInjector.inject(this)
 
-        entryTag = intent.data?.getTagFromUrl() ?: intent.getStringExtra(EXTRA_TAG)
+        entryTag = intent.getStringExtra(EXTRA_TAG)?: TagLinkParser.getTag(intent.data.toString())
         tagDataFragment = supportFragmentManager.getDataFragmentInstance(EXTRA_TAG_DATA_FRAGMENT + entryTag)
         tagDataFragment.data?.apply {
             presenter.page = page

@@ -44,4 +44,9 @@ class EntryVoteButton : BaseVoteButton, EntryVoteButtonView {
         super.onDetachedFromWindow()
         presenter.unsubscribe()
     }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        presenter.subscribe(this)
+    }
 }
