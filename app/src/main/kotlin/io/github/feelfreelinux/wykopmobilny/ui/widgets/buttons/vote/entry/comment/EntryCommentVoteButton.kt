@@ -19,6 +19,11 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
 
     @Inject lateinit var presenter : EntryCommentVoteButtonPresenter
 
+    init {
+        WykopApp.uiInjector.inject(this)
+        presenter.subscribe(this)
+    }
+
     override fun unvote() {
         presenter.unvote()
     }
@@ -28,17 +33,23 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
     }
 
     fun setCommentData(comment : Comment) {
-        WykopApp.uiInjector.inject(this)
-        presenter.subscribe(this)
         presenter.entryId = comment.entryId
         presenter.commentId = comment.id
         voteCount = comment.voteCount
 
         setOnLongClickListener {
-            val credentials = CredentialsPreferences(context)
-            credentials.userToken = "cqAcD:fbAgb:fudKN:8ExCW:1T5oV:37vt"
             VotersDialog(context, comment.voters).show()
             true
         }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        presenter.unsubscribe()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        presenter.subscribe(this)
     }
 }

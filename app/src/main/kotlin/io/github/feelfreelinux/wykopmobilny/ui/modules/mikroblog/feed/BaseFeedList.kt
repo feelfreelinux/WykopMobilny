@@ -52,6 +52,7 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
             clearOnScrollListeners()
             addOnScrollListener(InfiniteScrollListener({ presenter?.loadData(false) }, layoutManager as LinearLayoutManager))
         }
+
         if (feedList == null || feedList.isEmpty()) {
             // Create adapter if no data is saved
             if (feedAdapter.data.isEmpty()) {

@@ -54,6 +54,10 @@ abstract class BaseNotificationsListActivity : BaseActivity(), NotificationsList
         Toast.makeText(this, R.string.read_notifications, Toast.LENGTH_SHORT).show()
     }
 
+    override fun disableLoading() {
+        notificationAdapter.disableLoading()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.notification_list_menu, menu)
         return true

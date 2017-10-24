@@ -23,11 +23,12 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
 import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-fun Context.openEntryActivity(entryId : Int) {
+fun Context.openEntryActivity(entryId : Int, commentId: Int? = null) {
     val intent = Intent(this, EntryActivity::class.java)
     intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
     startActivity(intent)
@@ -42,14 +43,16 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     @Inject lateinit var presenter : EntryDetailPresenter
     private lateinit var entryFragmentData : DataFragment<Entry>
-    private val adapter by lazy { EntryDetailAdapter() }
+    private val adapter by lazy { EntryDetailAdapter( { inputToolbar.addAddressant(it.nick) } ) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
         setSupportActionBar(toolbar)
 
-        entryId = intent.data?.getWpisId() ?: intent.getIntExtra(EXTRA_ENTRY_ID, -1)
+        entryId =
+                if (intent.data != null) EntryLinkParser.getEntryId(intent.dataString)!!
+                else intent.getIntExtra(EXTRA_ENTRY_ID, -1)
 
         supportActionBar?.apply {
             title = null

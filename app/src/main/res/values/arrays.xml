@@ -21,6 +21,11 @@
         <item>@string/copy_content</item>
     </string-array>
 
+    <string-array name="entry_comment_menu">
+        <item>@string/copy_content</item>
+        <item>@string/add_receiver</item>
+        <item>@string/report</item>
+    </string-array>
 
     <string-array name="lenny_face_array">
         <item>( ͡° ͜ʖ ͡°)</item>

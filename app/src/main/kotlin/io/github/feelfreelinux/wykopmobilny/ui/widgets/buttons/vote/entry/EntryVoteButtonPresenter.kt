@@ -23,4 +23,9 @@ class EntryVoteButtonPresenter(private val subscriptionHandler : SubscriptionHel
                             view?.isButtonSelected = true
                         }, { view?.showErrorDialog(it) }, this)
     }
+
+    override fun unsubscribe() {
+        super.unsubscribe()
+        subscriptionHandler.dispose(this)
+    }
 }

@@ -15,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.openEntry
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
+import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.entry_layout.view.*
@@ -95,10 +96,10 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
     }
 
     override fun editEntry() {
-        context.editEntry(entry.body, entry.id)
+        context.editEntry(entry.body.removeHtml(), entry.id)
     }
 
-    override fun copyEntry() {
-        clipboardHelper.copyTextToClipboard(entry.body)
+    override fun copyContent() {
+        clipboardHelper.copyTextToClipboard(entry.body.removeHtml())
     }
 }

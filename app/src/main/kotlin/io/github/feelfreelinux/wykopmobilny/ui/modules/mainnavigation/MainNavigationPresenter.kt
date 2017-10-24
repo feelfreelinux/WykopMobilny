@@ -6,13 +6,16 @@ import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val userManager: UserManagerApi, private val myWykopApi: MyWykopApi) : BasePresenter<MainNavigationView>() {
 
     fun navigationItemClicked(itemId: Int) {
         when (itemId) {
-            R.id.nav_mikroblog -> view?.openFragment(HotFragment.newInstance())
-            R.id.login -> { view?.openLoginActivity() }
             R.id.logout -> {
                 userManager.logoutUser()
                 view?.restartActivity()
@@ -26,24 +29,7 @@ class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelper
     }
 
     private fun setupNavigation() {
-        if (userManager.isUserAuthorized()) {
-            view?.showUsersMenu(true)
-            userManager.getUserCredentials()?.let { view?.avatarUrl = it.avatarUrl }
-            getNotificationsCount()
-        } else view?.showUsersMenu(false)
-    }
-
-    fun getNotificationsCount() {
-        myWykopApi.apply {
-            subscriptionHelper.subscribe(getNotificationCount(),
-                    { view?.notificationCount = it.count },
-                    { view?.showErrorDialog(it) },
-                    this@MainNavigationPresenter)
-
-            subscriptionHelper.subscribe(getHashTagNotificationCount(), { view?.hashTagNotificationCount = it.count },
-                    { view?.showErrorDialog(it) },
-                    this@MainNavigationPresenter)
-        }
+        view?.showUsersMenu(userManager.isUserAuthorized())
     }
 
     override fun unsubscribe() {

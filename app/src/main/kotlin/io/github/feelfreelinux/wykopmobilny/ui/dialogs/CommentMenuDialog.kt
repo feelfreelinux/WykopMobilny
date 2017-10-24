@@ -6,13 +6,14 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
-interface EntryMenuDialogListener {
-    fun removeEntry()
-    fun editEntry()
-    fun copyEntry()
+interface CommentMenuDialogInterface {
+    fun removeComment()
+    fun editComment()
+    fun addReceiver()
+    fun copyContent()
 }
 
-fun EntryMenuDialog(context : Context, author : Author, userManagerApi: UserManagerApi, listener : EntryMenuDialogListener) : AlertDialog {
+fun CommentMenuDialog(context : Context, author : Author, userManagerApi: UserManagerApi, listener : CommentMenuDialogInterface): AlertDialog {
     val alertBuilder = context.createAlertBuilder()
 
     alertBuilder.run {
@@ -21,17 +22,18 @@ fun EntryMenuDialog(context : Context, author : Author, userManagerApi: UserMana
                 val items = context.resources.getStringArray(R.array.entry_menu_canedit)
                 setItems(items, { _, pos ->
                     when (pos) {
-                        0 -> { listener.copyEntry() }
-                        1 -> { listener.editEntry() }
+                        0 -> { listener.copyContent() }
+                        1 -> { listener.editComment() }
                         2 -> {}
-                        3 -> { ConfirmationDialog(context) { listener.removeEntry() }.show() }
+                        3 -> { ConfirmationDialog(context) { listener.removeComment() }.show() }
                     }
                 })
             } else {
-                val items = context.resources.getStringArray(R.array.entry_menu)
+                val items = context.resources.getStringArray(R.array.entry_comment_menu)
                 setItems(items, { _, pos ->
                     when (pos) {
-                        0 -> { listener.copyEntry() }
+                        0 -> { listener.copyContent() }
+                        1 -> { listener.addReceiver() }
                     }
                 })
             }
@@ -40,7 +42,7 @@ fun EntryMenuDialog(context : Context, author : Author, userManagerApi: UserMana
             setItems(items, { _, pos ->
                 when (pos) {
                     0 -> {
-                        listener.copyEntry()
+                        listener.copyContent()
                     }
                 }
             })

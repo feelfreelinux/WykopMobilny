@@ -58,6 +58,10 @@
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListActivity" />
         <activity android:name=".ui.modules.notificationslist.hashtags.HashTagsNotificationsListActivity" />
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity" />
+        <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
+        <activity android:name=".ui.modules.pm.conversationslist.ConversationsListActivity" />
+        <activity android:name=".ui.modules.pm.conversation.ConversationActivity" />
+
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

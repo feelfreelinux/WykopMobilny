@@ -1,10 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.api
 
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import okhttp3.MediaType
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import okio.Okio
 import okio.BufferedSink
 import okhttp3.RequestBody

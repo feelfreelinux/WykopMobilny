@@ -1,11 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.api.mywykop
 
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
-import io.github.feelfreelinux.wykopmobilny.models.mapToNotification
+import io.github.feelfreelinux.wykopmobilny.models.mapper.NotificationMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.NotificationCountResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.NotificationResponse
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
 import io.reactivex.Single
 import retrofit2.Retrofit
 
@@ -23,13 +21,13 @@ class MyWykopRepository(val retrofit: Retrofit) : MyWykopApi {
 
     override fun readNotifications() = mywykopApi.readNotifications()
 
-    override fun getNotifications(page : Int) = mywykopApi.getNotifications(page).map { it.map { it.mapToNotification() } }
+    override fun getNotifications(page : Int) = mywykopApi.getNotifications(page).map { it.map { NotificationMapper.map(it) } }
 
     override fun getNotificationCount() = mywykopApi.getNotificationCount()
 
     override fun readHashTagNotifications() = mywykopApi.readHashTagsNotifications()
 
-    override fun getHashTagNotifications(page : Int) = mywykopApi.getHashTagsNotifications(page).map { it.map { it.mapToNotification() } }
+    override fun getHashTagNotifications(page : Int) = mywykopApi.getHashTagsNotifications(page).map { it.map { NotificationMapper.map(it) } }
 
     override fun getHashTagNotificationCount() = mywykopApi.getHashTagsNotificationsCount()
 }

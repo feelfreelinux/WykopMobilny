@@ -29,4 +29,14 @@ class EntryFavoriteButton : FavoriteButton, EntryFavoriteButtonView {
         entryId = entry.id
         isFavorite = entry.isFavorite
     }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        presenter.unsubscribe()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        presenter.subscribe(this)
+    }
 }

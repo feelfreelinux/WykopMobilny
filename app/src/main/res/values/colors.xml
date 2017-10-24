@@ -8,7 +8,7 @@
     <color name="cardList.Dark">#1c1c1c</color>
     <color name="cardViewSelected.Dark">#252525</color>
     <color name="toolbarItemsColor.Dark">#434343</color>
-    <color name="separatorColor.Dark">#404040</color>
+    <color name="separatorColor.Dark">#3e3e3e</color>
     <color name="drawablesColor.Dark">#ffffff</color>
     <color name="mikroblogControlsColor.Dark">#424242</color>
     <color name="plusPressedColor">#27ae60</color>

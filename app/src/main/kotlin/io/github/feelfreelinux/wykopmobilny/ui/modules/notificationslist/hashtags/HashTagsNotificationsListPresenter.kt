@@ -15,7 +15,7 @@ class HashTagsNotificationsListPresenter(val subscriptionHelper: SubscriptionHel
                     if (it.isNotEmpty()) {
                         page++
                         view?.addNotifications(it, shouldRefresh)
-                    }
+                    } else view?.disableLoading()
                 }, { view?.showErrorDialog(it) }, this)
     }
 

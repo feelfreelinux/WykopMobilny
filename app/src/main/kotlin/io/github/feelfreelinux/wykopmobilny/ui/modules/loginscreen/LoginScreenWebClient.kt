@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
 import android.annotation.TargetApi
 import android.os.Build
+import android.support.annotation.RequiresApi
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -16,7 +17,7 @@ class LoginActivityWebClient(private val tokenUrlCallback: TokenUrlCallback) : W
         return false
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         request?.let {
             tokenUrlCallback.invoke(it.url.toString())

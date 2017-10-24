@@ -8,6 +8,7 @@ import org.json.JSONObject
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.io.IOException
+import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 

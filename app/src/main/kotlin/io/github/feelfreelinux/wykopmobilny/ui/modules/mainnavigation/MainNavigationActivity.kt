@@ -19,13 +19,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.USER_LOGGED_IN
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.startHashTagsNotificationListActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.startNotificationsListActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.openConversationsList
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -48,7 +45,13 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     val LOGIN_REQUEST_CODE = 142
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        presenter.navigationItemClicked(item.itemId)
+        when (item.itemId) {
+            R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
+            R.id.login -> { openLoginActivity() }
+            R.id.messages -> { openConversationsList() }
+            else -> presenter.navigationItemClicked(item.itemId)
+        }
+
         item.isChecked = true
         drawer_layout.closeDrawers()
         return true
@@ -106,14 +109,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         drawer_layout.addDrawerListener(actionBarToggle)
         navigationView.setNavigationItemSelectedListener(this)
         presenter.subscribe(this)
-
-        navHeader.nav_notifications.setOnClickListener {
-            startNotificationsListActivity()
-        }
-
-        navHeader.nav_notifications_tag.setOnClickListener {
-            startHashTagsNotificationListActivity()
-        }
     }
 
     override fun showUsersMenu(value : Boolean) {
@@ -123,27 +118,12 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             findItem(R.id.login).isVisible = !value
             findItem(R.id.logout).isVisible = value
         }
-        navHeader.isVisible = value
+        navHeader.view_container.checkIsUserLoggedIn()
     }
 
     fun openMainFragment() {
         openFragment(HotFragment())
     }
-
-    override var notificationCount: Int
-        get() = navHeader.nav_notifications.text.toString().toInt()
-        set(value) { navHeader.nav_notifications.text = value.toString() }
-
-    override var hashTagNotificationCount: Int
-        get() = navHeader.nav_notifications_tag.text.toString().toInt()
-        set(value) { navHeader.nav_notifications_tag.text = value.toString() }
-
-    override var avatarUrl: String
-        get() = TODO("not implemented")
-        set(value) {
-            navHeader.img_profile.loadImage(value)
-        }
-
 
     override fun openFragment(fragment: Fragment) {
         fab.isVisible = false
@@ -165,7 +145,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {
             if(drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
-            else AppExitConfirmationDialog(this, { finish() })?.show()
+            else AppExitConfirmationDialog(this, { finish() }).show()
         }
         else supportFragmentManager.popBackStack()
     }

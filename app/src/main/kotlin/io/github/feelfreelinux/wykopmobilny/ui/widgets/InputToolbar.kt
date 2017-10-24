@@ -115,12 +115,19 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     }
 
     fun setDefaultAddressant(user : String) {
-        defaultText = "@$user: "
+        if (!userManager.isUserAuthorized() || userManager.getUserCredentials()!!.login != user) {
+            defaultText = "@$user: "
+        }
     }
 
     fun addAddressant(user : String) {
+        body.requestFocus()
         textBody += "@$user: "
         selectionPosition = textBody.length
+    }
+
+    fun setCustomHint(hint : String) {
+        body.hint = hint
     }
 
     fun hasUserEditedContent() = textBody != defaultText && markdownToolbar.hasUserEditedContent()
