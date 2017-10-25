@@ -53,8 +53,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     init {
         WykopApp.uiInjector.inject(this)
 
-        // Only show if user's logged in
-        isVisible = userManager.isUserAuthorized()
+        show()
 
         // Inflate view
         View.inflate(context, R.layout.input_toolbar, this)
@@ -115,7 +114,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     }
 
     fun setDefaultAddressant(user : String) {
-        if (!userManager.isUserAuthorized() || userManager.getUserCredentials()!!.login != user) {
+        if (userManager.isUserAuthorized() && userManager.getUserCredentials()!!.login != user) {
             defaultText = "@$user: "
         }
     }
@@ -131,4 +130,13 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     }
 
     fun hasUserEditedContent() = textBody != defaultText && markdownToolbar.hasUserEditedContent()
+
+    fun hide() {
+        isVisible = false
+    }
+
+    fun show() {
+        // Only show if user's logged in
+        isVisible = userManager.isUserAuthorized()
+    }
 }

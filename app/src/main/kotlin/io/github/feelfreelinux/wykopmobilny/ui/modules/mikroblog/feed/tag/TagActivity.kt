@@ -37,8 +37,6 @@ class TagActivity : BaseActivity(), TagView {
     @Inject lateinit var presenter : TagPresenter
     private var tagMeta : TagMeta? = null
 
-    var fab : View? = null
-
     companion object {
         val EXTRA_TAG = "EXTRA_TAG"
         val EXTRA_TAG_DATA_FRAGMENT = "DATA_FRAGMENT_#"
@@ -66,9 +64,8 @@ class TagActivity : BaseActivity(), TagView {
         presenter.subscribe(this)
         feedRecyclerView.apply {
             presenter = this@TagActivity.presenter
-            initAdapter(tagDataFragment.data?.model)
-
             fab = this@TagActivity.fab
+            initAdapter(tagDataFragment.data?.model)
             onFabClickedListener = {
                 context.createNewEntry(null)
             }

@@ -121,14 +121,14 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
     override fun showEntry(entry: Entry) {
         adapter.entry = entry
         inputToolbar.setDefaultAddressant(entry.author.nick)
-        inputToolbar.isVisible = true
+        inputToolbar.show()
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
         adapter.notifyDataSetChanged()
     }
 
     override fun hideInputToolbar() {
-        inputToolbar.isVisible = false
+        inputToolbar.hide()
     }
 
     override fun hideInputbarProgress() {
