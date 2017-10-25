@@ -3,31 +3,30 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
 import kotlinx.android.synthetic.main.activity_notifications_list.*
-import kotlinx.android.synthetic.main.toolbar.*
 
-abstract class BaseNotificationsListActivity : BaseActivity(), NotificationsListView, SwipeRefreshLayout.OnRefreshListener {
+abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView, SwipeRefreshLayout.OnRefreshListener {
     val notificationAdapter by lazy { NotificationsListAdapter() }
 
     abstract fun markAsRead()
 
     abstract fun loadMore()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notifications_list)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
+        return inflater.inflate(R.layout.activity_notifications_list, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
         swiperefresh.setOnRefreshListener(this)
 
         recyclerView.apply {
@@ -37,6 +36,7 @@ abstract class BaseNotificationsListActivity : BaseActivity(), NotificationsList
             addOnScrollListener(InfiniteScrollListener({ loadMore() }, layoutManager as LinearLayoutManager))
         }
         swiperefresh.isRefreshing = false
+        super.onActivityCreated(savedInstanceState)
     }
 
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter : Boolean) {
@@ -51,22 +51,20 @@ abstract class BaseNotificationsListActivity : BaseActivity(), NotificationsList
 
     override fun showReadToast() {
         onRefresh()
-        Toast.makeText(this, R.string.read_notifications, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, R.string.read_notifications, Toast.LENGTH_SHORT).show()
     }
 
     override fun disableLoading() {
         notificationAdapter.disableLoading()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.notification_list_menu, menu)
-        return true
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.notification_list_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.markAsRead -> markAsRead()
-            android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
     }

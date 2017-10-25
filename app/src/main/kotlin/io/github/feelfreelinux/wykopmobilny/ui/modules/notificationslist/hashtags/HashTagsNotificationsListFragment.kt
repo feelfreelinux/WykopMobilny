@@ -3,41 +3,40 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashta
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.BaseNotificationsListActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.BaseNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 import javax.inject.Inject
 
-fun Context.startHashTagsNotificationListActivity() {
-    val intent = Intent(this, HashTagsNotificationsListActivity::class.java)
-    startActivity(intent)
-}
-
-class HashTagsNotificationsListActivity : BaseNotificationsListActivity() {
+class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
     @Inject lateinit var presenter : HashTagsNotificationsListPresenter
 
     private lateinit var entryFragmentData : DataFragment<PagedDataModel<List<Notification>>>
 
     companion object {
         val DATA_FRAGMENT_TAG = "NOTIFICATIONS_HASH_TAG_LIST_ACTIVITY"
+        fun newInstance() : Fragment {
+            return HashTagsNotificationsListFragment()
+        }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
         super.onCreate(savedInstanceState)
-        supportActionBar?.setTitle(R.string.hashtags_notifications_title)
+        (activity as BaseActivity).supportActionBar?.setTitle(R.string.hashtags_notifications_title)
 
-        entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        entryFragmentData = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         val pagedModel = entryFragmentData.data
         if (pagedModel != null && pagedModel.model.isNotEmpty()) {
             loadingView.isVisible = false
@@ -63,7 +62,7 @@ class HashTagsNotificationsListActivity : BaseNotificationsListActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (isFinishing) supportFragmentManager.removeDataFragment(entryFragmentData)
+        if (isRemoving) fragmentManager.removeDataFragment(entryFragmentData)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

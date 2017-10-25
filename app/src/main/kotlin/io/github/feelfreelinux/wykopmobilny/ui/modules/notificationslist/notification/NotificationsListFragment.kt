@@ -1,30 +1,28 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification
 
-import android.content.Context
-import android.content.Intent
+import android.support.v4.app.Fragment
 import android.os.Bundle
-import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.BaseNotificationsListActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.BaseNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 import javax.inject.Inject
 
-fun Context.startNotificationsListActivity() {
-    val intent = Intent(this, NotificationsListActivity::class.java)
-    startActivity(intent)
-}
-class NotificationsListActivity : BaseNotificationsListActivity() {
+class NotificationsListFragment : BaseNotificationsListFragment() {
     private lateinit var entryFragmentData : DataFragment<PagedDataModel<List<Notification>>>
 
     companion object {
         val DATA_FRAGMENT_TAG = "NOTIFICATIONS_LIST_ACTIVITY"
+        fun newInstance() : Fragment {
+            return NotificationsListFragment()
+        }
     }
 
     override fun loadMore() {
@@ -37,13 +35,14 @@ class NotificationsListActivity : BaseNotificationsListActivity() {
 
     @Inject lateinit var presenter : NotificationsListPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
         super.onCreate(savedInstanceState)
-        supportActionBar?.setTitle(R.string.notifications_title)
+        (activity as BaseActivity).supportActionBar?.setTitle(R.string.notifications_title)
 
-        entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        entryFragmentData = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         if (entryFragmentData.data != null && entryFragmentData.data!!.model.isNotEmpty()) {
             loadingView.isVisible = false
             presenter.page = entryFragmentData.data!!.page
@@ -65,7 +64,7 @@ class NotificationsListActivity : BaseNotificationsListActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (isFinishing) supportFragmentManager.removeDataFragment(entryFragmentData)
+        if (isRemoving) fragmentManager.removeDataFragment(entryFragmentData)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

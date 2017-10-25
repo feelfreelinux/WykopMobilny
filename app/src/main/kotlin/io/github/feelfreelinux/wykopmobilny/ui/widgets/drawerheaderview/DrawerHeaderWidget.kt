@@ -6,10 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.startHashTagsNotificationListActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.startNotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -29,13 +26,6 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
     init {
         View.inflate(context, R.layout.drawer_header_view_layout, this)
         WykopApp.uiInjector.inject(this)
-        nav_notifications.setOnClickListener {
-            context.startNotificationsListActivity()
-        }
-
-        nav_notifications_tag.setOnClickListener {
-            context.startHashTagsNotificationListActivity()
-        }
     }
 
     override var hashTagsNotificationsCount: Int

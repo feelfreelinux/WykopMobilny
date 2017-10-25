@@ -9,9 +9,9 @@ import com.evernote.android.job.Job
 import com.evernote.android.job.JobRequest
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -68,13 +68,15 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
 
     override fun showNotificationsCount(count: Int) {
         // Create intent
-        val intent = Intent(context, NotificationsListActivity::class.java)
+        val intent = Intent(context, NavigationActivity::class.java)
+        intent.putExtra(NavigationActivity.TARGET_FRAGMENT_KEY, NavigationActivity.TARGET_NOTIFICATIONS)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         // Show Notification
         notificationManager.updateNotification(NOTIFICATION_ID,
                 buildNotification(context.getString(R.string.notificationsCountMessage, count), pendingIntent))
+
     }
 
     override fun showErrorDialog(e: Throwable) {} // @TODO idk how to handle it

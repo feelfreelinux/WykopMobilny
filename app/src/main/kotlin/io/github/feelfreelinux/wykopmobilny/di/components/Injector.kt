@@ -26,11 +26,11 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFra
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderWidget
 import javax.inject.Singleton
 
@@ -56,15 +56,15 @@ interface Injector {
     fun inject(favoriteButton: FavoriteButton)
     fun inject(baseFeedList: BaseFeedList)
     fun inject(inputToolbar: InputToolbar)
-    fun inject(notificationsListActivity: NotificationsListActivity)
-    fun inject(hashTagsNotificationsListActivity: HashTagsNotificationsListActivity)
     fun inject(photoViewActivity: PhotoViewActivity)
     fun inject(editEntryActivity: EditEntryActivity)
     fun inject(wykopNotificationsJob: WykopNotificationsJob)
     fun inject(wykopNotificationsBroadcastReceiver: WykopNotificationsBroadcastReceiver)
     fun inject(editEntryCommentActivity: EditEntryCommentActivity)
     fun inject(drawerHeaderWidget: DrawerHeaderWidget)
-    fun inject(conversationsListActivity: ConversationsListActivity)
+    fun inject(conversationsListActivity: ConversationsListFragment)
     fun inject(conversationActivity: ConversationActivity)
     fun inject(notificationViewHolder: NotificationViewHolder)
+    fun inject(notificationsListFragment: NotificationsListFragment)
+    fun inject(hashTagsNotificationsListFragment: HashTagsNotificationsListFragment)
 }
