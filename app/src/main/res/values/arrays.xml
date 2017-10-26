@@ -10,6 +10,24 @@
         <item>@string/report</item>
     </string-array>
 
+    <string-array name="preferences_notifications_frequency">
+        <item>15 minut</item>
+        <item>30 minut</item>
+        <item>1 godzina</item>
+        <item>2 godziny</item>
+        <item>4 godziny</item>
+        <item>8 godzin</item>
+    </string-array>
+
+    <string-array name="preferences_notifications_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>240</item>
+        <item>480</item>
+    </string-array>
+
     <string-array name="entry_menu_canedit">
         <item>@string/copy_content</item>
         <item>@string/edit</item>

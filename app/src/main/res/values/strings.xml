@@ -3,6 +3,16 @@
     <string name="period24">Gorące wpisy 24h</string>
     <string name="period12">Gorące wpisy 12h</string>
     <string name="period6">Gorące wpisy 6h</string>
+    <string name="options">Ustawienia</string>
+    <string name="pref_appearance">Wygląd</string>
+    <string name="pref_dark_style">Styl nocny</string>
+    <string name="pref_notifications">Powiadomienia</string>
+    <string name="pref_notifications_enable">Włącz powiadomienia</string>
+    <string name="pref_notifications_frequency">Częstotliwość sprawdzania</string>
+    <string name="pref_content_filter">Filtrowanie treści</string>
+    <string name="pref_content_plus18">Pokazuj treści 18+</string>
+    <string name="pref_content_filternsfw">Zamazuj treści z tagiem #nsfw</string>
+
     <string name="newest_entries">Najnowsze wpisy</string>
     <string name="share">Udostępnij</string>
     <string name="save_image">Zapisz obraz</string>

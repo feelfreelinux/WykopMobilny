@@ -2,8 +2,10 @@
 
     <!-- Base application theme. -->
 
-    <style name="AppTheme.Dark" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.Dark" parent="Base.Theme.AppCompat">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:windowBackground">@color/cardList.Dark</item>
         <item name="android:itemBackground">@color/cardList.Dark</item>
         <item name="colorPrimary">@color/colorPrimary.Dark</item>
@@ -17,7 +19,6 @@
         <item name="drawablesColor">@color/drawablesColor.Dark</item>
         <item name="cardViewSelected">@color/cardViewSelected.Dark</item>
         <item name="authorHeader_date_color">@color/authorHeader_date.Dark</item>
-        <item name="textColor">@color/textColor.Dark</item>
         <item name="android:editTextColor">@android:color/white</item>
         <item name="MirkoButtonStyle">@style/MikroButton</item>
         <item name="colorControlNormal">@color/cardViewSelected.Dark</item>

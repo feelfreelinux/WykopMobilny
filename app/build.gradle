@@ -51,6 +51,8 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$versions.supportLibrary"
     implementation "com.android.support:recyclerview-v7:$versions.supportLibrary"
     implementation "com.android.support:cardview-v7:$versions.supportLibrary"
+    implementation "com.android.support:preference-v7:$versions.supportLibrary"
+    implementation "com.android.support:preference-v14:$versions.supportLibrary"
     implementation "com.android.support:design:$versions.supportLibrary"
     implementation "com.android.support:support-v4:$versions.supportLibrary"
     implementation "com.android.support:customtabs:$versions.supportLibrary"
@@ -86,7 +88,6 @@ dependencies {
 
     // Android-Job
     implementation "com.evernote:android-job:$versions.androidjob"
-
 
     // Unit tests
     testImplementation "org.mockito:mockito-core:$versions.mockito"

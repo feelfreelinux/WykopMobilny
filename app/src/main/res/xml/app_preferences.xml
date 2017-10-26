@@ -1,0 +1,39 @@
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/pref_appearance">
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="style_nocny"
+            android:title="@string/pref_dark_style"
+            android:defaultValue="false"/>
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/pref_notifications">
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="show_notifications"
+            android:title="@string/pref_notifications_enable"
+            android:defaultValue="true"/>
+
+        <android.support.v7.preference.ListPreference
+            android:key="notifications_frequency"
+            android:title="@string/pref_notifications_frequency"
+            android:entries="@array/preferences_notifications_frequency"
+            android:entryValues="@array/preferences_notifications_frequency_values"
+            android:defaultValue="15"/>
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/pref_content_filter">
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="showplus18"
+            android:title="@string/pref_content_plus18"
+            android:defaultValue="false"/>
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="shownsfw"
+            android:title="@string/pref_content_filternsfw"
+            android:defaultValue="true"/>
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

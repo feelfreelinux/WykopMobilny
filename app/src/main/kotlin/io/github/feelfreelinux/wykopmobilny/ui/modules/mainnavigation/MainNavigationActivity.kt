@@ -23,6 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificatio
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.startSettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.activity_navigation.*
@@ -60,6 +61,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
             R.id.login -> { openLoginActivity() }
             R.id.messages -> { openFragment(ConversationsListFragment.newInstance()) }
+            R.id.nav_settings -> { startSettingsActivity() }
             else -> presenter.navigationItemClicked(item.itemId)
         }
 
