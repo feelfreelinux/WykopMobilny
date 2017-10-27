@@ -14,11 +14,11 @@ class TagPresenter(private val subscriptionHelper: SubscriptionHelperApi, privat
         if (shouldRefresh) page = 1
         subscriptionHelper.subscribe(tagApi.getTagEntries(tag, page),
                 {
+                    view?.setMeta(it.meta)
                     if (it.entries.isNotEmpty()) {
                         page ++
-                        view?.setMeta(it.meta)
                         view?.addDataToAdapter(it.entries, shouldRefresh)
-                    }
+                    } else view?.disableLoading()
                 },
                 { view?.showErrorDialog(it) }, this
         )

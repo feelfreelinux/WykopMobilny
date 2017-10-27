@@ -50,7 +50,10 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRe
             prepare()
             adapter = conversationsAdapter
             clearOnScrollListeners()
-            addOnScrollListener(InfiniteScrollListener({ loadMore() }, layoutManager as LinearLayoutManager))
+            addOnScrollListener(InfiniteScrollListener({
+                recyclerView.post { conversationsAdapter.isLoading = true }
+                loadMore()
+            }, layoutManager as LinearLayoutManager))
         }
         swiperefresh.isRefreshing = false
         presenter.subscribe(this)

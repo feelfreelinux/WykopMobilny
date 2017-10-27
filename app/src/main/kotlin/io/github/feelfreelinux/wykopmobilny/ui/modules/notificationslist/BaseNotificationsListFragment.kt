@@ -33,7 +33,10 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
             prepare()
             adapter = notificationAdapter
             clearOnScrollListeners()
-            addOnScrollListener(InfiniteScrollListener({ loadMore() }, layoutManager as LinearLayoutManager))
+            addOnScrollListener(InfiniteScrollListener({
+                recyclerView.post { notificationAdapter.isLoading = true }
+                loadMore()
+            }, layoutManager as LinearLayoutManager))
         }
         swiperefresh.isRefreshing = false
         super.onActivityCreated(savedInstanceState)

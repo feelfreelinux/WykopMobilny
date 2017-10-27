@@ -4,4 +4,5 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 
 interface BaseFeedView : BaseView {
     fun addDataToAdapter(entryList : List<Entry>, shouldClearAdapter : Boolean)
+    fun disableLoading()
 }
