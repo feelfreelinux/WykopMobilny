@@ -16,7 +16,7 @@ class HotPresenter(private val subscriptionHelper: SubscriptionHelperApi, privat
             if (it.isNotEmpty()) {
                 page++
                 view?.addDataToAdapter(it, shouldRefresh)
-            }
+            } else view?.disableLoading()
         }
         val failure : (Throwable) -> Unit  = { view?.showErrorDialog(it) }
 

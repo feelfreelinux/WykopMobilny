@@ -50,7 +50,10 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
         recyclerView.apply {
             adapter = feedAdapter
             clearOnScrollListeners()
-            addOnScrollListener(InfiniteScrollListener({ presenter?.loadData(false) }, layoutManager as LinearLayoutManager))
+            addOnScrollListener(InfiniteScrollListener({
+                recyclerView.post { feedAdapter.isLoading = true }
+                presenter?.loadData(false)
+            }, layoutManager as LinearLayoutManager))
         }
 
         if (feedList == null || feedList.isEmpty()) {
@@ -80,6 +83,12 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
                 if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
             }
         }
+    }
+
+    override fun disableLoading() {
+        feedAdapter.isLoading = false
+        isRefreshing = false
+        isLoading = false
     }
 
     val entries : List<Entry>

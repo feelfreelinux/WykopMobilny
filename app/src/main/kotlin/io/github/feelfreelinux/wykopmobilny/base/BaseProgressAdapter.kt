@@ -13,12 +13,26 @@ const val ITEM_PROGRESS = 1
 
 abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val dataset = arrayListOf<A?>()
+    var isLoading : Boolean = false
+        get() = field
+        set(value) {
+            if (value) {
+                if (!field) {
+                    dataset.add(null) // LoadingView
+                    notifyItemInserted(dataset.size - 1)
+                }
+            } else {
+                disableLoading()
+            }
+
+            field = value
+        }
 
     val data : List<A>
         get() = dataset.filterNotNull()
 
     fun disableLoading() {
-        if (dataset.last() == null) {
+        if (dataset.isNotEmpty() && dataset.last() == null) {
             val size = dataset.size - 1
             dataset.removeAt(size)
             notifyItemRemoved(size)
@@ -26,18 +40,16 @@ abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Recyc
     }
 
     fun addData(items : List<A>, shouldClearAdapter : Boolean) {
+        isLoading = false
+
         if (shouldClearAdapter) {
             dataset.apply {
                 clear()
                 addAll(items)
-                add(null)
             }
             notifyDataSetChanged()
         } else {
-            disableLoading()
             dataset.addAll(items)
-            dataset.add(null) // LoadingView
-
             notifyItemRangeInserted(dataset.size - items.size, items.size + 1)
         }
     }

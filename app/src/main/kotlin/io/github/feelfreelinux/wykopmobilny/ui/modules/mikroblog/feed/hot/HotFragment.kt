@@ -100,4 +100,8 @@ class HotFragment : BaseNavigationFragment(), HotView {
 
     override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean)
         = feedRecyclerView.addDataToAdapter(entryList, shouldClearAdapter)
+
+    override fun disableLoading() {
+        feedRecyclerView.disableLoading()
+    }
 }
