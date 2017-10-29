@@ -3,13 +3,16 @@ package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import kotlin.reflect.KProperty
 
 
-abstract class Preferences(var context: Context? = null) {
+abstract class Preferences(var context: Context? = null, useDefaultFile : Boolean = false) {
 
     private val prefs: SharedPreferences by lazy {
-        if (context != null)
+        if (context != null && useDefaultFile)
+            PreferenceManager.getDefaultSharedPreferences(context)
+        else if (context != null)
             context!!.getSharedPreferences(javaClass.simpleName, Context.MODE_PRIVATE)
         else
             throw IllegalStateException("Context was not initialized. Call Preferences.init(context) before using it")

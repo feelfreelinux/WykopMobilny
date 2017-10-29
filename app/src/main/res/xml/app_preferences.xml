@@ -17,7 +17,7 @@
             android:defaultValue="true"/>
 
         <android.support.v7.preference.ListPreference
-            android:key="notifications_frequency"
+            android:key="notificationsSchedulerDelay"
             android:title="@string/pref_notifications_frequency"
             android:entries="@array/preferences_notifications_frequency"
             android:entryValues="@array/preferences_notifications_frequency_values"

@@ -38,7 +38,7 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
 
         fun shedule(settingsPreferencesApi: SettingsPreferencesApi) {
             JobRequest.Builder(TAG)
-                    .setPeriodic(settingsPreferencesApi.notificationsSchedulerDelay, TimeUnit.MINUTES.toMillis(5))
+                    .setPeriodic(TimeUnit.MINUTES.toMillis(settingsPreferencesApi.notificationsSchedulerDelay!!.toLong()), TimeUnit.MINUTES.toMillis(5))
                     .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                     .setUpdateCurrent(true)
                     .build()
