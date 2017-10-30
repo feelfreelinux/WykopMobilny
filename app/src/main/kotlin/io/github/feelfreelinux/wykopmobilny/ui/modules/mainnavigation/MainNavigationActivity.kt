@@ -17,6 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.modules.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
@@ -61,7 +62,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
             R.id.login -> { openLoginActivity() }
             R.id.messages -> { openFragment(ConversationsListFragment.newInstance()) }
-            R.id.nav_settings -> { startSettingsActivity() }
+            R.id.nav_settings -> { openSettingsActivity() }
             else -> presenter.navigationItemClicked(item.itemId)
         }
 
@@ -188,6 +189,10 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         startActivityForResult(Intent(this, LoginScreenActivity::class.java), LOGIN_REQUEST_CODE)
     }
 
+    fun openSettingsActivity() {
+        startActivityForResult(Intent(this, SettingsActivity::class.java), LOGIN_REQUEST_CODE)
+    }
+
     override fun restartActivity() {
         launchNavigationActivity()
         finish()
@@ -197,6 +202,12 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         when (requestCode) {
             LOGIN_REQUEST_CODE -> {
                 if (resultCode == LoginScreenActivity.USER_LOGGED_IN) {
+                    restartActivity()
+                }
+            }
+
+            else -> {
+                if (resultCode == SettingsActivity.THEME_CHANGED_RESULT) {
                     restartActivity()
                 }
             }

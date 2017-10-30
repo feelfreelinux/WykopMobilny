@@ -17,6 +17,11 @@ fun Context.startSettingsActivity() {
 }
 
 class SettingsActivity : BaseActivity() {
+    companion object {
+        val THEME_CHANGED_EXTRA = "THEME_CHANGED"
+        val THEME_CHANGED_RESULT = 154
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -48,7 +53,7 @@ class SettingsActivity : BaseActivity() {
             } else if (pref is CheckBoxPreference) {
                 when (pref.key) {
                     "useDarkTheme" -> {
-                        activity.finish()
+                        restartActivity()
                     }
                 }
             }
@@ -64,13 +69,27 @@ class SettingsActivity : BaseActivity() {
             preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         }
 
+        fun restartActivity() {
+            val intent = Intent(context, SettingsActivity::class.java)
+            intent.putExtra(THEME_CHANGED_EXTRA, true)
+            startActivity(intent)
+            activity.finish()
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            android.R.id.home -> finish()
+            android.R.id.home -> onBackPressed()
         }
 
         return true
+    }
+
+    override fun onBackPressed() {
+        if (intent.hasExtra(THEME_CHANGED_EXTRA)) {
+            setResult(THEME_CHANGED_RESULT)
+        }
+        finish()
     }
 }

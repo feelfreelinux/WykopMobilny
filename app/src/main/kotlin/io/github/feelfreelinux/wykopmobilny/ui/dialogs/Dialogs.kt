@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.utils.markdownLink
 import kotlinx.android.synthetic.main.dialog_edittext.view.*
+import kotlinx.android.synthetic.main.link_layout.view.*
 
 typealias formatDialogCallback = (String) -> Unit
 
@@ -71,8 +72,8 @@ fun MarkDownLinkDialog(context : Context, callback: formatDialogCallback): Alert
     val padding = context.resources.getDimension(R.dimen.dialog_edittext_padding).toInt()
     view.setPadding(padding, padding, padding, padding)
 
-    val descriptionEditText = view.findViewById<EditText>(R.id.description)
-    val linkEditText = view.findViewById<EditText>(R.id.title)
+    val descriptionEditText = view.description
+    val linkEditText = view.title
 
     alertBuilder.run {
         setTitle(R.string.insert_link)
