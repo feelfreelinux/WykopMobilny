@@ -52,6 +52,7 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         presenter.subscribe(this)
+        checkIsUserLoggedIn()
     }
 
     override fun showErrorDialog(e: Throwable) = context.showExceptionDialog(e)
