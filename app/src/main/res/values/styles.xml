@@ -2,6 +2,34 @@
 
     <!-- Base application theme. -->
 
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:windowBackground">@color/cardList</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:itemBackground">@color/cardList</item>
+        <item name="cardListColor">@color/cardList</item>
+        <item name="cardViewColor">@color/cardView</item>
+        <item name="spacerColor">@color/toolbarItemsColor</item>
+        <item name="drawablesColor">@color/drawablesColor.Dark</item>
+        <item name="cardViewSelected">@color/cardViewSelected</item>
+        <item name="authorHeader_date_color">@color/authorHeader_date.Dark</item>
+        <item name="MirkoButtonStyle">@style/MikroButton</item>
+        <item name="colorControlNormal">@color/cardViewSelected.Dark</item>
+        <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
+
+        <item name="notificationDrawable">@drawable/ic_notification_light</item>
+        <item name="mailDrawable">@drawable/ic_mail_light</item>
+        <item name="commentDrawable">@drawable/ic_comment_light</item>
+        <item name="favoriteDrawable">@drawable/ic_favorite_selected_light</item>
+        <item name="favoriteOutlineDrawable">@drawable/ic_favorite_light</item>
+    </style>
+
     <style name="AppTheme.Dark" parent="Base.Theme.AppCompat">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:textColor">@android:color/white</item>
@@ -24,6 +52,12 @@
         <item name="colorControlNormal">@color/cardViewSelected.Dark</item>
         <item name="android:textColorHint">@color/hintColor.Dark</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
+
+        <item name="notificationDrawable">@drawable/ic_notification</item>
+        <item name="mailDrawable">@drawable/ic_mail</item>
+        <item name="commentDrawable">@drawable/ic_comment</item>
+        <item name="favoriteDrawable">@drawable/ic_favorite_selected</item>
+        <item name="favoriteOutlineDrawable">@drawable/ic_favorite</item>
     </style>
 
     <style name="AppTheme.Dark.NavigationView">

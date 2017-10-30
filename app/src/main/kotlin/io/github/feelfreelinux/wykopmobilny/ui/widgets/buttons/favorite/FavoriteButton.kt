@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.widget.ImageView
@@ -19,10 +20,19 @@ abstract class FavoriteButton : ImageView, FavoriteButtonView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     @Inject lateinit var userManager : UserManagerApi
+    var favoriteDrawable : Drawable
+    var favoriteOutlineDrawable : Drawable
+
 
     init {
         WykopApp.uiInjector.inject(this)
         setBackgroundResource(R.drawable.button_background_state_list)
+        val typedArray = context.obtainStyledAttributes(arrayOf(
+                R.attr.favoriteDrawable, R.attr.favoriteOutlineDrawable).toIntArray())
+        favoriteDrawable = typedArray.getDrawable(0)
+        favoriteOutlineDrawable = typedArray.getDrawable(1)
+        typedArray.recycle()
+
         isVisible = userManager.isUserAuthorized()
     }
 
@@ -31,14 +41,10 @@ abstract class FavoriteButton : ImageView, FavoriteButtonView {
         set(value) {
             if (value) {
                 isSelected = true
-                setImageDrawable(
-                        ContextCompat.getDrawable(context, R.drawable.ic_favorite_selected)
-                )
+                setImageDrawable(favoriteDrawable)
             } else {
                 isSelected = false
-                setImageDrawable(
-                        ContextCompat.getDrawable(context, R.drawable.ic_favorite)
-                )
+                setImageDrawable(favoriteOutlineDrawable)
             }
         }
 

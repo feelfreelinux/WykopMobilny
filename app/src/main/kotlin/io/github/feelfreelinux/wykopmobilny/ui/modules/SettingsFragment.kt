@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.support.v7.preference.CheckBoxPreference
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.view.MenuItem
@@ -44,6 +45,12 @@ class SettingsActivity : BaseActivity() {
 
             if (pref is ListPreference) {
                 pref.setSummary(pref.entry)
+            } else if (pref is CheckBoxPreference) {
+                when (pref.key) {
+                    "useDarkTheme" -> {
+                        activity.finish()
+                    }
+                }
             }
         }
 

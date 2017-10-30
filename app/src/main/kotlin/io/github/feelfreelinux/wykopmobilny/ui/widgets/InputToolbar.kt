@@ -13,6 +13,12 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
 import javax.inject.Inject
+import android.R.attr.data
+import android.support.annotation.ColorInt
+import android.content.res.Resources.Theme
+import android.util.TypedValue
+
+
 
 interface InputToolbarListener {
     fun sendPhoto(photo : TypedInputStream, body : String)
@@ -52,7 +58,10 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
     init {
         WykopApp.uiInjector.inject(this)
-
+        val typedValue = TypedValue()
+        val theme = context.theme
+        theme.resolveAttribute(R.attr.cardViewColor, typedValue, true)
+        setBackgroundColor(typedValue.data)
         show()
 
         // Inflate view

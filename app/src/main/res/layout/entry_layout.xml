@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/button_margin"
             android:layout_marginTop="@dimen/button_margin"
-            android:drawableStart="@drawable/ic_comment"
+            android:drawableStart="?attr/commentDrawable"
             android:background="@drawable/button_vote_background_state_list"
             style="@style/MikroButton"
             app:layout_constraintEnd_toEndOf="parent"

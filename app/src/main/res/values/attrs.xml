@@ -9,4 +9,14 @@
     <attr name="authorHeader_date_color" format="color" />
     <attr name="textColor" format="color"/>
     <attr name="MirkoButtonStyle" format="reference"/>
+
+    <!-- DRAWABLES -->
+    <attr name="commentDrawable" format="reference"/>
+    <attr name="notificationDrawable" format="reference"/>
+    <attr name="mailDrawable" format="reference"/>
+    <attr name="favoriteDrawable" format="reference"/>
+    <attr name="favoriteOutlineDrawable" format="reference"/>
+    <attr name="voteButtonStatelist" format="reference"/>
+    <attr name="cardviewStatelist" format="reference"/>
+
 </resources>

@@ -4,7 +4,7 @@
     <android.support.v7.preference.PreferenceCategory
         android:title="@string/pref_appearance">
         <android.support.v7.preference.CheckBoxPreference
-            android:key="style_nocny"
+            android:key="useDarkTheme"
             android:title="@string/pref_dark_style"
             android:defaultValue="false"/>
 

@@ -15,11 +15,13 @@ import javax.inject.Inject
 
 
 const val CONNECT_URL : String = "https://a.wykop.pl/user/connect/appkey/$APP_KEY"
-const val USER_LOGGED_IN = 21
 
 @Suppress("DEPRECATION")
 class LoginScreenActivity : BaseActivity(), LoginScreenView {
     @Inject lateinit var presenter : LoginScreenPresenter
+    companion object {
+        val USER_LOGGED_IN = 21
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
