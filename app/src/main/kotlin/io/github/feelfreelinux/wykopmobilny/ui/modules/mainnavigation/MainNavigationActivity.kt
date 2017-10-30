@@ -142,10 +142,12 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             checkIsUserLoggedIn()
             nav_notifications_tag.setOnClickListener {
                 openFragment(HashTagsNotificationsListFragment.newInstance())
+                deselectItems()
             }
 
             nav_notifications.setOnClickListener {
                 openFragment(NotificationsListFragment.newInstance())
+                deselectItems()
             }
         }
     }
@@ -168,6 +170,13 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
 
     override fun closeDrawer() =
             drawer_layout.closeDrawers()
+
+    fun deselectItems() {
+        val menu = navigationView.menu
+        for (i in 0 until menu.size()) {
+            menu.getItem(i).isChecked = false
+        }
+    }
 
 
     override fun onBackPressed() {

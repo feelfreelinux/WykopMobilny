@@ -11,7 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.editEntry
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.openEntryActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.getEntryActivityIntent
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
@@ -65,7 +65,7 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
             text = entry.commentsCount.toString()
 
             setOnClickListener {
-                context.openEntryActivity(entry.id)
+                context.startActivity(context.getEntryActivityIntent(entry.id))
             }
         }
 

@@ -24,10 +24,10 @@ import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-fun Context.launchTagActivity(tag : String) {
+fun Context.getTagActivityIntent(tag : String) : Intent {
     val intent = Intent(this, TagActivity::class.java)
     intent.putExtra(TagActivity.EXTRA_TAG, tag)
-    startActivity(intent)
+    return intent
 }
 
 class TagActivity : BaseActivity(), TagView {

@@ -13,13 +13,15 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.createNewEntry
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedList
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import kotlinx.android.synthetic.main.fragment_feed.view.*
 import javax.inject.Inject
 
 class HotFragment : BaseNavigationFragment(), HotView {
     @Inject lateinit var presenter : HotPresenter
+    @Inject lateinit var settingsPreferences : SettingsPreferencesApi
     lateinit var feedRecyclerView : BaseFeedList
-    lateinit var entriesDataFragment : DataFragment<PagedDataModel<List<Entry>>>
+    lateinit var entriesDataFragment : DataFragment<Pair<PagedDataModel<List<Entry>>, String>>
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -33,7 +35,11 @@ class HotFragment : BaseNavigationFragment(), HotView {
         WykopApp.uiInjector.inject(this)
         entriesDataFragment = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         presenter.subscribe(this)
-        entriesDataFragment.data?.apply { presenter.page = page }
+        presenter.period = settingsPreferences.hotEntriesScreen ?: "newest"
+        entriesDataFragment.data?.apply {
+            presenter.page = first.page
+            presenter.period = second
+        }
 
         view?.feedRecyclerView.apply {
             feedRecyclerView = this@apply!!
@@ -42,7 +48,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
             onFabClickedListener = {
                 this@HotFragment.context.createNewEntry(null)
             }
-            initAdapter(entriesDataFragment.data?.model)
+            initAdapter(entriesDataFragment.data?.first?.model)
         }
     }
 
@@ -55,7 +61,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        entriesDataFragment.data = PagedDataModel(presenter.page , feedRecyclerView.entries)
+        entriesDataFragment.data = Pair(PagedDataModel(presenter.page , feedRecyclerView.entries), presenter.period)
     }
 
     override fun onPause() {
@@ -70,7 +76,14 @@ class HotFragment : BaseNavigationFragment(), HotView {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.hot_period, menu)
-        navigation.activityToolbar.setTitle(R.string.period24)
+        navigation.activityToolbar.setTitle(
+                when (presenter.period) {
+                    "24" -> R.string.period24
+                    "12" -> R.string.period12
+                    "6" -> R.string.period6
+                    else -> R.string.newest_entries
+                }
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

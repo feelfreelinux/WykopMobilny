@@ -31,6 +31,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notific
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderWidget
 import javax.inject.Singleton
 
@@ -67,4 +68,5 @@ interface Injector {
     fun inject(notificationViewHolder: NotificationViewHolder)
     fun inject(notificationsListFragment: NotificationsListFragment)
     fun inject(hashTagsNotificationsListFragment: HashTagsNotificationsListFragment)
+    fun inject(wykopImageView: WykopImageView)
 }

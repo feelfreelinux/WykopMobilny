@@ -7,6 +7,13 @@
             android:key="style_nocny"
             android:title="@string/pref_dark_style"
             android:defaultValue="false"/>
+
+        <android.support.v7.preference.ListPreference
+            android:key="hotEntriesScreen"
+            android:title="Domyślny ekran w gorących wpisach"
+            android:entries="@array/preferences_hot_screen"
+            android:entryValues="@array/preferences_hot_screen_values"
+            android:defaultValue="newest"/>
     </android.support.v7.preference.PreferenceCategory>
 
     <android.support.v7.preference.PreferenceCategory
@@ -27,7 +34,7 @@
     <android.support.v7.preference.PreferenceCategory
         android:title="@string/pref_content_filter">
         <android.support.v7.preference.CheckBoxPreference
-            android:key="showplus18"
+            android:key="showAdultContent"
             android:title="@string/pref_content_plus18"
             android:defaultValue="false"/>
         <android.support.v7.preference.CheckBoxPreference

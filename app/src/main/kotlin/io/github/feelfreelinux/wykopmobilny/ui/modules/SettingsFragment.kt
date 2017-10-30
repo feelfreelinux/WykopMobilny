@@ -29,7 +29,14 @@ class SettingsActivity : BaseActivity() {
 
     class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            addPreferencesFromResource(R.xml.app_preferences);
+            addPreferencesFromResource(R.xml.app_preferences)
+            (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
+                summary = entry
+            }
+
+            (findPreference("hotEntriesScreen") as ListPreference).apply {
+                summary = entry
+            }
         }
 
         override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {

@@ -19,6 +19,20 @@
         <item>8 godzin</item>
     </string-array>
 
+    <string-array name="preferences_hot_screen">
+        <item>@string/period24</item>
+        <item>@string/period12</item>
+        <item>@string/period6</item>
+        <item>@string/newest_entries</item>
+    </string-array>
+
+    <string-array name="preferences_hot_screen_values">
+        <item>24</item>
+        <item>12</item>
+        <item>6</item>
+        <item>newest</item>
+    </string-array>
+
     <string-array name="preferences_notifications_frequency_values">
         <item>15</item>
         <item>30</item>

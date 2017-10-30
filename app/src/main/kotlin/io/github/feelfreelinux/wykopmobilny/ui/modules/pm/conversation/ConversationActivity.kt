@@ -25,15 +25,10 @@ import kotlinx.android.synthetic.main.activity_conversation.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-fun Context.openConversationActivity(user : String) {
+fun Context.getConversationIntent(user : String) : Intent {
     val intent = Intent(this, ConversationActivity::class.java)
     intent.putExtra(ConversationActivity.EXTRA_USER, user)
-    startActivity(intent)
-}
-
-fun String.getConversationUserFromUrl(): String {
-    val part = substringAfter("wiadomosc-prywatna/konwersacja/")
-    return part.substringBefore("/")
+    return intent
 }
 
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {

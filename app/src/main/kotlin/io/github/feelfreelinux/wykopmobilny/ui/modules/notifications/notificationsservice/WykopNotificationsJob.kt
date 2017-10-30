@@ -13,12 +13,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.Navigation
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
 class WykopNotificationsJob : Job(), WykopNotificationsJobView {
     @Inject lateinit var presenter : WykopNotificationsJobPresenter
+    @Inject lateinit var wykopLinkHandler : WykopLinkHandlerApi
     @Inject lateinit var notificationManager : WykopNotificationManagerApi
 
     private fun buildNotification(body : String, intent : PendingIntent): Notification {
@@ -58,8 +60,8 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
 
     override fun showNotification(notification: io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification) {
         // Create intent
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(notification.url))
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        val intent = wykopLinkHandler.getLinkIntent(notification.url)
+        intent?.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         // Show Notification
