@@ -5,11 +5,11 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), BaseInputView, MarkdownToolbarListener {
+abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
     @Inject lateinit var notificationManager : WykopNotificationManagerApi
     private val notificationId by lazy { notificationManager.getNewId() }
 
@@ -119,7 +119,4 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : AppCompatActivity(), 
         startActivityForResult(Intent.createChooser(intent,
                 getString(R.string.insert_photo_galery)), USER_ACTION_INSERT_PHOTO)
     }
-
-    override fun showErrorDialog(e: Throwable) =
-        showExceptionDialog(e)
 }
