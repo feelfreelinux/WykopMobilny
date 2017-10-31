@@ -17,6 +17,14 @@ fun Context.createNewEntry(receiver: String?) {
 class AddEntryActivity : BaseInputActivity<AddEntryPresenter>() {
     @Inject override lateinit var presenter: AddEntryPresenter
 
+    companion object {
+        fun createIntent(context : Context, receiver: String?) : Intent {
+            val intent = Intent(context, AddEntryActivity::class.java)
+            intent.putExtra(BaseInputActivity.EXTRA_RECEIVER, receiver)
+            return intent
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WykopApp.uiInjector.inject(this)

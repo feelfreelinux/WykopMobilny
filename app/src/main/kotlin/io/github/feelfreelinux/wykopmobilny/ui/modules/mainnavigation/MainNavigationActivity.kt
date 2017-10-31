@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -17,14 +16,14 @@ import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.SettingsActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.startSettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.activity_navigation.*
@@ -55,14 +54,22 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         val LOGIN_REQUEST_CODE = 142
         val TARGET_FRAGMENT_KEY = "TARGET_FRAGMENT"
         val TARGET_NOTIFICATIONS = "TARGET_NOTIFICATIONS"
+
+        fun getIntent(context: Context, targetFragment: String? = null): Intent {
+            val intent = Intent(context, NavigationActivity::class.java)
+            targetFragment?.let {
+                intent.putExtra(NavigationActivity.TARGET_FRAGMENT_KEY, targetFragment)
+            }
+            return intent
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
-            R.id.login -> { openLoginActivity() }
+            R.id.login -> { navigator.openLoginScreen(this, LOGIN_REQUEST_CODE) }
             R.id.messages -> { openFragment(ConversationsListFragment.newInstance()) }
-            R.id.nav_settings -> { openSettingsActivity() }
+            R.id.nav_settings -> { navigator.openSettingsActivity(this) }
             else -> presenter.navigationItemClicked(item.itemId)
         }
 
@@ -73,6 +80,8 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
 
     @Inject lateinit var presenter : MainNavigationPresenter
     @Inject lateinit var settingsApi : SettingsPreferencesApi
+    @Inject lateinit var navigator : NavigatorApi
+
 
     private val navHeader by lazy { navigationView.getHeaderView(0) }
     private val actionBarToggle by lazy {
@@ -169,7 +178,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         closeDrawer()
     }
 
-    override fun closeDrawer() =
+    fun closeDrawer() =
             drawer_layout.closeDrawers()
 
     fun deselectItems() {
@@ -185,16 +194,8 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         else AppExitConfirmationDialog(this, { finish() }).show()
     }
 
-    override fun openLoginActivity() {
-        startActivityForResult(Intent(this, LoginScreenActivity::class.java), LOGIN_REQUEST_CODE)
-    }
-
-    fun openSettingsActivity() {
-        startActivityForResult(Intent(this, SettingsActivity::class.java), LOGIN_REQUEST_CODE)
-    }
-
     override fun restartActivity() {
-        launchNavigationActivity()
+        navigator.openMainActivity(this)
         finish()
     }
 

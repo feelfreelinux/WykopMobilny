@@ -17,13 +17,13 @@ fun String.toSpannable(): Spannable {
     )
 }
 
-fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, handler : WykopLinkHandlerApi) {
+fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, callback : (String) -> Unit) {
     val start = getSpanStart(span)
     val end = getSpanEnd(span)
     val flags = getSpanFlags(span)
     val clickable = object : LinkSpan() {
         override fun onClick(tv: View) {
-            handler.handleUrl(span.url)
+            callback(span.url)
         }
     }
     setSpan(clickable, start, end, flags)

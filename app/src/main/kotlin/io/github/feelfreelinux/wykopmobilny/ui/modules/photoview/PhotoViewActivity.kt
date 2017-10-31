@@ -29,11 +29,16 @@ fun Context.launchPhotoView(imageUrl: String) {
 class PhotoViewActivity : BaseActivity() {
     companion object {
         val URL_EXTRA = "URL"
+
+        fun createIntent(context : Context, imageUrl: String): Intent {
+            val intent = Intent(context, PhotoViewActivity::class.java)
+            intent.putExtra(PhotoViewActivity.URL_EXTRA, imageUrl)
+            return intent
+        }
     }
     val url: String by lazy { intent.getStringExtra(URL_EXTRA) }
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     private val photoViewActions by lazy { PhotoViewActions(this, clipboardHelper) as PhotoViewCallbacks }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photoview)

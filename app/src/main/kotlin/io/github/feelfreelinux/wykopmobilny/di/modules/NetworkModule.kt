@@ -15,6 +15,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
+import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelper
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
@@ -66,7 +68,7 @@ class NetworkModule(private val baseUrl : String) {
     fun provideWykopNotificationManager(mgr: NotificationManager) : WykopNotificationManagerApi = WykopNotificationManager(mgr)
 
     @Provides
-    fun provideWykopLinkHandlerApi(context : Context) : WykopLinkHandlerApi = WykopLinkHandler(context)
+    fun provideWykopLinkHandlerApi(context : Context) : WykopLinkHandlerApi = WykopLinkHandler()
 
     @Provides
     @Singleton
@@ -84,6 +86,9 @@ class NetworkModule(private val baseUrl : String) {
 
     @Provides
     fun provideSubscriptionHandler(userTokenRefresher: UserTokenRefresher) : SubscriptionHelperApi = SubscriptionHelper(AndroidSchedulers.mainThread(), Schedulers.io(), userTokenRefresher)
+
+    @Provides
+    fun provideNavigatorApi() : NavigatorApi = Navigator()
 
     @Provides
     fun provideClipboardHelper(context: Context) : ClipboardHelperApi = ClipboardHelper(context)

@@ -39,6 +39,12 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
         val EXTRA_FRAGMENT_KEY = "ENTRY_ACTIVITY_#"
+
+        fun createIntent(context : Context, entryId: Int, commentId: Int?): Intent {
+            val intent = Intent(context, EntryActivity::class.java)
+            intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
+            return intent
+        }
     }
 
     @Inject lateinit var presenter : EntryDetailPresenter

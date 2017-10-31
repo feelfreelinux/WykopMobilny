@@ -60,7 +60,7 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
 
     override fun showNotification(notification: io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification) {
         // Create intent
-        val intent = wykopLinkHandler.getLinkIntent(notification.url)
+        val intent = wykopLinkHandler.getLinkIntent(context, notification.url)
         intent?.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
@@ -70,8 +70,7 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
 
     override fun showNotificationsCount(count: Int) {
         // Create intent
-        val intent = Intent(context, NavigationActivity::class.java)
-        intent.putExtra(NavigationActivity.TARGET_FRAGMENT_KEY, NavigationActivity.TARGET_NOTIFICATIONS)
+        val intent = NavigationActivity.getIntent(context, NavigationActivity.TARGET_NOTIFICATIONS)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 

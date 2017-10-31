@@ -40,6 +40,12 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
     companion object {
         val EXTRA_USER = "USER"
         val DATA_FRAGMENT_TAG = "CONVERSATION_TAG"
+
+        fun createIntent(context: Context, user : String) : Intent {
+            val intent = Intent(context, ConversationActivity::class.java)
+            intent.putExtra(ConversationActivity.EXTRA_USER, user)
+            return intent
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

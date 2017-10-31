@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
@@ -10,6 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.editEntry
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.getEntryActivityIntent
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
@@ -33,6 +35,7 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
     @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     @Inject lateinit var presenter : EntryPresenter
+    @Inject lateinit var navigator : NavigatorApi
     private lateinit var entry : Entry
 
     init {
@@ -65,7 +68,7 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
             text = entry.commentsCount.toString()
 
             setOnClickListener {
-                context.startActivity(context.getEntryActivityIntent(entry.id))
+                navigator.openEntryDetailsActivity(context as Activity, entry.id)
             }
         }
 
@@ -79,7 +82,7 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
     }
 
     private fun setupBody() {
-        entryContentTextView.prepareBody(entry.body, linkHandler)
+        entryContentTextView.prepareBody(entry.body, { linkHandler.handleUrl(context as Activity, it) })
         entryImageView.setEmbed(entry.embed)
     }
 

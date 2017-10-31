@@ -40,6 +40,12 @@ class TagActivity : BaseActivity(), TagView {
     companion object {
         val EXTRA_TAG = "EXTRA_TAG"
         val EXTRA_TAG_DATA_FRAGMENT = "DATA_FRAGMENT_#"
+
+        fun createIntent(context : Context, tag : String): Intent {
+            val intent = Intent(context, TagActivity::class.java)
+            intent.putExtra(TagActivity.EXTRA_TAG, tag)
+            return intent
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -21,6 +21,7 @@
         <android.support.v7.preference.CheckBoxPreference
             android:key="show_notifications"
             android:title="@string/pref_notifications_enable"
+            android:summary="@string/not_implemented"
             android:defaultValue="true"/>
 
         <android.support.v7.preference.ListPreference
@@ -39,6 +40,7 @@
             android:defaultValue="false"/>
         <android.support.v7.preference.CheckBoxPreference
             android:key="shownsfw"
+            android:summary="@string/not_implemented"
             android:title="@string/pref_content_filternsfw"
             android:defaultValue="true"/>
     </android.support.v7.preference.PreferenceCategory>

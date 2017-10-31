@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
@@ -11,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Comment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialogInterface
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.editEntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
@@ -38,6 +40,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     @Inject lateinit var userManagerApi : UserManagerApi
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     @Inject lateinit var presenter : CommentPresenter
+    @Inject lateinit var navigator : NavigatorApi
 
     init {
         WykopApp.uiInjector.inject(this)
@@ -73,7 +76,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     }
 
     private fun setupBody() {
-        entryContentTextView.prepareBody(comment.body, linkHandler)
+        entryContentTextView.prepareBody(comment.body, { linkHandler.handleUrl(context as Activity, it) })
         entryImageView.setEmbed(comment.embed)
     }
 
@@ -86,7 +89,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     }
 
     override fun editComment() {
-        context.editEntryComment(comment.body.removeHtml(), comment.entryId, comment.id)
+        navigator.openEditEntryCommentActivity(context as Activity, comment.body.removeHtml(), comment.entryId, comment.id)
     }
 
     override fun removeComment() {

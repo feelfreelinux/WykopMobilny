@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.di.modules.PresentersModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.RepositoryModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.ViewPresentersModule
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.NotificationViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.PMMessageViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.FavoriteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVoteButton
@@ -69,4 +70,5 @@ interface Injector {
     fun inject(notificationsListFragment: NotificationsListFragment)
     fun inject(hashTagsNotificationsListFragment: HashTagsNotificationsListFragment)
     fun inject(wykopImageView: WykopImageView)
+    fun inject(pmMessageViewHolder: PMMessageViewHolder)
 }

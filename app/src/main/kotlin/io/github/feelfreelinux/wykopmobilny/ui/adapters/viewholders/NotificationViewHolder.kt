@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
+import android.app.Activity
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
@@ -38,7 +39,7 @@ class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             }
 
             cardView.setOnClickListener {
-                notificationLinkHandler.handleUrl(notification.url)
+                notificationLinkHandler.handleUrl(context as Activity, notification.url)
             }
         }
 

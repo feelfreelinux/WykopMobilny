@@ -62,9 +62,8 @@
         <activity android:name=".ui.modules.notificationslist.hashtags.HashTagsNotificationsListActivity" />
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity" />
         <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
-        <activity android:name=".ui.modules.pm.conversationslist.ConversationsListActivity" />
         <activity android:name=".ui.modules.pm.conversation.ConversationActivity" />
-        <activity android:name=".ui.modules.SettingsActivity" />
+        <activity android:name=".ui.modules.settings.SettingsActivity" />
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>

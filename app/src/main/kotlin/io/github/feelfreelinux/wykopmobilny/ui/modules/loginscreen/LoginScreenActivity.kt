@@ -1,5 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.webkit.CookieManager
@@ -21,6 +23,10 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     @Inject lateinit var presenter : LoginScreenPresenter
     companion object {
         val USER_LOGGED_IN = 21
+
+        fun createIntent(context: Context): Intent {
+            return Intent(context, LoginScreenActivity::class.java)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

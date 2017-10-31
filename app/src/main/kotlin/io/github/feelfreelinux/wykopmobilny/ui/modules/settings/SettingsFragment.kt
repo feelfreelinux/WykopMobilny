@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.ui.modules
+package io.github.feelfreelinux.wykopmobilny.ui.modules.settings
 
 import android.content.Context
 import android.content.Intent
@@ -8,6 +8,7 @@ import android.support.v7.preference.CheckBoxPreference
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.view.MenuItem
+import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import kotlinx.android.synthetic.main.toolbar.*
@@ -20,6 +21,10 @@ class SettingsActivity : BaseActivity() {
     companion object {
         val THEME_CHANGED_EXTRA = "THEME_CHANGED"
         val THEME_CHANGED_RESULT = 154
+
+        fun createIntent(context: Context): Intent {
+            return Intent(context, SettingsActivity::class.java)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +58,7 @@ class SettingsActivity : BaseActivity() {
             } else if (pref is CheckBoxPreference) {
                 when (pref.key) {
                     "useDarkTheme" -> {
+                        Toast.makeText(context, "Zrestartuj aplikacje aby zastosować styl", Toast.LENGTH_SHORT).show()
                         restartActivity()
                     }
                 }

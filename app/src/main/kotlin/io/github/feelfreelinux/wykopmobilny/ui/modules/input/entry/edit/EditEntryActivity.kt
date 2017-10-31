@@ -21,6 +21,13 @@ class EditEntryActivity : BaseInputActivity<EditEntryPresenter>(), EditEntryView
 
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
+
+        fun createIntent(context: Context, body : String, entryId: Int): Intent {
+            val intent = Intent(context, EditEntryActivity::class.java)
+            intent.putExtra(BaseInputActivity.EXTRA_BODY, body)
+            intent.putExtra(EditEntryActivity.EXTRA_ENTRY_ID, entryId)
+            return intent
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

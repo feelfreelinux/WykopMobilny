@@ -26,6 +26,16 @@ class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(),
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
         val EXTRA_COMMENT_ID = "COMMENT_ID"
+
+        fun createIntent(context : Context, body : String, entryId : Int, commentId : Int): Intent {
+            val intent = Intent(context, EditEntryCommentActivity::class.java)
+            intent.apply {
+                putExtra(EditEntryCommentActivity.EXTRA_ENTRY_ID, entryId)
+                putExtra(EditEntryCommentActivity.EXTRA_COMMENT_ID, commentId)
+                putExtra(BaseInputActivity.EXTRA_BODY, body)
+            }
+            return intent
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
