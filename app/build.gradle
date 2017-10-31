@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.fabric'
 
 kapt {
     generateStubs = true
@@ -42,6 +43,11 @@ android {
     buildToolsVersion '26.0.2'
 }
 
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
@@ -61,7 +67,9 @@ dependencies {
     // Utils
     implementation "org.ocpsoft.prettytime:prettytime:$versions.prettytime"
     implementation "com.github.chrisbanes:PhotoView:$versions.photoview"
-
+    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true;
+    }
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
