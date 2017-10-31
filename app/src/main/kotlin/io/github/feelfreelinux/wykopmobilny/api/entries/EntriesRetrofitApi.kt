@@ -52,7 +52,7 @@ interface EntriesRetrofitApi {
                         @Path("entryId") entryId : Int) : Single<AddResponse>
 
     @FormUrlEncoded
-    @POST("/entries/editEntry/{entryId}/appkey/$APP_KEY")
+    @POST("/entries/edit/{entryId}/appkey/$APP_KEY")
     fun editEntry(@Field("body") body: String,
                         @Path("entryId") entryId : Int) : Single<AddResponse>
 
