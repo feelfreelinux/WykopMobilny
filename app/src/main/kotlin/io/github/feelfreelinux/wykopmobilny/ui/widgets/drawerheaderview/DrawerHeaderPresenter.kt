@@ -6,41 +6,46 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.NotificationCountRespons
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.functions.BiFunction
+import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
 class DrawerHeaderPresenter(val subscriptionHelper: SubscriptionHelperApi, val myWykopApi: MyWykopApi) : BasePresenter<DrawerHeaderView>() {
+    private val intervalDisposable = CompositeDisposable()
+
     fun fetchNotifications() {
-        subscriptionHelper.dispose(this)
-        val disposable = subscriptionHelper.getSubscriberCompositeDisposable(this)
-        disposable.add(
-                        Observable.interval(0, 5, TimeUnit.MINUTES)
-                                .map { zipNotificationSingle() }
-                                .subscribe { getNotificationsCount(it) }
-                )
+        intervalDisposable.dispose()
+        intervalDisposable.clear()
+        intervalDisposable.add(
+                Observable.interval(0, 5, TimeUnit.MINUTES)
+                        .map { myWykopApi.getHashTagNotificationCount() }
+                        .subscribe { getHashTagNotificationsCount(it) }
+        )
+
+        intervalDisposable.add(
+                Observable.interval(0, 5, TimeUnit.MINUTES)
+                        .map { myWykopApi.getNotificationCount() }
+                        .subscribe { getNotificationsCount(it) }
+        )
     }
 
-    fun zipNotificationSingle() : Single<Pair<NotificationCountResponse, NotificationCountResponse>> {
-        return Single.zip(
-                myWykopApi.getNotificationCount(),
-                myWykopApi.getHashTagNotificationCount(),
-                BiFunction { t1, t2 -> Pair(t1, t2) })
-
-    }
-
-    fun getNotificationsCount(single: Single<Pair<NotificationCountResponse, NotificationCountResponse>>) {
+    fun getNotificationsCount(single: Single<NotificationCountResponse>) {
         subscriptionHelper.subscribe(single,
-                {
-                    view?.notificationCount = it.first.count
-                    view?.hashTagsNotificationsCount = it.second.count
-                },
+                { view?.notificationCount = it.count },
                 { view?.showErrorDialog(it) },
                 this@DrawerHeaderPresenter)
     }
 
+    fun getHashTagNotificationsCount(single: Single<NotificationCountResponse>) {
+        subscriptionHelper.subscribe(single,
+                { view?.hashTagsNotificationsCount = it.count },
+                { view?.showErrorDialog(it) },
+                this@DrawerHeaderPresenter)
+    }
 
     override fun unsubscribe() {
         super.unsubscribe()
         subscriptionHelper.dispose(this)
+        intervalDisposable.dispose()
+        intervalDisposable.clear()
     }
 }

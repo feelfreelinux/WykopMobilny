@@ -86,6 +86,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
             messages.addAll(items.reversed())
             notifyDataSetChanged()
         }
+        recyclerView.invalidate()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -97,7 +98,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        conversationDataFragment.data = conversationAdapter.messages
+        conversationDataFragment.data = conversationAdapter.messages.reversed()
     }
 
     override fun openGalleryImageChooser() {

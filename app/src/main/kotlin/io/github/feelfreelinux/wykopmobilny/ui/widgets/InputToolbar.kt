@@ -119,7 +119,6 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
             photoUrl = null
         }
         closeMarkdownToolbar()
-        body.clearFocus()
     }
 
     fun setDefaultAddressant(user : String) {
