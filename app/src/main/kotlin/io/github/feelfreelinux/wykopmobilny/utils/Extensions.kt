@@ -16,11 +16,26 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
+import android.content.ContextWrapper
+import android.app.Activity
+
+
 
 
 var View.isVisible : Boolean
     get() = visibility == View.VISIBLE
     set(value) { visibility = if (value) View.VISIBLE else View.GONE }
+
+fun View.getActivityContext() : Activity? {
+    var context = context
+    while (context is ContextWrapper) {
+        if (context is Activity) {
+            return context
+        }
+        context = context.baseContext
+    }
+    return null
+}
 
 fun RecyclerView.prepare() {
     setHasFixedSize(true) // For better performance

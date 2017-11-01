@@ -3,9 +3,5 @@
     android:shape="rectangle">
 
     <corners android:radius="5dp"/>
-
-    <solid android:color="@color/plusPressedColor"/>
-    <stroke android:color="@color/toolbarItemsColor"
-        android:width="1dp"/>
-
+    <solid android:color="@color/cardViewSelected.Dark"/>
 </shape>

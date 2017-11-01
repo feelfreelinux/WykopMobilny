@@ -1,9 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 
-import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
@@ -16,6 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.editEntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
@@ -48,7 +49,9 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
         View.inflate(context, R.layout.comment_layout, this)
         isClickable = true
         isFocusable = true
-        setBackgroundResource(R.drawable.cardview_background_statelist)
+        val typedValue = TypedValue()
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
+        setBackgroundResource(typedValue.resourceId)
     }
 
     fun setCommentData(comment: Comment) {
@@ -76,7 +79,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     }
 
     private fun setupBody() {
-        entryContentTextView.prepareBody(comment.body, { linkHandler.handleUrl(context as Activity, it) })
+        entryContentTextView.prepareBody(comment.body, { linkHandler.handleUrl(getActivityContext()!!, it) })
         entryImageView.setEmbed(comment.embed)
     }
 
@@ -89,7 +92,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     }
 
     override fun editComment() {
-        navigator.openEditEntryCommentActivity(context as Activity, comment.body.removeHtml(), comment.entryId, comment.id)
+        navigator.openEditEntryCommentActivity(getActivityContext()!!, comment.body.removeHtml(), comment.entryId, comment.id)
     }
 
     override fun removeComment() {

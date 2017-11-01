@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
@@ -15,6 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.editEntry
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.getEntryActivityIntent
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
@@ -44,7 +46,9 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
         presenter.subscribe(this)
         isClickable = true
         isFocusable = true
-        setBackgroundResource(R.drawable.cardview_background_statelist)
+        val typedValue = TypedValue()
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
+        setBackgroundResource(typedValue.resourceId)
     }
 
     fun setEntryData(entry : Entry) {
@@ -68,7 +72,7 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
             text = entry.commentsCount.toString()
 
             setOnClickListener {
-                navigator.openEntryDetailsActivity(context as Activity, entry.id)
+                navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
             }
         }
 
@@ -82,7 +86,7 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
     }
 
     private fun setupBody() {
-        entryContentTextView.prepareBody(entry.body, { linkHandler.handleUrl(context as Activity, it) })
+        entryContentTextView.prepareBody(entry.body, { linkHandler.handleUrl(getActivityContext()!!, it) })
         entryImageView.setEmbed(entry.embed)
     }
 

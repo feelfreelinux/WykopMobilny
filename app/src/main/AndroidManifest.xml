@@ -58,8 +58,6 @@
             </intent-filter>
         </activity>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity" />
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListActivity" />
-        <activity android:name=".ui.modules.notificationslist.hashtags.HashTagsNotificationsListActivity" />
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity" />
         <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
         <activity android:name=".ui.modules.pm.conversation.ConversationActivity" />

@@ -2,10 +2,12 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
@@ -24,8 +26,9 @@ abstract class BaseVoteButton : TextView {
 
     init {
         WykopApp.uiInjector.inject(this)
-
-        setBackgroundResource(R.drawable.button_vote_background_state_list)
+        val typedValue = TypedValue()
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.voteButtonStatelist, typedValue, true)
+        setBackgroundResource(typedValue.resourceId)
         setOnClickListener {
             userManager.runIfLoggedIn(context) {
                 if (isSelected) unvote()

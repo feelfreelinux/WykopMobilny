@@ -23,6 +23,9 @@
         <item name="colorControlNormal">@color/cardViewSelected.Dark</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
 
+        <item name="voteButtonStatelist">@drawable/button_vote_background_state_list</item>
+        <item name="buttonStatelist">@drawable/button_background_state_list</item>
+        <item name="cardviewStatelist">@drawable/cardview_background_statelist</item>
         <item name="notificationDrawable">@drawable/ic_notification_light</item>
         <item name="mailDrawable">@drawable/ic_mail_light</item>
         <item name="commentDrawable">@drawable/ic_comment_light</item>
@@ -53,6 +56,9 @@
         <item name="android:textColorHint">@color/hintColor.Dark</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
 
+        <item name="voteButtonStatelist">@drawable/button_vote_background_state_list_dark</item>
+        <item name="buttonStatelist">@drawable/button_background_state_list_dark</item>
+        <item name="cardviewStatelist">@drawable/cardview_background_statelist_dark</item>
         <item name="notificationDrawable">@drawable/ic_notification</item>
         <item name="mailDrawable">@drawable/ic_mail</item>
         <item name="commentDrawable">@drawable/ic_comment</item>

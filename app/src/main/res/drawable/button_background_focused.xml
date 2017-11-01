@@ -4,8 +4,8 @@
 
     <corners android:radius="5dp"/>
 
-    <solid android:color="?attr/cardViewSelected"/>
-    <stroke android:color="?attr/spacerColor"
+    <solid android:color="@color/cardViewSelected"/>
+    <stroke android:color="@color/toolbarItemsColor"
         android:width="1dp"/>
 
 </shape>
