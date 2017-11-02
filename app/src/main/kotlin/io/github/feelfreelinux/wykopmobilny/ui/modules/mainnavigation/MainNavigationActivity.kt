@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.widget.Toast
 import com.evernote.android.job.util.JobUtil
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
@@ -197,6 +198,11 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     override fun restartActivity() {
         navigator.openMainActivity(this)
         finish()
+    }
+
+    override fun showNotImplementedToast() {
+        Toast.makeText(this, "Nie zaimplementowano", Toast.LENGTH_SHORT).show()
+        deselectItems()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

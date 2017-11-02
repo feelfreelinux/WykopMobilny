@@ -76,6 +76,10 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
             }
         }
 
+        setOnClickListener {
+            navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
+        }
+
         voteButton.apply {
             setEntryData(entry)
             isButtonSelected = entry.isVoted

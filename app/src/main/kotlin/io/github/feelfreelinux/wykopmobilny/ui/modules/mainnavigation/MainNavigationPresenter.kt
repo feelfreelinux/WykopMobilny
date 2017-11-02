@@ -20,6 +20,7 @@ class MainNavigationPresenter(private val subscriptionHelper: SubscriptionHelper
                 userManager.logoutUser()
                 view?.restartActivity()
             }
+            else -> view?.showNotImplementedToast()
         }
     }
 

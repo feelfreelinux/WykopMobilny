@@ -6,4 +6,5 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 interface MainNavigationView : BaseView {
     fun showUsersMenu(value : Boolean)
     fun restartActivity()
+    fun showNotImplementedToast()
 }
