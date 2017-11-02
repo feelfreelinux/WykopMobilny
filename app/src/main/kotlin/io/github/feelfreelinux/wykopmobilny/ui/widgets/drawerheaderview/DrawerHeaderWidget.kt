@@ -53,7 +53,6 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
         super.onAttachedToWindow()
         presenter.subscribe(this)
         checkIsUserLoggedIn()
-        img_profile.loadImage(userManager.getUserCredentials()!!.avatarUrl)
     }
 
     override fun showErrorDialog(e: Throwable) = context.showExceptionDialog(e)
