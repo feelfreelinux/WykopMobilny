@@ -3,5 +3,5 @@
     android:shape="rectangle">
 
     <corners android:radius="5dp"/>
-    <solid android:color="@color/cardViewSelected"/>
+    <solid android:color="@color/cardView"/>
 </shape>

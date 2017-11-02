@@ -8,7 +8,9 @@ import android.widget.LinearLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.formatDialogCallback
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
 import io.github.feelfreelinux.wykopmobilny.utils.getMimeType
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.queryFileName
 import kotlinx.android.synthetic.main.markdown_toolbar.view.*
 
@@ -37,16 +39,17 @@ class MarkdownToolbar : LinearLayout {
         }
     }
 
-    var mPhoto : Uri? = null
+    var floatingImageView : FloatingImageView? = null
+
+    var photoUrl : String?
+        get() = floatingImageView?.photoUrl
+        set(value) { if(value != null) { floatingImageView?.loadPhotoUrl(value) } else floatingImageView?.removeImage() }
 
     var photo : Uri?
-        get() = mPhoto
+        get() = floatingImageView?.photo
         set(value) {
-            mPhoto = value
-            photoUrl = null
+            floatingImageView?.setImage(value)
         }
-
-    var photoUrl : String? = null
 
     init {
         View.inflate(context, R.layout.markdown_toolbar, this)
@@ -69,9 +72,7 @@ class MarkdownToolbar : LinearLayout {
     }
 
     fun insertImageFromUrl(url : String) {
-        photo = null
-        photoUrl = url
-        // @TODO add imagepreview in some type of cloud icon
+        floatingImageView?.loadPhotoUrl(url)
     }
 
     fun getPhotoTypedInputStream(): TypedInputStream? {
@@ -86,7 +87,7 @@ class MarkdownToolbar : LinearLayout {
 
     fun hasUserEditedContent() : Boolean {
         return (photo != null ||
-                !photoUrl.isNullOrEmpty() ||
+                !floatingImageView?.photoUrl.isNullOrEmpty() ||
                 (markdownListener != null && markdownListener?.textBody!!.isNotEmpty()))
     }
 

@@ -55,6 +55,10 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
     var inputToolbarListener : InputToolbarListener? = null
 
+    fun setFloatingImageView(floatingImageView: FloatingImageView) {
+        markdownToolbar.floatingImageView = floatingImageView
+    }
+
 
     init {
         WykopApp.uiInjector.inject(this)

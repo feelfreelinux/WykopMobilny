@@ -53,6 +53,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         }
 
         markupToolbar.markdownListener = this
+        markupToolbar.floatingImageView = floatingImageView
     }
 
 

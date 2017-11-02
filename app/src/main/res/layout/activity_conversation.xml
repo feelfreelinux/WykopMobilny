@@ -33,6 +33,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
+        android:id="@+id/floatingImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/inputToolbar"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
         android:id="@+id/inputToolbar"
         android:layout_width="match_parent"

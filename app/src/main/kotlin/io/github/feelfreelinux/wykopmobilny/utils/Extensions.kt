@@ -95,12 +95,12 @@ fun Uri.getMimeType(contentResolver: ContentResolver): String {
 class KotlinGlideRequestListener(val failedListener : (GlideException?) -> Unit, val successListener : () -> Unit) : RequestListener<Drawable> {
     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
         failedListener(e)
-        return true
+        return false
     }
 
     override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
         successListener()
-        return true
+        return false
     }
 
 }

@@ -80,6 +80,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
         // Prepare InputToolbar
         inputToolbar.inputToolbarListener = this
+        inputToolbar.setFloatingImageView(floatingImageView)
 
         swiperefresh.setOnRefreshListener(this)
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + entryId)
