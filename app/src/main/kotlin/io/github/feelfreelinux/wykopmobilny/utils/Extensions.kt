@@ -18,8 +18,11 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import android.content.ContextWrapper
 import android.app.Activity
-
-
+import android.graphics.drawable.Drawable
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 
 
 var View.isVisible : Boolean
@@ -87,4 +90,17 @@ fun Uri.getMimeType(contentResolver: ContentResolver): String {
         MimeTypeMap.getSingleton().getMimeTypeFromExtension(
                 fileExtension.toLowerCase())
     }
+}
+
+class KotlinGlideRequestListener(val failedListener : (GlideException?) -> Unit, val successListener : () -> Unit) : RequestListener<Drawable> {
+    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+        failedListener(e)
+        return true
+    }
+
+    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+        successListener()
+        return true
+    }
+
 }

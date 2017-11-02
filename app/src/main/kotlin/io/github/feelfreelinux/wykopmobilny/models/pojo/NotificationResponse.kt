@@ -7,19 +7,19 @@ data class NotificationResponse(
         val author : String?,
 
         @Json(name = "author_avatar")
-        val authorAvatar : String,
+        val authorAvatar : String?,
 
         @Json(name = "author_avatar_med")
-        val authorAvatarMed : String,
+        val authorAvatarMed : String?,
 
         @Json(name = "author_avatar_lo")
-        val authorAvatarLo : String,
+        val authorAvatarLo : String?,
 
         @Json(name = "author_group")
-        val authorGroup : Int,
+        val authorGroup : Int?,
 
         @Json(name = "author_sex")
-        val authorSex : String,
+        val authorSex : String?,
 
         @Json(name = "date")
         val date : String,

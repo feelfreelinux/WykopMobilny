@@ -31,6 +31,17 @@
         <item name="commentDrawable">@drawable/ic_comment_light</item>
         <item name="favoriteDrawable">@drawable/ic_favorite_selected_light</item>
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite_light</item>
+
+        <item name="markdownFormatQuote">@drawable/ic_format_quote</item>
+        <item name="markdownFormatBold">@drawable/ic_format_bold</item>
+        <item name="markdownFormatCode">@drawable/ic_format_code</item>
+        <item name="markdownFormatItalic">@drawable/ic_format_italic</item>
+        <item name="markdownInsertEmoticon">@drawable/ic_insert_emoticon</item>
+        <item name="markdownInsertLink">@drawable/ic_insert_link</item>
+        <item name="markdownInsertPhoto">@drawable/ic_insert_photo</item>
+        <item name="markdownInsertSpoiler">@drawable/ic_insert_spoiler</item>
+        <item name="markdownSend">@drawable/ic_send</item>
+
     </style>
 
     <style name="AppTheme.Dark" parent="Base.Theme.AppCompat">
@@ -64,6 +75,16 @@
         <item name="commentDrawable">@drawable/ic_comment</item>
         <item name="favoriteDrawable">@drawable/ic_favorite_selected</item>
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite</item>
+
+        <item name="markdownFormatQuote">@drawable/ic_format_quote_dark</item>
+        <item name="markdownFormatBold">@drawable/ic_format_bold_dark</item>
+        <item name="markdownFormatCode">@drawable/ic_format_code_dark</item>
+        <item name="markdownFormatItalic">@drawable/ic_format_italic_dark</item>
+        <item name="markdownInsertEmoticon">@drawable/ic_insert_emoticon_dark</item>
+        <item name="markdownInsertLink">@drawable/ic_insert_link_dark</item>
+        <item name="markdownInsertSpoiler">@drawable/ic_insert_spoiler_dark</item>
+        <item name="markdownInsertPhoto">@drawable/ic_insert_photo_dark</item>
+        <item name="markdownSend">@drawable/ic_send_dark</item>
     </style>
 
     <style name="AppTheme.Dark.NavigationView">

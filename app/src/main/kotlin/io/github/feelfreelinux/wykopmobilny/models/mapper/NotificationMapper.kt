@@ -8,8 +8,12 @@ class NotificationMapper {
     companion object : Mapper<NotificationResponse, Notification> {
         override fun map(value: NotificationResponse): Notification {
             value.run {
+                val author = if (author != null && authorAvatar != null && authorGroup != null && authorSex != null)
+                    Author(author, authorAvatar, authorGroup, authorSex, null)
+                else null
+
                 return Notification(
-                        Author(author ?: "", authorAvatar, authorGroup, authorSex, null),
+                        author,
                         body,
                         date,
                         type,

@@ -19,4 +19,15 @@
     <attr name="voteButtonStatelist" format="reference"/>
     <attr name="buttonStatelist" format="reference"/>
     <attr name="cardviewStatelist" format="reference"/>
+
+    <attr name="markdownFormatBold" format="reference"/>
+    <attr name="markdownFormatItalic" format="reference"/>
+    <attr name="markdownFormatQuote" format="reference"/>
+    <attr name="markdownFormatCode" format="reference"/>
+    <attr name="markdownInsertEmoticon" format="reference"/>
+    <attr name="markdownInsertPhoto" format="reference"/>
+    <attr name="markdownInsertLink" format="reference"/>
+    <attr name="markdownInsertSpoiler" format="reference"/>
+    <attr name="markdownSend" format="reference"/>
+
 </resources>

@@ -16,42 +16,42 @@
             <ImageView
                 android:id="@+id/format_bold"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_format_bold" />
+                android:src="?attr/markdownFormatBold" />
 
             <ImageView
                 android:id="@+id/format_quote"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_format_quote" />
+                android:src="?attr/markdownFormatQuote" />
 
             <ImageView
                 android:id="@+id/format_italic"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_format_italic" />
+                android:src="?attr/markdownFormatItalic" />
 
             <ImageView
                 android:id="@+id/insert_link"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_insert_link" />
+                android:src="?attr/markdownInsertLink" />
 
             <ImageView
                 android:id="@+id/insert_code"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_code" />
+                android:src="?attr/markdownFormatCode" />
 
             <ImageView
                 android:id="@+id/insert_spoiler"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_spoiler" />
+                android:src="?attr/markdownInsertSpoiler" />
 
             <ImageView
                 android:id="@+id/insert_emoticon"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_insert_emoticon" />
+                android:src="?attr/markdownInsertEmoticon" />
 
             <ImageView
                 android:id="@+id/insert_photo"
                 style="@style/MarkdownButton"
-                android:src="@drawable/ic_photo" />
+                android:src="?attr/markdownInsertPhoto" />
         </LinearLayout>
     </HorizontalScrollView>
 </LinearLayout>

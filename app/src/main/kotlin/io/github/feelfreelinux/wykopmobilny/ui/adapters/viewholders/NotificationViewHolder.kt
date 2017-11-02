@@ -9,6 +9,7 @@ import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
@@ -26,20 +27,26 @@ class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
     fun bindNotification(notification: Notification) {
         view.apply {
             // Setup widgets
-            avatarView.setAuthor(notification.author)
             body.setText(notification.body.removeHtml(), TextView.BufferType.SPANNABLE)
             date.text = notification.date.toPrettyDate()
             newNotificationMark.isVisible = notification.new
 
-            if (notification.author.nick.isNotEmpty()) {
-                // Color nickname
-                val nickName = notification.body.substringBefore(" ") // nick
-                val spannable = body.text as Spannable
-                spannable.setSpan(ForegroundColorSpan(getGroupColor(notification.author.group)), 0, nickName.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            if (notification.author != null) {
+                avatarView.isVisible = true
+                avatarView.setAuthor(notification.author)
+
+                if (notification.author.nick.isNotEmpty()) {
+                    // Color nickname
+                    val nickName = notification.body.substringBefore(" ") // nick
+                    val spannable = body.text as Spannable
+                    spannable.setSpan(ForegroundColorSpan(getGroupColor(notification.author.group)), 0, nickName.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+            } else {
+                avatarView.isVisible = false
             }
 
             cardView.setOnClickListener {
-                notificationLinkHandler.handleUrl(context as Activity, notification.url)
+                notificationLinkHandler.handleUrl(getActivityContext()!!, notification.url)
             }
         }
 
