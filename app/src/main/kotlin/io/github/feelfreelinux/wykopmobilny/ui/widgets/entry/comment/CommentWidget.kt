@@ -13,12 +13,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialogInterface
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.editEntryComment
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -33,15 +30,15 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    lateinit var comment : Comment
+    lateinit var comment: Comment
 
-    var addReceiverListener : ((Author) -> Unit)? = null
+    var addReceiverListener: ((Author) -> Unit)? = null
 
-    @Inject lateinit var linkHandler : WykopLinkHandlerApi
-    @Inject lateinit var userManagerApi : UserManagerApi
-    @Inject lateinit var clipboardHelper : ClipboardHelperApi
-    @Inject lateinit var presenter : CommentPresenter
-    @Inject lateinit var navigator : NavigatorApi
+    @Inject lateinit var linkHandler: WykopLinkHandlerApi
+    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject lateinit var clipboardHelper: ClipboardHelperApi
+    @Inject lateinit var presenter: CommentPresenter
+    @Inject lateinit var navigator: NavigatorApi
 
     init {
         WykopApp.uiInjector.inject(this)

@@ -8,16 +8,6 @@ import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import javax.inject.Inject
 
-fun Context.editEntryComment(body : String, entryId : Int, commentId : Int) {
-    val intent = Intent(this, EditEntryCommentActivity::class.java)
-    intent.apply {
-        putExtra(EditEntryCommentActivity.EXTRA_ENTRY_ID, entryId)
-        putExtra(EditEntryCommentActivity.EXTRA_COMMENT_ID, commentId)
-        putExtra(BaseInputActivity.EXTRA_BODY, body)
-    }
-    startActivity(intent)
-}
-
 class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(), EditEntryCommentView {
     override val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, 0) }
     override val commentId by lazy { intent.getIntExtra(EXTRA_COMMENT_ID, 0) }

@@ -1,6 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
+import android.app.Activity
 import android.content.ContentResolver
+import android.content.ContextWrapper
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.support.v7.widget.LinearLayoutManager
@@ -9,20 +12,16 @@ import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
 import com.bumptech.glide.GenericTransitionOptions
-import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
-import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.launchPhotoView
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
-import org.ocpsoft.prettytime.PrettyTime
-import java.util.*
-import android.content.ContextWrapper
-import android.app.Activity
-import android.graphics.drawable.Drawable
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
+import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 
 var View.isVisible : Boolean
@@ -59,19 +58,11 @@ fun ImageView.loadImage(url : String) {
             .into(this)
 }
 
-fun ImageView.setPhotoViewUrl( url : String) {
-    setOnClickListener {
-        context.run {
-            launchPhotoView(url)
-        }
-    }
-}
-
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
 
 fun Uri.queryFileName(contentResolver: ContentResolver) : String {
-    val returnCursor = contentResolver.query(this, null, null, null, null)!!
-    val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+    val returnCursor = contentResolver.query(this, null, null, null, null)
+    val nameIndex = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME) ?: return ""
     returnCursor.moveToFirst()
     val name = returnCursor.getString(nameIndex)
     returnCursor.close()

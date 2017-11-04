@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
@@ -12,7 +13,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.editEntry
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -23,13 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.synthetic.main.entry_layout.view.*
 import javax.inject.Inject
 
-
-class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), EntryMenuDialogListener, EntryView {
 
     @Inject lateinit var linkHandler : WykopLinkHandlerApi
     @Inject lateinit var userManager : UserManagerApi
@@ -105,7 +99,7 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
     }
 
     override fun editEntry() {
-        context.editEntry(entry.body.removeHtml(), entry.id)
+        navigator.openEditEntryActivity(context as Activity, entry.body.removeHtml(), entry.id)
     }
 
     override fun copyContent() {
