@@ -145,7 +145,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             findItem(R.id.logout).isVisible = value
         }
         navHeader.view_container.apply {
-            checkIsUserLoggedIn()
             nav_notifications_tag.setOnClickListener {
                 openFragment(HashTagsNotificationsListFragment.newInstance())
                 deselectItems()

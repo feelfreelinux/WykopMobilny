@@ -36,7 +36,7 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) { nav_notifications.text = value.toString() }
 
-    fun checkIsUserLoggedIn() {
+    private fun checkIsUserLoggedIn() {
         if (userManager.isUserAuthorized()) {
             isVisible = true
             img_profile.loadImage(userManager.getUserCredentials()!!.avatarUrl)

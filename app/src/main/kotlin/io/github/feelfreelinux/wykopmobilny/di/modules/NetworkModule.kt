@@ -36,6 +36,7 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule(private val baseUrl : String) {
+
     @Provides
     @Singleton
     fun provideOkHttpClient(userManagerApi: UserManagerApi): OkHttpClient {
