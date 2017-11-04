@@ -9,7 +9,8 @@ import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
-class DrawerHeaderPresenter(val subscriptionHelper: SubscriptionHelperApi, val myWykopApi: MyWykopApi) : BasePresenter<DrawerHeaderView>() {
+class DrawerHeaderPresenter(val subscriptionHelper: SubscriptionHelperApi,
+                            private val myWykopApi: MyWykopApi) : BasePresenter<DrawerHeaderView>() {
     private val intervalDisposable = CompositeDisposable()
 
     fun fetchNotifications() {
@@ -28,14 +29,14 @@ class DrawerHeaderPresenter(val subscriptionHelper: SubscriptionHelperApi, val m
         )
     }
 
-    fun getNotificationsCount(single: Single<NotificationCountResponse>) {
+    private fun getNotificationsCount(single: Single<NotificationCountResponse>) {
         subscriptionHelper.subscribe(single,
                 { view?.notificationCount = it.count },
                 { view?.showErrorDialog(it) },
                 this@DrawerHeaderPresenter)
     }
 
-    fun getHashTagNotificationsCount(single: Single<NotificationCountResponse>) {
+    private fun getHashTagNotificationsCount(single: Single<NotificationCountResponse>) {
         subscriptionHelper.subscribe(single,
                 { view?.hashTagsNotificationsCount = it.count },
                 { view?.showErrorDialog(it) },

@@ -4,11 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.R.id.toolbar
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -22,27 +20,20 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_conversation.*
-import kotlinx.android.synthetic.main.activity_conversation.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
-
-fun Context.getConversationIntent(user : String) : Intent {
-    val intent = Intent(this, ConversationActivity::class.java)
-    intent.putExtra(ConversationActivity.EXTRA_USER, user)
-    return intent
-}
 
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
     val conversationAdapter by lazy { PMMessageAdapter() }
     val user by lazy { intent.getStringExtra(EXTRA_USER) }
-    @Inject lateinit var presenter : ConversationPresenter
-    lateinit var conversationDataFragment : DataFragment<List<PMMessage>>
+    @Inject lateinit var presenter: ConversationPresenter
+    lateinit var conversationDataFragment: DataFragment<List<PMMessage>>
 
     companion object {
         val EXTRA_USER = "USER"
         val DATA_FRAGMENT_TAG = "CONVERSATION_TAG"
 
-        fun createIntent(context: Context, user : String) : Intent {
+        fun createIntent(context: Context, user: String): Intent {
             val intent = Intent(context, ConversationActivity::class.java)
             intent.putExtra(ConversationActivity.EXTRA_USER, user)
             return intent

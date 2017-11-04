@@ -1,18 +1,35 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
+import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.LoginCredentials
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.reactivex.Single
 
-class LoginScreenPresenter(private val userManager: UserManagerApi) : BasePresenter<LoginScreenView>() {
+class LoginScreenPresenter(private val userManager: UserManagerApi,
+                           private val subscriptionHelperApi: SubscriptionHelperApi,
+                           private val userApi: UserApi) : BasePresenter<LoginScreenView>() {
     fun handleUrl(url: String) {
         extractToken(url)?.apply {
             userManager.loginUser(this)
-            view?.goBackToSplashScreen()
+            subscriptionHelperApi.subscribe(userApi.getUserSessionToken()
+                    .flatMap { it ->
+                        userManager.saveCredentials(it)
+                        Single.just(it)
+                    },
+                    { view?.goBackToSplashScreen() },
+                    { view?.showErrorDialog(IllegalStateException("Redirect url ($url) doesn't contain userData")) },
+                    this)
         }
     }
 
-    private fun extractToken(url: String) : LoginCredentials? {
+    override fun unsubscribe() {
+        subscriptionHelperApi.dispose(this)
+        super.unsubscribe()
+    }
+
+    private fun extractToken(url: String): LoginCredentials? {
         url.apply {
             if (!contains("/token/") and !contains("/login/")) {
                 view?.showErrorDialog(IllegalStateException("Redirect url ($url) doesn't contain userData"))

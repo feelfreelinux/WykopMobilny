@@ -18,13 +18,13 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.activity_navigation.*
@@ -32,15 +32,6 @@ import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
-
-fun Context.launchNavigationActivity(targetFragment : String? = null) {
-    val intent = Intent(this, NavigationActivity::class.java)
-    targetFragment?.let {
-        intent.putExtra(NavigationActivity.TARGET_FRAGMENT_KEY, targetFragment)
-    }
-    startActivity(intent)
-}
-
 
 interface MainNavigationInterface {
     val activityToolbar : Toolbar
@@ -101,7 +92,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         JobUtil.hasBootPermission(this)
 
         // Schedules notification service
-        WykopNotificationsJob.shedule(settingsApi)
+        WykopNotificationsJob.schedule(settingsApi)
 
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
@@ -131,15 +122,19 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onResume() {
+        super.onResume()
+        presenter.subscribe(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
         presenter.unsubscribe()
     }
 
     private fun setupNavigation() {
         drawer_layout.addDrawerListener(actionBarToggle)
         navigationView.setNavigationItemSelectedListener(this)
-        presenter.subscribe(this)
     }
 
     override fun showUsersMenu(value : Boolean) {
@@ -150,7 +145,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             findItem(R.id.logout).isVisible = value
         }
         navHeader.view_container.apply {
-            checkIsUserLoggedIn()
             nav_notifications_tag.setOnClickListener {
                 openFragment(HashTagsNotificationsListFragment.newInstance())
                 deselectItems()
