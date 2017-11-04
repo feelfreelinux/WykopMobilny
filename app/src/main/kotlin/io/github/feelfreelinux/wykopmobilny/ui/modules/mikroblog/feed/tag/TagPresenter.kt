@@ -2,7 +2,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag
 
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.TagMeta
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
@@ -27,8 +26,7 @@ class TagPresenter(private val subscriptionHelper: SubscriptionHelperApi, privat
     fun blockTag() {
         subscriptionHelper.subscribe(tagApi.block(tag),
                 {
-                    val meta = TagMeta(tag, false, true)
-                    view?.setMeta(meta)
+                    view?.setObserveState(it)
                 },
                 { view?.showErrorDialog(it) }, this
         )
@@ -37,8 +35,7 @@ class TagPresenter(private val subscriptionHelper: SubscriptionHelperApi, privat
     fun unblockTag() {
         subscriptionHelper.subscribe(tagApi.unblock(tag),
                 {
-                    val meta = TagMeta(tag, false, false)
-                    view?.setMeta(meta)
+                    view?.setObserveState(it)
                 },
                 { view?.showErrorDialog(it) }, this
         )
@@ -47,8 +44,7 @@ class TagPresenter(private val subscriptionHelper: SubscriptionHelperApi, privat
     fun observeTag() {
         subscriptionHelper.subscribe(tagApi.observe(tag),
                 {
-                    val meta = TagMeta(tag, true, false)
-                    view?.setMeta(meta)
+                    view?.setObserveState(it)
                 },
                 { view?.showErrorDialog(it) }, this
         )
@@ -57,8 +53,7 @@ class TagPresenter(private val subscriptionHelper: SubscriptionHelperApi, privat
     fun unobserveTag() {
         subscriptionHelper.subscribe(tagApi.unobserve(tag),
                 {
-                    val meta = TagMeta(tag, false, false)
-                    view?.setMeta(meta)
+                    view?.setObserveState(it)
                 },
                 { view?.showErrorDialog(it) }, this
         )

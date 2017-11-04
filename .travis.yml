@@ -2,29 +2,30 @@ language: android
 jdk: oraclejdk8
 android:
   components:
-    - tools
-    - platform-tools
-    - build-tools-26.0.2
-    - android-26
-    - extra-android-m2repository
-    
+  - tools
+  - platform-tools
+  - build-tools-26.0.2
+  - android-26
+  - extra-android-m2repository
 licenses:
-   - 'android-sdk-preview-license-.+'
-   - 'android-sdk-license-.+'
-   - 'google-gdk-license-.+'
-    
+- android-sdk-preview-license-.+
+- android-sdk-license-.+
+- google-gdk-license-.+
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
-    
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+  - "$HOME/.android/build-cache"
 before_script:
-   - echo -e "apiKey=\"example_key\"\napiSecret=\"example_secret\"" >> credentials.properties
-   
+- echo -e "apiKey=\"$wykopApiKey\"\napiSecret=\"$wykopApiSecret\"" >> credentials.properties
+- echo -e "apikey=$fabricApiKey" >> app/fabric.properties
 script:
-   - ./gradlew build connectedCheck
+- "./gradlew build connectedCheck"
+env:
+  global:
+  - secure: b2UZXqP3fopgry8ijiaVyHK1StoDBvlXh9u6awFpe3oWAgr2nyLQeyotX0LJ5CDq+iEeTcSMfpFVNkyIh8Skwa3GPiDIDDZZ+ipkc7zKpFIeNd9RWQiE795d8A60FVPvURD8IJdP8nQNn+xoFpM4GsLHrgN3MkcAL/DkblTul/4ypIx2AHNW+/NWvp8+A//9MW/A5ihQEYV2O7jCxYNBYLT4u6IeQb7h52jBDRl0hCRIIIvs6mNjy9ko+/5qA+WttTgYdR2BQ3VvVHBbUFvE6o3UF705jAwLhbwPXKS5bZZ6wRVYYqOnrrLv++XPbKXg/sjhgaCj1yhiFTKpN2hOW40AefyMZJCqtGEmEgxDT+8C4hwBZ14FVSI9LCVRD9lN4ZcNufyNr7yX/xrPZOXCKS1rGkPWQh9NSyLQYWm+MlioW1VXlj1Bw3xkn0PxNRVpos6vNTP5LU3Ly+ZEpgew1njJKMzPaQ/ZMa/yZBGV37BntwCZN8Vy55Dt9CvMvSrQW3w2+YHtNOHTkzDealya8fsMlec5DNfDk2hgwHJ7IaKcOjWlNVj8iL50c3HsLx312bKxajtT8dr0Kifdv8XSd72kGpU16pUpmv1Ll02RiGOsBRwm9R0Oqy3jOU8afAIgfrOIeVao6/6TKhvBtob62va96Ohd8X+e5LrKQDnLa7I=
+  - secure: 4K6RkirJNMtvHXOY3kYe6je0vXazDtm/HcH83Lf+OAHcXd45G0Fah8+7+kBiNdZnE+Pj8NIDy4j/digyJ8ook6bXPCgWcpl4aGuEZA7xvQl0WYJwfCICN0fXRxEwYLOXvPhCXvnNBksTdTVzPm0r3S0r6DyRxLB/IMEYTfToycAkSoDQSYjBZ1/1tcA1M53ZvShMl1qn10E3LKq/reeJCOBaDo1FgWfmM1iLdwwkhCW/a9oRoBIRPMLJKxxchhR2iSKXMWirZCllkNfdiNOphn6g2iEL5HgG7NkImVjs2ALUPZQ8nfR4mndCswO3r77lpxyvHr88HsLzkJoHHepPi+dRmEwvadQAf6OnenS/PQdiZHHyM09rul/NshA85JISQM0k9khnFSKPlV+NF5+L1ImH5nbIJSdaCidewkWmdRvT+gYUYNNJ0Mso+aDYoJLn9UW1YC8RDKbMl5JJL/quj3HR6ZZqVyCwg0f7GTy05wP9HfZADiiOHgbzBPtC46c1Y/k2RznSC9sxywZIisW9ul+rEHaWYJH9LaWop+EuhPIjKwpqKllJN4vnyxJAbiyRia2LFSLZexahIMtKRC5p585IHjxBegaOmSxM3erHUP0E4k7Vhkh2KaSyFReHbqSy344I1DBGuVlbAClOpj/xLXAhSNbMhZek4dhihPLC2Ek=
+  - secure: L4tA0X40Qd8VBMnegj1FQIENtwrlwGt6HjNgDaMhH0f/OpHeUtunq57dHkz2H3zMJHK//3tIzCPbGTdQK9S7NET4BQmgBOmgyEx71NFtjFfV/osVYVO7bSlXsnzeu0CLSQ1pLA8IlvQhN/1ePF3t5kc/HZCyAXvavBT4tG3cyPatbwJQBEZG8MA0/MtfTzxdYm3tKob9aqyheCp9PZew7zvf9TgkxQ53z7PSongo05YJc/sA8MJ6UPYPAXNBcBySwahpoqfCmYFJShPwfRNXd4lphsNsiSKeN0cFjnxdASpnUJNmvfz37kVBlXaUz4EFYy87lSEDFYwSCeEMuX85jtAzMIvEvy1a48LAvaCONy+VLR8NYqO1cazMFRndlaiImVYUc5PjgJQyveITZidEvuz4jBocQ6ntIQhddFYrRKodLX3FQahYMvIJjgRQ8jNjinJEWuJgf2+vhaYyuwEZdjhXzbkIMnssjb05p/D7bmtUTGfeZi7Vp2EKhveF+0T83s0dExseKzDYcB8Aw1jYMhyNHDs8ByODnVaK6Uf3NlT1+0BDgoCi3siQ2c6ge/jc+62hotfMO4/5v2rhLpfCkJiO32yGTXGsFn2w9wm0VyEjGeLPPMA1z0H6coMRvgmwc3rnT9HhvqZwqa4tzs8RuWwMypKd1ZlhhjLrYaWnJj8=

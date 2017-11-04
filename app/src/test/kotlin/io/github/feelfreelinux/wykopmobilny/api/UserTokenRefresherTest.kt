@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.api
 
 import com.nhaarman.mockito_kotlin.*
-import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
-import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
+import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
+import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.models.pojo.NotificationCountResponse
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Single
@@ -13,8 +13,8 @@ import java.io.IOException
 
 class UserTokenRefresherTest {
     lateinit var systemUnderTest : UserTokenRefresher
-    val mockOfUserApi = mock<UserApi>()
-    val mockOfMyWykopApi = mock<MyWykopApi>()
+    val mockOfUserApi = mock<LoginApi>()
+    val mockOfMyWykopApi = mock<NotificationsApi>()
     val mockOfUserManager = mock<UserManagerApi>()
 
     @Before

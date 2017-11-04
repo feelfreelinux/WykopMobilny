@@ -4,7 +4,6 @@ import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
-import retrofit2.http.Body
 
 class ConversationPresenter(val subscriptionHelperApi: SubscriptionHelperApi, val pmApi: PMApi) : BasePresenter<ConversationView>() {
     lateinit var user : String

@@ -21,7 +21,7 @@ class AuthorHeaderView : ConstraintLayout {
         View.inflate(context, R.layout.author_header_layout, this)
     }
 
-    fun setAuthorData(author : Author, date : String) {
+    fun setAuthorData(author : Author, date : String, app : String? = null) {
         author.apply {
             userNameTextView.apply {
                 text = nick

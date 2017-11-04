@@ -1,10 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.utils.usermanager
 
 import android.content.Context
-import io.github.feelfreelinux.wykopmobilny.models.pojo.Profile
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LoginResponse
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.UserNotLoggedInDialog
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 data class LoginCredentials(val login : String, val token : String)
 
@@ -13,7 +12,7 @@ data class UserCredentials(val login : String, val avatarUrl : String, val userK
 interface UserManagerApi {
     fun loginUser(credentials : LoginCredentials)
     fun logoutUser()
-    fun saveCredentials(user : Profile)
+    fun saveCredentials(credentials : LoginResponse)
     fun getUserCredentials() : UserCredentials?
     fun isUserAuthorized() : Boolean
     fun runIfLoggedIn(context : Context, callback : () -> Unit)
@@ -35,10 +34,10 @@ class UserManager(private val credentialsPreferencesApi: CredentialsPreferencesA
         }
     }
 
-    override fun saveCredentials(user : Profile) {
+    override fun saveCredentials(credentials : LoginResponse) {
         credentialsPreferencesApi.apply {
-            avatarUrl = user.avatarBig
-            userToken = user.userKey
+            avatarUrl = credentials.profile.avatar
+            userToken = credentials.userkey
         }
     }
 

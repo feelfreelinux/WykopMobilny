@@ -3,11 +3,10 @@ package io.github.feelfreelinux.wykopmobilny.di.modules
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
-import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
+import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
-import io.github.feelfreelinux.wykopmobilny.api.stream.StreamApi
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
-import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
+import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryPresenter
@@ -29,13 +28,13 @@ class PresentersModule {
     @Provides
     fun provideLoginPresenter(userManagerApi: UserManagerApi,
                               subscriptionHelperApi: SubscriptionHelperApi,
-                              userApi: UserApi) = LoginScreenPresenter(userManagerApi,
+                              userApi: LoginApi) = LoginScreenPresenter(userManagerApi,
             subscriptionHelperApi,
             userApi)
 
     @Provides
-    fun provideMainNavigationPresenter(subscriptionHelperApi: SubscriptionHelperApi, userManagerApi: UserManagerApi, myWykopApi: MyWykopApi)
-            = MainNavigationPresenter(subscriptionHelperApi, userManagerApi, myWykopApi)
+    fun provideMainNavigationPresenter(subscriptionHelperApi: SubscriptionHelperApi, userManagerApi: UserManagerApi, notificationsApi: NotificationsApi)
+            = MainNavigationPresenter(subscriptionHelperApi, userManagerApi, notificationsApi)
 
     @Provides
     fun provideHotPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi)
@@ -62,8 +61,8 @@ class PresentersModule {
             = EditEntryCommentPresenter(subscriptionHelperApi, entriesApi)
 
     @Provides
-    fun provideNotificationsListPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi)
-            = NotificationsListPresenter(subscriptionHelperApi, myWykopApi)
+    fun provideNotificationsListPresenter(subscriptionHelperApi: SubscriptionHelperApi, notificationsApi: NotificationsApi)
+            = NotificationsListPresenter(subscriptionHelperApi, notificationsApi)
 
     @Provides
     fun provideConversationsListPresenter(subscriptionHelperApi: SubscriptionHelperApi, pmApi: PMApi)
@@ -74,10 +73,10 @@ class PresentersModule {
             = ConversationPresenter(subscriptionHelperApi, pmApi)
 
     @Provides
-    fun provideHashTagsNotificationListPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi)
-            = HashTagsNotificationsListPresenter(subscriptionHelperApi, myWykopApi)
+    fun provideHashTagsNotificationListPresenter(subscriptionHelperApi: SubscriptionHelperApi, notificationsApi: NotificationsApi)
+            = HashTagsNotificationsListPresenter(subscriptionHelperApi, notificationsApi)
 
     @Provides
-    fun provideWykopNoticationsJobPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi, userManagerApi: UserManagerApi)
-            = WykopNotificationsJobPresenter(subscriptionHelperApi, myWykopApi, userManagerApi)
+    fun provideWykopNoticationsJobPresenter(subscriptionHelperApi: SubscriptionHelperApi, notificationsApi: NotificationsApi, userManagerApi: UserManagerApi)
+            = WykopNotificationsJobPresenter(subscriptionHelperApi, notificationsApi, userManagerApi)
 }

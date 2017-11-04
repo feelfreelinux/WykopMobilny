@@ -8,17 +8,14 @@ import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Comment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialogInterface
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.editEntryComment
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -33,7 +30,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    lateinit var comment : Comment
+    lateinit var comment : EntryComment
 
     var addReceiverListener : ((Author) -> Unit)? = null
 
@@ -54,20 +51,20 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
         setBackgroundResource(typedValue.resourceId)
     }
 
-    fun setCommentData(comment: Comment) {
-        this.comment = comment
+    fun setCommentData(entryComment: EntryComment) {
+        this.comment = entryComment
         setupHeader()
         setupFooter()
         setupBody()
 
         setOnLongClickListener {
-            CommentMenuDialog(context, comment.author, userManagerApi, this).show()
+            CommentMenuDialog(context, entryComment.author, userManagerApi, this).show()
             true
         }
     }
 
     private fun setupHeader() {
-        authorHeaderView.setAuthorData(comment.author, comment.date)
+        authorHeaderView.setAuthorData(comment.author, comment.date, comment.app)
     }
 
     private fun setupFooter() {
@@ -96,7 +93,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     }
 
     override fun removeComment() {
-        presenter.deleteComment(comment.entryId, comment.id)
+        presenter.deleteComment(comment.id)
     }
 
     override fun markCommentAsRemoved() {

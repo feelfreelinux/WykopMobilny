@@ -2,9 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit
 
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputView
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.InputPresenter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryView
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
 class EditEntryPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val entriesApi: EntriesApi) : InputPresenter<EditEntryView>() {

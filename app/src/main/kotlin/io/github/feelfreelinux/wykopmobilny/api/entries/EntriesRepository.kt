@@ -1,75 +1,64 @@
 package io.github.feelfreelinux.wykopmobilny.api.entries
 
 import io.github.feelfreelinux.wykopmobilny.api.*
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.models.mapper.EntryMapper
-import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapperV2
-import io.github.feelfreelinux.wykopmobilny.models.pojo.DeleteResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.EntryResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.EntryResponseV2
-import io.github.feelfreelinux.wykopmobilny.models.pojo.entries.FavoriteEntryResponse
-import io.reactivex.Single
+import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
+import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapper
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryCommentResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 import java.io.InputStream
-
-interface EntriesApi {
-    fun getEntryIndex(entryId : Int): Single<Entry>
-    fun voteEntry(entryId: Int): Single<VoteResponse>
-    fun unvoteEntry(entryId: Int): Single<VoteResponse>
-    fun voteComment(entryId: Int, commentId: Int): Single<VoteResponse>
-    fun unvoteComment(entryId: Int, commentId: Int): Single<VoteResponse>
-    fun addEntry(body : String, inputStream: TypedInputStream): Single<AddResponse>
-    fun addEntry(body: String, embed: String?): Single<AddResponse>
-    fun addEntryComment(body: String, entryId: Int, embed: String?): Single<AddResponse>
-    fun addEntryComment(body: String, entryId: Int, inputStream: TypedInputStream): Single<AddResponse>
-    fun markFavorite(entryId: Int) : Single<FavoriteEntryResponse>
-    fun deleteEntry(entryId: Int): Single<DeleteResponse>
-    fun editEntry(body: String, entryId: Int): Single<AddResponse>
-    fun editEntryComment(body : String, entryId: Int, commentId: Int): Single<AddResponse>
-    fun deleteEntryComment(entryId: Int, commentId: Int): Single<DeleteResponse>
-
-    fun getHot(page : Int, period : String) : Single<List<Entry>>
-    fun getStream(page : Int) : Single<List<Entry>>
-    fun getEntry(id : Int) : Single<Entry>
-
-}
 
 data class TypedInputStream(val fileName : String, val mimeType : String, val inputStream: InputStream)
 
 class EntriesRepository(val retrofit: Retrofit) : EntriesApi {
     private val entriesApi by lazy { retrofit.create(EntriesRetrofitApi::class.java) }
 
-    override fun getEntryIndex(entryId : Int) = entriesApi.getEntryIndex(entryId).map { EntryMapper.map(it) }
-
     override fun voteEntry(entryId: Int) = entriesApi.voteEntry(entryId)
+            .compose<VoteResponse>(ErrorHandlerTransformer())
 
     override fun unvoteEntry(entryId: Int) = entriesApi.unvoteEntry(entryId)
+            .compose<VoteResponse>(ErrorHandlerTransformer())
 
-    override fun voteComment(entryId: Int, commentId: Int) = entriesApi.voteComment(entryId, commentId)
 
-    override fun unvoteComment(entryId: Int, commentId: Int) = entriesApi.unvoteComment(entryId, commentId)
+    override fun voteComment(commentId: Int) = entriesApi.voteComment(commentId)
+            .compose<VoteResponse>(ErrorHandlerTransformer())
+
+
+    override fun unvoteComment(commentId: Int) = entriesApi.unvoteComment(commentId)
+            .compose<VoteResponse>(ErrorHandlerTransformer())
+
 
     override fun addEntry(body : String, inputStream: TypedInputStream) = entriesApi.addEntry(body.toRequestBody(), inputStream.getFileMultipart())
+            .compose<EntryResponse>(ErrorHandlerTransformer())
 
     override fun addEntry(body : String, embed: String?) = entriesApi.addEntry(body, embed)
+            .compose<EntryResponse>(ErrorHandlerTransformer())
 
     override fun addEntryComment(body : String, entryId: Int, inputStream: TypedInputStream) =
             entriesApi.addEntryComment(body.toRequestBody(), entryId, inputStream.getFileMultipart())
+                    .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
     override fun addEntryComment(body : String, entryId: Int, embed: String?) = entriesApi.addEntryComment(body, embed, entryId)
+            .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
     override fun editEntry(body : String, entryId: Int) = entriesApi.editEntry(body, entryId)
+            .compose<EntryResponse>(ErrorHandlerTransformer())
 
     override fun markFavorite(entryId: Int) = entriesApi.markFavorite(entryId)
+            .compose<FavoriteResponse>(ErrorHandlerTransformer())
 
     override fun deleteEntry(entryId: Int) = entriesApi.deleteEntry(entryId)
+            .compose<EntryResponse>(ErrorHandlerTransformer())
 
-    override fun editEntryComment(body: String, entryId: Int, commentId: Int) = entriesApi.editEntryComment(body, entryId, commentId)
+    override fun editEntryComment(body: String, commentId: Int) = entriesApi.editEntryComment(body, commentId)
+            .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
-    override fun deleteEntryComment(entryId: Int, commentId: Int) = entriesApi.deleteEntryComment(entryId, commentId)
+    override fun deleteEntryComment(commentId: Int) = entriesApi.deleteEntryComment(commentId)
+            .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
@@ -77,15 +66,15 @@ class EntriesRepository(val retrofit: Retrofit) : EntriesApi {
     private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
 
     override fun getHot(page : Int, period : String) = entriesApi.getHot(page, period)
-            .compose<List<EntryResponseV2>>(ErrorHandlerTransformer())
-            .map { it.map { EntryMapperV2.map(it) } }
+            .compose<List<EntryResponse>>(ErrorHandlerTransformer())
+            .map { it.map { EntryMapper.map(it) } }
 
     override fun getStream(page : Int) = entriesApi.getStream(page)
-            .compose<List<EntryResponseV2>>(ErrorHandlerTransformer())
-            .map { it.map { EntryMapperV2.map(it) } }
+            .compose<List<EntryResponse>>(ErrorHandlerTransformer())
+            .map { it.map { EntryMapper.map(it) } }
 
     override fun getEntry(id : Int) = entriesApi.getEntry(id)
-            .compose<EntryResponseV2>(ErrorHandlerTransformer())
-            .map { EntryMapperV2.map(it) }
+            .compose<EntryResponse>(ErrorHandlerTransformer())
+            .map { EntryMapper.map(it) }
 
 }

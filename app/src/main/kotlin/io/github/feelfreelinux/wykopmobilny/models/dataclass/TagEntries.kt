@@ -1,4 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
-data class TagEntries(val meta : TagMeta,
-                      val entries : List<Entry>)
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
+
+data class TagEntries(
+        val entries : List<Entry>,
+        val meta : TagMetaResponse
+)

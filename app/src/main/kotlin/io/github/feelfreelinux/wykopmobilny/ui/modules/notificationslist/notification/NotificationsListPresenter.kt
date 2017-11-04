@@ -1,16 +1,16 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification
 
-import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
+import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListView
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
-class NotificationsListPresenter(val subscriptionHelper: SubscriptionHelperApi, val myWykopApi: MyWykopApi) : BasePresenter<NotificationsListView>() {
+class NotificationsListPresenter(val subscriptionHelper: SubscriptionHelperApi, val notificationsApi: NotificationsApi) : BasePresenter<NotificationsListView>() {
     var page = 1
 
     fun loadData(shouldRefresh : Boolean) {
         if (shouldRefresh) page = 1
-        subscriptionHelper.subscribe(myWykopApi.getNotifications(page),
+        subscriptionHelper.subscribe(notificationsApi.getNotifications(page),
                 {
                     if (it.isNotEmpty()) {
                         page++
@@ -20,7 +20,7 @@ class NotificationsListPresenter(val subscriptionHelper: SubscriptionHelperApi, 
     }
 
     fun readNotifications() {
-        subscriptionHelper.subscribe(myWykopApi.readNotifications(),
+        subscriptionHelper.subscribe(notificationsApi.readNotifications(),
                 { view?.showReadToast() }, { view?.showErrorDialog(it) }, this)
     }
 

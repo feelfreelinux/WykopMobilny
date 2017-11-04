@@ -42,19 +42,22 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
         recyclerView.prepare()
     }
 
+    fun setupInfiniteScrollListeners() {
+        recyclerView.apply {
+            clearOnScrollListeners()
+            addOnScrollListener(InfiniteScrollListener({
+                presenter?.loadData(false)
+            }, layoutManager as LinearLayoutManager))
+        }
+    }
+
     fun initAdapter(feedList: List<Entry>? = emptyList()) {
         // Add endlessScrolListener, and FabAutohide to recyclerview
         fab?.isVisible = false // We'll show it later.
         fab?.setOnClickListener { onFabClickedListener.invoke() }
 
-        recyclerView.apply {
-            adapter = feedAdapter
-            clearOnScrollListeners()
-            addOnScrollListener(InfiniteScrollListener({
-                recyclerView.post { feedAdapter.isLoading = true }
-                presenter?.loadData(false)
-            }, layoutManager as LinearLayoutManager))
-        }
+        recyclerView.adapter = feedAdapter
+        setupInfiniteScrollListeners()
 
         if (feedList == null || feedList.isEmpty()) {
             // Create adapter if no data is saved
@@ -80,13 +83,17 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
                 feedAdapter.addData(entryList, shouldClearAdapter)
 
                 if (feedAdapter.data.size == entryList.size) fab?.isVisible = shouldShowFab // First time add only.
-                if (shouldClearAdapter) recyclerView.smoothScrollToPosition(0)
+                if (shouldClearAdapter) {
+                    recyclerView.smoothScrollToPosition(0)
+                    setupInfiniteScrollListeners()
+                }
             }
         }
     }
 
     override fun disableLoading() {
-        feedAdapter.isLoading = false
+        recyclerView.clearOnScrollListeners()
+        feedAdapter.disableLoading()
         isRefreshing = false
         isLoading = false
     }

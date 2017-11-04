@@ -19,7 +19,7 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
 
     companion object {
         const val USER_LOGGED_IN = 21
-        const val CONNECT_URL: String = "https://a.wykop.pl/user/connect/appkey/$APP_KEY"
+        const val CONNECT_URL: String = "https://a2.wykop.pl/login/connect/appkey/$APP_KEY"
 
         fun createIntent(context: Context): Intent {
             return Intent(context, LoginScreenActivity::class.java)

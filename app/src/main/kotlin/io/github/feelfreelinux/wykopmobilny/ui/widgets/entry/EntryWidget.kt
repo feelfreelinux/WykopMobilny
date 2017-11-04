@@ -62,7 +62,7 @@ class EntryWidget : CardView, EntryMenuDialogListener, EntryView {
     }
 
     private fun setupHeader() {
-        authorHeaderView.setAuthorData(entry.author, entry.date)
+        authorHeaderView.setAuthorData(entry.author, entry.date, entry.app)
     }
 
     private fun setupButtons() {

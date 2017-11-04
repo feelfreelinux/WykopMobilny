@@ -14,7 +14,6 @@ const val ITEM_PROGRESS = 1
 abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val dataset = arrayListOf<A?>()
     var isLoading : Boolean = false
-        get() = field
         set(value) {
             if (value) {
                 if (!field) {
@@ -46,10 +45,15 @@ abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Recyc
             dataset.apply {
                 clear()
                 addAll(items)
+                add(null)
             }
             notifyDataSetChanged()
         } else {
+            if (dataset.last() == null) {
+                dataset.removeAt(dataset.size)
+            }
             dataset.addAll(items)
+            dataset.add(null)
             notifyItemRangeInserted(dataset.size - items.size, items.size + 1)
         }
     }

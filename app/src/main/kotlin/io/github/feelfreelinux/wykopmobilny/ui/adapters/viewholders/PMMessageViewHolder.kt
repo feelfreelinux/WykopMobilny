@@ -24,13 +24,14 @@ class PMMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         flipMessage(message.isSentFromUser)
 
         view.apply {
-            avatarView.setAuthor(message.author)
             val prettyDate = message.date.toPrettyDate()
             date.text = prettyDate
+/*            avatarView.setAuthor(message.author)
 
-            message.author.app?.let {
+
+            message.app?.let {
                 date.text = context.getString(R.string.date_with_user_app, prettyDate, message.author.app)
-            }
+            }*/
 
             body.prepareBody(message.body, { linkHandler.handleUrl(context as Activity, it) })
             embedImage.setEmbed(message.embed)

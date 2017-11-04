@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
-import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
+import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.pojo.NotificationCountResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJobPresenter
@@ -19,7 +19,7 @@ import java.io.IOException
 class WykopNotificationsJobPresenterTest {
     lateinit var subjectUnderTest : WykopNotificationsJobPresenter
     val mockUserManager = mock<UserManagerApi>()
-    val mockMyWykopApi = mock<MyWykopApi>()
+    val mockMyWykopApi = mock<NotificationsApi>()
     val subscriptionHelper = TestSubscriptionHelper()
     val mockView = mock<WykopNotificationsJobView>()
 

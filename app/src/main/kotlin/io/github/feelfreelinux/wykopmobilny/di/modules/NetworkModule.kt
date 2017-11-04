@@ -7,8 +7,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.ApiSignInterceptor
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
-import io.github.feelfreelinux.wykopmobilny.api.WykopRequestBodyConverterFactory
-import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
+import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
@@ -31,6 +30,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -81,13 +81,13 @@ class NetworkModule(private val baseUrl : String) {
         return Retrofit.Builder()
                 .client(client)
                 .baseUrl(baseUrl)
-                .addConverterFactory(WykopRequestBodyConverterFactory(moshi))
+                .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
     }
 
     @Provides
-    fun provideUserTokenRefresher(userApi : UserApi, userManagerApi: UserManagerApi) = UserTokenRefresher(userApi, userManagerApi)
+    fun provideUserTokenRefresher(userApi : LoginApi, userManagerApi: UserManagerApi) = UserTokenRefresher(userApi, userManagerApi)
 
     @Provides
     fun provideSubscriptionHandler(userTokenRefresher: UserTokenRefresher) : SubscriptionHelperApi = SubscriptionHelper(AndroidSchedulers.mainThread(), Schedulers.io(), userTokenRefresher)

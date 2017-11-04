@@ -9,11 +9,12 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.TagMeta
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.createNewEntry
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
@@ -26,7 +27,8 @@ class TagActivity : BaseActivity(), TagView {
     lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
     @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var presenter : TagPresenter
-    private var tagMeta : TagMeta? = null
+    private var tagMeta : TagMetaResponse? = null
+    private var tagState : TagStateResponse? = null
 
     companion object {
         val EXTRA_TAG = "EXTRA_TAG"
@@ -105,9 +107,14 @@ class TagActivity : BaseActivity(), TagView {
         tagDataFragment.data = PagedDataModel(presenter.page, feedRecyclerView.entries)
     }
 
-    override fun setMeta(tagMeta: TagMeta) {
+    override fun setMeta(tagMeta: TagMetaResponse) {
         this.tagMeta = tagMeta
         invalidateOptionsMenu()
+    }
+
+    override fun setObserveState(tagState: TagStateResponse) {
+        tagMeta?.isBlocked = tagState.isBlocked
+        tagMeta?.isObserved = tagState.isObserved
     }
 
     override fun onPause() {

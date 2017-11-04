@@ -3,13 +3,9 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comme
 import android.content.Context
 import android.util.AttributeSet
 import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Comment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVoteButton
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
 import javax.inject.Inject
 
 class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
@@ -34,15 +30,9 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
         presenter.vote()
     }
 
-    fun setCommentData(comment : Comment) {
-        presenter.entryId = comment.entryId
+    fun setCommentData(comment : EntryComment) {
         presenter.commentId = comment.id
         voteCount = comment.voteCount
-
-        setOnLongClickListener {
-            VotersDialog(context, comment.voters).show()
-            true
-        }
     }
 
     override fun onDetachedFromWindow() {

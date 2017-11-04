@@ -8,6 +8,6 @@ data class Entry(val id : Int,
                  val isFavorite : Boolean,
                  val embed : Embed?,
                  val voteCount : Int,
-                 val voters : List<Author>,
                  val commentsCount : Int,
-                 val comments : List<Comment>)
+                 val comments : List<EntryComment>,
+                 val app : String?)

@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
 import com.nhaarman.mockito_kotlin.*
 import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
-import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
+import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.LoginCredentials
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -14,7 +14,7 @@ class LoginScreenPresenterTest {
     lateinit var systemUnderTest: LoginScreenPresenter
     private val mockOfView = mock<LoginScreenView>()
     private val mockOfUserManager = mock<UserManagerApi>()
-    private val mockOfUserApi = mock<UserApi>()
+    private val mockOfUserApi = mock<LoginApi>()
     private val subscriptionHelper = TestSubscriptionHelper()
     private val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
 

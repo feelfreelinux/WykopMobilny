@@ -8,7 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 class EditEntryCommentPresenter(private val subscriptionHelperApi: SubscriptionHelperApi, private val entriesApi: EntriesApi) : InputPresenter<EditEntryCommentView>() {
     fun editComment() {
         view?.showProgressBar = true
-        subscriptionHelperApi.subscribe(entriesApi.editEntryComment(view?.textBody!!, view?.entryId!!, view?.commentId!!),
+        subscriptionHelperApi.subscribe(entriesApi.editEntryComment(view?.textBody!!, view?.commentId!!),
                 { view?.exitActivity() },
                 {
                     view?.showProgressBar = false

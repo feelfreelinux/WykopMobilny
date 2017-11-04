@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
 
 class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRefreshLayout.OnRefreshListener {
-    private lateinit var conversationsDataFragment : DataFragment<PagedDataModel<List<Conversation>>>
+    private lateinit var conversationsDataFragment : DataFragment<List<Conversation>>
     @Inject lateinit var presenter : ConversationsListPresenter
     private val conversationsAdapter by lazy { ConversationsListAdapter() }
 
@@ -49,11 +49,6 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRe
         recyclerView.apply {
             prepare()
             adapter = conversationsAdapter
-            clearOnScrollListeners()
-            addOnScrollListener(InfiniteScrollListener({
-                recyclerView.post { conversationsAdapter.isLoading = true }
-                loadMore()
-            }, layoutManager as LinearLayoutManager))
         }
         swiperefresh.isRefreshing = false
         presenter.subscribe(this)
@@ -62,33 +57,28 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRe
             loadingView.isVisible = true
             onRefresh()
         } else {
-            conversationsAdapter.addData(conversationsDataFragment.data!!.model, true)
-            presenter.page = conversationsDataFragment.data!!.page
+            conversationsAdapter.dataset.addAll(conversationsDataFragment.data!!)
             loadingView.isVisible = false
         }
     }
 
-    private fun loadMore() {
-        presenter.loadConversations(false)
-    }
-
-    override fun disableLoading() {
-        conversationsAdapter.disableLoading()
-    }
-
-    override fun showConversations(items : List<Conversation>, shouldCleanAdapter : Boolean) {
+    override fun showConversations(items : List<Conversation>) {
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
-        conversationsAdapter.addData(items, shouldCleanAdapter)
+        conversationsAdapter.apply {
+            dataset.clear()
+            dataset.addAll(items)
+            notifyDataSetChanged()
+        }
     }
 
     override fun onRefresh() {
-        presenter.loadConversations(true)
+        presenter.loadConversations()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        conversationsDataFragment.data = PagedDataModel(presenter.page, conversationsAdapter.data)
+        conversationsDataFragment.data = conversationsAdapter.dataset
     }
 
     override fun onDestroy() {

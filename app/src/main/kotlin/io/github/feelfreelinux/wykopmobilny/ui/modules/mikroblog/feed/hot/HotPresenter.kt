@@ -2,7 +2,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot
 
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.api.stream.StreamApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
@@ -17,7 +16,7 @@ class HotPresenter(private val subscriptionHelper: SubscriptionHelperApi, privat
             if (it.isNotEmpty()) {
                 page++
                 view?.addDataToAdapter(it, shouldRefresh)
-            } else view?.disableLoading()
+            }
         }
         val failure : (Throwable) -> Unit  = { view?.showErrorDialog(it) }
 

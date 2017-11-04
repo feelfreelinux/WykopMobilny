@@ -33,11 +33,6 @@ class EntryVoteButton : BaseVoteButton, EntryVoteButtonView {
     fun setEntryData(entry : Entry) {
         presenter.entryId = entry.id
         voteCount = entry.voteCount
-
-        setOnLongClickListener {
-            VotersDialog(context, entry.voters).show()
-            true
-        }
     }
 
     override fun onDetachedFromWindow() {

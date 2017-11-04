@@ -3,7 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.dialogs
 import android.app.AlertDialog
 import android.content.Context
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.api.WykopRequestBodyConverterFactory
+import io.github.feelfreelinux.wykopmobilny.api.errorhandler.WykopExceptionParser
 
 fun Context.showExceptionDialog(e : Throwable) {
     ExceptionDialog(this, e)?.show()
@@ -11,7 +11,7 @@ fun Context.showExceptionDialog(e : Throwable) {
 
 fun ExceptionDialog(context : Context, e: Throwable) : AlertDialog? {
     val message = when(e) {
-        is WykopRequestBodyConverterFactory.ApiException -> { "${e.message} (${e.code})" }
+        is WykopExceptionParser.WykopApiException -> { "${e.message} (${e.code})" }
         else -> if (e.message.isNullOrEmpty()) e.toString() else e.message
     }
     val alertBuilder = context.createAlertBuilder()

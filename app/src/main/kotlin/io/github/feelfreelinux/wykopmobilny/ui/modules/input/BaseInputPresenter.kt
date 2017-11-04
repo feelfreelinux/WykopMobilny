@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input
 
-import io.github.feelfreelinux.wykopmobilny.api.entries.AddResponse
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 

@@ -1,14 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice
 
-import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
+import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
-class WykopNotificationsJobPresenter(val subscriptionHelper: SubscriptionHelperApi, val myWykopApi: MyWykopApi, val userManager: UserManagerApi) : BasePresenter<WykopNotificationsJobView>() {
+class WykopNotificationsJobPresenter(val subscriptionHelper: SubscriptionHelperApi, val notificationsApi: NotificationsApi, val userManager: UserManagerApi) : BasePresenter<WykopNotificationsJobView>() {
     fun checkNotifications() {
         if (userManager.isUserAuthorized()) {
-            subscriptionHelper.subscribe(myWykopApi.getNotifications(1),
+            subscriptionHelper.subscribe(notificationsApi.getNotifications(1),
                     {
                         val unreadNotifications = it.filter { it.new }
 
@@ -24,7 +24,7 @@ class WykopNotificationsJobPresenter(val subscriptionHelper: SubscriptionHelperA
     }
 
     private fun getNotificationsCount() {
-        subscriptionHelper.subscribe(myWykopApi.getNotificationCount(),
+        subscriptionHelper.subscribe(notificationsApi.getNotificationCount(),
                 {
                     view?.showNotificationsCount(it.count)
                 }, { view?.showErrorDialog(it) }, this)

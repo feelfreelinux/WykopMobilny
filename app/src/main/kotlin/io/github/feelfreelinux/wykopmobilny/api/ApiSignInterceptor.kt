@@ -32,6 +32,7 @@ class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
                         .filter { !formBody.value(it).isNullOrEmpty() }
                         .sortedWith(compareBy({ formBody.name(it) }))
                         .mapTo(ArrayList<String>()) { formBody.value(it) }
+                        .reversed() // apiv2 accepts these items in reversed order, wtf
 
                 APP_SECRET + url+ paramList.joinToString(",")
             }

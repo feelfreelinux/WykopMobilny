@@ -10,7 +10,7 @@ class EntryDetailPresenter(private val subscriptionHelper: SubscriptionHelperApi
     fun loadData() {
         view?.hideInputToolbar()
         subscriptionHelper.subscribe(
-                entriesApi.getEntryIndex(entryId),
+                entriesApi.getEntry(entryId),
                 { view?.showEntry(it) },
                 { view?.showErrorDialog(it) }, this)
 

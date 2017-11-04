@@ -4,6 +4,5 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
 
 interface ConversationsListView : BaseView {
-    fun showConversations(items : List<Conversation>, shouldCleanAdapter : Boolean)
-    fun disableLoading()
+    fun showConversations(items : List<Conversation>)
 }
