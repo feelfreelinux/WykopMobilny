@@ -9,19 +9,18 @@ import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.PMMessage
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.pmmessage_sent_layout.view.*
 import javax.inject.Inject
 
 class PMMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-    @Inject lateinit var linkHandler : WykopLinkHandlerApi
+    @Inject lateinit var linkHandler: WykopLinkHandlerApi
 
     init {
         WykopApp.uiInjector.inject(this)
     }
 
-    fun bindView(message : PMMessage) {
+    fun bindView(message: PMMessage) {
         flipMessage(message.isSentFromUser)
 
         view.apply {
@@ -41,7 +40,7 @@ class PMMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     /**
      * This function flips the message depending on the direction.
      */
-    fun flipMessage(isSentFromUser : Boolean) {
+    fun flipMessage(isSentFromUser: Boolean) {
         val avatarParams = view.avatarView.layoutParams as RelativeLayout.LayoutParams
 
         if (isSentFromUser) {

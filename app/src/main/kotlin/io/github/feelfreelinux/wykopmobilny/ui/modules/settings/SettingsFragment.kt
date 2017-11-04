@@ -8,14 +8,12 @@ import android.support.v7.preference.CheckBoxPreference
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.view.MenuItem
-import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import kotlinx.android.synthetic.main.toolbar.*
-
-fun Context.startSettingsActivity() {
-    startActivity(Intent(this, SettingsActivity::class.java))
-}
+import javax.inject.Inject
 
 class SettingsActivity : BaseActivity() {
     companion object {
@@ -27,8 +25,12 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
+    @Inject
+    lateinit var navigatorApi: NavigatorApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WykopApp.uiInjector.inject(this)
         setContentView(R.layout.activity_settings)
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Ustawienia"
@@ -37,6 +39,7 @@ class SettingsActivity : BaseActivity() {
                 .replace(R.id.settings_fragment, SettingsFragment())
                 .commit()
     }
+
 
     class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -58,7 +61,6 @@ class SettingsActivity : BaseActivity() {
             } else if (pref is CheckBoxPreference) {
                 when (pref.key) {
                     "useDarkTheme" -> {
-                        Toast.makeText(context, "Zrestartuj aplikacje aby zastosować styl", Toast.LENGTH_SHORT).show()
                         restartActivity()
                     }
                 }
@@ -75,7 +77,7 @@ class SettingsActivity : BaseActivity() {
             preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         }
 
-        fun restartActivity() {
+        private fun restartActivity() {
             val intent = Intent(context, SettingsActivity::class.java)
             intent.putExtra(THEME_CHANGED_EXTRA, true)
             startActivity(intent)
@@ -95,6 +97,7 @@ class SettingsActivity : BaseActivity() {
     override fun onBackPressed() {
         if (intent.hasExtra(THEME_CHANGED_EXTRA)) {
             setResult(THEME_CHANGED_RESULT)
+            navigatorApi.openMainActivity(this)
         }
         finish()
     }

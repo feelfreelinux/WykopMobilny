@@ -41,12 +41,14 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
             isVisible = true
             img_profile.loadImage(userManager.getUserCredentials()!!.avatarUrl)
             presenter.fetchNotifications()
-        } else isVisible = false
+        } else {
+            isVisible = false
+        }
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         presenter.unsubscribe()
+        super.onDetachedFromWindow()
     }
 
     override fun onAttachedToWindow() {

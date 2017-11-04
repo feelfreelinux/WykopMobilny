@@ -6,21 +6,21 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.ApiSignInterceptor
+import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.WykopRequestBodyConverterFactory
 import io.github.feelfreelinux.wykopmobilny.api.user.UserApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
-import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
-import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelper
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
@@ -72,7 +72,7 @@ class NetworkModule(private val baseUrl : String) {
     fun provideWykopNotificationManager(mgr: NotificationManager) : WykopNotificationManagerApi = WykopNotificationManager(mgr)
 
     @Provides
-    fun provideWykopLinkHandlerApi(context : Context) : WykopLinkHandlerApi = WykopLinkHandler()
+    fun provideWykopLinkHandlerApi(navigatorApi: NavigatorApi) : WykopLinkHandlerApi = WykopLinkHandler(navigatorApi)
 
     @Provides
     @Singleton

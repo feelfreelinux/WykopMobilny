@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificati
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
-import android.net.Uri
 import android.support.v4.app.NotificationCompat
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobRequest
@@ -38,7 +37,7 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
         val TAG = "wykop_notifications_job"
         val NOTIFICATION_ID = 15
 
-        fun shedule(settingsPreferencesApi: SettingsPreferencesApi) {
+        fun schedule(settingsPreferencesApi: SettingsPreferencesApi) {
             JobRequest.Builder(TAG)
                     .setPeriodic(TimeUnit.MINUTES.toMillis(settingsPreferencesApi.notificationsSchedulerDelay!!.toLong()), TimeUnit.MINUTES.toMillis(5))
                     .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
@@ -59,12 +58,9 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
     }
 
     override fun showNotification(notification: io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification) {
-        // Create intent
         val intent = wykopLinkHandler.getLinkIntent(context, notification.url)
         intent?.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-
-        // Show Notification
         notificationManager.updateNotification(NOTIFICATION_ID, buildNotification(notification.body, pendingIntent))
     }
 

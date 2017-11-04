@@ -8,14 +8,6 @@ import io.github.feelfreelinux.wykopmobilny.di.modules.RepositoryModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.ViewPresentersModule
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.NotificationViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.PMMessageViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.FavoriteButton
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButton
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVoteButton
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentWidget
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.EntryVoteButton
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
@@ -32,8 +24,17 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notific
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.FavoriteButton
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButton
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVoteButton
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.EntryVoteButton
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderWidget
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentWidget
 import javax.inject.Singleton
 
 @Singleton
@@ -71,4 +72,5 @@ interface Injector {
     fun inject(hashTagsNotificationsListFragment: HashTagsNotificationsListFragment)
     fun inject(wykopImageView: WykopImageView)
     fun inject(pmMessageViewHolder: PMMessageViewHolder)
+    fun inject(settingsFragment: SettingsActivity)
 }

@@ -28,12 +28,6 @@ import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-fun Context.getEntryActivityIntent(entryId : Int, commentId: Int? = null) : Intent {
-    val intent = Intent(this, EntryActivity::class.java)
-    intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
-    return intent
-}
-
 class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener {
     var entryId = 0
     companion object {

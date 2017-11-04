@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
-import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
@@ -14,7 +13,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.editEntry
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.getEntryActivityIntent
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible

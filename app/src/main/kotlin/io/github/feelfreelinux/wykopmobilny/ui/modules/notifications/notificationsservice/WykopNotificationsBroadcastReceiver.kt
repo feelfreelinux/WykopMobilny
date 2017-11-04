@@ -15,7 +15,7 @@ class WykopNotificationsBroadcastReceiver : BroadcastReceiver() {
 
         intent.action?.apply {
             if (this == "android.intent.action.BOOT_COMPLETED") {
-                WykopNotificationsJob.shedule(settingsApi)
+                WykopNotificationsJob.schedule(settingsApi)
             }
         }
     }
