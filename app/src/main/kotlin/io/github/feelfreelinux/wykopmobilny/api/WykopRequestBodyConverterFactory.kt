@@ -24,18 +24,8 @@ class WykopRequestBodyConverterFactory(private val moshi : Moshi) : Converter.Fa
         @Throws(IOException::class)
         override fun convert(response: ResponseBody): T {
             response.use { value ->
-                val json = value.string()
-                if (json.length < 200 && json.contains("{\"error\":{")) {
-                    val jsonObj = JSONObject(json)
-                    if (jsonObj.has("error")) {
-                        val error = jsonObj.getJSONObject("error")
-                        throw ApiException(
-                                error.getString("message"),
-                                error.getInt("code")
-                        )
-                    }
-                }
-                return adapter.fromJson(json)
+
+                return adapter.fromJson(value.string())
             }
         }
     }

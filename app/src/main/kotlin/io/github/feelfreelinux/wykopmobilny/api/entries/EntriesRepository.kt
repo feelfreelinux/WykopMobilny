@@ -3,8 +3,11 @@ package io.github.feelfreelinux.wykopmobilny.api.entries
 import io.github.feelfreelinux.wykopmobilny.api.*
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.mapper.EntryMapper
+import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapperV2
 import io.github.feelfreelinux.wykopmobilny.models.pojo.DeleteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.EntryResponseV2
 import io.github.feelfreelinux.wykopmobilny.models.pojo.entries.FavoriteEntryResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -27,6 +30,11 @@ interface EntriesApi {
     fun editEntry(body: String, entryId: Int): Single<AddResponse>
     fun editEntryComment(body : String, entryId: Int, commentId: Int): Single<AddResponse>
     fun deleteEntryComment(entryId: Int, commentId: Int): Single<DeleteResponse>
+
+    fun getHot(page : Int, period : String) : Single<List<Entry>>
+    fun getStream(page : Int) : Single<List<Entry>>
+    fun getEntry(id : Int) : Single<Entry>
+
 }
 
 data class TypedInputStream(val fileName : String, val mimeType : String, val inputStream: InputStream)
@@ -67,4 +75,17 @@ class EntriesRepository(val retrofit: Retrofit) : EntriesApi {
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
 
     private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
+
+    override fun getHot(page : Int, period : String) = entriesApi.getHot(page, period)
+            .compose<List<EntryResponseV2>>(ErrorHandlerTransformer())
+            .map { it.map { EntryMapperV2.map(it) } }
+
+    override fun getStream(page : Int) = entriesApi.getStream(page)
+            .compose<List<EntryResponseV2>>(ErrorHandlerTransformer())
+            .map { it.map { EntryMapperV2.map(it) } }
+
+    override fun getEntry(id : Int) = entriesApi.getEntry(id)
+            .compose<EntryResponseV2>(ErrorHandlerTransformer())
+            .map { EntryMapperV2.map(it) }
+
 }

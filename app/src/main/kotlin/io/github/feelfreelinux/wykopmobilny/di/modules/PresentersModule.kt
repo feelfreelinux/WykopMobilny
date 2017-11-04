@@ -38,8 +38,8 @@ class PresentersModule {
             = MainNavigationPresenter(subscriptionHelperApi, userManagerApi, myWykopApi)
 
     @Provides
-    fun provideHotPresenter(subscriptionHelperApi: SubscriptionHelperApi, streamApi: StreamApi)
-            = HotPresenter(subscriptionHelperApi, streamApi)
+    fun provideHotPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi)
+            = HotPresenter(subscriptionHelperApi, entriesApi)
 
     @Provides
     fun provideTagPresenter(subscriptionHelperApi: SubscriptionHelperApi, tagApi: TagApi)

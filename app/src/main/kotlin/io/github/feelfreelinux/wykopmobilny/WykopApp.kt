@@ -20,7 +20,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificatio
 class WykopApp : Application() {
     companion object {
         lateinit var uiInjector: Injector
-        val WYKOP_API_URL = "https://a.wykop.pl"
+        val WYKOP_API_URL = "https://a2.wykop.pl"
     }
 
     private var refWatcher: RefWatcher? = null

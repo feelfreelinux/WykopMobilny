@@ -4,6 +4,8 @@ import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.models.pojo.DeleteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.EntryResponseV2
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopApiResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.entries.FavoriteEntryResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -11,6 +13,15 @@ import okhttp3.RequestBody
 import retrofit2.http.*
 data class AddResponse(val id : Int)
 interface EntriesRetrofitApi {
+    @GET("/entries/hot/page/{page}/period/{period}/appkey/$APP_KEY")
+    fun getHot(@Path("page") page : Int, @Path("period") period : String) : Single<WykopApiResponse<List<EntryResponseV2>>>
+
+    @GET("/entries/stream/page/{page}/appkey/$APP_KEY")
+    fun getStream(@Path("page") page : Int) : Single<WykopApiResponse<List<EntryResponseV2>>>
+
+    @GET("/entries/entry/{id}/appkey/$APP_KEY")
+    fun getEntry(@Path("id") id : Int) : Single<WykopApiResponse<EntryResponseV2>>
+
     @GET("/entries/index/{entryId}/appkey/$APP_KEY")
     fun getEntryIndex(@Path("entryId") entryId : Int) : Single<EntryResponse>
 
