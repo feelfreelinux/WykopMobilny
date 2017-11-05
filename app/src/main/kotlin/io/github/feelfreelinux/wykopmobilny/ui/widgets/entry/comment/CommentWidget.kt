@@ -63,6 +63,14 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
         }
     }
 
+    fun setStyleForComment(isAuthorComment: Boolean){
+        if (isAuthorComment){
+            is_author_comment.visibility = View.VISIBLE
+        } else {
+            is_author_comment.visibility = View.GONE
+        }
+    }
+
     private fun setupHeader() {
         authorHeaderView.setAuthorData(comment.author, comment.date)
     }
