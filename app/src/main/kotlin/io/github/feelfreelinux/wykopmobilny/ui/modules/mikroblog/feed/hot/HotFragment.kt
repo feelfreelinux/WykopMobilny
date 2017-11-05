@@ -5,13 +5,13 @@ import android.support.v4.content.ContextCompat
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.createNewEntry
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedList
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import kotlinx.android.synthetic.main.fragment_feed.view.*
@@ -20,6 +20,7 @@ import javax.inject.Inject
 class HotFragment : BaseNavigationFragment(), HotView {
     @Inject lateinit var presenter : HotPresenter
     @Inject lateinit var settingsPreferences : SettingsPreferencesApi
+    @Inject lateinit var navigatorApi : NavigatorApi
     lateinit var feedRecyclerView : BaseFeedList
     lateinit var entriesDataFragment : DataFragment<Pair<PagedDataModel<List<Entry>>, String>>
 
@@ -46,7 +47,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
             this.presenter = this@HotFragment.presenter
             fab = this@HotFragment.fab
             onFabClickedListener = {
-                this@HotFragment.context.createNewEntry(null)
+                navigatorApi.openAddEntryActivity(activity)
             }
             initAdapter(entriesDataFragment.data?.first?.model)
         }

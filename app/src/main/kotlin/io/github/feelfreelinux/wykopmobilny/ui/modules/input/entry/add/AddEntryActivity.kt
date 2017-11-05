@@ -8,12 +8,6 @@ import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import javax.inject.Inject
 
-fun Context.createNewEntry(receiver: String?) {
-    val intent = Intent(this, AddEntryActivity::class.java)
-    intent.putExtra(BaseInputActivity.EXTRA_RECEIVER, receiver)
-    startActivity(intent)
-}
-
 class AddEntryActivity : BaseInputActivity<AddEntryPresenter>() {
     @Inject override lateinit var presenter: AddEntryPresenter
 
