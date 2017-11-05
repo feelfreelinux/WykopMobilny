@@ -29,20 +29,21 @@ import javax.inject.Inject
 
 class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener {
     var entryId = 0
+
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
         val EXTRA_FRAGMENT_KEY = "ENTRY_ACTIVITY_#"
 
-        fun createIntent(context : Context, entryId: Int, commentId: Int?): Intent {
+        fun createIntent(context: Context, entryId: Int, commentId: Int?): Intent {
             val intent = Intent(context, EntryActivity::class.java)
             intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
             return intent
         }
     }
 
-    @Inject lateinit var presenter : EntryDetailPresenter
-    private lateinit var entryFragmentData : DataFragment<Entry>
-    private val adapter by lazy { EntryDetailAdapter( { inputToolbar.addAddressant(it.nick) } ) }
+    @Inject lateinit var presenter: EntryDetailPresenter
+    private lateinit var entryFragmentData: DataFragment<Entry>
+    private val adapter by lazy { EntryDetailAdapter({ inputToolbar.addAddressant(it.nick) }) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
