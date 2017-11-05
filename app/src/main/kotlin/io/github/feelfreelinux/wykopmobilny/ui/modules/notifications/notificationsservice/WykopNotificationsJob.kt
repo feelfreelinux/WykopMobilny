@@ -18,11 +18,11 @@ import javax.inject.Inject
 
 
 class WykopNotificationsJob : Job(), WykopNotificationsJobView {
-    @Inject lateinit var presenter : WykopNotificationsJobPresenter
-    @Inject lateinit var wykopLinkHandler : WykopLinkHandlerApi
-    @Inject lateinit var notificationManager : WykopNotificationManagerApi
+    @Inject lateinit var presenter: WykopNotificationsJobPresenter
+    @Inject lateinit var wykopLinkHandler: WykopLinkHandlerApi
+    @Inject lateinit var notificationManager: WykopNotificationManagerApi
 
-    private fun buildNotification(body : String, intent : PendingIntent): Notification {
+    private fun buildNotification(body: String, intent: PendingIntent): Notification {
         return NotificationCompat.Builder(context, WykopNotificationManager.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_wykopmobilny)
                 .setContentIntent(intent)
@@ -30,7 +30,6 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
                 .setContentText(body).build()
-
     }
 
     companion object {
@@ -38,12 +37,17 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
         val NOTIFICATION_ID = 15
 
         fun schedule(settingsPreferencesApi: SettingsPreferencesApi) {
-            JobRequest.Builder(TAG)
-                    .setPeriodic(TimeUnit.MINUTES.toMillis(settingsPreferencesApi.notificationsSchedulerDelay!!.toLong()), TimeUnit.MINUTES.toMillis(5))
-                    .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
-                    .setUpdateCurrent(true)
-                    .build()
-                    .schedule()
+            var build: JobRequest? = null
+            if (settingsPreferencesApi.showNotifications) {
+                build = JobRequest.Builder(TAG)
+                        .setPeriodic(TimeUnit.MINUTES.toMillis(15.toLong()), TimeUnit.MINUTES.toMillis(5))
+                        .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+                        .setUpdateCurrent(true)
+                        .build()
+                build.schedule()
+            } else {
+                build?.cancelAndEdit()
+            }
         }
     }
 

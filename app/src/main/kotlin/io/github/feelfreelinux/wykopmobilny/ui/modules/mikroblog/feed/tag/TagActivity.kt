@@ -14,7 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.createNewEntry
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
 import kotlinx.android.synthetic.main.activity_feed.*
@@ -26,6 +26,7 @@ class TagActivity : BaseActivity(), TagView {
     lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
     @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var presenter : TagPresenter
+    @Inject lateinit var navigatorApi : NavigatorApi
     private var tagMeta : TagMeta? = null
 
     companion object {
@@ -64,7 +65,7 @@ class TagActivity : BaseActivity(), TagView {
             fab = this@TagActivity.fab
             initAdapter(tagDataFragment.data?.model)
             onFabClickedListener = {
-                context.createNewEntry(null)
+                navigatorApi.openAddEntryActivity(this@TagActivity)
             }
         }
         setSupportActionBar(toolbar)

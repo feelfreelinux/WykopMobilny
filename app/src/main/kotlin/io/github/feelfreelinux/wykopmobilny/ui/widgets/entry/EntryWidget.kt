@@ -13,7 +13,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.editEntry
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
@@ -31,7 +30,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     @Inject lateinit var presenter: EntryPresenter
     @Inject lateinit var navigator: NavigatorApi
     private lateinit var entry: Entry
-
+  
     init {
         WykopApp.uiInjector.inject(this)
         View.inflate(context, R.layout.entry_layout, this)
@@ -108,7 +107,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     }
 
     override fun editEntry() {
-        context.editEntry(entry.body.removeHtml(), entry.id)
+        navigator.openEditEntryActivity(context as Activity, entry.body.removeHtml(), entry.id)
     }
 
     override fun copyContent() {

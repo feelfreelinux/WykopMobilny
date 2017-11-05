@@ -2,14 +2,9 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.photoview
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -21,12 +16,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_photoview.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
-
-fun Context.launchPhotoView(imageUrl: String) {
-    val intent = Intent(this, PhotoViewActivity::class.java)
-    intent.putExtra(PhotoViewActivity.URL_EXTRA, imageUrl)
-    startActivity(intent)
-}
 
 class PhotoViewActivity : BaseActivity() {
     companion object {

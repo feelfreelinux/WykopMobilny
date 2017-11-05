@@ -19,9 +19,8 @@
     <android.support.v7.preference.PreferenceCategory
         android:title="@string/pref_notifications">
         <android.support.v7.preference.CheckBoxPreference
-            android:key="show_notifications"
+            android:key="showNotifications"
             android:title="@string/pref_notifications_enable"
-            android:summary="@string/not_implemented"
             android:defaultValue="true"/>
 
         <android.support.v7.preference.ListPreference

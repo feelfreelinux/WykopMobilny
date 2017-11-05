@@ -30,15 +30,15 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    lateinit var comment : Comment
+    lateinit var comment: Comment
 
-    var addReceiverListener : ((Author) -> Unit)? = null
+    var addReceiverListener: ((Author) -> Unit)? = null
 
-    @Inject lateinit var linkHandler : WykopLinkHandlerApi
-    @Inject lateinit var userManagerApi : UserManagerApi
-    @Inject lateinit var clipboardHelper : ClipboardHelperApi
-    @Inject lateinit var presenter : CommentPresenter
-    @Inject lateinit var navigator : NavigatorApi
+    @Inject lateinit var linkHandler: WykopLinkHandlerApi
+    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject lateinit var clipboardHelper: ClipboardHelperApi
+    @Inject lateinit var presenter: CommentPresenter
+    @Inject lateinit var navigator: NavigatorApi
 
     init {
         WykopApp.uiInjector.inject(this)
