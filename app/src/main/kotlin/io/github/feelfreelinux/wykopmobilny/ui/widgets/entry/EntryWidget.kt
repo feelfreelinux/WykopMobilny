@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
-import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
@@ -14,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
@@ -37,7 +37,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         isClickable = true
         isFocusable = true
         val typedValue = TypedValue()
-        (context as Activity).theme.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
     }
 
@@ -58,7 +58,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         setupButtons()
 
         setOnLongClickListener {
-            EntryMenuDialog(context, entry.author, userManager, this).show()
+            EntryMenuDialog(getActivityContext()!!, entry.author, userManager, this).show()
             true
         }
     }
@@ -72,12 +72,12 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             text = entry.commentsCount.toString()
 
             setOnClickListener {
-                navigator.openEntryDetailsActivity((context as Activity), entry.id)
+                navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
             }
         }
 
         setOnClickListener {
-            navigator.openEntryDetailsActivity((context as Activity), entry.id)
+            navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
         }
 
         voteButton.apply {
@@ -90,7 +90,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     }
 
     private fun setupBody() {
-        entryContentTextView.prepareBody(entry.body, { linkHandler.handleUrl((context as Activity), it) })
+        entryContentTextView.prepareBody(entry.body, { linkHandler.handleUrl(getActivityContext()!!, it) })
         entryImageView.setEmbed(entry.embed)
     }
 
@@ -107,7 +107,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     }
 
     override fun editEntry() {
-        navigator.openEditEntryActivity(context as Activity, entry.body.removeHtml(), entry.id)
+        navigator.openEditEntryActivity(getActivityContext()!!, entry.body.removeHtml(), entry.id)
     }
 
     override fun copyContent() {
