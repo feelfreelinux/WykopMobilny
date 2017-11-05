@@ -9,7 +9,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVot
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.userSessionToken
 import javax.inject.Inject
 
 class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {

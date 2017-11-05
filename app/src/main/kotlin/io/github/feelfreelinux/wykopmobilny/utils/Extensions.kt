@@ -69,9 +69,6 @@ fun Uri.queryFileName(contentResolver: ContentResolver) : String {
     return name
 }
 
-val CredentialsPreferencesApi.userSessionToken : String
-    get() = if (userToken.isNullOrEmpty()) "" else "userkey/$userToken"
-
 fun Uri.getMimeType(contentResolver: ContentResolver): String {
     return if (scheme == ContentResolver.SCHEME_CONTENT) {
         contentResolver.getType(this)

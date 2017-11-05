@@ -14,7 +14,6 @@ class DrawerHeaderPresenter(val subscriptionHelper: SubscriptionHelperApi,
     private val intervalDisposable = CompositeDisposable()
 
     fun fetchNotifications() {
-        intervalDisposable.dispose()
         intervalDisposable.clear()
         intervalDisposable.add(
                 Observable.interval(0, 5, TimeUnit.MINUTES)

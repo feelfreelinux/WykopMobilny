@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.formatDialogCallback
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.getMimeType
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.queryFileName
@@ -77,10 +78,13 @@ class MarkdownToolbar : LinearLayout {
 
     fun getPhotoTypedInputStream(): TypedInputStream? {
         photo?.apply {
-            val contentResolver = context.contentResolver
-            return TypedInputStream(photo?.queryFileName(contentResolver)!!,
-                    getMimeType(contentResolver),
-                    contentResolver.openInputStream(photo))
+            val contentResolver = getActivityContext()!!.contentResolver
+            photo?.queryFileName(contentResolver)?.apply {
+                return TypedInputStream(
+                        this,
+                        getMimeType(contentResolver),
+                        contentResolver.openInputStream(photo))
+            }
         }
         return null
     }

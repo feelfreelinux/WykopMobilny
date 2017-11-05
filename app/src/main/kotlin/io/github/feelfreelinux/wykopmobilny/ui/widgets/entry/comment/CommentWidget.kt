@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -64,10 +65,15 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     }
 
     fun setStyleForComment(isAuthorComment: Boolean){
-        if (isAuthorComment){
-            is_author_comment.visibility = View.VISIBLE
+        val credentials = userManagerApi.getUserCredentials()
+        if (credentials != null && credentials.login == comment.author.nick) {
+            authorBadgeStrip.isVisible = true
+            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBadgeOwn))
+        } else if (isAuthorComment) {
+            authorBadgeStrip.isVisible = true
+            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBadgeAuthors))
         } else {
-            is_author_comment.visibility = View.GONE
+            authorBadgeStrip.isVisible = false
         }
     }
 
