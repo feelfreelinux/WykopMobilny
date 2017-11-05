@@ -13,12 +13,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialogInterface
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.editEntryComment
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -63,6 +60,14 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
         setOnLongClickListener {
             CommentMenuDialog(context, comment.author, userManagerApi, this).show()
             true
+        }
+    }
+
+    fun setStyleForComment(isAuthorComment: Boolean){
+        if (isAuthorComment){
+            is_author_comment.visibility = View.VISIBLE
+        } else {
+            is_author_comment.visibility = View.GONE
         }
     }
 
