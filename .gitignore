@@ -8,3 +8,4 @@
 .externalNativeBuild
 /annotations/
 credentials.properties
+app/fabric.properties

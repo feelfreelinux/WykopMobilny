@@ -14,9 +14,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="" />
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity" />
 
