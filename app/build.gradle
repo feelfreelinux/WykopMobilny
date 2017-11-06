@@ -19,8 +19,8 @@ android {
         applicationId "io.github.feelfreelinux.wykopmobilny"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 2
-        versionName "0.1.2"
+        versionCode 3
+        versionName "0.1.2.1"
 
         def credentialsPropertiesFile = rootProject.file("credentials.properties")
         def credentialsProperties = new Properties()
@@ -29,8 +29,19 @@ android {
         buildConfigField 'String', 'APP_SECRET', credentialsProperties['apiSecret']
         buildConfigField 'String', 'APP_KEY', credentialsProperties['apiKey']
     }
+    
+    signingConfigs {
+        ci {
+            keyAlias "key0"
+            keyPassword System.getenv('CI_KEYSTORE_PASSWORD')
+            storeFile file('../ci-release-keystore.jks')
+            storePassword System.getenv('CI_KEYSTORE_PASSWORD')
+        }
+    }
+    
     buildTypes {
         release {
+            if(System.getenv('CI_KEYSTORE_PASSWORD')) signingConfig signingConfigs.ci
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -42,9 +53,7 @@ android {
     }
     buildToolsVersion '26.0.2'
     lintOptions {
-
         abortOnError false
-
     }
 }
 
