@@ -13,6 +13,15 @@ androidExtensions {
 }
 
 android {
+    signingConfigs {
+        ci {
+            keyAlias "key0"
+            keyPassword System.getenv('CI_KEYSTORE_PASSWORD')
+            storeFile file('../ci-release-keystore.jks')
+            storePassword System.getenv('CI_KEYSTORE_PASSWORD')
+        }
+    }
+    
     compileSdkVersion 26
     buildToolsVersion versions.buildTools
     defaultConfig {
@@ -31,6 +40,7 @@ android {
     }
     buildTypes {
         release {
+            if(System.getenv('CI_KEYSTORE_PASSWORD')) signingConfig signingConfigs.ci
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -42,9 +52,7 @@ android {
     }
     buildToolsVersion '26.0.2'
     lintOptions {
-
         abortOnError false
-
     }
 }
 

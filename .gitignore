@@ -6,6 +6,7 @@
 /build
 /captures
 .externalNativeBuild
+.ci-release-keystore.jks
 /annotations/
 credentials.properties
 app/fabric.properties
