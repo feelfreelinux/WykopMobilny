@@ -6,7 +6,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
-import io.github.feelfreelinux.wykopmobilny.models.pojo.entries.FavoriteEntryResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +26,7 @@ class EntryFavoriteButtonPresenterTest {
 
     @Test
     fun marksEntryFavorite() {
-        val response = FavoriteEntryResponse(true)
+        val response = FavoriteResponse(true)
         whenever(mockOfView.entryId).thenReturn(14)
         whenever(mockOfEntriesApi.markFavorite(any())).thenReturn(Single.just(response))
 
@@ -36,7 +36,7 @@ class EntryFavoriteButtonPresenterTest {
 
     @Test
     fun unmarksEntryFavorite() {
-        val response = FavoriteEntryResponse(false)
+        val response = FavoriteResponse(false)
         whenever(mockOfView.entryId).thenReturn(12)
         whenever(mockOfEntriesApi.markFavorite(any())).thenReturn(Single.just(response))
 

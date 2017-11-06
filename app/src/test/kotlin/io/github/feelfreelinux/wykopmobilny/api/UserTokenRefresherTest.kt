@@ -1,9 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.api
 
 import com.nhaarman.mockito_kotlin.*
+import io.github.feelfreelinux.wykopmobilny.api.errorhandler.WykopExceptionParser
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
-import io.github.feelfreelinux.wykopmobilny.models.pojo.NotificationCountResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.NotificationsCountResponse
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -24,9 +25,9 @@ class UserTokenRefresherTest {
 
     @Test
     fun shouldNotInterceptSuccess() {
-        val response = NotificationCountResponse(15)
+        val response = NotificationsCountResponse(15)
         whenever(mockOfMyWykopApi.getNotificationCount()).thenReturn(Single.just(response))
-        val testObserver = TestObserver<NotificationCountResponse>()
+        val testObserver = TestObserver<NotificationsCountResponse>()
         mockOfMyWykopApi
                 .getNotificationCount()
                 .retryWhen(systemUnderTest)
@@ -41,7 +42,7 @@ class UserTokenRefresherTest {
     fun shouldNotInterceptEveryException() {
         val exception = IOException()
         whenever(mockOfMyWykopApi.getNotificationCount()).thenReturn(Single.error(exception))
-        val testObserver = TestObserver<NotificationCountResponse>()
+        val testObserver = TestObserver<NotificationsCountResponse>()
         mockOfMyWykopApi
                 .getNotificationCount()
                 .retryWhen(systemUnderTest)
@@ -54,9 +55,9 @@ class UserTokenRefresherTest {
 
     @Test
     fun shouldNotInterceptEveryApiException() {
-        val exception = WykopRequestBodyConverterFactory.ApiException("Test", 16)
+        val exception = WykopExceptionParser.WykopApiException(16, "Test")
         whenever(mockOfMyWykopApi.getNotificationCount()).thenReturn(Single.error(exception))
-        val testObserver = TestObserver<NotificationCountResponse>()
+        val testObserver = TestObserver<NotificationsCountResponse>()
         mockOfMyWykopApi
                 .getNotificationCount()
                 .retryWhen(systemUnderTest)

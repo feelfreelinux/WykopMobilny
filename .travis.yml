@@ -21,7 +21,7 @@ cache:
   - "$HOME/.android/build-cache"
 before_script:
 - echo -e "apiKey=\"$wykopApiKey\"\napiSecret=\"$wykopApiSecret\"" >> credentials.properties
-- echo -e "apikey=$fabricApiKey" >> app/fabric.properties
+- echo -e "apiKey=$fabricApiKey" >> app/fabric.properties
 script:
 - "./gradlew build connectedCheck"
 env:

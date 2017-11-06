@@ -2,8 +2,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry
 
 import com.nhaarman.mockito_kotlin.*
 import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
-import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -27,7 +27,7 @@ class EntryVoteButtonPresenterTest {
 
         systemUnderTest.entryId = 12
 
-        whenever(mockOfEntriesApi.voteEntry(any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES, emptyList())))
+        whenever(mockOfEntriesApi.voteEntry(any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES)))
         systemUnderTest.vote()
 
         verify(mockOfView).apply {
@@ -42,7 +42,7 @@ class EntryVoteButtonPresenterTest {
 
         systemUnderTest.entryId = 12
 
-        whenever(mockOfEntriesApi.unvoteEntry(any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES, emptyList())))
+        whenever(mockOfEntriesApi.unvoteEntry(any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES)))
         systemUnderTest.unvote()
 
         verify(mockOfView).apply {

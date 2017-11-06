@@ -2,8 +2,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comme
 
 import com.nhaarman.mockito_kotlin.*
 import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
-import io.github.feelfreelinux.wykopmobilny.models.pojo.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -25,7 +25,7 @@ class EntryCommentVoteButtonPresenterTest {
     fun shouldUpdateButtonOnVoteResponse() {
         val EXPECTED_VOTES = 211
 
-        whenever(mockOfEntriesApi.voteComment(any(), any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES, emptyList())))
+        whenever(mockOfEntriesApi.voteComment(any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES)))
         systemUnderTest.vote()
 
         verify(mockOfView).apply {
@@ -38,9 +38,8 @@ class EntryCommentVoteButtonPresenterTest {
     fun shouldUpdateButtonOnUnVoteResponse() {
         val EXPECTED_VOTES = 115
 
-        systemUnderTest.entryId = 12
 
-        whenever(mockOfEntriesApi.unvoteComment(any(), any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES, emptyList())))
+        whenever(mockOfEntriesApi.unvoteComment(any())).thenReturn(Single.just(VoteResponse(EXPECTED_VOTES)))
         systemUnderTest.unvote()
 
         verify(mockOfView).apply {
@@ -51,10 +50,8 @@ class EntryCommentVoteButtonPresenterTest {
 
     @Test
     fun shouldShowErrorDialog() {
-        systemUnderTest.entryId = 12
-
-        whenever(mockOfEntriesApi.voteComment(any(), any())).thenReturn(Single.error(IOException()))
-        whenever(mockOfEntriesApi.unvoteComment(any(), any())).thenReturn(Single.error(IOException()))
+        whenever(mockOfEntriesApi.voteComment(any())).thenReturn(Single.error(IOException()))
+        whenever(mockOfEntriesApi.unvoteComment(any())).thenReturn(Single.error(IOException()))
 
         systemUnderTest.vote()
         systemUnderTest.unvote()

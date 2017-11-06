@@ -31,7 +31,7 @@ class EntryDetailPresenterTest {
 
         systemUnderTest.entryId = 12
 
-        whenever(mockOfEntriesApi.getEntryIndex(any())).thenReturn(Single.just(testEntry))
+        whenever(mockOfEntriesApi.getEntry(any())).thenReturn(Single.just(testEntry))
 
         systemUnderTest.loadData()
         verify(mockOfView).showEntry(any())
@@ -41,7 +41,7 @@ class EntryDetailPresenterTest {
     fun testFailure() {
         systemUnderTest.entryId = 12
 
-        whenever(mockOfEntriesApi.getEntryIndex(any())).thenReturn(Single.error(IOException()))
+        whenever(mockOfEntriesApi.getEntry(any())).thenReturn(Single.error(IOException()))
 
         systemUnderTest.loadData()
         verify(mockOfView).showErrorDialog(any())

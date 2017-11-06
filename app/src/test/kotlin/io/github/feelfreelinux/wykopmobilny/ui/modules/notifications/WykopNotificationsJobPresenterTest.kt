@@ -7,7 +7,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
-import io.github.feelfreelinux.wykopmobilny.models.pojo.NotificationCountResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.NotificationsCountResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJobPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJobView
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -67,7 +67,7 @@ class WykopNotificationsJobPresenterTest {
         whenever(mockUserManager.isUserAuthorized()).thenReturn(true)
         val notificationResponse = listOf(mockNewNotification(), mockNewNotification())
         val fullNotificationsCount = 9
-        whenever(mockMyWykopApi.getNotificationCount()).thenReturn(Single.just(NotificationCountResponse(fullNotificationsCount)))
+        whenever(mockMyWykopApi.getNotificationCount()).thenReturn(Single.just(NotificationsCountResponse(fullNotificationsCount)))
         whenever(mockMyWykopApi.getNotifications(1)).thenReturn(Single.just(notificationResponse))
 
         subjectUnderTest.checkNotifications()
