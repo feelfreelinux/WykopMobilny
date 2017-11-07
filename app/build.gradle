@@ -57,6 +57,10 @@ android {
     }
 }
 
+afterEvaluate {
+    assembleRelease.dependsOn test
+}
+
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
