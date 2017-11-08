@@ -28,7 +28,6 @@ class TagActivity : BaseActivity(), TagView {
     @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var presenter : TagPresenter
     private var tagMeta : TagMetaResponse? = null
-    private var tagState : TagStateResponse? = null
     @Inject lateinit var navigatorApi : NavigatorApi
 
     companion object {
@@ -116,6 +115,7 @@ class TagActivity : BaseActivity(), TagView {
     override fun setObserveState(tagState: TagStateResponse) {
         tagMeta?.isBlocked = tagState.isBlocked
         tagMeta?.isObserved = tagState.isObserved
+        invalidateOptionsMenu()
     }
 
     override fun onPause() {

@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.TextView
@@ -29,6 +30,7 @@ abstract class BaseVoteButton : TextView {
         val typedValue = TypedValue()
         getActivityContext()!!.theme?.resolveAttribute(R.attr.voteButtonStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
+        setTextColor(ContextCompat.getColorStateList(context, typedValue.resourceId))
         setOnClickListener {
             userManager.runIfLoggedIn(context) {
                 if (isSelected) unvote()

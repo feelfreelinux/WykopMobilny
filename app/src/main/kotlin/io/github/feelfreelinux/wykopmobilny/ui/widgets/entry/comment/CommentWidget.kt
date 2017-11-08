@@ -17,6 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -24,7 +25,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.synthetic.main.comment_layout.view.*
 import javax.inject.Inject
 
-class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
+class CommentWidget : CardView, CommentMenuDialogInterface, CommentView, URLClickedListener {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -90,8 +91,12 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
     }
 
     private fun setupBody() {
-        entryContentTextView.prepareBody(comment.body, { linkHandler.handleUrl(getActivityContext()!!, it) })
+        entryContentTextView.prepareBody(comment.body, this)
         entryImageView.setEmbed(comment.embed)
+    }
+
+    override fun handleUrl(url: String) {
+        linkHandler.handleUrl(getActivityContext()!!, url)
     }
 
     override fun addReceiver() {

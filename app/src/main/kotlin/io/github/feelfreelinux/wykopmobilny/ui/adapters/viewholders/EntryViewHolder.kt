@@ -7,7 +7,10 @@ import kotlinx.android.synthetic.main.entry_list_item.view.*
 
 
 class EntryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-    fun bindView(entry : Entry) {
-        view.entry.setEntryData(entry)
+    fun bindView(entry : Entry, enableClickListener : Boolean = true) {
+        view.entry.apply {
+            shouldEnableClickListener = enableClickListener
+            setEntryData(entry)
+        }
     }
 }

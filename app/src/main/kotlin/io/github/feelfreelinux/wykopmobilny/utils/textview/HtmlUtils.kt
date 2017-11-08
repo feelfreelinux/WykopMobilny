@@ -15,11 +15,11 @@ fun String.toSpannable(): Spannable {
     )
 }
 
-fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, callback : (String) -> Unit) {
+fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, listener : URLClickedListener) {
     val start = getSpanStart(span)
     val end = getSpanEnd(span)
     val flags = getSpanFlags(span)
-    val clickable = SpoilerAwareLinkSpan(span.url, callback)
+    val clickable = SpoilerAwareLinkSpan(span.url, listener)
     setSpan(clickable, start, end, flags)
     removeSpan(span)
 }

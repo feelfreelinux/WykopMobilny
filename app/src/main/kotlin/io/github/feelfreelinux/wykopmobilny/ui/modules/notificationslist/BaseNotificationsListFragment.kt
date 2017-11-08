@@ -12,14 +12,23 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 
 abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView, SwipeRefreshLayout.OnRefreshListener {
-    val notificationAdapter by lazy { NotificationsListAdapter() }
+    val notificationAdapter by lazy { NotificationsListAdapter({ onNotificationClicked(it) }) }
+    abstract var linkHandler : WykopLinkHandlerApi
 
     abstract fun markAsRead()
 
     abstract fun loadMore()
+
+    private fun onNotificationClicked(position : Int) {
+        val notification = notificationAdapter.data[position]
+        notification.new = false
+        notificationAdapter.notifyDataSetChanged()
+        linkHandler.handleUrl(activity, notification.url)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -33,16 +42,22 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
             prepare()
             adapter = notificationAdapter
             clearOnScrollListeners()
-            addOnScrollListener(InfiniteScrollListener({
-                recyclerView.post { notificationAdapter.isLoading = true }
-                loadMore()
-            }, layoutManager as LinearLayoutManager))
+            setInfiniteScrollListener()
         }
         swiperefresh.isRefreshing = false
         super.onActivityCreated(savedInstanceState)
     }
 
+    private fun setInfiniteScrollListener() {
+        recyclerView.apply {
+            clearOnScrollListeners()
+            addOnScrollListener(InfiniteScrollListener(
+                    { loadMore() }, layoutManager as LinearLayoutManager))
+        }
+    }
+
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter : Boolean) {
+        if (shouldClearAdapter) setInfiniteScrollListener()
         if (notifications.isNotEmpty()) {
             recyclerView.post {
                 loadingView.isVisible = false
@@ -58,6 +73,7 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     }
 
     override fun disableLoading() {
+        recyclerView.clearOnScrollListeners()
         notificationAdapter.disableLoading()
     }
 

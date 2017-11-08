@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.app.Activity
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
@@ -18,13 +17,8 @@ import kotlinx.android.synthetic.main.notifications_list_item.view.*
 import javax.inject.Inject
 
 class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
-    @Inject lateinit var notificationLinkHandler : WykopLinkHandlerApi
 
-    init {
-        WykopApp.uiInjector.inject(this)
-    }
-
-    fun bindNotification(notification: Notification) {
+    fun bindNotification(notification: Notification, itemClickListener: () -> Unit) {
         view.apply {
             // Setup widgets
             body.setText(notification.body.removeHtml(), TextView.BufferType.SPANNABLE)
@@ -46,7 +40,7 @@ class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             }
 
             cardView.setOnClickListener {
-                notificationLinkHandler.handleUrl(getActivityContext()!!, notification.url)
+                itemClickListener()
             }
         }
 

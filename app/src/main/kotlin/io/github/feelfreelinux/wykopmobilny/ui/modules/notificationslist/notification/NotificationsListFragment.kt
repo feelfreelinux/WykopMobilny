@@ -12,11 +12,13 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.BaseNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 import javax.inject.Inject
 
 class NotificationsListFragment : BaseNotificationsListFragment() {
     private lateinit var entryFragmentData : DataFragment<PagedDataModel<List<Notification>>>
+    override @Inject lateinit var linkHandler : WykopLinkHandlerApi
 
     companion object {
         val DATA_FRAGMENT_TAG = "NOTIFICATIONS_LIST_ACTIVITY"

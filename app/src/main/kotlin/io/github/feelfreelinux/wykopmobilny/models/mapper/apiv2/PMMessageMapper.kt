@@ -9,7 +9,8 @@ class PMMessageMapper {
         override fun map(value: PMMessageResponse): PMMessage {
             return PMMessage(value.date, value.body ?: "",
                     if (value.embed != null) EmbedMapper.map(value.embed) else null,
-                    value.direction != "received")
+                    value.direction != "received",
+                    value.app)
         }
     }
 }

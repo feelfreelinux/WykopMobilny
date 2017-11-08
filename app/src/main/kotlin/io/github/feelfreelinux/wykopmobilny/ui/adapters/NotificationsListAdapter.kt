@@ -7,11 +7,11 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.NotificationViewHolder
 
-class NotificationsListAdapter : BaseProgressAdapter<NotificationViewHolder, Notification>() {
+class NotificationsListAdapter(val notificationItemClickListener : (Int) -> Unit) : BaseProgressAdapter<NotificationViewHolder, Notification>() {
     override fun createViewHolder(parent: ViewGroup): NotificationViewHolder
             = NotificationViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, parent, false))
 
     override fun bindHolder(holder: NotificationViewHolder, position: Int) {
-        holder.bindNotification(data[position])
+        holder.bindNotification(data[position], { notificationItemClickListener(position) })
     }
 }

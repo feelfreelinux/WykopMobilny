@@ -15,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -22,7 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.synthetic.main.entry_layout.view.*
 import javax.inject.Inject
 
-class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), EntryMenuDialogListener, EntryView {
+class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), EntryMenuDialogListener, EntryView, URLClickedListener {
 
     @Inject lateinit var linkHandler: WykopLinkHandlerApi
     @Inject lateinit var userManager: UserManagerApi
@@ -30,6 +31,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     @Inject lateinit var presenter: EntryPresenter
     @Inject lateinit var navigator: NavigatorApi
     private lateinit var entry: Entry
+    var shouldEnableClickListener = true
   
     init {
         WykopApp.uiInjector.inject(this)
@@ -76,8 +78,10 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             }
         }
 
-        setOnClickListener {
-            navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
+        if (shouldEnableClickListener) {
+            setOnClickListener {
+                navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
+            }
         }
 
         voteButton.apply {
@@ -90,8 +94,12 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     }
 
     private fun setupBody() {
-        entryContentTextView.prepareBody(entry.body, { linkHandler.handleUrl(getActivityContext()!!, it) })
+        entryContentTextView.prepareBody(entry.body, this)
         entryImageView.setEmbed(entry.embed)
+    }
+
+    override fun handleUrl(url: String) {
+        linkHandler.handleUrl(getActivityContext()!!, url)
     }
 
     override fun showErrorDialog(e: Throwable) =

@@ -75,6 +75,7 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
     }
 
     override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean) {
+        if (shouldClearAdapter) setupInfiniteScrollListeners()
         if (entryList.isNotEmpty()) {
             isRefreshing = false
             isLoading = false

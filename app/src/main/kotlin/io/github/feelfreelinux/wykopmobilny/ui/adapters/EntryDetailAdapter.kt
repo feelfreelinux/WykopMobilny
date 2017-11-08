@@ -19,7 +19,7 @@ class EntryDetailAdapter(private val addReceiverListener: (Author) -> Unit) : Re
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder?.itemViewType == ENTRY_HOLDER) {
-            (holder as EntryViewHolder).bindView(entry!!)
+            (holder as EntryViewHolder).bindView(entry!!, false)
         } else {
             val comment = entry!!.comments[position - 1]
             val entryAuthor = entry?.author

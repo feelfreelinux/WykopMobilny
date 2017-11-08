@@ -2,11 +2,16 @@ package io.github.feelfreelinux.wykopmobilny.utils.textview
 
 import android.text.TextPaint
 import android.text.style.ClickableSpan
+import android.text.style.URLSpan
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import java.net.URLDecoder
 
-class SpoilerAwareLinkSpan(val url : String, private val urlClickedListener : (String) -> Unit) : ClickableSpan() {
+interface URLClickedListener {
+    fun handleUrl(url : String)
+}
+
+class SpoilerAwareLinkSpan(val url : String, val urlClickedListener : URLClickedListener) : ClickableSpan() {
     override fun updateDrawState(ds: TextPaint) {
         super.updateDrawState(ds)
         ds.isUnderlineText = false
@@ -20,6 +25,6 @@ class SpoilerAwareLinkSpan(val url : String, private val urlClickedListener : (S
                 setMessage(URLDecoder.decode(text, "UTF-8"))
                 create().show()
             }
-        } else urlClickedListener(url)
+        } else urlClickedListener.handleUrl(url)
     }
 }

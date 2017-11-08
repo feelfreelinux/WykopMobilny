@@ -13,15 +13,15 @@ interface TagRetrofitApi {
     @GET("/tags/entries/{tag}/appkey/$APP_KEY/page/{page}")
     fun getTagEntries(@Path("tag") tag : String, @Path("page") page : Int) : Single<TagEntriesResponse>
 
-    @GET("/tag/observe/{tag}/appkey/$APP_KEY")
+    @GET("/tags/observe/{tag}/appkey/$APP_KEY")
     fun observe(@Path("tag") tag : String) : Single<WykopApiResponse<TagStateResponse>>
 
-    @GET("/tag/unobserve/{tag}/appkey/$APP_KEY")
+    @GET("/tags/unobserve/{tag}/appkey/$APP_KEY")
     fun unobserve(@Path("tag") tag : String) : Single<WykopApiResponse<TagStateResponse>>
 
-    @GET("/tag/block/{tag}/appkey/$APP_KEY")
+    @GET("/tags/block/{tag}/appkey/$APP_KEY")
     fun block(@Path("tag") tag : String) : Single<WykopApiResponse<TagStateResponse>>
 
-    @GET("/tag/unblock/{tag}/appkey/$APP_KEY")
+    @GET("/tags/unblock/{tag}/appkey/$APP_KEY")
     fun unblock(@Path("tag") tag : String) : Single<WykopApiResponse<TagStateResponse>>
 }
