@@ -12,6 +12,11 @@ androidExtensions {
     experimental = true
 }
 
+tasks.whenTaskAdded { task ->
+    if (task.name == 'assembleRelease')
+        task.dependsOn('test')
+}
+
 android {
     compileSdkVersion 26
     buildToolsVersion versions.buildTools
@@ -55,10 +60,6 @@ android {
     lintOptions {
         abortOnError false
     }
-}
-
-afterEvaluate {
-    assembleRelease.dependsOn test
 }
 
 repositories {
