@@ -1,8 +1,31 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/toolbar"/>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryDark"
+        android:fitsSystemWindows="true"
+        android:gravity="start"
+        android:minHeight="?attr/actionBarSize"
+        app:buttonGravity="top"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Rozmowa z m__b">
+
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
+            android:id="@+id/avatarview"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="end"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="285dp"
+            tools:layout_editor_absoluteY="7dp" />
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
@@ -44,6 +67,8 @@
         android:id="@+id/inputToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

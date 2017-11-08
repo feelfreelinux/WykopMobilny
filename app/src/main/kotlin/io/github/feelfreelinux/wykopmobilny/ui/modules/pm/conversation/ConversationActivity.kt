@@ -10,6 +10,8 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.FullConversation
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.PMMessage
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
@@ -19,15 +21,17 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.activity_conversation.*
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.activity_conversation.view.*
 import javax.inject.Inject
 
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
     val conversationAdapter by lazy { PMMessageAdapter() }
     val user by lazy { intent.getStringExtra(EXTRA_USER) }
+    lateinit var receiver : Author
     @Inject lateinit var presenter: ConversationPresenter
-    lateinit var conversationDataFragment: DataFragment<List<PMMessage>>
+    lateinit var conversationDataFragment: DataFragment<FullConversation>
 
     companion object {
         val EXTRA_USER = "USER"
@@ -47,7 +51,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         conversationDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = user
+        supportActionBar?.title = "Rozmowa z $user"
         swiperefresh.setOnRefreshListener { presenter.loadConversation() }
         inputToolbar.setCustomHint(getString(R.string.reply))
         inputToolbar.setFloatingImageView(floatingImageView)
@@ -61,6 +65,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         }
 
         if (conversationDataFragment.data == null) {
+            toolbar.avatarview.isVisible = false
             loadingView.isVisible = true
             presenter.loadConversation()
         } else {
@@ -71,12 +76,20 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
     }
 
-    override fun showConversation(items: List<PMMessage>) {
+    override fun showConversation(conversation: FullConversation) {
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
+        receiver = conversation.receiver
+        toolbar.apply {
+            subtitle = conversation.messages.first().date.toPrettyDate()
+            avatarview.setAuthor(conversation.receiver)
+            avatarview.isVisible = true
+        }
+
+
         conversationAdapter.apply {
             messages.clear()
-            messages.addAll(items.reversed())
+            messages.addAll(conversation.messages.reversed())
             notifyDataSetChanged()
         }
         recyclerView.invalidate()
@@ -91,7 +104,8 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        conversationDataFragment.data = conversationAdapter.messages.reversed()
+        conversationDataFragment.data =
+                FullConversation(conversationAdapter.messages.reversed(), receiver)
     }
 
     override fun openGalleryImageChooser() {

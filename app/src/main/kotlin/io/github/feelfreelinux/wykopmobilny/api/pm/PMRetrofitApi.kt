@@ -5,6 +5,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.Conversatio
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.PMMessageResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.common.WykopApiResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConversationResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -15,7 +16,7 @@ interface PMRetrofitApi {
     fun getConversations() : Single<WykopApiResponse<List<ConversationResponse>>>
 
     @GET("/pm/Conversation/{user}/appkey/$APP_KEY")
-    fun getConversation(@Path("user") user : String) : Single<WykopApiResponse<List<PMMessageResponse>>>
+    fun getConversation(@Path("user") user : String) : Single<FullConversationResponse>
 
     @Multipart
     @POST("/pm/SendMessage/{user}/appkey/$APP_KEY")

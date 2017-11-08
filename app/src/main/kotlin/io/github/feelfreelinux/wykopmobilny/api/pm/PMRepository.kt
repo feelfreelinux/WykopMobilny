@@ -2,12 +2,15 @@ package io.github.feelfreelinux.wykopmobilny.api.pm
 
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
+import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandler
 import io.github.feelfreelinux.wykopmobilny.api.getRequestBody
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.ConversationMapper
+import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.FullConversationMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.PMMessageMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationDeleteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.PMMessageResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConversationResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -20,8 +23,8 @@ class PMRepository(val retrofit: Retrofit) : PMApi {
             .map { it.map { ConversationMapper.map(it) } }
 
     override fun getConversation(user : String) = pmretrofitApi.getConversation(user)
-            .compose<List<PMMessageResponse>>(ErrorHandlerTransformer())
-            .map { it.map { PMMessageMapper.map(it) } }
+            .flatMap<FullConversationResponse>(ErrorHandler())
+            .map { FullConversationMapper.map(it) }
 
     override fun deleteConversation(user : String)
             = pmretrofitApi.deleteConversation(user)

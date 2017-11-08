@@ -5,15 +5,13 @@ import android.text.Html
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.URLSpan
-import android.view.View
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 
 fun String.toSpannable(): Spannable {
     @Suppress("DEPRECATION")
     (return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-        Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT, null, SpoilerTagHandler()) as Spannable
+        Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT, null, CodeTagHandler()) as Spannable
      else
-        Html.fromHtml(this, null, SpoilerTagHandler()) as Spannable
+        Html.fromHtml(this, null, CodeTagHandler()) as Spannable
     )
 }
 
@@ -21,11 +19,7 @@ fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, callback : (String) 
     val start = getSpanStart(span)
     val end = getSpanEnd(span)
     val flags = getSpanFlags(span)
-    val clickable = object : LinkSpan() {
-        override fun onClick(tv: View) {
-            callback(span.url)
-        }
-    }
+    val clickable = SpoilerAwareLinkSpan(span.url, callback)
     setSpan(clickable, start, end, flags)
     removeSpan(span)
 }

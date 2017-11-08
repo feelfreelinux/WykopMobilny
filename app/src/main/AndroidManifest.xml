@@ -56,7 +56,7 @@
         </activity>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity" />
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity" />
-        <activity android:name=".ui.modules.input.entry.entryComment.EditEntryCommentActivity" />
+        <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
         <activity android:name=".ui.modules.pm.conversation.ConversationActivity" />
         <activity android:name=".ui.modules.settings.SettingsActivity" />
 

@@ -26,13 +26,6 @@ class PMMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         view.apply {
             val prettyDate = message.date.toPrettyDate()
             date.text = prettyDate
-/*            avatarView.setAuthor(message.author)
-
-
-            message.app?.let {
-                date.text = context.getString(R.string.date_with_user_app, prettyDate, message.author.app)
-            }*/
-
             body.prepareBody(message.body, { linkHandler.handleUrl(context as Activity, it) })
             embedImage.setEmbed(message.embed)
         }
@@ -42,33 +35,17 @@ class PMMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
      * This function flips the message depending on the direction.
      */
     fun flipMessage(isSentFromUser: Boolean) {
-        val avatarParams = view.avatarView.layoutParams as RelativeLayout.LayoutParams
-
-        if (isSentFromUser) {
-            avatarParams.apply {
-                removeRule(RelativeLayout.ALIGN_PARENT_START)
-                addRule(RelativeLayout.ALIGN_PARENT_END)
-            }
-        } else {
-            avatarParams.apply {
-                removeRule(RelativeLayout.ALIGN_PARENT_END)
-                addRule(RelativeLayout.ALIGN_PARENT_START)
-            }
-        }
-
-        view.avatarView.layoutParams = avatarParams
-
         val cardViewParams = view.cardView.layoutParams as RelativeLayout.LayoutParams
 
         if (isSentFromUser) {
             cardViewParams.apply {
-                removeRule(RelativeLayout.END_OF)
-                addRule(RelativeLayout.START_OF, R.id.avatarView)
+                removeRule(RelativeLayout.ALIGN_PARENT_START)
+                addRule(RelativeLayout.ALIGN_PARENT_END)
             }
         } else {
             cardViewParams.apply {
-                removeRule(RelativeLayout.START_OF)
-                addRule(RelativeLayout.END_OF, R.id.avatarView)
+                removeRule(RelativeLayout.ALIGN_PARENT_END)
+                addRule(RelativeLayout.ALIGN_PARENT_START)
             }
         }
 
