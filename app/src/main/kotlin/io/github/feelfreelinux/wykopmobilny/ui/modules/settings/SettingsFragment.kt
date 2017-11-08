@@ -12,6 +12,8 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -40,8 +42,15 @@ class SettingsActivity : BaseActivity() {
                 .commit()
     }
 
-
     class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
+        @Inject
+        lateinit var settingsApi: SettingsPreferencesApi
+
+        override fun onActivityCreated(savedInstanceState: Bundle?) {
+            super.onActivityCreated(savedInstanceState)
+            WykopApp.uiInjector.inject(this)
+        }
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.app_preferences)
             (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
@@ -62,6 +71,9 @@ class SettingsActivity : BaseActivity() {
                 when (pref.key) {
                     "useDarkTheme" -> {
                         restartActivity()
+                    }
+                    "showNotifications" -> {
+                        WykopNotificationsJob.schedule(settingsApi)
                     }
                 }
             }

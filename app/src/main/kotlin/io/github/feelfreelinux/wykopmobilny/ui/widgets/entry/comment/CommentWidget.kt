@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -32,13 +33,13 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
 
     lateinit var comment : EntryComment
 
-    var addReceiverListener : ((Author) -> Unit)? = null
+    var addReceiverListener: ((Author) -> Unit)? = null
 
-    @Inject lateinit var linkHandler : WykopLinkHandlerApi
-    @Inject lateinit var userManagerApi : UserManagerApi
-    @Inject lateinit var clipboardHelper : ClipboardHelperApi
-    @Inject lateinit var presenter : CommentPresenter
-    @Inject lateinit var navigator : NavigatorApi
+    @Inject lateinit var linkHandler: WykopLinkHandlerApi
+    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject lateinit var clipboardHelper: ClipboardHelperApi
+    @Inject lateinit var presenter: CommentPresenter
+    @Inject lateinit var navigator: NavigatorApi
 
     init {
         WykopApp.uiInjector.inject(this)
@@ -60,6 +61,19 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView {
         setOnLongClickListener {
             CommentMenuDialog(context, entryComment.author, userManagerApi, this).show()
             true
+        }
+    }
+
+    fun setStyleForComment(isAuthorComment: Boolean){
+        val credentials = userManagerApi.getUserCredentials()
+        if (credentials != null && credentials.login == comment.author.nick) {
+            authorBadgeStrip.isVisible = true
+            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBadgeOwn))
+        } else if (isAuthorComment) {
+            authorBadgeStrip.isVisible = true
+            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBadgeAuthors))
+        } else {
+            authorBadgeStrip.isVisible = false
         }
     }
 

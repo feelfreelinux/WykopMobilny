@@ -40,7 +40,12 @@ class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelpe
         }
     }
 
-    override fun getImageBitmap() : Bitmap? = (photoView.image.drawable as BitmapDrawable).bitmap
+    override fun getImageBitmap() : Bitmap? {
+        photoView.image.drawable?.apply {
+            return (this as BitmapDrawable).bitmap
+        }
+        return null
+    }
 
     override fun saveImage() {
         val bitmap = getImageBitmap()

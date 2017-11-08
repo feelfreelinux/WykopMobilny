@@ -29,8 +29,19 @@ android {
         buildConfigField 'String', 'APP_SECRET', credentialsProperties['apiSecret']
         buildConfigField 'String', 'APP_KEY', credentialsProperties['apiKey']
     }
+    
+    signingConfigs {
+        ci {
+            keyAlias "key0"
+            keyPassword System.getenv('CI_KEYSTORE_PASSWORD')
+            storeFile file('../ci-release-keystore.jks')
+            storePassword System.getenv('CI_KEYSTORE_PASSWORD')
+        }
+    }
+    
     buildTypes {
         release {
+            if(System.getenv('CI_KEYSTORE_PASSWORD')) signingConfig signingConfigs.ci
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -42,10 +53,12 @@ android {
     }
     buildToolsVersion '26.0.2'
     lintOptions {
-
         abortOnError false
-
     }
+}
+
+afterEvaluate {
+    assembleRelease.dependsOn test
 }
 
 repositories {
@@ -84,6 +97,9 @@ dependencies {
     // RxJava
     implementation "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
     implementation "io.reactivex.rxjava2:rxjava:$versions.rxjava"
+
+    // AppUpdater
+    implementation "com.github.javiersantos:AppUpdater:$versions.appUpdater"
 
     // Dagger 2
     implementation "com.google.dagger:dagger:$versions.dagger2"

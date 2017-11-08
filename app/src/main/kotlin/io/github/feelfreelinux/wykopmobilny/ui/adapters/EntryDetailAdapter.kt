@@ -9,17 +9,23 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.CommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 
-class EntryDetailAdapter(val addReceiverListener : (Author) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var entry : Entry? = null
-    private val ENTRY_HOLDER = 0
-    private val COMMENT_HOLDER = 1
+class EntryDetailAdapter(private val addReceiverListener: (Author) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    companion object {
+        private const val ENTRY_HOLDER = 0
+        private const val COMMENT_HOLDER = 1
+    }
+
+    var entry: Entry? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        when (holder?.itemViewType) {
-            ENTRY_HOLDER -> (holder as EntryViewHolder).bindView(entry!!)
-            COMMENT_HOLDER -> (holder as CommentViewHolder).bindView(entry!!.comments[position - 1])
+        if (holder?.itemViewType == ENTRY_HOLDER) {
+            (holder as EntryViewHolder).bindView(entry!!)
+        } else {
+            val comment = entry!!.comments[position - 1]
+            val entryAuthor = entry?.author
+            val commentAuthor = comment.author
+            (holder as CommentViewHolder).bindView(comment, entryAuthor == commentAuthor)
         }
-
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -27,7 +33,7 @@ class EntryDetailAdapter(val addReceiverListener : (Author) -> Unit) : RecyclerV
         else COMMENT_HOLDER
     }
 
-    override fun getItemCount() : Int {
+    override fun getItemCount(): Int {
         entry?.comments?.let {
             return it.size + 1
         }

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.Toast
 import com.evernote.android.job.util.JobUtil
+import com.github.javiersantos.appupdater.AppUpdater
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -90,6 +91,14 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         setSupportActionBar(toolbar)
         WykopApp.uiInjector.inject(this)
         JobUtil.hasBootPermission(this)
+
+        // Setup AppUpdater
+        AppUpdater(this)
+                .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
+                .setTitleOnUpdateAvailable(R.string.update_available)
+                .setContentOnUpdateAvailable(R.string.update_app)
+                .setButtonUpdate(R.string.update)
+                .start()
 
         // Schedules notification service
         WykopNotificationsJob.schedule(settingsApi)

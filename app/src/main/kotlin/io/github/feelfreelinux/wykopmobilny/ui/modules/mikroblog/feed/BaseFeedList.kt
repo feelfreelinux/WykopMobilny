@@ -15,7 +15,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.entry_list_item.view.*
 import kotlinx.android.synthetic.main.feed_recyclerview.view.*
 import javax.inject.Inject
 
@@ -26,11 +25,11 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    @Inject lateinit var userManager : UserManagerApi
-    var presenter : BaseFeedPresenter? = null
+    @Inject lateinit var userManager: UserManagerApi
+    var presenter: BaseFeedPresenter? = null
     var onFabClickedListener = {}
     var shouldShowFab = true
-    var fab : View? = null
+    var fab: View? = null
 
     private val feedAdapter by lazy { FeedAdapter() }
 
@@ -83,10 +82,7 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
                 feedAdapter.addData(entryList, shouldClearAdapter)
 
                 if (feedAdapter.data.size == entryList.size) fab?.isVisible = shouldShowFab // First time add only.
-                if (shouldClearAdapter) {
-                    recyclerView.smoothScrollToPosition(0)
-                    setupInfiniteScrollListeners()
-                }
+                if (shouldClearAdapter) recyclerView.scrollToPosition(0)
             }
         }
     }
@@ -98,17 +94,21 @@ class BaseFeedList : CoordinatorLayout, SwipeRefreshLayout.OnRefreshListener, Ba
         isLoading = false
     }
 
-    val entries : List<Entry>
+    val entries: List<Entry>
         get() = feedAdapter.data
 
     override fun showErrorDialog(e: Throwable) =
-        context.showExceptionDialog(e)
+            context.showExceptionDialog(e)
 
-    var isLoading : Boolean
+    var isLoading: Boolean
         get() = loadingView.isVisible
-        set(value) { loadingView.isVisible = value }
+        set(value) {
+            loadingView.isVisible = value
+        }
 
-    var isRefreshing : Boolean
+    var isRefreshing: Boolean
         get() = swiperefresh.isRefreshing
-        set(value) { swiperefresh.isRefreshing = value }
+        set(value) {
+            swiperefresh.isRefreshing = value
+        }
 }

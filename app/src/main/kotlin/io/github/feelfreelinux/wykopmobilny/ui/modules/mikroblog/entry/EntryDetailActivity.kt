@@ -10,17 +10,16 @@ import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.decorators.EntryCommentItemDecoration
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryDetailAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.decorators.EntryCommentItemDecoration
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
-import io.github.feelfreelinux.wykopmobilny.utils.api.getWpisId
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
@@ -30,20 +29,21 @@ import javax.inject.Inject
 
 class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener {
     var entryId = 0
+
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
         val EXTRA_FRAGMENT_KEY = "ENTRY_ACTIVITY_#"
 
-        fun createIntent(context : Context, entryId: Int, commentId: Int?): Intent {
+        fun createIntent(context: Context, entryId: Int, commentId: Int?): Intent {
             val intent = Intent(context, EntryActivity::class.java)
             intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
             return intent
         }
     }
 
-    @Inject lateinit var presenter : EntryDetailPresenter
-    private lateinit var entryFragmentData : DataFragment<Entry>
-    private val adapter by lazy { EntryDetailAdapter( { inputToolbar.addAddressant(it.nick) } ) }
+    @Inject lateinit var presenter: EntryDetailPresenter
+    private lateinit var entryFragmentData: DataFragment<Entry>
+    private val adapter by lazy { EntryDetailAdapter({ inputToolbar.addAddressant(it.nick) }) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +61,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         supportActionBar?.title = null
         WykopApp.uiInjector.inject(this)
 
-        presenter.entryId = entryId
-        presenter.subscribe(this)
-
         // Prepare RecyclerView
         recyclerView.apply {
             prepare()
@@ -79,6 +76,9 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         swiperefresh.setOnRefreshListener(this)
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + entryId)
 
+    }
+
+    private fun loadData() {
         if (entryFragmentData.data != null)
             adapter.entry = entryFragmentData.data
         else {
@@ -86,6 +86,13 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             loadingView.isVisible = true
             presenter.loadData()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.subscribe(this)
+        presenter.entryId = entryId
+        loadData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -98,14 +105,10 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         entryFragmentData.data = adapter.entry
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.unsubscribe()
-    }
-
     override fun onPause() {
         super.onPause()
         if (isFinishing) supportFragmentManager.removeDataFragment(entryFragmentData)
+        presenter.unsubscribe()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

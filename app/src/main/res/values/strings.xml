@@ -85,4 +85,7 @@
     <string name="unobserve_tag">Przestań obserwować tag</string>
     <string name="block_tag">Zablokuj tag</string>
     <string name="unblock_tag">Odblokuj tag</string>
+    <string name="update_available">Dostępna aktualizacja</string>
+    <string name="update_app">Zaktualizuj aplikację do najnowszej wersji</string>
+    <string name="update">Zaktualizuj</string>
 </resources>

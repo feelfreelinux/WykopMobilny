@@ -16,6 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.createNewEntry
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
 import kotlinx.android.synthetic.main.activity_feed.*
@@ -29,6 +30,8 @@ class TagActivity : BaseActivity(), TagView {
     @Inject lateinit var presenter : TagPresenter
     private var tagMeta : TagMetaResponse? = null
     private var tagState : TagStateResponse? = null
+    @Inject lateinit var navigatorApi : NavigatorApi
+    private var tagMeta : TagMeta? = null
 
     companion object {
         val EXTRA_TAG = "EXTRA_TAG"
@@ -66,7 +69,7 @@ class TagActivity : BaseActivity(), TagView {
             fab = this@TagActivity.fab
             initAdapter(tagDataFragment.data?.model)
             onFabClickedListener = {
-                context.createNewEntry(null)
+                navigatorApi.openAddEntryActivity(this@TagActivity)
             }
         }
         setSupportActionBar(toolbar)

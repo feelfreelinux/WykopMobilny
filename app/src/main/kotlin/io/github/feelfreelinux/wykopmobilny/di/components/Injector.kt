@@ -73,4 +73,5 @@ interface Injector {
     fun inject(wykopImageView: WykopImageView)
     fun inject(pmMessageViewHolder: PMMessageViewHolder)
     fun inject(settingsFragment: SettingsActivity)
+    fun inject(settingsFragment: SettingsActivity.SettingsFragment)
 }
