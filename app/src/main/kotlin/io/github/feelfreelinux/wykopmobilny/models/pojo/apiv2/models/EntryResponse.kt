@@ -27,8 +27,12 @@ class EntryResponse(
 
         @Json(name="status")
         val status : String,
+
         @Json(name="embed")
         val embed : EmbedResponse?,
+        @Json(name="user_vote")
+
+        val survey : SurveyResponse?,
         @Json(name="user_vote")
         val userVote : Int,
         @Json(name="app")

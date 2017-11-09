@@ -10,18 +10,19 @@ import java.util.*
 
 fun parseDate(date : String) : Date = SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.GERMANY).parse(date)
 
-fun getGroupColor(role : Int) : Int {
-    var loginColor = Color.BLUE
-    when(role) {
-        0 -> loginColor = Color.parseColor("#339933")
-        1 -> loginColor = Color.parseColor("#ff5917")
-        2 -> loginColor = Color.parseColor("#BB0000")
-        5 -> loginColor = Color.parseColor("#ffffff")
-        1001 -> loginColor = Color.parseColor("#999999")
-        1002 -> loginColor = Color.parseColor("#999999")
-        2001 -> loginColor = Color.parseColor("#3F6FA0")
+fun getGroupColor(role : Int, isUsingDarkTheme : Boolean = true) : Int {
+    return when(role) {
+        0 -> Color.parseColor("#339933")
+        1 -> Color.parseColor("#ff5917")
+        2 -> Color.parseColor("#BB0000")
+        5 ->
+            if (isUsingDarkTheme) Color.parseColor("#ffffff")
+            else Color.parseColor("#000000")
+        1001 -> Color.parseColor("#999999")
+        1002 -> Color.parseColor("#999999")
+        2001 -> Color.parseColor("#3F6FA0")
+        else -> Color.BLUE
     }
-    return loginColor
 }
 
 fun getGenderStripResource(authorSex : String) : Int =

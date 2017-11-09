@@ -25,6 +25,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.FavoriteButton
@@ -74,4 +75,5 @@ interface Injector {
     fun inject(pmMessageViewHolder: PMMessageViewHolder)
     fun inject(settingsFragment: SettingsActivity)
     fun inject(settingsFragment: SettingsActivity.SettingsFragment)
+    fun inject(authorHeaderView: AuthorHeaderView)
 }

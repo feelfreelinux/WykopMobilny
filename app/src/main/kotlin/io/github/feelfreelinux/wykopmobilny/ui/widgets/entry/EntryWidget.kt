@@ -72,9 +72,10 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     private fun setupButtons() {
         commentsCountTextView.apply {
             text = entry.commentsCount.toString()
-
-            setOnClickListener {
-                navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
+            if (shouldEnableClickListener) {
+                setOnClickListener {
+                    navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
+                }
             }
         }
 
