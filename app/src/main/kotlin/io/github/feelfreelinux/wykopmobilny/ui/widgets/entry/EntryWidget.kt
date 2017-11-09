@@ -97,6 +97,10 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     private fun setupBody() {
         entryContentTextView.prepareBody(entry.body, this)
         entryImageView.setEmbed(entry.embed)
+
+        if (entry.survey != null) {
+            survey.setSurvey(entry.survey!!)
+        } else survey.isVisible = false
     }
 
     override fun handleUrl(url: String) {

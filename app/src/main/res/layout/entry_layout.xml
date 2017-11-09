@@ -32,6 +32,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/authorHeaderView"/>
 
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
+            android:id="@+id/survey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/entryContentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
             android:id="@+id/entryImageView"
             style="@style/WykopImageView"
@@ -41,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="wrap"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/entryContentTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/survey" />
 
         <TextView
             android:id="@+id/commentsCountTextView"

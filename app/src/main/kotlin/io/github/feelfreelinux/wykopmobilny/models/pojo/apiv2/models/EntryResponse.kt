@@ -30,7 +30,7 @@ class EntryResponse(
 
         @Json(name="embed")
         val embed : EmbedResponse?,
-        @Json(name="user_vote")
+        @Json(name="survey")
 
         val survey : SurveyResponse?,
         @Json(name="user_vote")

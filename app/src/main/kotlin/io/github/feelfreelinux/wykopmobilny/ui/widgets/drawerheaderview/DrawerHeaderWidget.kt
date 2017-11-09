@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import javax.inject.Inject
@@ -47,6 +48,7 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
     }
 
     override fun onDetachedFromWindow() {
+        printout("DEATACH")
         presenter.unsubscribe()
         super.onDetachedFromWindow()
     }
