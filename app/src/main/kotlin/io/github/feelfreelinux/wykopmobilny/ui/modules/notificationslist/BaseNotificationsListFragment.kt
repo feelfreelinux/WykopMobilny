@@ -59,11 +59,9 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter : Boolean) {
         if (shouldClearAdapter) setInfiniteScrollListener()
         if (notifications.isNotEmpty()) {
-            recyclerView.post {
-                loadingView.isVisible = false
-                swiperefresh.isRefreshing = false
-                notificationAdapter.addData(notifications, shouldClearAdapter)
-            }
+            loadingView.isVisible = false
+            swiperefresh.isRefreshing = false
+            notificationAdapter.addData(notifications, shouldClearAdapter)
         }
     }
 

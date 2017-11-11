@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificati
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.NotificationCompat
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobRequest
@@ -63,8 +64,15 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
 
     override fun showNotification(notification: io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification) {
         val intent = wykopLinkHandler.getLinkIntent(context, notification.url)
-        intent?.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+
+        val pendingIntent = if (intent != null) {
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            PendingIntent.getActivity(context, 0, intent, 0)
+
+        } else {
+            val notificationIntent = Intent(Intent.ACTION_VIEW, Uri.parse(notification.url))
+            PendingIntent.getActivity(context, 0, notificationIntent, 0)
+        }
         notificationManager.updateNotification(NOTIFICATION_ID, buildNotification(notification.body, pendingIntent))
     }
 

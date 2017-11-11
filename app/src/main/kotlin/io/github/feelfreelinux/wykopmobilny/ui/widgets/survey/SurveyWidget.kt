@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Answer
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.survey_answer_item.view.*
 import kotlinx.android.synthetic.main.survey_listview.view.*
 
@@ -25,6 +26,7 @@ class SurveyWidget : ConstraintLayout {
     }
 
     fun setSurvey(survey: Survey) {
+        isVisible = true
         surveyData = survey
         surveyQuestion.text = survey.question
 

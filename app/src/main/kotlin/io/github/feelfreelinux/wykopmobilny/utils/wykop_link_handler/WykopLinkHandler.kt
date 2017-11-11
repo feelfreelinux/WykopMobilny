@@ -65,7 +65,6 @@ class WykopLinkHandler(private val navigatorApi: NavigatorApi) : WykopLinkHandle
                 ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
             }
             else -> null
-
         }
     }
 }
