@@ -27,7 +27,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         val view = inflater?.inflate(R.layout.fragment_feed, container, false)
-        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity, R.drawable.ic_clock)
+        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity, R.drawable.ic_hot)
         return view
     }
 

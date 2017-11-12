@@ -2,11 +2,10 @@ package io.github.feelfreelinux.wykopmobilny
 
 import android.app.Application
 import android.content.Context
-import com.crashlytics.android.Crashlytics
+import com.bugsnag.android.Bugsnag
 import com.evernote.android.job.JobManager
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
-import io.fabric.sdk.android.Fabric
 import io.github.feelfreelinux.wykopmobilny.di.AppModule
 import io.github.feelfreelinux.wykopmobilny.di.components.DaggerInjector
 import io.github.feelfreelinux.wykopmobilny.di.components.Injector
@@ -32,8 +31,13 @@ class WykopApp : Application() {
     override fun onCreate() {
         super.onCreate()
         refWatcher = LeakCanary.install(this)
-        Fabric.with(this, Crashlytics())
         JobManager.create(this).addJobCreator(WykopNotificationJobCreator())
+        if (!BuildConfig.DEBUG) {
+            Bugsnag.init(this, BuildConfig.BUGSNAG_KEY)
+            Bugsnag.setReleaseStage(BuildConfig.BUILD_TYPE)
+            Bugsnag.setProjectPackages("io.github.feelfreelinux.wykopmobilny")
+        }
+
 
         uiInjector = DaggerInjector.builder()
                 .appModule(AppModule(this))

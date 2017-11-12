@@ -47,7 +47,17 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
         }
     }
 
+    fun startListeningForUpdates() {
+        presenter.subscribe(this)
+        checkIsUserLoggedIn()
+    }
+
+    fun stopListeningForUpdates() {
+        presenter.unsubscribe()
+    }
+
     override fun onDetachedFromWindow() {
+        printout("Deattached")
         presenter.unsubscribe()
         super.onDetachedFromWindow()
     }

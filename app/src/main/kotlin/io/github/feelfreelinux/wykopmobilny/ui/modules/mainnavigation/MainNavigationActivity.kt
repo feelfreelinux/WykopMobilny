@@ -11,8 +11,10 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.Toast
+import com.bugsnag.android.Bugsnag
 import com.evernote.android.job.util.JobUtil
 import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -29,6 +31,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.activity_navigation.*
+import kotlinx.android.synthetic.main.activity_navigation.view.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -94,6 +97,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
 
         // Setup AppUpdater
         AppUpdater(this)
+                .setUpdateFrom(UpdateFrom.GITHUB)
                 .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
                 .setTitleOnUpdateAvailable(R.string.update_available)
                 .setContentOnUpdateAvailable(R.string.update_app)
@@ -134,11 +138,13 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     override fun onResume() {
         super.onResume()
         presenter.subscribe(this)
+        navHeader.view_container.startListeningForUpdates()
     }
 
     override fun onPause() {
         super.onPause()
         presenter.unsubscribe()
+        navHeader.view_container.stopListeningForUpdates()
     }
 
     private fun setupNavigation() {
