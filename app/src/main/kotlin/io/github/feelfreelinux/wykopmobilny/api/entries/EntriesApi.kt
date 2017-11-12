@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.entries
 
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryCommentResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
@@ -21,6 +22,8 @@ interface EntriesApi {
     fun editEntry(body: String, entryId: Int): Single<EntryResponse>
     fun editEntryComment(body : String, commentId: Int): Single<EntryCommentResponse>
     fun deleteEntryComment(commentId: Int): Single<EntryCommentResponse>
+    fun voteSurvey(entryId: Int, answerId : Int): Single<Survey>
+
 
     fun getHot(page : Int, period : String) : Single<List<Entry>>
     fun getStream(page : Int) : Single<List<Entry>>

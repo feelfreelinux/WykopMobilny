@@ -2,10 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.api.entries
 
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.common.WykopApiResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryCommentResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -35,6 +32,9 @@ interface EntriesRetrofitApi {
 
     @GET("/entries/favorite/{entryId}/appkey/$APP_KEY")
     fun markFavorite(@Path("entryId") entryId: Int) : Single<WykopApiResponse<FavoriteResponse>>
+
+    @GET("/entries/surveyvote/{entryId}/{answerId}/appkey/$APP_KEY")
+    fun voteSurvey(@Path("entryId") entryId: Int, @Path("answerId") answerId : Int) : Single<WykopApiResponse<SurveyResponse>>
 
     @Multipart
     @POST("/entries/add/appkey/$APP_KEY")

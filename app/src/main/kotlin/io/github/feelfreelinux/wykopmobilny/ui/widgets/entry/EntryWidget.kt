@@ -99,7 +99,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         entryImageView.setEmbed(entry.embed)
 
         if (entry.survey != null) {
-            survey.setSurvey(entry.survey!!)
+            survey.setSurvey(entry.survey!!, entry.id)
         } else survey.isVisible = false
     }
 

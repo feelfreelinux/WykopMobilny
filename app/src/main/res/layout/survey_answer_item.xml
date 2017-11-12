@@ -6,40 +6,42 @@
 
     <TextView
         android:id="@+id/answer"
-        android:text="Po jabłka do lasu."
         android:textSize="14sp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:theme="@style/CheckBoxStyle"
+        app:layout_constraintTop_toBottomOf="@id/answer"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         app:layout_constraintTop_toBottomOf="@id/answer"
+        app:layout_constraintStart_toEndOf="@id/radioButton"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:background="@drawable/shape"
+        android:layout_width="0dp"
+        android:background="?surveyBarStroke"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:weightSum="100">
 
         <View
             android:id="@+id/percentage_view"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="30"
-            android:background="@drawable/shape2" />
+            android:background="?surveyBar" />
 
 
         <View
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/linearLayout"
-        app:layout_constraintStart_toStartOf="@id/linearLayout"
-        app:layout_constraintBottom_toBottomOf="@id/linearLayout"/>
 
     <TextView
         android:id="@+id/votesCount"

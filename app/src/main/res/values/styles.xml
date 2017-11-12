@@ -31,6 +31,8 @@
         <item name="commentDrawable">@drawable/ic_comment_light</item>
         <item name="favoriteDrawable">@drawable/ic_favorite_selected_light</item>
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite_light</item>
+        <item name="surveyBar">@drawable/survey_bar</item>
+        <item name="surveyBarStroke">@drawable/survey_bar_stroke</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold</item>
@@ -45,7 +47,7 @@
     </style>
 
     <style name="AppTheme.Dark" parent="Base.Theme.AppCompat">
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="preferenceTheme">@style/DarkPreferencesTheme</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:windowBackground">@color/cardList.Dark</item>
@@ -75,6 +77,8 @@
         <item name="commentDrawable">@drawable/ic_comment</item>
         <item name="favoriteDrawable">@drawable/ic_favorite_selected</item>
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite</item>
+        <item name="surveyBar">@drawable/survey_bar_dark</item>
+        <item name="surveyBarStroke">@drawable/survey_bar_stroke_dark</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote_dark</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold_dark</item>
@@ -137,5 +141,13 @@
         <item name="android:layout_height">@dimen/markdown_item_size</item>
         <item name="android:layout_width">@dimen/markdown_item_size</item>
         <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="DarkPreferencesTheme" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="colorControlNormal">@color/toolbarItemsColor.Dark</item>
+    </style>
+
+    <style name="CheckBoxStyle"  parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="colorControlNormal">?attr/spacerColor</item>
     </style>
 </resources>

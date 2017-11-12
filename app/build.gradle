@@ -22,7 +22,7 @@ android {
     buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "io.github.feelfreelinux.wykopmobilny"
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 5
         versionName "0.2.0"

@@ -7,5 +7,8 @@ data class SurveyResponse(
         val question : String,
 
         @Json(name="answers")
-        val answers : List<AnswerResponse>
+        val answers : List<AnswerResponse>,
+
+        @Json(name="user_answer")
+        val userAnswer : Int?
 )

@@ -10,6 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.commen
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
 @Module
@@ -31,4 +32,7 @@ class ViewPresentersModule {
 
     @Provides
     fun providesCommentPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi) = CommentPresenter(subscriptionHelperApi, entriesApi)
+
+    @Provides
+    fun providesSurveyPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi) = SurveyPresenter(subscriptionHelperApi, entriesApi)
 }

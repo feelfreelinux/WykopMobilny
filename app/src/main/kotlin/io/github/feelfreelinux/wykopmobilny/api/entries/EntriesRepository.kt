@@ -3,10 +3,8 @@ package io.github.feelfreelinux.wykopmobilny.api.entries
 import io.github.feelfreelinux.wykopmobilny.api.*
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapper
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryCommentResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.SurveyMapper
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -59,6 +57,10 @@ class EntriesRepository(val retrofit: Retrofit) : EntriesApi {
 
     override fun deleteEntryComment(commentId: Int) = entriesApi.deleteEntryComment(commentId)
             .compose<EntryCommentResponse>(ErrorHandlerTransformer())
+
+    override fun voteSurvey(entryId: Int, answerId: Int) = entriesApi.voteSurvey(entryId, answerId)
+            .compose<SurveyResponse>(ErrorHandlerTransformer())
+            .map { SurveyMapper.map(it) }
 
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!

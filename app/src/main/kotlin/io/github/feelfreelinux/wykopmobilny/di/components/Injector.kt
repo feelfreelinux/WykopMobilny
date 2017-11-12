@@ -36,6 +36,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.commen
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderWidget
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentWidget
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
 import javax.inject.Singleton
 
 @Singleton
@@ -76,4 +77,5 @@ interface Injector {
     fun inject(settingsFragment: SettingsActivity)
     fun inject(settingsFragment: SettingsActivity.SettingsFragment)
     fun inject(authorHeaderView: AuthorHeaderView)
+    fun inject(surveyWidget: SurveyWidget)
 }

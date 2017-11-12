@@ -8,7 +8,8 @@ class SurveyMapper {
     companion object : Mapper<SurveyResponse, Survey> {
         override fun map(value: SurveyResponse): Survey {
             return Survey(value.question,
-                    value.answers.map { AnswerMapper.map(it) })
+                    value.answers.map { AnswerMapper.map(it) },
+                    value.userAnswer)
         }
     }
 }
