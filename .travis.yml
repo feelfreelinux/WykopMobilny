@@ -21,11 +21,6 @@ cache:
   - "$HOME/.android/build-cache"
 script:
 - "./gradlew assembleRelease"
-before_install:
-- openssl aes-256-cbc -K $encrypted_110fd07a76f6_key -iv $encrypted_110fd07a76f6_iv
-  -in credentials.properties.enc -out credentials.properties -d
-- openssl aes-256-cbc -K $encrypted_110fd07a76f6_key -iv $encrypted_110fd07a76f6_iv
-  -in ci-release-keystore.jks.enc -out ci-release-keystore.jks -d
 deploy:
   provider: releases
   api_key:
@@ -40,3 +35,8 @@ env:
   global:
   - secure: teHBCHSeoGRamuHwwfqRVs7xs/oia911ij0oBdVg4Na9KbunnNJRAFwVB3RWCKhbaVAJkOvoKyNuWWIeXedS+Ia9/IBsSlvL0tOXdJZUtzM0tq56VNMncllDyleBUfBvYCsaDtsb54c0G6fgdjpD1C0l8+rGnJn7IbIWChTtblXpcoulCGmmnq/lp2KtHBEr8frZvChQMXmGdroiiJLWVhhVmtsyorc3tsI3CdaHVzztFh9ruzT45Wky0oYWuT16wLYaPiVGBR6S9Ear70TCXSIj6y2Mxu4Yt/Ig4o4zYp/9vVc5Exk+DZ4bZxJ+DaKNji8LSPVzEyVjWkmMuewELUusbV2Vrkg/bBYHeRjB/f5EHS+6lpQL4paRxtRL7UOBzAYsF6ckxKMEyksl4lXT1on8whfDhtWLWl81IboDX6Bsp53p2Nb7BJPENfEsUM5WhhYdFsqIiYrSfM61uxdpYkp/jy70uwMlWbgojvvs0hifC2L7Ve+iacJnDcnMPsvy//2V3PWtcAobiBNH7d5934YIEq3O0ylyyaxqWd1wtKej42woQrXLTTM/F0mXio6CrrEiJ0EYs83fxgyI055hPOecW1Zh0mRMuT/Mo8N/EsDGkpYRzBXPw1nylN0jGyg1y4zTTScKo/Ezk0TvmIpaM5Le0FEYRW9J8Rp6xaUyZds=
   - secure: DnMnA8OB7PufQnJE8+PNN5BZ9pWCCjmggMSm9nlJAJQX9VGYK7+vFRosYA27u++f/neZYR6IHr8iaIaUFCBUzIZ2/WT+bwuz1TiREKTbJCtbvOS/N36Zpm992psU11zCtVPlkg44/yJe1ItH/ctAwQE3fE/w3C99rucbeUfcly55+QeIU/8jkCwBb55HB1SIz6D+QtJ8HqvhyG+/+EcbJ1DPomR8gCH0tDUEgHMS1vzMALhJ0BiHP1biWWawbiEPivEZ491Z44QVxyTg+RJ8nPQtSua9jVej6XWuESS3g0AVuT7ybk1FR4sZubkFSjRLhiAJ3miGzJYkXtDiCwopDx80DsmGqXM5D1g93tNy3e/WZ8r2t7TwsqNY3kNFR0iyPxvFEyxOfwvITM2KV7OFrYsmGgFwmGUxCAlo0m9oy92CSJDwp4BBCX+TYc6ANkM+SRZhmGWSwvCWyAkAtNjTnX3hH+fvTIvrAP1khxvP3mAvXuz/IcjaAHAfkq/ya9WZ5Ey9/A4PoMSUGBIqD5sry0EIki5SnHSkt8DBypRK6e71IjZblyZkCtz636tkA4Pk+i7G2rAHud37F9khKhNv0Z6D8jWL5pQirQ2eTzG1DYv4gE3tmznCDHpPZiTYfbT6165UTepUkEDCNDq2+nhCkHAF0zsX4ooy1/iHKwMh7qM=
+before_install:
+- openssl aes-256-cbc -K $encrypted_110fd07a76f6_key -iv $encrypted_110fd07a76f6_iv
+  -in ci-release-keystore.jks.enc -out ci-release-keystore.jks -d
+- openssl aes-256-cbc -K $encrypted_110fd07a76f6_key -iv $encrypted_110fd07a76f6_iv
+  -in credentials.properties.enc -out credentials.properties -d

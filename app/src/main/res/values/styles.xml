@@ -22,6 +22,8 @@
         <item name="MirkoButtonStyle">@style/MikroButton</item>
         <item name="colorControlNormal">@color/cardViewSelected.Dark</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
+        <item name="usersMessageColor">@color/usersMessageColor</item>
+        <item name="usersMessageSubtextDirected">@color/authorHeader_date.Dark</item>
 
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list</item>
         <item name="buttonStatelist">@drawable/button_background_state_list</item>
@@ -68,6 +70,8 @@
         <item name="colorControlNormal">@color/cardViewSelected.Dark</item>
         <item name="android:textColorHint">@color/hintColor.Dark</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
+        <item name="usersMessageColor">@color/usersMessageColor.Dark</item>
+        <item name="usersMessageSubtextDirected">@color/usersMessageDirected.Dark</item>
 
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list_dark</item>
         <item name="buttonStatelist">@drawable/button_background_state_list_dark</item>

@@ -8,6 +8,8 @@
     <attr name="cardViewSelected" format="color" />
     <attr name="authorHeader_date_color" format="color" />
     <attr name="textColor" format="color"/>
+    <attr name="usersMessageColor" format="reference" />
+    <attr name="usersMessageSubtextDirected" format="reference" />
 
     <!-- DRAWABLES -->
     <attr name="commentDrawable" format="reference"/>

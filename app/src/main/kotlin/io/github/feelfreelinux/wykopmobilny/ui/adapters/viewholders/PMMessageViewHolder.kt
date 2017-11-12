@@ -1,7 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.app.Activity
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
+import android.util.TypedValue
 import android.view.View
 import android.widget.RelativeLayout
 import io.github.feelfreelinux.wykopmobilny.R
@@ -47,13 +49,27 @@ class PMMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLCl
      */
     fun flipMessage(isSentFromUser: Boolean) {
         val cardViewParams = view.cardView.layoutParams as RelativeLayout.LayoutParams
+        // Resolve colors from attr
+        val theme = view.getActivityContext()!!.theme
+        val usersMessageColor = TypedValue()
+        theme?.resolveAttribute(R.attr.usersMessageColor, usersMessageColor, true)
+
+        val usersMessageSubtextDirected = TypedValue()
+        theme?.resolveAttribute(R.attr.usersMessageSubtextDirected, usersMessageSubtextDirected, true)
+
+        val cardBackgroundColor = TypedValue()
+        theme?.resolveAttribute(R.attr.cardViewColor, cardBackgroundColor, true)
 
         if (isSentFromUser) {
+            view.cardView.setCardBackgroundColor(usersMessageColor.data)
+            view.cardView.date.setTextColor(usersMessageSubtextDirected.data)
             cardViewParams.apply {
                 removeRule(RelativeLayout.ALIGN_PARENT_START)
                 addRule(RelativeLayout.ALIGN_PARENT_END)
             }
         } else {
+            view.cardView.setCardBackgroundColor(cardBackgroundColor.data)
+            view.cardView.date.setTextColor(ContextCompat.getColor(view.context, R.color.authorHeader_date_Dark))
             cardViewParams.apply {
                 removeRule(RelativeLayout.ALIGN_PARENT_END)
                 addRule(RelativeLayout.ALIGN_PARENT_START)

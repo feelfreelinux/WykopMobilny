@@ -81,7 +81,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         swiperefresh.isRefreshing = false
         receiver = conversation.receiver
         toolbar.apply {
-            subtitle = conversation.messages.first().date.toPrettyDate()
+            subtitle = conversation.messages.last().date.toPrettyDate()
             avatarview.setAuthor(conversation.receiver)
             avatarview.isVisible = true
         }
