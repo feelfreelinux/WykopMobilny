@@ -5,6 +5,8 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.NotificationMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.NotificationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.NotificationsCountResponse
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import retrofit2.Retrofit
 
 class NotificationsRepository(val retrofit: Retrofit) : NotificationsApi {
@@ -21,8 +23,8 @@ class NotificationsRepository(val retrofit: Retrofit) : NotificationsApi {
             .compose<NotificationsCountResponse>(ErrorHandlerTransformer())
 
     override fun readHashTagNotifications() = mywykopApi.readHashTagsNotifications()
-            .map { emptyList<Notification>() }
-
+            .compose<List<NotificationResponse>>(ErrorHandlerTransformer())
+            .map { it.map { NotificationMapper.map(it) } }
 
     override fun getHashTagNotifications(page : Int) = mywykopApi.getHashTagsNotifications(page)
             .compose<List<NotificationResponse>>(ErrorHandlerTransformer())

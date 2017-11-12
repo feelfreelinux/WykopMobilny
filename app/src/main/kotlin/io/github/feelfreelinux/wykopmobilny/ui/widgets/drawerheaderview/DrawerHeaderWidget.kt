@@ -57,7 +57,6 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
     }
 
     override fun onDetachedFromWindow() {
-        printout("Deattached")
         presenter.unsubscribe()
         super.onDetachedFromWindow()
     }

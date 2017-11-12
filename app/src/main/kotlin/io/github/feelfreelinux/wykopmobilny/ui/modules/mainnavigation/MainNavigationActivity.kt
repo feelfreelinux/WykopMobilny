@@ -30,6 +30,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.Conv
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.activity_navigation.view.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
@@ -137,6 +138,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
 
     override fun onResume() {
         super.onResume()
+        printout("RESUME")
         presenter.subscribe(this)
         navHeader.view_container.startListeningForUpdates()
     }

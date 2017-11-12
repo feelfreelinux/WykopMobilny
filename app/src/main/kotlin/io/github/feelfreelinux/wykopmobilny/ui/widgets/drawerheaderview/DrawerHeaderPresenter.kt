@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.NotificationsCountResponse
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -11,10 +12,12 @@ import java.util.concurrent.TimeUnit
 
 class DrawerHeaderPresenter(val subscriptionHelper: SubscriptionHelperApi,
                             private val notificationsApi: NotificationsApi) : BasePresenter<DrawerHeaderView>() {
-    private val intervalDisposable = CompositeDisposable()
+    private var intervalDisposable = CompositeDisposable()
 
     fun fetchNotifications() {
         intervalDisposable.clear()
+        intervalDisposable.dispose()
+        intervalDisposable = CompositeDisposable()
         intervalDisposable.add(
                 Observable.interval(0, 5, TimeUnit.MINUTES)
                         .map { notificationsApi.getHashTagNotificationCount() }
