@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.di.modules.RepositoryModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.ViewPresentersModule
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.NotificationViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.PMMessageViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.votersdialog.VotersDialogFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
@@ -78,4 +79,5 @@ interface Injector {
     fun inject(settingsFragment: SettingsActivity.SettingsFragment)
     fun inject(authorHeaderView: AuthorHeaderView)
     fun inject(surveyWidget: SurveyWidget)
+    fun inject(votersDialogFragment: VotersDialogFragment)
 }

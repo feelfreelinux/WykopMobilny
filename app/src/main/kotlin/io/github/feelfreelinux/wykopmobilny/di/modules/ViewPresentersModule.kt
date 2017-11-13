@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.votersdialog.VotersDialogPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButtonPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.EntryVoteButtonPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButtonPresenter
@@ -35,4 +36,7 @@ class ViewPresentersModule {
 
     @Provides
     fun providesSurveyPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi) = SurveyPresenter(subscriptionHelperApi, entriesApi)
+
+    @Provides
+    fun providesVotersDialogPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi) = VotersDialogPresenter(subscriptionHelperApi, entriesApi)
 }

@@ -10,7 +10,7 @@ data class EmbedResponse(
         val url : String,
 
         @Json(name="source")
-        val source : String,
+        val source : String?,
 
         @Json(name="preview")
         val preview : String,

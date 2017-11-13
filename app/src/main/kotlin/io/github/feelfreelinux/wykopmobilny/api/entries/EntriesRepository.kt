@@ -2,9 +2,12 @@ package io.github.feelfreelinux.wykopmobilny.api.entries
 
 import io.github.feelfreelinux.wykopmobilny.api.*
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.SurveyMapper
+import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.VoterMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
+import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -79,4 +82,11 @@ class EntriesRepository(val retrofit: Retrofit) : EntriesApi {
             .compose<EntryResponse>(ErrorHandlerTransformer())
             .map { EntryMapper.map(it) }
 
+    override fun getEntryVoters(id: Int) = entriesApi.getEntryVoters(id)
+            .compose<List<VoterResponse>>(ErrorHandlerTransformer())
+            .map { it.map { VoterMapper.map(it) } }
+
+    override fun getEntryCommentVoters(id: Int) = entriesApi.getCommentUpvoters(id)
+            .compose<List<VoterResponse>>(ErrorHandlerTransformer())
+            .map { it.map { VoterMapper.map(it) } }
 }

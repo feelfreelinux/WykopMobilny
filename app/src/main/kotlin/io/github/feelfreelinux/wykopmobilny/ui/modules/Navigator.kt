@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules
 
 import android.app.Activity
 import android.content.Intent
+import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
@@ -63,11 +64,11 @@ class Navigator : NavigatorApi {
     }
 
     override fun openEditEntryActivity(context: Activity, body: String, entryId: Int) {
-        context.startActivity(EditEntryActivity.createIntent(context, body, entryId))
+        context.startActivityForResult(EditEntryActivity.createIntent(context, body, entryId), BaseInputActivity.REQUEST_CODE)
     }
 
     override fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int) {
-        context.startActivity(EditEntryCommentActivity.createIntent(context, body, entryId, commentId))
+        context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.REQUEST_CODE)
     }
 
     override fun openBrowser(context: Activity, url: String) {

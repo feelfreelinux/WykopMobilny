@@ -173,6 +173,10 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                 BaseInputActivity.USER_ACTION_INSERT_PHOTO -> {
                     inputToolbar.setPhoto(data?.data)
                 }
+
+                BaseInputActivity.REQUEST_CODE -> {
+                    onRefresh()
+                }
             }
         }
     }

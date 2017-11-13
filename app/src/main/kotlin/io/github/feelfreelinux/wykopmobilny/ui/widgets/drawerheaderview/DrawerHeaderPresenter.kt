@@ -47,10 +47,12 @@ class DrawerHeaderPresenter(val subscriptionHelper: SubscriptionHelperApi,
 
     override fun unsubscribe() {
         super.unsubscribe()
-        if (intervalDisposable != null) {
-            subscriptionHelper.dispose(this)
-            intervalDisposable.dispose()
-            intervalDisposable.clear()
+        intervalDisposable?.let {
+            if (!intervalDisposable.isDisposed) {
+                subscriptionHelper.dispose(this)
+                intervalDisposable.dispose()
+                intervalDisposable.clear()
+            }
         }
     }
 }

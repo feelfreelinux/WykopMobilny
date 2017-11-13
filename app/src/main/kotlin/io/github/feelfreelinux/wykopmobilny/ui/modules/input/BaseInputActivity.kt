@@ -26,6 +26,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     companion object {
         val EXTRA_RECEIVER = "EXTRA_RECEIVER"
         val EXTRA_BODY = "EXTRA_BODY"
+        val REQUEST_CODE = 106
         val USER_ACTION_INSERT_PHOTO = 142
     }
 
@@ -102,6 +103,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         }
 
     override fun exitActivity() {
+        setResult(Activity.RESULT_OK)
         finish()
     }
 

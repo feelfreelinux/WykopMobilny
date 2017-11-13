@@ -22,11 +22,21 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
+import android.text.SpannableStringBuilder
+
+
 
 
 var View.isVisible : Boolean
     get() = visibility == View.VISIBLE
     set(value) { visibility = if (value) View.VISIBLE else View.GONE }
+
+fun SpannableStringBuilder.appendNewSpan(text: CharSequence, what: Any, flags: Int): SpannableStringBuilder {
+    val start = length
+    append(text)
+    setSpan(what, start, length, flags)
+    return this
+}
 
 fun View.getActivityContext() : Activity? {
     var context = context

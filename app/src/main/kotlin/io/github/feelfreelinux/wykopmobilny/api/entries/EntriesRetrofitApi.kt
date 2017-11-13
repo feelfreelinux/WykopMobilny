@@ -41,6 +41,13 @@ interface EntriesRetrofitApi {
     fun addEntry(@Part("body") body: RequestBody,
                  @Part file : MultipartBody.Part) : Single<WykopApiResponse<EntryResponse>>
 
+
+    @GET("/entries/upvoters/{entryId}/appkey/$APP_KEY")
+    fun getEntryVoters(@Path("entryId") entryId: Int) : Single<WykopApiResponse<List<VoterResponse>>>
+
+    @GET("/entries/commentupvoters/{commentId}/appkey/$APP_KEY")
+    fun getCommentUpvoters(@Path("commentId") commentId: Int) : Single<WykopApiResponse<List<VoterResponse>>>
+
     @FormUrlEncoded
     @POST("/entries/add/appkey/$APP_KEY")
     fun addEntry(@Field("body") body: String,
