@@ -16,23 +16,20 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries.TagEntriesFragment
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
-import kotlinx.android.synthetic.main.activity_feed.*
+import kotlinx.android.synthetic.main.activity_tag.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class TagActivity : BaseActivity(), TagView {
+class TagActivity : BaseActivity() {
     private lateinit var entryTag : String
-    lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
-    @Inject lateinit var userManager : UserManagerApi
-    @Inject lateinit var presenter : TagPresenter
-    private var tagMeta : TagMetaResponse? = null
-    @Inject lateinit var navigatorApi : NavigatorApi
+    @Inject lateinit var navigator : NavigatorApi
 
     companion object {
         val EXTRA_TAG = "EXTRA_TAG"
-        val EXTRA_TAG_DATA_FRAGMENT = "DATA_FRAGMENT_#"
 
         fun createIntent(context : Context, tag : String): Intent {
             val intent = Intent(context, TagActivity::class.java)
@@ -43,15 +40,14 @@ class TagActivity : BaseActivity(), TagView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feed)
+        setContentView(R.layout.activity_tag)
         setSupportActionBar(toolbar)
-
         WykopApp.uiInjector.inject(this)
 
         entryTag = intent.getStringExtra(EXTRA_TAG)?: TagLinkParser.getTag(intent.data.toString())
-        tagDataFragment = supportFragmentManager.getDataFragmentInstance(EXTRA_TAG_DATA_FRAGMENT + entryTag)
-        tagDataFragment.data?.apply {
-            presenter.page = page
+
+        fab.setOnClickListener {
+            navigator.openAddEntryActivity(this)
         }
 
         supportActionBar?.apply {
@@ -59,79 +55,7 @@ class TagActivity : BaseActivity(), TagView {
             title = "#" + entryTag
         }
 
-        presenter.tag = entryTag
-        presenter.subscribe(this)
-        feedRecyclerView.apply {
-            presenter = this@TagActivity.presenter
-            fab = this@TagActivity.fab
-            initAdapter(tagDataFragment.data?.model)
-            onFabClickedListener = {
-                navigatorApi.openAddEntryActivity(this@TagActivity)
-            }
-        }
-        setSupportActionBar(toolbar)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.tag_menu, menu)
-
-        if (userManager.isUserAuthorized()) {
-            tagMeta?.apply {
-                menu.apply {
-                    if (isObserved) {
-                        findItem(R.id.action_unobserve).isVisible = true
-                    } else if (!isBlocked) {
-                        findItem(R.id.action_observe).isVisible = true
-                        findItem(R.id.action_block).isVisible = true
-                    } else if (isBlocked) {
-                        findItem(R.id.action_unblock).isVisible = true
-                    }
-                }
-            }
-        }
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_observe -> presenter.observeTag()
-            R.id.action_unobserve -> presenter.unobserveTag()
-            R.id.action_block -> presenter.blockTag()
-            R.id.action_unblock -> presenter.unblockTag()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        tagDataFragment.data = PagedDataModel(presenter.page, feedRecyclerView.entries)
-    }
-
-    override fun setMeta(tagMeta: TagMetaResponse) {
-        this.tagMeta = tagMeta
-        invalidateOptionsMenu()
-    }
-
-    override fun setObserveState(tagState: TagStateResponse) {
-        tagMeta?.isBlocked = tagState.isBlocked
-        tagMeta?.isObserved = tagState.isObserved
-        invalidateOptionsMenu()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (isFinishing) supportFragmentManager.removeDataFragment(tagDataFragment)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.unsubscribe()
-    }
-
-    override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean) =
-        feedRecyclerView.addDataToAdapter(entryList, shouldClearAdapter)
-
-    override fun disableLoading() {
-        feedRecyclerView.disableLoading()
+        supportFragmentManager.beginTransaction().replace(R.id.contentView,
+                TagEntriesFragment.newInstance(entryTag)).commit()
     }
 }

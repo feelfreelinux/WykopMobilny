@@ -19,6 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
+import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
@@ -105,8 +106,10 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
                 .setButtonUpdate(R.string.update)
                 .start()
 
-        // Schedules notification service
-        WykopNotificationsJob.schedule(settingsApi)
+        if (settingsApi.showNotifications) {
+            // Schedules notification service
+            WykopNotificationsJob.schedule(settingsApi)
+        }
 
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
@@ -138,7 +141,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
 
     override fun onResume() {
         super.onResume()
-        printout("RESUME")
         presenter.subscribe(this)
         navHeader.view_container.startListeningForUpdates()
     }
@@ -183,7 +185,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         fab.isVisible = false
         fab.setOnClickListener(null)
 
-        if (fragment is BaseNavigationFragment) fragment.fab = fab
+        if (fragment is BaseNavigationView) fragment.fab = fab
 
         supportFragmentManager.beginTransaction().replace(R.id.contentView,
                 fragment).commit()

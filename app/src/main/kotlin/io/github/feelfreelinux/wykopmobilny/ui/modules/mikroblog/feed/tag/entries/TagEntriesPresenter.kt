@@ -1,15 +1,14 @@
-package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag
+package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries
 
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
-class TagPresenter(private val subscriptionHelper: SubscriptionHelperApi, private val tagApi: TagApi) : BasePresenter<TagView>(), BaseFeedPresenter {
+class TagEntriesPresenter(val subscriptionHelper: SubscriptionHelperApi, val tagApi : TagApi) : BasePresenter<TagEntriesView>() {
     var page = 1
     var tag = ""
 
-    override fun loadData(shouldRefresh : Boolean) {
+    fun loadData(shouldRefresh : Boolean) {
         if (shouldRefresh) page = 1
         subscriptionHelper.subscribe(tagApi.getTagEntries(tag, page),
                 {

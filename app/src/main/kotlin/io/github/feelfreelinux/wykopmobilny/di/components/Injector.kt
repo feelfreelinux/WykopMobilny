@@ -18,6 +18,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedList
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries.TagEntriesFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
@@ -51,7 +52,6 @@ interface Injector {
     fun inject(mainNavigationActivity: NavigationActivity)
     fun inject(hotFragment: HotFragment)
     fun inject(entryActivity: EntryActivity)
-    fun inject(tagActivity: TagActivity)
     fun inject(entryVoteButton: EntryVoteButton)
     fun inject(entryCommentVoteButton: EntryCommentVoteButton)
     fun inject(entryView: EntryWidget)
@@ -80,4 +80,6 @@ interface Injector {
     fun inject(authorHeaderView: AuthorHeaderView)
     fun inject(surveyWidget: SurveyWidget)
     fun inject(votersDialogFragment: VotersDialogFragment)
+    fun inject(tagEntriesFragment: TagEntriesFragment)
+    fun inject(tagActivity: TagActivity)
 }

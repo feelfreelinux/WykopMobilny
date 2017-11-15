@@ -6,29 +6,37 @@ import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
+import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedList
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.EntryFeedFragment
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.fragment_feed.view.*
 import javax.inject.Inject
 
-class HotFragment : BaseNavigationFragment(), HotView {
+class HotFragment : EntryFeedFragment(), HotView, BaseNavigationView {
+    val navigation by lazy { activity as MainNavigationInterface }
+    override var fab : View? = null
     @Inject lateinit var presenter : HotPresenter
     @Inject lateinit var settingsPreferences : SettingsPreferencesApi
     @Inject lateinit var navigatorApi : NavigatorApi
-    lateinit var feedRecyclerView : BaseFeedList
-    lateinit var entriesDataFragment : DataFragment<Pair<PagedDataModel<List<Entry>>, String>>
+    private lateinit var entriesDataFragment : DataFragment<Pair<PagedDataModel<List<Entry>>, String>>
+
+    override fun loadData(shouldRefresh: Boolean) {
+        presenter.loadData(shouldRefresh)
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        val view = inflater?.inflate(R.layout.fragment_feed, container, false)
         navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity, R.drawable.ic_hot)
-        return view
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -42,15 +50,12 @@ class HotFragment : BaseNavigationFragment(), HotView {
             presenter.period = second
         }
 
-        view?.feedRecyclerView.apply {
-            feedRecyclerView = this@apply!!
-            this.presenter = this@HotFragment.presenter
-            fab = this@HotFragment.fab
-            onFabClickedListener = {
-                navigatorApi.openAddEntryActivity(activity)
-            }
-            initAdapter(entriesDataFragment.data?.first?.model)
+        fab?.isVisible = true
+        fab?.setOnClickListener {
+            navigatorApi.openAddEntryActivity(activity)
         }
+
+        initAdapter(entriesDataFragment.data?.first?.model)
     }
 
     companion object {
@@ -62,7 +67,7 @@ class HotFragment : BaseNavigationFragment(), HotView {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        entriesDataFragment.data = Pair(PagedDataModel(presenter.page , feedRecyclerView.entries), presenter.period)
+        entriesDataFragment.data = Pair(PagedDataModel(presenter.page , entries), presenter.period)
     }
 
     override fun onPause() {
@@ -107,15 +112,8 @@ class HotFragment : BaseNavigationFragment(), HotView {
             }
         }
 
-        feedRecyclerView.isRefreshing = true
+        isRefreshing = true
         presenter.loadData(true)
         return true
-    }
-
-    override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean)
-        = feedRecyclerView.addDataToAdapter(entryList, shouldClearAdapter)
-
-    override fun disableLoading() {
-        feedRecyclerView.disableLoading()
     }
 }
