@@ -11,20 +11,9 @@ interface URLClickedListener {
     fun handleUrl(url : String)
 }
 
-class SpoilerAwareLinkSpan(val url : String, val urlClickedListener : URLClickedListener) : ClickableSpan() {
+class SpoilerAwareLinkSpan(val url : String) : URLSpan(url) {
     override fun updateDrawState(ds: TextPaint) {
         super.updateDrawState(ds)
         ds.isUnderlineText = false
-    }
-
-    override fun onClick(view: View) {
-        if (url.startsWith("spoiler:")) {
-            val text = url.substringAfter("spoiler:")
-            view.context.createAlertBuilder().run {
-                setTitle("Spoiler")
-                setMessage(URLDecoder.decode(text, "UTF-8"))
-                create().show()
-            }
-        } else urlClickedListener.handleUrl(url)
     }
 }

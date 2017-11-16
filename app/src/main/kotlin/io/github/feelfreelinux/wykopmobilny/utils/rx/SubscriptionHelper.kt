@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.utils.rx
 
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -46,13 +47,17 @@ open class SubscriptionHelper(internal val observeScheduler: Scheduler,
     override fun dispose(subscriber: Any) {
         val disposable = subscriptions[subscriber.uniqueTag]
 
-        disposable?.let {
-            for (subscription in disposable) {
-                subscription.dispose()
+        try {
+            disposable?.let {
+                for (subscription in disposable) {
+                    subscription.dispose()
+                }
             }
-        }
 
-        subscriptions.remove(uniqueTag)
+            subscriptions.remove(uniqueTag)
+        } catch (e : NullPointerException) {
+            printout("Tried to call dispose on null")
+        }
     }
 
     private val Any.uniqueTag : String

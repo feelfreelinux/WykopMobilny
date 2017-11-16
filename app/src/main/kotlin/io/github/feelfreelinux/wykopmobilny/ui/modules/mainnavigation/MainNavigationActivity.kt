@@ -228,7 +228,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
 
             else -> {
                 if (resultCode == SettingsActivity.THEME_CHANGED_RESULT) {
-                    restartActivity()
+                    // restartActivity()
                 }
             }
         }

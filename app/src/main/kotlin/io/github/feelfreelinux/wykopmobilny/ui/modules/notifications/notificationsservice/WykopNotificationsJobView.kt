@@ -6,4 +6,5 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 interface WykopNotificationsJobView : BaseView {
     fun showNotification(notification : Notification)
     fun showNotificationsCount(count : Int)
+    fun cancelNotification()
 }

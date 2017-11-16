@@ -120,7 +120,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     }
 
     override fun editEntry() {
-        navigator.openEditEntryActivity(getActivityContext()!!, entry.body.removeHtml(), entry.id)
+        navigator.openEditEntryActivity(getActivityContext()!!, entry.body, entry.id)
     }
 
     override fun copyContent() {

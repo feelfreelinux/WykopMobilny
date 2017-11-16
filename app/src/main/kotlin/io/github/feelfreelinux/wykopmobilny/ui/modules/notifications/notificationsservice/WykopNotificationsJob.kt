@@ -88,6 +88,10 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
 
     }
 
+    override fun cancelNotification() {
+        notificationManager.cancelNotification(NOTIFICATION_ID)
+    }
+
     override fun showErrorDialog(e: Throwable) {} // @TODO idk how to handle it
 
 }

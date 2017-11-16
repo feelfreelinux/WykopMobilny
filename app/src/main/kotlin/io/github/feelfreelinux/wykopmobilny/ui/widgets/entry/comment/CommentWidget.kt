@@ -108,7 +108,7 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView, URLClic
     }
 
     override fun editComment() {
-        navigator.openEditEntryCommentActivity(getActivityContext()!!, comment.body.removeHtml(), comment.entryId, comment.id)
+        navigator.openEditEntryCommentActivity(getActivityContext()!!, comment.body, comment.entryId, comment.id)
     }
 
     override fun removeComment() {

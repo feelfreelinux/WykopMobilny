@@ -15,7 +15,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntr
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedList
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries.TagEntriesFragment
@@ -60,7 +59,6 @@ interface Injector {
     fun inject(entryFavoriteButton: EntryFavoriteButton)
     fun inject(baseVoteButton: BaseVoteButton)
     fun inject(favoriteButton: FavoriteButton)
-    fun inject(baseFeedList: BaseFeedList)
     fun inject(inputToolbar: InputToolbar)
     fun inject(photoViewActivity: PhotoViewActivity)
     fun inject(editEntryActivity: EditEntryActivity)

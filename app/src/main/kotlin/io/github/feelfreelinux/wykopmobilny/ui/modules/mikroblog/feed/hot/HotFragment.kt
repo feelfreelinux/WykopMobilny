@@ -14,11 +14,9 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedList
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.EntryFeedFragment
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import kotlinx.android.synthetic.main.fragment_feed.view.*
 import javax.inject.Inject
 
 class HotFragment : EntryFeedFragment(), HotView, BaseNavigationView {

@@ -17,6 +17,7 @@ class WykopNotificationsJobPresenter(val subscriptionHelper: SubscriptionHelperA
                             unreadNotifications.size == it.size -> getNotificationsCount()
                             unreadNotifications.size > 1 -> view?.showNotificationsCount(unreadNotifications.size)
                             unreadNotifications.isNotEmpty() -> view?.showNotification(unreadNotifications.first())
+                            unreadNotifications.isEmpty() -> view?.cancelNotification()
                         }
                     },
                     { view?.showErrorDialog(it) }, this)

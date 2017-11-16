@@ -1,23 +1,26 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.NotificationCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.util.regex.Pattern
 import javax.inject.Inject
+import java.util.regex.Pattern.DOTALL
+
+
 
 abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
     @Inject lateinit var notificationManager : WykopNotificationManagerApi
@@ -47,9 +50,12 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
                 selectionPosition = this.length + 2
             }
 
-            getStringExtra(EXTRA_BODY)?.apply {
-                textBody += this
-                selectionPosition = this.length
+            getStringExtra(EXTRA_BODY)?.apply { // @TODO Replace it with some regex or parser, its way too hacky now
+                val fixedText = replace("<a href=\"spoiler:", "")
+                        .replace("\">[pokaż spoiler]</a>", "")
+
+                textBody += fixedText.removeHtml()
+                selectionPosition = textBody.length
             }
         }
 

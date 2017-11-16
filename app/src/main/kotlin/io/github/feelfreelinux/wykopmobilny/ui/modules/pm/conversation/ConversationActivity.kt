@@ -12,7 +12,6 @@ import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.FullConversation
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.PMMessage
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.PMMessageAdapter
@@ -29,7 +28,7 @@ import javax.inject.Inject
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
     val conversationAdapter by lazy { PMMessageAdapter() }
     val user by lazy { intent.getStringExtra(EXTRA_USER) }
-    lateinit var receiver : Author
+    var receiver : Author? = null
     @Inject lateinit var presenter: ConversationPresenter
     lateinit var conversationDataFragment: DataFragment<FullConversation>
 
@@ -104,8 +103,10 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        conversationDataFragment.data =
-                FullConversation(conversationAdapter.messages.reversed(), receiver)
+        receiver?.let {
+            conversationDataFragment.data =
+                    FullConversation(conversationAdapter.messages.reversed(), receiver!!)
+        }
     }
 
     override fun openGalleryImageChooser() {

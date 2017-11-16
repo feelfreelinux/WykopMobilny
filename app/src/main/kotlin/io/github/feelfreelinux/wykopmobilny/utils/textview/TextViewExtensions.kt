@@ -1,18 +1,24 @@
 package io.github.feelfreelinux.wykopmobilny.utils.textview
 
 import android.text.SpannableStringBuilder
-import android.text.method.LinkMovementMethod
-import android.text.style.URLSpan
 import android.widget.TextView
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
+import java.net.URLDecoder
+
 
 fun TextView.prepareBody(html: String, listener : URLClickedListener) {
-    val sequence = html.toSpannable()
-    val strBuilder = SpannableStringBuilder(sequence)
-    val urls = strBuilder.getSpans(0, strBuilder.length, URLSpan::class.java)
-    urls.forEach {
-        span -> strBuilder.makeLinkClickable(span, listener)
-    }
-    text = strBuilder
-    movementMethod = LinkMovementMethod.getInstance()
+    text = SpannableStringBuilder(html.toSpannable())
+    val method = BetterLinkMovementMethod.linkifyHtml(this)
+    method.setOnLinkClickListener({
+        _, url ->
+        if (url.startsWith("spoiler:")) {
+            val text = url.substringAfter("spoiler:")
+            context.createAlertBuilder().apply {
+                setTitle("Spoiler")
+                setMessage(URLDecoder.decode(text, "UTF-8"))
+                create().show()
+            }
+        } else listener.handleUrl(url)
+        true
+    })
 }

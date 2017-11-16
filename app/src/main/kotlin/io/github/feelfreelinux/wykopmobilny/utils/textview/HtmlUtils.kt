@@ -15,15 +15,6 @@ fun String.toSpannable(): Spannable {
     )
 }
 
-fun SpannableStringBuilder.makeLinkClickable(span: URLSpan, listener : URLClickedListener) {
-    val start = getSpanStart(span)
-    val end = getSpanEnd(span)
-    val flags = getSpanFlags(span)
-    val clickable = SpoilerAwareLinkSpan(span.url, listener)
-    setSpan(clickable, start, end, flags)
-    removeSpan(span)
-}
-
 @Suppress("DEPRECATION")
 fun String.removeHtml() : String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
