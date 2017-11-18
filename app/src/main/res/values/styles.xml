@@ -101,7 +101,7 @@
     </style>
 
     <style name="NavigationDrawerStyle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="NavigationDrawerNotificationItem">

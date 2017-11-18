@@ -5,6 +5,6 @@ data class Notification(
         val body : String,
         val date : String,
         val type : String,
-        val url : String,
+        val url : String?,
         var new : Boolean
 )

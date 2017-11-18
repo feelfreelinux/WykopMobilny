@@ -16,6 +16,7 @@ fun TextView.prepareBody(html: String, listener : URLClickedListener) {
             context.createAlertBuilder().apply {
                 setTitle("Spoiler")
                 setMessage(URLDecoder.decode(text, "UTF-8"))
+                setNeutralButton(android.R.string.ok, null)
                 create().show()
             }
         } else listener.handleUrl(url)

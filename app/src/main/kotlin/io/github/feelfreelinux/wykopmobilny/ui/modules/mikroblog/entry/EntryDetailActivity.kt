@@ -20,6 +20,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.decorators.EntryCommentI
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
+import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
@@ -41,6 +42,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         }
     }
 
+    @Inject lateinit var clipboardHelper : ClipboardHelperApi
     @Inject lateinit var presenter: EntryDetailPresenter
     private lateinit var entryFragmentData: DataFragment<Entry>
     private val adapter by lazy { EntryDetailAdapter({ inputToolbar.addAddressant(it.nick) }) }
@@ -114,6 +116,14 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> onBackPressed()
+            R.id.copyUrl -> clipboardHelper.copyTextToClipboard(url, "entryUrl")
+            R.id.share -> {
+                val i = Intent(Intent.ACTION_SEND)
+                i.type = "text/plain"
+                i.putExtra(Intent.EXTRA_SUBJECT, resources.getString(R.string.share))
+                i.putExtra(Intent.EXTRA_TEXT, url)
+                startActivity(Intent.createChooser(i, resources.getString(R.string.share)))
+            }
         }
         return true
     }
@@ -180,4 +190,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             }
         }
     }
+
+    val url : String
+        get() = "https://wykop.pl/wpis/$entryId"
 }

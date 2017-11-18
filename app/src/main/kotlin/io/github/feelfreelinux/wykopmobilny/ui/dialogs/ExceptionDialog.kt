@@ -19,6 +19,7 @@ fun ExceptionDialog(context : Context, e: Throwable) : AlertDialog? {
     alertBuilder.run {
         setTitle(context.getString(R.string.error_occured))
         setMessage(message)
+        setNeutralButton(android.R.string.ok, null)
         return create()
     }
 }

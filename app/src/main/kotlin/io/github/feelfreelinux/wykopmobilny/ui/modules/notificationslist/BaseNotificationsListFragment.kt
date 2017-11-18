@@ -27,7 +27,9 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
         val notification = notificationAdapter.data[position]
         notification.new = false
         notificationAdapter.notifyDataSetChanged()
-        linkHandler.handleUrl(activity, notification.url)
+        notification.url?.let {
+            linkHandler.handleUrl(activity, notification.url)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

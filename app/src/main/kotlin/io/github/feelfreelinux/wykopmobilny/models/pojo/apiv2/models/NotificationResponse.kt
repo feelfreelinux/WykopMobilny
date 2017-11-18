@@ -16,7 +16,7 @@ data class NotificationResponse(
         @Json(name = "item_id")
         val itemId : String?,
         @Json(name = "url")
-        val url : String,
+        val url : String?,
         @Json(name = "new")
         val new : Boolean
 )

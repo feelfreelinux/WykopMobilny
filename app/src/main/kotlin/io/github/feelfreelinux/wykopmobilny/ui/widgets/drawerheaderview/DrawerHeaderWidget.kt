@@ -7,9 +7,7 @@ import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
-import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import javax.inject.Inject
@@ -20,6 +18,9 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    // @TODO Put this in memory
+    val PLACEHOLDER_IMAGE_URL = "https://i.imgur.com/aSm6pSJ.jpg"
 
     @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var presenter : DrawerHeaderPresenter
@@ -40,7 +41,13 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
     private fun checkIsUserLoggedIn() {
         if (userManager.isUserAuthorized()) {
             isVisible = true
-            img_profile.loadImage(userManager.getUserCredentials()!!.avatarUrl)
+            val credentials = userManager.getUserCredentials()!!
+            nav_profile_image.loadImage(credentials.avatarUrl)
+            if (credentials.backgroundUrl != null) {
+                backgroundImage.loadImage(credentials.backgroundUrl)
+            } else {
+                backgroundImage.loadImage(PLACEHOLDER_IMAGE_URL)
+            }
             presenter.fetchNotifications()
         } else {
             isVisible = false
@@ -70,6 +77,9 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
         presenter.subscribe(this)
         checkIsUserLoggedIn()
     }
+
+    override val isConnectedToInternet : Boolean
+        get() = context.isConnectedToInternet()
 
     override fun showErrorDialog(e: Throwable) = context.showExceptionDialog(e)
 }

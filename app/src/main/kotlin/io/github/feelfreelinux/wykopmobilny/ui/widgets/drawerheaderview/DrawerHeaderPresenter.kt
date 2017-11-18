@@ -32,17 +32,25 @@ class DrawerHeaderPresenter(val subscriptionHelper: SubscriptionHelperApi,
     }
 
     private fun getNotificationsCount(single: Single<NotificationsCountResponse>) {
-        subscriptionHelper.subscribe(single,
-                { view?.notificationCount = it.count },
-                { view?.showErrorDialog(it) },
-                this@DrawerHeaderPresenter)
+        view?.let {
+            if (view!!.isConnectedToInternet) {
+                subscriptionHelper.subscribe(single,
+                        { view?.notificationCount = it.count },
+                        { view?.showErrorDialog(it) },
+                        this@DrawerHeaderPresenter)
+            }
+        }
     }
 
     private fun getHashTagNotificationsCount(single: Single<NotificationsCountResponse>) {
-        subscriptionHelper.subscribe(single,
-                { view?.hashTagsNotificationsCount = it.count },
-                { view?.showErrorDialog(it) },
-                this@DrawerHeaderPresenter)
+        view?.let {
+            if (view!!.isConnectedToInternet) {
+                subscriptionHelper.subscribe(single,
+                        { view?.hashTagsNotificationsCount = it.count },
+                        { view?.showErrorDialog(it) },
+                        this@DrawerHeaderPresenter)
+            }
+        }
     }
 
     override fun unsubscribe() {

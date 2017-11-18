@@ -5,4 +5,5 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 interface DrawerHeaderView : BaseView {
     var notificationCount : Int
     var hashTagsNotificationsCount : Int
+    val isConnectedToInternet : Boolean
 }

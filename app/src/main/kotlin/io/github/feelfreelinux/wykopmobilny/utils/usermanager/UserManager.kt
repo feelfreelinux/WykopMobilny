@@ -7,7 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 
 data class LoginCredentials(val login : String, val token : String)
 
-data class UserCredentials(val login : String, val avatarUrl : String, val userKey : String)
+data class UserCredentials(val login : String, val avatarUrl : String, val backgroundUrl : String?, val userKey : String)
 
 interface UserManagerApi {
     fun loginUser(credentials : LoginCredentials)
@@ -37,6 +37,7 @@ class UserManager(private val credentialsPreferencesApi: CredentialsPreferencesA
     override fun saveCredentials(credentials : LoginResponse) {
         credentialsPreferencesApi.apply {
             avatarUrl = credentials.profile.avatar
+            backgroundUrl = credentials.profile.background
             userToken = credentials.userkey
         }
     }
@@ -50,7 +51,7 @@ class UserManager(private val credentialsPreferencesApi: CredentialsPreferencesA
     override fun getUserCredentials(): UserCredentials? {
         credentialsPreferencesApi.run {
             return if (!login.isNullOrEmpty() || !avatarUrl.isNullOrEmpty() || !userToken.isNullOrEmpty()) {
-                UserCredentials(login!!, avatarUrl!!, userToken!!)
+                UserCredentials(login!!, avatarUrl!!, backgroundUrl, userToken!!)
             } else null
         }
     }

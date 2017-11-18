@@ -103,6 +103,8 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
                 .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
                 .setTitleOnUpdateAvailable(R.string.update_available)
                 .setContentOnUpdateAvailable(R.string.update_app)
+                .setButtonDismiss(R.string.cancel)
+                .setButtonDoNotShowAgain(R.string.do_not_show_again)
                 .setButtonUpdate(R.string.update)
                 .start()
 
