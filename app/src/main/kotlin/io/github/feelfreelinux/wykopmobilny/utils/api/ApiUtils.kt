@@ -10,19 +10,17 @@ import java.util.*
 
 fun parseDate(date : String) : Date = SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.GERMANY).parse(date)
 
-fun getGroupColor(role : Int, isUsingDarkTheme : Boolean = true) : Int {
-    return when(role) {
-        0 -> Color.parseColor("#339933")
-        1 -> Color.parseColor("#ff5917")
-        2 -> Color.parseColor("#BB0000")
-        5 ->
-            if (isUsingDarkTheme) Color.parseColor("#ffffff")
-            else Color.parseColor("#000000")
-        1001 -> Color.parseColor("#999999")
-        1002 -> Color.parseColor("#999999")
-        2001 -> Color.parseColor("#3F6FA0")
-        else -> Color.BLUE
-    }
+fun getGroupColor(role : Int, isUsingDarkTheme : Boolean = true) : Int = when(role) {
+    0 -> Color.parseColor("#339933")
+    1 -> Color.parseColor("#ff5917")
+    2 -> Color.parseColor("#BB0000")
+    5 ->
+        if (isUsingDarkTheme) Color.parseColor("#ffffff")
+        else Color.parseColor("#000000")
+    1001 -> Color.parseColor("#999999")
+    1002 -> Color.parseColor("#999999")
+    2001 -> Color.parseColor("#3F6FA0")
+    else -> Color.BLUE
 }
 
 fun getGenderStripResource(authorSex : String) : Int =
@@ -39,11 +37,6 @@ fun String.encryptMD5() : String{
     var result = ""
     for (byte in digest) result += "%02x".format(byte)
     return result
-}
-
-fun Uri.getWpisId(): Int {
-    val subUrl = toString().substringAfter("/wpis/")
-    return subUrl.substringBefore("/").toInt()
 }
 
 fun Uri.getTag(): String {

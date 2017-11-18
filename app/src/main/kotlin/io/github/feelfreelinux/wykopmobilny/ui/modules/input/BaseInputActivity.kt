@@ -12,14 +12,11 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.util.regex.Pattern
 import javax.inject.Inject
-import java.util.regex.Pattern.DOTALL
-
+import io.github.feelfreelinux.wykopmobilny.utils.textview.removeSpoilerHtml
 
 
 abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
@@ -51,10 +48,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
             }
 
             getStringExtra(EXTRA_BODY)?.apply { // @TODO Replace it with some regex or parser, its way too hacky now
-                val fixedText = replace("<a href=\"spoiler:", "")
-                        .replace("\">[pokaż spoiler]</a>", "")
-
-                textBody += fixedText.removeHtml()
+                textBody += removeSpoilerHtml().removeHtml()
                 selectionPosition = textBody.length
             }
         }
