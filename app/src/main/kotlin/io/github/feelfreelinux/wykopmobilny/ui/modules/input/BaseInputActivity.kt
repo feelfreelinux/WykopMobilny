@@ -48,7 +48,9 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
             }
 
             getStringExtra(EXTRA_BODY)?.apply { // @TODO Replace it with some regex or parser, its way too hacky now
-                textBody += removeSpoilerHtml().removeHtml()
+                if (contains("<a href=\"spoiler:")) {
+                    textBody += removeSpoilerHtml().removeHtml()
+                } else textBody += removeHtml()
                 selectionPosition = textBody.length
             }
         }

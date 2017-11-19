@@ -36,7 +36,6 @@ class PhotoViewActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         WykopApp.uiInjector.inject(this)
         title = null
-        image.loadImage(url)
         GlideApp.with(this).load(url)
                 .listener(KotlinGlideRequestListener({ loadingView.isVisible = false }, { loadingView.isVisible = false }))
                 .into(image)
