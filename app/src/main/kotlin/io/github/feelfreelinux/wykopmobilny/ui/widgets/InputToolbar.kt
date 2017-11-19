@@ -132,6 +132,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     }
 
     fun addAddressant(user : String) {
+        defaultText = ""
         body.requestFocus()
         textBody += "@$user: "
         selectionPosition = textBody.length
