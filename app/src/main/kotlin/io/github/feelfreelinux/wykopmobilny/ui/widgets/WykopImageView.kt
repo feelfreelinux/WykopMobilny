@@ -2,15 +2,17 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.ImageView
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
-import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import javax.inject.Inject
 
 class WykopImageView(context: Context, attrs: AttributeSet) : ImageView(context, attrs) {
@@ -40,4 +42,5 @@ class WykopImageView(context: Context, attrs: AttributeSet) : ImageView(context,
             }
         }
     }
+
 }

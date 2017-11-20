@@ -112,6 +112,7 @@
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.EntryVoteButton
                 android:id="@+id/voteButton"
                 style="@style/MikroButton"
+                android:paddingLeft="8dp"
                 android:drawableStart="?attr/voteDrawable"
                 app:layout_constraintEnd_toStartOf="@+id/moreOptionsTextView"
                 app:layout_constraintTop_toTopOf="parent"

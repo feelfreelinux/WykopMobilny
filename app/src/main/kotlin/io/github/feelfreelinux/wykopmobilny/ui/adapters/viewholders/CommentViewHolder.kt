@@ -7,9 +7,9 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import kotlinx.android.synthetic.main.comment_list_item.view.*
 
 class CommentViewHolder(val view: View, private val addReceiverListener : (Author) -> Unit) : RecyclerView.ViewHolder(view) {
-    fun bindView(comment : EntryComment, isAuthorComment: Boolean) {
+    fun bindView(comment : EntryComment, isAuthorComment: Boolean, commentId : Int?) {
         view.entryComment.addReceiverListener = addReceiverListener
         view.entryComment.setCommentData(comment)
-        view.entryComment.setStyleForComment(isAuthorComment)
+        view.entryComment.setStyleForComment(isAuthorComment, commentId ?: -1)
     }
 }

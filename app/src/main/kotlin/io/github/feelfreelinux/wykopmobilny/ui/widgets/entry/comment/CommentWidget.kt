@@ -59,7 +59,7 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
         setupBody()
     }
 
-    fun setStyleForComment(isAuthorComment: Boolean){
+    fun setStyleForComment(isAuthorComment: Boolean, commentId : Int = -1){
         val credentials = userManagerApi.getUserCredentials()
         if (credentials != null && credentials.login == comment.author.nick) {
             authorBadgeStrip.isVisible = true
@@ -70,6 +70,12 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
         } else {
             authorBadgeStrip.isVisible = false
         }
+
+        if (commentId == comment.id) {
+            authorBadgeStrip.isVisible = true
+            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.plusPressedColor))
+        }
+
     }
 
     private fun setupHeader() {

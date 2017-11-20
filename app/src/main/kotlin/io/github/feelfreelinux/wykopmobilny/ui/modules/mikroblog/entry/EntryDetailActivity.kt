@@ -33,11 +33,15 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
+        val EXTRA_COMMENT_ID = "COMMENT_ID"
         val EXTRA_FRAGMENT_KEY = "ENTRY_ACTIVITY_#"
 
         fun createIntent(context: Context, entryId: Int, commentId: Int?): Intent {
             val intent = Intent(context, EntryActivity::class.java)
             intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
+            commentId?.let {
+                intent.putExtra(EntryActivity.EXTRA_COMMENT_ID, commentId)
+            }
             return intent
         }
     }
@@ -45,7 +49,8 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     @Inject lateinit var presenter: EntryDetailPresenter
     private lateinit var entryFragmentData: DataFragment<Entry>
-    private val adapter by lazy { EntryDetailAdapter({ inputToolbar.addAddressant(it.nick) }) }
+    private val adapter by lazy { EntryDetailAdapter({ inputToolbar.addAddressant(it.nick) },
+            intent.getIntExtra(EXTRA_COMMENT_ID, -1)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,6 +148,12 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
         adapter.notifyDataSetChanged()
+        if (intent.hasExtra(EXTRA_COMMENT_ID) && entryFragmentData.data == null) {
+            entry.comments.forEachIndexed({ index, comment ->
+                if (comment.id == intent.getIntExtra(EXTRA_COMMENT_ID, -1))
+                    recyclerView.scrollToPosition(index + 1)
+            })
+        }
     }
 
     override fun hideInputToolbar() {

@@ -9,7 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.CommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 
-class EntryDetailAdapter(private val addReceiverListener: (Author) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EntryDetailAdapter(private val addReceiverListener: (Author) -> Unit, val commentId : Int?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val ENTRY_HOLDER = 0
         private const val COMMENT_HOLDER = 1
@@ -24,7 +24,7 @@ class EntryDetailAdapter(private val addReceiverListener: (Author) -> Unit) : Re
             val comment = entry!!.comments[position - 1]
             val entryAuthor = entry?.author
             val commentAuthor = comment.author
-            (holder as CommentViewHolder).bindView(comment, entryAuthor == commentAuthor)
+            (holder as CommentViewHolder).bindView(comment, entryAuthor == commentAuthor, commentId)
         }
     }
 
