@@ -8,7 +8,10 @@
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:background="@null"
         android:layout_marginLeft="@dimen/dialog_edittext_padding"
         android:layout_marginRight="@dimen/dialog_edittext_padding"
-        android:inputType="text" />
+        android:inputType="text"/>
+
 </FrameLayout>

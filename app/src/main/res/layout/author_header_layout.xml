@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:tools="http://schemas.android.com/tools"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.support.constraint.ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/authorAvatarView"
         android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_height="42dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/userNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textSize="16sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/authorAvatarView"
-        app:layout_constraintTop_toTopOf="@+id/authorAvatarView"
-        tools:text="Username" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/entryDateTextView"
+        tools:text="Username"/>
 
     <TextView
         android:id="@+id/entryDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginStart="8dp"
-        android:textColor="?attr/authorHeader_date_color"
-        android:text="TextView"
+        android:layout_marginStart="10dp"
+        android:paddingBottom="2dp"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/authorAvatarView"
+        android:textColor="?attr/authorHeader_date_color"
         app:layout_constraintStart_toEndOf="@+id/authorAvatarView"
-        tools:text="1 minute ago" />
+        app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="1 minute ago"/>
+
 </merge>

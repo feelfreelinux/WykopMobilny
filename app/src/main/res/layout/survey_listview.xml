@@ -2,23 +2,32 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:parentTag="android.support.constraint.ConstraintLayout"
     android:id="@+id/surveyItems"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:parentTag="android.support.constraint.ConstraintLayout"
     android:orientation="vertical">
+
     <TextView
         android:id="@+id/surveyQuestion"
-        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13.5sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Question?"/>
+
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@id/surveyQuestion"
+        android:id="@+id/answerItems"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:id="@+id/answerItems">
+        app:layout_constraintTop_toBottomOf="@id/surveyQuestion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
     </LinearLayout>
+
 </merge>
