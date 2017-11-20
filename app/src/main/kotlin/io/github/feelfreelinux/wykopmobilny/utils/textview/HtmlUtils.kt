@@ -31,7 +31,7 @@ fun String.removeSpoilerHtml() : String {
     val sb = StringBuffer()
     while (m.find()) {
         val spoilerHtml = m.group(0)
-        val text = URLDecoder.decode(
+        val text = "! " + URLDecoder.decode(
                 spoilerHtml.replace(regexBegin, "").replace("\">[pokaż spoiler]</a>", ""),
                 "UTF-8")
         m.appendReplacement(sb, text)

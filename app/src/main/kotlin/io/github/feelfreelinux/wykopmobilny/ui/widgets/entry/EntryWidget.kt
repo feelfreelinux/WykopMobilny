@@ -2,14 +2,13 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
 import android.content.Context
 import android.support.v7.widget.CardView
+import android.support.v7.widget.PopupMenu
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialog
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EntryMenuDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
@@ -23,7 +22,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.synthetic.main.entry_layout.view.*
 import javax.inject.Inject
 
-class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), EntryMenuDialogListener, EntryView, URLClickedListener {
+class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs),  EntryView, URLClickedListener {
 
     @Inject lateinit var linkHandler: WykopLinkHandlerApi
     @Inject lateinit var userManager: UserManagerApi
@@ -58,11 +57,6 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         setupHeader()
         setupBody()
         setupButtons()
-
-        setOnLongClickListener {
-            EntryMenuDialog(getActivityContext()!!, entry.author, userManager, this).show()
-            true
-        }
     }
 
     private fun setupHeader() {
@@ -70,6 +64,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     }
 
     private fun setupButtons() {
+        moreOptionsTextView.setOnClickListener { openOptionsMenu() }
         commentsCountTextView.apply {
             text = entry.commentsCount.toString()
             if (shouldEnableClickListener) {
@@ -115,15 +110,49 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         entryImageView.isVisible = false
     }
 
-    override fun removeEntry() {
+    fun removeEntry() {
         presenter.deleteEntry(entry.id)
     }
 
-    override fun editEntry() {
+    fun editEntry() {
         navigator.openEditEntryActivity(getActivityContext()!!, entry.body, entry.id)
     }
 
-    override fun copyContent() {
+    fun copyContent() {
         clipboardHelper.copyTextToClipboard(entry.body.removeHtml())
+    }
+
+    fun openOptionsMenu() {
+        val popUpMenu = PopupMenu(context, moreOptionsTextView)
+        if (userManager.isUserAuthorized()) {
+            if (entry.author.nick == userManager.getUserCredentials()!!.login) {
+                popUpMenu.menuInflater.inflate(R.menu.entry_menu_authors_loggedin, popUpMenu.menu)
+                popUpMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.copy_content -> copyContent()
+                        R.id.edit_content -> editEntry()
+                        R.id.delete_content -> removeEntry()
+                    }
+                    true
+                }
+            } else {
+                popUpMenu.menuInflater.inflate(R.menu.entry_menu_loggedin, popUpMenu.menu)
+                popUpMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.copy_content -> copyContent()
+                    }
+                    true
+                }
+            }
+        } else {
+            popUpMenu.menuInflater.inflate(R.menu.entry_menu_loggedin, popUpMenu.menu)
+            popUpMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.copy_content -> copyContent()
+                }
+                true
+            }
+        }
+        popUpMenu.show()
     }
 }

@@ -8,9 +8,9 @@
 
     <View
         android:id="@+id/separator"
-        android:layout_width="wrap_content"
-        android:layout_height="0.25dp"
-        android:background="@color/separatorColor.Dark"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/separatorColor"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
@@ -18,14 +18,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/separator">
+        app:layout_constraintTop_toBottomOf="@id/separator">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbar
             android:id="@+id/markdownToolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            app:layout_constraintEnd_toStartOf="@+id/markdown_close" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/markdown_close"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
         <ImageView
             android:id="@+id/markdown_close"
@@ -35,22 +39,33 @@
             android:animateLayoutChanges="true"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_close"
+            app:layout_constraintStart_toEndOf="@id/markdownToolbar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/separatorHolder"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/separatorColor"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 
-    <AutoCompleteTextView
+    <EditText
         android:id="@+id/body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:paddingEnd="6dp"
+        android:paddingStart="12dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:textSize="15sp"
         android:layout_toStartOf="@id/send"
+        android:background="@null"
         android:hint="@string/write_comment"
         android:maxLines="5"
         android:inputType="textMultiLine|textCapSentences"
@@ -64,19 +79,21 @@
         android:layout_width="@dimen/input_toolbar_item_size"
         android:layout_height="@dimen/input_toolbar_item_size"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
         android:layout_margin="@dimen/input_toolbar_item_margin"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_arrow_upward"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send"
-        app:layout_constraintStart_toEndOf="@+id/body"
         app:layout_constraintTop_toBottomOf="@id/markdownToolbarHolder" />
+
 
     <ImageView
         android:id="@+id/send"
         android:layout_width="@dimen/input_toolbar_item_size"
         android:layout_height="@dimen/input_toolbar_item_size"
         android:layout_margin="@dimen/input_toolbar_item_margin"
+        android:layout_marginEnd="3dp"
         android:scaleType="centerCrop"
         android:src="?attr/markdownSend"
         app:layout_constraintBottom_toBottomOf="parent"

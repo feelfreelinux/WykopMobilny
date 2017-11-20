@@ -117,6 +117,10 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         when (item?.itemId) {
             android.R.id.home -> onBackPressed()
             R.id.copyUrl -> clipboardHelper.copyTextToClipboard(url, "entryUrl")
+            R.id.refresh -> {
+                swiperefresh.isRefreshing = true
+                onRefresh()
+            }
             R.id.share -> {
                 val i = Intent(Intent.ACTION_SEND)
                 i.type = "text/plain"

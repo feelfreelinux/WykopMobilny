@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
+import android.support.v7.widget.PopupMenu
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -10,8 +11,6 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialog
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CommentMenuDialogInterface
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
@@ -25,7 +24,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.synthetic.main.comment_layout.view.*
 import javax.inject.Inject
 
-class CommentWidget : CardView, CommentMenuDialogInterface, CommentView, URLClickedListener {
+class CommentWidget : CardView, CommentView, URLClickedListener {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -58,11 +57,6 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView, URLClic
         setupHeader()
         setupFooter()
         setupBody()
-
-        setOnLongClickListener {
-            CommentMenuDialog(context, entryComment.author, userManagerApi, this).show()
-            true
-        }
     }
 
     fun setStyleForComment(isAuthorComment: Boolean){
@@ -91,6 +85,8 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView, URLClic
     }
 
     private fun setupBody() {
+        moreOptionsTextView.setOnClickListener { openOptionsMenu() }
+        replyTextView.setOnClickListener { addReceiver() }
         entryContentTextView.prepareBody(comment.body, this)
         entryImageView.setEmbed(comment.embed)
     }
@@ -99,19 +95,19 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView, URLClic
         linkHandler.handleUrl(getActivityContext()!!, url)
     }
 
-    override fun addReceiver() {
+    fun addReceiver() {
         addReceiverListener?.invoke(comment.author)
     }
 
-    override fun copyContent() {
+    fun copyContent() {
         clipboardHelper.copyTextToClipboard(comment.body.removeHtml())
     }
 
-    override fun editComment() {
+    fun editComment() {
         navigator.openEditEntryCommentActivity(getActivityContext()!!, comment.body, comment.entryId, comment.id)
     }
 
-    override fun removeComment() {
+    fun removeComment() {
         presenter.deleteComment(comment.id)
     }
 
@@ -121,4 +117,38 @@ class CommentWidget : CardView, CommentMenuDialogInterface, CommentView, URLClic
     }
 
     override fun showErrorDialog(e: Throwable) = context.showExceptionDialog(e)
+
+    fun openOptionsMenu() {
+        val popUpMenu = PopupMenu(context, moreOptionsTextView)
+        if (userManagerApi.isUserAuthorized()) {
+            if (comment.author.nick == userManagerApi.getUserCredentials()!!.login) {
+                popUpMenu.menuInflater.inflate(R.menu.entry_comment_menu_authors_loggedin, popUpMenu.menu)
+                popUpMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.copy_content -> copyContent()
+                        R.id.edit_content -> editComment()
+                        R.id.delete_content -> removeComment()
+                    }
+                    true
+                }
+            } else {
+                popUpMenu.menuInflater.inflate(R.menu.entry_menu_loggedin, popUpMenu.menu)
+                popUpMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.copy_content -> copyContent()
+                    }
+                    true
+                }
+            }
+        } else {
+            popUpMenu.menuInflater.inflate(R.menu.entry_menu_loggedin, popUpMenu.menu)
+            popUpMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.copy_content -> copyContent()
+                }
+                true
+            }
+        }
+        popUpMenu.show()
+    }
 }

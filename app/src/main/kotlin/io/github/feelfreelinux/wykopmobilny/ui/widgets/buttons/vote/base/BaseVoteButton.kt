@@ -8,6 +8,7 @@ import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
@@ -21,6 +22,7 @@ abstract class BaseVoteButton : TextView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     @Inject lateinit var userManager : UserManagerApi
+    @Inject lateinit var settingsApi : SettingsPreferencesApi
 
     abstract fun vote()
     abstract fun unvote()
@@ -31,6 +33,7 @@ abstract class BaseVoteButton : TextView {
         getActivityContext()!!.theme?.resolveAttribute(R.attr.voteButtonStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
         setTextColor(ContextCompat.getColorStateList(context, typedValue.resourceId))
+        setLightThemeDrawable()
         setOnClickListener {
             userManager.runIfLoggedIn(context) {
                 if (isSelected) unvote()
@@ -39,6 +42,15 @@ abstract class BaseVoteButton : TextView {
         }
     }
 
+    fun setLightThemeDrawable() {
+        if (!settingsApi.useDarkTheme) {
+            if (isSelected) {
+                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_plus_activ, 0, 0, 0);
+            } else {
+                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_plus_light, 0, 0, 0);
+            }
+        }
+    }
     var voteCount : Int
         get() = text.toString().toInt()
         set(value) {
@@ -47,7 +59,10 @@ abstract class BaseVoteButton : TextView {
 
     var isButtonSelected: Boolean
         get() = isSelected
-        set(value) { isSelected = value }
+        set(value) {
+            isSelected = value
+            setLightThemeDrawable()
+        }
 
     fun showErrorDialog(e : Throwable) = context.showExceptionDialog(e)
 }

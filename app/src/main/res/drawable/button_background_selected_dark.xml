@@ -2,9 +2,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <corners android:radius="5dp"/>
+    <corners android:radius="0dp"/>
     <solid android:color="@color/plusPressedColor"/>
     <stroke android:color="@color/toolbarItemsColor.Dark"
-        android:width="1dp"/>
+        android:width="0dp"/>
 
 </shape>
