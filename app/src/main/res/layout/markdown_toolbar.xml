@@ -1,57 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal">
+    android:padding="4dp">
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/format_bold"
+        style="@style/MarkdownButton"
+        android:src="?attr/markdownFormatBold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/format_quote"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/format_quote"
+        style="@style/MarkdownButton"
+        android:src="?attr/markdownFormatQuote"
+        app:layout_constraintStart_toEndOf="@+id/format_bold"
+        app:layout_constraintEnd_toStartOf="@id/format_italic" />
 
-            <ImageView
-                android:id="@+id/format_bold"
-                style="@style/MarkdownButton"
-                android:src="?attr/markdownFormatBold" />
+    <ImageView
+        android:id="@+id/format_italic"
+        style="@style/MarkdownButton"
+        android:src="?attr/markdownFormatItalic"
+        app:layout_constraintStart_toEndOf="@+id/format_quote"
+        app:layout_constraintEnd_toStartOf="@id/insert_link" />
 
-            <ImageView
-                android:id="@+id/format_quote"
-                style="@style/MarkdownButton"
-                android:src="?attr/markdownFormatQuote" />
+    <ImageView
+        android:id="@+id/insert_link"
+        style="@style/MarkdownButton"
+        android:src="?attr/markdownInsertLink"
+        app:layout_constraintStart_toEndOf="@+id/format_italic"
+        app:layout_constraintEnd_toStartOf="@id/insert_code" />
 
-            <ImageView
-                android:id="@+id/format_italic"
-                style="@style/MarkdownButton"
-                android:src="?attr/markdownFormatItalic" />
+    <ImageView
+        android:id="@+id/insert_code"
+        style="@style/MarkdownButton"
+        android:src="?attr/markdownFormatCode"
+        app:layout_constraintStart_toEndOf="@+id/insert_link"
+        app:layout_constraintEnd_toStartOf="@id/insert_spoiler" />
 
-            <ImageView
-                android:id="@+id/insert_link"
-                style="@style/MarkdownButton"
-                android:src="?attr/markdownInsertLink" />
+    <ImageView
+        android:id="@+id/insert_spoiler"
+        style="@style/MarkdownButton"
+        android:src="?attr/markdownInsertSpoiler"
+        app:layout_constraintStart_toEndOf="@+id/insert_code"
+        app:layout_constraintEnd_toStartOf="@id/insert_emoticon"/>
 
-            <ImageView
-                android:id="@+id/insert_code"
-                style="@style/MarkdownButton"
-                android:src="?attr/markdownFormatCode" />
+    <ImageView
+        android:id="@+id/insert_emoticon"
+        style="@style/MarkdownButton"
+        android:src="?attr/markdownInsertEmoticon"
+        app:layout_constraintStart_toEndOf="@+id/insert_spoiler"
+        app:layout_constraintEnd_toStartOf="@id/insert_photo"/>
 
-            <ImageView
-                android:id="@+id/insert_spoiler"
-                style="@style/MarkdownButton"
-                android:src="?attr/markdownInsertSpoiler" />
+    <ImageView
+        android:id="@+id/insert_photo"
+        style="@style/MarkdownButton"
+        android:src="?attr/markdownInsertPhoto"
+        app:layout_constraintStart_toEndOf="@+id/insert_emoticon"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-            <ImageView
-                android:id="@+id/insert_emoticon"
-                style="@style/MarkdownButton"
-                android:src="?attr/markdownInsertEmoticon" />
-
-            <ImageView
-                android:id="@+id/insert_photo"
-                style="@style/MarkdownButton"
-                android:src="?attr/markdownInsertPhoto" />
-        </LinearLayout>
-    </HorizontalScrollView>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

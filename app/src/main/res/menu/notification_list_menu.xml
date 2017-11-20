@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/markAsRead"
         android:icon="@drawable/ic_mark_read"
         android:title="@string/markAsRead"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
+
 </menu>

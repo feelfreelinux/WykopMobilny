@@ -1,54 +1,67 @@
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/answer"
-        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:paddingTop="2dp"
+        android:paddingStart="2dp"
+        android:paddingEnd="30dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <RadioButton
-        android:id="@+id/radioButton"
-        android:theme="@style/CheckBoxStyle"
-        app:layout_constraintTop_toBottomOf="@id/answer"
-        android:layout_width="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="wrap_content" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Ansver"/>
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@id/answer"
-        app:layout_constraintStart_toEndOf="@id/radioButton"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         android:background="?surveyBarStroke"
-        android:layout_height="40dp"
         android:orientation="horizontal"
-        android:weightSum="100">
+        android:weightSum="100"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answer"
+        app:layout_constraintEnd_toStartOf="@id/radioButton">
 
         <View
             android:id="@+id/percentage_view"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="22dp"
             android:layout_weight="30"
-            android:background="?surveyBar" />
-
+            android:background="?surveyBar"/>
 
         <View
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/votesCount"
-        android:layout_marginEnd="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4.5dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="11.5dp"
         app:layout_constraintEnd_toEndOf="@id/linearLayout"
-        app:layout_constraintTop_toTopOf="@id/linearLayout"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/answer"
+        tools:text="30% (0 głosów)"/>
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:theme="@style/CheckBoxStyle"
+        android:layout_width="28dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintTop_toBottomOf="@id/answer"
+        app:layout_constraintStart_toEndOf="@id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
