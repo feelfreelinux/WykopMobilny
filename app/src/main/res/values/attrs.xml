@@ -10,9 +10,16 @@
     <attr name="textColor" format="color"/>
     <attr name="usersMessageColor" format="reference" />
     <attr name="usersMessageSubtextDirected" format="reference" />
+    <attr name="lineColor" format="reference" />
+    <attr name="separatorColor" format="reference" />
+    <attr name="expandImageGradient" format="reference" />
 
     <!-- DRAWABLES -->
     <attr name="commentDrawable" format="reference"/>
+    <attr name="voteDrawable" format="reference"/>
+    <attr name="dotsDrawable" format="reference"/>
+    <attr name="replyDrawable" format="reference"/>
+    <attr name="sharebtnDrawable" format="reference"/>
     <attr name="MirkoButtonStyle" format="reference"/>
     <attr name="notificationDrawable" format="reference"/>
     <attr name="mailDrawable" format="reference"/>
