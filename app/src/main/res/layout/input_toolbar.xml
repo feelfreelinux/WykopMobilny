@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

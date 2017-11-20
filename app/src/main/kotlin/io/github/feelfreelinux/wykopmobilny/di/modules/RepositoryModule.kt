@@ -8,6 +8,8 @@ import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsRepository
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMRepository
+import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
+import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestRepository
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagRepository
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
@@ -26,16 +28,20 @@ class RepositoryModule {
     @Singleton
     fun provideMyWykopApi(retrofit: Retrofit) : NotificationsApi = NotificationsRepository(retrofit)
 
+    @Provides
+    @Singleton
+    fun provideTagApi(retrofit: Retrofit) : TagApi = TagRepository(retrofit)
 
     @Provides
     @Singleton
-    fun proviteTagApi(retrofit: Retrofit) : TagApi = TagRepository(retrofit)
-
-    @Provides
-    @Singleton
-    fun provideUserApi(retrofit: Retrofit, credentialsPreferencesApi : CredentialsPreferencesApi) : LoginApi = LoginRepository(retrofit, credentialsPreferencesApi)
+    fun provideUserApi(retrofit: Retrofit, credentialsPreferencesApi : CredentialsPreferencesApi) : LoginApi
+            = LoginRepository(retrofit, credentialsPreferencesApi)
 
     @Provides
     @Singleton
     fun providePMApi(retrofit: Retrofit) : PMApi = PMRepository(retrofit)
+
+    @Provides
+    @Singleton
+    fun provideSuggestApi(retrofit: Retrofit) : SuggestApi = SuggestRepository(retrofit)
 }
