@@ -10,35 +10,35 @@
         style="@style/MarkdownButton"
         android:src="?attr/markdownFormatBold"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/format_italic"/>
+
+    <ImageView
+        android:id="@+id/format_italic"
+        style="@style/MarkdownButton"
+        android:src="?attr/markdownFormatItalic"
+        app:layout_constraintStart_toEndOf="@+id/format_bold"
         app:layout_constraintEnd_toStartOf="@id/format_quote"/>
 
     <ImageView
         android:id="@+id/format_quote"
         style="@style/MarkdownButton"
         android:src="?attr/markdownFormatQuote"
-        app:layout_constraintStart_toEndOf="@+id/format_bold"
-        app:layout_constraintEnd_toStartOf="@id/format_italic" />
-
-    <ImageView
-        android:id="@+id/format_italic"
-        style="@style/MarkdownButton"
-        android:src="?attr/markdownFormatItalic"
-        app:layout_constraintStart_toEndOf="@+id/format_quote"
-        app:layout_constraintEnd_toStartOf="@id/insert_link" />
+        app:layout_constraintStart_toEndOf="@+id/format_italic"
+        app:layout_constraintEnd_toStartOf="@id/insert_link"/>
 
     <ImageView
         android:id="@+id/insert_link"
         style="@style/MarkdownButton"
         android:src="?attr/markdownInsertLink"
-        app:layout_constraintStart_toEndOf="@+id/format_italic"
-        app:layout_constraintEnd_toStartOf="@id/insert_code" />
+        app:layout_constraintStart_toEndOf="@+id/format_quote"
+        app:layout_constraintEnd_toStartOf="@id/insert_code"/>
 
     <ImageView
         android:id="@+id/insert_code"
         style="@style/MarkdownButton"
         android:src="?attr/markdownFormatCode"
         app:layout_constraintStart_toEndOf="@+id/insert_link"
-        app:layout_constraintEnd_toStartOf="@id/insert_spoiler" />
+        app:layout_constraintEnd_toStartOf="@id/insert_spoiler"/>
 
     <ImageView
         android:id="@+id/insert_spoiler"
