@@ -11,6 +11,8 @@
         style="@style/EntryCommentsCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp"
         android:clickable="true"
         android:focusable="true">
 
@@ -20,56 +22,56 @@
 
             <ImageView
                 android:id="@+id/newNotificationMark"
-                android:layout_width="match_parent"
-                android:layout_height="1.2dp"
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_notification_unread"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
                 android:id="@+id/avatarView"
                 android:layout_width="66dp"
-                android:layout_height="68dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:padding="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/newNotificationMark"
                 app:layout_constraintEnd_toStartOf="@id/body"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/body"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingEnd="10dp"
                 android:paddingStart="4dp"
+                android:paddingEnd="2dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:textSize="13sp"
                 android:clickable="false"
                 android:duplicateParentState="true"
                 android:inputType="none"
-                app:layout_constraintTop_toBottomOf="@id/newNotificationMark"
                 app:layout_constraintStart_toEndOf="@id/avatarView"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."/>
+                app:layout_constraintEnd_toStartOf="@id/date"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Lorem ipsum"/>
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingBottom="6dp"
-                android:paddingTop="2dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="14dp"
                 android:clickable="false"
                 android:duplicateParentState="true"
                 android:textColor="?attr/authorHeader_date_color"
                 android:textSize="11sp"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/body"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="1 minute ago"/>
-
 
         </android.support.constraint.ConstraintLayout>
 

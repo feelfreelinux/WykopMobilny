@@ -2,24 +2,27 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <include
             layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            app:layout_scrollFlags="scroll|enterAlways"/>
+
     </android.support.design.widget.AppBarLayout>
 
     <io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.BaseFeedList
         android:id="@+id/feedRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -33,4 +36,5 @@
         app:layout_anchor="@id/feedRecyclerView"
         app:layout_anchorGravity="bottom|right"
         app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior"/>
+
 </android.support.design.widget.CoordinatorLayout>

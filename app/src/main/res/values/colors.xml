@@ -6,7 +6,7 @@
     <color name="colorAccent">#3780BF</color>
     <color name="colorPrimary">#2C679A</color>
     <color name="colorPrimaryDark">#285E8C</color>
-    <color name="colorAccent.Dark">#3275af</color>
+    <color name="colorAccent.Dark">#3a80bc</color>
     <color name="colorPrimary.Dark">#424242</color>
     <color name="colorPrimaryDark.Dark">#212121</color>
 
@@ -20,7 +20,8 @@
     <color name="separatorColor.Dark">#151515</color>
 
     <color name="lineColor">#e6e6e6</color>
-    <color name="lineColor.Dark">#1e1e1e</color>
+    <color name="lineColor.Dark">#303030</color>
+
 
     <color name="colorBadgeOwn">#3498db</color>
     <color name="colorBadgeAuthors">#F75616</color>
@@ -32,7 +33,7 @@
     <color name="cardList.Dark">#1c1c1c</color>
     <color name="cardViewSelected.Dark">#252525</color>
 
-    <color name="usersMessageColor">#c1e1ff</color>
+    <color name="usersMessageColor">#e1f0ff</color>
     <color name="usersMessageColor.Dark">#3b70a2</color>
     <color name="usersMessageDirected.Dark">#d6d6d6</color>
 
