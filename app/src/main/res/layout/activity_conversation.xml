@@ -1,4 +1,5 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,18 +14,21 @@
         android:gravity="start"
         android:minHeight="?attr/actionBarSize"
         app:buttonGravity="top"
+        android:elevation="5dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:titleTextAppearance="@style/Toolbar.TitleText.Messages"
+        app:subtitleTextAppearance="@style/Toolbar.Subtitle.Messages"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:title="Rozmowa z m__b">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
             android:id="@+id/avatarview"
-            android:layout_width="40dp"
-            android:layout_height="42dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
             android:layout_gravity="end"
-            android:visibility="visible"
-            tools:layout_editor_absoluteX="285dp"
-            tools:layout_editor_absoluteY="7dp" />
+            android:visibility="visible"/>
+
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -35,12 +39,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible" />
-
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:clipToPadding="false"
+            android:visibility="visible"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -51,24 +58,34 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
-        android:id="@+id/floatingImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/inputToolbar"
-        app:layout_constraintEnd_toEndOf="parent"/>
+    <View
+        android:id="@+id/shadowUp"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="?attr/shadowUpGradient"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/inputToolbar"/>
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
         android:id="@+id/inputToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/floatingImageView"/>
+
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
+        android:id="@+id/floatingImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

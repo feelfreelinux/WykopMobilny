@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="1dp"
         android:layout_alignParentStart="true"
         android:clickable="true"
         android:focusable="true">
