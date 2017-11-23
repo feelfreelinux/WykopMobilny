@@ -13,11 +13,11 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
 import javax.inject.Inject
-import android.R.attr.data
-import android.support.annotation.ColorInt
-import android.content.res.Resources.Theme
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.TypedValue
-
+import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.WykopSuggestionsAdapter
 
 
 interface InputToolbarListener {
@@ -36,6 +36,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         set(value) { body.setText(value) }
 
     @Inject lateinit var userManager : UserManagerApi
+    @Inject lateinit var suggestApi : SuggestApi
 
     var defaultText = ""
 
@@ -88,6 +89,9 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
                 textBody = defaultText
             }
         }
+
+        body.setAdapter(WykopSuggestionsAdapter(context, R.layout.autosuggest_item, suggestApi))
+
 
         send.setOnClickListener {
             showProgress(true)
@@ -151,5 +155,32 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     fun show() {
         // Only show if user's logged in
         isVisible = userManager.isUserAuthorized()
+    }
+
+    class WykopTextWatcher(val userAction : (String) -> Unit, val tagAction : (String) -> Unit, val notDefined : () -> Unit) : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+
+        override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            val text = s.toString()
+            if (text.contains('@')) {
+                val typedText = text.substringAfterLast('@')
+                if (typedText.isNotEmpty()) {
+                    if (!typedText.matches(".*([ \\t]).*".toRegex())) {
+                        userAction.invoke(typedText)
+                    } else notDefined()
+                } else notDefined()
+            } else notDefined()
+            if (text.contains('#')) {
+                val typedText = text.substringAfterLast('#')
+                if (typedText.isNotEmpty()) {
+                    if (!typedText.matches(".*([ \\t]).*".toRegex())) {
+                        tagAction.invoke(typedText)
+                    }
+                }
+            }
+
+        }
     }
 }

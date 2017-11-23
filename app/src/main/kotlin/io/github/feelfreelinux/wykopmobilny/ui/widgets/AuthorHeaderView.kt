@@ -30,11 +30,7 @@ class AuthorHeaderView : ConstraintLayout {
     fun setAuthorData(author : Author, date : String, app : String? = null) {
         author.apply {
             userNameTextView.apply {
-                text = if (nick.length <= 20) {
-                    nick
-                } else {
-                    nick.substring(0..20) + "..."
-                }
+                text = nick
                 setTextColor(getGroupColor(group, settingsApi.useDarkTheme))
             }
             authorAvatarView.setAuthor(this)

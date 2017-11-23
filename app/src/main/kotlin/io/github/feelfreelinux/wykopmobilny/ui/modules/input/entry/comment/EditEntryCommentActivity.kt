@@ -5,12 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.WykopSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
+import kotlinx.android.synthetic.main.activity_write_comment.*
 import javax.inject.Inject
 
 class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(), EditEntryCommentView {
     override val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, 0) }
     override val commentId by lazy { intent.getIntExtra(EXTRA_COMMENT_ID, 0) }
+    @Inject override lateinit var suggestionApi: SuggestApi
     @Inject override lateinit var presenter : EditEntryCommentPresenter
 
     companion object {
@@ -31,6 +35,7 @@ class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WykopApp.uiInjector.inject(this)
+        body.setAdapter(WykopSuggestionsAdapter(this, R.layout.autosuggest_item, suggestionApi))
         presenter.subscribe(this)
         supportActionBar?.setTitle(R.string.edit_comment)
     }

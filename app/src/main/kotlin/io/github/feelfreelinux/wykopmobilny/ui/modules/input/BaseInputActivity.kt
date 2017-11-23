@@ -7,7 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.WykopSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
@@ -20,8 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.removeSpoilerHtml
 
 
 abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
-    @Inject lateinit var notificationManager : WykopNotificationManagerApi
-    private val notificationId by lazy { notificationManager.getNewId() }
+    abstract var suggestionApi : SuggestApi
 
     companion object {
         val EXTRA_RECEIVER = "EXTRA_RECEIVER"
@@ -40,7 +42,6 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         setContentView(R.layout.activity_write_comment)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         intent.apply {
             getStringExtra(EXTRA_RECEIVER)?.apply {
                 textBody += "$this: "

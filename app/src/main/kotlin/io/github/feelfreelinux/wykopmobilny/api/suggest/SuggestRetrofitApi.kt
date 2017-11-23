@@ -12,6 +12,6 @@ interface SuggestRetrofitApi {
     @GET("/suggest/tags/{suggestString}/appkey/$APP_KEY")
     fun getTagSuggestions(@Path("suggestString") suggestString : String) : Single<WykopApiResponse<List<TagSuggestionResponse>>>
 
-    @GET("/suggest/tags/{suggestString}/appkey/$APP_KEY")
+    @GET("/suggest/users/{suggestString}/appkey/$APP_KEY")
     fun getUsersSuggestions(@Path("suggestString") suggestString : String) : Single<WykopApiResponse<List<AuthorResponse>>>
 }
