@@ -90,7 +90,10 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     }
 
     private fun setupBody() {
-        entryContentTextView.prepareBody(entry.body, this)
+        if (entry.body.isNotEmpty()) {
+            entryContentTextView.isVisible = true
+            entryContentTextView.prepareBody(entry.body, this)
+        } else entryContentTextView.isVisible = false
         entryImageView.setEmbed(entry.embed)
 
         if (entry.survey != null) {

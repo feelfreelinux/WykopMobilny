@@ -48,10 +48,10 @@ class WykopSuggestionsAdapter(context: Context, private val textViewResourceId: 
                         val typedText = text.substringAfterLast('@')
                         if (typedText.isNotEmpty()) {
                             if (!typedText.matches(".*([ \\t]).*".toRegex())) {
-                                if (typedText.length > 2) {
+                                if (typedText.length >= 2) {
                                     val suggestions = suggestApi.getUserSuggestions(typedText)
                                             .blockingGet()
-                                    mData.addAll(suggestions.map { WykopSuggestion(it, null, text.substringBeforeLast("@") + "@${it.nick}") })
+                                    mData.addAll(suggestions.subList(0, 7).map { WykopSuggestion(it, null, text.substringBeforeLast("@") + "@${it.nick}") })
                                 }
                             }
                         }
@@ -60,10 +60,10 @@ class WykopSuggestionsAdapter(context: Context, private val textViewResourceId: 
                         val typedText = text.substringAfterLast('#')
                         if (typedText.isNotEmpty()) {
                             if (!typedText.matches(".*([ \\t]).*".toRegex())) {
-                                if (typedText.length > 2) {
+                                if (typedText.length >= 2) {
                                     val suggestions = suggestApi.getTagSuggestions(typedText)
                                             .blockingGet()
-                                    mData.addAll(suggestions.map { WykopSuggestion(null, it, text.substringBeforeLast("#") + it.tag) })
+                                    mData.addAll(suggestions.subList(0, 7).map { WykopSuggestion(null, it, text.substringBeforeLast("#") + it.tag) })
                                 }
                             }
                         }

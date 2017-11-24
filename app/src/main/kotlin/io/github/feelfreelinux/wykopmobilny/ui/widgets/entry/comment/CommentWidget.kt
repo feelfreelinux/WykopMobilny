@@ -93,7 +93,10 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
     private fun setupBody() {
         moreOptionsTextView.setOnClickListener { openOptionsMenu() }
         replyTextView.setOnClickListener { addReceiver() }
-        entryContentTextView.prepareBody(comment.body, this)
+        if (comment.body.isNotEmpty()) {
+            entryContentTextView.isVisible = true
+            entryContentTextView.prepareBody(comment.body, this)
+        } else entryContentTextView.isVisible = false
         entryImageView.setEmbed(comment.embed)
     }
 
