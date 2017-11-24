@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.NotificationsCountResponse
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.reactivex.Observable
 import io.reactivex.Single

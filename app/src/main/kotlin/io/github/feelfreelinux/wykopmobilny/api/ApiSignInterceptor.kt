@@ -28,11 +28,12 @@ class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
         val encodeUrl : String = when(request.body()) {
             is FormBody -> {
                 val formBody = request.body() as FormBody
-                val paramList = (0 until formBody.size())
+                var paramList = (0 until formBody.size())
                         .filter { !formBody.value(it).isNullOrEmpty() }
                         .sortedWith(compareBy({ formBody.name(it) }))
                         .mapTo(ArrayList<String>()) { formBody.value(it) }
-                        .reversed() // apiv2 accepts these items in reversed order, wtf
+                        .toList()
+                if (customHeaders.contains(REMOVE_USERKEY_HEADER)) paramList = paramList.reversed()
 
                 APP_SECRET + url+ paramList.joinToString(",")
             }

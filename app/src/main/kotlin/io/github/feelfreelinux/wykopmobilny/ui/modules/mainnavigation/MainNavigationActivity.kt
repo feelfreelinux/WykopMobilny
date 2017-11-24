@@ -21,6 +21,7 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
@@ -31,10 +32,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.Conv
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_navigation.*
-import kotlinx.android.synthetic.main.activity_navigation.view.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
+import kotlinx.android.synthetic.main.navigation_header.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -112,6 +112,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
         }
+        navHeader.view_container.startListeningForUpdates()
 
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
@@ -144,12 +145,15 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     override fun onResume() {
         super.onResume()
         presenter.subscribe(this)
-        navHeader.view_container.startListeningForUpdates()
     }
 
     override fun onPause() {
         super.onPause()
         presenter.unsubscribe()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         navHeader.view_container.stopListeningForUpdates()
     }
 
@@ -165,6 +169,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             findItem(R.id.login).isVisible = !value
             findItem(R.id.logout).isVisible = value
         }
+        navHeader.view_container.isVisible = value
         navHeader.view_container.apply {
             nav_notifications_tag.setOnClickListener {
                 openFragment(HashTagsNotificationsListFragment.newInstance())
@@ -228,9 +233,13 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
                 }
             }
 
+            Navigator.STARTED_FROM_NOTIFIATIONS_CODE -> {
+                view_container.startListeningForUpdates()
+            }
+
             else -> {
                 if (resultCode == SettingsActivity.THEME_CHANGED_RESULT) {
-                    // restartActivity()
+                    restartActivity()
                 }
             }
         }

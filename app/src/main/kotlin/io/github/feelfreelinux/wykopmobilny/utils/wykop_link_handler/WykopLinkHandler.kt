@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
@@ -13,7 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
 
 interface WykopLinkHandlerApi {
-    fun handleUrl(context: Activity, url: String)
+    fun handleUrl(context: Activity, url: String, refreshNotifications : Boolean = false)
     fun getLinkIntent(context: Context, url: String): Intent?
 }
 
@@ -27,11 +28,11 @@ class WykopLinkHandler(private val navigatorApi: NavigatorApi) : WykopLinkHandle
         const val DELIMITER = "/"
     }
 
-    override fun handleUrl(context: Activity, url: String) {
+    override fun handleUrl(context: Activity, url: String, refreshNotifications: Boolean) {
         when (url.first()) {
             PROFILE_PREFIX -> handleProfile(url)
             TAG_PREFIX -> handleTag(context, url)
-            else -> handleLink(context, url)
+            else -> handleLink(context, url, refreshNotifications)
         }
     }
 
@@ -43,10 +44,11 @@ class WykopLinkHandler(private val navigatorApi: NavigatorApi) : WykopLinkHandle
         navigatorApi.openTagActivity(context, tag.removePrefix(TAG_PREFIX.toString()))
     }
 
-    private fun handleLink(context: Activity, url: String) {
+    private fun handleLink(context: Activity, url: String, refreshNotifications : Boolean) {
         val intent = getLinkIntent(context, url)
         if (intent != null) {
-            context.startActivity(intent)
+            if (refreshNotifications) context.startActivityForResult(intent, Navigator.STARTED_FROM_NOTIFIATIONS_CODE)
+            else context.startActivity(intent)
         } else {
             context.openBrowser(url)
         }

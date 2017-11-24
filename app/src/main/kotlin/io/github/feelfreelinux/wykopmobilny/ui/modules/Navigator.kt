@@ -30,6 +30,10 @@ interface NavigatorApi {
 }
 
 class Navigator : NavigatorApi {
+    companion object {
+        val STARTED_FROM_NOTIFIATIONS_CODE = 228
+    }
+
     override fun openMainActivity(context: Activity, targetFragment: String?) {
         context.startActivity(NavigationActivity.getIntent(context, targetFragment)
                 .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) })

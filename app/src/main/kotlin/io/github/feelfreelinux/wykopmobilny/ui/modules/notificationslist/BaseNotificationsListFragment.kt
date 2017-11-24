@@ -28,7 +28,7 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
         notification.new = false
         notificationAdapter.notifyDataSetChanged()
         notification.url?.let {
-            linkHandler.handleUrl(activity, notification.url)
+            linkHandler.handleUrl(activity, notification.url, true)
         }
     }
 

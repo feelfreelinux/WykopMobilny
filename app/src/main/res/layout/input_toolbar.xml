@@ -76,7 +76,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/show_markdown_menu"
         app:layout_constraintTop_toBottomOf="@id/markdownToolbarHolder"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/floatingImageView"/>
 
     <ImageView
         android:id="@+id/show_markdown_menu"
@@ -88,7 +88,7 @@
         android:src="@drawable/ic_arrow_upward"
         app:layout_constraintEnd_toStartOf="@+id/send"
         app:layout_constraintTop_toBottomOf="@id/markdownToolbarHolder"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/floatingImageView"/>
 
 
     <ImageView
@@ -100,7 +100,7 @@
         android:src="?attr/markdownSend"
         app:layout_constraintEnd_toStartOf="@id/progressBar"
         app:layout_constraintTop_toBottomOf="@id/markdownToolbarHolder"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/floatingImageView"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -110,6 +110,13 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/markdownToolbarHolder"
+        app:layout_constraintBottom_toTopOf="@id/floatingImageView"/>
+
+
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
+        android:id="@+id/floatingImageView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </merge>

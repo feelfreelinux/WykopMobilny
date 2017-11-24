@@ -20,6 +20,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.activity_conversation.*
 import kotlinx.android.synthetic.main.activity_conversation.view.*
@@ -53,7 +54,6 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         supportActionBar?.title = "Rozmowa z $user"
         swiperefresh.setOnRefreshListener { presenter.loadConversation() }
         inputToolbar.setCustomHint(getString(R.string.reply))
-        inputToolbar.setFloatingImageView(floatingImageView)
 
         presenter.subscribe(this)
         presenter.user = user
@@ -79,6 +79,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
         receiver = conversation.receiver
+        printout("HMM?")
         toolbar.apply {
             subtitle = conversation.messages.last().date.toPrettyDate()
             avatarview.setAuthor(conversation.receiver)
@@ -92,6 +93,16 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
             notifyDataSetChanged()
         }
         recyclerView.invalidate()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.subscribe(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribe()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

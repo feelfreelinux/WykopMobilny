@@ -49,9 +49,10 @@ class WykopSuggestionsAdapter(context: Context, private val textViewResourceId: 
                         if (typedText.isNotEmpty()) {
                             if (!typedText.matches(".*([ \\t]).*".toRegex())) {
                                 if (typedText.length >= 2) {
-                                    val suggestions = suggestApi.getUserSuggestions(typedText)
+                                    var suggestions = suggestApi.getUserSuggestions(typedText)
                                             .blockingGet()
-                                    mData.addAll(suggestions.subList(0, 7).map { WykopSuggestion(it, null, text.substringBeforeLast("@") + "@${it.nick}") })
+                                    suggestions = if (suggestions.size > 7) suggestions.subList(0, 7) else suggestions
+                                    mData.addAll(suggestions.map { WykopSuggestion(it, null, text.substringBeforeLast("@") + "@${it.nick}") })
                                 }
                             }
                         }
@@ -61,9 +62,10 @@ class WykopSuggestionsAdapter(context: Context, private val textViewResourceId: 
                         if (typedText.isNotEmpty()) {
                             if (!typedText.matches(".*([ \\t]).*".toRegex())) {
                                 if (typedText.length >= 2) {
-                                    val suggestions = suggestApi.getTagSuggestions(typedText)
+                                    var suggestions = suggestApi.getTagSuggestions(typedText)
                                             .blockingGet()
-                                    mData.addAll(suggestions.subList(0, 7).map { WykopSuggestion(null, it, text.substringBeforeLast("#") + it.tag) })
+                                    suggestions = if (suggestions.size > 7) suggestions.subList(0, 7) else suggestions
+                                    mData.addAll(suggestions.map { WykopSuggestion(null, it, text.substringBeforeLast("#") + it.tag) })
                                 }
                             }
                         }

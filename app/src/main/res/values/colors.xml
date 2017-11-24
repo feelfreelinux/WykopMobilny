@@ -34,7 +34,7 @@
     <color name="cardViewSelected.Dark">#252525</color>
 
     <color name="usersMessageColor">#e1f0ff</color>
-    <color name="usersMessageColor.Dark">#3b70a2</color>
+    <color name="usersMessageColor.Dark">#2e5f8c</color>
     <color name="usersMessageDirected.Dark">#d6d6d6</color>
 
     <color name="navigationSeparator">#404040</color>

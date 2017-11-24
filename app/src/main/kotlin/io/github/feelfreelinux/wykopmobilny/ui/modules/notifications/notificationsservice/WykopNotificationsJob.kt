@@ -66,7 +66,7 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
         val intent = wykopLinkHandler.getLinkIntent(context, notification.url!!)
 
         val pendingIntent = if (intent != null) {
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             PendingIntent.getActivity(context, 0, intent, 0)
 
         } else {
@@ -79,7 +79,7 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
     override fun showNotificationsCount(count: Int) {
         // Create intent
         val intent = NavigationActivity.getIntent(context, NavigationActivity.TARGET_NOTIFICATIONS)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or  Intent.FLAG_ACTIVITY_NEW_TASK)
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         // Show Notification

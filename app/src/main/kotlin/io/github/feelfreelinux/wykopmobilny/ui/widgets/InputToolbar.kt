@@ -56,11 +56,6 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
     var inputToolbarListener : InputToolbarListener? = null
 
-    fun setFloatingImageView(floatingImageView: FloatingImageView) {
-        markdownToolbar.floatingImageView = floatingImageView
-    }
-
-
     init {
         WykopApp.uiInjector.inject(this)
         val typedValue = TypedValue()
@@ -73,6 +68,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         View.inflate(context, R.layout.input_toolbar, this)
 
         markdownToolbar.markdownListener = this
+        markdownToolbar.floatingImageView = floatingImageView
 
         // Setup listeners
         show_markdown_menu.setOnClickListener {

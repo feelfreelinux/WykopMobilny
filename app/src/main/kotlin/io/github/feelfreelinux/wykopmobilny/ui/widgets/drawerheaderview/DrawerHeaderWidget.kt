@@ -67,17 +67,6 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
         }
     }
 
-    override fun onDetachedFromWindow() {
-        presenter.unsubscribe()
-        super.onDetachedFromWindow()
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        presenter.subscribe(this)
-        checkIsUserLoggedIn()
-    }
-
     override val isConnectedToInternet : Boolean
         get() = context.isConnectedToInternet()
 
