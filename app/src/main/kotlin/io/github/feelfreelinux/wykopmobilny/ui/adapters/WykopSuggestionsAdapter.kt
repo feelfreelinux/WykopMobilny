@@ -47,8 +47,8 @@ class WykopSuggestionsAdapter(context: Context, private val textViewResourceId: 
                     if (text.contains('@')) {
                         val typedText = text.substringAfterLast('@')
                         if (typedText.isNotEmpty()) {
-                            if (!typedText.matches(".*([ \\t]).*".toRegex())) {
-                                if (typedText.length >= 2) {
+                            if (typedText.matches("^[\\w-]+\$".toRegex())) {
+                                if (typedText.length > 2) {
                                     var suggestions = suggestApi.getUserSuggestions(typedText)
                                             .blockingGet()
                                     suggestions = if (suggestions.size > 7) suggestions.subList(0, 7) else suggestions
@@ -60,8 +60,8 @@ class WykopSuggestionsAdapter(context: Context, private val textViewResourceId: 
                     if (text.contains('#')) {
                         val typedText = text.substringAfterLast('#')
                         if (typedText.isNotEmpty()) {
-                            if (!typedText.matches(".*([ \\t]).*".toRegex())) {
-                                if (typedText.length >= 2) {
+                            if (typedText.matches("^[\\w-]+\$".toRegex())) {
+                                if (typedText.length > 2) {
                                     var suggestions = suggestApi.getTagSuggestions(typedText)
                                             .blockingGet()
                                     suggestions = if (suggestions.size > 7) suggestions.subList(0, 7) else suggestions
