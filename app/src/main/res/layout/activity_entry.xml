@@ -36,8 +36,8 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
+                android:paddingTop="@dimen/entry_recycler_padding_vertical"
+                android:paddingBottom="@dimen/entry_recycler_padding_vertical"
                 android:clipToPadding="false"
                 android:visibility="visible"/>
 
@@ -60,7 +60,7 @@
     <View
         android:id="@+id/shadowUp"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="@dimen/shadow_up_height"
         android:background="?attr/shadowUpGradient"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

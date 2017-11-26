@@ -9,8 +9,43 @@
     <dimen name="dialog_edittext_padding">8dp</dimen>
     <dimen name="cardview_margin_vertical">0dp</dimen>
     <dimen name="cardview_margin_horizontal">6dp</dimen>
-    <dimen name="markdown_item_size">26dp</dimen>
-    <dimen name="input_toolbar_item_size">22dp</dimen>
-    <dimen name="input_toolbar_item_margin">10dp</dimen>
+
+    <dimen name="entry_recycler_padding_vertical">6dp</dimen>
+
+    <dimen name="notifications_list_recycler_padding_top">5dp</dimen>
+    <dimen name="notifications_list_recycler_padding_bottom">2dp</dimen>
+    <dimen name="notifications_list_item_margin_top">2dp</dimen>
+    <dimen name="notifications_list_item_margin_bottom">5dp</dimen>
+    <dimen name="notifications_list_item_padding_start">6dp</dimen>
+    <dimen name="notifications_list_item_padding_end">0dp</dimen>
+    <dimen name="notifications_list_item_mark_width">4dp</dimen>
+    <dimen name="notifications_list_item_date_width">70dp</dimen>
+    <dimen name="notifications_list_item_date_padding_start">8dp</dimen>
+    <dimen name="notifications_list_item_date_padding_end">14dp</dimen>
+    <dimen name="notifications_list_item_date_text_size">11sp</dimen>
+    <dimen name="notifications_list_item_body_padding_start">6dp</dimen>
+    <dimen name="notifications_list_item_body_padding_end">2dp</dimen>
+    <dimen name="notifications_list_item_body_padding_vertical">8dp</dimen>
+    <dimen name="notifications_list_item_body_text_size">13sp</dimen>
+    <dimen name="notifications_list_item_avatar_width">62dp</dimen>
+    <dimen name="notifications_list_item_avatar_padding_horizontal">6dp</dimen>
+    <dimen name="notifications_list_item_avatar_padding_vertical">8dp</dimen>
+
+    <dimen name="write_comment_scroll_padding_vertical">4dp</dimen>
+
+    <dimen name="shadow_up_height">4dp</dimen>
+    <dimen name="separator_line_height">1dp</dimen>
+
+    <dimen name="markdown_item_size">24dp</dimen>
+    <dimen name="markdown_padding_vertical">6dp</dimen>
+
+    <dimen name="input_toolbar_text_size">15sp</dimen>
+    <dimen name="input_toolbar_text_margin_horizontal">10dp</dimen>
+    <dimen name="input_toolbar_text_padding_vertical">10dp</dimen>
+    <dimen name="input_toolbar_item_margin_vertical">4dp</dimen>
+    <dimen name="input_toolbar_item_margin_horizontal">10dp</dimen>
+    <dimen name="input_toolbar_item_size">24dp</dimen>
+
+    <dimen name="floating_image_height">80dp</dimen>
 
 </resources>

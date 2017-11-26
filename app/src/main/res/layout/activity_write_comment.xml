@@ -41,8 +41,8 @@
         android:id="@+id/contentView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
+        android:paddingTop="@dimen/write_comment_scroll_padding_vertical"
+        android:paddingBottom="@dimen/write_comment_scroll_padding_vertical"
         android:clipToPadding="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,8 +59,11 @@
                 android:id="@+id/body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:padding="12dp"
+                android:layout_marginStart="@dimen/input_toolbar_text_margin_horizontal"
+                android:layout_marginEnd="@dimen/input_toolbar_text_margin_horizontal"
+                android:paddingTop="@dimen/input_toolbar_text_padding_vertical"
+                android:paddingBottom="@dimen/input_toolbar_text_padding_vertical"
+                android:textSize="@dimen/input_toolbar_text_size"
                 android:background="@null"
                 android:inputType="textMultiLine|textCapSentences"/>
 
@@ -71,7 +74,7 @@
     <View
         android:id="@+id/shadowUp"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="@dimen/shadow_up_height"
         android:background="?attr/shadowUpGradient"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +83,7 @@
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/separator_line_height"
         android:background="?attr/separatorColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,8 +93,6 @@
         android:id="@+id/markupToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
         android:background="?attr/cardViewColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,7 +101,7 @@
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
         android:id="@+id/floatingImageView"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/floating_image_height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
