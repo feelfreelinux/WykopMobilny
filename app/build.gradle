@@ -27,8 +27,8 @@ android {
         applicationId "io.github.feelfreelinux.wykopmobilny"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 12
-        versionName "0.3.2"
+        versionCode 13
+        versionName "0.3.2.1"
 
         def credentialsPropertiesFile = rootProject.file("credentials.properties")
         def credentialsProperties = new Properties()

@@ -15,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResp
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.EntryFeedFragment
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
@@ -88,6 +89,7 @@ class TagEntriesFragment : EntryFeedFragment(), TagEntriesView {
             R.id.action_unobserve -> presenter.unobserveTag()
             R.id.action_block -> presenter.blockTag()
             R.id.action_unblock -> presenter.unblockTag()
+            android.R.id.home -> activity.finish()
         }
         return super.onOptionsItemSelected(item)
     }

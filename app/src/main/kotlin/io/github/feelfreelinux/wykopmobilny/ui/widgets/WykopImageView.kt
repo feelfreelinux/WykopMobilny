@@ -38,4 +38,12 @@ class WykopImageView(context: Context, attrs: AttributeSet) : ImageView(context,
         }
     }
 
+    /*override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        if (heightMeasureSpec > maxHeight || heightMeasureSpec == 0) {
+            setMeasuredDimension(widthMeasureSpec, MeasureSpec.makeMeasureSpec(maxHeight,
+                    MeasureSpec.getMode(widthMeasureSpec)))
+        }
+    }*/
+
 }

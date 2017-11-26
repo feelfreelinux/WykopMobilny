@@ -17,6 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResp
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries.TagEntriesFragment
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
@@ -27,6 +28,7 @@ import javax.inject.Inject
 class TagActivity : BaseActivity() {
     private lateinit var entryTag : String
     @Inject lateinit var navigator : NavigatorApi
+    @Inject lateinit var userManagerApi : UserManagerApi
 
     companion object {
         val EXTRA_TAG = "EXTRA_TAG"
@@ -49,6 +51,7 @@ class TagActivity : BaseActivity() {
         fab.setOnClickListener {
             navigator.openAddEntryActivity(this)
         }
+        fab.isVisible = userManagerApi.isUserAuthorized()
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -61,6 +64,6 @@ class TagActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) finish()
-        return true
+        return false
     }
 }
