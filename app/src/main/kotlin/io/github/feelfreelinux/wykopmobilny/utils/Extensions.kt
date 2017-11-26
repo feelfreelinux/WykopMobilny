@@ -18,11 +18,12 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
-import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import android.text.SpannableStringBuilder
+
+
 
 
 
@@ -71,12 +72,25 @@ fun ImageView.loadImage(url : String) {
 fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
 
 fun Uri.queryFileName(contentResolver: ContentResolver) : String {
-    val returnCursor = contentResolver.query(this, null, null, null, null)
-    val nameIndex = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME) ?: return ""
-    returnCursor.moveToFirst()
-    val name = returnCursor.getString(nameIndex)
-    returnCursor.close()
-    return name
+    var result: String? = null
+    if (scheme == "content") {
+        val cursor = contentResolver.query(this, null, null, null, null)
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+            }
+        } finally {
+            cursor!!.close()
+        }
+    }
+    if (result == null) {
+        result = path
+        val cut = result!!.lastIndexOf('/')
+        if (cut != -1) {
+            result = result.substring(cut + 1)
+        }
+    }
+    return result
 }
 
 fun Uri.getMimeType(contentResolver: ContentResolver): String {

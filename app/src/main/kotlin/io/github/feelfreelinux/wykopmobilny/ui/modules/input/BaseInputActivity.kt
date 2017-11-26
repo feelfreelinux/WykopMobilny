@@ -15,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
