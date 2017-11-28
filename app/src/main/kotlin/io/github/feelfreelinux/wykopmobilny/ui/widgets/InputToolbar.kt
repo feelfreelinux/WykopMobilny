@@ -18,6 +18,7 @@ import android.text.TextWatcher
 import android.util.TypedValue
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.WykopSuggestionsAdapter
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 
 interface InputToolbarListener {
@@ -88,7 +89,6 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
         body.setAdapter(WykopSuggestionsAdapter(context, R.layout.autosuggest_item, suggestApi))
 
-
         send.setOnClickListener {
             showProgress(true)
             val typedInputStream = markdownToolbar.getPhotoTypedInputStream()
@@ -151,32 +151,5 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     fun show() {
         // Only show if user's logged in
         isVisible = userManager.isUserAuthorized()
-    }
-
-    class WykopTextWatcher(val userAction : (String) -> Unit, val tagAction : (String) -> Unit, val notDefined : () -> Unit) : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {}
-
-        override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            val text = s.toString()
-            if (text.contains('@')) {
-                val typedText = text.substringAfterLast('@')
-                if (typedText.isNotEmpty()) {
-                    if (!typedText.matches(".*([ \\t]).*".toRegex())) {
-                        userAction.invoke(typedText)
-                    } else notDefined()
-                } else notDefined()
-            } else notDefined()
-            if (text.contains('#')) {
-                val typedText = text.substringAfterLast('#')
-                if (typedText.isNotEmpty()) {
-                    if (!typedText.matches(".*([ \\t]).*".toRegex())) {
-                        tagAction.invoke(typedText)
-                    }
-                }
-            }
-
-        }
     }
 }
