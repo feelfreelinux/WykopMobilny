@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,21 +9,20 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:paddingRight="12dp"
-        android:paddingLeft="12dp"
-        tools:text="feelfree"
+        android:paddingTop="@dimen/autosuggest_item_padding_vertical"
+        android:paddingBottom="@dimen/autosuggest_item_padding_vertical"
+        android:paddingRight="@dimen/autosuggest_item_padding_horizontal"
+        android:paddingLeft="@dimen/autosuggest_item_padding_horizontal"
+        android:textSize="@dimen/autosuggest_item_text_size"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/separator"/>
 
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
-        android:layout_height="0.3dp"
+        android:layout_height="@dimen/autosuggest_item_separator_height"
         android:background="?attr/separatorColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,7 +1,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,9 +22,9 @@
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
             android:id="@+id/avatarview"
-            android:layout_width="36dp"
+            android:layout_width="@dimen/conversation_avatar_width"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/conversation_avatar_margin_end"
             android:layout_gravity="end"
             android:visibility="visible"/>
 
@@ -35,17 +34,17 @@
         android:id="@+id/swiperefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/inputToolbar"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/inputToolbar">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
+            android:paddingTop="@dimen/conversation_recycler_padding_vertical"
+            android:paddingBottom="@dimen/conversation_recycler_padding_vertical"
             android:clipToPadding="false"
             android:visibility="visible"/>
 
@@ -66,7 +65,7 @@
     <View
         android:id="@+id/shadowUp"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="@dimen/shadow_up_height"
         android:background="?attr/shadowUpGradient"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

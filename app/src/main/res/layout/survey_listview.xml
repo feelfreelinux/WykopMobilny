@@ -12,7 +12,7 @@
         android:id="@+id/surveyQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="13.5sp"
+        android:textSize="@dimen/survey_question_text_size"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

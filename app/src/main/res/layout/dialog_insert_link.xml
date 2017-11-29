@@ -1,16 +1,25 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dialog_edittext_padding_horizontal"
+    android:paddingEnd="@dimen/dialog_edittext_padding_horizontal">
+
     <EditText
         android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="@string/link_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="@dimen/dialog_edittext_text_size"/>
+
     <EditText
         android:id="@+id/link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:inputType="textUri"
         android:hint="@string/url_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="@dimen/dialog_edittext_text_size"/>
+
 </LinearLayout>

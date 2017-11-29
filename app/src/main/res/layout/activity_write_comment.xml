@@ -6,9 +6,9 @@
     android:layout_height="match_parent">
 
     <include
-        layout="@layout/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        layout="@layout/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
