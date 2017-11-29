@@ -117,21 +117,23 @@
     </style>
 
     <style name="NavigationDrawerStyle">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/navigation_drawer_text_size</item>
     </style>
 
     <style name="NavigationDrawerNotificationItem">
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:drawablePadding">5dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/drawer_header_notification_item_height</item>
+        <item name="android:layout_marginTop">@dimen/drawer_header_notification_item_margin_top</item>
+        <item name="android:drawablePadding">@dimen/drawer_header_notification_item_drawable_padding</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:textSize">@dimen/drawer_header_notification_item_text_size</item>
         <item name="android:text">0</item>
-        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="BaseCardView" parent="CardView">
         <item name="cardBackgroundColor">?attr/cardViewColor</item>
-        <item name="cardCornerRadius">0dp</item>
+        <item name="cardCornerRadius">@dimen/cardview_radius</item>
     </style>
 
     <style name="EntryCardView" parent="BaseCardView">
@@ -151,40 +153,40 @@
     <style name="EntryContentTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingRight">12dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:paddingRight">@dimen/entry_content_padding_horizontal</item>
+        <item name="android:paddingLeft">@dimen/entry_content_padding_horizontal</item>
+        <item name="android:paddingTop">@dimen/entry_content_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/entry_content_padding_vertical</item>
+        <item name="android:textSize">@dimen/entry_content_text_size</item>
     </style>
 
     <style name="MikroButton">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">34dp</item>
-        <item name="android:paddingRight">@dimen/button_padding</item>
-        <item name="android:paddingLeft">@dimen/button_padding</item>
-        <item name="android:drawablePadding">@dimen/button_padding_drawable</item>
+        <item name="android:layout_height">@dimen/mirko_button_height</item>
+        <item name="android:paddingRight">@dimen/mirko_button_padding</item>
+        <item name="android:paddingLeft">@dimen/mirko_button_padding</item>
+        <item name="android:drawablePadding">@dimen/mirko_button_drawable_padding</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textSize">@dimen/mirko_button_text_size</item>
         <item name="android:textStyle">normal</item>
         <item name="android:background">@drawable/button_background_deselected</item>
     </style>
 
     <style name="WykopImageView">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:maxHeight">700dp</item>
-        <item name="android:adjustViewBounds">true</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxHeight">@dimen/wykop_image_view_max_height</item>
+        <item name="android:adjustViewBounds">true</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="WykopImageViewExpand">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_height">@dimen/wykop_image_view_expand_height</item>
         <item name="android:background">?attr/expandImageGradient</item>
         <item name="android:text">@string/expand_image</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">@dimen/wykop_image_view_expand_text_size</item>
     </style>
 
     <style name="MarkdownButton">
@@ -202,15 +204,15 @@
     </style>
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/toolbar_titletext_text_size</item>
     </style>
 
     <style name="Toolbar.TitleText.Messages" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/toolbar_titletext_messages_text_size</item>
     </style>
 
     <style name="Toolbar.Subtitle.Messages" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/toolbar_subtitle_messages_text_size</item>
     </style>
 
 </resources>

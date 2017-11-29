@@ -2,15 +2,15 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/dialog_edittext_padding_horizontal"
+    android:paddingEnd="@dimen/dialog_edittext_padding_horizontal">
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginLeft="@dimen/dialog_edittext_padding"
-        android:layout_marginRight="@dimen/dialog_edittext_padding"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:textSize="@dimen/dialog_edittext_text_size"/>
 
 </FrameLayout>

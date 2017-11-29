@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -11,10 +12,10 @@
         style="@style/EntryCommentsCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        app:cardCornerRadius="3dp"
-        app:cardElevation="1dp"
+        android:layout_marginLeft="@dimen/pmmessage_sent_layout_card_margin_horizontal"
+        android:layout_marginRight="@dimen/pmmessage_sent_layout_card_margin_horizontal"
+        app:cardCornerRadius="@dimen/pmmessage_sent_layout_card_radius"
+        app:cardElevation="@dimen/pmmessage_sent_layout_card_elevation"
         android:layout_alignParentStart="true"
         android:clickable="true"
         android:focusable="true">
@@ -22,10 +23,10 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:paddingTop="@dimen/pmmessage_sent_layout_item_padding_vertical"
+            android:paddingBottom="@dimen/pmmessage_sent_layout_item_padding_vertical"
+            android:paddingLeft="@dimen/pmmessage_sent_layout_item_padding_horizontal"
+            android:paddingRight="@dimen/pmmessage_sent_layout_item_padding_horizontal">
 
             <TextView
                 android:id="@+id/body"
@@ -40,20 +41,21 @@
                 android:clickable="false"
                 android:duplicateParentState="true"
                 android:textColor="?attr/authorHeader_date_color"
-                android:textSize="12sp"
+                android:textSize="@dimen/pmmessage_sent_layout_date_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/embedImage"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="1 minute ago via Android"/>
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
                 android:id="@+id/embedImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="200dp"
-                android:maxHeight="200dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:maxWidth="@dimen/pmmessage_sent_layout_image_max_width"
+                android:maxHeight="@dimen/pmmessage_sent_layout_image_max_height"
+                android:paddingTop="@dimen/pmmessage_sent_layout_image_padding_vertical"
+                android:paddingBottom="@dimen/pmmessage_sent_layout_image_padding_vertical"
+                android:adjustViewBounds="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/body"/>

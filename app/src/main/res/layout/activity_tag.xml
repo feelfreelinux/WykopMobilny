@@ -8,11 +8,13 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <include
-                layout="@layout/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlways" />
+                layout="@layout/toolbar"
+                app:layout_scrollFlags="scroll|enterAlways"/>
+
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
@@ -20,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -33,6 +35,6 @@
             app:fabSize="normal"
             app:layout_anchor="@id/contentView"
             app:layout_anchorGravity="bottom|right"
-            app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior" />
+            app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior"/>
 
     </android.support.design.widget.CoordinatorLayout>

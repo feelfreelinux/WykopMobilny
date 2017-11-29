@@ -1,16 +1,82 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="comment_section_left_margin">10dp</dimen>
-    <dimen name="button_padding_drawable">3dp</dimen>
-    <dimen name="button_padding">10dp</dimen>
-    <dimen name="button_text_size">15sp</dimen>
-    <dimen name="button_margin">8dp</dimen>
-    <dimen name="dialog_edittext_padding">8dp</dimen>
+
+    <dimen name="toolbar_titletext_text_size">18sp</dimen>
+    <dimen name="toolbar_titletext_messages_text_size">16sp</dimen>
+    <dimen name="toolbar_subtitle_messages_text_size">12sp</dimen>
+
+    <dimen name="wykop_image_view_max_height">700dp</dimen>
+    <dimen name="wykop_image_view_expand_height">24dp</dimen>
+    <dimen name="wykop_image_view_expand_text_size">11sp</dimen>
+
+    <dimen name="mirko_button_height">34dp</dimen>
+    <dimen name="mirko_button_drawable_padding">3dp</dimen>
+    <dimen name="mirko_button_padding">10dp</dimen>
+    <dimen name="mirko_button_text_size">15sp</dimen>
+    <dimen name="mirko_button_margin">8dp</dimen>
+
+    <dimen name="navigation_drawer_text_size">16sp</dimen>
+    <dimen name="drawer_header_background_image_height">80dp</dimen>
+    <dimen name="drawer_header_avatar_size">80dp</dimen>
+    <dimen name="drawer_header_avatar_elevation">3dp</dimen>
+    <dimen name="drawer_header_avatar_radius">3dp</dimen>
+    <dimen name="drawer_header_avatar_margin_top">40dp</dimen>
+    <dimen name="drawer_header_avatar_margin_bottom">3dp</dimen>
+    <dimen name="drawer_header_avatar_margin_start">15dp</dimen>
+    <dimen name="drawer_header_notification_item_text_size">18sp</dimen>
+    <dimen name="drawer_header_notification_item_height">24dp</dimen>
+    <dimen name="drawer_header_notification_item_margin_top">50dp</dimen>
+    <dimen name="drawer_header_notification_message_margin_start">18dp</dimen>
+    <dimen name="drawer_header_notification_message_margin_end">6dp</dimen>
+    <dimen name="drawer_header_notification_tag_margin_start">6dp</dimen>
+    <dimen name="drawer_header_notification_tag_margin_end">18dp</dimen>
+    <dimen name="drawer_header_notification_item_drawable_padding">6dp</dimen>
+
+    <dimen name="cardview_radius">0dp</dimen>
     <dimen name="cardview_margin_vertical">0dp</dimen>
     <dimen name="cardview_margin_horizontal">6dp</dimen>
 
+    <dimen name="dialog_edittext_padding">8dp</dimen>
+    <dimen name="dialog_edittext_padding_horizontal">8dp</dimen>
+    <dimen name="dialog_edittext_text_size">16sp</dimen>
+    <dimen name="dialog_voters_padding_horizontal">12dp</dimen>
+    <dimen name="dialog_voters_padding_vertical">10dp</dimen>
+    <dimen name="dialog_voters_text_size">16sp</dimen>
+
+    <dimen name="plus_button_padding_left">6dp</dimen>
+    <dimen name="author_badge_strip_width">2dp</dimen>
+
+    <dimen name="author_header_avatar_width">40dp</dimen>
+    <dimen name="author_header_username_margin_horizontal">10dp</dimen>
+    <dimen name="author_header_username_text_size">14sp</dimen>
+    <dimen name="author_header_date_margin_horizontal">10dp</dimen>
+    <dimen name="author_header_date_padding_bottom">2dp</dimen>
+    <dimen name="author_header_date_text_size">12sp</dimen>
+
+    <dimen name="comment_section_left_margin">10dp</dimen>
+    <dimen name="comment_layout_author_padding_vertical">8dp</dimen>
+    <dimen name="comment_layout_author_padding_horizontal">10dp</dimen>
+    <dimen name="comment_layout_button_padding_horizontal">2dp</dimen>
+
     <dimen name="entry_recycler_padding_vertical">6dp</dimen>
+    <dimen name="entry_layout_author_padding_vertical">8dp</dimen>
+    <dimen name="entry_layout_author_padding_horizontal">10dp</dimen>
+    <dimen name="entry_layout_button_padding_horizontal">2dp</dimen>
+    <dimen name="entry_layout_survey_padding_vertical">10dp</dimen>
+    <dimen name="entry_layout_survey_padding_horizontal">12dp</dimen>
+    <dimen name="entry_content_padding_vertical">8dp</dimen>
+    <dimen name="entry_content_padding_horizontal">12dp</dimen>
+    <dimen name="entry_content_text_size">13sp</dimen>
+
+    <dimen name="conversations_list_recycler_padding_top">5dp</dimen>
+    <dimen name="conversations_list_recycler_padding_bottom">2dp</dimen>
+    <dimen name="conversation_recycler_padding_vertical">6dp</dimen>
+    <dimen name="conversation_avatar_width">36dp</dimen>
+    <dimen name="conversation_avatar_margin_end">12dp</dimen>
+    <dimen name="conversation_list_item_margin_top">2dp</dimen>
+    <dimen name="conversation_list_item_margin_bottom">5dp</dimen>
+    <dimen name="conversation_list_item_author_margin">12dp</dimen>
 
     <dimen name="notifications_list_recycler_padding_top">5dp</dimen>
     <dimen name="notifications_list_recycler_padding_bottom">2dp</dimen>
@@ -47,5 +113,35 @@
     <dimen name="input_toolbar_item_size">24dp</dimen>
 
     <dimen name="floating_image_height">80dp</dimen>
+    <dimen name="floating_image_delete_button_margin">10dp</dimen>
+
+    <dimen name="autosuggest_item_padding_horizontal">12dp</dimen>
+    <dimen name="autosuggest_item_padding_vertical">6dp</dimen>
+    <dimen name="autosuggest_item_text_size">14sp</dimen>
+    <dimen name="autosuggest_item_separator_height">0.3dp</dimen>
+
+    <dimen name="pmmessage_sent_layout_card_margin_horizontal">12dp</dimen>
+    <dimen name="pmmessage_sent_layout_card_radius">3dp</dimen>
+    <dimen name="pmmessage_sent_layout_card_elevation">1dp</dimen>
+    <dimen name="pmmessage_sent_layout_date_text_size">12sp</dimen>
+    <dimen name="pmmessage_sent_layout_item_padding_horizontal">10dp</dimen>
+    <dimen name="pmmessage_sent_layout_item_padding_vertical">8dp</dimen>
+    <dimen name="pmmessage_sent_layout_image_padding_vertical">5dp</dimen>
+    <dimen name="pmmessage_sent_layout_image_max_width">400dp</dimen>
+    <dimen name="pmmessage_sent_layout_image_max_height">400dp</dimen>
+
+    <dimen name="survey_question_text_size">13.5sp</dimen>
+    <dimen name="survey_answer_text_size">13sp</dimen>
+    <dimen name="survey_answer_padding_start">2dp</dimen>
+    <dimen name="survey_answer_padding_end">30dp</dimen>
+    <dimen name="survey_answer_padding_top">2dp</dimen>
+    <dimen name="survey_percentage_view_height">22dp</dimen>
+    <dimen name="survey_percentage_margin_vertical">2dp</dimen>
+    <dimen name="survey_votes_count_margin_top">4.5dp</dimen>
+    <dimen name="survey_votes_count_margin_end">8dp</dimen>
+    <dimen name="survey_votes_count_text_size">11.5dp</dimen>
+    <dimen name="survey_votes_radio_button_width">28dp</dimen>
+    <dimen name="survey_votes_radio_button_height">26dp</dimen>
+    <dimen name="survey_votes_radio_button_margin_start">2dp</dimen>
 
 </resources>

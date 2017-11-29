@@ -43,14 +43,17 @@ abstract class BaseVoteButton : TextView {
     }
 
     fun setLightThemeDrawable() {
-        if (!settingsApi.useDarkTheme) {
-            if (isSelected) {
-                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_plus_activ, 0, 0, 0);
+        if (isSelected) {
+            setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_plus_activ, 0, 0, 0);
+        } else {
+            if (settingsApi.useDarkTheme) {
+                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_plus, 0, 0, 0);
             } else {
                 setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_plus_light, 0, 0, 0);
             }
         }
     }
+
     var voteCount : Int
         get() = text.toString().toInt()
         set(value) {

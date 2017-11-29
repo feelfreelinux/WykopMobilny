@@ -2,25 +2,24 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.support.v7.widget.CardView"
     style="@style/EntryCommentsCardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:parentTag="android.support.v7.widget.CardView">
+    android:layout_height="wrap_content">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:addStatesFromChildren="true">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingTop="@dimen/comment_layout_author_padding_vertical"
+            android:paddingBottom="@dimen/comment_layout_author_padding_vertical"
+            android:paddingLeft="@dimen/comment_layout_author_padding_horizontal"
+            android:paddingRight="@dimen/comment_layout_author_padding_horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -28,7 +27,7 @@
         <View
             android:id="@+id/lineTop"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/separator_line_height"
             android:background="?attr/lineColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,8 +39,7 @@
             android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lineTop"
-            tools:text="Text"/>
+            app:layout_constraintTop_toBottomOf="@+id/lineTop"/>
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
             android:id="@+id/entryImageView"
@@ -62,7 +60,7 @@
         <View
             android:id="@+id/lineBottom"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/separator_line_height"
             android:background="?attr/lineColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,8 +70,8 @@
             android:id="@+id/buttonsToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
+            android:paddingLeft="@dimen/comment_layout_button_padding_horizontal"
+            android:paddingRight="@dimen/comment_layout_button_padding_horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lineBottom">
@@ -97,6 +95,7 @@
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
                 android:id="@+id/voteButton"
                 style="@style/MikroButton"
+                android:paddingLeft="@dimen/plus_button_padding_left"
                 android:drawableStart="?attr/voteDrawable"
                 app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
                 app:layout_constraintTop_toTopOf="parent"
@@ -115,7 +114,7 @@
 
         <View
             android:id="@+id/authorBadgeStrip"
-            android:layout_width="2dp"
+            android:layout_width="@dimen/author_badge_strip_width"
             android:layout_height="0dp"
             android:background="@color/colorBadgeAuthors"
             android:visibility="visible"
