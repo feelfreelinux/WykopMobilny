@@ -28,6 +28,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.Conv
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.FavoriteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButton
@@ -80,4 +81,5 @@ interface Injector {
     fun inject(votersDialogFragment: VotersDialogFragment)
     fun inject(tagEntriesFragment: TagEntriesFragment)
     fun inject(tagActivity: TagActivity)
+    fun inject(wykopEmbedView: WykopEmbedView)
 }

@@ -41,9 +41,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lineTop"/>
 
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
             android:id="@+id/entryImageView"
-            style="@style/WykopImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintHeight_default="wrap"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

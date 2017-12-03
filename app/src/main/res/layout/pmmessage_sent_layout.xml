@@ -47,13 +47,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="1 minute ago via Android"/>
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
                 android:id="@+id/embedImage"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/pmmessage_sent_layout_image_max_width"
                 android:layout_height="wrap_content"
-                android:maxWidth="@dimen/pmmessage_sent_layout_image_max_width"
-                android:maxHeight="@dimen/pmmessage_sent_layout_image_max_height"
-                android:paddingTop="@dimen/pmmessage_sent_layout_image_padding_vertical"
                 android:paddingBottom="@dimen/pmmessage_sent_layout_image_padding_vertical"
                 android:adjustViewBounds="true"
                 app:layout_constraintStart_toStartOf="parent"
