@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
 import io.reactivex.Single
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
@@ -27,7 +28,7 @@ class EntryFavoriteButtonPresenterTest {
     @Test
     fun marksEntryFavorite() {
         val response = FavoriteResponse(true)
-        whenever(mockOfView.entryId).thenReturn(14)
+        assertEquals(-1, systemUnderTest.entryId)
         whenever(mockOfEntriesApi.markFavorite(any())).thenReturn(Single.just(response))
 
         systemUnderTest.markFavorite()
@@ -37,7 +38,7 @@ class EntryFavoriteButtonPresenterTest {
     @Test
     fun unmarksEntryFavorite() {
         val response = FavoriteResponse(false)
-        whenever(mockOfView.entryId).thenReturn(12)
+        assertEquals(-1, systemUnderTest.entryId)
         whenever(mockOfEntriesApi.markFavorite(any())).thenReturn(Single.just(response))
 
         systemUnderTest.markFavorite()
@@ -46,7 +47,7 @@ class EntryFavoriteButtonPresenterTest {
 
     @Test
     fun showsErrorDialog() {
-        whenever(mockOfView.entryId).thenReturn(11)
+        assertEquals(-1, systemUnderTest.entryId)
         whenever(mockOfEntriesApi.markFavorite(any())).thenReturn(Single.error(IOException()))
 
         systemUnderTest.markFavorite()
