@@ -33,7 +33,7 @@ class WykopApp : Application() {
         refWatcher = LeakCanary.install(this)
         JobManager.create(this).addJobCreator(WykopNotificationJobCreator())
         if (!BuildConfig.DEBUG) {
-            Bugsnag.init(this, BuildConfig.BUGSNAG_KEY)
+            Bugsnag.init(this, "3b54bcbf963f13ae9aa8f8376ea7c1cc")
             Bugsnag.setReleaseStage(BuildConfig.BUILD_TYPE)
             Bugsnag.setProjectPackages("io.github.feelfreelinux.wykopmobilny")
         }
