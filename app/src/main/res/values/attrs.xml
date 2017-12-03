@@ -43,4 +43,10 @@
     <attr name="markdownInsertSpoiler" format="reference"/>
     <attr name="markdownSend" format="reference"/>
 
+    <!-- DRAWABLES - BOTTOMSHEET MENU -->
+    <attr name="bottomSheetDelete" format="reference"/>
+    <attr name="bottomSheetEdit" format="reference"/>
+    <attr name="bottomSheetReport" format="reference"/>
+    <attr name="bottomSheetCopy" format="reference"/>
+
 </resources>

@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 
 import android.content.Context
+import android.support.design.widget.BottomSheetDialog
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.support.v7.widget.PopupMenu
@@ -22,6 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.comment_layout.view.*
+import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 import javax.inject.Inject
 
 class CommentWidget : CardView, CommentView, URLClickedListener {
@@ -128,36 +130,37 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
     override fun showErrorDialog(e: Throwable) = context.showExceptionDialog(e)
 
     fun openOptionsMenu() {
-        val popUpMenu = PopupMenu(context, moreOptionsTextView)
-        if (userManagerApi.isUserAuthorized()) {
-            if (comment.author.nick == userManagerApi.getUserCredentials()!!.login) {
-                popUpMenu.menuInflater.inflate(R.menu.entry_comment_menu_authors_loggedin, popUpMenu.menu)
-                popUpMenu.setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.copy_content -> copyContent()
-                        R.id.edit_content -> editComment()
-                        R.id.delete_content -> removeComment()
-                    }
-                    true
-                }
-            } else {
-                popUpMenu.menuInflater.inflate(R.menu.entry_menu_loggedin, popUpMenu.menu)
-                popUpMenu.setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.copy_content -> copyContent()
-                    }
-                    true
-                }
+        val activityContext = getActivityContext()!!
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_comment_menu_bottomsheet, null)
+        dialog.setContentView(bottomSheetView)
+
+        bottomSheetView.apply {
+            entry_comment_menu_copy.setOnClickListener {
+                copyContent()
+                dialog.dismiss()
             }
-        } else {
-            popUpMenu.menuInflater.inflate(R.menu.entry_menu_loggedin, popUpMenu.menu)
-            popUpMenu.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.copy_content -> copyContent()
-                }
-                true
+
+            entry_comment_menu_edit.setOnClickListener {
+                editComment()
+                dialog.dismiss()
             }
+
+            entry_comment_menu_delete.setOnClickListener {
+                removeComment()
+                dialog.dismiss()
+            }
+
+            entry_comment_menu_report.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            entry_comment_menu_report.isVisible = userManagerApi.isUserAuthorized()
+
+            val canUserEdit = userManagerApi.isUserAuthorized() && comment.author.nick == userManagerApi.getUserCredentials()!!.login
+            entry_comment_menu_delete.isVisible = canUserEdit
+            entry_comment_menu_edit.isVisible = canUserEdit
         }
-        popUpMenu.show()
+        dialog.show()
     }
 }

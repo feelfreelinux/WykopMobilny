@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
 import android.content.Context
+import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.CardView
 import android.support.v7.widget.PopupMenu
 import android.util.AttributeSet
@@ -20,6 +21,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.entry_layout.view.*
+import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 import javax.inject.Inject
 
 class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs),  EntryView, URLClickedListener {
@@ -126,36 +128,37 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     }
 
     fun openOptionsMenu() {
-        val popUpMenu = PopupMenu(context, moreOptionsTextView)
-        if (userManager.isUserAuthorized()) {
-            if (entry.author.nick == userManager.getUserCredentials()!!.login) {
-                popUpMenu.menuInflater.inflate(R.menu.entry_menu_authors_loggedin, popUpMenu.menu)
-                popUpMenu.setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.copy_content -> copyContent()
-                        R.id.edit_content -> editEntry()
-                        R.id.delete_content -> removeEntry()
-                    }
-                    true
-                }
-            } else {
-                popUpMenu.menuInflater.inflate(R.menu.entry_menu_loggedin, popUpMenu.menu)
-                popUpMenu.setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.copy_content -> copyContent()
-                    }
-                    true
-                }
+        val activityContext = getActivityContext()!!
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_menu_bottomsheet, null)
+        dialog.setContentView(bottomSheetView)
+
+        bottomSheetView.apply {
+            entry_menu_copy.setOnClickListener {
+                copyContent()
+                dialog.dismiss()
             }
-        } else {
-            popUpMenu.menuInflater.inflate(R.menu.entry_menu_loggedin, popUpMenu.menu)
-            popUpMenu.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.copy_content -> copyContent()
-                }
-                true
+
+            entry_menu_edit.setOnClickListener {
+                editEntry()
+                dialog.dismiss()
             }
+
+            entry_menu_delete.setOnClickListener {
+                removeEntry()
+                dialog.dismiss()
+            }
+
+            entry_menu_report.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            entry_menu_report.isVisible = userManager.isUserAuthorized()
+
+            val canUserEdit = userManager.isUserAuthorized() && entry.author.nick == userManager.getUserCredentials()!!.login
+            entry_menu_delete.isVisible = canUserEdit
+            entry_menu_edit.isVisible = canUserEdit
         }
-        popUpMenu.show()
+        dialog.show()
     }
 }

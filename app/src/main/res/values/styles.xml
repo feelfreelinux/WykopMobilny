@@ -54,6 +54,11 @@
         <item name="markdownInsertSpoiler">@drawable/ic_insert_spoiler</item>
         <item name="markdownSend">@drawable/ic_send</item>
 
+        <item name="bottomSheetEdit">@drawable/ic_pen_light</item>
+        <item name="bottomSheetCopy">@drawable/ic_copy_content_light</item>
+        <item name="bottomSheetReport">@drawable/ic_report_light</item>
+        <item name="bottomSheetDelete">@drawable/ic_menu_delete_light</item>
+
     </style>
 
     <style name="AppTheme.Dark" parent="Base.Theme.AppCompat">
@@ -109,6 +114,12 @@
         <item name="markdownInsertSpoiler">@drawable/ic_insert_spoiler_dark</item>
         <item name="markdownInsertPhoto">@drawable/ic_insert_photo_dark</item>
         <item name="markdownSend">@drawable/ic_send_dark</item>
+
+        <item name="bottomSheetEdit">@drawable/ic_pen</item>
+        <item name="bottomSheetCopy">@drawable/ic_copy_content</item>
+        <item name="bottomSheetReport">@drawable/ic_report</item>
+        <item name="bottomSheetDelete">@drawable/ic_menu_delete</item>
+
     </style>
 
     <style name="AppTheme.Dark.NavigationView">
@@ -190,6 +201,16 @@
         <item name="android:scaleType">centerCrop</item>
         <item name="android:layout_height">@dimen/markdown_item_size</item>
         <item name="android:layout_width">@dimen/markdown_item_size</item>
+    </style>
+
+    <style name="BottomSheetMenuItem">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
     <style name="DarkPreferencesTheme" parent="PreferenceThemeOverlay.v14.Material">

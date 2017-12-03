@@ -53,8 +53,8 @@
         android:id="@+id/buttonsToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/entry_layout_button_padding_horizontal"
-        android:paddingRight="@dimen/entry_layout_button_padding_horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/description">
