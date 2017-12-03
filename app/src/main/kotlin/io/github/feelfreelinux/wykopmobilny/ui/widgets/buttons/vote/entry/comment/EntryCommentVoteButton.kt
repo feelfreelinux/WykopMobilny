@@ -12,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
@@ -22,6 +23,8 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     @Inject lateinit var presenter : EntryCommentVoteButtonPresenter
+
+    lateinit var entryCommentReference : WeakReference<EntryComment>
 
     init {
         WykopApp.uiInjector.inject(this)
@@ -36,9 +39,14 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
         presenter.vote()
     }
 
+    override fun setButtonState(isSelected: Boolean) {
+        entryCommentReference.get()?.isVoted = isSelected
+    }
+
     fun setCommentData(comment : EntryComment) {
         presenter.commentId = comment.id
         voteCount = comment.voteCount
+        entryCommentReference = WeakReference(comment)
 
         if (comment.voteCount > 0) {
             setOnLongClickListener {

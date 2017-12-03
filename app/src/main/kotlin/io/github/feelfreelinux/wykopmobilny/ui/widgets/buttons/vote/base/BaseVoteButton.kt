@@ -60,11 +60,14 @@ abstract class BaseVoteButton : TextView {
             text =  context.getString(R.string.votes_count, value)
         }
 
+    abstract fun setButtonState(isSelected : Boolean)
+
     var isButtonSelected: Boolean
         get() = isSelected
         set(value) {
             isSelected = value
             setLightThemeDrawable()
+            setButtonState(value)
         }
 
     fun showErrorDialog(e : Throwable) = context.showExceptionDialog(e)

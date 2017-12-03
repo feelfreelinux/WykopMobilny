@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.votersdialog.VotersDialogFragment
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.base.BaseVoteButton
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class EntryVoteButton : BaseVoteButton, EntryVoteButtonView {
@@ -17,6 +18,8 @@ class EntryVoteButton : BaseVoteButton, EntryVoteButtonView {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    lateinit var entryReference : WeakReference<Entry>
 
     @Inject lateinit var presenter : EntryVoteButtonPresenter
 
@@ -33,7 +36,12 @@ class EntryVoteButton : BaseVoteButton, EntryVoteButtonView {
         presenter.vote()
     }
 
+    override fun setButtonState(isSelected: Boolean) {
+        entryReference.get()?.isVoted = isSelected
+    }
+
     fun setEntryData(entry : Entry) {
+        entryReference = WeakReference(entry)
         presenter.entryId = entry.id
         voteCount = entry.voteCount
         if (entry.voteCount > 0) {

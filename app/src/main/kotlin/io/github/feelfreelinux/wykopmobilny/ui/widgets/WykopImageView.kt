@@ -17,6 +17,7 @@ import javax.inject.Inject
 import android.widget.ImageView
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import java.lang.ref.WeakReference
 
 
 class WykopImageView: ImageView {
@@ -31,7 +32,7 @@ class WykopImageView: ImageView {
     }
 
     var resized = false
-    lateinit var mEmbed : Embed
+    lateinit var mEmbed : WeakReference<Embed>
 
     @Inject lateinit var settingsPreferences: SettingsPreferencesApi
     @Inject lateinit var navigatorApi: NavigatorApi
@@ -48,7 +49,8 @@ class WykopImageView: ImageView {
         resized = false
         if (embed == null) isVisible = false
         embed?.apply {
-            mEmbed = embed
+            setImageBitmap(null)
+            mEmbed = WeakReference(embed)
             isVisible = true
             if (plus18 && !settingsPreferences.showAdultContent) loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
             else loadImageFromUrl(preview)
@@ -59,9 +61,10 @@ class WykopImageView: ImageView {
     }
 
     fun handleUrl() {
-        when (mEmbed.type) {
-            "image" -> navigatorApi.openPhotoViewActivity(context as Activity, mEmbed.url)
-            "video" -> context.openBrowser(mEmbed.url) // @TODO replace with some nice implementation
+        val image = mEmbed.get()!!
+        when (image.type) {
+            "image" -> navigatorApi.openPhotoViewActivity(context as Activity, image.url)
+            "video" -> context.openBrowser(image.url) // @TODO replace with some nice implementation
         }
     }
 
@@ -82,10 +85,10 @@ class WykopImageView: ImageView {
         if (drawable != null) {
             val measuredMultipler = (drawable.intrinsicHeight.toFloat() / drawable.intrinsicWidth.toFloat())
             val heightSpec = widthSpec.toFloat() * measuredMultipler
-            if (measuredMultipler > WIDTH_HEIGHT_MULTIPLER && !resized) {
+            if (measuredMultipler > WIDTH_HEIGHT_MULTIPLER && !mEmbed.get()!!.isResize) {
                 setMeasuredDimension(widthSpec, (widthSpec.toFloat() * WIDTH_HEIGHT_MULTIPLER).toInt())
                 setOnClickListener {
-                    resized = true
+                    mEmbed.get()!!.isResize = true
                     requestLayout()
                     invalidate()
                     setOnClickListener {

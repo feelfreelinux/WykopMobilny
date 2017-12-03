@@ -50,6 +50,7 @@ abstract class FavoriteButton : ImageView, FavoriteButtonView {
     override var isFavorite : Boolean
         get() = isSelected
         set(value) {
+            saveFavoriteState(value)
             if (value) {
                 isSelected = true
                 setImageDrawable(favoriteDrawable)
@@ -58,6 +59,8 @@ abstract class FavoriteButton : ImageView, FavoriteButtonView {
                 setImageDrawable(favoriteOutlineDrawable)
             }
         }
+
+    abstract fun saveFavoriteState(isFavorite : Boolean)
 
     override fun showErrorDialog(e: Throwable) =
         context.showExceptionDialog(e)
