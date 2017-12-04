@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
 import android.content.Context
+import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.CardView
 import android.support.v7.widget.PopupMenu
@@ -158,6 +159,11 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             val canUserEdit = userManager.isUserAuthorized() && entry.author.nick == userManager.getUserCredentials()!!.login
             entry_menu_delete.isVisible = canUserEdit
             entry_menu_edit.isVisible = canUserEdit
+        }
+
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        dialog.setOnShowListener {
+            mBehavior.peekHeight = bottomSheetView.height
         }
         dialog.show()
     }

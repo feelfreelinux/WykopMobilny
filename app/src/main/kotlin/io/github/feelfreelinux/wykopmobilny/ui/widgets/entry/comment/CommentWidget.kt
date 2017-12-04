@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 
 import android.content.Context
+import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
@@ -160,6 +161,11 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
             val canUserEdit = userManagerApi.isUserAuthorized() && comment.author.nick == userManagerApi.getUserCredentials()!!.login
             entry_comment_menu_delete.isVisible = canUserEdit
             entry_comment_menu_edit.isVisible = canUserEdit
+        }
+
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        dialog.setOnShowListener {
+            mBehavior.peekHeight = bottomSheetView.height
         }
         dialog.show()
     }
