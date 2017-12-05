@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/EntryCardView"
     tools:parentTag="android.support.v7.widget.CardView"
+    style="@style/EntryCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -12,89 +12,107 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/link_layout_image_width"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_wykopmobilny"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/separator"/>
+
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:paddingStart="@dimen/link_layout_title_padding_horizontal"
+            android:paddingEnd="@dimen/link_layout_title_padding_horizontal"
+            android:paddingTop="@dimen/link_layout_title_padding_top"
+            android:paddingBottom="@dimen/link_layout_title_padding_bottom"
+            android:textSize="@dimen/link_layout_title_font_size"
+            android:textStyle="bold"
             android:maxLines="2"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/image"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet." />
+            tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet."/>
 
         <TextView
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/image"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            tools:text="Mauris et elementum diam. Nam laoreet nunc ac urna dapibus, porttitor faucibus magna pretium." />
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="100dp"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_wykopmobilny"
+            android:paddingStart="@dimen/link_layout_description_padding_horizontal"
+            android:paddingEnd="@dimen/link_layout_description_padding_horizontal"
+            android:paddingBottom="@dimen/link_layout_description_padding_bottom"
+            android:textSize="@dimen/link_layout_description_font_size"
+            android:maxLines="3"
+            app:layout_constraintStart_toEndOf="@id/image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            tools:text="Mauris et elementum diam. Nam laoreet nunc ac urna dapibus, porttitor faucibus magna pretium."/>
 
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/buttonsToolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/description">
-
-        <TextView
-            android:id="@+id/diggTextView"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorAccent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <View
+            android:id="@id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_line_height"
+            android:background="?attr/separatorColor"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="15 wykopów" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description"/>
 
-        <TextView
-            android:id="@+id/commentsTextView"
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/buttonsToolbar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="?attr/colorAccent"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/diggTextView"
-            tools:text="5 komentarzy" />
+            android:paddingLeft="@dimen/link_layout_button_padding_horizontal"
+            android:paddingRight="@dimen/link_layout_button_padding_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator">
 
-        <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="?attr/colorAccent"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/commentsTextView"
-            tools:text="3 godz. temu" />
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/diggCountTextView"
+                style="@style/MikroButton"
+                android:background="?attr/voteButtonStatelist"
+                android:drawableStart="?attr/wypokDrawable"
+                android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="2137"/>
+
+            <TextView
+                android:id="@+id/commentsCountTextView"
+                style="@style/MikroButton"
+                android:background="?attr/voteButtonStatelist"
+                android:drawableStart="?attr/commentDrawable"
+                app:layout_constraintStart_toEndOf="@+id/diggCountTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="50"/>
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/link_layout_date_padding"
+                android:textSize="@dimen/link_layout_date_text_size"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="3 godz. temu"/>
+
+            <TextView
+                android:id="@+id/moreOptionsTextView"
+                style="@style/MikroButton"
+                android:drawableStart="?attr/dotsDrawable"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 

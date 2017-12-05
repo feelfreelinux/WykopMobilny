@@ -1,11 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:parentTag="android.widget.FrameLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:parentTag="android.widget.FrameLayout">
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
-        android:id="@+id/image"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:clickable="false">
+
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/imageIconGifSize"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/ic_gif_size"
+            android:textColor="#ffffff"
+            android:text="24 MB"
+            android:textSize="10dp"
+            android:gravity="bottom|center_horizontal"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintTop_toTopOf="@id/image"/>
+
+        <TextView
+            android:id="@+id/imageIconGif"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:paddingBottom="6dp"
+            android:background="@drawable/ic_gif"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintTop_toTopOf="@id/image"/>
+
+        <TextView
+            android:id="@+id/imageIconGfycat"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/ic_gfycat"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintTop_toTopOf="@id/image"/>
+
+        <TextView
+            android:id="@+id/imageIconVimeo"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/ic_vimeo"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintTop_toTopOf="@id/image"/>
+
+        <TextView
+            android:id="@+id/imageIconYoutube"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/ic_youtube"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintTop_toTopOf="@id/image"/>
+
+        <TextView
+            android:id="@+id/imageExpand"
+            style="@style/WykopImageViewExpand"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintEnd_toEndOf="@id/image"
+            app:layout_constraintBottom_toBottomOf="@id/image"/>
+
+    </android.support.constraint.ConstraintLayout>
+
 </merge>

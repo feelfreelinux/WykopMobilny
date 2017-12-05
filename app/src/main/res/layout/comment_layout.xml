@@ -50,14 +50,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/entryContentTextView"/>
 
-        <TextView
-            android:id="@+id/expandImageViewTextView"
-            style="@style/WykopImageViewExpand"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/entryImageView"
-            app:layout_constraintEnd_toEndOf="@id/entryImageView"
-            app:layout_constraintBottom_toBottomOf="@id/entryImageView"/>
-
         <View
             android:id="@+id/lineBottom"
             android:layout_width="match_parent"
