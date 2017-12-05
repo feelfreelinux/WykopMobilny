@@ -121,14 +121,14 @@
     <dimen name="autosuggest_item_separator_height">0.3dp</dimen>
 
     <dimen name="pmmessage_sent_layout_card_margin_horizontal">12dp</dimen>
+    <dimen name="pmmessage_sent_layout_card_margin_vertical">6dp</dimen>
+    <dimen name="pmmessage_sent_layout_card_margin_flip">80dp</dimen>
     <dimen name="pmmessage_sent_layout_card_radius">3dp</dimen>
     <dimen name="pmmessage_sent_layout_card_elevation">1dp</dimen>
-    <dimen name="pmmessage_sent_layout_date_text_size">12sp</dimen>
+    <dimen name="pmmessage_sent_layout_date_text_size">11.5sp</dimen>
     <dimen name="pmmessage_sent_layout_item_padding_horizontal">10dp</dimen>
     <dimen name="pmmessage_sent_layout_item_padding_vertical">8dp</dimen>
-    <dimen name="pmmessage_sent_layout_image_padding_vertical">5dp</dimen>
-    <dimen name="pmmessage_sent_layout_image_max_width">400dp</dimen>
-    <dimen name="pmmessage_sent_layout_image_max_height">400dp</dimen>
+    <dimen name="pmmessage_sent_layout_image_margin_top">5dp</dimen>
 
     <dimen name="survey_question_text_size">13.5sp</dimen>
     <dimen name="survey_answer_text_size">13sp</dimen>
@@ -144,4 +144,16 @@
     <dimen name="survey_votes_radio_button_height">26dp</dimen>
     <dimen name="survey_votes_radio_button_margin_start">2dp</dimen>
 
+    <dimen name="link_layout_image_width">100dp</dimen>
+    <dimen name="link_layout_title_font_size">14sp</dimen>
+    <dimen name="link_layout_title_padding_horizontal">10dp</dimen>
+    <dimen name="link_layout_title_padding_top">8dp</dimen>
+    <dimen name="link_layout_title_padding_bottom">6dp</dimen>
+    <dimen name="link_layout_description_font_size">12sp</dimen>
+    <dimen name="link_layout_description_padding_horizontal">10dp</dimen>
+    <dimen name="link_layout_description_padding_bottom">6dp</dimen>
+    <dimen name="link_layout_button_padding_horizontal">2dp</dimen>
+    <dimen name="link_layout_digg_drawable_padding">5dp</dimen>
+    <dimen name="link_layout_date_text_size">12sp</dimen>
+    <dimen name="link_layout_date_padding">2dp</dimen>
 </resources>

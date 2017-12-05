@@ -34,6 +34,7 @@
         <item name="cardviewStatelist">@drawable/cardview_background_statelist</item>
         <item name="notificationDrawable">@drawable/ic_tag_light</item>
         <item name="mailDrawable">@drawable/ic_mail_light</item>
+        <item name="wypokDrawable">@drawable/ic_wypok_light</item>
         <item name="commentDrawable">@drawable/ic_comment_light</item>
         <item name="voteDrawable">@drawable/ic_plus_light</item>
         <item name="dotsDrawable">@drawable/ic_dots_light</item>
@@ -95,6 +96,7 @@
         <item name="cardviewStatelist">@drawable/cardview_background_statelist_dark</item>
         <item name="notificationDrawable">@drawable/ic_tag</item>
         <item name="mailDrawable">@drawable/ic_mail</item>
+        <item name="wypokDrawable">@drawable/ic_wypok</item>
         <item name="commentDrawable">@drawable/ic_comment</item>
         <item name="voteDrawable">@drawable/ic_plus</item>
         <item name="dotsDrawable">@drawable/ic_dots</item>

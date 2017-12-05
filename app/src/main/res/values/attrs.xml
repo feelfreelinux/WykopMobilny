@@ -16,6 +16,7 @@
     <attr name="shadowUpGradient" format="reference" />
 
     <!-- DRAWABLES -->
+    <attr name="wypokDrawable" format="reference"/>
     <attr name="commentDrawable" format="reference"/>
     <attr name="voteDrawable" format="reference"/>
     <attr name="dotsDrawable" format="reference"/>
