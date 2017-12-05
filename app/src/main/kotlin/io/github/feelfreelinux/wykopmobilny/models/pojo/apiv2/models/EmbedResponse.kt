@@ -19,7 +19,7 @@ data class EmbedResponse(
         val plus18 : Boolean,
 
         @Json(name="size")
-        val size : String,
+        val size : String?,
 
         @Json(name="animated")
         val animated : Boolean

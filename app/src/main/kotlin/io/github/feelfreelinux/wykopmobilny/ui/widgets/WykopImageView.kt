@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import android.widget.ImageView
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 
 class WykopImageView: ImageView {
@@ -44,6 +45,7 @@ class WykopImageView: ImageView {
 
     var openImageListener : () -> Unit = {}
     var onResizedListener : (Boolean) -> Unit = {}
+    var showResizeView : (Boolean) -> Unit = {}
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -52,7 +54,6 @@ class WykopImageView: ImageView {
             val measuredMultipler = (drawable.intrinsicHeight.toFloat() / drawable.intrinsicWidth.toFloat())
             val heightSpec = widthSpec.toFloat() * measuredMultipler
             if (measuredMultipler > WIDTH_HEIGHT_MULTIPLER && !isResized) {
-                setMeasuredDimension(widthSpec, (widthSpec.toFloat() * WIDTH_HEIGHT_MULTIPLER).toInt())
                 setOnClickListener {
                     isResized = true
                     onResizedListener(true)
@@ -60,7 +61,15 @@ class WykopImageView: ImageView {
                     invalidate()
                     setOnClickListener({ openImageListener() })
                 }
-            } else setMeasuredDimension(widthSpec, heightSpec.toInt())
-        } else setMeasuredDimension(widthSpec, (widthSpec.toFloat() * WIDTH_HEIGHT_MULTIPLER).toInt())
+                setMeasuredDimension(widthSpec, (widthSpec.toFloat() * WIDTH_HEIGHT_MULTIPLER).toInt())
+                showResizeView(true)
+            } else {
+                setMeasuredDimension(widthSpec, heightSpec.toInt())
+                showResizeView(false)
+            }
+        } else {
+            setMeasuredDimension(widthSpec, (widthSpec.toFloat() * WIDTH_HEIGHT_MULTIPLER).toInt())
+            showResizeView(false)
+        }
     }
 }

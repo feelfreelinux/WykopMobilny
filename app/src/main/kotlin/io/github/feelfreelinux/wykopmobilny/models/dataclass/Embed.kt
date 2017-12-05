@@ -5,4 +5,6 @@ data class Embed(val type : String,
                  val url : String,
                  val plus18 : Boolean,
                  val source : String?,
+                 val isAnimated : Boolean,
+                 val size : String,
                  var isResize : Boolean = false)
