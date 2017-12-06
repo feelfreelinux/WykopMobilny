@@ -5,22 +5,23 @@ import android.support.v4.content.ContextCompat
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
+import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.EntryFeedFragment
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import javax.inject.Inject
 
-class HotFragment : EntryFeedFragment(), HotView, BaseNavigationView {
+class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
     val navigation by lazy { activity as MainNavigationInterface }
+    override val feedAdapter by lazy { FeedAdapter() }
     override var fab : View? = null
     @Inject lateinit var presenter : HotPresenter
     @Inject lateinit var settingsPreferences : SettingsPreferencesApi
@@ -65,7 +66,7 @@ class HotFragment : EntryFeedFragment(), HotView, BaseNavigationView {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        entriesDataFragment.data = Pair(PagedDataModel(presenter.page , entries), presenter.period)
+        entriesDataFragment.data = Pair(PagedDataModel(presenter.page , data), presenter.period)
     }
 
     override fun onPause() {

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.base.BaseProgressAdapter
+import io.github.feelfreelinux.wykopmobilny.base.adapter.SimpleBaseProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 
-class FeedAdapter : BaseProgressAdapter<EntryViewHolder, Entry>() {
+class FeedAdapter : SimpleBaseProgressAdapter<EntryViewHolder, Entry>() {
     override fun bindHolder(holder: EntryViewHolder, position: Int) {
         holder.bindView(data[position])
     }

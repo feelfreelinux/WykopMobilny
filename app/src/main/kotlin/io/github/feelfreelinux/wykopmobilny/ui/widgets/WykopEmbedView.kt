@@ -86,6 +86,9 @@ class WykopEmbedView: FrameLayout {
             "youtube" -> {
                 imageIconYoutube.isVisible = true
             }
+            "youtu" -> {
+                imageIconYoutube.isVisible = true
+            }
             "gfycat" -> {
                 imageIconGfycat.isVisible = true
             }

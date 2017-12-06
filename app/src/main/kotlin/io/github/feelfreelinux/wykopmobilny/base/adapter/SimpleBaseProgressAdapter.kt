@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.base
+package io.github.feelfreelinux.wykopmobilny.base.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 
-const val ITEM_TYPE = 0
-const val ITEM_PROGRESS = 1
-
-abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class SimpleBaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), BaseProgressAdapter<A> {
     private val dataset = arrayListOf<A?>()
 
-    val data: List<A>
+    override val data: List<A>
         get() = dataset.filterNotNull()
 
-    fun disableLoading() {
+    companion object {
+        val ITEM_TYPE = 0
+        val ITEM_PROGRESS = 1
+    }
+
+    override fun disableLoading() {
         if (dataset.isNotEmpty() && dataset.last() == null) {
             val size = dataset.size - 1
             dataset.removeAt(size)
@@ -23,7 +25,7 @@ abstract class BaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Recyc
         }
     }
 
-    fun addData(items: List<A>, shouldClearAdapter: Boolean) {
+    override fun addData(items: List<A>, shouldClearAdapter: Boolean) {
         if (shouldClearAdapter) {
             dataset.apply {
                 clear()

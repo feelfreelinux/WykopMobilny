@@ -18,6 +18,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries.TagEntriesFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopIndexFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.tags.MyWykopTagsFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.users.MyWykopUsersFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
@@ -82,4 +85,7 @@ interface Injector {
     fun inject(tagEntriesFragment: TagEntriesFragment)
     fun inject(tagActivity: TagActivity)
     fun inject(wykopEmbedView: WykopEmbedView)
+    fun inject(myWykopIndexFragment: MyWykopIndexFragment)
+    fun inject(myWykopTagsFragment: MyWykopTagsFragment)
+    fun inject(myWykopUsersFragment: MyWykopUsersFragment)
 }

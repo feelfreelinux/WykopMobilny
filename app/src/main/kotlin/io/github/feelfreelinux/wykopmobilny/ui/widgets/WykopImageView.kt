@@ -65,10 +65,12 @@ class WykopImageView: ImageView {
                 showResizeView(true)
             } else {
                 setMeasuredDimension(widthSpec, heightSpec.toInt())
+                setOnClickListener { openImageListener() }
                 showResizeView(false)
             }
         } else {
             setMeasuredDimension(widthSpec, (widthSpec.toFloat() * WIDTH_HEIGHT_MULTIPLER).toInt())
+            setOnClickListener { openImageListener() }
             showResizeView(false)
         }
     }

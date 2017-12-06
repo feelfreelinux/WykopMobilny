@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
+import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
@@ -13,14 +14,14 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.EntryFeedFragment
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class TagEntriesFragment : EntryFeedFragment(), TagEntriesView {
+class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView {
     @Inject lateinit var presenter : TagEntriesPresenter
+    override val feedAdapter by lazy { FeedAdapter() }
     val entryTag by lazy { arguments.getString(EXTRA_TAG) }
     lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
     @Inject lateinit var userManager : UserManagerApi
@@ -40,7 +41,6 @@ class TagEntriesFragment : EntryFeedFragment(), TagEntriesView {
         tagDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG + entryTag)
         tagDataFragment.data?.apply {
             presenter.page = page
-            presenter.tag = arguments.getString(entryTag)
         }
 
         presenter.subscribe(this)
@@ -96,7 +96,7 @@ class TagEntriesFragment : EntryFeedFragment(), TagEntriesView {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        tagDataFragment.data = PagedDataModel(presenter.page , entries)
+        tagDataFragment.data = PagedDataModel(presenter.page , data)
     }
 
     override fun onPause() {

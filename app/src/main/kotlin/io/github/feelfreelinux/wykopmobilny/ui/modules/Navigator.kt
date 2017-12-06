@@ -10,6 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenAc
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
@@ -74,7 +75,6 @@ class Navigator : NavigatorApi {
     override fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int) {
         context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.REQUEST_CODE)
     }
-
     override fun openBrowser(context: Activity, url: String) {
         context.openBrowser(url)
     }

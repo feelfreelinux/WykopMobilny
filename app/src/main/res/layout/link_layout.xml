@@ -7,11 +7,9 @@
     style="@style/EntryCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <ImageView
             android:id="@+id/image"
             android:layout_width="@dimen/link_layout_image_width"
@@ -21,7 +19,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/separator"/>
-
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
@@ -37,7 +34,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet."/>
-
         <TextView
             android:id="@+id/description"
             android:layout_width="0dp"
@@ -51,16 +47,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title"
             tools:text="Mauris et elementum diam. Nam laoreet nunc ac urna dapibus, porttitor faucibus magna pretium."/>
-
         <View
             android:id="@id/separator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/separator_line_height"
-            android:background="?attr/separatorColor"
+            android:background="?attr/lineColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description"/>
-
         <android.support.constraint.ConstraintLayout
             android:id="@+id/buttonsToolbar"
             android:layout_width="0dp"
@@ -70,28 +64,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/separator">
-
             <TextView
-                android:id="@+id/diggCountTextView"
+                android:id="@+id/shareTextView"
                 style="@style/MikroButton"
-                android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/wypokDrawable"
-                android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
-                app:layout_constraintStart_toEndOf="parent"
+                android:drawableStart="?attr/sharebtnDrawable"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="2137"/>
-
-            <TextView
-                android:id="@+id/commentsCountTextView"
-                style="@style/MikroButton"
-                android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/commentDrawable"
-                app:layout_constraintStart_toEndOf="@+id/diggCountTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="50"/>
-
+                app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
                 android:id="@+id/dateTextView"
                 android:layout_width="wrap_content"
@@ -99,11 +78,29 @@
                 android:padding="@dimen/link_layout_date_padding"
                 android:textSize="@dimen/link_layout_date_text_size"
                 android:textStyle="normal"
-                app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
+                app:layout_constraintStart_toEndOf="@id/shareTextView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="3 godz. temu"/>
-
+            <TextView
+                android:id="@+id/commentsCountTextView"
+                style="@style/MikroButton"
+                android:background="?attr/voteButtonStatelist"
+                android:drawableStart="?attr/commentDrawable"
+                app:layout_constraintEnd_toStartOf="@+id/diggCountTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="50"/>
+            <TextView
+                android:id="@+id/diggCountTextView"
+                style="@style/MikroButton"
+                android:background="?attr/voteButtonStatelist"
+                android:drawableStart="?attr/wypokDrawable"
+                android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
+                app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="2137"/>
             <TextView
                 android:id="@+id/moreOptionsTextView"
                 style="@style/MikroButton"
@@ -111,9 +108,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
-
         </android.support.constraint.ConstraintLayout>
-
+        <View
+            android:id="@+id/hotBadgeStrip"
+            android:layout_width="@dimen/author_badge_strip_width"
+            android:layout_height="0dp"
+            android:background="@color/colorBadgeAuthors"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </android.support.constraint.ConstraintLayout>
-
 </android.support.v7.widget.CardView>

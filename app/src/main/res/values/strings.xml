@@ -79,6 +79,9 @@
     <string name="copy_content">Kopiuj treść</string>
     <string name="delete">Usuń</string>
     <string name="report">Zgłoś</string>
+    <string name="all">Wszystko</string>
+    <string name="tags">Tagi</string>
+    <string name="users">Użytkownicy</string>
     <string name="add_receiver">Dodaj do odbiorców</string>
     <string name="entryRemoved">[Wpis usunięty]</string>
     <string name="commentRemoved">[Komentarz usunięty]</string>
