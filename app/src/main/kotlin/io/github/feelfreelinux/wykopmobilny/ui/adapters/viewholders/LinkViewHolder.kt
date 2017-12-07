@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
@@ -21,6 +22,7 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClicked
             diggCountTextView.text = link.voteCount.toString()
             commentsCountTextView.text = link.commentsCount.toString()
             dateTextView.text = link.date.toPrettyDate()
+            hotBadgeStrip.isVisible = link.isHot
         }
     }
 

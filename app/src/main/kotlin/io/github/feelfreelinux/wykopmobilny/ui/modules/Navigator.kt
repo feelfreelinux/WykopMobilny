@@ -24,7 +24,7 @@ interface NavigatorApi {
     fun openPhotoViewActivity(context: Activity, url: String)
     fun openSettingsActivity(context: Activity)
     fun openLoginScreen(context: Activity, requestCode: Int)
-    fun openAddEntryActivity(context: Activity, receiver: String? = null)
+    fun openAddEntryActivity(context: Activity, receiver: String? = null, extraBody : String? = null)
     fun openEditEntryActivity(context: Activity, body: String, entryId: Int)
     fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int)
     fun openBrowser(context: Activity, url: String)
@@ -64,8 +64,8 @@ class Navigator : NavigatorApi {
         context.startActivityForResult(LoginScreenActivity.createIntent(context), requestCode)
     }
 
-    override fun openAddEntryActivity(context: Activity, receiver: String?) {
-        context.startActivity(AddEntryActivity.createIntent(context, receiver))
+    override fun openAddEntryActivity(context: Activity, receiver: String?, extraBody : String?) {
+        context.startActivity(AddEntryActivity.createIntent(context, receiver, extraBody))
     }
 
     override fun openEditEntryActivity(context: Activity, body: String, entryId: Int) {

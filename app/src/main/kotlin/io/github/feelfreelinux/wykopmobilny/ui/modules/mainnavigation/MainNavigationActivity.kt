@@ -115,8 +115,8 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
         }
-        navHeader.view_container?.startListeningForUpdates()
 
+        navHeader.view_container?.startListeningForUpdates()
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
         if (savedInstanceState == null) {

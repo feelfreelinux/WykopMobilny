@@ -9,10 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import kotlinx.android.synthetic.main.activity_mywykop.*
 
-class MyWykopFragment : BaseNavigationFragment() {
+class MyWykopFragment : BaseFragment() {
     lateinit var pagerAdapter : MyWykopPagerAdapter
 
     companion object {
