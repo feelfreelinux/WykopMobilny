@@ -73,10 +73,10 @@
         <TextView
             android:id="@+id/imageExpand"
             style="@style/WykopImageViewExpand"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/image"
-            app:layout_constraintEnd_toEndOf="@id/image"
-            app:layout_constraintBottom_toBottomOf="@id/image"/>
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 
