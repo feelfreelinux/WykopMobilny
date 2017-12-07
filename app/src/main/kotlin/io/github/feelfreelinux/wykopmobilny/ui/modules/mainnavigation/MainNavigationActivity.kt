@@ -23,6 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment
@@ -70,6 +71,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             R.id.messages -> { openFragment(ConversationsListFragment.newInstance()) }
             R.id.nav_settings -> { navigator.openSettingsActivity(this) }
             R.id.nav_mojwykop -> { openFragment(MyWykopFragment.newInstance()) }
+            R.id.nav_home -> { openFragment(PromotedFragment.newInstance()) }
             else -> presenter.navigationItemClicked(item.itemId)
         }
 

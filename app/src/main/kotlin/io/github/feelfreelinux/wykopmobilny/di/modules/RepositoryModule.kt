@@ -4,6 +4,9 @@ import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesRepository
+import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
+import io.github.feelfreelinux.wykopmobilny.api.links.LinksRepository
+import io.github.feelfreelinux.wykopmobilny.api.links.LinksRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopRepository
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
@@ -33,6 +36,10 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideMyWykopApi(retrofit: Retrofit) : MyWykopApi = MyWykopRepository(retrofit)
+
+    @Provides
+    @Singleton
+    fun provideLinksApi(retrofit: Retrofit) : LinksApi = LinksRepository(retrofit)
 
     @Provides
     @Singleton

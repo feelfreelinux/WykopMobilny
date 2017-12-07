@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.di.modules
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
+import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
@@ -11,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryDetailPresenter
@@ -92,5 +94,8 @@ class PresentersModule {
 
     @Provides
     fun provideMyWykopUsersPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi) = MyWykopUsersPresenter(subscriptionHelperApi, myWykopApi)
+
+    @Provides
+    fun providePromotedPresenter(subscriptionHelperApi: SubscriptionHelperApi, linksApi: LinksApi) = PromotedPresenter(subscriptionHelperApi, linksApi)
 
 }
