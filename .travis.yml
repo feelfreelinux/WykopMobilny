@@ -20,7 +20,7 @@ cache:
   - "$HOME/.gradle/wrapper/"
   - "$HOME/.android/build-cache"
 before_script:
-- $TRAVIS_EVENT_TYPE == "pull_request" && export apiKey="exampleKey" apiSecret="exampleSecret"
+- if [["$TRAVIS_EVENT_TYPE" == "pull_request"]]; then export apiKey="exampleKey" apiSecret="exampleSecret"; fi
 - echo -e "apiKey=\"$wykopApiKey\"\napiSecret=\"$wykopApiSecret\"" >> credentials.properties
 script:
 - "./gradlew assembleRelease"
@@ -43,4 +43,4 @@ env:
   - secure: L+jstmzIMMCUjcFUVlT91UtClx+UsaiYmoippcglI0FzTjxdlxickmqZOJaunwLRNL9UEjlIuxtvMrv+C8p0205Q/yAI2UEGmij3rzBnADias19pbgyOHS6xbH6E9nGReyh/EE7nxbHmjtFYZYAXSdjUn74TASYg9AZnps0WF6z3ZZtYCY/47KeYJdGJb+M9RfBZr24gUCBlZEkGxrrs/LFJCWzfoAiZPQqWP/8sO002HDrlVg99nRKaBXoMFTOhBagy9dhsp3rcdt7ylwO8TLLbvZh27JX314l3cRA3oLqR0Iw0xKGT1ws8pJ+NAsQunSfPCmh6Vgdydw1WJQC9R7/vbh4p6pev/KVBVh3nyvqvDVv8u/vzG7+hvxdJ5l2BAph2jT7nyfYuqqUui+Qt8W0mXJqbuAFnOt9GndnMaSI+h93UGk4Vbh/Osssrjev1negz9hvhv5h7UITVcOJCzfEF2J9934N4q43dYe1jrcUzl5HbsZhzVtS95oT+8X1MZZUQpijIQD0kYWewcRdN5xtgWgNo2eZupCc/Aahk7oDyhacrUNL1eMjXhjzASi0v7KLC4wTE4WOBows3axuGhY0Y5OXsFoyk+yYfkEbcbr2P8NBEm8tDXVY8vSaHxPcAgaMomvjhF0Cm1rF+cwvEG0QrtkSw2X5XcU8xnCuxyRo=
   - secure: 1rvT9iqxBXdv3KgJTdmH2lSl32wtzMLj6t2q4Wb/arJfjo+xMrK08G24o84EMbPQhi00zm+pbUgoeMjFPRF4OWex4ZXlHNaNQTlRUYTddh/DXPUKackxM9F66rse5Yk/xT0e8PgjtSAVZYKsP4sVlB4TW+BikPmUjJJvynobqrW/+OqjeEYJtT/Oc4Hd/CszMcYOyfN3nv+5+Dr1ZMr4ZKcxs0iv6+EzLAA/Ix6eEabTlba+/HQYPwJj4F7cShM4kLok+Cjlc67FMSQfKMnZgVThZLYk/gfbj9+ep5/oJq/9c+zoKWupNvSiwRQ6JjFVRWnbSxMwodVq2bERQDfMxlvavAW/iryYrc/bmUaFCnGm4AglJmi5k5AqeL4MeTyALvpS6j4JmWfKFfFtl9s8El0Qibr6GDiSbaDuS42zjXu1UqyHYPMzZYCr9aek+ImuURT/gTo8QKjGvWu9acIa2k4sHXwN+4Smbj2T4SII5BnZdOSbPqrzA+eWqbW14Mi2FMKWF//0QNUdvwthermEXopcQjA3IEP+vu8QKTib00oSfaEkvVYmi2Rr9KEa6EOYsDxaF3kqqggSRIVsIOXBZavxQfzNVIDTwzHd7QhnIkwSdJddjD5R7pSqPlDS/SuCbonPCUR6h9IFNkx24WvbEXMcfkanSfhPMI1HdKtt5wk=
 before_install:
-  - $TRAVIS_EVENT_TYPE == "push" && openssl aes-256-cbc -K $encrypted_110fd07a76f6_key -iv $encrypted_110fd07a76f6_iv -in ci-release-keystore.jks.enc -out ci-release-keystore.jks -d
+  - if [["$TRAVIS_EVENT_TYPE" == "push"]]; then openssl aes-256-cbc -K $encrypted_110fd07a76f6_key -iv $encrypted_110fd07a76f6_iv -in ci-release-keystore.jks.enc -out ci-release-keystore.jks -d; fi
