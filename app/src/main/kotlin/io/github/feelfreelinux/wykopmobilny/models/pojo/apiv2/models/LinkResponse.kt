@@ -28,13 +28,13 @@ class LinkResponse(
         val relatedCount : Int,
 
         @Json(name="author")
-        val author : AuthorResponse,
+        val author : AuthorResponse?,
 
         @Json(name="date")
         val date : String,
 
         @Json(name="preview")
-        val preview : String,
+        val preview : String?,
 
         @Json(name="plus18")
         val plus18 : Boolean,

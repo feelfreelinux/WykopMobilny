@@ -17,7 +17,7 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClicked
         view.apply {
             title.text = link.title
             title.prepareBody(link.title, this@LinkViewHolder)
-            image.loadImage(link.preview.stripImageCompression())
+            link.preview?.let { image.loadImage(link.preview.stripImageCompression()) }
             description.prepareBody(link.description, this@LinkViewHolder)
             description.text = link.description
             diggCountTextView.text = link.voteCount.toString()

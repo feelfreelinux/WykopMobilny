@@ -21,7 +21,7 @@ class WykopSuggestionsAdapter(context: Context, private val textViewResourceId: 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: View.inflate(context, textViewResourceId, null)
-        if (mData.size <= position) {
+        if (mData.size > position) {
             val suggestion = mData[position]
             val tv = view.textView
             suggestion.author?.apply {

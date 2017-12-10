@@ -26,7 +26,10 @@
     <string name="mikroblog">Mikroblog</string>
     <string name="mywykop">Mój Wykop</string>
     <string name="hits">Hity</string>
-    <string name="search">Szukaj</string>
+    <string name="search">Wyszukiwarka</string>
+    <string name="links">Znaleziska</string>
+    <string name="entries">Wpisy</string>
+    <string name="profiles">Użytkownicy</string>
     <string name="user">Użytkownik</string>
     <string name="your_profile">Twój profil</string>
     <string name="favourite">Ulubione</string>

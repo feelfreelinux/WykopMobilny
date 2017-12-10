@@ -13,6 +13,8 @@ import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsRepository
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMRepository
+import io.github.feelfreelinux.wykopmobilny.api.search.SearchApi
+import io.github.feelfreelinux.wykopmobilny.api.search.SearchRepository
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestRepository
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
@@ -57,4 +59,8 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideSuggestApi(retrofit: Retrofit) : SuggestApi = SuggestRepository(retrofit)
+
+    @Provides
+    @Singleton
+    fun provideSearchApi(retrofit: Retrofit) : SearchApi = SearchRepository(retrofit)
 }

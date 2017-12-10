@@ -51,7 +51,7 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     }
 
     private fun setInfiniteScrollListener() {
-        recyclerView.apply {
+        recyclerView?.apply {
             clearOnScrollListeners()
             addOnScrollListener(InfiniteScrollListener(
                     { loadMore() }, layoutManager as LinearLayoutManager))

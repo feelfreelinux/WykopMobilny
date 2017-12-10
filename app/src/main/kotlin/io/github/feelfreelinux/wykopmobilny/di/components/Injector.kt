@@ -29,6 +29,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notific
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry.EntrySearchFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.search.links.LinkSearchFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.search.users.UsersSearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
@@ -90,4 +93,7 @@ interface Injector {
     fun inject(myWykopTagsFragment: MyWykopTagsFragment)
     fun inject(myWykopUsersFragment: MyWykopUsersFragment)
     fun inject(promotedFragment: PromotedFragment)
+    fun inject(entrySearchFragment: EntrySearchFragment)
+    fun inject(linkSearchFragment: LinkSearchFragment)
+    fun inject(usersSearchFragment: UsersSearchFragment)
 }
