@@ -10,6 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenAc
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
@@ -23,7 +24,7 @@ interface NavigatorApi {
     fun openPhotoViewActivity(context: Activity, url: String)
     fun openSettingsActivity(context: Activity)
     fun openLoginScreen(context: Activity, requestCode: Int)
-    fun openAddEntryActivity(context: Activity, receiver: String? = null)
+    fun openAddEntryActivity(context: Activity, receiver: String? = null, extraBody : String? = null)
     fun openEditEntryActivity(context: Activity, body: String, entryId: Int)
     fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int)
     fun openBrowser(context: Activity, url: String)
@@ -63,8 +64,8 @@ class Navigator : NavigatorApi {
         context.startActivityForResult(LoginScreenActivity.createIntent(context), requestCode)
     }
 
-    override fun openAddEntryActivity(context: Activity, receiver: String?) {
-        context.startActivity(AddEntryActivity.createIntent(context, receiver))
+    override fun openAddEntryActivity(context: Activity, receiver: String?, extraBody : String?) {
+        context.startActivity(AddEntryActivity.createIntent(context, receiver, extraBody))
     }
 
     override fun openEditEntryActivity(context: Activity, body: String, entryId: Int) {
@@ -74,7 +75,6 @@ class Navigator : NavigatorApi {
     override fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int) {
         context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.REQUEST_CODE)
     }
-
     override fun openBrowser(context: Activity, url: String) {
         context.openBrowser(url)
     }

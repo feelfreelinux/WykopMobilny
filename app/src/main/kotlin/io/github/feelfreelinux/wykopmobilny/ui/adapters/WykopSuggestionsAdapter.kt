@@ -21,15 +21,17 @@ class WykopSuggestionsAdapter(context: Context, private val textViewResourceId: 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: View.inflate(context, textViewResourceId, null)
-        val suggestion = mData[position]
-        val tv = view.textView
-        suggestion.author?.apply {
-            tv.setTextColor(getGroupColor(group, false))
-            tv.text = "@$nick"
-        }
+        if (mData.size <= position) {
+            val suggestion = mData[position]
+            val tv = view.textView
+            suggestion.author?.apply {
+                tv.setTextColor(getGroupColor(group, false))
+                tv.text = "@$nick"
+            }
 
-        suggestion.tag?.let {
-            tv.text = "${it.tag} (${it.followers})"
+            suggestion.tag?.let {
+                tv.text = "${it.tag} (${it.followers})"
+            }
         }
         return view
     }

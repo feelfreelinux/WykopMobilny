@@ -49,7 +49,7 @@ class TagActivity : BaseActivity() {
         entryTag = intent.getStringExtra(EXTRA_TAG)?: TagLinkParser.getTag(intent.data.toString())
 
         fab.setOnClickListener {
-            navigator.openAddEntryActivity(this)
+            navigator.openAddEntryActivity(this, null, "#$entryTag")
         }
         fab.isVisible = userManagerApi.isUserAuthorized()
 
@@ -58,8 +58,10 @@ class TagActivity : BaseActivity() {
             title = "#" + entryTag
         }
 
-        supportFragmentManager.beginTransaction().replace(R.id.contentView,
-                TagEntriesFragment.newInstance(entryTag)).commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(R.id.contentView,
+                    TagEntriesFragment.newInstance(entryTag)).commit()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

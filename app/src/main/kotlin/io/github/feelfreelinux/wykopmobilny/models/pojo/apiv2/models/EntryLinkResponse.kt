@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class EntryLinkResponse(
         @Json(name="entry")
-        val entry : EntryResponse,
+        val entry : EntryResponse?,
         @Json(name="link")
-        val link : LinkResponse
+        val link : LinkResponse?
 )

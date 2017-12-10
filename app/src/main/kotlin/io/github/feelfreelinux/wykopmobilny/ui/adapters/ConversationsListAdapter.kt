@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.BaseProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.ConversationViewHolder
 

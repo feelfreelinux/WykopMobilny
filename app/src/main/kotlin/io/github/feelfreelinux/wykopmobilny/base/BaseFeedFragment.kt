@@ -1,25 +1,24 @@
-package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed
+package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
+import io.github.feelfreelinux.wykopmobilny.base.adapter.BaseProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
-import kotlinx.android.synthetic.main.entry_feed_fragment.*
-abstract class EntryFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, BaseEntryFeedView {
+import kotlinx.android.synthetic.main.feed_fragment.*
+abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.entry_feed_fragment, container, false)
+        return inflater?.inflate(R.layout.feed_fragment, container, false)
     }
 
-    private val feedAdapter by lazy { FeedAdapter() }
+    abstract val feedAdapter : BaseProgressAdapter<T>
 
     abstract fun loadData(shouldRefresh : Boolean)
 
@@ -38,8 +37,8 @@ abstract class EntryFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshL
         }
     }
 
-    fun initAdapter(feedList: List<Entry>? = emptyList()) {
-        recyclerView.adapter = feedAdapter
+    fun initAdapter(feedList: List<T>? = emptyList()) {
+        recyclerView.adapter = feedAdapter as RecyclerView.Adapter<*>
         setupInfiniteScrollListeners()
 
         if (feedList == null || feedList.isEmpty()) {
@@ -58,7 +57,7 @@ abstract class EntryFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshL
         loadData(true)
     }
 
-    override fun addDataToAdapter(entryList: List<Entry>, shouldClearAdapter: Boolean) {
+    fun addDataToAdapter(entryList: List<T>, shouldClearAdapter: Boolean) {
         if (shouldClearAdapter) setupInfiniteScrollListeners()
         if (entryList.isNotEmpty()) {
             isRefreshing = false
@@ -70,14 +69,14 @@ abstract class EntryFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshL
         }
     }
 
-    override fun disableLoading() {
+    fun disableLoading() {
         recyclerView.clearOnScrollListeners()
         feedAdapter.disableLoading()
         isRefreshing = false
         isLoading = false
     }
 
-    val entries: List<Entry>
+    val data: List<T>
         get() = feedAdapter.data
 
     var isLoading: Boolean

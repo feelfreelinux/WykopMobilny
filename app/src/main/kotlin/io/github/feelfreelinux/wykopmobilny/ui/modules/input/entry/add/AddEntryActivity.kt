@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,8 +17,9 @@ class AddEntryActivity : BaseInputActivity<AddEntryPresenter>() {
     @Inject override lateinit var presenter: AddEntryPresenter
 
     companion object {
-        fun createIntent(context : Context, receiver: String?) : Intent {
+        fun createIntent(context : Activity, receiver: String?, textBody : String? = null) : Intent {
             val intent = Intent(context, AddEntryActivity::class.java)
+            intent.putExtra(BaseInputActivity.EXTRA_BODY, textBody)
             intent.putExtra(BaseInputActivity.EXTRA_RECEIVER, receiver)
             return intent
         }

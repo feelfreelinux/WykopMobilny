@@ -14,7 +14,7 @@ class WykopNotificationsJobPresenter(val subscriptionHelper: SubscriptionHelperA
 
                         // In this case, we should download full notifications list
                         when {
-                            unreadNotifications.size == it.size -> getNotificationsCount()
+                            unreadNotifications.size == it.size && unreadNotifications.isNotEmpty() -> getNotificationsCount()
                             unreadNotifications.size > 1 -> view?.showNotificationsCount(unreadNotifications.size)
                             unreadNotifications.isNotEmpty() -> view?.showNotification(unreadNotifications.first())
                             unreadNotifications.isEmpty() -> view?.cancelNotification()

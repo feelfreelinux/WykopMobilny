@@ -1,0 +1,28 @@
+package io.github.feelfreelinux.wykopmobilny.api.mywykop
+
+import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
+import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsRetrofitApi
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
+import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryLinkMapper
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryLinkResponse
+import io.reactivex.Single
+import retrofit2.Retrofit
+
+class MyWykopRepository(val retrofit: Retrofit) : MyWykopApi {
+    private val mywykopApi by lazy { retrofit.create(MyWykopRetrofitApi::class.java) }
+
+    override fun getIndex(page : Int): Single<List<EntryLink>> =
+            mywykopApi.getIndex(page)
+                    .compose<List<EntryLinkResponse>>(ErrorHandlerTransformer())
+                    .map { it.map { EntryLinkMapper.map(it) } }
+
+    override fun byUsers(page : Int): Single<List<EntryLink>> =
+            mywykopApi.byUsers(page)
+                    .compose<List<EntryLinkResponse>>(ErrorHandlerTransformer())
+                    .map { it.map { EntryLinkMapper.map(it) } }
+
+    override fun byTags(page : Int): Single<List<EntryLink>> =
+            mywykopApi.byTags(page)
+                    .compose<List<EntryLinkResponse>>(ErrorHandlerTransformer())
+                    .map { it.map { EntryLinkMapper.map(it) } }
+}

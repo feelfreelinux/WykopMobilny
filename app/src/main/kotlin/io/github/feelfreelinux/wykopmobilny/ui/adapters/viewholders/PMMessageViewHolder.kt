@@ -60,28 +60,32 @@ class PMMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLCl
         val cardBackgroundColor = TypedValue()
         theme?.resolveAttribute(R.attr.cardViewColor, cardBackgroundColor, true)
 
-        val margin_vertical = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_vertical).toInt()
-        val margin_horizontal = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_horizontal).toInt()
-        val margin_flip = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_flip).toInt()
+        val marginVertical = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_vertical).toInt()
+        val marginHorizontal = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_horizontal).toInt()
+        val marginFlip = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_flip).toInt()
 
         if (isSentFromUser) {
             view.cardView.setCardBackgroundColor(usersMessageColor.data)
             view.cardView.date.setTextColor(usersMessageSubtextDirected.data)
-            cardViewParams.setMargins(margin_flip, margin_vertical, margin_horizontal, margin_vertical)
+            cardViewParams.setMargins(marginFlip, marginVertical, marginHorizontal, marginVertical)
             cardViewParams.apply {
                 removeRule(RelativeLayout.ALIGN_PARENT_START)
                 addRule(RelativeLayout.ALIGN_PARENT_END)
+                height = RelativeLayout.LayoutParams.WRAP_CONTENT
             }
         } else {
             view.cardView.setCardBackgroundColor(cardBackgroundColor.data)
             view.cardView.date.setTextColor(ContextCompat.getColor(view.context, R.color.authorHeader_date_Dark))
-            cardViewParams.setMargins(margin_horizontal, margin_vertical, margin_flip, margin_vertical)
+            cardViewParams.setMargins(marginHorizontal, marginVertical, marginFlip, marginVertical)
             cardViewParams.apply {
                 removeRule(RelativeLayout.ALIGN_PARENT_END)
                 addRule(RelativeLayout.ALIGN_PARENT_START)
+                height = RelativeLayout.LayoutParams.WRAP_CONTENT
             }
         }
 
         view.cardView.layoutParams = cardViewParams
+        view.invalidate()
+        view.requestLayout()
     }
 }

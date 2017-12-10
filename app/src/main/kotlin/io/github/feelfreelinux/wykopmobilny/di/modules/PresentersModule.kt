@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.di.modules
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
+import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
@@ -15,6 +16,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNaviga
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryDetailPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries.TagEntriesPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopIndexPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.tags.MyWykopTagsPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.users.MyWykopUsersPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJobPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListPresenter
@@ -77,6 +81,16 @@ class PresentersModule {
             = WykopNotificationsJobPresenter(subscriptionHelperApi, notificationsApi, userManagerApi)
 
     @Provides
-    fun provideTagEntriesFragment(subscriptionHelperApi: SubscriptionHelperApi, tagApi: TagApi) =
+    fun provideTagEntriesFragmentPresenter(subscriptionHelperApi: SubscriptionHelperApi, tagApi: TagApi) =
             TagEntriesPresenter(subscriptionHelperApi, tagApi)
+
+    @Provides
+    fun provideMyWykopIndexPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi) = MyWykopIndexPresenter(subscriptionHelperApi, myWykopApi)
+
+    @Provides
+    fun provideMyWykopTagsPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi) = MyWykopTagsPresenter(subscriptionHelperApi, myWykopApi)
+
+    @Provides
+    fun provideMyWykopUsersPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi) = MyWykopUsersPresenter(subscriptionHelperApi, myWykopApi)
+
 }

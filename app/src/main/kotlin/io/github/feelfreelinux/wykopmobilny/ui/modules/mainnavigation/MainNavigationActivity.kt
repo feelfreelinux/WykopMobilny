@@ -25,6 +25,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListFragment
@@ -68,6 +69,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             R.id.login -> { navigator.openLoginScreen(this, LOGIN_REQUEST_CODE) }
             R.id.messages -> { openFragment(ConversationsListFragment.newInstance()) }
             R.id.nav_settings -> { navigator.openSettingsActivity(this) }
+            R.id.nav_mojwykop -> { openFragment(MyWykopFragment.newInstance()) }
             else -> presenter.navigationItemClicked(item.itemId)
         }
 
@@ -113,8 +115,8 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
         }
-        navHeader.view_container?.startListeningForUpdates()
 
+        navHeader.view_container?.startListeningForUpdates()
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
         if (savedInstanceState == null) {
