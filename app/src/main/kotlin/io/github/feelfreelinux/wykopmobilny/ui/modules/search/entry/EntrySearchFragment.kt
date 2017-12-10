@@ -59,6 +59,7 @@ class EntrySearchFragment : BaseFeedFragment<Entry>(), EntrySearchView {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
+        if (::dataFragment.isInitialized)
         dataFragment.data = PagedDataModel(presenter.page , data)
     }
     override fun onDetach() {

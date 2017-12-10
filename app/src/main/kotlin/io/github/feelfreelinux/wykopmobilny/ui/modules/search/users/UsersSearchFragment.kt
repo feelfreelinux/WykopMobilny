@@ -67,7 +67,6 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
         super.onActivityCreated(savedInstanceState)
         conversationsDataFragment = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         WykopApp.uiInjector.inject(this)
-        (activity as BaseActivity).supportActionBar?.setTitle(R.string.messages)
         swiperefresh.setOnRefreshListener(this)
 
         recyclerView.apply {
@@ -96,16 +95,13 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
+        if (::conversationsDataFragment.isInitialized)
         conversationsDataFragment.data = profilesAdapter.dataset
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.unsubscribe()
-    }
-
-    override fun onPause() {
-        super.onPause()
         if (isRemoving) fragmentManager.removeDataFragment(conversationsDataFragment)
     }
+
 }

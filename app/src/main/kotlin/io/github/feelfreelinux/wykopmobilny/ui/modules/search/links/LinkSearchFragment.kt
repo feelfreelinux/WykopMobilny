@@ -63,6 +63,7 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
+        if (::dataFragment.isInitialized)
         dataFragment.data = PagedDataModel(presenter.page , data)
     }
     override fun onDetach() {

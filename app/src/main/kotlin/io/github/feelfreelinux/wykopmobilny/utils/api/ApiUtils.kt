@@ -31,7 +31,6 @@ fun getGenderStripResource(authorSex : String) : Int =
     }
 
 fun String.stripImageCompression() : String {
-    printout(this)
     val extension = substringAfterLast(".")
     val baseUrl = substringBeforeLast(",")
     return baseUrl + "." + extension
