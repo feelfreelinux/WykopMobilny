@@ -34,8 +34,7 @@ class AuthorHeaderView : ConstraintLayout {
                 setTextColor(getGroupColor(group, settingsApi.useDarkTheme))
             }
             authorAvatarView.setAuthor(this)
-
-            val prettyDate = date.toPrettyDate()
+            val prettyDate = if (date.isNotEmpty()) date.toPrettyDate() else ""
             entryDateTextView.text = prettyDate
 
             app?.let {

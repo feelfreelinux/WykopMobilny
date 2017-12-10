@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
@@ -16,7 +17,7 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClicked
         view.apply {
             title.text = link.title
             title.prepareBody(link.title, this@LinkViewHolder)
-            image.loadImage(link.preview)
+            link.preview?.let { image.loadImage(link.preview.stripImageCompression()) }
             description.prepareBody(link.description, this@LinkViewHolder)
             description.text = link.description
             diggCountTextView.text = link.voteCount.toString()

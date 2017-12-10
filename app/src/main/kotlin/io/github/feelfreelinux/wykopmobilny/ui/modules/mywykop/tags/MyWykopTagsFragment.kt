@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.tags
 
+import android.content.Context
 import android.os.Bundle
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
@@ -45,6 +46,10 @@ class MyWykopTagsFragment : BaseFeedFragment<EntryLink>(), MyWykopView {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         dataFragment.data = PagedDataModel(presenter.page , data)
+    }
+    override fun onDetach() {
+        super.onDetach()
+        presenter.unsubscribe()
     }
 
     override fun onPause() {

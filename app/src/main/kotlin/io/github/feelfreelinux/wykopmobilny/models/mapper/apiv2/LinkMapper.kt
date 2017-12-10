@@ -11,7 +11,7 @@ class LinkMapper {
                     value.title,
                     value.description, value.tags, value.sourceUrl,
                     value.voteCount, value.commentsCount, value.relatedCount,
-                    AuthorMapper.map(value.author), value.date, value.preview,
+                    if (value.author != null) AuthorMapper.map(value.author) else null, value.date, value.preview,
                     value.plus18, value.canVote, value.isHot,
                     value.status, value.userVote, value.app)
         }

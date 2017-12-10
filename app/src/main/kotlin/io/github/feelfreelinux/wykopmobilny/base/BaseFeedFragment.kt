@@ -62,7 +62,7 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
         if (entryList.isNotEmpty()) {
             isRefreshing = false
             isLoading = false
-            recyclerView.post {
+            recyclerView?.post {
                 feedAdapter.addData(entryList, shouldClearAdapter)
                 if (shouldClearAdapter) recyclerView.scrollToPosition(0)
             }

@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.users
 
+import android.content.Context
 import android.os.Bundle
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
@@ -46,7 +47,11 @@ class MyWykopUsersFragment : BaseFeedFragment<EntryLink>(), MyWykopView {
         super.onSaveInstanceState(outState)
         dataFragment.data = PagedDataModel(presenter.page , data)
     }
-
+    override fun onDetach() {
+        super.onDetach()
+        presenter.unsubscribe()
+    }
+    
     override fun onPause() {
         super.onPause()
         if (isRemoving) fragmentManager.removeDataFragment(dataFragment)

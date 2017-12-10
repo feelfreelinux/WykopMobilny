@@ -19,4 +19,9 @@ class MyWykopUsersPresenter(val subscriptionHelperApi: SubscriptionHelperApi, va
                 },
                 { view?.showErrorDialog(it) }, this)
     }
+
+    override fun unsubscribe() {
+        super.unsubscribe()
+        subscriptionHelperApi.dispose(this)
+    }
 }
