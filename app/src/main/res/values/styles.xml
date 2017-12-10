@@ -235,4 +235,20 @@
         <item name="android:textSize">@dimen/toolbar_subtitle_messages_text_size</item>
     </style>
 
+    <style name="TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/tabBarIndicatorColor</item>
+        <item name="tabIndicatorHeight">@dimen/tabBar_indicator_height</item>
+        <item name="tabPaddingStart">@dimen/tabBar_padding_horizontal</item>
+        <item name="tabPaddingEnd">@dimen/tabBar_padding_horizontal</item>
+        <item name="tabBackground">?attr/colorPrimaryDark</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/tabBarTextColorSelected</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/tabBar_text_size</item>
+        <item name="android:textColor">@color/tabBarTextColor</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 </resources>

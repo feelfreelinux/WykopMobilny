@@ -22,9 +22,9 @@
     <color name="lineColor">#e6e6e6</color>
     <color name="lineColor.Dark">#303030</color>
 
-
     <color name="colorBadgeOwn">#3498db</color>
     <color name="colorBadgeAuthors">#F75616</color>
+    <color name="colorBadgeHot">#f71e16</color>
 
     <color name="cardView">#ffffff</color>
     <color name="cardList">#E9EEEF</color>
@@ -43,5 +43,9 @@
     <color name="plusPressedColor">#2AB364</color>
     <color name="authorHeader_date.Dark">#757575</color>
     <color name="hintColor.Dark">#9e9e9e</color>
+
+    <color name="tabBarTextColor">#f4f4f4</color>
+    <color name="tabBarTextColorSelected">#ffffff</color>
+    <color name="tabBarIndicatorColor">#ffffff</color>
 
 </resources>
