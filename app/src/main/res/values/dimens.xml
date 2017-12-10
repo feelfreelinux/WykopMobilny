@@ -144,16 +144,22 @@
     <dimen name="survey_votes_radio_button_height">26dp</dimen>
     <dimen name="survey_votes_radio_button_margin_start">2dp</dimen>
 
-    <dimen name="link_layout_image_width">100dp</dimen>
-    <dimen name="link_layout_title_font_size">14sp</dimen>
+    <dimen name="link_layout_image_width">110dp</dimen>
+    <dimen name="link_layout_title_font_size">13.5sp</dimen>
     <dimen name="link_layout_title_padding_horizontal">10dp</dimen>
     <dimen name="link_layout_title_padding_top">8dp</dimen>
     <dimen name="link_layout_title_padding_bottom">6dp</dimen>
-    <dimen name="link_layout_description_font_size">12sp</dimen>
+    <dimen name="link_layout_description_font_size">13sp</dimen>
     <dimen name="link_layout_description_padding_horizontal">10dp</dimen>
-    <dimen name="link_layout_description_padding_bottom">6dp</dimen>
+    <dimen name="link_layout_description_padding_bottom">8dp</dimen>
     <dimen name="link_layout_button_padding_horizontal">2dp</dimen>
     <dimen name="link_layout_digg_drawable_padding">5dp</dimen>
     <dimen name="link_layout_date_text_size">12sp</dimen>
-    <dimen name="link_layout_date_padding">2dp</dimen>
+    <dimen name="link_layout_date_padding_horizontal">5dp</dimen>
+    <dimen name="link_layout_hot_badge_strip_width">2dp</dimen>
+
+    <dimen name="tabBar_indicator_height">2dp</dimen>
+    <dimen name="tabBar_padding_horizontal">6dp</dimen>
+    <dimen name="tabBar_text_size">14sp</dimen>
+
 </resources>
