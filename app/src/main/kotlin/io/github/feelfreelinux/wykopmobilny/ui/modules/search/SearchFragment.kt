@@ -16,7 +16,7 @@ interface SearchFragmentQuery {
 
 class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFragmentQuery {
     override var searchQuery = ""
-    val viewPagerAdapter by lazy { SearchPagerAdapter(resources, childFragmentManager) }
+    lateinit var viewPagerAdapter : SearchPagerAdapter
     override fun onQueryTextSubmit(query: String?): Boolean {
         query?.let {
             if (query.length > 2) {
@@ -44,16 +44,23 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFra
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as BaseActivity).supportActionBar?.setTitle(R.string.search)
+        viewPagerAdapter = SearchPagerAdapter(resources, childFragmentManager)
         pager.adapter = viewPagerAdapter
         tabLayout.setupWithViewPager(pager)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        (activity as BaseActivity).supportActionBar?.setTitle(R.string.search)
+    }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.search_menu, menu)
-        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        val item = menu.findItem(R.id.action_search)
+        item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM or MenuItem.SHOW_AS_ACTION_WITH_TEXT)
+        val searchView = item.actionView as SearchView
         searchView.setOnQueryTextListener(this)
+        searchView.setIconifiedByDefault(false)
     }
 }

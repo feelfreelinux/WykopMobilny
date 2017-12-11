@@ -32,6 +32,12 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        WykopApp.uiInjector.inject(this)
+        presenter.subscribe(this)
+        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        dataFragment.data?.apply {
+            presenter.page = page
+        }
         val parent = (parentFragment as SearchFragmentQuery)
         if (queryString != parent.searchQuery) {
             queryString = parent.searchQuery
@@ -43,13 +49,7 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        WykopApp.uiInjector.inject(this)
-        presenter.subscribe(this)
-        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        dataFragment.data?.apply {
-            presenter.page = page
-        }
-        presenter.subscribe(this)
+
         initAdapter(dataFragment.data?.model)
     }
 
@@ -68,11 +68,12 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView {
     }
     override fun onDetach() {
         super.onDetach()
+        if (::presenter.isInitialized)
         presenter.unsubscribe()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         if (isRemoving) fragmentManager.removeDataFragment(dataFragment)
     }
 }
