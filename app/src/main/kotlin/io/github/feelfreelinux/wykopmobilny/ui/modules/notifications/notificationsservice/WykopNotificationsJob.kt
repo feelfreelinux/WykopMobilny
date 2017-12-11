@@ -20,6 +20,7 @@ import javax.inject.Inject
 
 class WykopNotificationsJob : Job(), WykopNotificationsJobView {
     @Inject lateinit var presenter: WykopNotificationsJobPresenter
+    @Inject lateinit var settingsApi: SettingsPreferencesApi
     @Inject lateinit var wykopLinkHandler: WykopLinkHandlerApi
     @Inject lateinit var notificationManager: WykopNotificationManagerApi
 
@@ -54,39 +55,44 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
 
     override fun onRunJob(params: Params): Result {
         WykopApp.uiInjector.inject(this)
-
-        presenter.apply {
-            subscribe(this@WykopNotificationsJob)
-            checkNotifications()
+        if (settingsApi.showNotifications) {
+            presenter.apply {
+                subscribe(this@WykopNotificationsJob)
+                checkNotifications()
+            }
         }
         return Result.SUCCESS
     }
 
     override fun showNotification(notification: io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification) {
-        val intent = wykopLinkHandler.getLinkIntent(context, notification.url!!)
-        intent?.action = System.currentTimeMillis().toString()
-        val pendingIntent = if (intent != null) {
-            intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        if (settingsApi.showNotifications) {
+            val intent = wykopLinkHandler.getLinkIntent(context, notification.url!!)
+            intent?.action = System.currentTimeMillis().toString()
+            val pendingIntent = if (intent != null) {
+                intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        } else {
-            val notificationIntent = Intent(Intent.ACTION_VIEW, Uri.parse(notification.url))
-            PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            } else {
+                val notificationIntent = Intent(Intent.ACTION_VIEW, Uri.parse(notification.url))
+                PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            }
+            notificationManager.updateNotification(WykopNotificationsJob.NOTIFICATION_ID, buildNotification(notification.body, pendingIntent))
+
         }
-        notificationManager.updateNotification(WykopNotificationsJob.NOTIFICATION_ID, buildNotification(notification.body, pendingIntent))
     }
-
     override fun showNotificationsCount(count: Int) {
-        // Create intent
-        val intent = NavigationActivity.getIntent(context, NavigationActivity.TARGET_NOTIFICATIONS)
-        intent.action = System.currentTimeMillis().toString()
-        intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or  Intent.FLAG_ACTIVITY_NEW_TASK)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        if (settingsApi.showNotifications) {
+            // Create intent
+            val intent = NavigationActivity.getIntent(context, NavigationActivity.TARGET_NOTIFICATIONS)
+            intent.action = System.currentTimeMillis().toString()
+            intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        // Show Notification
-        notificationManager.updateNotification(NOTIFICATION_ID,
-                buildNotification(context.getString(R.string.notificationsCountMessage, count), pendingIntent))
+            // Show Notification
+            notificationManager.updateNotification(NOTIFICATION_ID,
+                    buildNotification(context.getString(R.string.notificationsCountMessage, count), pendingIntent))
 
+        }
     }
 
     override fun cancelNotification() {
