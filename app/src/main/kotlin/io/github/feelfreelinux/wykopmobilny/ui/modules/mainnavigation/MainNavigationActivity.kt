@@ -106,7 +106,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         // Setup AppUpdater
         AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
-                .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
                 .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
                 .setTitleOnUpdateAvailable(R.string.update_available)
                 .setContentOnUpdateAvailable(R.string.update_app)
