@@ -3,27 +3,28 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
-import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
+import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import kotlinx.android.synthetic.main.link_layout.view.*
+import javax.inject.Inject
 
 
 class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClickedListener {
     fun bindView(link : Link) {
         view.apply {
-            title.text = link.title
-            title.prepareBody(link.title, this@LinkViewHolder)
+            title.text = link.title.removeHtml()
             link.preview?.let { image.loadImage(link.preview.stripImageCompression()) }
-            description.prepareBody(link.description, this@LinkViewHolder)
-            description.text = link.description
+            description.text = link.description.removeHtml()
             diggCountTextView.text = link.voteCount.toString()
             commentsCountTextView.text = link.commentsCount.toString()
             dateTextView.text = link.date.toPrettyDate()
             hotBadgeStrip.isVisible = link.isHot
+            setOnClickListener {
+                view.getActivityContext()!!.openBrowser(link.sourceUrl)
+            }
         }
     }
 
