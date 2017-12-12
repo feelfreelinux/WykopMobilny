@@ -9,8 +9,15 @@
             android:defaultValue="false"/>
 
         <android.support.v7.preference.ListPreference
+            android:key="defaultScreen"
+            android:title="@string/defaultScreen"
+            android:entries="@array/preferences_default_screen"
+            android:entryValues="@array/preferences_default_screen_values"
+            android:defaultValue="mainpage"/>
+
+        <android.support.v7.preference.ListPreference
             android:key="hotEntriesScreen"
-            android:title="Domyślny ekran w gorących wpisach"
+            android:title="@string/defaultHotScreen"
             android:entries="@array/preferences_hot_screen"
             android:entryValues="@array/preferences_hot_screen_values"
             android:defaultValue="newest"/>

@@ -20,6 +20,6 @@ data class Link(
         val canVote : Boolean,
         val isHot : Boolean,
         val status : String,
-        val userVote : Int,
+        val userVote : String?,
         val app : String?
 )

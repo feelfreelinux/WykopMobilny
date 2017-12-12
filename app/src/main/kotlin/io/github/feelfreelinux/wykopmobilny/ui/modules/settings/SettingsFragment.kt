@@ -60,6 +60,10 @@ class SettingsActivity : BaseActivity() {
             (findPreference("hotEntriesScreen") as ListPreference).apply {
                 summary = entry
             }
+
+            (findPreference("defaultScreen") as ListPreference).apply {
+                summary = entry
+            }
         }
 
         override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {

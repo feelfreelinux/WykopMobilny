@@ -58,9 +58,11 @@ abstract class BaseVoteButton : TextView {
         get() = text.toString().toInt()
         set(value) {
             text =  context.getString(R.string.votes_count, value)
+            setButtonVoteCount(value)
         }
 
     abstract fun setButtonState(isSelected : Boolean)
+    abstract fun setButtonVoteCount(voteCount : Int)
 
     var isButtonSelected: Boolean
         get() = isSelected

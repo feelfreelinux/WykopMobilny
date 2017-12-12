@@ -13,6 +13,9 @@
     <string name="pref_content_plus18">Pokazuj treści 18+</string>
     <string name="pref_content_filternsfw">Zamazuj treści z tagiem #nsfw</string>
     <string name="not_implemented">Nie zaimplementowano</string>
+    <string name="defaultHotScreen">Domyślny ekran w gorących wpisach</string>
+    <string name="defaultScreen">Domyślny ekran aplikacji</string>
+
 
     <string name="newest_entries">Najnowsze wpisy</string>
     <string name="share">Udostępnij</string>

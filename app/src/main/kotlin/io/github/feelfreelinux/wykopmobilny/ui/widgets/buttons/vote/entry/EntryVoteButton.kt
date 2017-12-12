@@ -40,6 +40,10 @@ class EntryVoteButton : BaseVoteButton, EntryVoteButtonView {
         entryReference.get()?.isVoted = isSelected
     }
 
+    override fun setButtonVoteCount(voteCount: Int) {
+        entryReference.get()?.voteCount = voteCount
+    }
+
     fun setEntryData(entry : Entry) {
         entryReference = WeakReference(entry)
         presenter.entryId = entry.id

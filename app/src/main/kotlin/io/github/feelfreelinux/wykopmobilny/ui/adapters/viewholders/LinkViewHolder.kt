@@ -1,7 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
@@ -16,6 +18,7 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClicked
     fun bindView(link : Link) {
         view.apply {
             title.text = link.title.removeHtml()
+            image.isVisible = link.preview != null
             link.preview?.let { image.loadImage(link.preview.stripImageCompression()) }
             description.text = link.description.removeHtml()
             diggCountTextView.text = link.voteCount.toString()

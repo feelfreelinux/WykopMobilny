@@ -104,7 +104,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         JobUtil.hasBootPermission(this)
 
         // Setup AppUpdater
-        AppUpdater(this)
+        /*AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
                 .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
                 .setTitleOnUpdateAvailable(R.string.update_available)
@@ -112,7 +112,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
                 .setButtonDismiss(R.string.cancel)
                 .setButtonDoNotShowAgain(R.string.do_not_show_again)
                 .setButtonUpdate(R.string.update)
-                .start()
+                .start()*/
 
         if (settingsApi.showNotifications) {
             // Schedules notification service
@@ -191,8 +191,10 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     }
 
     fun openMainFragment() {
-        // @TODO Handle settings here
-        openFragment(HotFragment())
+        when (settingsApi.defaultScreen!!) {
+            "mainpage" -> openFragment(PromotedFragment.newInstance())
+            "mikroblog" -> openFragment(HotFragment.newInstance())
+        }
     }
 
     override fun openFragment(fragment: Fragment) {
