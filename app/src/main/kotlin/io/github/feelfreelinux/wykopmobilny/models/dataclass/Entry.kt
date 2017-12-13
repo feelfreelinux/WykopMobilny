@@ -8,7 +8,7 @@ data class Entry(val id : Int,
                  var isFavorite : Boolean,
                  val survey : Survey?,
                  val embed : Embed?,
-                 val voteCount : Int,
+                 var voteCount : Int,
                  val commentsCount : Int,
                  val comments : List<EntryComment>,
                  val app : String?)

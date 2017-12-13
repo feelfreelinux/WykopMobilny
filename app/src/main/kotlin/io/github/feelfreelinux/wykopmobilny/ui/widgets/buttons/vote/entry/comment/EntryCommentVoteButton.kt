@@ -43,10 +43,14 @@ class EntryCommentVoteButton : BaseVoteButton, EntryCommentVoteButtonView {
         entryCommentReference.get()?.isVoted = isSelected
     }
 
+    override fun setButtonVoteCount(voteCount: Int) {
+        entryCommentReference.get()?.voteCount = voteCount
+    }
+
     fun setCommentData(comment : EntryComment) {
         presenter.commentId = comment.id
-        voteCount = comment.voteCount
         entryCommentReference = WeakReference(comment)
+        voteCount = comment.voteCount
 
         if (comment.voteCount > 0) {
             setOnLongClickListener {

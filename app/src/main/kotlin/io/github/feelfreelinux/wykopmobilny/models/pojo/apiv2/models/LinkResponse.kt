@@ -49,7 +49,7 @@ class LinkResponse(
         val status : String,
 
         @Json(name="user_vote")
-        val userVote : Int,
+        val userVote : String?,
 
         @Json(name="app")
         val app : String?
