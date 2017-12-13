@@ -21,12 +21,11 @@
 
         <TextView
             android:id="@+id/imageIconGifSize"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:paddingBottom="5dp"
-            android:background="@drawable/ic_gif_size"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:paddingBottom="5.5dp"
+            android:background="@mipmap/ic_gif_size"
             android:textColor="#ffffff"
-            android:text="24 MB"
             android:textSize="10dp"
             android:gravity="bottom|center_horizontal"
             android:visibility="gone"
@@ -35,38 +34,38 @@
 
         <TextView
             android:id="@+id/imageIconGif"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
             android:paddingBottom="6dp"
-            android:background="@drawable/ic_gif"
+            android:background="@mipmap/ic_gif"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/image"
             app:layout_constraintTop_toTopOf="@id/image"/>
 
         <TextView
             android:id="@+id/imageIconGfycat"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:background="@drawable/ic_gfycat"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="@mipmap/ic_gfycat"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/image"
             app:layout_constraintTop_toTopOf="@id/image"/>
 
         <TextView
             android:id="@+id/imageIconVimeo"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:background="@drawable/ic_vimeo"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="@mipmap/ic_vimeo"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/image"
             app:layout_constraintTop_toTopOf="@id/image"/>
 
         <TextView
             android:id="@+id/imageIconYoutube"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:background="@drawable/ic_youtube"
-            android:visibility="gone"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="@mipmap/ic_youtube"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="@id/image"
             app:layout_constraintTop_toTopOf="@id/image"/>
 
