@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api
 
 import io.github.feelfreelinux.wykopmobilny.APP_SECRET
+import io.github.feelfreelinux.wykopmobilny.BuildConfig
 import io.github.feelfreelinux.wykopmobilny.utils.api.encryptMD5
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -50,7 +51,9 @@ class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
             }
             else -> APP_SECRET + url
         }
-        printout(encodeUrl)
+        if (BuildConfig.DEBUG) {
+            printout(encodeUrl)
+        }
 
         builder.apply {
             url(url)

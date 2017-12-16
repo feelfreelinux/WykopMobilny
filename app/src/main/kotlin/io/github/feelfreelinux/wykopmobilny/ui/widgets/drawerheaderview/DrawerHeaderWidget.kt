@@ -38,7 +38,7 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) { nav_notifications.text = value.toString() }
 
-    private fun checkIsUserLoggedIn() {
+    fun checkIsUserLoggedIn(checkNotifications : Boolean) {
         if (userManager.isUserAuthorized()) {
             isVisible = true
             val credentials = userManager.getUserCredentials()!!
@@ -48,7 +48,7 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
             } else {
                 backgroundImage.loadImage(PLACEHOLDER_IMAGE_URL)
             }
-            presenter.fetchNotifications()
+            if (checkNotifications) presenter.fetchNotifications()
         } else {
             isVisible = false
         }
@@ -57,7 +57,7 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
     fun startListeningForUpdates() {
         if (userManager.isUserAuthorized()) {
             presenter.subscribe(this)
-            checkIsUserLoggedIn()
+            checkIsUserLoggedIn(true)
         }
     }
 

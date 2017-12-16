@@ -46,7 +46,7 @@
     <string name="votes_count">%1$d</string>
     <string name="date_with_user_app">%1$s via %2$s</string>
     <string name="votePercentageCount">%1$d%% (%2$d głosów)</string>
-
+    <string name="searchNoResults">¯\\_(ツ)_/¯\nBrak wyników</string>
     <string name="refresh">Odśwież</string>
     <string name="nav_drawer_open">Nawigacja otwarta</string>
     <string name="nav_drawer_closed">Nawigacja zamknięta</string>

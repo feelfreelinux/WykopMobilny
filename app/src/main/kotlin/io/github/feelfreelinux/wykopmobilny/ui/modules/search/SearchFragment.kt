@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import android.support.v7.widget.SearchView
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.utils.hideKeyboard
 import kotlinx.android.synthetic.main.activity_search.*
 
 
@@ -14,14 +15,23 @@ interface SearchFragmentQuery {
     var searchQuery : String
 }
 
+interface SearchFragmentNotifier {
+    fun notifyQueryChanged()
+}
+
 class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFragmentQuery {
     override var searchQuery = ""
-    lateinit var viewPagerAdapter : SearchPagerAdapter
+
+    private lateinit var viewPagerAdapter : SearchPagerAdapter
     override fun onQueryTextSubmit(query: String?): Boolean {
         query?.let {
             if (query.length > 2) {
                 searchQuery = query
-                viewPagerAdapter.notifyDataSetChanged()
+                for (i in 0 until viewPagerAdapter.registeredFragments.size()) {
+                    (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
+                            .notifyQueryChanged()
+                }
+                activity.hideKeyboard()
             }
         }
         return true
@@ -32,6 +42,8 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFra
     }
 
     companion object {
+        val EXTRA_QUERY = "EXTRA_QUERY"
+
         fun newInstance() : Fragment {
             return SearchFragment()
         }
@@ -46,12 +58,18 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFra
         super.onViewCreated(view, savedInstanceState)
         viewPagerAdapter = SearchPagerAdapter(resources, childFragmentManager)
         pager.adapter = viewPagerAdapter
+        pager.offscreenPageLimit = 3
         tabLayout.setupWithViewPager(pager)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.search)
+        savedInstanceState?.apply{
+            if (containsKey(EXTRA_QUERY)) {
+                searchQuery = getString(EXTRA_QUERY)
+            }
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -60,7 +78,13 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFra
         val item = menu.findItem(R.id.action_search)
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM or MenuItem.SHOW_AS_ACTION_WITH_TEXT)
         val searchView = item.actionView as SearchView
+        searchView.setQuery(searchQuery, false)
         searchView.setOnQueryTextListener(this)
         searchView.setIconifiedByDefault(false)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(EXTRA_QUERY, searchQuery)
     }
 }

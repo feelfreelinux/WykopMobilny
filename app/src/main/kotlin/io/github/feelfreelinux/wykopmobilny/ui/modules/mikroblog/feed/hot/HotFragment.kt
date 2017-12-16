@@ -22,10 +22,10 @@ import javax.inject.Inject
 class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
     val navigation by lazy { activity as MainNavigationInterface }
     override val feedAdapter by lazy { FeedAdapter() }
-    override var fab : View? = null
     @Inject lateinit var presenter : HotPresenter
     @Inject lateinit var settingsPreferences : SettingsPreferencesApi
     @Inject lateinit var navigatorApi : NavigatorApi
+    val fab by lazy { navigation.floatingButton }
     private lateinit var entriesDataFragment : DataFragment<Pair<PagedDataModel<List<Entry>>, String>>
 
     override fun loadData(shouldRefresh: Boolean) {
@@ -34,6 +34,10 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
+        fab.isVisible = true
+        fab.setOnClickListener {
+            navigatorApi.openAddEntryActivity(activity)
+        }
         navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity, R.drawable.ic_hot)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -47,11 +51,6 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
         entriesDataFragment.data?.apply {
             presenter.page = first.page
             presenter.period = second
-        }
-
-        fab?.isVisible = true
-        fab?.setOnClickListener {
-            navigatorApi.openAddEntryActivity(activity)
         }
 
         initAdapter(entriesDataFragment.data?.first?.model)

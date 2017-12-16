@@ -7,4 +7,5 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 interface LinkSearchView : BaseView {
     fun addDataToAdapter(entryList : List<Link>, shouldClearAdapter : Boolean)
     fun disableLoading()
+    var showSearchEmptyView : Boolean
 }

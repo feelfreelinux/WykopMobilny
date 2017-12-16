@@ -29,6 +29,7 @@ class MyWykopFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         pagerAdapter = MyWykopPagerAdapter(resources, childFragmentManager)
+        pager.offscreenPageLimit = 3
         pager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(pager)
     }

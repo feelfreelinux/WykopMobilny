@@ -50,7 +50,7 @@ class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelpe
     override fun saveImage() {
         val bitmap = getImageBitmap()
         if (bitmap != null && checkForWriteReadPermission()) {
-            val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OtwartyWykopMobilny")
+            val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "wykopmobilny")
             if (!file.exists()) file.mkdirs()
 
             val pictureFile = File("""${file.absoluteFile}/${photoView.url.substringAfterLast('/')}""")

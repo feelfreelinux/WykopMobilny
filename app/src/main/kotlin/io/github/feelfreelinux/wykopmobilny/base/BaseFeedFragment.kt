@@ -13,10 +13,22 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
 import kotlinx.android.synthetic.main.feed_fragment.*
+import kotlinx.android.synthetic.main.search_empty_view.*
+
 abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.feed_fragment, container, false)
     }
+
+    var showSearchEmptyView: Boolean
+        get() = searchEmptyView.isVisible
+        set(value) {
+            searchEmptyView.isVisible = value
+            if (value) {
+                feedAdapter.addData(emptyList(), true)
+                feedAdapter.disableLoading()
+            }
+        }
 
     abstract val feedAdapter : BaseProgressAdapter<T>
 
@@ -64,13 +76,13 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
             isLoading = false
             recyclerView?.post {
                 feedAdapter.addData(entryList, shouldClearAdapter)
-                if (shouldClearAdapter) recyclerView.scrollToPosition(0)
+                if (shouldClearAdapter) recyclerView?.scrollToPosition(0)
             }
         }
     }
 
     fun disableLoading() {
-        recyclerView.clearOnScrollListeners()
+        recyclerView?.clearOnScrollListeners()
         feedAdapter.disableLoading()
         isRefreshing = false
         isLoading = false

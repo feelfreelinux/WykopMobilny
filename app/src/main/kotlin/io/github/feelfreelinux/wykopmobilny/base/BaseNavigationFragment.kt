@@ -5,5 +5,4 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNaviga
 
 abstract class BaseNavigationFragment : BaseFragment(), BaseNavigationView {
     val navigation by lazy { activity as MainNavigationInterface }
-    override var fab : View? = null
 }

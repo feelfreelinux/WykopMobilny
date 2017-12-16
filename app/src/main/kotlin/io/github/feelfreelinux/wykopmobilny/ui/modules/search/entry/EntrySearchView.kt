@@ -6,4 +6,5 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 interface EntrySearchView : BaseView {
     fun addDataToAdapter(entryList : List<Entry>, shouldClearAdapter : Boolean)
     fun disableLoading()
+    var showSearchEmptyView : Boolean
 }

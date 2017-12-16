@@ -11,6 +11,7 @@ class LinkSearchPresenter(val subscriptionHelperApi: SubscriptionHelperApi, val 
         if (shouldRefresh) page = 1
         subscriptionHelperApi.subscribe(searchApi.searchLinks(page, q),
                 {
+                    view?.showSearchEmptyView = page == 1 && it.isEmpty()
                     when {
                         it.isNotEmpty() -> {
                             page++

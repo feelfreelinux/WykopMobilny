@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.PagerAdapter
+import android.util.SparseArray
+import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopIndexFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.tags.MyWykopTagsFragment
@@ -15,6 +17,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.users.UsersSearchF
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 class SearchPagerAdapter(val resources : Resources, fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+    val registeredFragments = SparseArray<Fragment>()
+
     override fun getItem(position: Int): Fragment {
         return when(position) {
             0 -> LinkSearchFragment.newInstance()
@@ -25,6 +29,17 @@ class SearchPagerAdapter(val resources : Resources, fragmentManager: FragmentMan
 
     override fun getCount() = 3
 
+    override fun instantiateItem(container: ViewGroup?, position: Int): Any {
+        val fragment = super.instantiateItem(container, position) as Fragment
+        registeredFragments.put(position, fragment)
+        return fragment
+    }
+
+    override fun destroyItem(container: ViewGroup?, position: Int, `object`: Any?) {
+        registeredFragments.removeAt(position)
+        super.destroyItem(container, position, `object`)
+    }
+
     override fun getPageTitle(position: Int): CharSequence {
         super.getPageTitle(position)
         return when(position) {
@@ -34,7 +49,5 @@ class SearchPagerAdapter(val resources : Resources, fragmentManager: FragmentMan
         }
     }
 
-    override fun getItemPosition(`object`: Any?): Int {
-        return PagerAdapter.POSITION_NONE
-    }
+
 }
