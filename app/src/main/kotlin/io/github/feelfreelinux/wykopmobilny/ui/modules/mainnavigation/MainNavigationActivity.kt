@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.bugsnag.android.Bugsnag
 import com.evernote.android.job.util.JobUtil
@@ -35,6 +36,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.*
@@ -46,10 +49,14 @@ interface MainNavigationInterface {
     val activityToolbar : Toolbar
     fun openFragment(fragment: Fragment)
     fun showErrorDialog(e: Throwable)
+    val floatingButton : View
 }
 
 class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override val activityToolbar: Toolbar get() = toolbar
+
+    override val floatingButton: View
+        get() = fab
 
     companion object {
         val LOGIN_REQUEST_CODE = 142
@@ -85,6 +92,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     @Inject lateinit var presenter : MainNavigationPresenter
     @Inject lateinit var settingsApi : SettingsPreferencesApi
     @Inject lateinit var navigator : NavigatorApi
+    @Inject lateinit var userManagerApi : UserManagerApi
 
 
     private val navHeader by lazy { navigationView.getHeaderView(0) }
@@ -104,7 +112,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         JobUtil.hasBootPermission(this)
 
         // Setup AppUpdater
-        /*AppUpdater(this)
+        AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
                 .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
                 .setTitleOnUpdateAvailable(R.string.update_available)
@@ -112,24 +120,25 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
                 .setButtonDismiss(R.string.cancel)
                 .setButtonDoNotShowAgain(R.string.do_not_show_again)
                 .setButtonUpdate(R.string.update)
-                .start()*/
+                .start()
 
         if (settingsApi.showNotifications) {
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
         }
 
-        navHeader.view_container?.startListeningForUpdates()
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         setupNavigation()
         if (savedInstanceState == null) {
+            navHeader.view_container?.startListeningForUpdates()
             if (intent.hasExtra(TARGET_FRAGMENT_KEY)) {
                 when (intent.getStringExtra(TARGET_FRAGMENT_KEY)) {
                     TARGET_NOTIFICATIONS -> openFragment(NotificationsListFragment.newInstance())
                 }
 
             } else openMainFragment()
-        }
+        } else navHeader.view_container?.checkIsUserLoggedIn(false)
+        setFABVisibility()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -175,7 +184,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             findItem(R.id.login).isVisible = !value
             findItem(R.id.logout).isVisible = value
         }
-        fab.isVisible = value
+        setFABVisibility()
         navHeader.view_container.isVisible = value
         navHeader.view_container.apply {
             nav_notifications_tag.setOnClickListener {
@@ -200,12 +209,15 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     override fun openFragment(fragment: Fragment) {
         fab.isVisible = false
         fab.setOnClickListener(null)
-
-        if (fragment is BaseNavigationView) fragment.fab = fab
-
+        if (fragment is BaseNavigationView) fab.isVisible = true
         supportFragmentManager.beginTransaction().replace(R.id.contentView,
-                fragment).commit()
+                fragment, "MAIN_FRAGMENT").commit()
         closeDrawer()
+    }
+
+    fun setFABVisibility() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.contentView)
+        fab.isVisible = fragment != null && fragment is BaseNavigationView && userManagerApi.isUserAuthorized()
     }
 
     fun closeDrawer() =

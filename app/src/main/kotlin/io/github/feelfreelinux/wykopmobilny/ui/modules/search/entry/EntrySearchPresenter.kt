@@ -10,6 +10,7 @@ class EntrySearchPresenter(val subscriptionHelperApi: SubscriptionHelperApi, val
         if (shouldRefresh) page = 1
         subscriptionHelperApi.subscribe(searchApi.searchEntries(page, q),
                 {
+                    view?.showSearchEmptyView = page == 1 && it.isEmpty()
                     when {
                         it.isNotEmpty() -> {
                             page++

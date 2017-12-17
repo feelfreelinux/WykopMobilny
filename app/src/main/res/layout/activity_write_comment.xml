@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <AutoCompleteTextView
+            <MultiAutoCompleteTextView
                 android:id="@+id/body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,6 +65,7 @@
                 android:paddingBottom="@dimen/input_toolbar_text_padding_vertical"
                 android:textSize="@dimen/input_toolbar_text_size"
                 android:background="@null"
+                android:dropDownWidth="wrap_content"
                 android:inputType="textMultiLine|textCapSentences"/>
 
         </android.support.v7.widget.CardView>

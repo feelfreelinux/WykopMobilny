@@ -14,6 +14,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.WykopSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
+import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
@@ -21,10 +24,13 @@ import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeSpoilerHtml
+import kotlinx.android.synthetic.main.input_toolbar.view.*
 
 
 abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
     abstract var suggestionApi : SuggestApi
+    val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(this, suggestionApi) }
+    val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(this, suggestionApi) }
 
     companion object {
         val EXTRA_RECEIVER = "EXTRA_RECEIVER"
@@ -37,6 +43,17 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     override var textBody: String
         get() = body.text.toString()
         set(value) { body.setText(value, TextView.BufferType.EDITABLE) }
+
+    fun setupSuggestions() {
+        body.setTokenizer(WykopSuggestionsTokenizer({
+            if (body.adapter !is UsersSuggestionsAdapter)
+                body.setAdapter(usersSuggestionAdapter)
+        }, {
+            if (body.adapter !is HashTagsSuggestionsAdapter)
+                body.setAdapter(hashTagsSuggestionAdapter)
+        }))
+        body.threshold = 3
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

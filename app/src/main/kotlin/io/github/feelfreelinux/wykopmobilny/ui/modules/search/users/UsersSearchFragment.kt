@@ -14,19 +14,21 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ProfilesAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentNotifier
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentQuery
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.feed_fragment.*
+import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.OnRefreshListener {
+class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.OnRefreshListener, SearchFragmentNotifier {
     override fun showUsers(entryList: List<Author>) {
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
+        searchEmptyView.isVisible = entryList.isEmpty()
         profilesAdapter.apply {
-            printout(entryList.size.toString())
             dataset.clear()
             dataset.addAll(entryList)
             notifyDataSetChanged()
@@ -44,25 +46,26 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.feed_fragment, container, false)
-    }
-
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dataFragment = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        WykopApp.uiInjector.inject(this)
+    override fun notifyQueryChanged() {
         val parent = (parentFragment as SearchFragmentQuery)
         if (queryString != parent.searchQuery) {
             queryString = parent.searchQuery
             if (::presenter.isInitialized) {
                 onRefresh()
-            }
+            } else { loadingView.isVisible = false }
         }
     }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.feed_fragment, container, false)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        WykopApp.uiInjector.inject(this)
+        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
 
+        presenter.subscribe(this)
         swiperefresh.setOnRefreshListener(this)
 
         recyclerView.apply {
@@ -70,11 +73,10 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
             adapter = profilesAdapter
         }
         swiperefresh.isRefreshing = false
-        presenter.subscribe(this)
 
         if (dataFragment.data == null) {
-            loadingView.isVisible = true
-            onRefresh()
+            loadingView.isVisible = false
+            notifyQueryChanged()
         } else {
             profilesAdapter.dataset.addAll(dataFragment.data!!)
             profilesAdapter.notifyDataSetChanged()
@@ -83,7 +85,10 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
     }
 
     override fun onRefresh() {
-        if (queryString.length > 2) presenter.searchProfiles(queryString)
+        if (queryString.length > 2) {
+            loadingView.isVisible = true
+            presenter.searchProfiles(queryString)
+        }
         else {
             loadingView.isVisible = false
         }
@@ -91,13 +96,11 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        if (::dataFragment.isInitialized)
         dataFragment.data = profilesAdapter.dataset
     }
 
     override fun onDetach() {
         super.onDetach()
-        if (::presenter.isInitialized)
         presenter.unsubscribe()
     }
 

@@ -13,12 +13,13 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentNotifier
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentQuery
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry.EntrySearchPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry.EntrySearchView
 import javax.inject.Inject
 
-class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView {
+class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragmentNotifier {
     override val feedAdapter by lazy { LinkAdapter() }
     lateinit var dataFragment : DataFragment<PagedDataModel<List<Link>>>
     @Inject lateinit var presenter : LinkSearchPresenter
@@ -30,14 +31,7 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView {
         }
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        WykopApp.uiInjector.inject(this)
-        presenter.subscribe(this)
-        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        dataFragment.data?.apply {
-            presenter.page = page
-        }
+    override fun notifyQueryChanged() {
         val parent = (parentFragment as SearchFragmentQuery)
         if (queryString != parent.searchQuery) {
             queryString = parent.searchQuery
@@ -49,7 +43,13 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        WykopApp.uiInjector.inject(this)
+        presenter.subscribe(this)
+        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        dataFragment.data?.apply {
+            presenter.page = page
+        }
+        notifyQueryChanged()
         initAdapter(dataFragment.data?.model)
     }
 
@@ -63,12 +63,10 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        if (::dataFragment.isInitialized)
         dataFragment.data = PagedDataModel(presenter.page , data)
     }
     override fun onDetach() {
         super.onDetach()
-        if (::presenter.isInitialized)
         presenter.unsubscribe()
     }
 
