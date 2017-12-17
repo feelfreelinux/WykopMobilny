@@ -29,7 +29,7 @@ class AddEntryActivity : BaseInputActivity<AddEntryPresenter>() {
         super.onCreate(savedInstanceState)
         WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
-        body.setAdapter(WykopSuggestionsAdapter(this, R.layout.autosuggest_item, suggestionApi))
+        setupSuggestions()
         supportActionBar?.setTitle(R.string.add_new_entry)
     }
 }

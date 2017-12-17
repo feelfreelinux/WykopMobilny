@@ -13,12 +13,11 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
 import javax.inject.Inject
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.TypedValue
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.WykopSuggestionsAdapter
-import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
 
 
 interface InputToolbarListener {
@@ -38,6 +37,8 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
     @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var suggestApi : SuggestApi
+    val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(context, suggestApi) }
+    val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(context, suggestApi) }
 
     var defaultText = ""
 
@@ -87,8 +88,14 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
             }
         }
 
-        body.setAdapter(WykopSuggestionsAdapter(context, R.layout.autosuggest_item, suggestApi))
-
+        body.setTokenizer(WykopSuggestionsTokenizer({
+            if (body.adapter !is UsersSuggestionsAdapter)
+                body.setAdapter(usersSuggestionAdapter)
+        }, {
+            if (body.adapter !is HashTagsSuggestionsAdapter)
+                body.setAdapter(hashTagsSuggestionAdapter)
+        }))
+        body.threshold = 3
         send.setOnClickListener {
             showProgress(true)
             val typedInputStream = markdownToolbar.getPhotoTypedInputStream()

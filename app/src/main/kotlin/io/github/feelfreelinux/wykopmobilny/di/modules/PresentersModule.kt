@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.di.modules
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
@@ -8,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.search.SearchApi
+import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryPresenter
@@ -30,6 +32,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.Conv
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry.EntrySearchPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.links.LinkSearchPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.users.UsersSearchPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 

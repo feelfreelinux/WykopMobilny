@@ -31,7 +31,7 @@ class EditEntryActivity : BaseInputActivity<EditEntryPresenter>(), EditEntryView
         super.onCreate(savedInstanceState)
         WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
-        body.setAdapter(WykopSuggestionsAdapter(this, R.layout.autosuggest_item, suggestionApi))
+        setupSuggestions()
         supportActionBar?.setTitle(R.string.edit_entry)
     }
 

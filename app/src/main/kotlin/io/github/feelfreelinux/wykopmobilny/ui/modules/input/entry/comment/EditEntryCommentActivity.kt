@@ -35,7 +35,7 @@ class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WykopApp.uiInjector.inject(this)
-        body.setAdapter(WykopSuggestionsAdapter(this, R.layout.autosuggest_item, suggestionApi))
+        setupSuggestions()
         presenter.subscribe(this)
         supportActionBar?.setTitle(R.string.edit_comment)
     }
