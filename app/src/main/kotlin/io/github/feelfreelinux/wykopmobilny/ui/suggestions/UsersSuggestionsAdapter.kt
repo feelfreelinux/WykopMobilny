@@ -12,10 +12,34 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.TagSuggestion
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.WykopSuggestion
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.autosuggest_item.view.*
 
 class UsersSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi) : ArrayAdapter<Author>(context, R.layout.autosuggest_item), Filterable {
     val mData = arrayListOf<Author>()
+    val mFilter = object : Filter() {
+        override fun convertResultToString(resultValue: Any): CharSequence =
+                (resultValue as Author).nick
+
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val filterResults = FilterResults()
+            if (constraint != null) {
+                val data = ArrayList<Author>()
+                if (!constraint.contains(" ")) data.addAll(suggestionApi.getUserSuggestions(constraint.toString()).blockingGet())
+                filterResults.values = data.toList()
+                filterResults.count = data.size
+            }
+            return filterResults
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            mData.clear()
+            if (results != null && results.count > 0) {
+                mData.addAll(results.values as List<Author>)
+                notifyDataSetChanged()
+            } else notifyDataSetInvalidated()
+        }
+    }
 
     override fun getCount() = mData.size
 
@@ -30,28 +54,6 @@ class UsersSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi) :
     }
 
     override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun convertResultToString(resultValue: Any): CharSequence =
-                    (resultValue as Author).nick
-
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val filterResults = FilterResults()
-                if (constraint != null) {
-                    mData.clear()
-                    mData.addAll(suggestionApi.getUserSuggestions(constraint.toString()).blockingGet())
-                    filterResults.values = mData
-                    filterResults.count = mData.size
-                }
-                return filterResults
-            }
-
-            override fun publishResults(contraint: CharSequence?, results: FilterResults?) {
-                if (results != null && results.count > 0) {
-                    notifyDataSetChanged()
-                } else {
-                    notifyDataSetInvalidated()
-                }
-            }
-        }
+        return mFilter
     }
 }
