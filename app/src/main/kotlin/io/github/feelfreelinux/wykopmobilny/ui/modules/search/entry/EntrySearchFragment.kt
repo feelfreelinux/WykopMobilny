@@ -74,6 +74,6 @@ class EntrySearchFragment : BaseFeedFragment<Entry>(), EntrySearchView, SearchFr
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(dataFragment)
+        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
     }
 }

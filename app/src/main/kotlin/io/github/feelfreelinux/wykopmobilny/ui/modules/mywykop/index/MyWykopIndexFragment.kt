@@ -52,9 +52,8 @@ class MyWykopIndexFragment : BaseFeedFragment<EntryLink>(), MyWykopView {
         presenter.unsubscribe()
     }
 
-
     override fun onPause() {
         super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(dataFragment)
+        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
     }
 }

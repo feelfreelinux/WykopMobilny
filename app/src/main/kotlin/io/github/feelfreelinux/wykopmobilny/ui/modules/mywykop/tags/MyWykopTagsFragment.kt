@@ -54,6 +54,6 @@ class MyWykopTagsFragment : BaseFeedFragment<EntryLink>(), MyWykopView {
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(dataFragment)
+        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
     }
 }

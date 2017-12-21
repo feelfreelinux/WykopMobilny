@@ -106,7 +106,7 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(dataFragment)
+        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
     }
 
 }
