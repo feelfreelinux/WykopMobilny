@@ -128,9 +128,10 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         }
 
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
+        navHeader.view_container?.startListeningForUpdates()
+
         setupNavigation()
         if (savedInstanceState == null) {
-            navHeader.view_container?.startListeningForUpdates()
             if (intent.hasExtra(TARGET_FRAGMENT_KEY)) {
                 when (intent.getStringExtra(TARGET_FRAGMENT_KEY)) {
                     TARGET_NOTIFICATIONS -> openFragment(NotificationsListFragment.newInstance())

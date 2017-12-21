@@ -19,27 +19,10 @@ interface SearchFragmentNotifier {
     fun notifyQueryChanged()
 }
 
-class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFragmentQuery {
+class SearchFragment : BaseFragment(), SearchFragmentQuery {
     override var searchQuery = ""
 
     private lateinit var viewPagerAdapter : SearchPagerAdapter
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        query?.let {
-            if (query.length > 2) {
-                searchQuery = query
-                for (i in 0 until viewPagerAdapter.registeredFragments.size()) {
-                    (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
-                            .notifyQueryChanged()
-                }
-                activity.hideKeyboard()
-            }
-        }
-        return true
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        return false
-    }
 
     companion object {
         val EXTRA_QUERY = "EXTRA_QUERY"
@@ -79,7 +62,25 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFra
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM or MenuItem.SHOW_AS_ACTION_WITH_TEXT)
         val searchView = item.actionView as SearchView
         searchView.setQuery(searchQuery, false)
-        searchView.setOnQueryTextListener(this)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    if (query.length > 2) {
+                        searchQuery = query
+                        for (i in 0 until viewPagerAdapter.registeredFragments.size()) {
+                            (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
+                                    .notifyQueryChanged()
+                        }
+                        activity.hideKeyboard()
+                        searchView.clearFocus()
+                    }
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?) = false
+
+        })
         searchView.setIconifiedByDefault(false)
     }
 

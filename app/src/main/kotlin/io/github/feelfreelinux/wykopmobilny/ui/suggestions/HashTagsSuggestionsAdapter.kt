@@ -37,7 +37,7 @@ class HashTagsSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi
                 val filterResults = FilterResults()
                 if (constraint != null) {
                     val data = ArrayList<TagSuggestion>()
-                    if (!constraint.contains(" ")) data.addAll(suggestionApi.getTagSuggestions(constraint.toString()).blockingGet())
+                    if (constraint.matches("[\\w-]+".toRegex())) data.addAll(suggestionApi.getTagSuggestions(constraint.toString()).blockingGet())
                     filterResults.values = data.toList()
                     filterResults.count = data.size
                 }

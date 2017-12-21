@@ -25,7 +25,7 @@ class UsersSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi) :
             val filterResults = FilterResults()
             if (constraint != null) {
                 val data = ArrayList<Author>()
-                if (!constraint.contains(" ")) data.addAll(suggestionApi.getUserSuggestions(constraint.toString()).blockingGet())
+                if (constraint.matches("[\\w-]+".toRegex())) data.addAll(suggestionApi.getUserSuggestions(constraint.toString()).blockingGet())
                 filterResults.values = data.toList()
                 filterResults.count = data.size
             }
