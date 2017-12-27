@@ -8,7 +8,11 @@ import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun parseDate(date : String) : Date = SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.GERMANY).parse(date)
+fun parseDate(date : String) : Date {
+    val format = SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.GERMANY)
+    format.timeZone = TimeZone.getTimeZone("Europe/Warsaw")
+    return format.parse(date)
+}
 
 fun getGroupColor(role : Int, isUsingDarkTheme : Boolean = true) : Int = when(role) {
     0 -> Color.parseColor("#339933")

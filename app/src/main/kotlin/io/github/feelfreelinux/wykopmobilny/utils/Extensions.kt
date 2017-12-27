@@ -24,10 +24,6 @@ import java.util.*
 import android.text.SpannableStringBuilder
 
 
-
-
-
-
 var View.isVisible : Boolean
     get() = visibility == View.VISIBLE
     set(value) { visibility = if (value) View.VISIBLE else View.GONE }
@@ -69,8 +65,9 @@ fun ImageView.loadImage(url : String) {
             .into(this)
 }
 
-fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
-
+fun String.toPrettyDate() : String {
+    return PrettyTime(Locale("pl")).format(parseDate(this))
+}
 fun Uri.queryFileName(contentResolver: ContentResolver) : String {
     var result: String? = null
     if (scheme == "content") {
