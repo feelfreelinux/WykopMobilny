@@ -9,16 +9,20 @@ class EntryCommentVoteButtonPresenter(private val subscriptionHandler : Subscrip
     var commentId = 0
 
     override fun unvote() {
-            subscriptionHandler.subscribe(entriesApi.unvoteComment(commentId),
+        view?.isButtonEnabled = false
+        subscriptionHandler.subscribe(entriesApi.unvoteComment(commentId),
                     {
+                        view?.isButtonEnabled = true
                         view?.voteCount = it.voteCount
                         view?.isButtonSelected = false
                     }, { view?.showErrorDialog(it) }, this)
     }
 
     override fun vote() {
+        view?.isButtonEnabled = false
         subscriptionHandler.subscribe(entriesApi.voteComment(commentId),
                 {
+                    view?.isButtonEnabled = true
                     view?.voteCount = it.voteCount
                     view?.isButtonSelected = true
                 }, { view?.showErrorDialog(it) }, this)

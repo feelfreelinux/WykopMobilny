@@ -54,6 +54,10 @@ abstract class BaseVoteButton : TextView {
         }
     }
 
+    var isButtonEnabled : Boolean
+        get() = isEnabled
+        set(value) { isEnabled = value }
+
     var voteCount : Int
         get() = text.toString().toInt()
         set(value) {
@@ -72,5 +76,8 @@ abstract class BaseVoteButton : TextView {
             setButtonState(value)
         }
 
-    fun showErrorDialog(e : Throwable) = context.showExceptionDialog(e)
+    fun showErrorDialog(e : Throwable) {
+        isButtonEnabled = true
+        context.showExceptionDialog(e)
+    }
 }

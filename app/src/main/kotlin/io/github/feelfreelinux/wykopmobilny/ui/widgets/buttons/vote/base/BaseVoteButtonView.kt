@@ -5,4 +5,5 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 interface BaseVoteButtonView : BaseView {
     var voteCount : Int
     var isButtonSelected : Boolean
+    var isButtonEnabled : Boolean
 }
