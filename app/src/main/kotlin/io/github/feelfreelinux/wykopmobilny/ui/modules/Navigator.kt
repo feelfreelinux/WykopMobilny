@@ -2,6 +2,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules
 
 import android.app.Activity
 import android.content.Intent
+import io.github.feelfreelinux.wykopmobilny.api.ENTRYCOMMENT_REPORT_URL
+import io.github.feelfreelinux.wykopmobilny.api.ENTRY_REPORT_URL
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
@@ -28,11 +30,13 @@ interface NavigatorApi {
     fun openEditEntryActivity(context: Activity, body: String, entryId: Int)
     fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int)
     fun openBrowser(context: Activity, url: String)
+    fun openReportEntryScreen(context: Activity, entryId: Int)
+    fun openReportEntryCommentScreen(context: Activity, entryCommentId: Int)
 }
 
 class Navigator : NavigatorApi {
     companion object {
-        val STARTED_FROM_NOTIFIATIONS_CODE = 228
+        val STARTED_FROM_NOTIFICATIONS_CODE = 228
     }
 
     override fun openMainActivity(context: Activity, targetFragment: String?) {
@@ -77,5 +81,13 @@ class Navigator : NavigatorApi {
     }
     override fun openBrowser(context: Activity, url: String) {
         context.openBrowser(url)
+    }
+
+    override fun openReportEntryScreen(context: Activity, entryId: Int) {
+        context.openBrowser(ENTRY_REPORT_URL+entryId)
+    }
+
+    override fun openReportEntryCommentScreen(context: Activity, entryCommentId: Int) {
+        context.openBrowser(ENTRYCOMMENT_REPORT_URL+entryCommentId)
     }
 }

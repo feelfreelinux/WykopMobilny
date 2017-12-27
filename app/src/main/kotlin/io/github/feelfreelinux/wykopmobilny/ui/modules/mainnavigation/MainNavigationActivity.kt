@@ -12,14 +12,10 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.bugsnag.android.Bugsnag
 import com.evernote.android.job.util.JobUtil
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.UpdateFrom
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
@@ -36,7 +32,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
@@ -255,7 +250,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
                 }
             }
 
-            Navigator.STARTED_FROM_NOTIFIATIONS_CODE -> {
+            Navigator.STARTED_FROM_NOTIFICATIONS_CODE -> {
                 view_container?.startListeningForUpdates()
             }
 

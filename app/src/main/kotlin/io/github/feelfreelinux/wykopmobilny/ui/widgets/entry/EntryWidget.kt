@@ -128,6 +128,10 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         clipboardHelper.copyTextToClipboard(entry.body.removeHtml())
     }
 
+    fun reportContent() {
+        navigator.openReportEntryScreen(getActivityContext()!!, entry.id)
+    }
+
     fun openOptionsMenu() {
         val activityContext = getActivityContext()!!
         val dialog = BottomSheetDialog(activityContext)
@@ -151,6 +155,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             }
 
             entry_menu_report.setOnClickListener {
+                reportContent()
                 dialog.dismiss()
             }
 

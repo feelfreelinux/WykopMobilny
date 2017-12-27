@@ -123,6 +123,10 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
         presenter.deleteComment(comment.id)
     }
 
+    fun reportComment() {
+        navigator.openReportEntryCommentScreen(getActivityContext()!!, comment.id)
+    }
+
     override fun markCommentAsRemoved() {
         entryContentTextView.setText(R.string.commentRemoved)
         entryImageView.isVisible = false
@@ -153,6 +157,7 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
             }
 
             entry_comment_menu_report.setOnClickListener {
+                reportComment()
                 dialog.dismiss()
             }
 

@@ -47,7 +47,7 @@ class WykopLinkHandler(private val navigatorApi: NavigatorApi) : WykopLinkHandle
     private fun handleLink(context: Activity, url: String, refreshNotifications : Boolean) {
         val intent = getLinkIntent(context, url)
         if (intent != null) {
-            if (refreshNotifications) context.startActivityForResult(intent, Navigator.STARTED_FROM_NOTIFIATIONS_CODE)
+            if (refreshNotifications) context.startActivityForResult(intent, Navigator.STARTED_FROM_NOTIFICATIONS_CODE)
             else context.startActivity(intent)
         } else {
             context.openBrowser(url)
