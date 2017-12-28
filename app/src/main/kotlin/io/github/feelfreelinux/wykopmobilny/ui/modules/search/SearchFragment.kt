@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import android.support.v7.widget.SearchView
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.utils.hideKeyboard
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_search.*
 
 
@@ -17,6 +18,7 @@ interface SearchFragmentQuery {
 
 interface SearchFragmentNotifier {
     fun notifyQueryChanged()
+    fun removeDataFragment()
 }
 
 class SearchFragment : BaseFragment(), SearchFragmentQuery {
@@ -82,6 +84,16 @@ class SearchFragment : BaseFragment(), SearchFragmentQuery {
 
         })
         searchView.setIconifiedByDefault(false)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (isRemoving) {
+            for (i in 0 until viewPagerAdapter.registeredFragments.size()) {
+                (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
+                        .removeDataFragment()
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

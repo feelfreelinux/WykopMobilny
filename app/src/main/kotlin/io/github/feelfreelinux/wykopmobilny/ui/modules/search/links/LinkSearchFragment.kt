@@ -70,8 +70,7 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragm
         presenter.unsubscribe()
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
+    override fun removeDataFragment() {
+        supportFragmentManager.removeDataFragment(dataFragment)
     }
 }
