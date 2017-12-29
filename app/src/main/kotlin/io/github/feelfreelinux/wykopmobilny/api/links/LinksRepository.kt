@@ -5,9 +5,12 @@ import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryLinkMapper
+import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkCommentMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryLinkResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkCommentResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
 import io.reactivex.Single
 import retrofit2.Retrofit
@@ -19,5 +22,10 @@ class LinksRepository(val retrofit: Retrofit) : LinksApi {
             linksApi.getPromoted(page)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
                     .map { it.map { LinkMapper.map(it) } }
+
+    override fun getLinkComments(linkId: Int, sortBy: String) =
+            linksApi.getLinkComments(linkId, sortBy)
+                    .compose<List<LinkCommentResponse>>(ErrorHandlerTransformer())
+                    .map { it.map { LinkCommentMapper.map(it) } }
 
 }

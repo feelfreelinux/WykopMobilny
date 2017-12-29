@@ -15,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationPresenter
@@ -94,6 +95,8 @@ class PresentersModule {
     fun provideTagEntriesFragmentPresenter(subscriptionHelperApi: SubscriptionHelperApi, tagApi: TagApi) =
             TagEntriesPresenter(subscriptionHelperApi, tagApi)
 
+    @Provides
+    fun provideLinkDetailsPresenter(subscriptionHelperApi: SubscriptionHelperApi, linksApi: LinksApi) = LinkDetailsPresenter(subscriptionHelperApi, linksApi)
     @Provides
     fun provideMyWykopIndexPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi) = MyWykopIndexPresenter(subscriptionHelperApi, myWykopApi)
 

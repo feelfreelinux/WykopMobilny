@@ -12,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.votersdialog.VotersDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
@@ -96,4 +97,5 @@ interface Injector {
     fun inject(entrySearchFragment: EntrySearchFragment)
     fun inject(linkSearchFragment: LinkSearchFragment)
     fun inject(usersSearchFragment: UsersSearchFragment)
+    fun inject(linkDetailsActivity: LinkDetailsActivity)
 }

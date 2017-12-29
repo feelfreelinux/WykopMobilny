@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="android.support.v7.widget.CardView"
@@ -86,14 +86,21 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
-                android:id="@+id/voteButton"
+                android:id="@+id/plusButton"
                 style="@style/MikroButton"
-                android:paddingLeft="@dimen/plus_button_padding_left"
-                android:drawableStart="?attr/voteDrawable"
-                app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
+                android:drawableStart="?attr/plusDrawable"
+                app:layout_constraintEnd_toStartOf="@id/minusButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
+                android:id="@+id/minusButton"
+                style="@style/MikroButton"
+                android:paddingLeft="@dimen/plus_button_padding_left"
+                android:drawableStart="?attr/minusDrawable"
+                app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/moreOptionsTextView"
@@ -116,4 +123,4 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
-</merge>
+</android.support.v7.widget.CardView>

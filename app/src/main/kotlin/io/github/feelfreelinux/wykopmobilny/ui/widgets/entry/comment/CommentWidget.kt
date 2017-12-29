@@ -5,7 +5,6 @@ import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
-import android.support.v7.widget.PopupMenu
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -23,7 +22,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.synthetic.main.comment_layout.view.*
+import kotlinx.android.synthetic.main.entry_comment_layout.view.*
 import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 import javax.inject.Inject
 
@@ -47,7 +46,7 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
     init {
         WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
-        View.inflate(context, R.layout.comment_layout, this)
+        View.inflate(context, R.layout.entry_comment_layout, this)
         isClickable = true
         isFocusable = true
         val typedValue = TypedValue()

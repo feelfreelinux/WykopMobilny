@@ -60,6 +60,7 @@
         <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
         <activity android:name=".ui.modules.pm.conversation.ConversationActivity" />
         <activity android:name=".ui.modules.settings.SettingsActivity" />
+        <activity android:name=".ui.modules.links.linkdetails.LinkDetailsActivity" />
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>

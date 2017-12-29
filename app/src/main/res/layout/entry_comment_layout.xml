@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="android.support.v7.widget.CardView"
-    style="@style/EntryCardView"
+    style="@style/EntryCommentsCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false">
+        android:addStatesFromChildren="true">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/entry_layout_author_padding_vertical"
-            android:paddingBottom="@dimen/entry_layout_author_padding_vertical"
-            android:paddingLeft="@dimen/entry_layout_author_padding_horizontal"
-            android:paddingRight="@dimen/entry_layout_author_padding_horizontal"
+            android:paddingTop="@dimen/comment_layout_author_padding_vertical"
+            android:paddingBottom="@dimen/comment_layout_author_padding_vertical"
+            android:paddingLeft="@dimen/comment_layout_author_padding_horizontal"
+            android:paddingRight="@dimen/comment_layout_author_padding_horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <View
             android:id="@+id/lineTop"
@@ -31,35 +31,24 @@
             android:background="?attr/lineColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/authorHeaderView"/>
+            app:layout_constraintTop_toBottomOf="@+id/authorHeaderView"/>
 
         <TextView
             android:id="@+id/entryContentTextView"
             style="@style/EntryContentTextView"
             android:clickable="true"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lineTop"/>
-
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
-            android:id="@+id/survey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/entry_layout_survey_padding_vertical"
-            android:paddingBottom="@dimen/entry_layout_survey_padding_vertical"
-            android:paddingLeft="@dimen/entry_layout_survey_padding_horizontal"
-            android:paddingRight="@dimen/entry_layout_survey_padding_horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/entryContentTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/lineTop"/>
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
             android:id="@+id/entryImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintHeight_default="wrap"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/survey"/>
+            app:layout_constraintTop_toBottomOf="@id/entryContentTextView"/>
 
         <View
             android:id="@+id/lineBottom"
@@ -68,14 +57,14 @@
             android:background="?attr/lineColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/entryImageView"/>
+            app:layout_constraintTop_toBottomOf="@+id/entryImageView"/>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/buttonsToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/entry_layout_button_padding_horizontal"
-            android:paddingRight="@dimen/entry_layout_button_padding_horizontal"
+            android:paddingLeft="@dimen/comment_layout_button_padding_horizontal"
+            android:paddingRight="@dimen/comment_layout_button_padding_horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lineBottom">
@@ -88,32 +77,23 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButton
-                android:id="@+id/favoriteButton"
+            <TextView
+                android:id="@+id/replyTextView"
                 style="@style/MikroButton"
+                android:drawableStart="?attr/replyDrawable"
                 app:layout_constraintStart_toEndOf="@id/shareTextView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <TextView
-                android:id="@+id/commentsCountTextView"
-                style="@style/MikroButton"
-                android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/commentDrawable"
-                app:layout_constraintEnd_toStartOf="@+id/voteButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="3"/>
-
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.EntryVoteButton
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
                 android:id="@+id/voteButton"
                 style="@style/MikroButton"
                 android:paddingLeft="@dimen/plus_button_padding_left"
                 android:drawableStart="?attr/plusDrawable"
-                app:layout_constraintEnd_toStartOf="@+id/moreOptionsTextView"
+                app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="2"/>
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
 
             <TextView
                 android:id="@+id/moreOptionsTextView"
@@ -125,6 +105,15 @@
 
         </android.support.constraint.ConstraintLayout>
 
-    </android.support.constraint.ConstraintLayout>
+        <View
+            android:id="@+id/authorBadgeStrip"
+            android:layout_width="@dimen/author_badge_strip_width"
+            android:layout_height="0dp"
+            android:background="@color/colorBadgeAuthors"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
+    </android.support.constraint.ConstraintLayout>
 </merge>

@@ -36,7 +36,8 @@
         <item name="mailDrawable">@drawable/ic_mail_light</item>
         <item name="wypokDrawable">@drawable/ic_wypok_light</item>
         <item name="commentDrawable">@drawable/ic_comment_light</item>
-        <item name="voteDrawable">@drawable/ic_plus_light</item>
+        <item name="plusDrawable">@drawable/ic_plus_light</item>
+        <item name="minusDrawable">@drawable/ic_minus_light</item>
         <item name="dotsDrawable">@drawable/ic_dots_light</item>
         <item name="replyDrawable">@drawable/ic_reply_light</item>
         <item name="sharebtnDrawable">@drawable/ic_sharebtn_light</item>
@@ -98,7 +99,8 @@
         <item name="mailDrawable">@drawable/ic_mail</item>
         <item name="wypokDrawable">@drawable/ic_wypok</item>
         <item name="commentDrawable">@drawable/ic_comment</item>
-        <item name="voteDrawable">@drawable/ic_plus</item>
+        <item name="plusDrawable">@drawable/ic_plus</item>
+        <item name="minusDrawable">@drawable/ic_minus</item>
         <item name="dotsDrawable">@drawable/ic_dots</item>
         <item name="replyDrawable">@drawable/ic_reply</item>
         <item name="sharebtnDrawable">@drawable/ic_sharebtn</item>

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
@@ -26,7 +27,7 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClicked
             dateTextView.text = link.date.toPrettyDate()
             hotBadgeStrip.isVisible = link.isHot
             setOnClickListener {
-                view.getActivityContext()!!.openBrowser(link.sourceUrl)
+                view.getActivityContext()!!.startActivity(LinkDetailsActivity.createIntent(view.getActivityContext()!!, link))
             }
         }
     }

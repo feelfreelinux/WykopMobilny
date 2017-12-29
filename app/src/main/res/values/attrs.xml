@@ -18,7 +18,8 @@
     <!-- DRAWABLES -->
     <attr name="wypokDrawable" format="reference"/>
     <attr name="commentDrawable" format="reference"/>
-    <attr name="voteDrawable" format="reference"/>
+    <attr name="plusDrawable" format="reference"/>
+    <attr name="minusDrawable" format="reference"/>
     <attr name="dotsDrawable" format="reference"/>
     <attr name="replyDrawable" format="reference"/>
     <attr name="sharebtnDrawable" format="reference"/>
