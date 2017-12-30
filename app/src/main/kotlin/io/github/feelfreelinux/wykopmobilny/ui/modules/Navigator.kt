@@ -11,10 +11,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditE
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
@@ -43,7 +42,7 @@ class Navigator : NavigatorApi {
     }
 
     override fun openMainActivity(context: Activity, targetFragment: String?) {
-        context.startActivity(NavigationActivity.getIntent(context, targetFragment)
+        context.startActivity(MainNavigationActivity.getIntent(context, targetFragment)
                 .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) })
     }
 

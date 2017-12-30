@@ -66,7 +66,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             setDisplayHomeAsUpEnabled(true)
         }
         supportActionBar?.title = null
-        WykopApp.uiInjector.inject(this)
 
         // Prepare RecyclerView
         recyclerView.apply {

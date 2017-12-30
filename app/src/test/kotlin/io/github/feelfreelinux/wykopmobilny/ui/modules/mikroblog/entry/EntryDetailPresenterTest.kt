@@ -20,7 +20,7 @@ class EntryDetailPresenterTest {
 
     @Before
     fun setup() {
-        systemUnderTest = EntryDetailPresenter(subscribeHelper, mockOfEntriesApi)
+        //systemUnderTest = EntryDetailPresenter(subscribeHelper, mockOfEntriesApi)
         systemUnderTest.subscribe(mockOfView)
     }
 

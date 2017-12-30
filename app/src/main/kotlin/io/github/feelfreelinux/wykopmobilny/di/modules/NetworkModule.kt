@@ -5,9 +5,11 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
+import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.ApiSignInterceptor
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
+import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
@@ -35,7 +37,9 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-class NetworkModule(private val baseUrl : String) {
+class NetworkModule {
+    @Provides
+    fun provideWykopSchedulers() : io.github.feelfreelinux.wykopmobilny.base.Schedulers = WykopSchedulers()
 
     @Provides
     @Singleton
@@ -80,7 +84,7 @@ class NetworkModule(private val baseUrl : String) {
     fun provideRetrofit(client: OkHttpClient, moshi: Moshi) : Retrofit {
         return Retrofit.Builder()
                 .client(client)
-                .baseUrl(baseUrl)
+                .baseUrl(WykopApp.WYKOP_API_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()

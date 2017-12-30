@@ -1,6 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
+import io.reactivex.disposables.CompositeDisposable
+
 open class BasePresenter<T : BaseView> {
+    var compositeObservable = CompositeDisposable()
     var view : T? = null
 
     open fun subscribe(view: T) {
@@ -9,5 +12,6 @@ open class BasePresenter<T : BaseView> {
 
     open fun unsubscribe() {
         view = null
+        compositeObservable.dispose()
     }
 }

@@ -9,7 +9,7 @@ import com.evernote.android.job.Job
 import com.evernote.android.job.JobRequest
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
@@ -83,7 +83,7 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
     override fun showNotificationsCount(count: Int) {
         if (settingsApi.showNotifications) {
             // Create intent
-            val intent = NavigationActivity.getIntent(context, NavigationActivity.TARGET_NOTIFICATIONS)
+            val intent = MainNavigationActivity.getIntent(context, MainNavigationActivity.TARGET_NOTIFICATIONS)
             intent.action = System.currentTimeMillis().toString()
             intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)

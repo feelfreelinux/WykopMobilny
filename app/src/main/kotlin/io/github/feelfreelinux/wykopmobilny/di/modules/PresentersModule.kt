@@ -47,17 +47,10 @@ class PresentersModule {
             subscriptionHelperApi,
             userApi)
 
-    @Provides
-    fun provideMainNavigationPresenter(subscriptionHelperApi: SubscriptionHelperApi, userManagerApi: UserManagerApi, notificationsApi: NotificationsApi)
-            = MainNavigationPresenter(subscriptionHelperApi, userManagerApi, notificationsApi)
 
-    @Provides
-    fun provideHotPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi)
-            = HotPresenter(subscriptionHelperApi, entriesApi)
-
-    @Provides
+    /*@Provides
     fun provideEntryDetailPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi)
-            = EntryDetailPresenter(subscriptionHelperApi, entriesApi)
+            = EntryDetailPresenter(subscriptionHelperApi, entriesApi)*/
 
     @Provides
     fun provideAddEntryPresenter(subscriptionHelperApi: SubscriptionHelperApi, entriesApi: EntriesApi)
@@ -105,9 +98,6 @@ class PresentersModule {
 
     @Provides
     fun provideMyWykopUsersPresenter(subscriptionHelperApi: SubscriptionHelperApi, myWykopApi: MyWykopApi) = MyWykopUsersPresenter(subscriptionHelperApi, myWykopApi)
-
-    @Provides
-    fun providePromotedPresenter(subscriptionHelperApi: SubscriptionHelperApi, linksApi: LinksApi) = PromotedPresenter(subscriptionHelperApi, linksApi)
 
     @Provides
     fun provideEntrySearchPresenter(subscriptionHelperApi: SubscriptionHelperApi, searchApi: SearchApi) = EntrySearchPresenter(subscriptionHelperApi, searchApi)

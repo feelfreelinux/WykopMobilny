@@ -18,7 +18,7 @@
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity" />
 
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity">
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,7 +26,7 @@
         </activity>
 
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
-            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity">
+            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -42,7 +42,7 @@
         </activity>
 
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity"
-            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity">
+            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />

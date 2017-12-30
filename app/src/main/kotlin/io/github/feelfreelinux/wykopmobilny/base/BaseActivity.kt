@@ -2,13 +2,14 @@ package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import dagger.android.support.DaggerAppCompatActivity
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 
 // This class should be extended in all activities in this app. Place global-activity settings here
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : DaggerAppCompatActivity() {
     fun showErrorDialog(e : Throwable) =
         showExceptionDialog(e)
 

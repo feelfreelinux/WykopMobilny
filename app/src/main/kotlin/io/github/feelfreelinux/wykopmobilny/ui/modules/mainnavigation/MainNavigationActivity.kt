@@ -13,6 +13,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.evernote.android.job.util.JobUtil
+import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -47,7 +49,7 @@ interface MainNavigationInterface {
     val floatingButton : View
 }
 
-class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
+class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override val activityToolbar: Toolbar get() = toolbar
 
     override val floatingButton: View
@@ -59,9 +61,9 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         val TARGET_NOTIFICATIONS = "TARGET_NOTIFICATIONS"
 
         fun getIntent(context: Context, targetFragment: String? = null): Intent {
-            val intent = Intent(context, NavigationActivity::class.java)
+            val intent = Intent(context, MainNavigationActivity::class.java)
             targetFragment?.let {
-                intent.putExtra(NavigationActivity.TARGET_FRAGMENT_KEY, targetFragment)
+                intent.putExtra(MainNavigationActivity.TARGET_FRAGMENT_KEY, targetFragment)
             }
             return intent
         }
@@ -103,11 +105,10 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
-        WykopApp.uiInjector.inject(this)
         JobUtil.hasBootPermission(this)
 
         // Setup AppUpdater
-                /*AppUpdater(this)
+                AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
                 .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
                 .setTitleOnUpdateAvailable(R.string.update_available)
@@ -115,7 +116,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
                 .setButtonDismiss(R.string.cancel)
                 .setButtonDoNotShowAgain(R.string.do_not_show_again)
                 .setButtonUpdate(R.string.update)
-                .start()*/
+                .start()
 
         if (settingsApi.showNotifications) {
             // Schedules notification service
