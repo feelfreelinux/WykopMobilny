@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog

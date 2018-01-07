@@ -1,8 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
 import android.os.Parcelable
-import com.squareup.moshi.Json
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorResponse
 import kotlinx.android.parcel.Parcelize
 
 

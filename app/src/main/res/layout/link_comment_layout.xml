@@ -85,7 +85,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.VoteButton
                 android:id="@+id/plusButton"
                 style="@style/MikroButton"
                 android:drawableStart="?attr/plusDrawable"
@@ -93,7 +93,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.comment.EntryCommentVoteButton
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.VoteButton
                 android:id="@+id/minusButton"
                 style="@style/MikroButton"
                 android:paddingLeft="@dimen/plus_button_padding_left"

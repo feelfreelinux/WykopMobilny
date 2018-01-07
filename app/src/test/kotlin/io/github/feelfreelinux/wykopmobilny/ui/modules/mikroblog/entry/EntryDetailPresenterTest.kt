@@ -4,9 +4,9 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.TestSchedulers
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -16,11 +16,11 @@ class EntryDetailPresenterTest {
     lateinit var systemUnderTest: EntryDetailPresenter
     val mockOfView = mock<EntryDetailView>()
     val mockOfEntriesApi = mock<EntriesApi>()
-    val subscribeHelper = TestSubscriptionHelper()
+    val schedulers = TestSchedulers()
 
     @Before
     fun setup() {
-        //systemUnderTest = EntryDetailPresenter(subscribeHelper, mockOfEntriesApi)
+        systemUnderTest = EntryDetailPresenter(schedulers, mockOfEntriesApi)
         systemUnderTest.subscribe(mockOfView)
     }
 

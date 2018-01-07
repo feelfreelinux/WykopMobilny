@@ -1,16 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.di
 
-import android.app.Application
-import android.content.Context
 import dagger.Component
-import dagger.android.support.AndroidSupportInjectionModule
-import javax.inject.Singleton
 import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.di.modules.NetworkModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.RepositoryModule
-import dagger.BindsInstance
-
+import io.github.feelfreelinux.wykopmobilny.di.modules.ViewPresenterFactoryModule
+import javax.inject.Singleton
 
 
 @Singleton

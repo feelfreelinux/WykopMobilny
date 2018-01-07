@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
-import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 
 class PromotedPresenter(val schedulers: Schedulers, private val linksApi: LinksApi) : BasePresenter<PromotedView>() {
     var page = 1

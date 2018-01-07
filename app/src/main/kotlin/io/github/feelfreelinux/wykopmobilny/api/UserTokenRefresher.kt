@@ -13,6 +13,7 @@ import retrofit2.HttpException
 class UserTokenRefresher(private val userApi: LoginApi, private val userManagerApi: UserManagerApi) : Function<Flowable<Throwable>, Publisher<*>> {
     override fun apply(t: Flowable<Throwable>): Publisher<*> {
         return t.flatMap {
+
             when (it) {
                 is WykopExceptionParser.WykopApiException -> {
                     if (it.code == 11 || it.code == 12) {

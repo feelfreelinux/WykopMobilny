@@ -1,9 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification
 
-import android.support.v4.app.Fragment
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -39,12 +38,11 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
         super.onCreate(savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.notifications_title)
 
-        entryFragmentData = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         if (entryFragmentData.data != null && entryFragmentData.data!!.model.isNotEmpty()) {
             loadingView.isVisible = false
             presenter.page = entryFragmentData.data!!.page
@@ -66,10 +64,10 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(entryFragmentData)
+        if (isRemoving) supportFragmentManager.removeDataFragment(entryFragmentData)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         entryFragmentData.data = PagedDataModel(presenter.page, notificationAdapter.data)
     }

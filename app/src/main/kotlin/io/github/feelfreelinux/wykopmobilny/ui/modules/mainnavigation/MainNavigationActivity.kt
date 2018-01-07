@@ -16,12 +16,12 @@ import com.evernote.android.job.util.JobUtil
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
@@ -34,10 +34,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
-import kotlinx.android.synthetic.main.navigation_header.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -78,7 +78,11 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             R.id.nav_mojwykop -> { openFragment(MyWykopFragment.newInstance()) }
             R.id.nav_home -> { openFragment(PromotedFragment.newInstance()) }
             R.id.search -> { openFragment(SearchFragment.newInstance()) }
-            else -> presenter.navigationItemClicked(item.itemId)
+            R.id.logout -> {
+                userManagerApi.logoutUser()
+                restartActivity()
+            }
+            else -> showNotImplementedToast()
         }
 
         item.isChecked = true
@@ -89,6 +93,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     @Inject lateinit var presenter : MainNavigationPresenter
     @Inject lateinit var settingsApi : SettingsPreferencesApi
     @Inject lateinit var navigator : NavigatorApi
+    @Inject lateinit var newNavigator : NewNavigatorApi
     @Inject lateinit var userManagerApi : UserManagerApi
 
 
@@ -108,7 +113,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         JobUtil.hasBootPermission(this)
 
         // Setup AppUpdater
-                AppUpdater(this)
+        AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
                 .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
                 .setTitleOnUpdateAvailable(R.string.update_available)
@@ -124,9 +129,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         }
 
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
-        navHeader.view_container?.startListeningForUpdates()
+        navHeader.view_container?.showDrawerHeader(userManagerApi.isUserAuthorized(), userManagerApi.getUserCredentials())
 
-        setupNavigation()
+        showUsersMenu(userManagerApi.isUserAuthorized())
         if (savedInstanceState == null) {
             if (intent.hasExtra(TARGET_FRAGMENT_KEY)) {
                 when (intent.getStringExtra(TARGET_FRAGMENT_KEY)) {
@@ -134,8 +139,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 }
 
             } else openMainFragment()
-        } else navHeader.view_container?.checkIsUserLoggedIn(false)
+        }
+        presenter.startListeningForNotifications()
         setFABVisibility()
+        setupNavigation()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -162,11 +169,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     override fun onPause() {
         super.onPause()
         presenter.unsubscribe()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        navHeader.view_container?.stopListeningForUpdates()
     }
 
     private fun setupNavigation() {
@@ -201,6 +203,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             "mainpage" -> openFragment(PromotedFragment.newInstance())
             "mikroblog" -> openFragment(HotFragment.newInstance())
         }
+        openFragment(HotFragment.newInstance())
     }
 
     override fun openFragment(fragment: Fragment) {
@@ -227,6 +230,19 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         }
     }
 
+    override fun showNotificationsCount(notifications: Int) {
+        drawer_layout.view_container.apply {
+            notificationCount = notifications
+        }
+
+    }
+
+    override fun showHashNotificationsCount(hashNotifications: Int) {
+        drawer_layout.view_container.apply {
+            hashTagsNotificationsCount = hashNotifications
+        }
+
+    }
 
     override fun onBackPressed() {
         if(drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
@@ -251,8 +267,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 }
             }
 
-            Navigator.STARTED_FROM_NOTIFICATIONS_CODE -> {
-                view_container?.startListeningForUpdates()
+            NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE -> {
+                printout("dddd")
+                presenter.startListeningForNotifications()
             }
 
             else -> {

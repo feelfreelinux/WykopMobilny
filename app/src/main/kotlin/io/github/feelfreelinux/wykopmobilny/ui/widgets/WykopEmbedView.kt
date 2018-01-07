@@ -1,24 +1,15 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets
 
-import android.app.Activity
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.CoordinatorLayout
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
-import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.utils.*
-import javax.inject.Inject
-import android.widget.ImageView
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import kotlinx.android.synthetic.main.wykopembedview.view.*
 import java.lang.ref.WeakReference
 import java.net.URI
@@ -36,15 +27,11 @@ class WykopEmbedView: FrameLayout {
 
     var resized = false
     lateinit var mEmbed : WeakReference<Embed>
-
-    @Inject lateinit var settingsPreferences: SettingsPreferencesApi
-    @Inject lateinit var navigatorApi: NavigatorApi
-
+    lateinit var navigator : NewNavigatorApi
 
 
     init {
         View.inflate(context, R.layout.wykopembedview, this)
-        WykopApp.uiInjector.inject(this)
         isVisible = false
         image.onResizedListener = {
             mEmbed.get()?.isResize = it
@@ -57,8 +44,9 @@ class WykopEmbedView: FrameLayout {
         image.openImageListener = { handleUrl() }
     }
 
-    fun setEmbed(embed: Embed?) {
+    fun setEmbed(embed: Embed?, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi) {
         resized = false
+        navigator = navigatorApi
         if (embed == null) isVisible = false
         embed?.apply {
             image.resetImage()
@@ -66,7 +54,7 @@ class WykopEmbedView: FrameLayout {
             image.isResized = embed.isResize
             imageExpand.isVisible = false
             isVisible = true
-            if (plus18 && !settingsPreferences.showAdultContent) image.loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
+            if (plus18 && !settingsPreferencesApi.showAdultContent) image.loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
             else {
                 image.loadImageFromUrl(preview)
             }
@@ -115,7 +103,7 @@ class WykopEmbedView: FrameLayout {
             "image" -> {
                 // APIV2 WTF
                 val url = if (image.isAnimated) image.url.replace(".jpg", ".gif") else image.url
-                navigatorApi.openPhotoViewActivity(context as Activity, url)
+                navigator.openPhotoViewActivity(url)
 
             }
             "video" -> context.openBrowser(image.url) // @TODO replace with some nice implementation

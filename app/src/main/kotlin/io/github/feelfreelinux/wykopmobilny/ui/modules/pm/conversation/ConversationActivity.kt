@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
+import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.FullConversation
@@ -20,17 +20,19 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_conversation.*
 import kotlinx.android.synthetic.main.activity_conversation.view.*
 import javax.inject.Inject
 
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
-    val conversationAdapter by lazy { PMMessageAdapter() }
+    @Inject lateinit var conversationAdapter : PMMessageAdapter
     val user by lazy { intent.getStringExtra(EXTRA_USER) }
     var receiver : Author? = null
     @Inject lateinit var presenter: ConversationPresenter
+    @Inject lateinit var userManagerApi : UserManagerApi
+    @Inject lateinit var suggestionApi : SuggestApi
     lateinit var conversationDataFragment: DataFragment<FullConversation>
 
     companion object {
@@ -47,7 +49,6 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversation)
-        WykopApp.uiInjector.inject(this)
         conversationDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -72,6 +73,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         }
 
         inputToolbar.inputToolbarListener = this
+        inputToolbar.setup(userManagerApi, suggestionApi)
 
     }
 
@@ -79,13 +81,11 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
         receiver = conversation.receiver
-        printout("HMM?")
         toolbar.apply {
             subtitle = conversation.messages.last().date.toPrettyDate()
             avatarview.setAuthor(conversation.receiver)
             avatarview.isVisible = true
         }
-
 
         conversationAdapter.apply {
             messages.clear()

@@ -1,9 +1,9 @@
 ext {
     versions = [
-            buildTools        : '26.0.1',
+            buildTools        : '27.0.1',
             androidPlugin     : '2.3.3',
             kotlin            : '1.2.0',
-            supportLibrary    : '26.1.0',
+            supportLibrary    : '27.0.2',
             constraintLayout  : '1.0.2',
             glide             : '4.1.1',
             prettytime        : '4.0.1.Final',

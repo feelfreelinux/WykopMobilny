@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot
 
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
-import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+
 
 class HotPresenter(private val schedulers: Schedulers, private val entriesApi: EntriesApi) : BasePresenter<HotView>() {
     var page = 1

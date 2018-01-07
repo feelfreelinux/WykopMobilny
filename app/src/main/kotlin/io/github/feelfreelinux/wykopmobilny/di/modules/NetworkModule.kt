@@ -20,12 +20,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelper
-import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -60,6 +56,7 @@ class NetworkModule {
     fun provideMoshi() =
             Moshi.Builder().build()
 
+
     @Provides
     fun provideCredentialsPreferences(context: Context) : CredentialsPreferencesApi = CredentialsPreferences(context)
 
@@ -77,9 +74,6 @@ class NetworkModule {
     fun provideWykopNotificationManager(mgr: NotificationManager) : WykopNotificationManagerApi = WykopNotificationManager(mgr)
 
     @Provides
-    fun provideWykopLinkHandlerApi(navigatorApi: NavigatorApi) : WykopLinkHandlerApi = WykopLinkHandler(navigatorApi)
-
-    @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient, moshi: Moshi) : Retrofit {
         return Retrofit.Builder()
@@ -94,11 +88,11 @@ class NetworkModule {
     fun provideUserTokenRefresher(userApi : LoginApi, userManagerApi: UserManagerApi) = UserTokenRefresher(userApi, userManagerApi)
 
     @Provides
-    fun provideSubscriptionHandler(userTokenRefresher: UserTokenRefresher) : SubscriptionHelperApi = SubscriptionHelper(AndroidSchedulers.mainThread(), Schedulers.io(), userTokenRefresher)
-
-    @Provides
     fun provideNavigatorApi() : NavigatorApi = Navigator()
 
     @Provides
     fun provideClipboardHelper(context: Context) : ClipboardHelperApi = ClipboardHelper(context)
+
+    //fun provideEntryPresenterFactory() = EntryPresenterFactory()
+
 }

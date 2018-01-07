@@ -5,14 +5,12 @@ import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.utils.*
-import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserCredentials
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
-import javax.inject.Inject
 
-class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
+class DrawerHeaderWidget : ConstraintLayout {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -22,53 +20,29 @@ class DrawerHeaderWidget : ConstraintLayout, DrawerHeaderView {
     // @TODO Put this in memory
     val PLACEHOLDER_IMAGE_URL = "https://i.imgur.com/aSm6pSJ.jpg"
 
-    @Inject lateinit var userManager : UserManagerApi
-    @Inject lateinit var presenter : DrawerHeaderPresenter
-
     init {
         View.inflate(context, R.layout.drawer_header_view_layout, this)
-        WykopApp.uiInjector.inject(this)
     }
 
-    override var hashTagsNotificationsCount: Int
+    var hashTagsNotificationsCount: Int
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) { nav_notifications_tag.text = value.toString() }
 
-    override var notificationCount: Int
+    var notificationCount: Int
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) { nav_notifications.text = value.toString() }
 
-    fun checkIsUserLoggedIn(checkNotifications : Boolean) {
-        if (userManager.isUserAuthorized()) {
+    fun showDrawerHeader(isUserAuthorized : Boolean, credentials: UserCredentials?) {
+        if (isUserAuthorized) {
             isVisible = true
-            val credentials = userManager.getUserCredentials()!!
-            nav_profile_image.loadImage(credentials.avatarUrl)
+            nav_profile_image.loadImage(credentials!!.avatarUrl)
             if (credentials.backgroundUrl != null) {
                 backgroundImage.loadImage(credentials.backgroundUrl)
             } else {
                 backgroundImage.loadImage(PLACEHOLDER_IMAGE_URL)
             }
-            if (checkNotifications) presenter.fetchNotifications()
         } else {
             isVisible = false
         }
     }
-
-    fun startListeningForUpdates() {
-        if (userManager.isUserAuthorized()) {
-            presenter.subscribe(this)
-            checkIsUserLoggedIn(true)
-        }
-    }
-
-    fun stopListeningForUpdates() {
-        if (userManager.isUserAuthorized()) {
-            presenter.unsubscribe()
-        }
-    }
-
-    override val isConnectedToInternet : Boolean
-        get() = context.isConnectedToInternet()
-
-    override fun showErrorDialog(e: Throwable) = context.showExceptionDialog(e)
 }

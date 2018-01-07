@@ -6,7 +6,10 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorRespo
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
 import io.reactivex.Single
-import retrofit2.http.*
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface SearchRetrofitApi {
     @FormUrlEncoded

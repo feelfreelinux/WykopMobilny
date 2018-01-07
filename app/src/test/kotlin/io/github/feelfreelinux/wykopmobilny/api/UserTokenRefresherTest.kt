@@ -1,6 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.api
 
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
+import com.nhaarman.mockito_kotlin.whenever
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.WykopExceptionParser
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi

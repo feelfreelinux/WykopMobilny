@@ -1,20 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.api.search
 
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
-import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
-import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopRetrofitApi
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.AuthorMapper
-import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryLinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryLinkResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
-import io.reactivex.Single
 import retrofit2.Retrofit
 
 class SearchRepository(val retrofit: Retrofit) : SearchApi {

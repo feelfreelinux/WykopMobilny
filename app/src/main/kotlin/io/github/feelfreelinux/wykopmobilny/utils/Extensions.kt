@@ -8,6 +8,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.SpannableStringBuilder
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
@@ -21,7 +22,6 @@ import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
-import android.text.SpannableStringBuilder
 
 
 var View.isVisible : Boolean

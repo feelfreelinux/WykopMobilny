@@ -1,8 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.tags
 
-import android.content.Context
 import android.os.Bundle
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -15,7 +13,7 @@ import javax.inject.Inject
 
 
 class MyWykopTagsFragment : BaseFeedFragment<EntryLink>(), MyWykopView {
-    override val feedAdapter by lazy { EntryLinkAdapter() }
+    @Inject override lateinit var feedAdapter : EntryLinkAdapter
     @Inject lateinit var presenter : MyWykopTagsPresenter
     lateinit var dataFragment : DataFragment<PagedDataModel<List<EntryLink>>>
 
@@ -29,7 +27,6 @@ class MyWykopTagsFragment : BaseFeedFragment<EntryLink>(), MyWykopView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
         dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         dataFragment.data?.apply {
@@ -43,7 +40,7 @@ class MyWykopTagsFragment : BaseFeedFragment<EntryLink>(), MyWykopView {
         presenter.loadData(shouldRefresh)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         dataFragment.data = PagedDataModel(presenter.page , data)
     }

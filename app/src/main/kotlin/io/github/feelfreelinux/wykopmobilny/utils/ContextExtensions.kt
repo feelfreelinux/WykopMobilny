@@ -2,12 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.app.Activity
 import android.content.Context
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
-import io.github.feelfreelinux.wykopmobilny.R
-import android.net.NetworkInfo
-import android.net.ConnectivityManager
 import android.view.inputmethod.InputMethodManager
+import io.github.feelfreelinux.wykopmobilny.R
 
 
 fun Context.openBrowser(url : String) {

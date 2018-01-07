@@ -81,6 +81,7 @@
     <string name="notifications_title">Powiadomienia</string>
     <string name="hashtags_notifications_title">Obserwowane tagi</string>
     <string name="voters">Plusujący</string>
+    <string name="entry_voters">Osoby plusujące ten wpis</string>
     <string name="edit">Edytuj</string>
     <string name="copy_content">Kopiuj treść</string>
     <string name="delete">Usuń</string>

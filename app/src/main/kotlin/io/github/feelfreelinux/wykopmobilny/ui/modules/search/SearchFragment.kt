@@ -2,13 +2,12 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.search
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.SearchView
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import android.support.v7.widget.SearchView
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.utils.hideKeyboard
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_search.*
 
 
@@ -39,7 +38,7 @@ class SearchFragment : BaseFragment(), SearchFragmentQuery {
         return inflater.inflate(R.layout.activity_search, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewPagerAdapter = SearchPagerAdapter(resources, childFragmentManager)
         pager.adapter = viewPagerAdapter
@@ -73,7 +72,7 @@ class SearchFragment : BaseFragment(), SearchFragmentQuery {
                             (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
                                     .notifyQueryChanged()
                         }
-                        activity.hideKeyboard()
+                        activity?.hideKeyboard()
                         searchView.clearFocus()
                     }
                 }

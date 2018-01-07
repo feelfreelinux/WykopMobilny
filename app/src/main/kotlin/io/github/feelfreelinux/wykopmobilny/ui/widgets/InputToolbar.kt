@@ -4,20 +4,18 @@ import android.content.Context
 import android.net.Uri
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.input_toolbar.view.*
-import javax.inject.Inject
-import android.util.TypedValue
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.android.synthetic.main.input_toolbar.view.*
 
 
 interface InputToolbarListener {
@@ -35,8 +33,8 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         get() =  body.text.toString()
         set(value) { body.setText(value) }
 
-    @Inject lateinit var userManager : UserManagerApi
-    @Inject lateinit var suggestApi : SuggestApi
+    lateinit var userManager : UserManagerApi
+    lateinit var suggestApi : SuggestApi
     val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(context, suggestApi) }
     val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(context, suggestApi) }
 
@@ -59,12 +57,10 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     var inputToolbarListener : InputToolbarListener? = null
 
     init {
-        WykopApp.uiInjector.inject(this)
         val typedValue = TypedValue()
         val theme = context.theme
         theme.resolveAttribute(R.attr.cardViewColor, typedValue, true)
         setBackgroundColor(typedValue.data)
-        show()
 
         // Inflate view
         View.inflate(context, R.layout.input_toolbar, this)
@@ -105,6 +101,12 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
                 inputToolbarListener?.sendPhoto(markdownToolbar.photoUrl, body.text.toString())
             }
         }
+    }
+
+    fun setup(userManagerApi: UserManagerApi, suggestionApi: SuggestApi) {
+        userManager = userManagerApi
+        suggestApi = suggestionApi
+        show()
     }
 
     fun showMarkdownToolbar() {

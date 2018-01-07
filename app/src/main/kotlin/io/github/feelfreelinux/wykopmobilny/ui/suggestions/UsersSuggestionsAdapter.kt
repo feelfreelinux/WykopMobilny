@@ -9,10 +9,7 @@ import android.widget.Filterable
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.TagSuggestion
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.WykopSuggestion
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.autosuggest_item.view.*
 
 class UsersSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi) : ArrayAdapter<Author>(context, R.layout.autosuggest_item), Filterable {

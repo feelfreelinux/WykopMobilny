@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.KotlinGlideRequestListener
-import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.activity_photoview.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -35,7 +32,6 @@ class PhotoViewActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photoview)
         setSupportActionBar(toolbar)
-        WykopApp.uiInjector.inject(this)
         title = null
         GlideApp.with(this).load(url)
                 .listener(KotlinGlideRequestListener({ loadingView.isVisible = false }, { loadingView.isVisible = false }))

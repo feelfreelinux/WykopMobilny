@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.api.pm
 
-import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandler
+import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.getRequestBody
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.ConversationMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.FullConversationMapper

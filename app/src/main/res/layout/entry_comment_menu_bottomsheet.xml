@@ -38,6 +38,21 @@
             android:text="@string/copy_content"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/entry_comment_menu_voters"
+        style="@style/BottomSheetMenuItem">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="?attr/bottomSheetVoters"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:text="@string/entry_voters"/>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/entry_comment_menu_report"
         style="@style/BottomSheetMenuItem">
         <ImageView

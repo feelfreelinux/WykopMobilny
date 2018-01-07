@@ -2,64 +2,84 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entri
 
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
-import io.github.feelfreelinux.wykopmobilny.utils.rx.SubscriptionHelperApi
+import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 
-class TagEntriesPresenter(val subscriptionHelper: SubscriptionHelperApi, val tagApi : TagApi) : BasePresenter<TagEntriesView>() {
+class TagEntriesPresenter(val schedulers: Schedulers, val tagApi : TagApi) : BasePresenter<TagEntriesView>() {
     var page = 1
     var tag = ""
 
     fun loadData(shouldRefresh : Boolean) {
         if (shouldRefresh) page = 1
-        subscriptionHelper.subscribe(tagApi.getTagEntries(tag, page),
-                {
-                    view?.setMeta(it.meta)
-                    if (it.entries.isNotEmpty()) {
-                        page ++
-                        view?.addDataToAdapter(it.entries, shouldRefresh)
-                    } else view?.disableLoading()
-                },
-                { view?.showErrorDialog(it) }, this
+        compositeObservable.add(
+                tagApi.getTagEntries(tag, page)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe(
+                                {
+                                    view?.setMeta(it.meta)
+                                    if (it.entries.isNotEmpty()) {
+                                        page ++
+                                        view?.addDataToAdapter(it.entries, shouldRefresh)
+                                    } else view?.disableLoading()
+                                },
+                                { view?.showErrorDialog(it) }
+                        )
         )
     }
 
     fun blockTag() {
-        subscriptionHelper.subscribe(tagApi.block(tag),
-                {
-                    view?.setObserveState(it)
-                },
-                { view?.showErrorDialog(it) }, this
+        compositeObservable.add(
+                tagApi.block(tag)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe(
+                                {
+                                    view?.setObserveState(it)
+                                },
+                                { view?.showErrorDialog(it) }
+                        )
         )
     }
 
     fun unblockTag() {
-        subscriptionHelper.subscribe(tagApi.unblock(tag),
-                {
-                    view?.setObserveState(it)
-                },
-                { view?.showErrorDialog(it) }, this
+        compositeObservable.add(
+                tagApi.unblock(tag)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe(
+                                {
+                                    view?.setObserveState(it)
+                                },
+                                { view?.showErrorDialog(it) }
+                        )
         )
     }
 
     fun observeTag() {
-        subscriptionHelper.subscribe(tagApi.observe(tag),
-                {
-                    view?.setObserveState(it)
-                },
-                { view?.showErrorDialog(it) }, this
+        compositeObservable.add(
+                tagApi.observe(tag)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe(
+                                {
+                                    view?.setObserveState(it)
+                                },
+                                { view?.showErrorDialog(it) }
+                        )
         )
     }
 
     fun unobserveTag() {
-        subscriptionHelper.subscribe(tagApi.unobserve(tag),
-                {
-                    view?.setObserveState(it)
-                },
-                { view?.showErrorDialog(it) }, this
+        compositeObservable.add(
+                tagApi.unobserve(tag)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe(
+                                {
+                                    view?.setObserveState(it)
+                                },
+                                { view?.showErrorDialog(it) }
+                        )
         )
-    }
-
-    override fun unsubscribe() {
-        super.unsubscribe()
-        subscriptionHelper.dispose(this)
     }
 }

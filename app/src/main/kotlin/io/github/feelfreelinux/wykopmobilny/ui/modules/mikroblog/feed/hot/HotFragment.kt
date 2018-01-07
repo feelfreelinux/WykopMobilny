@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
     val navigation by lazy { activity as MainNavigationInterface }
-    override val feedAdapter by lazy { FeedAdapter() }
+    @Inject override lateinit var feedAdapter : FeedAdapter
     @Inject lateinit var presenter : HotPresenter
     @Inject lateinit var settingsPreferences : SettingsPreferencesApi
     @Inject lateinit var navigatorApi : NavigatorApi
@@ -32,20 +31,19 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
         presenter.loadData(shouldRefresh)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         fab.isVisible = true
         fab.setOnClickListener {
-            navigatorApi.openAddEntryActivity(activity)
+            navigatorApi.openAddEntryActivity(activity!!)
         }
-        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity, R.drawable.ic_hot)
+        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity!!, R.drawable.ic_hot)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        WykopApp.uiInjector.inject(this)
-        entriesDataFragment = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        entriesDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         presenter.subscribe(this)
         presenter.period = settingsPreferences.hotEntriesScreen ?: "newest"
         entriesDataFragment.data?.apply {
@@ -63,14 +61,14 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         entriesDataFragment.data = Pair(PagedDataModel(presenter.page , data), presenter.period)
     }
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(entriesDataFragment)
+        if (isRemoving) supportFragmentManager?.removeDataFragment(entriesDataFragment)
     }
 
     override fun onDetach() {

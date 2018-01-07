@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 
 kapt {
     generateStubs = true
+    correctErrorTypes = true
 }
 
 androidExtensions {
@@ -21,7 +22,7 @@ static def getBugsnagKey() {
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "io.github.feelfreelinux.wykopmobilny"
@@ -60,7 +61,7 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.1'
     lintOptions {
         abortOnError false
     }
@@ -85,6 +86,13 @@ dependencies {
     implementation "com.android.support:customtabs:$versions.supportLibrary"
     implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
     implementation "com.google.android.gms:play-services-gcm:11.6.0"
+    annotationProcessor 'com.google.auto.factory:auto-factory:1.0-beta5'
+    kapt 'com.google.auto.factory:auto-factory:1.0-beta5'
+    provided("com.google.auto.factory:auto-factory:1.0-beta5") {
+        exclude(group: 'com.google.guava')
+    }
+
+
 
     // Utils
     implementation "com.bugsnag:bugsnag-android:4.1.3"

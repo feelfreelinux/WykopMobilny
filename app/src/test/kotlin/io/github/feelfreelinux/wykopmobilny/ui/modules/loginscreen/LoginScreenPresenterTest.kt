@@ -1,26 +1,25 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
-import com.nhaarman.mockito_kotlin.*
-import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
+import io.github.feelfreelinux.wykopmobilny.TestSchedulers
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.usermanager.LoginCredentials
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Single
 import org.junit.Before
-import org.junit.Test
 
 class LoginScreenPresenterTest {
     lateinit var systemUnderTest: LoginScreenPresenter
     private val mockOfView = mock<LoginScreenView>()
     private val mockOfUserManager = mock<UserManagerApi>()
     private val mockOfUserApi = mock<LoginApi>()
-    private val subscriptionHelper = TestSubscriptionHelper()
+    private val schedulers = TestSchedulers()
     private val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
 
     @Before
     fun setup() {
-        systemUnderTest = LoginScreenPresenter(mockOfUserManager, subscriptionHelper, mockOfUserApi)
+        systemUnderTest = LoginScreenPresenter(schedulers, mockOfUserManager, mockOfUserApi)
         systemUnderTest.subscribe(mockOfView)
         whenever(mockOfUserApi.getUserSessionToken()).thenReturn(Single.just(mock()))
     }

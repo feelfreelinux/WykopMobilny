@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.api.mywykop
 
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
-import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryLinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryLinkResponse

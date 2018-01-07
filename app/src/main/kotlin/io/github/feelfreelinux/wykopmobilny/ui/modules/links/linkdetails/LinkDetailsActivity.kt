@@ -1,34 +1,21 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Menu
-import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryDetailAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkDetailsAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.decorators.EntryCommentItemDecoration
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryDetailPresenter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryDetailView
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
 import kotlinx.android.synthetic.main.activity_link_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -60,7 +47,6 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             setDisplayHomeAsUpEnabled(true)
         }
         supportActionBar?.title = null
-        WykopApp.uiInjector.inject(this)
         presenter.linkId = link.id
 
         // Prepare RecyclerView
