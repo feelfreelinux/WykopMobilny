@@ -39,7 +39,7 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
     var addReceiverListener: ((Author) -> Unit)? = null
     lateinit var presenter : CommentPresenter
     private lateinit var userManagerApi: UserManagerApi
-    private lateinit var votersDialogView : View
+    private lateinit var votersDialogListener : (List<Voter>) -> Unit
 
     init {
         View.inflate(context, R.layout.entry_comment_layout, this)
@@ -187,27 +187,28 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
     fun openVotersMenu() {
         val activityContext = getActivityContext()!!
         val dialog = BottomSheetDialog(activityContext)
-        votersDialogView = activityContext.layoutInflater.inflate(R.layout.dialog_voters, null)
+        val votersDialogView = activityContext.layoutInflater.inflate(R.layout.dialog_voters, null)
         dialog.setContentView(votersDialogView)
-        val mBehavior = BottomSheetBehavior.from(votersDialogView.parent as View)
-        dialog.setOnShowListener {
-            mBehavior.peekHeight = votersDialogView.height
+        votersDialogListener = {
+            if (dialog.isShowing) {
+                votersDialogView.progressView.isVisible = false
+                val spannableStringBuilder = SpannableStringBuilder()
+                it
+                        .map { it.author }
+                        .forEachIndexed {
+                            index, author ->
+                            val span = ForegroundColorSpan(getGroupColor(author.group))
+                            spannableStringBuilder.appendNewSpan(author.nick, span, 0)
+                            if (index < it.size - 1) spannableStringBuilder.append(", ")
+                        }
+                votersDialogView.votersTextView.text = spannableStringBuilder
+            }
         }
         dialog.show()
         presenter.getVoters()
     }
 
     override fun showVoters(voters : List<Voter>) {
-        votersDialogView.progressView.isVisible = false
-        val spannableStringBuilder = SpannableStringBuilder()
-        voters
-                .map { it.author }
-                .forEachIndexed {
-                    index, author ->
-                    val span = ForegroundColorSpan(getGroupColor(author.group))
-                    spannableStringBuilder.appendNewSpan(author.nick, span, 0)
-                    if (index < voters.size - 1) spannableStringBuilder.append(", ")
-                }
-        votersDialogView.votersTextView.text = spannableStringBuilder
+        votersDialogListener(voters)
     }
 }

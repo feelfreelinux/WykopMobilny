@@ -7,6 +7,8 @@ open class BasePresenter<T : BaseView> {
     var view : T? = null
 
     open fun subscribe(view: T) {
+        compositeObservable.dispose()
+        compositeObservable = CompositeDisposable()
         this.view = view
     }
 

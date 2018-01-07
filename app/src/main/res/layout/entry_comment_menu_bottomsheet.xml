@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
-            android:text="@string/entry_voters"/>
+            android:text="@string/comment_voters"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/entry_comment_menu_report"
