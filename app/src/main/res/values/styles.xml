@@ -28,7 +28,7 @@
         <item name="separatorColor">@color/separatorColor</item>
         <item name="expandImageGradient">@drawable/gradient_expand_image_light</item>
         <item name="shadowUpGradient">@drawable/gradient_separator_input_light</item>
-
+        <item name="adminNickColor">@android:color/black</item>
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list</item>
         <item name="buttonStatelist">@drawable/button_background_state_list</item>
         <item name="cardviewStatelist">@drawable/cardview_background_statelist</item>
@@ -36,7 +36,8 @@
         <item name="mailDrawable">@drawable/ic_mail_light</item>
         <item name="wypokDrawable">@drawable/ic_wypok_light</item>
         <item name="commentDrawable">@drawable/ic_comment_light</item>
-        <item name="voteDrawable">@drawable/ic_plus_light</item>
+        <item name="plusDrawable">@drawable/ic_plus_light</item>
+        <item name="minusDrawable">@drawable/ic_minus_light</item>
         <item name="dotsDrawable">@drawable/ic_dots_light</item>
         <item name="replyDrawable">@drawable/ic_reply_light</item>
         <item name="sharebtnDrawable">@drawable/ic_sharebtn_light</item>
@@ -58,6 +59,7 @@
         <item name="bottomSheetEdit">@drawable/ic_pen_light</item>
         <item name="bottomSheetCopy">@drawable/ic_copy_content_light</item>
         <item name="bottomSheetReport">@drawable/ic_report_light</item>
+        <item name="bottomSheetVoters">@drawable/ic_navi_profile</item>
         <item name="bottomSheetDelete">@drawable/ic_menu_delete_light</item>
 
     </style>
@@ -90,6 +92,7 @@
         <item name="separatorColor">@color/separatorColor.Dark</item>
         <item name="expandImageGradient">@drawable/gradient_expand_image</item>
         <item name="shadowUpGradient">@drawable/gradient_separator_input</item>
+        <item name="adminNickColor">@android:color/white</item>
 
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list_dark</item>
         <item name="buttonStatelist">@drawable/button_background_state_list_dark</item>
@@ -98,7 +101,8 @@
         <item name="mailDrawable">@drawable/ic_mail</item>
         <item name="wypokDrawable">@drawable/ic_wypok</item>
         <item name="commentDrawable">@drawable/ic_comment</item>
-        <item name="voteDrawable">@drawable/ic_plus</item>
+        <item name="plusDrawable">@drawable/ic_plus</item>
+        <item name="minusDrawable">@drawable/ic_minus</item>
         <item name="dotsDrawable">@drawable/ic_dots</item>
         <item name="replyDrawable">@drawable/ic_reply</item>
         <item name="sharebtnDrawable">@drawable/ic_sharebtn</item>
@@ -120,6 +124,7 @@
         <item name="bottomSheetEdit">@drawable/ic_pen</item>
         <item name="bottomSheetCopy">@drawable/ic_copy_content</item>
         <item name="bottomSheetReport">@drawable/ic_report</item>
+        <item name="bottomSheetVoters">@drawable/ic_navi_profile_dark</item>
         <item name="bottomSheetDelete">@drawable/ic_menu_delete</item>
 
     </style>

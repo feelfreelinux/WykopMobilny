@@ -1,22 +1,16 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopView
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopIndexPresenter
 import javax.inject.Inject
 
 class PromotedFragment : BaseFeedFragment<Link>(), PromotedView {
@@ -32,7 +26,7 @@ class PromotedFragment : BaseFeedFragment<Link>(), PromotedView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -54,7 +48,6 @@ class PromotedFragment : BaseFeedFragment<Link>(), PromotedView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
         dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         dataFragment.data?.apply {
@@ -69,7 +62,7 @@ class PromotedFragment : BaseFeedFragment<Link>(), PromotedView {
         presenter.getPromotedLinks(shouldRefresh)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         dataFragment.data = PagedDataModel(presenter.page , data)
     }
@@ -81,6 +74,6 @@ class PromotedFragment : BaseFeedFragment<Link>(), PromotedView {
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(dataFragment)
+        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
     }
 }

@@ -7,9 +7,8 @@ import android.os.Bundle
 import android.webkit.CookieManager
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import kotlinx.android.synthetic.main.activity_webview.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -27,13 +26,12 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     }
 
     @Inject
-    lateinit var navigatorApi: NavigatorApi
+    lateinit var navigatorApi: NewNavigatorApi
     @Inject
     lateinit var presenter: LoginScreenPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WykopApp.uiInjector.inject(this)
         setContentView(R.layout.activity_webview)
         toolbar.title = getString(R.string.login)
         setSupportActionBar(toolbar)
@@ -46,7 +44,7 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     }
 
     override fun goBackToSplashScreen() {
-        navigatorApi.openMainActivity(this)
+        navigatorApi.openMainActivity()
         setResult(USER_LOGGED_IN)
         finish()
     }

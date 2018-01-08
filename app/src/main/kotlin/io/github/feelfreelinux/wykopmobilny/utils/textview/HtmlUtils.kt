@@ -3,8 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.utils.textview
 import android.os.Build
 import android.text.Html
 import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.URLSpan
 import java.net.URLDecoder
 import java.util.regex.Pattern
 

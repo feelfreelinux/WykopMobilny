@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
-import android.content.Context
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ProgressBar

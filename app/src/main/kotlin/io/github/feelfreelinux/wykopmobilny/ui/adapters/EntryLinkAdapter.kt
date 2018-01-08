@@ -8,8 +8,12 @@ import io.github.feelfreelinux.wykopmobilny.base.adapter.AdvancedProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import javax.inject.Inject
 
-class EntryLinkAdapter() : AdvancedProgressAdapter<EntryLink>() {
+class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi : SettingsPreferencesApi, val entryPresenterFactory: EntryPresenterFactory) : AdvancedProgressAdapter<EntryLink>() {
     companion object {
         val ENTRY_VIEWTYPE = 1
         val LINK_VIEWTYPE = 2
@@ -23,7 +27,7 @@ class EntryLinkAdapter() : AdvancedProgressAdapter<EntryLink>() {
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
             when (viewType) {
-                ENTRY_VIEWTYPE -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false))
+                ENTRY_VIEWTYPE -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false), userManagerApi, settingsPreferencesApi, entryPresenterFactory.create())
                 else -> LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false))
             }
 

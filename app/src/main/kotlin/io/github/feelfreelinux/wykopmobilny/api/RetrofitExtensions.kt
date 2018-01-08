@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.api
 
 import okhttp3.MediaType
-import okio.Okio
-import okio.BufferedSink
 import okhttp3.RequestBody
 import okhttp3.internal.Util
+import okio.BufferedSink
+import okio.Okio
 import okio.Source
 import java.io.IOException
 import java.io.InputStream

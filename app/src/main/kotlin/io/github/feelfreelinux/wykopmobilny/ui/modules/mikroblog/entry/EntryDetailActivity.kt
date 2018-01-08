@@ -8,8 +8,8 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
+import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -23,6 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
 import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -48,14 +49,17 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     @Inject lateinit var presenter: EntryDetailPresenter
+    @Inject lateinit var userManager : UserManagerApi
+    @Inject lateinit var suggestionApi : SuggestApi
     private lateinit var entryFragmentData: DataFragment<Entry>
-    private val adapter by lazy { EntryDetailAdapter({ inputToolbar.addAddressant(it.nick) },
-            intent.getIntExtra(EXTRA_COMMENT_ID, -1)) }
+    @Inject lateinit var adapter : EntryDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
         setSupportActionBar(toolbar)
+        adapter.commentId = intent.getIntExtra(EXTRA_COMMENT_ID, -1)
+        adapter.addReceiverListener = { inputToolbar.addAddressant(it.nick) }
 
         entryId =
                 if (intent.data != null) EntryLinkParser.getEntryId(intent.dataString)!!
@@ -66,7 +70,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             setDisplayHomeAsUpEnabled(true)
         }
         supportActionBar?.title = null
-        WykopApp.uiInjector.inject(this)
 
         // Prepare RecyclerView
         recyclerView.apply {
@@ -77,6 +80,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         }
 
         // Prepare InputToolbar
+        inputToolbar.setup(userManager, suggestionApi)
         inputToolbar.inputToolbarListener = this
 
         swiperefresh.setOnRefreshListener(this)

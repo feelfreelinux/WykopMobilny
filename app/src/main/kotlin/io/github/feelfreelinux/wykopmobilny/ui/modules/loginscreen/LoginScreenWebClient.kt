@@ -1,12 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
-import android.annotation.TargetApi
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 typealias TokenUrlCallback = (url : String) -> Unit
 

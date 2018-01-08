@@ -4,7 +4,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import com.nhaarman.mockito_kotlin.whenever
-import io.github.feelfreelinux.wykopmobilny.TestSubscriptionHelper
+import io.github.feelfreelinux.wykopmobilny.TestSchedulers
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.NotificationsCountResponse
@@ -20,12 +20,12 @@ class WykopNotificationsJobPresenterTest {
     lateinit var subjectUnderTest : WykopNotificationsJobPresenter
     val mockUserManager = mock<UserManagerApi>()
     val mockMyWykopApi = mock<NotificationsApi>()
-    val subscriptionHelper = TestSubscriptionHelper()
+    val schedulers = TestSchedulers()
     val mockView = mock<WykopNotificationsJobView>()
 
     @Before
     fun setup() {
-        subjectUnderTest = WykopNotificationsJobPresenter(subscriptionHelper, mockMyWykopApi, mockUserManager)
+        subjectUnderTest = WykopNotificationsJobPresenter(schedulers, mockMyWykopApi, mockUserManager)
         subjectUnderTest.subscribe(mockView)
     }
 

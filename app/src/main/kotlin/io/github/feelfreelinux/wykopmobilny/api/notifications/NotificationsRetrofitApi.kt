@@ -1,9 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.api.notifications
 
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.common.WykopApiResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.NotificationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.NotificationsCountResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.common.WykopApiResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

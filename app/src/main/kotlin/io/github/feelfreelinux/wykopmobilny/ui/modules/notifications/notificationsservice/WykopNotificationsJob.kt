@@ -8,21 +8,18 @@ import android.support.v4.app.NotificationCompat
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobRequest
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 
-class WykopNotificationsJob : Job(), WykopNotificationsJobView {
-    @Inject lateinit var presenter: WykopNotificationsJobPresenter
-    @Inject lateinit var settingsApi: SettingsPreferencesApi
-    @Inject lateinit var wykopLinkHandler: WykopLinkHandlerApi
-    @Inject lateinit var notificationManager: WykopNotificationManagerApi
+class WykopNotificationsJob(
+        val presenter : WykopNotificationsJobPresenter,
+        val settingsApi: SettingsPreferencesApi,
+        val notificationManager: WykopNotificationManagerApi) : Job(), WykopNotificationsJobView {
 
     private fun buildNotification(body: String, intent: PendingIntent): Notification {
         return NotificationCompat.Builder(context, WykopNotificationManager.NOTIFICATION_CHANNEL_ID)
@@ -54,7 +51,6 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
     }
 
     override fun onRunJob(params: Params): Result {
-        WykopApp.uiInjector.inject(this)
         if (settingsApi.showNotifications) {
             presenter.apply {
                 subscribe(this@WykopNotificationsJob)
@@ -66,7 +62,7 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
 
     override fun showNotification(notification: io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification) {
         if (settingsApi.showNotifications) {
-            val intent = wykopLinkHandler.getLinkIntent(context, notification.url!!)
+            val intent = WykopLinkHandler.getLinkIntent(notification.url!!, context)
             intent?.action = System.currentTimeMillis().toString()
             val pendingIntent = if (intent != null) {
                 intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -83,7 +79,7 @@ class WykopNotificationsJob : Job(), WykopNotificationsJobView {
     override fun showNotificationsCount(count: Int) {
         if (settingsApi.showNotifications) {
             // Create intent
-            val intent = NavigationActivity.getIntent(context, NavigationActivity.TARGET_NOTIFICATIONS)
+            val intent = MainNavigationActivity.getIntent(context, MainNavigationActivity.TARGET_NOTIFICATIONS)
             intent.action = System.currentTimeMillis().toString()
             intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)

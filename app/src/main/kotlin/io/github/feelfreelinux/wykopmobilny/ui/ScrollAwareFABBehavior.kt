@@ -1,11 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui
 
 import android.content.Context
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.FloatingActionButton
+import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
-import android.support.v4.view.ViewCompat
 
 class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) : FloatingActionButton.Behavior(context, attrs) {
     override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, child: FloatingActionButton, directTargetChild: View, target: View, nestedScrollAxes: Int, type: Int): Boolean {

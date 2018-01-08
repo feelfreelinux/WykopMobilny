@@ -16,8 +16,9 @@ import kotlinx.android.synthetic.main.feed_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 
 abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.feed_fragment, container, false)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.feed_fragment, container, false)
     }
 
     var showSearchEmptyView: Boolean

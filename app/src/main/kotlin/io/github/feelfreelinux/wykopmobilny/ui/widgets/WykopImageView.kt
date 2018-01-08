@@ -3,11 +3,10 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
-import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import android.widget.ImageView
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 
 
 class WykopImageView: ImageView {

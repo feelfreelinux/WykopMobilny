@@ -1,16 +1,17 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
-import com.squareup.moshi.Json
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorResponse
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 
-data class Link(
+@Parcelize data class Link(
         val id : Int,
         val title : String,
         val description : String,
         val tags : String,
         val sourceUrl : String,
         val voteCount : Int,
+        var comments : List<LinkComment>,
         val commentsCount : Int,
         val relatedCount : Int,
         val author : Author?,
@@ -22,4 +23,4 @@ data class Link(
         val status : String,
         val userVote : String?,
         val app : String?
-)
+) : Parcelable

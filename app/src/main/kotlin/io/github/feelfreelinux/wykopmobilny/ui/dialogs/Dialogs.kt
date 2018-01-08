@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.dialogs
 import android.app.AlertDialog
 import android.content.Context
 import android.view.View
-import android.widget.EditText
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.utils.markdownLink

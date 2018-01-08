@@ -3,23 +3,19 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
-import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ConversationsListAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
 import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
 
@@ -41,8 +37,7 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRe
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        conversationsDataFragment = fragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        WykopApp.uiInjector.inject(this)
+        conversationsDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.messages)
         swiperefresh.setOnRefreshListener(this)
 
@@ -76,7 +71,7 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRe
         presenter.loadConversations()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         conversationsDataFragment.data = conversationsAdapter.dataset
     }
@@ -88,6 +83,6 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRe
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(conversationsDataFragment)
+        if (isRemoving) supportFragmentManager.removeDataFragment(conversationsDataFragment)
     }
 }

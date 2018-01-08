@@ -8,14 +8,23 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.CommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentPresenterFactory
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import javax.inject.Inject
 
-class EntryDetailAdapter(private val addReceiverListener: (Author) -> Unit, val commentId : Int?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
+                                             val settingsPreferencesApi: SettingsPreferencesApi,
+                                             val entryPresenterFactory: EntryPresenterFactory,
+                                             val commentPresenterFactory: CommentPresenterFactory) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val ENTRY_HOLDER = 0
         private const val COMMENT_HOLDER = 1
     }
-
+    lateinit var addReceiverListener: (Author) -> Unit
     var entry: Entry? = null
+    var commentId : Int? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder?.itemViewType == ENTRY_HOLDER) {
@@ -42,8 +51,8 @@ class EntryDetailAdapter(private val addReceiverListener: (Author) -> Unit, val 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ENTRY_HOLDER -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false))
-            else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false), addReceiverListener)
+            ENTRY_HOLDER -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false), userManagerApi, settingsPreferencesApi, entryPresenterFactory.create())
+            else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false), addReceiverListener, settingsPreferencesApi, userManagerApi, commentPresenterFactory.create())
         }
     }
 }

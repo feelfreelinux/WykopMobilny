@@ -2,11 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.search
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.SearchView
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import android.support.v7.widget.SearchView
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.utils.hideKeyboard
 import kotlinx.android.synthetic.main.activity_search.*
 
@@ -17,29 +17,13 @@ interface SearchFragmentQuery {
 
 interface SearchFragmentNotifier {
     fun notifyQueryChanged()
+    fun removeDataFragment()
 }
 
-class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFragmentQuery {
+class SearchFragment : BaseFragment(), SearchFragmentQuery {
     override var searchQuery = ""
 
     private lateinit var viewPagerAdapter : SearchPagerAdapter
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        query?.let {
-            if (query.length > 2) {
-                searchQuery = query
-                for (i in 0 until viewPagerAdapter.registeredFragments.size()) {
-                    (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
-                            .notifyQueryChanged()
-                }
-                activity.hideKeyboard()
-            }
-        }
-        return true
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        return false
-    }
 
     companion object {
         val EXTRA_QUERY = "EXTRA_QUERY"
@@ -54,7 +38,7 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFra
         return inflater.inflate(R.layout.activity_search, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewPagerAdapter = SearchPagerAdapter(resources, childFragmentManager)
         pager.adapter = viewPagerAdapter
@@ -79,8 +63,36 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, SearchFra
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM or MenuItem.SHOW_AS_ACTION_WITH_TEXT)
         val searchView = item.actionView as SearchView
         searchView.setQuery(searchQuery, false)
-        searchView.setOnQueryTextListener(this)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    if (query.length > 2) {
+                        searchQuery = query
+                        for (i in 0 until viewPagerAdapter.registeredFragments.size()) {
+                            (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
+                                    .notifyQueryChanged()
+                        }
+                        activity?.hideKeyboard()
+                        searchView.clearFocus()
+                    }
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?) = false
+
+        })
         searchView.setIconifiedByDefault(false)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (isRemoving) {
+            for (i in 0 until viewPagerAdapter.registeredFragments.size()) {
+                (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
+                        .removeDataFragment()
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

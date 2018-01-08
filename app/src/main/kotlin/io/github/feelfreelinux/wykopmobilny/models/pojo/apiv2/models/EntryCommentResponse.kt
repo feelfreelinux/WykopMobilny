@@ -19,13 +19,10 @@ data class EntryCommentResponse(
         val voteCount : Int,
         @Json(name = "status")
         val status : String,
-
         @Json(name = "user_vote")
         val userVote : Int,
-
         @Json(name = "embed")
         val embed : EmbedResponse?,
-
         @Json(name = "app")
         val app : String?
 )

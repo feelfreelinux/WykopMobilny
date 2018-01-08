@@ -1,20 +1,20 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
-import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
+import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.link_layout.view.*
-import javax.inject.Inject
 
 
-class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClickedListener {
+class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view)  {
     fun bindView(link : Link) {
         view.apply {
             title.text = link.title.removeHtml()
@@ -26,12 +26,9 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClicked
             dateTextView.text = link.date.toPrettyDate()
             hotBadgeStrip.isVisible = link.isHot
             setOnClickListener {
-                view.getActivityContext()!!.openBrowser(link.sourceUrl)
+                view.getActivityContext()!!.startActivity(LinkDetailsActivity.createIntent(view.getActivityContext()!!, link))
             }
         }
     }
 
-    override fun handleUrl(url: String) {
-        // @TODO something here
-    }
 }

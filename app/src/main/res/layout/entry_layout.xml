@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.favorite.entry.EntryFavoriteButton
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
                 android:id="@+id/favoriteButton"
                 style="@style/MikroButton"
                 app:layout_constraintStart_toEndOf="@id/shareTextView"
@@ -105,11 +105,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="3"/>
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.vote.entry.EntryVoteButton
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.VoteButton
                 android:id="@+id/voteButton"
                 style="@style/MikroButton"
                 android:paddingLeft="@dimen/plus_button_padding_left"
-                android:drawableStart="?attr/voteDrawable"
+                android:drawableStart="?attr/plusDrawable"
                 app:layout_constraintEnd_toStartOf="@+id/moreOptionsTextView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

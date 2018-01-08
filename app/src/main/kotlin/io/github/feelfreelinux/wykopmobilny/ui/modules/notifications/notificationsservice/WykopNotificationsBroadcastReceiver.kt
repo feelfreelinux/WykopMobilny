@@ -11,7 +11,8 @@ class WykopNotificationsBroadcastReceiver : BroadcastReceiver() {
     @Inject lateinit var settingsApi : SettingsPreferencesApi
 
     override fun onReceive(context: Context, intent: Intent) {
-        WykopApp.uiInjector.inject(this)
+        (context.applicationContext as WykopApp)
+                .broadcastReceiverInjector().inject(this)
 
         intent.action?.apply {
             if (this == "android.intent.action.BOOT_COMPLETED") {

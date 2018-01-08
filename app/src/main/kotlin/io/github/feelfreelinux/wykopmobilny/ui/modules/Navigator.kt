@@ -2,15 +2,18 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules
 
 import android.app.Activity
 import android.content.Intent
+import io.github.feelfreelinux.wykopmobilny.api.ENTRYCOMMENT_REPORT_URL
+import io.github.feelfreelinux.wykopmobilny.api.ENTRY_REPORT_URL
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.NavigationActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
@@ -28,15 +31,18 @@ interface NavigatorApi {
     fun openEditEntryActivity(context: Activity, body: String, entryId: Int)
     fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int)
     fun openBrowser(context: Activity, url: String)
+    fun openReportEntryScreen(context: Activity, entryId: Int)
+    fun openReportEntryCommentScreen(context: Activity, entryCommentId: Int)
+    fun openLinkDetailsActivity(context: Activity, link: Link)
 }
 
 class Navigator : NavigatorApi {
     companion object {
-        val STARTED_FROM_NOTIFIATIONS_CODE = 228
+        val STARTED_FROM_NOTIFICATIONS_CODE = 228
     }
 
     override fun openMainActivity(context: Activity, targetFragment: String?) {
-        context.startActivity(NavigationActivity.getIntent(context, targetFragment)
+        context.startActivity(MainNavigationActivity.getIntent(context, targetFragment)
                 .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) })
     }
 
@@ -77,5 +83,17 @@ class Navigator : NavigatorApi {
     }
     override fun openBrowser(context: Activity, url: String) {
         context.openBrowser(url)
+    }
+
+    override fun openReportEntryScreen(context: Activity, entryId: Int) {
+        context.openBrowser(ENTRY_REPORT_URL+entryId)
+    }
+
+    override fun openReportEntryCommentScreen(context: Activity, entryCommentId: Int) {
+        context.openBrowser(ENTRYCOMMENT_REPORT_URL+entryCommentId)
+    }
+
+    override fun openLinkDetailsActivity(context: Activity, link : Link) {
+        context.startActivity(LinkDetailsActivity.createIntent(context, link))
     }
 }

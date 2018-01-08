@@ -11,7 +11,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.formatDialogCallback
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.getMimeType
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.queryFileName
 import kotlinx.android.synthetic.main.markdown_toolbar.view.*
 

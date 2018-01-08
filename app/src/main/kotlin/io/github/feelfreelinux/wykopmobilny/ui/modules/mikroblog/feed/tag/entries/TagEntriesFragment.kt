@@ -1,11 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries
 
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat.invalidateOptionsMenu
 import android.support.v4.app.Fragment
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -15,27 +13,24 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
 class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView {
     @Inject lateinit var presenter : TagEntriesPresenter
-    override val feedAdapter by lazy { FeedAdapter() }
-    val entryTag by lazy { arguments.getString(EXTRA_TAG) }
+    @Inject override lateinit var feedAdapter : FeedAdapter
+    val entryTag by lazy { arguments!!.getString(EXTRA_TAG) }
     lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
     @Inject lateinit var userManager : UserManagerApi
     private var tagMeta : TagMetaResponse? = null
-    @Inject lateinit var navigatorApi : NavigatorApi
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        WykopApp.uiInjector.inject(this)
         presenter.tag = entryTag
 
         tagDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG + entryTag)
@@ -89,19 +84,19 @@ class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView {
             R.id.action_unobserve -> presenter.unobserveTag()
             R.id.action_block -> presenter.blockTag()
             R.id.action_unblock -> presenter.unblockTag()
-            android.R.id.home -> activity.finish()
+            android.R.id.home -> activity?.finish()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         tagDataFragment.data = PagedDataModel(presenter.page , data)
     }
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(tagDataFragment)
+        if (isRemoving) supportFragmentManager.removeDataFragment(tagDataFragment)
     }
 
     override fun onDetach() {
@@ -113,12 +108,12 @@ class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView {
 
     override fun setMeta(tagMeta: TagMetaResponse) {
         this.tagMeta = tagMeta
-        invalidateOptionsMenu(activity)
+        activity?.invalidateOptionsMenu()
     }
 
     override fun setObserveState(tagState: TagStateResponse) {
         tagMeta?.isBlocked = tagState.isBlocked
         tagMeta?.isObserved = tagState.isObserved
-        invalidateOptionsMenu(activity)
+        activity?.invalidateOptionsMenu()
     }
 }

@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.api.pm
 
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.common.WykopApiResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationDeleteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.PMMessageResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.common.WykopApiResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConversationResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody

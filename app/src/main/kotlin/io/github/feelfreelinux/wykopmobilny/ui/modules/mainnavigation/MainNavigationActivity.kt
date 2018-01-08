@@ -12,18 +12,16 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.bugsnag.android.Bugsnag
 import com.evernote.android.job.util.JobUtil
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
@@ -40,7 +38,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
-import kotlinx.android.synthetic.main.navigation_header.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -52,7 +49,7 @@ interface MainNavigationInterface {
     val floatingButton : View
 }
 
-class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
+class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override val activityToolbar: Toolbar get() = toolbar
 
     override val floatingButton: View
@@ -64,9 +61,9 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         val TARGET_NOTIFICATIONS = "TARGET_NOTIFICATIONS"
 
         fun getIntent(context: Context, targetFragment: String? = null): Intent {
-            val intent = Intent(context, NavigationActivity::class.java)
+            val intent = Intent(context, MainNavigationActivity::class.java)
             targetFragment?.let {
-                intent.putExtra(NavigationActivity.TARGET_FRAGMENT_KEY, targetFragment)
+                intent.putExtra(MainNavigationActivity.TARGET_FRAGMENT_KEY, targetFragment)
             }
             return intent
         }
@@ -81,7 +78,11 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             R.id.nav_mojwykop -> { openFragment(MyWykopFragment.newInstance()) }
             R.id.nav_home -> { openFragment(PromotedFragment.newInstance()) }
             R.id.search -> { openFragment(SearchFragment.newInstance()) }
-            else -> presenter.navigationItemClicked(item.itemId)
+            R.id.logout -> {
+                userManagerApi.logoutUser()
+                restartActivity()
+            }
+            else -> showNotImplementedToast()
         }
 
         item.isChecked = true
@@ -92,6 +93,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
     @Inject lateinit var presenter : MainNavigationPresenter
     @Inject lateinit var settingsApi : SettingsPreferencesApi
     @Inject lateinit var navigator : NavigatorApi
+    @Inject lateinit var newNavigator : NewNavigatorApi
     @Inject lateinit var userManagerApi : UserManagerApi
 
 
@@ -108,7 +110,6 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
-        WykopApp.uiInjector.inject(this)
         JobUtil.hasBootPermission(this)
 
         // Setup AppUpdater
@@ -126,19 +127,24 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
         }
+        presenter.subscribe(this)
 
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
-        setupNavigation()
+        navHeader.view_container?.showDrawerHeader(userManagerApi.isUserAuthorized(), userManagerApi.getUserCredentials())
+
+        showUsersMenu(userManagerApi.isUserAuthorized())
         if (savedInstanceState == null) {
-            navHeader.view_container?.startListeningForUpdates()
             if (intent.hasExtra(TARGET_FRAGMENT_KEY)) {
                 when (intent.getStringExtra(TARGET_FRAGMENT_KEY)) {
                     TARGET_NOTIFICATIONS -> openFragment(NotificationsListFragment.newInstance())
                 }
 
             } else openMainFragment()
-        } else navHeader.view_container?.checkIsUserLoggedIn(false)
+        }
+        printout("LISTEN")
+        presenter.startListeningForNotifications()
         setFABVisibility()
+        setupNavigation()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -157,19 +163,10 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.unsubscribe()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        navHeader.view_container?.stopListeningForUpdates()
+        presenter.unsubscribe()
+        printout("UNSUBSCRIBE")
     }
 
     private fun setupNavigation() {
@@ -204,6 +201,7 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
             "mainpage" -> openFragment(PromotedFragment.newInstance())
             "mikroblog" -> openFragment(HotFragment.newInstance())
         }
+        openFragment(HotFragment.newInstance())
     }
 
     override fun openFragment(fragment: Fragment) {
@@ -230,6 +228,19 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
         }
     }
 
+    override fun showNotificationsCount(notifications: Int) {
+        drawer_layout.view_container.apply {
+            notificationCount = notifications
+        }
+
+    }
+
+    override fun showHashNotificationsCount(hashNotifications: Int) {
+        drawer_layout.view_container.apply {
+            hashTagsNotificationsCount = hashNotifications
+        }
+
+    }
 
     override fun onBackPressed() {
         if(drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
@@ -254,8 +265,9 @@ class NavigationActivity : BaseActivity(), MainNavigationView, NavigationView.On
                 }
             }
 
-            Navigator.STARTED_FROM_NOTIFIATIONS_CODE -> {
-                view_container?.startListeningForUpdates()
+            NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE -> {
+                printout("dddd")
+                presenter.startListeningForNotifications()
             }
 
             else -> {

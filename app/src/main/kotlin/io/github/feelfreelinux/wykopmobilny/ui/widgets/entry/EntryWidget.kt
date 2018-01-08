@@ -4,39 +4,34 @@ import android.content.Context
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.CardView
-import android.support.v7.widget.PopupMenu
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
-import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
-import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
+import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entry_layout.view.*
 import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
-import javax.inject.Inject
 
 class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs),  EntryView, URLClickedListener {
 
-    @Inject lateinit var linkHandler: WykopLinkHandlerApi
-    @Inject lateinit var userManager: UserManagerApi
-    @Inject lateinit var clipboardHelper: ClipboardHelperApi
-    @Inject lateinit var presenter: EntryPresenter
-    @Inject lateinit var navigator: NavigatorApi
+    private lateinit var userManagerApi: UserManagerApi
+    private lateinit var presenter: EntryPresenter
     private lateinit var entry: Entry
+    private lateinit var votersDialogListener : (List<Voter>) -> Unit
     var shouldEnableClickListener = true
   
     init {
-        WykopApp.uiInjector.inject(this)
         View.inflate(context, R.layout.entry_layout, this)
         isClickable = true
         isFocusable = true
@@ -47,6 +42,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        if (::presenter.isInitialized)
         presenter.subscribe(this)
     }
 
@@ -55,8 +51,14 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         presenter.unsubscribe()
     }
 
-    fun setEntryData(entry: Entry) {
+    fun setEntryData(entry: Entry, userManager: UserManagerApi, settingsApi : SettingsPreferencesApi, entryPresenter: EntryPresenter) {
+        presenter = entryPresenter
+        userManagerApi = userManager
+        voteButton.setup(userManager, settingsApi)
+        presenter.subscribe(this)
         this.entry = entry
+        presenter.entryId = entry.id
+        entryImageView.setEmbed(entry.embed, settingsApi, entryPresenter.navigatorApi)
         setupHeader()
         setupBody()
         setupButtons()
@@ -72,24 +74,32 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             text = entry.commentsCount.toString()
             if (shouldEnableClickListener) {
                 setOnClickListener {
-                    navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
+                    presenter.openDetails()
                 }
             }
         }
 
         if (shouldEnableClickListener) {
             setOnClickListener {
-                navigator.openEntryDetailsActivity(getActivityContext()!!, entry.id)
+                presenter.openDetails()
             }
         }
 
         voteButton.apply {
-            setEntryData(entry)
             isButtonSelected = entry.isVoted
             voteCount = entry.voteCount
+            voteListener = { presenter.voteEntry() }
+            unvoteListener = { presenter.unvoteEntry() }
         }
 
-        favoriteButton.setEntryData(entry)
+        favoriteButton.apply {
+            isFavorite = entry.isFavorite
+            isVisible = userManagerApi.isUserAuthorized()
+            setOnClickListener {
+                presenter.markFavorite()
+            }
+
+        }
     }
 
     private fun setupBody() {
@@ -97,15 +107,19 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             entryContentTextView.isVisible = true
             entryContentTextView.prepareBody(entry.body, this)
         } else entryContentTextView.isVisible = false
-        entryImageView.setEmbed(entry.embed)
 
         if (entry.survey != null) {
-            survey.setSurvey(entry.survey!!, entry.id)
+            survey.voteAnswerListener = { presenter.voteAnswer(it) }
+            survey.setSurvey(entry.survey!!, userManagerApi)
         } else survey.isVisible = false
     }
 
+    override fun showSurvey(surveyData: Survey) {
+        survey.setSurvey(surveyData, userManagerApi)
+    }
+
     override fun handleUrl(url: String) {
-        linkHandler.handleUrl(getActivityContext()!!, url)
+        presenter.handleLink(url)
     }
 
     override fun showErrorDialog(e: Throwable) =
@@ -116,16 +130,27 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         entryImageView.isVisible = false
     }
 
-    fun removeEntry() {
-        presenter.deleteEntry(entry.id)
+    override fun markEntryUnvoted(voteCount: Int) {
+        voteButton.apply {
+            isButtonSelected = false
+            isEnabled = true
+        }.voteCount = voteCount
+        entry.isVoted = false
+        entry.voteCount = voteCount
     }
 
-    fun editEntry() {
-        navigator.openEditEntryActivity(getActivityContext()!!, entry.body, entry.id)
+    override fun markEntryFavorite(isFavorite: Boolean) {
+        favoriteButton.isFavorite = isFavorite
+        entry.isFavorite = isFavorite
     }
 
-    fun copyContent() {
-        clipboardHelper.copyTextToClipboard(entry.body.removeHtml())
+    override fun markEntryVoted(voteCount: Int) {
+        voteButton.apply {
+            isButtonSelected = true
+            isEnabled = true
+        }.voteCount = voteCount
+        entry.isVoted = true
+        entry.voteCount = voteCount
     }
 
     fun openOptionsMenu() {
@@ -136,27 +161,33 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
 
         bottomSheetView.apply {
             entry_menu_copy.setOnClickListener {
-                copyContent()
+                presenter.copyContent(entry)
                 dialog.dismiss()
             }
 
             entry_menu_edit.setOnClickListener {
-                editEntry()
+                presenter.editEntry(entry)
                 dialog.dismiss()
             }
 
             entry_menu_delete.setOnClickListener {
-                removeEntry()
+                presenter.deleteEntry()
                 dialog.dismiss()
             }
 
             entry_menu_report.setOnClickListener {
+                presenter.reportContent()
                 dialog.dismiss()
             }
 
-            entry_menu_report.isVisible = userManager.isUserAuthorized()
+            entry_menu_voters.setOnClickListener {
+                openVotersMenu()
+                dialog.dismiss()
+            }
 
-            val canUserEdit = userManager.isUserAuthorized() && entry.author.nick == userManager.getUserCredentials()!!.login
+            entry_menu_report.isVisible = userManagerApi.isUserAuthorized()
+
+            val canUserEdit = userManagerApi.isUserAuthorized() && entry.author.nick == userManagerApi.getUserCredentials()!!.login
             entry_menu_delete.isVisible = canUserEdit
             entry_menu_edit.isVisible = canUserEdit
         }
@@ -166,5 +197,33 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             mBehavior.peekHeight = bottomSheetView.height
         }
         dialog.show()
+    }
+
+    fun openVotersMenu() {
+        val activityContext = getActivityContext()!!
+        val dialog = BottomSheetDialog(activityContext)
+        val votersDialogView = activityContext.layoutInflater.inflate(R.layout.dialog_voters, null)
+        dialog.setContentView(votersDialogView)
+        votersDialogListener = {
+            if (dialog.isShowing) {
+                votersDialogView.progressView.isVisible = false
+                val spannableStringBuilder = SpannableStringBuilder()
+                it
+                        .map { it.author }
+                        .forEachIndexed {
+                            index, author ->
+                            val span = ForegroundColorSpan(getGroupColor(author.group))
+                            spannableStringBuilder.appendNewSpan(author.nick, span, 0)
+                            if (index < it.size - 1) spannableStringBuilder.append(", ")
+                        }
+                votersDialogView.votersTextView.text = spannableStringBuilder
+            }
+        }
+        dialog.show()
+        presenter.getVoters()
+    }
+
+    override fun showVoters(voters : List<Voter>) {
+        votersDialogListener(voters)
     }
 }

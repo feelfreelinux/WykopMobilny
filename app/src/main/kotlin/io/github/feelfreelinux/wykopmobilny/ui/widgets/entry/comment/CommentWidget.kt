@@ -5,27 +5,27 @@ import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
-import android.support.v7.widget.PopupMenu
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
+import io.github.feelfreelinux.wykopmobilny.utils.appendNewSpan
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
-import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.synthetic.main.comment_layout.view.*
+import kotlinx.android.synthetic.main.dialog_voters.view.*
+import kotlinx.android.synthetic.main.entry_comment_layout.view.*
 import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
-import javax.inject.Inject
 
 class CommentWidget : CardView, CommentView, URLClickedListener {
     constructor(context: Context) : super(context)
@@ -37,17 +37,12 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
     lateinit var comment : EntryComment
 
     var addReceiverListener: ((Author) -> Unit)? = null
-
-    @Inject lateinit var linkHandler: WykopLinkHandlerApi
-    @Inject lateinit var userManagerApi: UserManagerApi
-    @Inject lateinit var clipboardHelper: ClipboardHelperApi
-    @Inject lateinit var presenter: CommentPresenter
-    @Inject lateinit var navigator: NavigatorApi
+    lateinit var presenter : CommentPresenter
+    private lateinit var userManagerApi: UserManagerApi
+    private lateinit var votersDialogListener : (List<Voter>) -> Unit
 
     init {
-        WykopApp.uiInjector.inject(this)
-        presenter.subscribe(this)
-        View.inflate(context, R.layout.comment_layout, this)
+        View.inflate(context, R.layout.entry_comment_layout, this)
         isClickable = true
         isFocusable = true
         val typedValue = TypedValue()
@@ -55,8 +50,14 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
         setBackgroundResource(typedValue.resourceId)
     }
 
-    fun setCommentData(entryComment: EntryComment) {
+    fun setCommentData(entryComment: EntryComment, userManager : UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, commentPresenter: CommentPresenter) {
         this.comment = entryComment
+        presenter = commentPresenter
+        userManagerApi = userManager
+        commentPresenter.commentId = entryComment.id
+        commentPresenter.subscribe(this)
+        voteButton.setup(userManager, settingsPreferencesApi)
+        entryImageView.setEmbed(comment.embed, settingsPreferencesApi, commentPresenter.navigatorApi)
         setupHeader()
         setupFooter()
         setupBody()
@@ -87,9 +88,10 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
 
     private fun setupFooter() {
         voteButton.apply {
-            setCommentData(comment)
             isButtonSelected = comment.isVoted
             voteCount = comment.voteCount
+            voteListener = { presenter.voteComment() }
+            unvoteListener = { presenter.unvoteComment() }
         }
     }
 
@@ -100,32 +102,38 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
             entryContentTextView.isVisible = true
             entryContentTextView.prepareBody(comment.body, this)
         } else entryContentTextView.isVisible = false
-        entryImageView.setEmbed(comment.embed)
     }
 
     override fun handleUrl(url: String) {
-        linkHandler.handleUrl(getActivityContext()!!, url)
+        presenter.handleLink(url)
     }
 
     fun addReceiver() {
         addReceiverListener?.invoke(comment.author)
     }
 
-    fun copyContent() {
-        clipboardHelper.copyTextToClipboard(comment.body.removeHtml())
-    }
-
-    fun editComment() {
-        navigator.openEditEntryCommentActivity(getActivityContext()!!, comment.body, comment.entryId, comment.id)
-    }
-
-    fun removeComment() {
-        presenter.deleteComment(comment.id)
-    }
 
     override fun markCommentAsRemoved() {
         entryContentTextView.setText(R.string.commentRemoved)
         entryImageView.isVisible = false
+    }
+
+    override fun markCommentUnvoted(voteCount: Int) {
+        voteButton.apply {
+            isButtonSelected = false
+            isEnabled = true
+        }.voteCount = voteCount
+        comment.isVoted = false
+        comment.voteCount = voteCount
+    }
+
+    override fun markCommentVoted(voteCount: Int) {
+        voteButton.apply {
+            isButtonSelected = true
+            isEnabled = true
+        }.voteCount = voteCount
+        comment.isVoted = true
+        comment.voteCount = voteCount
     }
 
     override fun showErrorDialog(e: Throwable) = context.showExceptionDialog(e)
@@ -138,21 +146,27 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
 
         bottomSheetView.apply {
             entry_comment_menu_copy.setOnClickListener {
-                copyContent()
+                presenter.copyContent(comment)
                 dialog.dismiss()
             }
 
             entry_comment_menu_edit.setOnClickListener {
-                editComment()
+                presenter.editEntryComment(comment)
                 dialog.dismiss()
             }
 
             entry_comment_menu_delete.setOnClickListener {
-                removeComment()
+                presenter.deleteComment()
+                dialog.dismiss()
+            }
+
+            entry_comment_menu_voters.setOnClickListener {
+                openVotersMenu()
                 dialog.dismiss()
             }
 
             entry_comment_menu_report.setOnClickListener {
+                presenter.reportContent()
                 dialog.dismiss()
             }
 
@@ -168,5 +182,33 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
             mBehavior.peekHeight = bottomSheetView.height
         }
         dialog.show()
+    }
+
+    fun openVotersMenu() {
+        val activityContext = getActivityContext()!!
+        val dialog = BottomSheetDialog(activityContext)
+        val votersDialogView = activityContext.layoutInflater.inflate(R.layout.dialog_voters, null)
+        dialog.setContentView(votersDialogView)
+        votersDialogListener = {
+            if (dialog.isShowing) {
+                votersDialogView.progressView.isVisible = false
+                val spannableStringBuilder = SpannableStringBuilder()
+                it
+                        .map { it.author }
+                        .forEachIndexed {
+                            index, author ->
+                            val span = ForegroundColorSpan(getGroupColor(author.group))
+                            spannableStringBuilder.appendNewSpan(author.nick, span, 0)
+                            if (index < it.size - 1) spannableStringBuilder.append(", ")
+                        }
+                votersDialogView.votersTextView.text = spannableStringBuilder
+            }
+        }
+        dialog.show()
+        presenter.getVoters()
+    }
+
+    override fun showVoters(voters : List<Voter>) {
+        votersDialogListener(voters)
     }
 }

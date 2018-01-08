@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -18,7 +17,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentNoti
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentQuery
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.feed_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
@@ -62,7 +60,6 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        WykopApp.uiInjector.inject(this)
         dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
 
         presenter.subscribe(this)
@@ -94,7 +91,7 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         dataFragment.data = profilesAdapter.dataset
     }
@@ -104,9 +101,7 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
         presenter.unsubscribe()
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(dataFragment)
+    override fun removeDataFragment() {
+        supportFragmentManager.removeDataFragment(dataFragment)
     }
-
 }

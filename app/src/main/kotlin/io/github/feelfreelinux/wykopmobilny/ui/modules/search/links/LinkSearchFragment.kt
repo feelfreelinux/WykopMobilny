@@ -2,21 +2,15 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.search.links
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.View
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentNotifier
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentQuery
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry.EntrySearchPresenter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry.EntrySearchView
 import javax.inject.Inject
 
 class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragmentNotifier {
@@ -43,7 +37,6 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragm
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        WykopApp.uiInjector.inject(this)
         presenter.subscribe(this)
         dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         dataFragment.data?.apply {
@@ -61,7 +54,7 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragm
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         dataFragment.data = PagedDataModel(presenter.page , data)
     }
@@ -70,8 +63,7 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragm
         presenter.unsubscribe()
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving) fragmentManager.removeDataFragment(dataFragment)
+    override fun removeDataFragment() {
+        supportFragmentManager.removeDataFragment(dataFragment)
     }
 }

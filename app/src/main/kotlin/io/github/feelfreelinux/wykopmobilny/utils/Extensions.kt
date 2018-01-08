@@ -8,6 +8,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.SpannableStringBuilder
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
@@ -21,11 +22,6 @@ import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
-import android.text.SpannableStringBuilder
-
-
-
-
 
 
 var View.isVisible : Boolean
@@ -69,8 +65,9 @@ fun ImageView.loadImage(url : String) {
             .into(this)
 }
 
-fun String.toPrettyDate() : String = PrettyTime(Locale("pl")).format(parseDate(this))
-
+fun String.toPrettyDate() : String {
+    return PrettyTime(Locale("pl")).format(parseDate(this))
+}
 fun Uri.queryFileName(contentResolver: ContentResolver) : String {
     var result: String? = null
     if (scheme == "content") {

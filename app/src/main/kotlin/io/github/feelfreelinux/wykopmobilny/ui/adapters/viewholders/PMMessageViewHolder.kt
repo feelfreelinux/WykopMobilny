@@ -1,31 +1,28 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.app.Activity
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.View
 import android.widget.RelativeLayout
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.PMMessage
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.pmmessage_sent_layout.view.*
-import javax.inject.Inject
 
-class PMMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClickedListener {
-    @Inject lateinit var linkHandler: WykopLinkHandlerApi
+class PMMessageViewHolder(val view: View,
+                          val linkHandlerApi: WykopLinkHandlerApi,
+                          val settingsPreferencesApi: SettingsPreferencesApi,
+                          val navigatorApi: NewNavigatorApi) : RecyclerView.ViewHolder(view), URLClickedListener {
 
     override fun handleUrl(url: String) {
-        linkHandler.handleUrl(view.getActivityContext()!!, url)
-    }
-
-    init {
-        WykopApp.uiInjector.inject(this)
+        linkHandlerApi.handleUrl(url)
     }
 
     fun bindView(message: PMMessage) {
@@ -40,7 +37,7 @@ class PMMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLCl
             }
 
             body.prepareBody(message.body, this@PMMessageViewHolder)
-            embedImage.setEmbed(message.embed)
+            embedImage.setEmbed(message.embed, settingsPreferencesApi, navigatorApi)
         }
     }
 
