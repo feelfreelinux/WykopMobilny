@@ -36,7 +36,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     @Inject lateinit var presenter: LinkDetailsPresenter
     private lateinit var linkFragmentData: DataFragment<Link>
     private val link by lazy { intent.getParcelableExtra(EXTRA_LINK) as Link }
-    private val adapter by lazy { LinkDetailsAdapter() }
+    @Inject lateinit var adapter : LinkDetailsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_link_details)

@@ -14,7 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.link_layout.view.*
 
 
-class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClickedListener {
+class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view)  {
     fun bindView(link : Link) {
         view.apply {
             title.text = link.title.removeHtml()
@@ -31,7 +31,4 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view), URLClicked
         }
     }
 
-    override fun handleUrl(url: String) {
-        // @TODO something here
-    }
 }

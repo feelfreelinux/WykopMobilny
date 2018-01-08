@@ -1,6 +1,6 @@
 ext {
     versions = [
-            buildTools        : '27.0.1',
+            buildTools        : '27.0.2',
             androidPlugin     : '2.3.3',
             kotlin            : '1.2.0',
             supportLibrary    : '27.0.2',

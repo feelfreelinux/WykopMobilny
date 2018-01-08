@@ -7,8 +7,11 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkCommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import javax.inject.Inject
 
-class LinkDetailsAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class LinkDetailsAdapter @Inject constructor(val navigatorApi: NewNavigatorApi, val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val HEADER_HOLDER = 0
         private const val COMMENT_HOLDER = 1
@@ -39,8 +42,8 @@ class LinkDetailsAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            HEADER_HOLDER -> LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false))
-            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_layout, parent, false))
+            HEADER_HOLDER -> LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_list_item, parent, false))
+            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), navigatorApi, settingsPreferencesApi)
         }
     }
 }
