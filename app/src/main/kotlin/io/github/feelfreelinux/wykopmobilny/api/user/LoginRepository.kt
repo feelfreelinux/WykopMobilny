@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.api.user
 
+import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LoginResponse
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
