@@ -16,7 +16,7 @@
     <dimen name="mirko_button_text_size">15sp</dimen>
     <dimen name="mirko_button_margin">8dp</dimen>
 
-    <dimen name="navigation_drawer_text_size">16sp</dimen>
+    <dimen name="navigation_drawer_text_size">15sp</dimen>
     <dimen name="drawer_header_background_image_height">80dp</dimen>
     <dimen name="drawer_header_avatar_size">80dp</dimen>
     <dimen name="drawer_header_avatar_elevation">3dp</dimen>
@@ -43,6 +43,7 @@
     <dimen name="dialog_voters_padding_horizontal">12dp</dimen>
     <dimen name="dialog_voters_padding_vertical">10dp</dimen>
     <dimen name="dialog_voters_text_size">16sp</dimen>
+    <dimen name="dialog_voters_title_text_size">20sp</dimen>
 
     <dimen name="plus_button_padding_left">6dp</dimen>
     <dimen name="author_badge_strip_width">2dp</dimen>
@@ -145,10 +146,12 @@
     <dimen name="survey_votes_radio_button_margin_start">2dp</dimen>
 
     <dimen name="link_layout_image_width">110dp</dimen>
+    <dimen name="link_details_layout_title_font_size">15sp</dimen>
     <dimen name="link_layout_title_font_size">13.5sp</dimen>
     <dimen name="link_layout_title_padding_horizontal">10dp</dimen>
     <dimen name="link_layout_title_padding_top">8dp</dimen>
     <dimen name="link_layout_title_padding_bottom">6dp</dimen>
+    <dimen name="link_details_layout_description_font_size">14sp</dimen>
     <dimen name="link_layout_description_font_size">13sp</dimen>
     <dimen name="link_layout_description_padding_horizontal">10dp</dimen>
     <dimen name="link_layout_description_padding_bottom">8dp</dimen>

@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/dialog_voters_padding_horizontal"
-    android:paddingEnd="@dimen/dialog_voters_padding_horizontal"
-    android:paddingTop="@dimen/dialog_voters_padding_vertical">
+    android:orientation="vertical"
+    android:background="?attr/cardListColor">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/voters"
+        android:textSize="@dimen/dialog_voters_title_text_size"
+        android:paddingStart="@dimen/dialog_voters_padding_horizontal"
+        android:paddingEnd="@dimen/dialog_voters_padding_horizontal"
+        android:paddingTop="@dimen/dialog_voters_padding_vertical"
+        android:paddingBottom="@dimen/dialog_voters_padding_vertical"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_line_height"
+        android:background="?attr/lineColor"/>
+
+    <ProgressBar
+        android:id="@+id/progressView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="@dimen/dialog_voters_padding_vertical"
+        android:paddingBottom="@dimen/dialog_voters_padding_vertical"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+        <TextView
+            android:id="@+id/votersTextView"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:padding="8dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/voters"
-                android:textSize="22sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/votersTextView"
-                android:textSize="@dimen/dialog_voters_text_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dialog_voters_text_size"
+            android:paddingStart="@dimen/dialog_voters_padding_horizontal"
+            android:paddingEnd="@dimen/dialog_voters_padding_horizontal"
+            android:paddingTop="@dimen/dialog_voters_padding_vertical"
+            android:paddingBottom="@dimen/dialog_voters_padding_vertical"/>
     </ScrollView>
 
-    <ProgressBar
-        android:id="@+id/progressView"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-</FrameLayout>
+</LinearLayout>

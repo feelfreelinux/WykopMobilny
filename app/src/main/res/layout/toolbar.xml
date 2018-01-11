@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
     android:fitsSystemWindows="true"
+    android:elevation="4dp"
     app:contentInsetStartWithNavigation="0dp"
     app:titleTextAppearance="@style/Toolbar.TitleText"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"

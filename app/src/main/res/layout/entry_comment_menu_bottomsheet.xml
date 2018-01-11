@@ -8,19 +8,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:id="@+id/entry_comment_menu_edit"
+        android:id="@+id/entry_comment_menu_voters"
         style="@style/BottomSheetMenuItem">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetEdit"
+            android:src="?attr/bottomSheetVoters"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="@string/edit_comment"/>
+            android:layout_marginLeft="16dp"
+            android:text="@string/comment_voters"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/entry_comment_menu_copy"
@@ -38,21 +38,6 @@
             android:text="@string/copy_content"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/entry_comment_menu_voters"
-        style="@style/BottomSheetMenuItem">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetVoters"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/comment_voters"/>
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/entry_comment_menu_report"
         style="@style/BottomSheetMenuItem">
         <ImageView
@@ -66,6 +51,21 @@
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
             android:text="@string/report"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/entry_comment_menu_edit"
+        style="@style/BottomSheetMenuItem">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="?attr/bottomSheetEdit"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:text="@string/edit_comment"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/entry_comment_menu_delete"

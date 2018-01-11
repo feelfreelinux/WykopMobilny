@@ -175,7 +175,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
     override fun showUsersMenu(value : Boolean) {
         navigationView.menu.apply {
-            findItem(R.id.nav_user).isVisible = value
+            setGroupVisible(R.id.nav_user, value)
             findItem(R.id.nav_mojwykop).isVisible = value
             findItem(R.id.login).isVisible = !value
             findItem(R.id.logout).isVisible = value

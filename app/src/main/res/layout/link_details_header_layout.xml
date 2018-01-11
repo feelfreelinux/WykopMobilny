@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="@dimen/link_layout_image_width"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
             android:scaleType="centerCrop"
             android:clickable="false"
             android:focusable="false"
@@ -22,7 +22,7 @@
             android:src="@drawable/ic_wykopmobilny"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/separator"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/title"
@@ -32,15 +32,15 @@
             android:paddingEnd="@dimen/link_layout_title_padding_horizontal"
             android:paddingTop="@dimen/link_layout_title_padding_top"
             android:paddingBottom="@dimen/link_layout_title_padding_bottom"
-            android:textSize="@dimen/link_layout_title_font_size"
+            android:textSize="@dimen/link_details_layout_title_font_size"
             android:textStyle="bold"
-            android:maxLines="2"
+            android:maxLines="3"
             android:clickable="false"
             android:focusable="false"
             android:duplicateParentState="true"
-            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image"
             tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet."/>
 
         <TextView
@@ -50,12 +50,12 @@
             android:paddingStart="@dimen/link_layout_description_padding_horizontal"
             android:paddingEnd="@dimen/link_layout_description_padding_horizontal"
             android:paddingBottom="@dimen/link_layout_description_padding_bottom"
-            android:textSize="@dimen/link_layout_description_font_size"
-            android:maxLines="3"
+            android:textSize="@dimen/link_details_layout_description_font_size"
+            android:maxLines="5"
             android:clickable="false"
             android:focusable="false"
             android:duplicateParentState="true"
-            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title"
             tools:text="Mauris et elementum diam. Nam laoreet nunc ac urna dapibus, porttitor faucibus magna pretium."/>
