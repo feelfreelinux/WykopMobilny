@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.api.pm
 
+import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandler
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
@@ -15,23 +16,27 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 
-class PMRepository(val retrofit: Retrofit) : PMApi {
+class PMRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher) : PMApi {
     private val pmretrofitApi by lazy { retrofit.create(PMRetrofitApi::class.java) }
 
     override fun getConversations() = pmretrofitApi.getConversations()
+            .retryWhen(userTokenRefresher)
             .compose<List<ConversationResponse>>(ErrorHandlerTransformer())
             .map { it.map { ConversationMapper.map(it) } }
 
     override fun getConversation(user : String) = pmretrofitApi.getConversation(user)
+            .retryWhen(userTokenRefresher)
             .flatMap<FullConversationResponse>(ErrorHandler())
             .map { FullConversationMapper.map(it) }
 
     override fun deleteConversation(user : String)
-            = pmretrofitApi.deleteConversation(user)
+    = pmretrofitApi.deleteConversation(user)
+            .retryWhen(userTokenRefresher)
             .compose<ConversationDeleteResponse>(ErrorHandlerTransformer())
 
     override fun sendMessage(body : String, user : String, embed: String?) =
             pmretrofitApi.sendMessage(body, user, embed)
+                    .retryWhen(userTokenRefresher)
                     .compose<PMMessageResponse>(ErrorHandlerTransformer())
                     .map { PMMessageMapper.map(it) }
 
@@ -42,6 +47,7 @@ class PMRepository(val retrofit: Retrofit) : PMApi {
                             "embed",
                             embed.fileName,
                             embed.inputStream.getRequestBody(embed.mimeType))!!)
+                    .retryWhen(userTokenRefresher)
                     .compose<PMMessageResponse>(ErrorHandlerTransformer())
                     .map { PMMessageMapper.map(it) }
 

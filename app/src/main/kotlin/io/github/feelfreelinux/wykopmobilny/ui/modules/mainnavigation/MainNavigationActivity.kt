@@ -141,7 +141,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
             } else openMainFragment()
         }
-        printout("LISTEN")
         presenter.startListeningForNotifications()
         setFABVisibility()
         setupNavigation()
