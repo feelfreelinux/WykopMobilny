@@ -105,7 +105,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="3"/>
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.VoteButton
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
                 android:id="@+id/voteButton"
                 style="@style/MikroButton"
                 android:paddingLeft="@dimen/plus_button_padding_left"

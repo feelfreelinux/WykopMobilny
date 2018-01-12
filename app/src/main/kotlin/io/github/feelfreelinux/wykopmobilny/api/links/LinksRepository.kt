@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkCommentMappe
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkCommentResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
 import io.reactivex.Single
 import retrofit2.Retrofit
 
@@ -25,4 +26,18 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .compose<List<LinkCommentResponse>>(ErrorHandlerTransformer())
                     .map { it.map { LinkCommentMapper.map(it) } }
 
-}
+    override fun commentVoteUp(linkId: Int): Single<LinkVoteResponse> =
+            linksApi.commentVoteUp(linkId)
+                    .retryWhen(userTokenRefresher)
+                    .compose<LinkVoteResponse>(ErrorHandlerTransformer())
+
+
+    override fun commentVoteDown(linkId: Int): Single<LinkVoteResponse> =
+            linksApi.commentVoteDown(linkId)
+                    .retryWhen(userTokenRefresher)
+                    .compose<LinkVoteResponse>(ErrorHandlerTransformer())
+
+    override fun commentVoteRemove(linkId: Int): Single<LinkVoteResponse> =
+            linksApi.commentVoteRemove(linkId)
+                    .retryWhen(userTokenRefresher)
+                    .compose<LinkVoteResponse>(ErrorHandlerTransformer())}

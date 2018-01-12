@@ -5,15 +5,18 @@ import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.link_comment_layout.view.*
 import kotlinx.android.synthetic.main.link_comment_list_item.view.*
 
-class LinkCommentViewHolder(val view: View, val navigatorApi: NewNavigatorApi, val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.ViewHolder(view) {
-    fun bindView(comment : LinkComment) {
+class LinkCommentViewHolder(val view: View, val linkCommentPresenter: LinkCommentPresenter, val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.ViewHolder(view) {
+    fun bindView(comment : LinkComment, isUserAuthor: Boolean) {
         val margin = if (comment.id != comment.parentId) 8f else 0f
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin, view.resources.displayMetrics)
         view.setPadding(px.toInt(), 0, 0, 0)
-        view.linkComment.setLinkCommentData(comment, navigatorApi, settingsPreferencesApi)
+        view.linkComment.setLinkCommentData(comment, linkCommentPresenter, userManagerApi, settingsPreferencesApi)
+        view.linkComment.setStyleForComment(isUserAuthor)
     }
 }

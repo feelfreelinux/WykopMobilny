@@ -54,7 +54,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     fun setEntryData(entry: Entry, userManager: UserManagerApi, settingsApi : SettingsPreferencesApi, entryPresenter: EntryPresenter) {
         presenter = entryPresenter
         userManagerApi = userManager
-        voteButton.setup(userManager, settingsApi)
+        voteButton.setup(userManager)
         presenter.subscribe(this)
         this.entry = entry
         presenter.entryId = entry.id

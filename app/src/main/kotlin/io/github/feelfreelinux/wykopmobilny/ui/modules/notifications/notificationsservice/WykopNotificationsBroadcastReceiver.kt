@@ -3,17 +3,16 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificati
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import dagger.android.DaggerBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import javax.inject.Inject
 
-class WykopNotificationsBroadcastReceiver : BroadcastReceiver() {
+class WykopNotificationsBroadcastReceiver : DaggerBroadcastReceiver() {
     @Inject lateinit var settingsApi : SettingsPreferencesApi
 
     override fun onReceive(context: Context, intent: Intent) {
-        (context.applicationContext as WykopApp)
-                .broadcastReceiverInjector().inject(this)
-
+        super.onReceive(context, intent)
         intent.action?.apply {
             if (this == "android.intent.action.BOOT_COMPLETED") {
                 WykopNotificationsJob.schedule(settingsApi)

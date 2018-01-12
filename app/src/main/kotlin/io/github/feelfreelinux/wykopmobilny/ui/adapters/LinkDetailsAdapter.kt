@@ -8,10 +8,14 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkCommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class LinkDetailsAdapter @Inject constructor(val navigatorApi: NewNavigatorApi, val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPresenterFactory,
+                                             val userManagerApi: UserManagerApi,
+                                             val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val HEADER_HOLDER = 0
         private const val COMMENT_HOLDER = 1
@@ -24,7 +28,7 @@ class LinkDetailsAdapter @Inject constructor(val navigatorApi: NewNavigatorApi, 
             (holder as LinkViewHolder).bindView(link!!)
         } else {
             val comment = link!!.comments[position - 1]
-            (holder as LinkCommentViewHolder).bindView(comment)
+            (holder as LinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick)
         }
     }
 
@@ -43,7 +47,7 @@ class LinkDetailsAdapter @Inject constructor(val navigatorApi: NewNavigatorApi, 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             HEADER_HOLDER -> LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_list_item, parent, false))
-            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), navigatorApi, settingsPreferencesApi)
+            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), presenterFactory.create(), userManagerApi, settingsPreferencesApi)
         }
     }
 }

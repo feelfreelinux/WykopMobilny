@@ -41,6 +41,7 @@
     <color name="drawablesColor.Dark">#e6e6e6</color>
     <color name="mikroblogControlsColor.Dark">#424242</color>
     <color name="plusPressedColor">#2AB364</color>
+    <color name="minusPressedColor">#c0392b</color>
     <color name="authorHeader_date.Dark">#757575</color>
     <color name="hintColor.Dark">#9e9e9e</color>
 

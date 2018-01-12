@@ -95,11 +95,6 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         recyclerView.invalidate()
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe(this)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()

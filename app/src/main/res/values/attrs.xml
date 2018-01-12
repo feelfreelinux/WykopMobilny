@@ -30,6 +30,7 @@
     <attr name="favoriteDrawable" format="reference"/>
     <attr name="favoriteOutlineDrawable" format="reference"/>
     <attr name="voteButtonStatelist" format="reference"/>
+    <attr name="voteMinusButtonStatelist" format="reference"/>
     <attr name="buttonStatelist" format="reference"/>
     <attr name="cardviewStatelist" format="reference"/>
     <attr name="surveyBar" format="reference" />
