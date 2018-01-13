@@ -51,48 +51,8 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
 
     private fun setupHeader() {
         authorHeaderView.setAuthorData(comment.author, comment.date, comment.app)
-    }
-
-    private fun setupButtons() {
-        plusButton.setup(userManagerApi)
-        plusButton.text = comment.voteCountPlus.toString()
-        plusButton.voteListener = {
-            presenter.voteUp()
-            comment.userVote = 1
-            minusButton.isButtonSelected = false
-            minusButton.isEnabled = false
-        }
-
-        minusButton.setup(userManagerApi)
-        minusButton.text = comment.voteCountMinus.absoluteValue.toString()
-        minusButton.voteListener = {
-            presenter.voteDown()
-            comment.userVote = -1
-            plusButton.isButtonSelected = false
-            plusButton.isEnabled = false
-        }
-
-        when (comment.userVote) {
-            -1 -> {
-                minusButton.isButtonSelected = true
-                plusButton.isButtonSelected = false
-                minusButton.isEnabled = false
-                plusButton.isEnabled = true
-            }
-
-            1 -> {
-                plusButton.isButtonSelected = true
-                minusButton.isButtonSelected = false
-                plusButton.isEnabled = false
-                minusButton.isEnabled = true
-            }
-
-            0 -> {
-                plusButton.isButtonSelected = false
-                minusButton.isButtonSelected = false
-                plusButton.isEnabled = true
-                minusButton.isEnabled = true
-            }
+        authorHeaderView.setOnClickListener {
+            presenter.voteCancel()
         }
     }
 
@@ -132,6 +92,50 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
         presenter.handleUrl(url)
     }
 
+    private fun setupButtons() {
+        plusButton.setup(userManagerApi)
+        plusButton.text = comment.voteCountPlus.toString()
+        minusButton.setup(userManagerApi)
+        minusButton.text = comment.voteCountMinus.absoluteValue.toString()
+
+        plusButton.voteListener = {
+            presenter.voteUp()
+            minusButton.isEnabled = false
+        }
+
+        minusButton.voteListener = {
+            presenter.voteDown()
+            plusButton.isEnabled = false
+        }
+
+        plusButton.unvoteListener = {
+            minusButton.isEnabled = false
+            presenter.voteCancel()
+        }
+
+        minusButton.unvoteListener = {
+            plusButton.isEnabled = false
+            presenter.voteCancel()
+        }
+
+        when (comment.userVote) {
+            1 -> {
+                plusButton.isButtonSelected = true
+                minusButton.isButtonSelected = false
+            }
+
+            0 -> {
+                plusButton.isButtonSelected = false
+                minusButton.isButtonSelected = false
+            }
+
+            -1 -> {
+                plusButton.isButtonSelected = false
+                minusButton.isButtonSelected = true
+            }
+        }
+    }
+
     override fun setVoteCount(voteResponse: LinkVoteResponse) {
         comment.voteCount = voteResponse.voteCount
         comment.voteCountMinus = voteResponse.voteCountMinus
@@ -141,17 +145,27 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
     }
 
     override fun markVotedMinus() {
-        minusButton.isEnabled = false
+        comment.userVote = -1
+        minusButton.isEnabled = true
         plusButton.isEnabled = true
         minusButton.isButtonSelected = true
         plusButton.isButtonSelected = false
     }
 
     override fun markVotedPlus() {
+        comment.userVote = 1
         minusButton.isEnabled = true
-        plusButton.isEnabled = false
+        plusButton.isEnabled = true
         minusButton.isButtonSelected = false
         plusButton.isButtonSelected = true
+    }
+
+    override fun markVoteRemoved() {
+        comment.userVote = 0
+        minusButton.isEnabled = true
+        plusButton.isEnabled = true
+        minusButton.isButtonSelected = false
+        plusButton.isButtonSelected = false
     }
 
     override fun showErrorDialog(e: Throwable) {

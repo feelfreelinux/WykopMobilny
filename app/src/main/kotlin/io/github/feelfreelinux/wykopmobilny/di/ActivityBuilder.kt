@@ -20,6 +20,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryDeta
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivityFragmentProvider
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivityModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivityModule
@@ -27,9 +28,11 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivityModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsFragmentProvider
 
-
 @Module
 abstract class ActivityBuilder {
+    @ContributesAndroidInjector
+    abstract fun bindWykopStartupBroadcastReceiver() : WykopNotificationsBroadcastReceiver
+
     @ContributesAndroidInjector(modules = [LoginScreenModule::class])
     abstract fun bindLoginActivity(): LoginScreenActivity
 

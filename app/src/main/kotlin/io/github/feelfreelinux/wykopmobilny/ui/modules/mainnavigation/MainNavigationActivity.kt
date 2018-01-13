@@ -228,14 +228,14 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     override fun showNotificationsCount(notifications: Int) {
-        drawer_layout.view_container.apply {
+        drawer_layout.view_container?.apply {
             notificationCount = notifications
         }
 
     }
 
     override fun showHashNotificationsCount(hashNotifications: Int) {
-        drawer_layout.view_container.apply {
+        drawer_layout.view_container?.apply {
             hashTagsNotificationsCount = hashNotifications
         }
 

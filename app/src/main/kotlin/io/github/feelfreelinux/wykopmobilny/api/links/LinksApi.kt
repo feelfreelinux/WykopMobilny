@@ -11,6 +11,6 @@ interface LinksApi {
 
     fun commentVoteUp(linkId: Int) : Single<LinkVoteResponse>
     fun commentVoteDown(linkId: Int) : Single<LinkVoteResponse>
-    fun commentVoteRemove(linkId: Int) : Single<LinkVoteResponse>
+    fun commentVoteCancel(linkId: Int) : Single<LinkVoteResponse>
 
 }

@@ -6,5 +6,6 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteRes
 interface LinkCommentView : BaseView {
     fun markVotedPlus()
     fun markVotedMinus()
+    fun markVoteRemoved()
     fun setVoteCount(voteResponse: LinkVoteResponse)
 }

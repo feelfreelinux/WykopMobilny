@@ -42,4 +42,18 @@ class LinkCommentPresenter(
                         }, { view?.showErrorDialog(it) })
         )
     }
+
+
+    fun voteCancel() {
+        compositeObservable.add(
+                linksApi
+                        .commentVoteCancel(linkId)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({
+                            view?.setVoteCount(it)
+                            view?.markVoteRemoved()
+                        }, { view?.showErrorDialog(it) })
+        )
+    }
 }

@@ -24,6 +24,6 @@ interface LinksRetrofitApi {
     fun commentVoteDown(@Path("linkId") linkId : Int) : Single<WykopApiResponse<LinkVoteResponse>>
 
 
-    @GET("/links/commentVoteRemove/{linkId}/appkey/$APP_KEY")
-    fun commentVoteRemove(@Path("linkId") linkId : Int) : Single<WykopApiResponse<LinkVoteResponse>>
+    @GET("/links/commentVoteCancel/1/{linkId}/appkey/$APP_KEY")
+    fun commentVoteCancel(@Path("linkId") linkId : Int) : Single<WykopApiResponse<LinkVoteResponse>>
 }
