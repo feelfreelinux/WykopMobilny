@@ -9,6 +9,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
@@ -188,10 +189,12 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
         val activityContext = getActivityContext()!!
         val dialog = BottomSheetDialog(activityContext)
         val votersDialogView = activityContext.layoutInflater.inflate(R.layout.dialog_voters, null)
+        votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView)
         votersDialogListener = {
             if (dialog.isShowing) {
                 votersDialogView.progressView.isVisible = false
+                votersDialogView.votersTextView.isVisible = true
                 val spannableStringBuilder = SpannableStringBuilder()
                 it
                         .map { it.author }
@@ -201,6 +204,10 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
                             spannableStringBuilder.appendNewSpan(author.nick, span, 0)
                             if (index < it.size - 1) spannableStringBuilder.append(", ")
                         }
+                if (spannableStringBuilder.isEmpty()) {
+                    votersDialogView.votersTextView.gravity = Gravity.CENTER
+                    spannableStringBuilder.append(context.getString(R.string.dialogNoVotes))
+                }
                 votersDialogView.votersTextView.text = spannableStringBuilder
             }
         }

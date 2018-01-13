@@ -8,19 +8,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:id="@+id/entry_menu_edit"
+        android:id="@+id/entry_menu_voters"
         style="@style/BottomSheetMenuItem">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetEdit"
+            android:src="?attr/bottomSheetVoters"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="@string/edit_entry"/>
+            android:layout_marginLeft="16dp"
+            android:text="@string/entry_voters"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/entry_menu_copy"
@@ -53,19 +53,19 @@
             android:text="@string/report"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/entry_menu_voters"
+        android:id="@+id/entry_menu_edit"
         style="@style/BottomSheetMenuItem">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetVoters"
+            android:src="?attr/bottomSheetEdit"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/entry_voters"/>
+            android:layout_marginStart="16dp"
+            android:text="@string/edit_entry"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/entry_menu_delete"

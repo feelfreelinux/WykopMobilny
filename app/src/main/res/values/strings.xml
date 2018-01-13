@@ -47,6 +47,7 @@
     <string name="date_with_user_app">%1$s via %2$s</string>
     <string name="votePercentageCount">%1$d%% (%2$d głosów)</string>
     <string name="searchNoResults">¯\\_(ツ)_/¯\nBrak wyników</string>
+    <string name="dialogNoVotes">¯\\_(ツ)_/¯\nBrak plusów</string>
     <string name="refresh">Odśwież</string>
     <string name="nav_drawer_open">Nawigacja otwarta</string>
     <string name="nav_drawer_closed">Nawigacja zamknięta</string>
@@ -81,8 +82,8 @@
     <string name="notifications_title">Powiadomienia</string>
     <string name="hashtags_notifications_title">Obserwowane tagi</string>
     <string name="voters">Plusujący</string>
-    <string name="entry_voters">Osoby plusujące ten wpis</string>
-    <string name="comment_voters">Osoby plusujące ten komentarz</string>
+    <string name="entry_voters">Lista plusujących</string>
+    <string name="comment_voters">Lista plusujących</string>
     <string name="edit">Edytuj</string>
     <string name="copy_content">Kopiuj treść</string>
     <string name="delete">Usuń</string>

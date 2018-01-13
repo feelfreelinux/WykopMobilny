@@ -88,6 +88,7 @@
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
                 android:id="@+id/plusButton"
                 style="@style/MikroButton"
+                android:paddingLeft="@dimen/plus_button_padding_left"
                 android:drawableStart="?attr/plusDrawable"
                 app:layout_constraintEnd_toStartOf="@id/minusButton"
                 app:layout_constraintTop_toTopOf="parent"
