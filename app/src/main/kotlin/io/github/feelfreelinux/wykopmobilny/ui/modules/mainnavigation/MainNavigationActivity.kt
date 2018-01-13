@@ -127,8 +127,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
         }
-        presenter.subscribe(this)
-
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         navHeader.view_container?.showDrawerHeader(userManagerApi.isUserAuthorized(), userManagerApi.getUserCredentials())
 
@@ -141,7 +139,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
             } else openMainFragment()
         }
-        presenter.startListeningForNotifications()
         setFABVisibility()
         setupNavigation()
     }
@@ -162,10 +159,17 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onResume() {
+        super.onResume()
+        if (!presenter.isSubscribed) {
+            presenter.subscribe(this)
+            presenter.startListeningForNotifications()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
         presenter.unsubscribe()
-        printout("UNSUBSCRIBE")
     }
 
     private fun setupNavigation() {
@@ -265,8 +269,11 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             }
 
             NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE -> {
-                printout("dddd")
-                presenter.startListeningForNotifications()
+                if (!presenter.isSubscribed) {
+                    presenter.subscribe(this)
+                    presenter.startListeningForNotifications()
+                }
+                presenter.checkNotifications(true)
             }
 
             else -> {
