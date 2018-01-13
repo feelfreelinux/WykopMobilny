@@ -10,7 +10,7 @@ class LinkMapper {
             return Link(value.id,
                     value.title,
                     value.description, value.tags, value.sourceUrl,
-                    value.voteCount, emptyList(),
+                    value.voteCount, value.buryCount, emptyList(),
                     value.commentsCount, value.relatedCount,
                     if (value.author != null) AuthorMapper.map(value.author) else null, value.date, value.preview,
                     value.plus18, value.canVote, value.isHot,

@@ -21,6 +21,9 @@ class LinkResponse(
         @Json(name="vote_count")
         val voteCount : Int,
 
+        @Json(name="bury_count")
+        val buryCount : Int,
+
         @Json(name="comments_count")
         val commentsCount : Int,
 

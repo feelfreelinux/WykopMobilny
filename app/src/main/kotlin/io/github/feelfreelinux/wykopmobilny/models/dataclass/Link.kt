@@ -10,7 +10,8 @@ import kotlinx.android.parcel.Parcelize
         val description : String,
         val tags : String,
         val sourceUrl : String,
-        val voteCount : Int,
+        var voteCount : Int,
+        var buryCount : Int,
         var comments : List<LinkComment>,
         val commentsCount : Int,
         val relatedCount : Int,
@@ -21,6 +22,6 @@ import kotlinx.android.parcel.Parcelize
         val canVote : Boolean,
         val isHot : Boolean,
         val status : String,
-        val userVote : String?,
+        var userVote : String?,
         val app : String?
 ) : Parcelable

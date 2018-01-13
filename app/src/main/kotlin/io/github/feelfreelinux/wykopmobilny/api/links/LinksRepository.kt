@@ -5,6 +5,7 @@ import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransfo
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkCommentMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkCommentResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
@@ -40,4 +41,21 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
     override fun commentVoteCancel(linkId: Int): Single<LinkVoteResponse> =
             linksApi.commentVoteCancel(linkId)
                     .retryWhen(userTokenRefresher)
-                    .compose<LinkVoteResponse>(ErrorHandlerTransformer())}
+                    .compose<LinkVoteResponse>(ErrorHandlerTransformer())
+
+    override fun voteUp(linkId: Int): Single<DigResponse> =
+            linksApi.voteUp(linkId)
+                    .retryWhen(userTokenRefresher)
+                    .compose<DigResponse>(ErrorHandlerTransformer())
+
+    override fun voteDown(linkId: Int, reason : Int): Single<DigResponse> =
+            linksApi.voteDown(linkId, reason)
+                    .retryWhen(userTokenRefresher)
+                    .compose<DigResponse>(ErrorHandlerTransformer())
+
+    override fun voteRemove(linkId: Int) : Single<DigResponse> =
+            linksApi.voteRemove(linkId)
+                    .retryWhen(userTokenRefresher)
+                    .compose<DigResponse>(ErrorHandlerTransformer())
+}
+

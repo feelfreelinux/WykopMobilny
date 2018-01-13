@@ -9,12 +9,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkCommentV
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkHeaderViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.LinkPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
 class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPresenterFactory,
+                                             val linkPresenterFactory: LinkPresenterFactory,
                                              val userManagerApi: UserManagerApi,
                                              val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -47,7 +49,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            HEADER_HOLDER -> LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_list_item, parent, false))
+            HEADER_HOLDER -> LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_list_item, parent, false), linkPresenterFactory.create(), userManagerApi)
             else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), presenterFactory.create(), userManagerApi, settingsPreferencesApi)
         }
     }

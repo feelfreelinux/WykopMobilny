@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.api.links
 
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.common.WykopApiResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkCommentResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
@@ -26,4 +27,14 @@ interface LinksRetrofitApi {
 
     @GET("/links/commentVoteCancel/1/{linkId}/appkey/$APP_KEY")
     fun commentVoteCancel(@Path("linkId") linkId : Int) : Single<WykopApiResponse<LinkVoteResponse>>
+
+    @GET("/links/voteup/{linkId}/appkey/$APP_KEY")
+    fun voteUp(@Path("linkId") linkId : Int) : Single<WykopApiResponse<DigResponse>>
+
+    @GET("/links/votedown/{linkId}/{voteType}/appkey/$APP_KEY")
+    fun voteDown(@Path("linkId") linkId : Int,
+                 @Path("voteType") reason : Int) : Single<WykopApiResponse<DigResponse>>
+
+    @GET("/links/voteremove/{linkId}/appkey/$APP_KEY")
+    fun voteRemove(@Path("linkId") linkId : Int) : Single<WykopApiResponse<DigResponse>>
 }

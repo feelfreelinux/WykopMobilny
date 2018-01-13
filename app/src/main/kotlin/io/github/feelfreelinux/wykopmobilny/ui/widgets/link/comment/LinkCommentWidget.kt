@@ -51,9 +51,6 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
 
     private fun setupHeader() {
         authorHeaderView.setAuthorData(comment.author, comment.date, comment.app)
-        authorHeaderView.setOnClickListener {
-            presenter.voteCancel()
-        }
     }
 
     private fun setupBody() {
