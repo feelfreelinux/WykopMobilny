@@ -27,6 +27,12 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .compose<List<LinkCommentResponse>>(ErrorHandlerTransformer())
                     .map { it.map { LinkCommentMapper.map(it) } }
 
+    override fun getLink(linkId: Int): Single<Link> =
+            linksApi.getLink(linkId)
+                    .retryWhen(userTokenRefresher)
+                    .compose<LinkResponse>(ErrorHandlerTransformer())
+                    .map { LinkMapper.map(it) }
+
     override fun commentVoteUp(linkId: Int): Single<LinkVoteResponse> =
             linksApi.commentVoteUp(linkId)
                     .retryWhen(userTokenRefresher)

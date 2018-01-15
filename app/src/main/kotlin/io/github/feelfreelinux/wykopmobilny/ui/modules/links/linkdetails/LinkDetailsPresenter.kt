@@ -15,4 +15,13 @@ class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi) :
                         .subscribe({ view?.showLinkComments(it) }, { view?.showErrorDialog(it) })
         )
     }
+
+    fun updateLink() {
+        compositeObservable.add(
+                linksApi.getLink(linkId)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.updateLink(it) }, { view?.showErrorDialog(it) })
+        )
+    }
 }

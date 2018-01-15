@@ -17,6 +17,9 @@ interface LinksRetrofitApi {
     @GET("/links/comments/{linkId}/sort/{sortBy}/appkey/$APP_KEY")
     fun getLinkComments(@Path("linkId") linkId : Int, @Path("sortBy") sortBy : String) : Single<WykopApiResponse<List<LinkCommentResponse>>>
 
+    @GET("/links/link/{linkId}/appkey/$APP_KEY")
+    fun getLink(@Path("linkId") linkId : Int) : Single<WykopApiResponse<LinkResponse>>
+
     @GET("/links/commentVoteUp/1/{linkId}/appkey/$APP_KEY")
     fun commentVoteUp(@Path("linkId") linkId : Int) : Single<WykopApiResponse<LinkVoteResponse>>
 

@@ -41,7 +41,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_link_details)
         setSupportActionBar(toolbar)
-
+        presenter.subscribe(this)
         supportActionBar?.apply {
             title = null
             setDisplayHomeAsUpEnabled(true)
@@ -72,24 +72,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             adapter.notifyDataSetChanged()
             loadingView.isVisible = true
             presenter.loadComments()
+            presenter.updateLink()
         }
-    }
-
-    private fun loadData() {
-        if (linkFragmentData.data != null)
-            adapter.link = linkFragmentData.data
-        else {
-            // Trigger data loading
-            loadingView.isVisible = true
-            presenter.loadComments()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe(this)
-        presenter.linkId = link.id
-        loadData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -105,12 +89,12 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     override fun onPause() {
         super.onPause()
         if (isFinishing) supportFragmentManager.removeDataFragment(linkFragmentData)
-        presenter.unsubscribe()
     }
 
 
     override fun onRefresh() {
         presenter.loadComments()
+        presenter.updateLink()
     }
 
     override fun showLinkComments(comments: List<LinkComment>) {
@@ -124,5 +108,11 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
                     recyclerView.scrollToPosition(index + 1)
             })
         }*/
+    }
+
+    override fun updateLink(link: Link) {
+        link.comments = adapter.link!!.comments
+        adapter.link = link
+        adapter.notifyDataSetChanged()
     }
 }
