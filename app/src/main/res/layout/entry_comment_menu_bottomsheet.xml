@@ -15,12 +15,13 @@
             android:layout_height="match_parent"
             android:src="?attr/bottomSheetVoters"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
-            android:text="@string/comment_voters"/>
+            android:text="@string/voters_list" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/entry_comment_menu_copy"

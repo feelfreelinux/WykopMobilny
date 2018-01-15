@@ -61,6 +61,11 @@
         <item name="bottomSheetEdit">@drawable/ic_pen_light</item>
         <item name="bottomSheetCopy">@drawable/ic_copy_content_light</item>
         <item name="bottomSheetReport">@drawable/ic_report_light</item>
+        <item name="bottomSheetBury">@drawable/ic_bury_light</item>
+        <item name="bottomSheetBuryList">@drawable/ic_bury_list_light</item>
+        <item name="bottomSheetDiggerList">@drawable/ic_dig_list_light</item>
+        <item name="bottomSheetRelated">@drawable/ic_related_light</item>
+
         <item name="bottomSheetVoters">@drawable/ic_sheet_voters</item>
         <item name="bottomSheetDelete">@drawable/ic_menu_delete_light</item>
 
@@ -129,6 +134,10 @@
         <item name="bottomSheetReport">@drawable/ic_report</item>
         <item name="bottomSheetVoters">@drawable/ic_sheet_voters_light</item>
         <item name="bottomSheetDelete">@drawable/ic_menu_delete</item>
+        <item name="bottomSheetBury">@drawable/ic_bury</item>
+        <item name="bottomSheetBuryList">@drawable/ic_bury_list</item>
+        <item name="bottomSheetDiggerList">@drawable/ic_dig_list</item>
+        <item name="bottomSheetRelated">@drawable/ic_related</item>
 
     </style>
 

@@ -8,78 +8,82 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:id="@+id/entry_comment_menu_voters"
+        android:id="@+id/link_bury"
         style="@style/BottomSheetMenuItem">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetVoters"
+            android:src="?attr/bottomSheetBury" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:text="@string/bury"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/link_diggers"
+        style="@style/BottomSheetMenuItem">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="?attr/bottomSheetDiggerList"
+            />
+        <TextView
+            android:id="@+id/tvDiggerList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:text="@string/dig_list"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/link_bury_list"
+        style="@style/BottomSheetMenuItem">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="?attr/bottomSheetBuryList"
+            />
+        <TextView
+            android:id="@+id/tvBuryList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:text="@string/bury_list"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/link_related"
+        style="@style/BottomSheetMenuItem">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="?attr/bottomSheetRelated"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
-            android:text="@string/comment_voters"/>
+            android:text="@string/related"/>
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/entry_comment_menu_copy"
+        android:id="@+id/link_report"
         style="@style/BottomSheetMenuItem">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetCopy"
-            />
+            android:src="?attr/bottomSheetReport" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
-            android:text="@string/copy_content"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/entry_comment_menu_report"
-        style="@style/BottomSheetMenuItem">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetReport"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/report"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/entry_comment_menu_edit"
-        style="@style/BottomSheetMenuItem">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetEdit"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="@string/edit_comment"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/entry_comment_menu_delete"
-        style="@style/BottomSheetMenuItem">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetDelete"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/delete"/>
+            android:text="@string/report" />
     </LinearLayout>
 </LinearLayout>

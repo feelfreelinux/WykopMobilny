@@ -2,6 +2,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.link
 
 import android.content.Context
 import android.graphics.Color
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.BottomSheetDialog
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
@@ -17,6 +19,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.android.synthetic.main.link_bury_menu_bottomsheet.view.*
+import kotlinx.android.synthetic.main.link_menu_bottomsheet.view.*
 import kotlinx.android.synthetic.main.link_details_header_layout.view.*
 
 class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), LinkView {
@@ -57,6 +61,9 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
     private fun setupButtons() {
         diggCountTextView.text = link.voteCount.toString()
         commentsCountTextView.text = link.commentsCount.toString()
+        moreOptionsTextView.setOnClickListener {
+            openOptionsMenu()
+        }
     }
 
     private fun setupBody() {
@@ -122,6 +129,87 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         link.userVote = null
         diggCountTextView.isEnabled = true
         setWykopColorDrawable(false)
+    }
+
+    fun openOptionsMenu() {
+        val activityContext = getActivityContext()!!
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_menu_bottomsheet, null)
+        dialog.setContentView(bottomSheetView)
+
+        bottomSheetView.apply {
+            tvDiggerList.text = resources.getString(R.string.dig_list, link.voteCount)
+            tvBuryList.text = resources.getString(R.string.bury_list, link.buryCount)
+            link_diggers.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            link_bury_list.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            link_bury.setOnClickListener {
+                dialog.dismiss()
+                openBuryReasonMenu()
+            }
+
+            link_related.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            link_report.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            link_report.isVisible = userManager.isUserAuthorized()
+            link_bury.isVisible = userManager.isUserAuthorized()
+        }
+
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        dialog.setOnShowListener {
+            mBehavior.peekHeight = bottomSheetView.height
+        }
+        dialog.show()
+    }
+
+    fun openBuryReasonMenu() {
+        val activityContext = getActivityContext()!!
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_bury_menu_bottomsheet, null)
+        dialog.setContentView(bottomSheetView)
+
+        bottomSheetView.apply {
+            reason_duplicate.setOnClickListener {
+                presenter.voteDown(1)
+                dialog.dismiss()
+            }
+
+            reason_spam.setOnClickListener {
+                presenter.voteDown(2)
+                dialog.dismiss()
+            }
+
+            reason_fake_info.setOnClickListener {
+                presenter.voteDown(3)
+                dialog.dismiss()
+            }
+
+            reason_wrong_content.setOnClickListener {
+                presenter.voteDown(4)
+                dialog.dismiss()
+            }
+
+            reason_unsuitable_content.setOnClickListener {
+                presenter.voteDown(5)
+                dialog.dismiss()
+            }
+        }
+
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        dialog.setOnShowListener {
+            mBehavior.peekHeight = bottomSheetView.height
+        }
+        dialog.show()
     }
 
     override fun showErrorDialog(e: Throwable) {

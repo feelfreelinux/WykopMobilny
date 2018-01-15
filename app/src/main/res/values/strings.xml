@@ -84,8 +84,8 @@
     <string name="voters">Plusujący</string>
     <string name="voters_list">Lista plusujących</string>
     <string name="bury">Zakop</string>
-    <string name="bury_list">Lista zakopujących (%1$s)</string>
-    <string name="dig_list">Lista wykopujących (%1$s)</string>
+    <string name="bury_list">Lista zakopujących (%1$d)</string>
+    <string name="dig_list">Lista wykopujących (%1$d)</string>
     <string name="edit">Edytuj</string>
     <string name="copy_content">Kopiuj treść</string>
     <string name="delete">Usuń</string>
@@ -105,7 +105,14 @@
     <string name="update_app">Zaktualizuj aplikację do najnowszej wersji</string>
     <string name="update">Zaktualizuj</string>
     <string name="cancel">Anuluj</string>
+    <string name="related">Powiązane</string>
     <string name="do_not_show_again">Nie pokazuj ponownie</string>
     <string name="expand_image">rozwiń obrazek</string>
+    <string name="bury_reason">Powód zakopu</string>
+    <string name="reason_duplicate">Duplikat</string>
+    <string name="reason_spam">Spam</string>
+    <string name="reason_fake_info">Informacja nieprawdziwa</string>
+    <string name="reason_wrong_content">Treść nieodpowiednia</string>
+    <string name="reason_unsuitable_content">Nie nadaje się</string>
 
 </resources>

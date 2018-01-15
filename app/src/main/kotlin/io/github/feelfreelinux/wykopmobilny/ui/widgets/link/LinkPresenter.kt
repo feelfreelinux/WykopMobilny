@@ -48,7 +48,7 @@ class LinkPresenter(
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({
-                            view?.showDigged()
+                            view?.showBurried()
                         }, {
                             view?.showErrorDialog(it)
                         })

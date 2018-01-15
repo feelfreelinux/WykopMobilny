@@ -7,80 +7,69 @@
     android:background="?attr/cardListColor"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:text="@string/bury_reason"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        style="@style/BottomSheetMenuItem"/>
+
     <LinearLayout
-        android:id="@+id/entry_menu_voters"
+        android:id="@+id/reason_duplicate"
         style="@style/BottomSheetMenuItem">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetVoters"
-            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
-            android:text="@string/voters_list" />
+            android:text="@string/reason_duplicate" />
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/entry_menu_copy"
+        android:id="@+id/reason_spam"
         style="@style/BottomSheetMenuItem">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetCopy"
-            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
-            android:text="@string/copy_content"/>
+            android:text="@string/reason_spam" />
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/entry_menu_report"
+        android:id="@+id/reason_fake_info"
         style="@style/BottomSheetMenuItem">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetReport"
-            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
-            android:text="@string/report"/>
+            android:text="@string/reason_fake_info" />
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/entry_menu_edit"
+        android:id="@+id/reason_wrong_content"
         style="@style/BottomSheetMenuItem">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetEdit"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="@string/edit_entry"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/entry_menu_delete"
-        style="@style/BottomSheetMenuItem">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetDelete"
-            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
-            android:text="@string/delete"/>
+            android:text="@string/reason_wrong_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/reason_unsuitable_content"
+        style="@style/BottomSheetMenuItem">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:text="@string/reason_unsuitable_content" />
     </LinearLayout>
 </LinearLayout>

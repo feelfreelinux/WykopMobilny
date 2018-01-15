@@ -49,6 +49,11 @@
 
     <!-- DRAWABLES - BOTTOMSHEET MENU -->
     <attr name="bottomSheetDelete" format="reference"/>
+    <attr name="bottomSheetRelated" format="reference"/>
+    <attr name="bottomSheetDig" format="reference"/>
+    <attr name="bottomSheetDiggerList" format="reference"/>
+    <attr name="bottomSheetBury" format="reference"/>
+    <attr name="bottomSheetBuryList" format="reference"/>
     <attr name="bottomSheetEdit" format="reference"/>
     <attr name="bottomSheetReport" format="reference"/>
     <attr name="bottomSheetCopy" format="reference"/>
