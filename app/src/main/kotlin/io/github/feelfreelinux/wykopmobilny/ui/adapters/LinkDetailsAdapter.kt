@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkCommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkHeaderViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
@@ -25,6 +26,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
     }
 
     var link: Link? = null
+    var onReplyClickedListener : (LinkComment) -> Unit = {}
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder?.itemViewType == HEADER_HOLDER) {
@@ -50,7 +52,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             HEADER_HOLDER -> LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_list_item, parent, false), linkPresenterFactory.create(), userManagerApi)
-            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), presenterFactory.create(), userManagerApi, settingsPreferencesApi)
+            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), onReplyClickedListener, presenterFactory.create(), userManagerApi, settingsPreferencesApi)
         }
     }
 }

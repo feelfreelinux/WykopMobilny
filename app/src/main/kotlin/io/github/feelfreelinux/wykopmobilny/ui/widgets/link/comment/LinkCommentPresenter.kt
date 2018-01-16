@@ -13,6 +13,7 @@ class LinkCommentPresenter(
         @Provided val newNavigatorApi: NewNavigatorApi,
         @Provided val linksApi : LinksApi) : BasePresenter<LinkCommentView>() {
     var linkId = -1
+
     fun handleUrl(url : String) {
         newNavigatorApi.openBrowser(url)
     }
@@ -53,6 +54,17 @@ class LinkCommentPresenter(
                         .subscribe({
                             view?.setVoteCount(it)
                             view?.markVoteRemoved()
+                        }, { view?.showErrorDialog(it) })
+        )
+    }
+
+    fun deleteComment() {
+        compositeObservable.add(
+                linksApi.commentDelete(linkId)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({
+                            view?.markCommentAsRemoved()
                         }, { view?.showErrorDialog(it) })
         )
     }

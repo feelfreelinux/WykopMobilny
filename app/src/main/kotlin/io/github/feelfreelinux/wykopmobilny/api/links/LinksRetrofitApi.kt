@@ -2,13 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.api.links
 
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.common.WykopApiResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkCommentResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 interface LinksRetrofitApi {
     @GET("/links/promoted/page/{page}/appkey/$APP_KEY")
@@ -40,4 +38,33 @@ interface LinksRetrofitApi {
 
     @GET("/links/voteremove/{linkId}/appkey/$APP_KEY")
     fun voteRemove(@Path("linkId") linkId : Int) : Single<WykopApiResponse<DigResponse>>
+
+    @Multipart
+    @POST("/links/commentadd/{linkId}/{commentId}/appkey/$APP_KEY")
+    fun addComment(@Part("body") body: RequestBody,
+                        @Path("linkId") linkId : Int,
+                        @Path("commentId") commentId : Int,
+                        @Part file : MultipartBody.Part) : Single<WykopApiResponse<LinkCommentResponse>>
+
+    @FormUrlEncoded
+    @POST("/links/commentadd/{linkId}/{commentId}/appkey/$APP_KEY")
+    fun addComment(@Field("body") body: String,
+                   @Path("linkId") linkId : Int,
+                   @Path("commentId") commentId : Int,
+                   @Field("embed") embed : String?) : Single<WykopApiResponse<LinkCommentResponse>>
+
+    @POST("/links/commentdelete/{linkCommentId}/appkey/$APP_KEY")
+    fun deleteComment(@Path("linkCommentId") linkId : Int) : Single<WykopApiResponse<LinkCommentResponse>>
+
+    @Multipart
+    @POST("/links/commentadd/{linkId}/appkey/$APP_KEY")
+    fun addComment(@Part("body") body: RequestBody,
+                   @Path("linkId") linkId : Int,
+                   @Part file : MultipartBody.Part) : Single<WykopApiResponse<LinkCommentResponse>>
+
+    @FormUrlEncoded
+    @POST("/links/commentadd/{linkId}/appkey/$APP_KEY")
+    fun addComment(@Field("body") body: String,
+                   @Path("linkId") linkId : Int,
+                   @Field("embed") embed : String?) : Single<WykopApiResponse<LinkCommentResponse>>
 }

@@ -27,7 +27,7 @@ android {
     defaultConfig {
         applicationId "io.github.feelfreelinux.wykopmobilny"
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 19
         versionName "0.4.2"
 
@@ -61,7 +61,6 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
-    buildToolsVersion versions.buildTools
     lintOptions {
         abortOnError false
     }

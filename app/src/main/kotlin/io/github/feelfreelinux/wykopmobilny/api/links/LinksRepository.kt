@@ -1,8 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.api.links
 
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
+import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
+import io.github.feelfreelinux.wykopmobilny.api.getRequestBody
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkCommentMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
@@ -10,7 +13,10 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkComment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Retrofit
+import java.lang.reflect.Type
 
 class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher) : LinksApi {
     private val linksApi by lazy { retrofit.create(LinksRetrofitApi::class.java) }
@@ -63,5 +69,41 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
             linksApi.voteRemove(linkId)
                     .retryWhen(userTokenRefresher)
                     .compose<DigResponse>(ErrorHandlerTransformer())
+
+    override fun commentAdd(body: String, embed: String?, linkId: Int): Single<LinkComment> =
+            linksApi.addComment(body, linkId, embed)
+                    .retryWhen(userTokenRefresher)
+                    .compose<LinkCommentResponse>(ErrorHandlerTransformer())
+                    .map { LinkCommentMapper.map(it) }
+
+    override fun commentAdd(body: String, inputStream: TypedInputStream, linkId: Int): Single<LinkComment> =
+            linksApi.addComment(body.toRequestBody(), linkId, inputStream.getFileMultipart())
+                    .retryWhen(userTokenRefresher)
+                    .compose<LinkCommentResponse>(ErrorHandlerTransformer())
+                    .map { LinkCommentMapper.map(it) }
+
+    override fun commentAdd(body: String, embed: String?, linkId: Int, linkComment: Int): Single<LinkComment> =
+        linksApi.addComment(body, linkId, linkComment, embed)
+                        .retryWhen(userTokenRefresher)
+                        .compose<LinkCommentResponse>(ErrorHandlerTransformer())
+                        .map { LinkCommentMapper.map(it) }
+
+    override fun commentAdd(body: String, inputStream: TypedInputStream, linkId: Int, linkComment: Int): Single<LinkComment> =
+            linksApi.addComment(body.toRequestBody(), linkId, linkComment, inputStream.getFileMultipart())
+                    .retryWhen(userTokenRefresher)
+                    .compose<LinkCommentResponse>(ErrorHandlerTransformer())
+                    .map { LinkCommentMapper.map(it) }
+
+    override fun commentDelete(commentId: Int): Single<LinkComment> =
+            linksApi.deleteComment(commentId)
+                    .retryWhen(userTokenRefresher)
+                    .compose<LinkCommentResponse>(ErrorHandlerTransformer())
+                    .map { LinkCommentMapper.map(it) }
+
+    private fun TypedInputStream.getFileMultipart() =
+            MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
+
+    private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
+
 }
 

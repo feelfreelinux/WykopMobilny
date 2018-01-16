@@ -7,5 +7,6 @@ interface LinkCommentView : BaseView {
     fun markVotedPlus()
     fun markVotedMinus()
     fun markVoteRemoved()
+    fun markCommentAsRemoved()
     fun setVoteCount(voteResponse: LinkVoteResponse)
 }
