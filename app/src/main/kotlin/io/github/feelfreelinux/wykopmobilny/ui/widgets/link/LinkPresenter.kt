@@ -6,13 +6,19 @@ import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 
 @AutoFactory
 class LinkPresenter(
         @Provided val schedulers: Schedulers,
         @Provided val navigatorApi: NewNavigatorApi,
+        @Provided val linkHandlerApi: WykopLinkHandlerApi,
         @Provided val linksApi: LinksApi) : BasePresenter<LinkView>() {
     var linkId = -1
+
+    fun handleUrl(url : String) {
+        linkHandlerApi.handleUrl(url)
+    }
 
     fun voteUp() {
         compositeObservable.add(

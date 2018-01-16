@@ -16,14 +16,18 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
+import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
+import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.link_bury_menu_bottomsheet.view.*
 import kotlinx.android.synthetic.main.link_menu_bottomsheet.view.*
 import kotlinx.android.synthetic.main.link_details_header_layout.view.*
+import java.net.URL
 
-class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), LinkView {
+class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), LinkView, URLClickedListener {
 
     lateinit var link : Link
     lateinit var presenter : LinkPresenter
@@ -56,6 +60,13 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
     private fun setupHeader() {
         dateTextView.text = link.date.toPrettyDate()
         hotBadgeStrip.isVisible = link.isHot
+        avatarView.setAuthor(link.author!!)
+        dateTextView.text = link.date.toPrettyDate()
+        urlTextView.text = URL(link.sourceUrl).host
+        userTextView.text = link.author!!.nick
+        userTextView.setTextColor(context.getGroupColor(link.author!!.group))
+        tagsTextView.prepareBody(link.tags.convertToTagsHtml(), this)
+
     }
 
     private fun setupButtons() {
@@ -212,7 +223,19 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         dialog.show()
     }
 
+    override fun handleUrl(url: String) {
+        presenter.handleUrl(url)
+    }
+
     override fun showErrorDialog(e: Throwable) {
         context.showExceptionDialog(e)
+    }
+
+    fun String.convertToTagsHtml() : String {
+        val html = StringBuilder()
+        split(" ").forEach {
+            html.append("<a href=\"$it\">$it<\\a> ")
+        }
+        return html.toString()
     }
 }

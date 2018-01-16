@@ -29,6 +29,6 @@ class ViewPresenterFactoryModule {
             = LinkCommentPresenterFactory(Provider { schedulers }, Provider { newNavigatorApi }, Provider { linksApi })
 
     @Provides
-    fun provideLinkPresenterFactory(schedulers: Schedulers, linksApi: LinksApi, newNavigatorApi: NewNavigatorApi)
-            = LinkPresenterFactory(Provider { schedulers }, Provider { newNavigatorApi }, Provider { linksApi })
+    fun provideLinkPresenterFactory(schedulers: Schedulers, linksApi: LinksApi, newNavigatorApi: NewNavigatorApi, linkHandlerApi: WykopLinkHandlerApi)
+            = LinkPresenterFactory(Provider { schedulers }, Provider { newNavigatorApi }, Provider { linkHandlerApi }, Provider { linksApi })
 }
