@@ -24,6 +24,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.LinkParser
 import kotlinx.android.synthetic.main.activity_link_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -32,6 +33,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     companion object {
         val EXTRA_LINK = "LINK_PARCEL"
         val EXTRA_FRAGMENT_KEY = "LINK_ACTIVITY_#"
+        val EXTRA_LINK_ID = "EXTRA_LINKID"
         val EXTRA_COMMENT_ID = "EXTRA_COMMENT_ID"
 
         fun createIntent(context: Context, link : Link): Intent {
@@ -39,9 +41,27 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             intent.putExtra(EXTRA_LINK, link)
             return intent
         }
+
+        fun createIntent(context: Context, linkId : Int, commentId : Int? = null): Intent {
+            val intent = Intent(context, LinkDetailsActivity::class.java)
+            intent.putExtra(EXTRA_LINK_ID, linkId)
+            intent.putExtra(EXTRA_COMMENT_ID, commentId)
+            return intent
+        }
     }
 
     var replyLinkId : Int = 0
+
+    val link by lazy { intent.getParcelableExtra<Link>(EXTRA_LINK) }
+    val linkId by lazy { if (intent.hasExtra(EXTRA_LINK)) link.id else {
+        if (intent.data == null) intent.getIntExtra(EXTRA_LINK_ID, -1)
+        else LinkParser.getLinkId(intent.dataString)!!
+    } }
+
+    val linkCommentId by lazy {
+        if (intent.hasExtra(EXTRA_COMMENT_ID)) intent.getIntExtra(EXTRA_COMMENT_ID, -1)
+        else LinkParser.getLinkCommentId(intent.dataString) ?: -1
+    }
 
     override fun getReplyCommentId(): Int {
         return if (replyLinkId != 0 && inputToolbar.textBody.contains("@")) replyLinkId
@@ -53,7 +73,6 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     @Inject lateinit var presenter: LinkDetailsPresenter
     private lateinit var linkFragmentData: DataFragment<Link>
-    private val link by lazy { intent.getParcelableExtra(EXTRA_LINK) as Link }
     @Inject lateinit var adapter : LinkDetailsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +83,6 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             title = null
             setDisplayHomeAsUpEnabled(true)
         }
-        supportActionBar?.title = null
-        presenter.linkId = link.id
 
         adapter.onReplyClickedListener = {
             replyLinkId = it.id
@@ -78,21 +95,25 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             // Set margin, adapter
             this.adapter = this@LinkDetailsActivity.adapter
         }
+        supportActionBar?.title = null
+        presenter.linkId = if(intent.data != null) { LinkParser.getLinkId(intent.dataString)!! } else { linkId }
+        if (intent.hasExtra(EXTRA_LINK)) {
+            adapter.link = link
+            adapter.notifyDataSetChanged()
+        }
+        adapter.highlightCommentId = linkCommentId
 
-        adapter.link = link
-        adapter.notifyDataSetChanged()
         // Prepare InputToolbar
         inputToolbar.setup(userManagerApi, suggestionsApi)
         inputToolbar.inputToolbarListener = this
 
         swiperefresh.setOnRefreshListener(this)
-        linkFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + link.id)
+        linkFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + linkId)
         if (linkFragmentData.data != null) {
             adapter.link = linkFragmentData.data
             adapter.notifyDataSetChanged()
             loadingView.isVisible = false
         } else {
-            adapter.link = link
             adapter.notifyDataSetChanged()
             loadingView.isVisible = true
             hideInputToolbar()
@@ -128,8 +149,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         swiperefresh.isRefreshing = false
         adapter.notifyDataSetChanged()
         inputToolbar.show()
-        if (intent.hasExtra(EXTRA_COMMENT_ID) && linkFragmentData.data == null) {
-            scrollToComment(intent.getIntExtra(EXTRA_COMMENT_ID, -1))
+        if (linkCommentId != -1 && linkFragmentData.data == null) {
+            scrollToComment(linkCommentId)
         }
     }
 
@@ -142,7 +163,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     }
 
     override fun updateLink(link: Link) {
-        link.comments = adapter.link!!.comments
+        link.comments = adapter.link?.comments ?: emptyList()
         adapter.link = link
         adapter.notifyDataSetChanged()
         inputToolbar.show()

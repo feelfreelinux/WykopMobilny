@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.Intent
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.ConversationLinkParser
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.LinkParser
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
 
 interface WykopLinkHandlerApi {
@@ -37,6 +39,9 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
                 }
                 Companion.PM_MATCHER -> {
                     ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
+                }
+                Companion.LINK_MATCHER -> {
+                    LinkDetailsActivity.createIntent(context, LinkParser.getLinkId(url)!!, LinkParser.getLinkCommentId(url))
                 }
                 else -> null
             }

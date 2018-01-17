@@ -25,6 +25,8 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
         private const val COMMENT_HOLDER = 1
     }
 
+    var highlightCommentId = -1
+
     var link: Link? = null
     var onReplyClickedListener : (LinkComment) -> Unit = {}
 
@@ -33,7 +35,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
             (holder as LinkHeaderViewHolder).bindView(link!!)
         } else {
             val comment = link!!.comments[position - 1]
-            (holder as LinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick)
+            (holder as LinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
         }
     }
 

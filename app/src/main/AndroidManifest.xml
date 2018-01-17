@@ -60,7 +60,21 @@
         <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
         <activity android:name=".ui.modules.pm.conversation.ConversationActivity" />
         <activity android:name=".ui.modules.settings.SettingsActivity" />
-        <activity android:name=".ui.modules.links.linkdetails.LinkDetailsActivity" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity"
+            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
+            <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="https"
+                    android:host="www.wykop.pl"
+                    android:pathPrefix="/link" />
+
+                <data android:scheme="http"
+                    android:host="www.wykop.pl"
+                    android:pathPrefix="/link" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.modules.links.upvoters.UpvotersActivity" />
         <activity android:name=".ui.modules.links.downvoters.DownvotersActivity" />
         <activity android:name=".ui.modules.input.link.edit.LinkCommentEditActivity" />
