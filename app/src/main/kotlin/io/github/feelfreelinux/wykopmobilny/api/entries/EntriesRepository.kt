@@ -36,20 +36,22 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .compose<VoteResponse>(ErrorHandlerTransformer())
 
 
-    override fun addEntry(body : String, inputStream: TypedInputStream) = entriesApi.addEntry(body.toRequestBody(), inputStream.getFileMultipart())
+    override fun addEntry(body : String, inputStream: TypedInputStream, plus18: Boolean) =
+            entriesApi.addEntry(body.toRequestBody(), plus18.toRequestBody(), inputStream.getFileMultipart())
             .retryWhen(userTokenRefresher)
             .compose<EntryResponse>(ErrorHandlerTransformer())
 
-    override fun addEntry(body : String, embed: String?) = entriesApi.addEntry(body, embed)
+    override fun addEntry(body : String, embed: String?, plus18 : Boolean) = entriesApi.addEntry(body, embed, plus18)
             .retryWhen(userTokenRefresher)
             .compose<EntryResponse>(ErrorHandlerTransformer())
 
-    override fun addEntryComment(body : String, entryId: Int, inputStream: TypedInputStream) =
-            entriesApi.addEntryComment(body.toRequestBody(), entryId, inputStream.getFileMultipart())
+    override fun addEntryComment(body : String, entryId: Int, inputStream: TypedInputStream, plus18: Boolean) =
+            entriesApi.addEntryComment(body.toRequestBody(), plus18.toRequestBody(), entryId, inputStream.getFileMultipart())
                     .retryWhen(userTokenRefresher)
                     .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
-    override fun addEntryComment(body : String, entryId: Int, embed: String?) = entriesApi.addEntryComment(body, embed, entryId)            .retryWhen(userTokenRefresher)
+    override fun addEntryComment(body : String, entryId: Int, embed: String?, plus18: Boolean) =
+            entriesApi.addEntryComment(body, embed, plus18, entryId)
             .retryWhen(userTokenRefresher)
             .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
@@ -82,6 +84,7 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
 
     private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
+    private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
 
     override fun getHot(page : Int, period : String) = entriesApi.getHot(page, period)
             .retryWhen(userTokenRefresher)

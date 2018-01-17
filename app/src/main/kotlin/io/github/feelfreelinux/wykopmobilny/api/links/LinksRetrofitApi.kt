@@ -29,6 +29,12 @@ interface LinksRetrofitApi {
     @GET("/links/commentVoteCancel/1/{linkId}/appkey/$APP_KEY")
     fun commentVoteCancel(@Path("linkId") linkId : Int) : Single<WykopApiResponse<LinkVoteResponse>>
 
+    @GET("/links/upvoters/{linkId}/appkey/$APP_KEY")
+    fun getUpvoters(@Path("linkId") linkId : Int) : Single<WykopApiResponse<List<UpvoterResponse>>>
+
+    @GET("/links/downvoters/{linkId}/appkey/$APP_KEY")
+    fun getDownvoters(@Path("linkId") linkId : Int) : Single<WykopApiResponse<List<DownvoterResponse>>>
+
     @GET("/links/voteup/{linkId}/appkey/$APP_KEY")
     fun voteUp(@Path("linkId") linkId : Int) : Single<WykopApiResponse<DigResponse>>
 
@@ -42,7 +48,8 @@ interface LinksRetrofitApi {
     @Multipart
     @POST("/links/commentadd/{linkId}/{commentId}/appkey/$APP_KEY")
     fun addComment(@Part("body") body: RequestBody,
-                        @Path("linkId") linkId : Int,
+                   @Part("adultmedia") plus18 : RequestBody,
+                   @Path("linkId") linkId : Int,
                         @Path("commentId") commentId : Int,
                         @Part file : MultipartBody.Part) : Single<WykopApiResponse<LinkCommentResponse>>
 
@@ -51,7 +58,8 @@ interface LinksRetrofitApi {
     fun addComment(@Field("body") body: String,
                    @Path("linkId") linkId : Int,
                    @Path("commentId") commentId : Int,
-                   @Field("embed") embed : String?) : Single<WykopApiResponse<LinkCommentResponse>>
+                   @Field("embed") embed : String?,
+                   @Field("adultmedia") plus18 : Boolean) : Single<WykopApiResponse<LinkCommentResponse>>
 
     @POST("/links/commentdelete/{linkCommentId}/appkey/$APP_KEY")
     fun deleteComment(@Path("linkCommentId") linkId : Int) : Single<WykopApiResponse<LinkCommentResponse>>
@@ -59,6 +67,7 @@ interface LinksRetrofitApi {
     @Multipart
     @POST("/links/commentadd/{linkId}/appkey/$APP_KEY")
     fun addComment(@Part("body") body: RequestBody,
+                   @Part("adultmedia") plus18 : RequestBody,
                    @Path("linkId") linkId : Int,
                    @Part file : MultipartBody.Part) : Single<WykopApiResponse<LinkCommentResponse>>
 
@@ -66,5 +75,11 @@ interface LinksRetrofitApi {
     @POST("/links/commentadd/{linkId}/appkey/$APP_KEY")
     fun addComment(@Field("body") body: String,
                    @Path("linkId") linkId : Int,
-                   @Field("embed") embed : String?) : Single<WykopApiResponse<LinkCommentResponse>>
+                   @Field("embed") embed : String?,
+                   @Field("adultmedia") plus18 : Boolean) : Single<WykopApiResponse<LinkCommentResponse>>
+
+    @FormUrlEncoded
+    @POST("/links/commentedit/{linkId}/appkey/$APP_KEY")
+    fun editComment(@Field("body") body: String,
+                  @Path("linkId") entryId : Int) : Single<WykopApiResponse<LinkCommentResponse>>
 }

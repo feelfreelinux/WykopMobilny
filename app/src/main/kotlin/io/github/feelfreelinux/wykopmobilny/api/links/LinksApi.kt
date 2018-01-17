@@ -1,9 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.links
 
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
 import io.reactivex.Single
@@ -17,15 +15,25 @@ interface LinksApi {
     fun commentVoteDown(linkId: Int) : Single<LinkVoteResponse>
     fun commentVoteCancel(linkId: Int) : Single<LinkVoteResponse>
     fun commentDelete(commentId: Int) : Single<LinkComment>
-    fun commentAdd(body : String, inputStream: TypedInputStream,
+    fun commentAdd(body : String,
+                   plus18 : Boolean,
+                   inputStream: TypedInputStream,
                    linkId: Int, linkComment: Int) : Single<LinkComment>
     fun commentAdd(body : String, embed: String?,
+                   plus18 : Boolean,
                    linkId: Int, linkComment: Int) : Single<LinkComment>
-    fun commentAdd(body : String, inputStream: TypedInputStream,
+    fun commentAdd(body : String,
+                   plus18 : Boolean,
+                   inputStream: TypedInputStream,
                    linkId: Int) : Single<LinkComment>
     fun commentAdd(body : String, embed: String?,
+                   plus18 : Boolean,
                    linkId: Int) : Single<LinkComment>
+    fun commentEdit(body : String, linkId: Int) : Single<LinkComment>
     fun voteUp(linkId: Int) : Single<DigResponse>
     fun voteDown(linkId: Int, reason : Int) : Single<DigResponse>
     fun voteRemove(linkId: Int) : Single<DigResponse>
+    fun getUpvoters(linkId: Int) : Single<List<Upvoter>>
+    fun getDownvoters(linkId: Int) : Single<List<Downvoter>>
+
 }

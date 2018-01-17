@@ -14,10 +14,10 @@ interface EntriesApi {
     fun unvoteEntry(entryId: Int): Single<VoteResponse>
     fun voteComment(commentId: Int): Single<VoteResponse>
     fun unvoteComment(commentId: Int): Single<VoteResponse>
-    fun addEntry(body : String, inputStream: TypedInputStream): Single<EntryResponse>
-    fun addEntry(body: String, embed: String?): Single<EntryResponse>
-    fun addEntryComment(body: String, entryId: Int, embed: String?): Single<EntryCommentResponse>
-    fun addEntryComment(body: String, entryId: Int, inputStream: TypedInputStream): Single<EntryCommentResponse>
+    fun addEntry(body : String, inputStream: TypedInputStream, plus18: Boolean): Single<EntryResponse>
+    fun addEntry(body: String, embed: String?, plus18: Boolean): Single<EntryResponse>
+    fun addEntryComment(body: String, entryId: Int, embed: String?, plus18: Boolean): Single<EntryCommentResponse>
+    fun addEntryComment(body: String, entryId: Int, inputStream: TypedInputStream, plus18: Boolean): Single<EntryCommentResponse>
     fun markFavorite(entryId: Int) : Single<FavoriteResponse>
     fun deleteEntry(entryId: Int): Single<EntryResponse>
     fun editEntry(body: String, entryId: Int): Single<EntryResponse>

@@ -26,7 +26,4 @@ class MarkdownDialogs(val context : Context) {
 
     fun showLennyfaceDialog(callback : formatDialogCallback) =
             LennyfaceDialog(context, callback)?.show()
-
-    fun showUploadPhotoDialog(formatCallback : formatDialogCallback, insertGalleryImageCallback : () -> Unit) =
-            UploadPhotoDialog(context, insertGalleryImageCallback, formatCallback)?.show()
 }

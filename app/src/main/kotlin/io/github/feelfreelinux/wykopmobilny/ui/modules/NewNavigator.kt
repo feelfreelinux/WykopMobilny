@@ -9,7 +9,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit.LinkCommentEditActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters.DownvotersActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upvoters.UpvotersActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
@@ -30,11 +33,14 @@ interface NewNavigatorApi {
     fun openLoginScreen(requestCode: Int)
     fun openAddEntryActivity(receiver: String? = null, extraBody : String? = null)
     fun openEditEntryActivity(body: String, entryId: Int)
+    fun openEditLinkCommentActivity(body: String, linkId: Int)
     fun openEditEntryCommentActivity(body: String, entryId: Int, commentId: Int)
     fun openBrowser(url: String)
     fun openReportEntryScreen(entryId: Int)
     fun openReportEntryCommentScreen(entryCommentId: Int)
     fun openLinkDetailsActivity(link: Link)
+    fun openLinkUpvotersActivity(linkId : Int)
+    fun openLinkDownvotersActivity(linkId : Int)
 }
 
 class NewNavigator(val context : Activity) : NewNavigatorApi {
@@ -79,6 +85,10 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
         context.startActivityForResult(EditEntryActivity.createIntent(context, body, entryId), BaseInputActivity.REQUEST_CODE)
     }
 
+    override fun openEditLinkCommentActivity(body: String, linkId: Int) {
+        context.startActivityForResult(LinkCommentEditActivity.createIntent(context, body, linkId), BaseInputActivity.REQUEST_CODE)
+    }
+
     override fun openEditEntryCommentActivity(body: String, entryId: Int, commentId: Int) {
         context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.REQUEST_CODE)
     }
@@ -96,5 +106,13 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
 
     override fun openLinkDetailsActivity(link : Link) {
         context.startActivity(LinkDetailsActivity.createIntent(context, link))
+    }
+
+    override fun openLinkUpvotersActivity(linkId : Int) {
+        context.startActivity(UpvotersActivity.createIntent(linkId, context))
+    }
+
+    override fun openLinkDownvotersActivity(linkId : Int) {
+        context.startActivity(DownvotersActivity.createIntent(linkId, context))
     }
 }

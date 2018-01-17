@@ -6,10 +6,14 @@ import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
@@ -22,6 +26,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.link_bury_menu_bottomsheet.view.*
 import kotlinx.android.synthetic.main.link_menu_bottomsheet.view.*
 import kotlinx.android.synthetic.main.link_details_header_layout.view.*
@@ -32,6 +37,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
     lateinit var link : Link
     lateinit var presenter : LinkPresenter
     lateinit var userManager : UserManagerApi
+
     init {
         View.inflate(context, R.layout.link_details_header_layout, this)
         isClickable = true
@@ -152,10 +158,12 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
             tvDiggerList.text = resources.getString(R.string.dig_list, link.voteCount)
             tvBuryList.text = resources.getString(R.string.bury_list, link.buryCount)
             link_diggers.setOnClickListener {
+                presenter.openUpvotersList()
                 dialog.dismiss()
             }
 
             link_bury_list.setOnClickListener {
+                presenter.openDownvotersList()
                 dialog.dismiss()
             }
 
@@ -191,27 +199,27 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
 
         bottomSheetView.apply {
             reason_duplicate.setOnClickListener {
-                presenter.voteDown(1)
+                presenter.voteDown(LinkPresenter.BURY_REASON_DUPLICATE)
                 dialog.dismiss()
             }
 
             reason_spam.setOnClickListener {
-                presenter.voteDown(2)
+                presenter.voteDown(LinkPresenter.BURY_REASON_SPAM)
                 dialog.dismiss()
             }
 
             reason_fake_info.setOnClickListener {
-                presenter.voteDown(3)
+                presenter.voteDown(LinkPresenter.BURY_REASON_FAKE_INFO)
                 dialog.dismiss()
             }
 
             reason_wrong_content.setOnClickListener {
-                presenter.voteDown(4)
+                presenter.voteDown(LinkPresenter.BURY_REASON_WRONG_CONTENT)
                 dialog.dismiss()
             }
 
             reason_unsuitable_content.setOnClickListener {
-                presenter.voteDown(5)
+                presenter.voteDown(LinkPresenter.BURY_REASON_UNSUITABLE_CONTENT)
                 dialog.dismiss()
             }
         }

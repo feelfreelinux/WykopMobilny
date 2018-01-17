@@ -71,8 +71,8 @@
     <string name="sending_entry">Wysyłanie wpisu…</string>
     <string name="url_address">Adres url</string>
     <string name="link_description">Opis linku</string>
-    <string name="insert_photo_galery">Wybierz z galerii</string>
-    <string name="insert_photo_url">Z adresu URL</string>
+    <string name="insert_photo_galery">Dodaj zdjęcie z galerii</string>
+    <string name="insert_photo_url">Dodaj zdjęcie z adresu URL</string>
     <string name="confirmation">Jesteś pewien?</string>
     <string name="confirm_exit">Czy na pewno chcesz wyjść?</string>
     <string name="confirm_app_exit">Czy na pewno chcesz zamknąć aplikację?</string>
@@ -106,6 +106,9 @@
     <string name="update">Zaktualizuj</string>
     <string name="cancel">Anuluj</string>
     <string name="related">Powiązane</string>
+    <string name="upvoters">Wykopujący</string>
+    <string name="downvoters">Zakopujący</string>
+
     <string name="do_not_show_again">Nie pokazuj ponownie</string>
     <string name="expand_image">rozwiń obrazek</string>
     <string name="bury_reason">Powód zakopu</string>
@@ -114,5 +117,6 @@
     <string name="reason_fake_info">Informacja nieprawdziwa</string>
     <string name="reason_wrong_content">Treść nieodpowiednia</string>
     <string name="reason_unsuitable_content">Nie nadaje się</string>
+    <string name="mark_nsfw">Oznacz jako 18+</string>
 
 </resources>

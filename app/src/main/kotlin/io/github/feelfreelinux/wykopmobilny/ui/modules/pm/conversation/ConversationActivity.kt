@@ -131,12 +131,12 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         } else finish()
     }
 
-    override fun sendPhoto(photo: String?, body: String) {
-        presenter.sendMessage(body, photo)
+    override fun sendPhoto(photo: String?, body: String, containsAdultContent : Boolean) {
+        presenter.sendMessage(body, photo, containsAdultContent)
     }
 
-    override fun sendPhoto(photo: TypedInputStream, body: String) {
-        presenter.sendMessage(body, photo)
+    override fun sendPhoto(photo: TypedInputStream, body: String, containsAdultContent: Boolean) {
+        presenter.sendMessage(body, photo, containsAdultContent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

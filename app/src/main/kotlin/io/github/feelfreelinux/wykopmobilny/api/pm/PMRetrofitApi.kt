@@ -21,14 +21,16 @@ interface PMRetrofitApi {
     @Multipart
     @POST("/pm/SendMessage/{user}/appkey/$APP_KEY")
     fun sendMessage(@Part("body") body: RequestBody,
-                        @Path("user") user : String,
+                    @Part("adultmedia") plus18 : RequestBody,
+                    @Path("user") user : String,
                         @Part file : MultipartBody.Part) : Single<WykopApiResponse<PMMessageResponse>>
 
     @FormUrlEncoded
     @POST("/pm/SendMessage/{user}/appkey/$APP_KEY")
     fun sendMessage(@Field("body") body: String,
                         @Path("user") user : String,
-                        @Field("embed") embed : String?) : Single<WykopApiResponse<PMMessageResponse>>
+                        @Field("embed") embed : String?,
+                        @Field("adultmedia") plus18 : Boolean) : Single<WykopApiResponse<PMMessageResponse>>
 
     @GET("/pm/DeleteConversation/{user}/appkey/$APP_KEY")
     fun deleteConversation(@Path("user") user : String) : Single<WykopApiResponse<ConversationDeleteResponse>>

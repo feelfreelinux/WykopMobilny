@@ -11,6 +11,6 @@ interface PMApi {
     fun getConversations(): Single<List<Conversation>>
     fun getConversation(user : String): Single<FullConversation>
     fun deleteConversation(user : String): Single<ConversationDeleteResponse>
-    fun sendMessage(body : String, user : String, embed: String?): Single<PMMessage>
-    fun sendMessage(body : String, user : String, embed: TypedInputStream): Single<PMMessage>
+    fun sendMessage(body : String, user : String, embed: String?, plus18 : Boolean): Single<PMMessage>
+    fun sendMessage(body : String, user : String, plus18: Boolean, embed: TypedInputStream): Single<PMMessage>
 }

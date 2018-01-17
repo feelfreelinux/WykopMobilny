@@ -39,6 +39,7 @@ interface EntriesRetrofitApi {
     @Multipart
     @POST("/entries/add/appkey/$APP_KEY")
     fun addEntry(@Part("body") body: RequestBody,
+                 @Part("adultmedia") plus18 : RequestBody,
                  @Part file : MultipartBody.Part) : Single<WykopApiResponse<EntryResponse>>
 
 
@@ -51,11 +52,13 @@ interface EntriesRetrofitApi {
     @FormUrlEncoded
     @POST("/entries/add/appkey/$APP_KEY")
     fun addEntry(@Field("body") body: String,
-                 @Field("embed") embed : String?) : Single<WykopApiResponse<EntryResponse>>
+                 @Field("embed") embed : String?,
+                 @Field("adultmedia") plus18 : Boolean) : Single<WykopApiResponse<EntryResponse>>
 
     @Multipart
     @POST("/entries/commentadd/{entryId}/appkey/$APP_KEY")
     fun addEntryComment(@Part("body") body: RequestBody,
+                        @Part("adultmedia") plus18 : RequestBody,
                         @Path("entryId") entryId : Int,
                         @Part file : MultipartBody.Part) : Single<WykopApiResponse<EntryCommentResponse>>
 
@@ -63,6 +66,7 @@ interface EntriesRetrofitApi {
     @POST("/entries/commentadd/{entryId}/appkey/$APP_KEY")
     fun addEntryComment(@Field("body") body: String,
                         @Field("embed") embed : String?,
+                        @Field("adultmedia") plus18 : Boolean,
                         @Path("entryId") entryId : Int) : Single<WykopApiResponse<EntryCommentResponse>>
 
     @FormUrlEncoded

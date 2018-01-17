@@ -187,12 +187,12 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         } else finish()
     }
 
-    override fun sendPhoto(photo: String?, body: String) {
-        presenter.addComment(body, photo)
+    override fun sendPhoto(photo: String?, body: String, containsAdultContent: Boolean) {
+        presenter.addComment(body, photo, containsAdultContent)
     }
 
-    override fun sendPhoto(photo: TypedInputStream, body: String) {
-        presenter.addComment(body, photo)
+    override fun sendPhoto(photo: TypedInputStream, body: String, containsAdultContent: Boolean) {
+        presenter.addComment(body, photo, containsAdultContent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

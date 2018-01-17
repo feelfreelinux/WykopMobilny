@@ -20,9 +20,9 @@ class EntryDetailPresenter(val schedulers: Schedulers, private val entriesApi: E
 
     }
 
-    fun addComment(body : String, photo: TypedInputStream) {
+    fun addComment(body : String, photo: TypedInputStream, containsAdultContent : Boolean) {
         compositeObservable.add(
-                entriesApi.addEntryComment(body, entryId, photo)
+                entriesApi.addEntryComment(body, entryId, photo, containsAdultContent)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe(
@@ -38,9 +38,9 @@ class EntryDetailPresenter(val schedulers: Schedulers, private val entriesApi: E
                         ))
     }
 
-    fun addComment(body : String, photo : String?) {
+    fun addComment(body : String, photo : String?, containsAdultContent : Boolean) {
         compositeObservable.add(
-                entriesApi.addEntryComment(body, entryId, photo)
+                entriesApi.addEntryComment(body, entryId, photo, containsAdultContent)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe(

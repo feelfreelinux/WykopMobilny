@@ -7,10 +7,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputView
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.InputPresenter
 
 class AddEntryPresenter(private val schedulers: Schedulers, private val entriesApi: EntriesApi) : InputPresenter<BaseInputView>() {
-    override fun sendWithPhoto(photo: TypedInputStream) {
+    override fun sendWithPhoto(photo: TypedInputStream, containsAdultContent : Boolean) {
         view?.showProgressBar = true
         compositeObservable.add(
-                entriesApi.addEntry(view?.textBody!!, photo)
+                entriesApi.addEntry(view?.textBody!!, photo, containsAdultContent)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe(
@@ -22,10 +22,10 @@ class AddEntryPresenter(private val schedulers: Schedulers, private val entriesA
         )
     }
 
-    override fun sendWithPhotoUrl(photo: String?) {
+    override fun sendWithPhotoUrl(photo: String?, containsAdultContent : Boolean) {
         view?.showProgressBar = true
         compositeObservable.add(
-                entriesApi.addEntry(view?.textBody!!, photo)
+                entriesApi.addEntry(view?.textBody!!, photo, containsAdultContent)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe(

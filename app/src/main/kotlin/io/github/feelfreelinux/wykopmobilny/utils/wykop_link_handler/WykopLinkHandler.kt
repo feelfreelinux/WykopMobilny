@@ -21,6 +21,7 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
         const val PROFILE_PREFIX = '@'
         const val TAG_PREFIX = '#'
         const val ENTRY_MATCHER = "wpis"
+        const val LINK_MATCHER = "link"
         const val TAG_MATCHER = "tag"
         const val PM_MATCHER = "wiadomosc-prywatna"
         const val DELIMITER = "/"

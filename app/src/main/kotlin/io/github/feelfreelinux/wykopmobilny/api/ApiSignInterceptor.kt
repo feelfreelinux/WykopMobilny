@@ -28,25 +28,25 @@ class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
         val encodeUrl : String = when(request.body()) {
             is FormBody -> {
                 val formBody = request.body() as FormBody
-                var paramList = (0 until formBody.size())
+                val paramList = (0 until formBody.size())
                         .filter { !formBody.value(it).isNullOrEmpty() }
-                        .sortedWith(compareBy({ formBody.name(it) }))
                         .mapTo(ArrayList<String>()) { formBody.value(it) }
                         .toList()
-                if (customHeaders.contains(REMOVE_USERKEY_HEADER)) paramList = paramList.reversed()
+                //if (customHeaders.contains(REMOVE_USERKEY_HEADER)) paramList = paramList.reversed()
 
                 APP_SECRET + url+ paramList.joinToString(",")
             }
             is MultipartBody -> {
                 val multipart = request.body() as MultipartBody
-                val part = multipart.part(0).body()
-
-                // Get body from multipart
-                val bufferedSink = Okio.buffer(Okio.sink(ByteArrayOutputStream()))
-                part.writeTo(bufferedSink)
-                val text_body = bufferedSink.buffer().readUtf8()
-
-                APP_SECRET + url + text_body
+                val parts = arrayListOf<String>()
+                for (i in 0..1) {
+                    val part = multipart.part(i).body()
+                    // Get body from multipart
+                    val bufferedSink = Okio.buffer(Okio.sink(ByteArrayOutputStream()))
+                    part.writeTo(bufferedSink)
+                    parts.add(bufferedSink.buffer().readUtf8())
+                }
+                APP_SECRET + url + parts.joinToString(",")
             }
             else -> APP_SECRET + url
         }

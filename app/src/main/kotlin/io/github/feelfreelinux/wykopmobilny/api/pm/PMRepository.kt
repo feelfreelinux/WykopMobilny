@@ -34,14 +34,15 @@ class PMRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefr
             .retryWhen(userTokenRefresher)
             .compose<ConversationDeleteResponse>(ErrorHandlerTransformer())
 
-    override fun sendMessage(body : String, user : String, embed: String?) =
-            pmretrofitApi.sendMessage(body, user, embed)
+    override fun sendMessage(body : String, user : String, embed: String?, plus18: Boolean) =
+            pmretrofitApi.sendMessage(body, user, embed, plus18)
                     .retryWhen(userTokenRefresher)
                     .compose<PMMessageResponse>(ErrorHandlerTransformer())
                     .map { PMMessageMapper.map(it) }
 
-    override fun sendMessage(body : String, user : String, embed: TypedInputStream) =
+    override fun sendMessage(body : String, user : String, plus18 : Boolean, embed: TypedInputStream) =
             pmretrofitApi.sendMessage(body.toRequestBody(),
+                    plus18.toRequestBody(),
                     user,
                     MultipartBody.Part.createFormData(
                             "embed",
@@ -50,6 +51,6 @@ class PMRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefr
                     .retryWhen(userTokenRefresher)
                     .compose<PMMessageResponse>(ErrorHandlerTransformer())
                     .map { PMMessageMapper.map(it) }
-
+    private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
     private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
 }

@@ -21,7 +21,7 @@ class EditEntryCommentPresenter(private val schedulers: Schedulers, private val 
         )
     }
 
-    override fun sendWithPhoto(photo: TypedInputStream) { editComment() }
+    override fun sendWithPhoto(photo: TypedInputStream, containsAdultContent : Boolean) { editComment() }
 
-    override fun sendWithPhotoUrl(photo: String?) { editComment() }
+    override fun sendWithPhotoUrl(photo: String?, containsAdultContent: Boolean) { editComment() }
 }

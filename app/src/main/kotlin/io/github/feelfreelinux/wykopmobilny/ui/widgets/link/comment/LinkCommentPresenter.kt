@@ -68,4 +68,8 @@ class LinkCommentPresenter(
                         }, { view?.showErrorDialog(it) })
         )
     }
+
+    fun openEditCommentActivity(body : String) {
+        newNavigatorApi.openEditLinkCommentActivity(body, linkId)
+    }
 }

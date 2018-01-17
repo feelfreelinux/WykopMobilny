@@ -32,11 +32,11 @@ class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi) :
         )
     }
 
-    fun sendReply(body : String, typedInputStream: TypedInputStream) {
+    fun sendReply(body : String, typedInputStream: TypedInputStream, containsAdultContent : Boolean) {
         val replyCommentId = view!!.getReplyCommentId()
         if (replyCommentId != -1) {
             compositeObservable.add(
-                    linksApi.commentAdd(body, typedInputStream, linkId, replyCommentId)
+                    linksApi.commentAdd(body, containsAdultContent, typedInputStream, linkId, replyCommentId)
                             .subscribeOn(schedulers.backgroundThread())
                             .observeOn(schedulers.mainThread())
                             .subscribe({
@@ -50,7 +50,7 @@ class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi) :
             )
         } else {
             compositeObservable.add(
-                    linksApi.commentAdd(body, typedInputStream, linkId)
+                    linksApi.commentAdd(body, containsAdultContent, typedInputStream, linkId)
                             .subscribeOn(schedulers.backgroundThread())
                             .observeOn(schedulers.mainThread())
                             .subscribe({
@@ -65,11 +65,11 @@ class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi) :
         }
     }
 
-    fun sendReply(body : String, embed: String?) {
+    fun sendReply(body : String, embed: String?, containsAdultContent : Boolean) {
         val replyCommentId = view!!.getReplyCommentId()
         if (replyCommentId != -1) {
             compositeObservable.add(
-                    linksApi.commentAdd(body, embed, linkId, replyCommentId)
+                    linksApi.commentAdd(body, embed, containsAdultContent, linkId, replyCommentId)
                             .subscribeOn(schedulers.backgroundThread())
                             .observeOn(schedulers.mainThread())
                             .subscribe({
@@ -83,7 +83,7 @@ class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi) :
             )
         } else {
             compositeObservable.add(
-                    linksApi.commentAdd(body, embed, linkId)
+                    linksApi.commentAdd(body, embed, containsAdultContent, linkId)
                             .subscribeOn(schedulers.backgroundThread())
                             .observeOn(schedulers.mainThread())
                             .subscribe({

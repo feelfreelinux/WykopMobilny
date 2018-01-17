@@ -19,8 +19,8 @@ import kotlinx.android.synthetic.main.input_toolbar.view.*
 
 
 interface InputToolbarListener {
-    fun sendPhoto(photo : TypedInputStream, body : String)
-    fun sendPhoto(photo : String?, body : String)
+    fun sendPhoto(photo : TypedInputStream, body : String, containsAdultContent: Boolean)
+    fun sendPhoto(photo : String?, body : String, containsAdultContent : Boolean)
     fun openGalleryImageChooser()
 }
 
@@ -96,9 +96,9 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
             showProgress(true)
             val typedInputStream = markdownToolbar.getPhotoTypedInputStream()
             if (typedInputStream != null) {
-                inputToolbarListener?.sendPhoto(typedInputStream, body.text.toString())
+                inputToolbarListener?.sendPhoto(typedInputStream, body.text.toString(), markdownToolbar.containsAdultContent)
             } else {
-                inputToolbarListener?.sendPhoto(markdownToolbar.photoUrl, body.text.toString())
+                inputToolbarListener?.sendPhoto(markdownToolbar.photoUrl, body.text.toString(), markdownToolbar.containsAdultContent)
             }
         }
     }
@@ -130,6 +130,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         markdownToolbar.apply {
             photo = null
             photoUrl = null
+            containsAdultContent = false
         }
         closeMarkdownToolbar()
     }

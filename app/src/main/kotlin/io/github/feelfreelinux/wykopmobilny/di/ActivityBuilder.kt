@@ -8,8 +8,15 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditE
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivityModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivityModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit.LinkCommentEditActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit.LinkCommentEditModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit.LinkCommentEditView
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters.DownvotersActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters.DownvotersModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upvoters.UpvotersActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upvoters.UpvotersModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
@@ -65,4 +72,13 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [TagActivityFragmentProvider::class, TagActivityModule::class])
     abstract fun bindTagActivity() : TagActivity
+
+    @ContributesAndroidInjector(modules = [UpvotersModule::class])
+    abstract fun bindUpvotersActivity() : UpvotersActivity
+
+    @ContributesAndroidInjector(modules = [DownvotersModule::class])
+    abstract fun bindDownvotersActivity() : DownvotersActivity
+
+    @ContributesAndroidInjector(modules = [LinkCommentEditModule::class])
+    abstract fun bindLinkEditCommentActivity() : LinkCommentEditActivity
 }

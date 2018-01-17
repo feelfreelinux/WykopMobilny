@@ -19,9 +19,9 @@ class ConversationPresenter(val schedulers: Schedulers, val pmApi: PMApi) : Base
         )
     }
 
-    fun sendMessage(body: String, photo : String?) {
+    fun sendMessage(body: String, photo : String?, containsAdultContent: Boolean) {
         compositeObservable.add(
-                pmApi.sendMessage(body, user, photo)
+                pmApi.sendMessage(body, user, photo, containsAdultContent)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe(
@@ -37,9 +37,9 @@ class ConversationPresenter(val schedulers: Schedulers, val pmApi: PMApi) : Base
         )
     }
 
-    fun sendMessage(body: String, photo: TypedInputStream) {
+    fun sendMessage(body: String, photo: TypedInputStream, containsAdultContent : Boolean) {
         compositeObservable.add(
-                pmApi.sendMessage(body, user, photo)
+                pmApi.sendMessage(body, user, containsAdultContent, photo)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe(

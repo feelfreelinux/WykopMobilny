@@ -16,8 +16,24 @@ class LinkPresenter(
         @Provided val linksApi: LinksApi) : BasePresenter<LinkView>() {
     var linkId = -1
 
+    companion object {
+        val BURY_REASON_DUPLICATE = 1
+        val BURY_REASON_SPAM = 2
+        val BURY_REASON_FAKE_INFO = 3
+        val BURY_REASON_WRONG_CONTENT = 4
+        val BURY_REASON_UNSUITABLE_CONTENT = 5
+    }
+
     fun handleUrl(url : String) {
         linkHandlerApi.handleUrl(url)
+    }
+
+    fun openUpvotersList() {
+        navigatorApi.openLinkUpvotersActivity(linkId)
+    }
+
+    fun openDownvotersList() {
+        navigatorApi.openLinkDownvotersActivity(linkId)
     }
 
     fun voteUp() {

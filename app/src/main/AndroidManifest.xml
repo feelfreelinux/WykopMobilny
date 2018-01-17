@@ -61,6 +61,9 @@
         <activity android:name=".ui.modules.pm.conversation.ConversationActivity" />
         <activity android:name=".ui.modules.settings.SettingsActivity" />
         <activity android:name=".ui.modules.links.linkdetails.LinkDetailsActivity" />
+        <activity android:name=".ui.modules.links.upvoters.UpvotersActivity" />
+        <activity android:name=".ui.modules.links.downvoters.DownvotersActivity" />
+        <activity android:name=".ui.modules.input.link.edit.LinkCommentEditActivity" />
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>

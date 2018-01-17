@@ -193,6 +193,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             }
 
             comment_menu_edit.setOnClickListener {
+                presenter.openEditCommentActivity(comment.body!!)
                 dialog.dismiss()
             }
 

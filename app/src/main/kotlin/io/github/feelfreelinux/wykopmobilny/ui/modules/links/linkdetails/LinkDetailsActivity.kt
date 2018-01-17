@@ -156,12 +156,12 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
                 getString(R.string.insert_photo_galery)), BaseInputActivity.USER_ACTION_INSERT_PHOTO)
     }
 
-    override fun sendPhoto(photo: String?, body: String) {
-        presenter.sendReply(body, photo)
+    override fun sendPhoto(photo: String?, body: String, containsAdultContent : Boolean) {
+        presenter.sendReply(body, photo, containsAdultContent)
     }
 
-    override fun sendPhoto(photo: TypedInputStream, body: String) {
-        presenter.sendReply(body, photo)
+    override fun sendPhoto(photo: TypedInputStream, body: String, containsAdultContent: Boolean) {
+        presenter.sendReply(body, photo, containsAdultContent)
     }
 
     override fun hideInputToolbar() {

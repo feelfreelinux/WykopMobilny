@@ -87,9 +87,9 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
             R.id.send -> {
                 val typedInputStream = markupToolbar.getPhotoTypedInputStream()
                 if (typedInputStream != null) {
-                    presenter.sendWithPhoto(typedInputStream)
+                    presenter.sendWithPhoto(typedInputStream, markupToolbar.containsAdultContent)
                 } else {
-                    presenter.sendWithPhotoUrl(markupToolbar.photoUrl)
+                    presenter.sendWithPhotoUrl(markupToolbar.photoUrl, markupToolbar.containsAdultContent)
                 }
             }
             android.R.id.home -> onBackPressed()
