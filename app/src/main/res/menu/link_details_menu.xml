@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/share"
+        android:title="@string/share"
+        android:icon="@drawable/ic_share"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/copyUrl"
+        android:title="@string/copy_entry_url"
+        android:icon="@drawable/ic_insert_link_dark"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/refresh"
+        android:title="@string/refresh"
+        android:icon="@drawable/ic_refresh"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/sortbyBest"
+        android:title="@string/sortby_best"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sortbyOldest"
+        android:title="@string/sortby_oldest"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sortbyNewest"
+        android:title="@string/sortby_newest"
+        app:showAsAction="never" />
+</menu>

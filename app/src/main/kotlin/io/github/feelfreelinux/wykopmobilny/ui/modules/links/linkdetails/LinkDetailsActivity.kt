@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.UserManager
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Menu
+import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
@@ -60,7 +62,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
 
     val linkCommentId by lazy {
         if (intent.hasExtra(EXTRA_COMMENT_ID)) intent.getIntExtra(EXTRA_COMMENT_ID, -1)
-        else LinkParser.getLinkCommentId(intent.dataString) ?: -1
+        else LinkParser.getLinkCommentId(intent.dataString ?: "") ?: -1
     }
 
     override fun getReplyCommentId(): Int {
@@ -83,6 +85,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             title = null
             setDisplayHomeAsUpEnabled(true)
         }
+        toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_sort)
+
 
         adapter.onReplyClickedListener = {
             replyLinkId = it.id
@@ -123,7 +127,29 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater?.inflate(R.menu.entry_fragment_menu, menu)
+        menuInflater?.inflate(R.menu.link_details_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.refresh -> onRefresh()
+            R.id.sortbyBest -> {
+                presenter.sortBy = "best"
+                presenter.loadComments()
+                swiperefresh.isRefreshing = true
+            }
+            R.id.sortbyNewest -> {
+                presenter.sortBy = "new"
+                presenter.loadComments()
+                swiperefresh.isRefreshing = true
+            }
+            R.id.sortbyOldest -> {
+                presenter.sortBy = "old"
+                presenter.loadComments()
+                swiperefresh.isRefreshing = true
+            }
+        }
         return true
     }
 
