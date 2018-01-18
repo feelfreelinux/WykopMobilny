@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     android:id="@+id/fragment_history_menu_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/cardListColor"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="?attr/cardListColor">
+
     <LinearLayout
         android:id="@+id/insert_gallery"
         style="@style/BottomSheetMenuItem">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/markdownInsertPhoto" />
+            android:src="?attr/markdownInsertPhoto"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/insert_photo_galery"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -29,14 +34,15 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetRelated" />
+            android:src="?attr/bottomSheetRelated"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/insert_photo_url" />
+            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:text="@string/insert_photo_url"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -47,13 +53,16 @@
             android:id="@+id/mark_nsfw_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetReport" />
+            android:gravity="center"
+            android:layout_marginStart="-4dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/mark_nsfw" />
+            android:layout_marginLeft="11dp"
+            android:text="@string/mark_nsfw"/>
+
     </LinearLayout>
+
 </LinearLayout>

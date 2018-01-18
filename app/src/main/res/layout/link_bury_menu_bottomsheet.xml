@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     android:id="@+id/fragment_history_menu_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/cardListColor"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="?attr/cardListColor">
+
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/bury_reason"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        style="@style/BottomSheetMenuItem"/>
+        android:textSize="@dimen/dialog_voters_title_text_size"
+        android:paddingStart="@dimen/dialog_voters_padding_horizontal"
+        android:paddingEnd="@dimen/dialog_voters_padding_horizontal"
+        android:paddingTop="@dimen/dialog_voters_padding_vertical"
+        android:paddingBottom="@dimen/dialog_voters_padding_vertical"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_line_height"
+        android:background="?attr/lineColor"/>
 
     <LinearLayout
         android:id="@+id/reason_duplicate"

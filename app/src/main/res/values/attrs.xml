@@ -23,6 +23,7 @@
     <attr name="minusDrawable" format="reference"/>
     <attr name="dotsDrawable" format="reference"/>
     <attr name="replyDrawable" format="reference"/>
+    <attr name="relatedDrawable" format="reference"/>
     <attr name="sharebtnDrawable" format="reference"/>
     <attr name="MirkoButtonStyle" format="reference"/>
     <attr name="notificationDrawable" format="reference"/>

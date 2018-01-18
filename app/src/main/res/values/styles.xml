@@ -42,6 +42,7 @@
         <item name="minusDrawable">@drawable/ic_minus_light</item>
         <item name="dotsDrawable">@drawable/ic_dots_light</item>
         <item name="replyDrawable">@drawable/ic_reply_light</item>
+        <item name="relatedDrawable">@drawable/ic_related_link_light</item>
         <item name="sharebtnDrawable">@drawable/ic_sharebtn_light</item>
         <item name="favoriteDrawable">@drawable/ic_favorite_selected_light</item>
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite_light</item>
@@ -113,6 +114,7 @@
         <item name="minusDrawable">@drawable/ic_minus</item>
         <item name="dotsDrawable">@drawable/ic_dots</item>
         <item name="replyDrawable">@drawable/ic_reply</item>
+        <item name="relatedDrawable">@drawable/ic_related_link</item>
         <item name="sharebtnDrawable">@drawable/ic_sharebtn</item>
         <item name="favoriteDrawable">@drawable/ic_favorite_selected</item>
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite</item>

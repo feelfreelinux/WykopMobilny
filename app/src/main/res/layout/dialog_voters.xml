@@ -32,6 +32,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/votersTextView"
             android:layout_width="match_parent"
@@ -41,6 +42,7 @@
             android:paddingEnd="@dimen/dialog_voters_padding_horizontal"
             android:paddingTop="@dimen/dialog_voters_padding_vertical"
             android:paddingBottom="@dimen/dialog_voters_padding_vertical"/>
+
     </ScrollView>
 
 </LinearLayout>
