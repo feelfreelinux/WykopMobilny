@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class TagActivity : BaseActivity() {
-    private lateinit var entryTag : String
+    val entryTag by lazy { intent.getStringExtra(EXTRA_TAG) }
     @Inject lateinit var navigator : NavigatorApi
     @Inject lateinit var userManagerApi : UserManagerApi
 
@@ -34,8 +34,6 @@ class TagActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tag)
         setSupportActionBar(toolbar)
-
-        entryTag = intent.getStringExtra(EXTRA_TAG)?: TagLinkParser.getTag(intent.data.toString())
 
         fab.setOnClickListener {
             navigator.openAddEntryActivity(this, null, "#$entryTag")

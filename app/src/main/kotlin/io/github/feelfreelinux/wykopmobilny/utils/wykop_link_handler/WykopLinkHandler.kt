@@ -32,7 +32,9 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
             val resource = url.substringAfter("wykop.pl/")
             return when (resource.substringBefore(Companion.DELIMITER)) {
                 Companion.ENTRY_MATCHER -> {
-                    EntryActivity.createIntent(context, EntryLinkParser.getEntryId(url)!!, EntryLinkParser.getEntryCommentId(url))
+                    val entryId = EntryLinkParser.getEntryId(url)
+                    if (entryId != null) EntryActivity.createIntent(context, entryId, EntryLinkParser.getEntryCommentId(url))
+                    else null
                 }
                 Companion.TAG_MATCHER -> {
                     TagActivity.createIntent(context, TagLinkParser.getTag(url))
@@ -41,7 +43,9 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
                     ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
                 }
                 Companion.LINK_MATCHER -> {
-                    LinkDetailsActivity.createIntent(context, LinkParser.getLinkId(url)!!, LinkParser.getLinkCommentId(url))
+                    val linkId = LinkParser.getLinkId(url)
+                    if (linkId != null) LinkDetailsActivity.createIntent(context, linkId, LinkParser.getLinkCommentId(url))
+                    else null
                 }
                 else -> null
             }
