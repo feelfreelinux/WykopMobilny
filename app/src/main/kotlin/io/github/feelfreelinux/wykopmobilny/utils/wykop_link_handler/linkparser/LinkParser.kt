@@ -1,17 +1,19 @@
 package io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser
 
+import io.github.feelfreelinux.wykopmobilny.utils.printout
+
 class LinkParser {
     companion object {
         fun getLinkId(url : String) : Int? {
             if (url.contains("/link/")) {
-                return url.substringAfter("/link/").substringBefore("/").toInt()
+                return url.substringAfter("/link/").substringBefore("/").toIntOrNull()
             }
             return null
         }
 
         fun getLinkCommentId(url : String) : Int? {
             if (url.contains("/#comment-")) {
-                return url.substringAfter("/#comment-").substringBefore("/").toInt()
+                return url.substringAfter("/#comment-").substringBefore("/").toIntOrNull()
             }
             return null
         }
