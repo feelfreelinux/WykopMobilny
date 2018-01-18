@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener {
-    var entryId = 0
+    val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
 
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
@@ -60,10 +60,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         setSupportActionBar(toolbar)
         adapter.commentId = intent.getIntExtra(EXTRA_COMMENT_ID, -1)
         adapter.addReceiverListener = { inputToolbar.addAddressant(it.nick) }
-
-        entryId =
-                if (intent.data != null) EntryLinkParser.getEntryId(intent.dataString)!!
-                else intent.getIntExtra(EXTRA_ENTRY_ID, -1)
 
         supportActionBar?.apply {
             title = null

@@ -21,10 +21,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkDetailsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
-import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.LinkParser
 import kotlinx.android.synthetic.main.activity_link_details.*
@@ -55,14 +52,13 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     var replyLinkId : Int = 0
 
     val link by lazy { intent.getParcelableExtra<Link>(EXTRA_LINK) }
-    val linkId by lazy { if (intent.hasExtra(EXTRA_LINK)) link.id else {
-        if (intent.data == null) intent.getIntExtra(EXTRA_LINK_ID, -1)
-        else LinkParser.getLinkId(intent.dataString)!!
-    } }
+    val linkId by lazy {
+        if (intent.hasExtra(EXTRA_LINK)) link.id else
+        intent.getIntExtra(EXTRA_LINK_ID, -1)
+    }
 
     val linkCommentId by lazy {
-        if (intent.hasExtra(EXTRA_COMMENT_ID)) intent.getIntExtra(EXTRA_COMMENT_ID, -1)
-        else LinkParser.getLinkCommentId(intent.dataString ?: "") ?: -1
+        intent.getIntExtra(EXTRA_COMMENT_ID, -1)
     }
 
     override fun getReplyCommentId(): Int {
@@ -100,7 +96,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             this.adapter = this@LinkDetailsActivity.adapter
         }
         supportActionBar?.title = null
-        presenter.linkId = if(intent.data != null) { LinkParser.getLinkId(intent.dataString)!! } else { linkId }
+        presenter.linkId = linkId
         if (intent.hasExtra(EXTRA_LINK)) {
             adapter.link = link
             adapter.notifyDataSetChanged()
@@ -149,6 +145,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
                 presenter.loadComments()
                 swiperefresh.isRefreshing = true
             }
+
+            android.R.id.home -> finish()
         }
         return true
     }

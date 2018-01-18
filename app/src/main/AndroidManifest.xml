@@ -26,58 +26,50 @@
         </activity>
 
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
-            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="https"
-                    android:host="www.wykop.pl"
-                    android:pathPrefix="/wpis" />
-
-                <data android:scheme="http"
-                    android:host="www.wykop.pl"
-                    android:pathPrefix="/wpis" />
-            </intent-filter>
-        </activity>
-
+            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity"
-            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="https"
-                    android:host="www.wykop.pl"
-                    android:pathPrefix="/tag" />
-                <data android:scheme="http"
-                    android:host="www.wykop.pl"
-                    android:pathPrefix="/tag" />
-            </intent-filter>
-        </activity>
+            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity" />
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity" />
         <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
         <activity android:name=".ui.modules.pm.conversation.ConversationActivity" />
         <activity android:name=".ui.modules.settings.SettingsActivity" />
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity"
-            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
-            <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="https"
-                    android:host="www.wykop.pl"
-                    android:pathPrefix="/link" />
-
-                <data android:scheme="http"
-                    android:host="www.wykop.pl"
-                    android:pathPrefix="/link" />
-            </intent-filter>
-        </activity>
+            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name=".ui.modules.links.upvoters.UpvotersActivity" />
         <activity android:name=".ui.modules.links.downvoters.DownvotersActivity" />
         <activity android:name=".ui.modules.input.link.edit.LinkCommentEditActivity" />
+        <activity android:name=".ui.modules.DeepLinkActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/0.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/1.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/2.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/3.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/4.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/5.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/6.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/7.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/8.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/9.*" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/0.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/1.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/2.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/3.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/4.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/5.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/6.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/7.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/8.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPattern="/link/9.*" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPrefix="/tag" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPrefix="/tag" android:scheme="http"/>
+                <data android:host="www.wykop.pl" android:pathPrefix="/wpis" android:scheme="https"/>
+                <data android:host="www.wykop.pl" android:pathPrefix="/wpis" android:scheme="https"/>
+            </intent-filter>
+        </activity>
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>
