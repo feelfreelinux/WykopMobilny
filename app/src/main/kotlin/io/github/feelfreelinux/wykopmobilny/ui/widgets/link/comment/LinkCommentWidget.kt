@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment
 import android.content.Context
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
+import android.support.v4.app.ShareCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
@@ -101,6 +102,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
         minusButton.setup(userManagerApi)
         minusButton.text = comment.voteCountMinus.absoluteValue.toString()
         moreOptionsTextView.setOnClickListener { openLinkCommentMenu() }
+        shareTextView.setOnClickListener { shareUrl() }
 
         plusButton.voteListener = {
             presenter.voteUp()
@@ -214,4 +216,16 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
     override fun showErrorDialog(e: Throwable) {
         context.showExceptionDialog(e)
     }
+
+    fun shareUrl() {
+        ShareCompat.IntentBuilder
+                .from(getActivityContext()!!)
+                .setType("text/plain")
+                .setChooserTitle(R.string.share)
+                .setText(url)
+                .startChooser()
+    }
+
+    val url : String
+        get() = "https://www.wykop.pl/link/${comment.linkId}/#comment-${comment.id}"
 }

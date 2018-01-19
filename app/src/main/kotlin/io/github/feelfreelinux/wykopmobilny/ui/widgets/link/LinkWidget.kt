@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
+import android.support.v4.app.ShareCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.text.SpannableStringBuilder
@@ -80,6 +81,10 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         commentsCountTextView.text = link.commentsCount.toString()
         moreOptionsTextView.setOnClickListener {
             openOptionsMenu()
+        }
+
+        shareTextView.setOnClickListener {
+            shareUrl()
         }
     }
 
@@ -246,4 +251,16 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         }
         return html.toString()
     }
+
+    fun shareUrl() {
+        ShareCompat.IntentBuilder
+                .from(getActivityContext()!!)
+                .setType("text/plain")
+                .setChooserTitle(R.string.share)
+                .setText(url)
+                .startChooser()
+    }
+
+    val url : String
+        get() = "https://www.wykop.pl/link/${link.id}"
 }

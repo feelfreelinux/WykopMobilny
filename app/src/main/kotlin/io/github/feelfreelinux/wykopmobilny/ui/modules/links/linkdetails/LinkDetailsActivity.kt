@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.UserManager
+import android.support.v4.app.ShareCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Menu
@@ -140,11 +141,16 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
                 presenter.loadComments()
                 swiperefresh.isRefreshing = true
             }
+
             R.id.sortbyOldest -> {
                 presenter.sortBy = "old"
                 presenter.loadComments()
                 swiperefresh.isRefreshing = true
             }
+
+            R.id.copyUrl -> copyUrl()
+
+            R.id.share -> shareUrl()
 
             android.R.id.home -> finish()
         }
@@ -236,4 +242,20 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             }
         }
     }
+
+    fun shareUrl() {
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType("text/plain")
+                .setChooserTitle(R.string.share)
+                .setText(url)
+                .startChooser()
+    }
+
+    fun copyUrl() {
+        clipboardHelper.copyTextToClipboard(url, "linkUrl")
+    }
+
+    val url : String
+        get() = "https://www.wykop.pl/link/$linkId"
 }

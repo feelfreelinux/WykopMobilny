@@ -19,6 +19,9 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
   - "$HOME/.android/build-cache"
+
+before_install:
+- yes | sdkmanager "platforms;android-27"
 before_script:
 - if [ ${TRAVIS_SECURE_ENV_VARS} = "false" ]; then export apiKey="exampleKey" apiSecret="exampleSecret"; fi
 - echo -e "apiKey=\"$wykopApiKey\"\napiSecret=\"$wykopApiSecret\"" >> credentials.properties

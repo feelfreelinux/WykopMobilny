@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ShareCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.MenuItem
@@ -125,13 +126,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                 swiperefresh.isRefreshing = true
                 onRefresh()
             }
-            R.id.share -> {
-                val i = Intent(Intent.ACTION_SEND)
-                i.type = "text/plain"
-                i.putExtra(Intent.EXTRA_SUBJECT, resources.getString(R.string.share))
-                i.putExtra(Intent.EXTRA_TEXT, url)
-                startActivity(Intent.createChooser(i, resources.getString(R.string.share)))
-            }
+            R.id.share -> shareUrl()
         }
         return true
     }
@@ -142,6 +137,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     override fun showEntry(entry: Entry) {
         adapter.entry = entry
+        entry.comments.forEach { it.entryId = entry.id }
         inputToolbar.setDefaultAddressant(entry.author.nick)
         inputToolbar.show()
         loadingView.isVisible = false
@@ -203,6 +199,15 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                 }
             }
         }
+    }
+
+    fun shareUrl() {
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType("text/plain")
+                .setChooserTitle(R.string.share)
+                .setText(url)
+                .startChooser()
     }
 
     val url : String

@@ -110,6 +110,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     }
 
     fun showMarkdownToolbar() {
+        if (!hasUserEditedContent()) textBody = defaultText
         markdownToolbarHolder.isVisible = true
         show_markdown_menu.isVisible = false
     }
