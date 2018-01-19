@@ -23,5 +23,6 @@ import kotlinx.android.parcel.Parcelize
         val isHot : Boolean,
         val status : String,
         var userVote : String?,
+        var userFavorite : Boolean,
         val app : String?
 ) : Parcelable

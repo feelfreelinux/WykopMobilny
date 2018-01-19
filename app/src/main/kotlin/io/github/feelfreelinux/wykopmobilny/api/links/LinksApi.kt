@@ -36,6 +36,6 @@ interface LinksApi {
     fun voteRemove(linkId: Int) : Single<DigResponse>
     fun getUpvoters(linkId: Int) : Single<List<Upvoter>>
     fun getDownvoters(linkId: Int) : Single<List<Downvoter>>
-    fun markFavorite(linkId : Int) : Single<FavoriteResponse>
+    fun markFavorite(linkId : Int) : Single<Boolean>
     fun getRelated(linkId: Int) : Single<List<Related>>
 }

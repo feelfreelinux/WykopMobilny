@@ -87,5 +87,5 @@ interface LinksRetrofitApi {
                   @Path("linkId") entryId : Int) : Single<WykopApiResponse<LinkCommentResponse>>
 
     @GET("/links/favorite/{linkId}/appkey/$APP_KEY")
-    fun markFavorite(@Path("linkId") entryId : Int) : Single<WykopApiResponse<FavoriteResponse>>
+    fun markFavorite(@Path("linkId") entryId : Int) : Single<WykopApiResponse<List<Boolean>>>
 }

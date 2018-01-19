@@ -54,6 +54,9 @@ class LinkResponse(
         @Json(name="user_vote")
         val userVote : String?,
 
+        @Json(name="user_favorite")
+        val userFavorite : Boolean?,
+
         @Json(name="app")
         val app : String?
 )

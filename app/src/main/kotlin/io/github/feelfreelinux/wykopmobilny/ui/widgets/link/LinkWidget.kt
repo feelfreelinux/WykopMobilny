@@ -86,6 +86,12 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         shareTextView.setOnClickListener {
             shareUrl()
         }
+
+        favoriteButton.isVisible = userManager.isUserAuthorized()
+        favoriteButton.isFavorite = link.userFavorite
+        favoriteButton.setOnClickListener {
+            presenter.markFavorite()
+        }
     }
 
     private fun setupBody() {
@@ -93,6 +99,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         image.isVisible = link.preview != null
         link.preview?.let { image.loadImage(link.preview!!.stripImageCompression()) }
         description.text = link.description.removeHtml()
+        relatedCountTextView.text = link.relatedCount.toString()
         setOnClickListener {
             presenter.navigatorApi.openBrowser(link.sourceUrl)
         }
@@ -242,6 +249,11 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
 
     override fun showErrorDialog(e: Throwable) {
         context.showExceptionDialog(e)
+    }
+
+    override fun markFavorite() {
+        link.userFavorite = !link.userFavorite
+        favoriteButton.isFavorite = link.userFavorite
     }
 
     fun String.convertToTagsHtml() : String {

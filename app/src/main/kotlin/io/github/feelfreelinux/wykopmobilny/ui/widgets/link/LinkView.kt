@@ -9,4 +9,5 @@ interface LinkView : BaseView {
     fun showDigged()
     fun showBurried()
     fun showUnvoted()
+    fun markFavorite()
 }

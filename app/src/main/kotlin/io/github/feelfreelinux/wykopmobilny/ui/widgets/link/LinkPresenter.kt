@@ -73,4 +73,13 @@ class LinkPresenter(
                         })
         )
     }
+
+    fun markFavorite() {
+        compositeObservable.add(
+                linksApi.markFavorite(linkId)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.markFavorite() }, { view?.showErrorDialog(it) })
+        )
+    }
 }

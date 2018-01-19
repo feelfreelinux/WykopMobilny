@@ -118,10 +118,11 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .compose<List<RelatedResponse>>(ErrorHandlerTransformer())
                     .map { it.map { RelatedMapper.map(it) } }
 
-    override fun markFavorite(linkId: Int): Single<FavoriteResponse> =
+    override fun markFavorite(linkId: Int): Single<Boolean> =
             linksApi.markFavorite(linkId)
                     .retryWhen(userTokenRefresher)
-                    .compose<FavoriteResponse>(ErrorHandlerTransformer())
+                    .compose<List<Boolean>>(ErrorHandlerTransformer())
+                    .map { it.first() }
 
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
