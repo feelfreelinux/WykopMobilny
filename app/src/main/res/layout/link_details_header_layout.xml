@@ -6,13 +6,15 @@
     tools:parentTag="android.support.v7.widget.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="@dimen/link_details_layout_image_height"
             android:scaleType="centerCrop"
             android:clickable="false"
             android:focusable="false"
@@ -21,6 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
@@ -31,14 +34,15 @@
             android:paddingBottom="@dimen/link_layout_title_padding_bottom"
             android:textSize="@dimen/link_details_layout_title_font_size"
             android:textStyle="bold"
-            android:maxLines="3"
+            android:maxLines="5"
             android:clickable="false"
             android:focusable="false"
             android:duplicateParentState="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image"
-            tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet."/>
+            tools:text="Tytuł znaleziska"/>
+
         <TextView
             android:id="@+id/description"
             android:layout_width="0dp"
@@ -47,14 +51,15 @@
             android:paddingEnd="@dimen/link_layout_description_padding_horizontal"
             android:paddingBottom="@dimen/link_layout_description_padding_bottom"
             android:textSize="@dimen/link_details_layout_description_font_size"
-            android:maxLines="5"
+            android:maxLines="10"
             android:clickable="false"
             android:focusable="false"
             android:duplicateParentState="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title"
-            tools:text="Mauris et elementum diam. Nam laoreet nunc ac urna dapibus, porttitor faucibus magna pretium."/>
+            tools:text="Opis znaleziska"/>
+
         <View
             android:id="@+id/separator1"
             android:layout_width="match_parent"
@@ -63,6 +68,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description"/>
+
         <HorizontalScrollView
             android:id="@+id/detailsScrollView"
             android:layout_width="match_parent"
@@ -73,27 +79,28 @@
             app:layout_constraintTop_toBottomOf="@id/separator1">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
+                android:paddingTop="@dimen/write_comment_scroll_padding_vertical"
+                android:paddingBottom="@dimen/write_comment_scroll_padding_vertical">
 
                 <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
                     android:id="@+id/avatarView"
-                    android:layout_width="36dp"
+                    android:layout_width="@dimen/link_details_layout_scroll_avatar_width"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="0dp"
-                    android:paddingStart="10dp" />
+                    android:paddingStart="@dimen/link_details_layout_scroll_avatar_padding_start"
+                    android:paddingEnd="@dimen/link_details_layout_scroll_avatar_padding_end"/>
 
                 <TextView
                     android:id="@+id/userTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="12dp"
-                    android:textSize="13sp" />
+                    android:paddingLeft="@dimen/link_details_layout_scroll_avatar_padding_start"
+                    android:paddingRight="@dimen/link_details_layout_scroll_item_padding_vertical"
+                    android:textSize="@dimen/link_details_layout_scroll_item_text_size"
+                    tools:text="Powodzenia"/>
 
                 <View
                     android:layout_width="@dimen/separator_line_height"
@@ -105,9 +112,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:textSize="13sp" />
+                    android:paddingLeft="@dimen/link_details_layout_scroll_item_padding_vertical"
+                    android:paddingRight="@dimen/link_details_layout_scroll_item_padding_vertical"
+                    android:textSize="@dimen/link_details_layout_scroll_item_text_size"
+                    tools:text="2 godz. temu"/>
 
                 <View
                     android:layout_width="@dimen/separator_line_height"
@@ -119,9 +127,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:textSize="13sp" />
+                    android:paddingLeft="@dimen/link_details_layout_scroll_item_padding_vertical"
+                    android:paddingRight="@dimen/link_details_layout_scroll_item_padding_vertical"
+                    android:textSize="@dimen/link_details_layout_scroll_item_text_size"
+                    tools:text="wykop.pl"/>
 
                 <View
                     android:layout_width="@dimen/separator_line_height"
@@ -133,9 +142,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:textSize="13sp" />
+                    android:paddingLeft="@dimen/link_details_layout_scroll_item_padding_vertical"
+                    android:paddingRight="@dimen/link_details_layout_scroll_item_padding_vertical"
+                    android:textSize="@dimen/link_details_layout_scroll_item_text_size"
+                    tools:text="#permdlacauki"/>
 
             </LinearLayout>
 
@@ -149,6 +159,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailsScrollView"/>
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/buttonsToolbar"
             android:layout_width="0dp"
@@ -158,6 +169,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/separator2">
+
             <TextView
                 android:id="@+id/shareTextView"
                 style="@style/MikroButton"
@@ -165,6 +177,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/fsvotiteTextView"
+                style="@style/MikroButton"
+                android:drawableStart="?attr/favoriteOutlineDrawable"
+                app:layout_constraintStart_toEndOf="@id/shareTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/relatedCountTextView"
+                style="@style/MikroButton"
+                android:drawableStart="?attr/relatedDrawable"
+                app:layout_constraintEnd_toStartOf="@+id/commentsCountTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="21"/>
+
             <TextView
                 android:id="@+id/commentsCountTextView"
                 style="@style/MikroButton"
@@ -173,7 +203,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/diggCountTextView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="50"/>
+                tools:text="37"/>
+
             <TextView
                 android:id="@+id/diggCountTextView"
                 style="@style/MikroButton"
@@ -184,6 +215,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="2137"/>
+
             <TextView
                 android:id="@+id/moreOptionsTextView"
                 style="@style/MikroButton"
@@ -191,7 +223,33 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
         </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/relatedList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonsToolbar">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/separator_line_height"
+                android:background="?attr/lineColor"/>
+
+            <HorizontalScrollView
+                android:id="@+id/relatedListScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
         <View
             android:id="@+id/hotBadgeStrip"
             android:layout_width="@dimen/link_layout_hot_badge_strip_width"
@@ -201,5 +259,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
     </android.support.constraint.ConstraintLayout>
+
 </merge>

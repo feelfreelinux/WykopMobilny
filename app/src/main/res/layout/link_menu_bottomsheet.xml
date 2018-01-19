@@ -1,73 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     android:id="@+id/fragment_history_menu_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/cardListColor"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="?attr/cardListColor">
+
     <LinearLayout
         android:id="@+id/link_bury"
         style="@style/BottomSheetMenuItem">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetBury" />
+            android:src="?attr/bottomSheetBury"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/bury"/>
+
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/link_diggers"
         style="@style/BottomSheetMenuItem">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetDiggerList"
-            />
+            android:src="?attr/bottomSheetDiggerList"/>
+
         <TextView
             android:id="@+id/tvDiggerList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/dig_list"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/link_bury_list"
         style="@style/BottomSheetMenuItem">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetBuryList"
-            />
+            android:src="?attr/bottomSheetBuryList"/>
+
         <TextView
             android:id="@+id/tvBuryList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/bury_list"/>
+
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/link_related"
         style="@style/BottomSheetMenuItem">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetRelated"
-            />
+            android:src="?attr/bottomSheetRelated"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/related"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -77,13 +90,15 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetReport" />
+            android:src="?attr/bottomSheetReport"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/report" />
+            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:text="@string/report"/>
+
     </LinearLayout>
+
 </LinearLayout>

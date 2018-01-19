@@ -146,12 +146,10 @@
     <dimen name="survey_votes_radio_button_margin_start">2dp</dimen>
 
     <dimen name="link_layout_image_width">110dp</dimen>
-    <dimen name="link_details_layout_title_font_size">15sp</dimen>
     <dimen name="link_layout_title_font_size">13.5sp</dimen>
     <dimen name="link_layout_title_padding_horizontal">10dp</dimen>
     <dimen name="link_layout_title_padding_top">8dp</dimen>
     <dimen name="link_layout_title_padding_bottom">6dp</dimen>
-    <dimen name="link_details_layout_description_font_size">14sp</dimen>
     <dimen name="link_layout_description_font_size">13sp</dimen>
     <dimen name="link_layout_description_padding_horizontal">10dp</dimen>
     <dimen name="link_layout_description_padding_bottom">8dp</dimen>
@@ -161,8 +159,19 @@
     <dimen name="link_layout_date_padding_horizontal">5dp</dimen>
     <dimen name="link_layout_hot_badge_strip_width">2dp</dimen>
 
+    <dimen name="link_details_layout_image_height">200dp</dimen>
+    <dimen name="link_details_layout_title_font_size">15sp</dimen>
+    <dimen name="link_details_layout_description_font_size">14sp</dimen>
+    <dimen name="link_details_layout_scroll_padding_vertical">5dp</dimen>
+    <dimen name="link_details_layout_scroll_avatar_width">36dp</dimen>
+    <dimen name="link_details_layout_scroll_avatar_padding_start">10dp</dimen>
+    <dimen name="link_details_layout_scroll_avatar_padding_end">0dp</dimen>
+    <dimen name="link_details_layout_scroll_item_padding_vertical">12dp</dimen>
+    <dimen name="link_details_layout_scroll_item_text_size">13sp</dimen>
+
     <dimen name="tabBar_indicator_height">2dp</dimen>
     <dimen name="tabBar_padding_horizontal">6dp</dimen>
     <dimen name="tabBar_text_size">14sp</dimen>
 
+    <dimen name="bottomsheet_item_textview_margin_left">16dp</dimen>
 </resources>
