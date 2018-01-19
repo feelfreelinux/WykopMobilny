@@ -12,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntr
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit.LinkCommentEditActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters.DownvotersActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.related.RelatedActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upvoters.UpvotersActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
@@ -41,6 +42,7 @@ interface NewNavigatorApi {
     fun openLinkDetailsActivity(link: Link)
     fun openLinkUpvotersActivity(linkId : Int)
     fun openLinkDownvotersActivity(linkId : Int)
+    fun openLinkRelatedActivity(linkId : Int)
 }
 
 class NewNavigator(val context : Activity) : NewNavigatorApi {
@@ -114,5 +116,9 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
 
     override fun openLinkDownvotersActivity(linkId : Int) {
         context.startActivity(DownvotersActivity.createIntent(linkId, context))
+    }
+
+    override fun openLinkRelatedActivity(linkId : Int) {
+        context.startActivity(RelatedActivity.createIntent(linkId, context))
     }
 }

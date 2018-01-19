@@ -185,6 +185,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
             }
 
             link_related.setOnClickListener {
+                presenter.openRelatedList()
                 dialog.dismiss()
             }
 

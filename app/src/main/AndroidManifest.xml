@@ -70,6 +70,7 @@
                 <data android:host="www.wykop.pl" android:pathPrefix="/wpis" android:scheme="https"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.modules.links.related.RelatedActivity" />
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>

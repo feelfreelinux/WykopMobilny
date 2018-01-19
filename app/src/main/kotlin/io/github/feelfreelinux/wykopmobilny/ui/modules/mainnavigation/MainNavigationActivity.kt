@@ -204,7 +204,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             "mainpage" -> openFragment(PromotedFragment.newInstance())
             "mikroblog" -> openFragment(HotFragment.newInstance())
         }
-        openFragment(HotFragment.newInstance())
     }
 
     override fun openFragment(fragment: Fragment) {

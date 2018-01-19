@@ -33,6 +33,10 @@ class LinkPresenter(
         navigatorApi.openLinkDownvotersActivity(linkId)
     }
 
+    fun openRelatedList() {
+        navigatorApi.openLinkRelatedActivity(linkId)
+    }
+
     fun voteUp() {
         compositeObservable.add(
                 linksApi.voteUp(linkId)

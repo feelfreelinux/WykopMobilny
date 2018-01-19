@@ -4,5 +4,6 @@ class RelatedResponse (
         val id : Int,
         val url : String,
         val voteCount : Int,
-        val author : AuthorResponse
+        val author : AuthorResponse,
+        val title : String
 )
