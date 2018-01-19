@@ -12,23 +12,22 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.LinkPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import javax.inject.Provider
 
 @Module
 class ViewPresenterFactoryModule {
     @Provides
     fun provideEntryPresenterFactory(schedulers: Schedulers, entriesApi: EntriesApi, clipboardHelperApi: ClipboardHelperApi, newNavigatorApi: NewNavigatorApi, wykopLinkHandlerApi: WykopLinkHandlerApi)
-            = EntryPresenterFactory(Provider { schedulers }, Provider { entriesApi },   Provider { clipboardHelperApi },  Provider { newNavigatorApi },  Provider { wykopLinkHandlerApi })
+            = EntryPresenterFactory(schedulers, entriesApi, clipboardHelperApi,  newNavigatorApi,  wykopLinkHandlerApi)
 
     @Provides
     fun provideCommentPresenterFactory(schedulers: Schedulers, entriesApi: EntriesApi, clipboardHelperApi: ClipboardHelperApi, newNavigatorApi: NewNavigatorApi, wykopLinkHandlerApi: WykopLinkHandlerApi)
-            = CommentPresenterFactory(Provider { schedulers }, Provider { entriesApi },   Provider { clipboardHelperApi },  Provider { newNavigatorApi },  Provider { wykopLinkHandlerApi })
+            = CommentPresenterFactory(schedulers, entriesApi,  clipboardHelperApi,  newNavigatorApi,  wykopLinkHandlerApi)
 
     @Provides
     fun provideLinkCommentPresenterFactory(schedulers: Schedulers, linksApi: LinksApi, newNavigatorApi: NewNavigatorApi)
-            = LinkCommentPresenterFactory(Provider { schedulers }, Provider { newNavigatorApi }, Provider { linksApi })
+            = LinkCommentPresenterFactory(schedulers, newNavigatorApi, linksApi)
 
     @Provides
     fun provideLinkPresenterFactory(schedulers: Schedulers, linksApi: LinksApi, newNavigatorApi: NewNavigatorApi, linkHandlerApi: WykopLinkHandlerApi)
-            = LinkPresenterFactory(Provider { schedulers }, Provider { newNavigatorApi }, Provider { linkHandlerApi }, Provider { linksApi })
+            = LinkPresenterFactory(schedulers, newNavigatorApi, linkHandlerApi, linksApi)
 }

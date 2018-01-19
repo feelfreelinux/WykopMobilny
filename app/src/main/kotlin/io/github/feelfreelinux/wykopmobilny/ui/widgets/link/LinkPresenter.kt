@@ -1,19 +1,16 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link
 
-import com.google.auto.factory.AutoFactory
-import com.google.auto.factory.Provided
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 
-@AutoFactory
 class LinkPresenter(
-        @Provided val schedulers: Schedulers,
-        @Provided val navigatorApi: NewNavigatorApi,
-        @Provided val linkHandlerApi: WykopLinkHandlerApi,
-        @Provided val linksApi: LinksApi) : BasePresenter<LinkView>() {
+        val schedulers: Schedulers,
+        val navigatorApi: NewNavigatorApi,
+        val linkHandlerApi: WykopLinkHandlerApi,
+        val linksApi: LinksApi) : BasePresenter<LinkView>() {
     var linkId = -1
 
     companion object {

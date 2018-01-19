@@ -1,17 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment
 
-import com.google.auto.factory.AutoFactory
-import com.google.auto.factory.Provided
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 
-@AutoFactory
 class LinkCommentPresenter(
-        @Provided val schedulers: Schedulers,
-        @Provided val newNavigatorApi: NewNavigatorApi,
-        @Provided val linksApi : LinksApi) : BasePresenter<LinkCommentView>() {
+        val schedulers: Schedulers,
+        val newNavigatorApi: NewNavigatorApi,
+        val linksApi : LinksApi) : BasePresenter<LinkCommentView>() {
     var linkId = -1
 
     fun handleUrl(url : String) {
