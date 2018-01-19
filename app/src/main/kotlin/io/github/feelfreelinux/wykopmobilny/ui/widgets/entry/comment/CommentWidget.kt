@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 import android.content.Context
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
+import android.support.v4.app.ShareCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.text.SpannableStringBuilder
@@ -94,6 +95,7 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
             voteListener = { presenter.voteComment() }
             unvoteListener = { presenter.unvoteComment() }
         }
+        shareTextView.setOnClickListener { shareUrl() }
     }
 
     private fun setupBody() {
@@ -218,4 +220,16 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
     override fun showVoters(voters : List<Voter>) {
         votersDialogListener(voters)
     }
+
+    fun shareUrl() {
+        ShareCompat.IntentBuilder
+                .from(getActivityContext()!!)
+                .setType("text/plain")
+                .setChooserTitle(R.string.share)
+                .setText(url)
+                .startChooser()
+    }
+
+    val url : String
+        get() = "https://www.wykop.pl/wpis/${comment.entryId}/#comment-${comment.id}"
 }

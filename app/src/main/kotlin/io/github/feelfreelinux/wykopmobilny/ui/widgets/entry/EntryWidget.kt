@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 import android.content.Context
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
+import android.support.v4.app.ShareCompat
 import android.support.v7.widget.CardView
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -100,6 +101,10 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
                 presenter.markFavorite()
             }
 
+        }
+
+        shareTextView.setOnClickListener {
+            shareUrl()
         }
     }
 
@@ -233,4 +238,16 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     override fun showVoters(voters : List<Voter>) {
         votersDialogListener(voters)
     }
+
+    fun shareUrl() {
+        ShareCompat.IntentBuilder
+                .from(getActivityContext()!!)
+                .setType("text/plain")
+                .setChooserTitle(R.string.share)
+                .setText(url)
+                .startChooser()
+    }
+
+    val url : String
+        get() = "https://www.wykop.pl/wpis/${entry.id}"
 }
