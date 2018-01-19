@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api.links
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
 import io.reactivex.Single
 
@@ -35,5 +36,6 @@ interface LinksApi {
     fun voteRemove(linkId: Int) : Single<DigResponse>
     fun getUpvoters(linkId: Int) : Single<List<Upvoter>>
     fun getDownvoters(linkId: Int) : Single<List<Downvoter>>
-
+    fun markFavorite(linkId : Int) : Single<FavoriteResponse>
+    fun getRelated(linkId: Int) : Single<List<Related>>
 }
