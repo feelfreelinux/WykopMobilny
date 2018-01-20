@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.github.feelfreelinux.wykopmobilny.ui.widgets.link.related.RelatedWidget
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relatedView"
+    style="@style/EntryCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"/>

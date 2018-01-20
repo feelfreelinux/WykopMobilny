@@ -2,6 +2,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragmentProvider
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragmentModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
@@ -36,6 +38,9 @@ abstract class MainNavigationFragmentProvider {
 
     @ContributesAndroidInjector(modules = [MyWykopFragmentProvider::class])
     abstract fun provideMyWykopFragment() : MyWykopFragment
+
+    @ContributesAndroidInjector(modules = [FavoriteFragmentProvider::class])
+    abstract fun provideFavoriteFragment() : FavoriteFragment
 
     @ContributesAndroidInjector(modules = [SearchFragmentProvider::class])
     abstract fun provideSearchFragment() : SearchFragment

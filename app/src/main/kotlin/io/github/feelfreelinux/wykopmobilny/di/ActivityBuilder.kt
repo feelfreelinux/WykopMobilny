@@ -15,6 +15,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters.Downvote
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters.DownvotersModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.related.RelatedActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.related.RelatedModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upvoters.UpvotersActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upvoters.UpvotersModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
@@ -78,6 +80,9 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [DownvotersModule::class])
     abstract fun bindDownvotersActivity() : DownvotersActivity
+
+    @ContributesAndroidInjector(modules = [RelatedModule::class])
+    abstract fun bindRelatedActivity() : RelatedActivity
 
     @ContributesAndroidInjector(modules = [LinkCommentEditModule::class])
     abstract fun bindLinkEditCommentActivity() : LinkCommentEditActivity

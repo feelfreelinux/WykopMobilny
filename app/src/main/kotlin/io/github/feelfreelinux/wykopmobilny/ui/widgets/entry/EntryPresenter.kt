@@ -1,7 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
-import com.google.auto.factory.AutoFactory
-import com.google.auto.factory.Provided
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
@@ -11,12 +9,11 @@ import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 
-@AutoFactory()
-class EntryPresenter(@Provided val schedulers: Schedulers,
-                     @Provided val entriesApi: EntriesApi,
-                     @Provided val clipboardHelperApi: ClipboardHelperApi,
-                     @Provided val navigatorApi: NewNavigatorApi,
-                     @Provided val linkHandler: WykopLinkHandlerApi) : BasePresenter<EntryView>() {
+class EntryPresenter(val schedulers: Schedulers,
+                     val entriesApi: EntriesApi,
+                     val clipboardHelperApi: ClipboardHelperApi,
+                     val navigatorApi: NewNavigatorApi,
+                     val linkHandler: WykopLinkHandlerApi) : BasePresenter<EntryView>() {
     var entryId = -1
     fun deleteEntry() {
         compositeObservable.add(

@@ -3,11 +3,13 @@ package io.github.feelfreelinux.wykopmobilny.api.links
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
 import io.reactivex.Single
 
 interface LinksApi {
     fun getPromoted(page : Int) : Single<List<Link>>
+    fun getObserved(page : Int) : Single<List<Link>>
     fun getLinkComments(linkId: Int, sortBy : String) : Single<List<LinkComment>>
     fun getLink(linkId: Int) : Single<Link>
 
@@ -35,5 +37,6 @@ interface LinksApi {
     fun voteRemove(linkId: Int) : Single<DigResponse>
     fun getUpvoters(linkId: Int) : Single<List<Upvoter>>
     fun getDownvoters(linkId: Int) : Single<List<Downvoter>>
-
+    fun markFavorite(linkId : Int) : Single<Boolean>
+    fun getRelated(linkId: Int) : Single<List<Related>>
 }

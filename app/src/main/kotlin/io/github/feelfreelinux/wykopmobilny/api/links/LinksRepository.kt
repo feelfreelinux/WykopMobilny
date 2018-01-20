@@ -22,6 +22,12 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
                     .map { it.map { LinkMapper.map(it) } }
 
+    override fun getObserved(page : Int): Single<List<Link>> =
+            linksApi.getObserved(page)
+                    .retryWhen(userTokenRefresher)
+                    .compose<List<LinkResponse>>(ErrorHandlerTransformer())
+                    .map { it.map { LinkMapper.map(it) } }
+
     override fun getLinkComments(linkId: Int, sortBy: String) =
             linksApi.getLinkComments(linkId, sortBy)
                     .retryWhen(userTokenRefresher)
@@ -111,6 +117,18 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .retryWhen(userTokenRefresher)
                     .compose<List<UpvoterResponse>>(ErrorHandlerTransformer())
                     .map { it.map { UpvoterMapper.map(it) } }
+
+    override fun getRelated(linkId: Int): Single<List<Related>> =
+            linksApi.getRelated(linkId)
+                    .retryWhen(userTokenRefresher)
+                    .compose<List<RelatedResponse>>(ErrorHandlerTransformer())
+                    .map { it.map { RelatedMapper.map(it) } }
+
+    override fun markFavorite(linkId: Int): Single<Boolean> =
+            linksApi.markFavorite(linkId)
+                    .retryWhen(userTokenRefresher)
+                    .compose<List<Boolean>>(ErrorHandlerTransformer())
+                    .map { it.first() }
 
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!

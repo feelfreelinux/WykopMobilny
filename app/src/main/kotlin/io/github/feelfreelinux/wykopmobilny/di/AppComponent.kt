@@ -11,7 +11,11 @@ import javax.inject.Singleton
 
 
 @Singleton
-@Component( modules = [AndroidSupportInjectionModule::class, AppModule::class, ActivityBuilder::class, NetworkModule::class, RepositoryModule::class])
+@Component( modules = [AndroidSupportInjectionModule::class,
+    AppModule::class,
+    ActivityBuilder::class,
+    NetworkModule::class,
+    RepositoryModule::class])
 internal interface AppComponent : AndroidInjector<WykopApp> {
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<WykopApp>()

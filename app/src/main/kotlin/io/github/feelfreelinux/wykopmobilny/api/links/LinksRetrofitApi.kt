@@ -12,6 +12,9 @@ interface LinksRetrofitApi {
     @GET("/links/promoted/page/{page}/appkey/$APP_KEY")
     fun getPromoted(@Path("page") page : Int) : Single<WykopApiResponse<List<LinkResponse>>>
 
+    @GET("/links/observed/page/{page}/appkey/$APP_KEY")
+    fun getObserved(@Path("page") page : Int) : Single<WykopApiResponse<List<LinkResponse>>>
+
     @GET("/links/comments/{linkId}/sort/{sortBy}/appkey/$APP_KEY")
     fun getLinkComments(@Path("linkId") linkId : Int, @Path("sortBy") sortBy : String) : Single<WykopApiResponse<List<LinkCommentResponse>>>
 
@@ -34,6 +37,9 @@ interface LinksRetrofitApi {
 
     @GET("/links/downvoters/{linkId}/appkey/$APP_KEY")
     fun getDownvoters(@Path("linkId") linkId : Int) : Single<WykopApiResponse<List<DownvoterResponse>>>
+
+    @GET("/links/related/{linkId}/appkey/$APP_KEY")
+    fun getRelated(@Path("linkId") linkId : Int) : Single<WykopApiResponse<List<RelatedResponse>>>
 
     @GET("/links/voteup/{linkId}/appkey/$APP_KEY")
     fun voteUp(@Path("linkId") linkId : Int) : Single<WykopApiResponse<DigResponse>>
@@ -81,5 +87,8 @@ interface LinksRetrofitApi {
     @FormUrlEncoded
     @POST("/links/commentedit/{linkId}/appkey/$APP_KEY")
     fun editComment(@Field("body") body: String,
-                  @Path("linkId") entryId : Int) : Single<WykopApiResponse<LinkCommentResponse>>
+                  @Path("linkId") linkId : Int) : Single<WykopApiResponse<LinkCommentResponse>>
+
+    @GET("/links/favorite/{linkId}/appkey/$APP_KEY")
+    fun markFavorite(@Path("linkId") entryId : Int) : Single<WykopApiResponse<List<Boolean>>>
 }

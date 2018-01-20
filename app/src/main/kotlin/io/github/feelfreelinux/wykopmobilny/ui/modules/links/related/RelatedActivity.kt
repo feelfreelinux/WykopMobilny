@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters
+package io.github.feelfreelinux.wykopmobilny.ui.modules.links.related
 
 import android.app.Activity
 import android.content.Context
@@ -9,11 +9,13 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Downvoter
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Upvoter
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.DownvoterListAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.RelatedListAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.UpvoterListAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
@@ -21,17 +23,17 @@ import kotlinx.android.synthetic.main.activity_conversations_list.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class DownvotersActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, DownvotersView {
+class RelatedActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, RelatedView {
 
-    private lateinit var downvotersDataFragment: DataFragment<List<Downvoter>>
-    @Inject lateinit var presenter: DownvotersPresenter
-    @Inject lateinit var downvotersAdapter: DownvoterListAdapter
+    private lateinit var relatedDataFragment: DataFragment<List<Related>>
+    @Inject lateinit var presenter: RelatedPresenter
+    @Inject lateinit var relatedAdapter: RelatedListAdapter
 
     companion object {
-        val DATA_FRAGMENT_TAG = "DOWNVOTERS_LIST"
+        val DATA_FRAGMENT_TAG = "RELATED_LIST"
         val EXTRA_LINKID = "LINK_ID_EXTRA"
         fun createIntent(linkId : Int, activity: Activity): Intent {
-            val intent = Intent(activity, DownvotersActivity::class.java)
+            val intent = Intent(activity, RelatedActivity::class.java)
             intent.putExtra(EXTRA_LINKID, linkId)
             return intent
         }
@@ -39,37 +41,46 @@ class DownvotersActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        downvotersDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        relatedDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         setContentView(R.layout.activity_voterslist)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = resources.getString(R.string.downvoters)
+        supportActionBar?.title = resources.getString(R.string.related)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         swiperefresh.setOnRefreshListener(this)
         recyclerView.apply {
             prepare()
-            adapter = downvotersAdapter
+            adapter = relatedAdapter
         }
         swiperefresh.isRefreshing = false
         presenter.linkId = intent.getIntExtra(EXTRA_LINKID, -1)
         presenter.subscribe(this)
 
-        if (downvotersDataFragment.data == null) {
+        if (relatedDataFragment.data == null) {
             loadingView.isVisible = true
             onRefresh()
         } else {
-            downvotersAdapter.dataset.addAll(downvotersDataFragment.data!!)
+            relatedAdapter.dataset.addAll(relatedDataFragment.data!!)
             loadingView.isVisible = false
         }
     }
 
-    override fun showDownvoters(downvoters: List<Downvoter>) {
+    override fun showRelated(related: List<Related>) {
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
-        downvotersAdapter.apply {
+        relatedAdapter.apply {
             dataset.clear()
-            dataset.addAll(downvoters)
+            dataset.addAll(related)
             notifyDataSetChanged()
         }
+    }
+
+    override fun onRefresh() {
+        presenter.getRelated()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        relatedDataFragment.data = relatedAdapter.dataset
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -79,15 +90,6 @@ class DownvotersActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onRefresh() {
-        presenter.getDownvoters()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        downvotersDataFragment.data = downvotersAdapter.dataset
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
@@ -95,6 +97,6 @@ class DownvotersActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onPause() {
         super.onPause()
-        if (isFinishing) supportFragmentManager.removeDataFragment(downvotersDataFragment)
+        if (isFinishing) supportFragmentManager.removeDataFragment(relatedDataFragment)
     }
 }
