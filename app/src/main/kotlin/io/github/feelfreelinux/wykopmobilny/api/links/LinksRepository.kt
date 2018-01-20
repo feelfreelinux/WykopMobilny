@@ -22,6 +22,12 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
                     .map { it.map { LinkMapper.map(it) } }
 
+    override fun getUpcoming(page : Int, sortBy: String): Single<List<Link>> =
+            linksApi.getUpcoming(page, sortBy)
+                    .retryWhen(userTokenRefresher)
+                    .compose<List<LinkResponse>>(ErrorHandlerTransformer())
+                    .map { it.map { LinkMapper.map(it) } }
+
     override fun getObserved(page : Int): Single<List<Link>> =
             linksApi.getObserved(page)
                     .retryWhen(userTokenRefresher)

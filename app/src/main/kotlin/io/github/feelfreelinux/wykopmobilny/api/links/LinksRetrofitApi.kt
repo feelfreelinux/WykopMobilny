@@ -9,6 +9,10 @@ import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface LinksRetrofitApi {
+    @GET("/links/upcoming/page/{page}/sort/{sortBy}/appkey/$APP_KEY")
+    fun getUpcoming(@Path("page") page : Int,
+                    @Path("sortBy") sortBy : String) : Single<WykopApiResponse<List<LinkResponse>>>
+
     @GET("/links/promoted/page/{page}/appkey/$APP_KEY")
     fun getPromoted(@Path("page") page : Int) : Single<WykopApiResponse<List<LinkResponse>>>
 
