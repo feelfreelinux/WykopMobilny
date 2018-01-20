@@ -69,11 +69,10 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         hotBadgeStrip.isVisible = link.isHot
         avatarView.setAuthor(link.author!!)
         dateTextView.text = link.date.toPrettyDate()
-        urlTextView.text = URL(link.sourceUrl).host
+        urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
         userTextView.text = link.author!!.nick
         userTextView.setTextColor(context.getGroupColor(link.author!!.group))
         tagsTextView.prepareBody(link.tags.convertToTagsHtml(), this)
-
     }
 
     private fun setupButtons() {

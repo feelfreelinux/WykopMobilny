@@ -116,6 +116,11 @@
     <string name="bury_reason">Powód zakopu</string>
     <string name="reason_duplicate">Duplikat</string>
     <string name="reason_spam">Spam</string>
+    <string name="upcoming_sortby_comments">Komentowane</string>
+    <string name="upcoming_sortby_votes">Wykopywane</string>
+    <string name="upcoming_sortby_active">Aktywne</string>
+    <string name="upcoming_sortby_date">Najnowsze</string>
+
     <string name="reason_fake_info">Informacja nieprawdziwa</string>
     <string name="reason_wrong_content">Treść nieodpowiednia</string>
     <string name="reason_unsuitable_content">Nie nadaje się</string>

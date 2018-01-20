@@ -35,6 +35,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         val EXTRA_FRAGMENT_KEY = "LINK_ACTIVITY_#"
         val EXTRA_LINK_ID = "EXTRA_LINKID"
         val EXTRA_COMMENT_ID = "EXTRA_COMMENT_ID"
+        val EXTRA_SORTBY = "EXTRA_SORTBY"
 
         fun createIntent(context: Context, link : Link): Intent {
             val intent = Intent(context, LinkDetailsActivity::class.java)
@@ -84,7 +85,6 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         }
         toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_sort)
 
-
         adapter.onReplyClickedListener = {
             replyLinkId = it.id
             inputToolbar.addAddressant(it.author.nick)
@@ -96,7 +96,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             // Set margin, adapter
             this.adapter = this@LinkDetailsActivity.adapter
         }
-        supportActionBar?.title = null
+        supportActionBar?.title = "Znalezisko"
         presenter.linkId = linkId
         if (intent.hasExtra(EXTRA_LINK)) {
             adapter.link = link
@@ -121,6 +121,12 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             presenter.loadComments()
             presenter.updateLink()
         }
+
+        when(presenter.sortBy) {
+            "new" -> supportActionBar?.setSubtitle(R.string.sortby_newest)
+            "old" -> supportActionBar?.setSubtitle(R.string.sortby_oldest)
+            "best" -> supportActionBar?.setSubtitle(R.string.sortby_best)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -133,17 +139,20 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             R.id.refresh -> onRefresh()
             R.id.sortbyBest -> {
                 presenter.sortBy = "best"
+                supportActionBar?.setSubtitle(R.string.sortby_best)
                 presenter.loadComments()
                 swiperefresh.isRefreshing = true
             }
             R.id.sortbyNewest -> {
                 presenter.sortBy = "new"
+                supportActionBar?.setSubtitle(R.string.sortby_newest)
                 presenter.loadComments()
                 swiperefresh.isRefreshing = true
             }
 
             R.id.sortbyOldest -> {
                 presenter.sortBy = "old"
+                supportActionBar?.setSubtitle(R.string.sortby_oldest)
                 presenter.loadComments()
                 swiperefresh.isRefreshing = true
             }
@@ -157,7 +166,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         return true
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(EXTRA_SORTBY, presenter.sortBy)
         super.onSaveInstanceState(outState)
         linkFragmentData.data = adapter.link
     }

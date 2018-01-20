@@ -24,6 +24,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upcoming.UpcomingFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment
@@ -80,6 +81,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             R.id.nav_home -> { openFragment(PromotedFragment.newInstance()) }
             R.id.search -> { openFragment(SearchFragment.newInstance()) }
             R.id.favourite -> { openFragment(FavoriteFragment.newInstance()) }
+            R.id.nav_wykopalisko -> { openFragment(UpcomingFragment.newInstance()) }
             R.id.logout -> {
                 userManagerApi.logoutUser()
                 restartActivity()
@@ -209,6 +211,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     override fun openFragment(fragment: Fragment) {
+        supportActionBar?.subtitle = null
         fab.isVisible = false
         fab.setOnClickListener(null)
         if (fragment is BaseNavigationView) fab.isVisible = true

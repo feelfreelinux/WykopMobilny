@@ -6,6 +6,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragmentProvider
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragmentModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upcoming.UpcomingFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upcoming.UpcomingModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragmentModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment
@@ -44,4 +46,8 @@ abstract class MainNavigationFragmentProvider {
 
     @ContributesAndroidInjector(modules = [SearchFragmentProvider::class])
     abstract fun provideSearchFragment() : SearchFragment
+
+
+    @ContributesAndroidInjector(modules = [UpcomingModule::class])
+    abstract fun provideUpcomingFragment() : UpcomingFragment
 }
