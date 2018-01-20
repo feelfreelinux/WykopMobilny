@@ -15,6 +15,9 @@ interface EntriesRetrofitApi {
     @GET("/entries/stream/page/{page}/appkey/$APP_KEY")
     fun getStream(@Path("page") page : Int) : Single<WykopApiResponse<List<EntryResponse>>>
 
+    @GET("/entries/observed/page/{page}/appkey/$APP_KEY")
+    fun getObserved(@Path("page") page : Int) : Single<WykopApiResponse<List<EntryResponse>>>
+
     @GET("/entries/entry/{id}/appkey/$APP_KEY")
     fun getEntry(@Path("id") id : Int) : Single<WykopApiResponse<EntryResponse>>
 

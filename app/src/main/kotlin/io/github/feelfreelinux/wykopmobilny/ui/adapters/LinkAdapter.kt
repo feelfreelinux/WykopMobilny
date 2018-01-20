@@ -6,8 +6,9 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.SimpleBaseProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
+import javax.inject.Inject
 
-class LinkAdapter : SimpleBaseProgressAdapter<LinkViewHolder, Link>() {
+class LinkAdapter @Inject constructor() : SimpleBaseProgressAdapter<LinkViewHolder, Link>() {
     override fun bindHolder(holder: LinkViewHolder, position: Int) {
         holder.bindView(data[position])
     }

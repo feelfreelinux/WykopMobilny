@@ -22,6 +22,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
@@ -78,6 +79,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             R.id.nav_mojwykop -> { openFragment(MyWykopFragment.newInstance()) }
             R.id.nav_home -> { openFragment(PromotedFragment.newInstance()) }
             R.id.search -> { openFragment(SearchFragment.newInstance()) }
+            R.id.favourite -> { openFragment(FavoriteFragment.newInstance()) }
             R.id.logout -> {
                 userManagerApi.logoutUser()
                 restartActivity()

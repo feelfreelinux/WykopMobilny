@@ -28,6 +28,7 @@ interface EntriesApi {
 
     fun getHot(page : Int, period : String) : Single<List<Entry>>
     fun getStream(page : Int) : Single<List<Entry>>
+    fun getObserved(page : Int) : Single<List<Entry>>
     fun getEntry(id : Int) : Single<Entry>
     fun getEntryVoters(id : Int) : Single<List<Voter>>
     fun getEntryCommentVoters(id : Int) : Single<List<Voter>>
