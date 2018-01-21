@@ -99,6 +99,10 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         link.preview?.let { image.loadImage(link.preview!!.stripImageCompression()) }
         description.text = link.description.removeHtml()
         relatedCountTextView.text = link.relatedCount.toString()
+        relatedCountTextView.setOnClickListener {
+            if (link.relatedCount > 0)
+            presenter.openRelatedList()
+        }
         setOnClickListener {
             presenter.navigatorApi.openBrowser(link.sourceUrl)
         }
@@ -184,6 +188,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
             }
 
             link_related.setOnClickListener {
+                if (link.relatedCount > 0)
                 presenter.openRelatedList()
                 dialog.dismiss()
             }

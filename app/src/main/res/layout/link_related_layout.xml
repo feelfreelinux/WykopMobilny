@@ -9,8 +9,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:addStatesFromChildren="true">
+        android:layout_height="wrap_content">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
             android:id="@+id/authorHeaderView"
@@ -90,19 +89,25 @@
             android:paddingRight="@dimen/comment_layout_button_padding_horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lineBottom">
+            app:layout_constraintTop_toBottomOf="@id/lineBottom"
+            android:clickable="true"
+            android:focusable="true">
 
             <TextView
                 android:id="@+id/shareTextView"
                 style="@style/MikroButton"
+                android:clickable="true"
                 android:drawableStart="?attr/sharebtnDrawable"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:focusable="true" />
 
             <TextView
                 android:id="@+id/voteCountTextView"
                 style="@style/MikroButton"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_marginEnd="@dimen/link_related_layout_vote_margin_end"
                 app:layout_constraintEnd_toStartOf="@id/plusButton"
                 app:layout_constraintTop_toTopOf="parent"

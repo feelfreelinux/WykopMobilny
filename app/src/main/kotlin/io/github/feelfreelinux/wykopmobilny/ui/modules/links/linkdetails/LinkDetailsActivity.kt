@@ -72,7 +72,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     @Inject lateinit var suggestionsApi : SuggestApi
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     @Inject lateinit var presenter: LinkDetailsPresenter
-    private lateinit var linkFragmentData: DataFragment<Link>
+    private lateinit var linkFragmentData: DataFragment<Pair<Link, String>> // link, sortby
     @Inject lateinit var adapter : LinkDetailsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,7 +111,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         swiperefresh.setOnRefreshListener(this)
         linkFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + linkId)
         if (linkFragmentData.data != null) {
-            adapter.link = linkFragmentData.data
+            adapter.link = linkFragmentData.data?.first
+            presenter.sortBy = linkFragmentData.data?.second ?: "best"
             adapter.notifyDataSetChanged()
             loadingView.isVisible = false
         } else {
@@ -122,11 +123,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             presenter.updateLink()
         }
 
-        when(presenter.sortBy) {
-            "new" -> supportActionBar?.setSubtitle(R.string.sortby_newest)
-            "old" -> supportActionBar?.setSubtitle(R.string.sortby_oldest)
-            "best" -> supportActionBar?.setSubtitle(R.string.sortby_best)
-        }
+        setSubtitle()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -134,25 +131,33 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         return true
     }
 
+    fun setSubtitle() {
+        supportActionBar?.setSubtitle(when(presenter.sortBy) {
+            "new" -> R.string.sortby_newest
+            "old" -> R.string.sortby_oldest
+            else -> R.string.sortby_best
+        })
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.refresh -> onRefresh()
             R.id.sortbyBest -> {
                 presenter.sortBy = "best"
-                supportActionBar?.setSubtitle(R.string.sortby_best)
+                setSubtitle()
                 presenter.loadComments()
                 swiperefresh.isRefreshing = true
             }
             R.id.sortbyNewest -> {
                 presenter.sortBy = "new"
-                supportActionBar?.setSubtitle(R.string.sortby_newest)
+                setSubtitle()
                 presenter.loadComments()
                 swiperefresh.isRefreshing = true
             }
 
             R.id.sortbyOldest -> {
                 presenter.sortBy = "old"
-                supportActionBar?.setSubtitle(R.string.sortby_oldest)
+                setSubtitle()
                 presenter.loadComments()
                 swiperefresh.isRefreshing = true
             }
@@ -169,7 +174,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString(EXTRA_SORTBY, presenter.sortBy)
         super.onSaveInstanceState(outState)
-        linkFragmentData.data = adapter.link
+        adapter.link?.let { linkFragmentData.data = Pair(adapter.link!!, presenter.sortBy) }
     }
 
     override fun onPause() {

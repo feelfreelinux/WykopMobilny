@@ -8,9 +8,11 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragmentNotifier
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import javax.inject.Inject
 
-class EntryFavoriteFragment : BaseFeedFragment<Entry>(), EntryFavoriteView {
+class EntryFavoriteFragment : BaseFeedFragment<Entry>(), EntryFavoriteView, FavoriteFragmentNotifier {
     @Inject override lateinit var feedAdapter : FeedAdapter
     @Inject lateinit var presenter : EntryFavoritePresenter
     lateinit var dataFragment : DataFragment<PagedDataModel<List<Entry>>>
@@ -48,8 +50,7 @@ class EntryFavoriteFragment : BaseFeedFragment<Entry>(), EntryFavoriteView {
         presenter.unsubscribe()
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
+    override fun removeDataFragment() {
+        supportFragmentManager?.removeDataFragment(dataFragment)
     }
 }

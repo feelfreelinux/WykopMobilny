@@ -65,6 +65,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
         comment.body?.let {
             commentContentTextView.prepareBody(comment.body!!, this)
         }
+        commentContentTextView.isVisible = !comment.body.isNullOrEmpty()
         val margin = if (comment.id != comment.parentId) 8f else 0f
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin, resources.displayMetrics)
         val params = layoutParams as MarginLayoutParams

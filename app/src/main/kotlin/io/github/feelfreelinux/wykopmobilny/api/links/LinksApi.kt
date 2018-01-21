@@ -5,6 +5,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
 import io.reactivex.Single
 
 interface LinksApi {
@@ -17,6 +18,8 @@ interface LinksApi {
 
     fun commentVoteUp(linkId: Int) : Single<LinkVoteResponse>
     fun commentVoteDown(linkId: Int) : Single<LinkVoteResponse>
+    fun relatedVoteUp(relatedId: Int) : Single<VoteResponse>
+    fun relatedVoteDown(relatedId: Int) : Single<VoteResponse>
     fun commentVoteCancel(linkId: Int) : Single<LinkVoteResponse>
     fun commentDelete(commentId: Int) : Single<LinkComment>
     fun commentAdd(body : String,

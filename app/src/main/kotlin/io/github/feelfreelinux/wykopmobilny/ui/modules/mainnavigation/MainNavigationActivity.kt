@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -36,9 +38,11 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
+import kotlinx.android.synthetic.main.app_about_bottomsheet.view.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -74,14 +78,15 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
-            R.id.login -> { navigator.openLoginScreen(this, LOGIN_REQUEST_CODE) }
+            R.id.login -> { navigator.openLoginScreen(LOGIN_REQUEST_CODE) }
             R.id.messages -> { openFragment(ConversationsListFragment.newInstance()) }
-            R.id.nav_settings -> { navigator.openSettingsActivity(this) }
+            R.id.nav_settings -> { navigator.openSettingsActivity() }
             R.id.nav_mojwykop -> { openFragment(MyWykopFragment.newInstance()) }
             R.id.nav_home -> { openFragment(PromotedFragment.newInstance()) }
             R.id.search -> { openFragment(SearchFragment.newInstance()) }
             R.id.favourite -> { openFragment(FavoriteFragment.newInstance()) }
             R.id.nav_wykopalisko -> { openFragment(UpcomingFragment.newInstance()) }
+            R.id.about -> { openAboutSheet() }
             R.id.logout -> {
                 userManagerApi.logoutUser()
                 restartActivity()
@@ -96,8 +101,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
     @Inject lateinit var presenter : MainNavigationPresenter
     @Inject lateinit var settingsApi : SettingsPreferencesApi
-    @Inject lateinit var navigator : NavigatorApi
-    @Inject lateinit var newNavigator : NewNavigatorApi
+    @Inject lateinit var navigator : NewNavigatorApi
     @Inject lateinit var userManagerApi : UserManagerApi
 
 
@@ -255,7 +259,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     override fun restartActivity() {
-        navigator.openMainActivity(this)
+        navigator.openMainActivity()
         finish()
     }
 
@@ -286,5 +290,41 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 }
             }
         }
+    }
+
+    fun openAboutSheet() {
+        val dialog = BottomSheetDialog(this)
+        val bottomSheetView = layoutInflater.inflate(R.layout.app_about_bottomsheet, null)
+        dialog.setContentView(bottomSheetView)
+
+        bottomSheetView.apply {
+            val versionName = packageManager.getPackageInfo(packageName, 0).versionName
+            app_version_textview.text = getString(R.string.app_version, versionName)
+            app_version.setOnClickListener {
+                openBrowser("https://github.com/feelfreelinux/WykopMobilny")
+                dialog.dismiss()
+            }
+
+            app_report_bug.setOnClickListener {
+                navigator.openTagActivity("owmbugi")
+                dialog.dismiss()
+            }
+
+            app_observe_tag.setOnClickListener {
+                navigator.openTagActivity("otwartywykopmobilny")
+                dialog.dismiss()
+            }
+
+            license.setOnClickListener {
+                openBrowser("https://github.com/feelfreelinux/WykopMobilny/blob/master/LICENSE")
+                dialog.dismiss()
+            }
+        }
+
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        dialog.setOnShowListener {
+            mBehavior.peekHeight = bottomSheetView.height
+        }
+        dialog.show()
     }
 }
