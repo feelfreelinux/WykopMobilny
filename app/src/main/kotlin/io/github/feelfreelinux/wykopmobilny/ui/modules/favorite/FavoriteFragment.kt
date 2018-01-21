@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentNotifier
 import kotlinx.android.synthetic.main.activity_mywykop.*
 
 class FavoriteFragment  : BaseFragment() {
@@ -35,5 +36,14 @@ class FavoriteFragment  : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.favourite)
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (isRemoving)
+        for (i in 0 until pagerAdapter.registeredFragments.size()) {
+            (pagerAdapter.registeredFragments.valueAt(i) as FavoriteFragmentNotifier)
+                    .removeDataFragment()
+        }
     }
 }

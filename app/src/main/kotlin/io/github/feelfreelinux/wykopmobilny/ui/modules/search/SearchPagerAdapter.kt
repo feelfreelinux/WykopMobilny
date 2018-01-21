@@ -43,6 +43,4 @@ class SearchPagerAdapter(val resources : Resources, fragmentManager: FragmentMan
             else -> resources.getString(R.string.profiles)
         }
     }
-
-
 }

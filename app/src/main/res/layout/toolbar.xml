@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     android:elevation="4dp"
     app:contentInsetStartWithNavigation="0dp"
+    app:subtitleTextAppearance="@style/Toolbar.Subtitle.Messages"
     app:titleTextAppearance="@style/Toolbar.TitleText"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:background="?attr/colorPrimaryDark">

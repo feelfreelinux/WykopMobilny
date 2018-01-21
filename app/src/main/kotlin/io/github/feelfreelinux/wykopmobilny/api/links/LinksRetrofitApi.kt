@@ -52,6 +52,12 @@ interface LinksRetrofitApi {
     fun voteDown(@Path("linkId") linkId : Int,
                  @Path("voteType") reason : Int) : Single<WykopApiResponse<DigResponse>>
 
+    @GET("/links/relatedvoteup/0/{relatedId}/appkey/$APP_KEY")
+    fun relatedVoteUp(@Path("relatedId") relatedId : Int) : Single<WykopApiResponse<VoteResponse>>
+
+    @GET("/links/relatedvotedown/1/{relatedId}/appkey/$APP_KEY")
+    fun relatedVoteDown(@Path("relatedId") relatedId : Int) : Single<WykopApiResponse<VoteResponse>>
+
     @GET("/links/voteremove/{linkId}/appkey/$APP_KEY")
     fun voteRemove(@Path("linkId") linkId : Int) : Single<WykopApiResponse<DigResponse>>
 

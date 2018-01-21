@@ -7,10 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
-import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
-import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
-import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
-import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
+import io.github.feelfreelinux.wykopmobilny.models.fragments.*
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import javax.inject.Inject
@@ -19,7 +16,7 @@ class UpcomingFragment : BaseFeedFragment<Link>(), UpcomingView {
     @Inject override lateinit var feedAdapter : LinkAdapter
     @Inject lateinit var presenter : UpcomingPresenter
     val navigation by lazy { activity as MainNavigationInterface }
-    lateinit var dataFragment : DataFragment<PagedDataModel<List<Link>>>
+    lateinit var dataFragment : DataFragment<SortedPagedDataModel<List<Link>>>
 
     companion object {
         val DATA_FRAGMENT_TAG = "UPCOMING_FRAGMENT_TAG"
@@ -32,7 +29,6 @@ class UpcomingFragment : BaseFeedFragment<Link>(), UpcomingView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity!!, R.drawable.ic_sort)
-        navigation.activityToolbar.subtitle = getString(R.string.upcoming_sortby_comments)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -49,22 +45,26 @@ class UpcomingFragment : BaseFeedFragment<Link>(), UpcomingView {
             }
             R.id.sortByComments -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_COMMENTS
-                navigation.activityToolbar.setSubtitle(R.string.upcoming_sortby_comments)
+                setSubtitle()
+                isRefreshing = true
                 onRefresh()
             }
             R.id.sortByVotes -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_VOTES
-                navigation.activityToolbar.setSubtitle(R.string.upcoming_sortby_votes)
+                setSubtitle()
+                isRefreshing = true
                 onRefresh()
             }
             R.id.sortByDate -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_DATE
-                navigation.activityToolbar.setSubtitle(R.string.upcoming_sortby_date)
+                setSubtitle()
+                isRefreshing = true
                 onRefresh()
             }
             R.id.sortByActive -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_ACTIVE
-                navigation.activityToolbar.setSubtitle(R.string.upcoming_sortby_active)
+                setSubtitle()
+                isRefreshing = true
                 onRefresh()
             }
         }
@@ -77,10 +77,21 @@ class UpcomingFragment : BaseFeedFragment<Link>(), UpcomingView {
         dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         dataFragment.data?.apply {
             presenter.page = page
+            presenter.sortBy = sortby
         }
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.wykopalisko)
         presenter.subscribe(this)
+        setSubtitle()
         initAdapter(dataFragment.data?.model)
+    }
+
+    fun setSubtitle() {
+        navigation.activityToolbar.setSubtitle(when (presenter.sortBy) {
+            UpcomingPresenter.SORTBY_ACTIVE -> R.string.upcoming_sortby_active
+            UpcomingPresenter.SORTBY_DATE -> R.string.upcoming_sortby_date
+            UpcomingPresenter.SORTBY_VOTES -> R.string.upcoming_sortby_votes
+            else -> R.string.upcoming_sortby_comments
+        })
     }
 
     override fun loadData(shouldRefresh: Boolean) {
@@ -89,7 +100,7 @@ class UpcomingFragment : BaseFeedFragment<Link>(), UpcomingView {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        dataFragment.data = PagedDataModel(presenter.page , data)
+        dataFragment.data = SortedPagedDataModel(presenter.page, presenter.sortBy, data)
     }
 
     override fun onDetach() {

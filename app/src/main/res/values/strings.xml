@@ -125,5 +125,9 @@
     <string name="reason_wrong_content">Treść nieodpowiednia</string>
     <string name="reason_unsuitable_content">Nie nadaje się</string>
     <string name="mark_nsfw">Oznacz jako 18+</string>
+    <string name="license">Aplikacja została upubliczniona na licencji MIT</string>
+    <string name="report_bug">Zgłoś błąd pod tagiem #owmbugi</string>
+    <string name="observe_otwartywykopmobilny">Obserwuj tag #otwartywykopmobilny</string>
+    <string name="app_version">Wykop Mobilny (%1$s)</string>
 
 </resources>
