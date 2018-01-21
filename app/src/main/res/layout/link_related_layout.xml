@@ -14,38 +14,26 @@
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
             android:id="@+id/authorHeaderView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:paddingTop="@dimen/comment_layout_author_padding_vertical"
-            android:paddingBottom="@dimen/comment_layout_author_padding_vertical"
-            android:paddingLeft="@dimen/comment_layout_author_padding_horizontal"
-            android:paddingRight="@dimen/comment_layout_author_padding_horizontal"
+            android:layout_width="@dimen/link_related_layout_avatar_width"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/link_related_layout_avatar_padding_vertical"
+            android:paddingBottom="@dimen/link_related_layout_avatar_padding_vertical"
+            android:paddingStart="@dimen/link_related_layout_avatar_padding_start"
+            android:paddingEnd="@dimen/link_related_layout_avatar_padding_end"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/userNameTextView"
-            app:layout_constraintStart_toEndOf="@id/authorHeaderView"
-            android:text="m__b"
-            app:layout_constraintBottom_toBottomOf="@id/authorHeaderView"
-            app:layout_constraintTop_toTopOf="@id/authorHeaderView"
-            android:layout_marginStart="@dimen/author_header_username_margin_horizontal"
-            android:layout_marginEnd="@dimen/author_header_username_margin_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="@dimen/author_header_username_text_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/voteCountTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="+16"
-            app:layout_constraintBottom_toBottomOf="@id/authorHeaderView"
-            app:layout_constraintTop_toTopOf="@id/authorHeaderView"
+            tools:text="m__b"
             android:layout_marginStart="@dimen/author_header_username_margin_horizontal"
             android:layout_marginEnd="@dimen/author_header_username_margin_horizontal"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            app:layout_constraintStart_toEndOf="@id/authorHeaderView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/lineTop"/>
 
         <View
             android:id="@+id/lineTop"
@@ -58,38 +46,32 @@
 
         <TextView
             android:id="@+id/title"
-            android:clickable="true"
-            android:text="Przykładowy opis strzelaniny w rosji"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textSize="18sp"
+            android:textSize="@dimen/link_related_layout_title_text_size"
             android:textStyle="bold"
+            android:paddingStart="@dimen/link_related_layout_padding_vertical"
+            android:paddingEnd="@dimen/link_related_layout_padding_vertical"
+            android:paddingTop="@dimen/link_related_layout_title_padding_top"
+            android:paddingBottom="@dimen/link_related_layout_title_padding_bottom"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lineTop"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lineTop"
+            tools:text="Przykładowy opis strzelaniny w rosji"/>
 
         <TextView
             android:id="@+id/urlTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:layout_marginStart="12dp"
-            android:lines="1"
-            android:text="https://www.wykop.pl/wykopalisko/aktywne/"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
-
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
-            android:id="@+id/commentImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintHeight_default="wrap"
+            android:textSize="@dimen/link_related_layout_link_text_size"
+            android:textStyle="italic"
+            android:paddingStart="@dimen/link_related_layout_padding_vertical"
+            android:paddingEnd="@dimen/link_related_layout_padding_vertical"
+            android:paddingBottom="@dimen/link_related_layout_link_padding_bottom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/urlTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            tools:text="https://www.wykop.pl/wykopalisko/aktywne/"/>
 
         <View
             android:id="@+id/lineBottom"
@@ -98,7 +80,7 @@
             android:background="?attr/lineColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/commentImageView"/>
+            app:layout_constraintTop_toBottomOf="@+id/urlTextView"/>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/buttonsToolbar"
@@ -118,6 +100,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
+            <TextView
+                android:id="@+id/voteCountTextView"
+                style="@style/MikroButton"
+                android:layout_marginEnd="@dimen/link_related_layout_vote_margin_end"
+                app:layout_constraintEnd_toStartOf="@id/plusButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="+16"/>
+
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
                 android:id="@+id/plusButton"
                 style="@style/MikroButton"
@@ -133,6 +124,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
         </android.support.constraint.ConstraintLayout>
+
     </android.support.constraint.ConstraintLayout>
+
 </merge>
