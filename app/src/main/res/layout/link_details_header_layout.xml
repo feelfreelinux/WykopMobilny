@@ -225,30 +225,6 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/relatedList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonsToolbar">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/separator_line_height"
-                android:background="?attr/lineColor"/>
-
-            <HorizontalScrollView
-                android:id="@+id/relatedListScrollView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </HorizontalScrollView>
-
-        </LinearLayout>
-
         <View
             android:id="@+id/hotBadgeStrip"
             android:layout_width="@dimen/link_layout_hot_badge_strip_width"
