@@ -2,10 +2,10 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.tag
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries.TagEntriesFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries.TagEntriesModule
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.links.TagLinksFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.links.TagLinksFragmentModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.entries.TagEntriesFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.entries.TagEntriesModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.links.TagLinksFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.links.TagLinksFragmentModule
 
 @Module
 abstract class TagActivityFragmentProvider {

@@ -7,13 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.util.SparseArray
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.entry.EntryFavoriteFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.links.LinksFavoriteFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries.TagEntriesFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.links.TagLinksFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopIndexFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.tags.MyWykopTagsFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.users.MyWykopUsersFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.entries.TagEntriesFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.links.TagLinksFragment
 
 class TagPagerAdapter(val tag : String, val resources : Resources, fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
     val registeredFragments = SparseArray<Fragment>()
