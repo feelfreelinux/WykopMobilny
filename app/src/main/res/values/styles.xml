@@ -4,8 +4,8 @@
 
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
         <item name="android:windowBackground">@color/cardList</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -74,8 +74,8 @@
 
     <style name="AppTheme.Dark" parent="Base.Theme.AppCompat">
         <item name="preferenceTheme">@style/DarkPreferencesTheme</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColor">@color/textColor.Dark</item>
+        <item name="android:textColorPrimary">@color/textColor.Dark</item>
         <item name="android:windowBackground">@color/cardList.Dark</item>
         <item name="android:itemBackground">@color/cardList.Dark</item>
         <item name="colorPrimary">@color/colorPrimary.Dark</item>
@@ -89,7 +89,7 @@
         <item name="drawablesColor">@color/drawablesColor.Dark</item>
         <item name="cardViewSelected">@color/cardViewSelected.Dark</item>
         <item name="authorHeader_date_color">@color/authorHeader_date.Dark</item>
-        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:editTextColor">@color/textColor.Dark</item>
         <item name="MirkoButtonStyle">@style/MikroButton</item>
         <item name="colorControlNormal">@color/cardViewSelected.Dark</item>
         <item name="android:textColorHint">@color/hintColor.Dark</item>
@@ -166,6 +166,7 @@
     <style name="BaseCardView" parent="CardView">
         <item name="cardBackgroundColor">?attr/cardViewColor</item>
         <item name="cardCornerRadius">@dimen/cardview_radius</item>
+        <item name="cardElevation">@dimen/cardview_elevation</item>
     </style>
 
     <style name="EntryCardView" parent="BaseCardView">
@@ -244,6 +245,10 @@
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">@dimen/toolbar_titletext_text_size</item>
+    </style>
+
+    <style name="Toolbar.Subtitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textSize">@dimen/toolbar_subtitle_text_size</item>
     </style>
 
     <style name="Toolbar.TitleText.Messages" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">

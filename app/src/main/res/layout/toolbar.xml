@@ -6,10 +6,11 @@
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
     android:fitsSystemWindows="true"
-    android:elevation="4dp"
+    app:elevation="0dp"
     app:contentInsetStartWithNavigation="0dp"
-    app:subtitleTextAppearance="@style/Toolbar.Subtitle.Messages"
     app:titleTextAppearance="@style/Toolbar.TitleText"
+    app:subtitleTextAppearance="@style/Toolbar.Subtitle"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:background="?attr/colorPrimaryDark">
+
 </android.support.v7.widget.Toolbar>

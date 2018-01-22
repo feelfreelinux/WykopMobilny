@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_share"
+
+    <item
+        android:id="@+id/action_share"
         android:icon="@drawable/ic_share"
         android:title="@string/share"
-        app:showAsAction="ifRoom" />
-    <item android:id="@+id/action_save_image"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_save_image"
         android:title="@string/save_image"
-        app:showAsAction="never" />
-    <item android:id="@+id/action_copy_url"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_copy_url"
         android:title="@string/copy_url"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
+
 </menu>

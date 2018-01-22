@@ -10,11 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/voters"
-        android:textSize="@dimen/dialog_voters_title_text_size"
-        android:paddingStart="@dimen/dialog_voters_padding_horizontal"
-        android:paddingEnd="@dimen/dialog_voters_padding_horizontal"
-        android:paddingTop="@dimen/dialog_voters_padding_vertical"
-        android:paddingBottom="@dimen/dialog_voters_padding_vertical"/>
+        android:textSize="@dimen/bottomsheet_item_title_text_size"
+        android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
 
     <View
         android:layout_width="match_parent"
@@ -26,8 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingTop="@dimen/dialog_voters_padding_vertical"
-        android:paddingBottom="@dimen/dialog_voters_padding_vertical"/>
+        android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -38,10 +38,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dialog_voters_text_size"
-            android:paddingStart="@dimen/dialog_voters_padding_horizontal"
-            android:paddingEnd="@dimen/dialog_voters_padding_horizontal"
-            android:paddingTop="@dimen/dialog_voters_padding_vertical"
-            android:paddingBottom="@dimen/dialog_voters_padding_vertical"/>
+            android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
+            android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
+            android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+            android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
 
     </android.support.v4.widget.NestedScrollView>
 

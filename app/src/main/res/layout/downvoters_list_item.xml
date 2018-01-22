@@ -27,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/conversation_list_item_author_margin"
+            android:textSize="@dimen/link_related_layout_link_text_size"
             tools:text="Nie nadaje się"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
