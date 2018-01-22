@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries
+package io.github.feelfreelinux.wykopmobilny.ui.modules.tag.entries
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityView
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
@@ -22,10 +23,9 @@ class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView {
     val entryTag by lazy { arguments!!.getString(EXTRA_TAG) }
     lateinit var tagDataFragment : DataFragment<PagedDataModel<List<Entry>>>
     @Inject lateinit var userManager : UserManagerApi
-    private var tagMeta : TagMetaResponse? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -55,39 +55,14 @@ class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView {
         }
     }
 
+    override fun setParentMeta(tagMeta: TagMetaResponse) {
+        (activity as TagActivityView).setMeta(tagMeta)
+    }
     override fun loadData(shouldRefresh: Boolean) {
         presenter.loadData(shouldRefresh)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.tag_menu, menu)
 
-        if (userManager.isUserAuthorized()) {
-            tagMeta?.apply {
-                menu.apply {
-                    if (isObserved) {
-                        findItem(R.id.action_unobserve).isVisible = true
-                    } else if (!isBlocked) {
-                        findItem(R.id.action_observe).isVisible = true
-                        findItem(R.id.action_block).isVisible = true
-                    } else if (isBlocked) {
-                        findItem(R.id.action_unblock).isVisible = true
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_observe -> presenter.observeTag()
-            R.id.action_unobserve -> presenter.unobserveTag()
-            R.id.action_block -> presenter.blockTag()
-            R.id.action_unblock -> presenter.unblockTag()
-            android.R.id.home -> activity?.finish()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -102,18 +77,5 @@ class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView {
     override fun onDetach() {
         super.onDetach()
         presenter.unsubscribe()
-    }
-
-    // This thing will be moved to TagActivity @TODO
-
-    override fun setMeta(tagMeta: TagMetaResponse) {
-        this.tagMeta = tagMeta
-        activity?.invalidateOptionsMenu()
-    }
-
-    override fun setObserveState(tagState: TagStateResponse) {
-        tagMeta?.isBlocked = tagState.isBlocked
-        tagMeta?.isObserved = tagState.isObserved
-        activity?.invalidateOptionsMenu()
     }
 }

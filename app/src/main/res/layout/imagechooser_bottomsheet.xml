@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/insert_photo_galery"/>
 
     </LinearLayout>
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/insert_photo_url"/>
 
     </LinearLayout>
@@ -51,6 +51,7 @@
 
         <CheckBox
             android:id="@+id/mark_nsfw_checkbox"
+            style="@style/CheckBoxStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -60,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
             android:text="@string/mark_nsfw"/>
 
     </LinearLayout>

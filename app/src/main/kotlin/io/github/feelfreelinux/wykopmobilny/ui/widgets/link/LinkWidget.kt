@@ -126,38 +126,36 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
     }
 
     override fun showBurried() {
-        diggCountTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.minusPressedColor))
         link.userVote = "bury"
-        diggCountTextView.isEnabled = true
-        diggCountTextView.setOnClickListener {
+        diggCountTextView.isButtonSelected = true
+        diggCountTextView.setVoteState("bury")
+        diggCountTextView.unvoteListener =  {
             presenter.voteRemove()
             diggCountTextView.isEnabled = false
         }
         diggCountTextView.isEnabled = true
-        setWykopColorDrawable(true)
     }
 
     override fun showDigged() {
-        diggCountTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.plusPressedColor))
         link.userVote = "dig"
-        diggCountTextView.isEnabled = true
-        diggCountTextView.setOnClickListener {
+        diggCountTextView.isButtonSelected = true
+        diggCountTextView.setVoteState("dig")
+        diggCountTextView.unvoteListener =  {
             presenter.voteRemove()
             diggCountTextView.isEnabled = false
         }
         diggCountTextView.isEnabled = true
-        setWykopColorDrawable(true)
     }
 
     override fun showUnvoted() {
-        diggCountTextView.setBackgroundColor(Color.TRANSPARENT)
-        diggCountTextView.setOnClickListener {
+        diggCountTextView.isButtonSelected = false
+        diggCountTextView.setVoteState(null)
+        diggCountTextView.voteListener = {
             presenter.voteUp()
             diggCountTextView.isEnabled = false
         }
         link.userVote = null
         diggCountTextView.isEnabled = true
-        setWykopColorDrawable(false)
     }
 
     fun openOptionsMenu() {

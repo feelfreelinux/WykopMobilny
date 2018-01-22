@@ -1,4 +1,4 @@
-package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.entries
+package io.github.feelfreelinux.wykopmobilny.ui.modules.tag.entries
 
 import dagger.Module
 import dagger.Provides

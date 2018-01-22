@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:app="http://schemas.android.com/apk/res-auto"
+<merge
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:parentTag="android.support.v7.widget.CardView"
@@ -37,6 +38,7 @@
             android:id="@+id/commentContentTextView"
             style="@style/EntryContentTextView"
             android:clickable="true"
+            android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lineTop"/>

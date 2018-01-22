@@ -13,11 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bury_reason"
-        android:textSize="@dimen/dialog_voters_title_text_size"
-        android:paddingStart="@dimen/dialog_voters_padding_horizontal"
-        android:paddingEnd="@dimen/dialog_voters_padding_horizontal"
-        android:paddingTop="@dimen/dialog_voters_padding_vertical"
-        android:paddingBottom="@dimen/dialog_voters_padding_vertical"/>
+        android:textSize="@dimen/bottomsheet_item_title_text_size"
+        android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
 
     <View
         android:layout_width="match_parent"
@@ -32,8 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/reason_duplicate" />
+            android:text="@string/reason_duplicate"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -44,8 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/reason_spam" />
+            android:text="@string/reason_spam"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -56,8 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/reason_fake_info" />
+            android:text="@string/reason_fake_info"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -68,8 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/reason_wrong_content" />
+            android:text="@string/reason_wrong_content"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -80,7 +80,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:text="@string/reason_unsuitable_content" />
+            android:text="@string/reason_unsuitable_content"/>
+
     </LinearLayout>
+
 </LinearLayout>

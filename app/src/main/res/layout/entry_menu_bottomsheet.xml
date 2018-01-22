@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/voters_list"/>
 
     </LinearLayout>
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/copy_content"/>
 
     </LinearLayout>
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/report"/>
 
     </LinearLayout>
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/edit_entry"/>
 
     </LinearLayout>
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/delete"/>
 
     </LinearLayout>

@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/separator">
+        app:layout_constraintBottom_toTopOf="@id/shadowUp">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardView"
@@ -77,15 +77,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/shadow_up_height"
         android:background="?attr/shadowUpGradient"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separator"/>
-
-    <View
-        android:id="@+id/separator"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_line_height"
-        android:background="?attr/separatorColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/markupToolbar"/>

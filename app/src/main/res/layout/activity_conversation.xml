@@ -13,7 +13,7 @@
         android:gravity="start"
         android:minHeight="?attr/actionBarSize"
         app:buttonGravity="top"
-        android:elevation="5dp"
+        android:elevation="0dp"
         app:contentInsetStartWithNavigation="0dp"
         app:titleTextAppearance="@style/Toolbar.TitleText.Messages"
         app:subtitleTextAppearance="@style/Toolbar.Subtitle.Messages"
