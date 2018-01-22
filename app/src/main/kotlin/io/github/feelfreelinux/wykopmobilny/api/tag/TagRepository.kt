@@ -4,8 +4,10 @@ import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandler
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagEntriesMapper
+import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagLinksMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagEntriesResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagLinksResponse
 import retrofit2.Retrofit
 
 class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher) : TagApi {
@@ -15,6 +17,11 @@ class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresh
             .retryWhen(userTokenRefresher)
             .flatMap(ErrorHandler<TagEntriesResponse>())
             .map { TagEntriesMapper.map(it)}
+
+    override fun getTagLinks(tag : String, page : Int) = tagApi.getTagLinks(tag, page)
+            .retryWhen(userTokenRefresher)
+            .flatMap(ErrorHandler<TagLinksResponse>())
+            .map { TagLinksMapper.map(it)}
 
     override fun observe(tag : String) = tagApi.observe(tag)
             .retryWhen(userTokenRefresher)

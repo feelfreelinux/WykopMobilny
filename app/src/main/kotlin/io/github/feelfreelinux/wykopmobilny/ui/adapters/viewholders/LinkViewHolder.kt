@@ -11,7 +11,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
-import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.link_layout.view.*
