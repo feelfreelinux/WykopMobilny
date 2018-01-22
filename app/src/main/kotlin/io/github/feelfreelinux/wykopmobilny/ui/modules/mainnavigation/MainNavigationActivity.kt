@@ -211,6 +211,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         when (settingsApi.defaultScreen!!) {
             "mainpage" -> openFragment(PromotedFragment.newInstance())
             "mikroblog" -> openFragment(HotFragment.newInstance())
+            "mywykop" -> openFragment(MyWykopFragment.newInstance())
         }
     }
 

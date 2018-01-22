@@ -4,15 +4,17 @@ import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 
 class LinkCommentPresenter(
         val schedulers: Schedulers,
         val newNavigatorApi: NewNavigatorApi,
+        val wykopLinkHandlerApi: WykopLinkHandlerApi,
         val linksApi : LinksApi) : BasePresenter<LinkCommentView>() {
     var linkId = -1
 
     fun handleUrl(url : String) {
-        newNavigatorApi.openBrowser(url)
+        wykopLinkHandlerApi.handleUrl(url)
     }
 
     fun voteUp() {

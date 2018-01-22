@@ -10,6 +10,7 @@ fun UserNotLoggedInDialog(context : Context) : AlertDialog? {
     alertBuilder.run {
         setTitle(context.getString(R.string.error_occured))
         setMessage(context.getString(R.string.user_not_logged_in))
+        setPositiveButton(android.R.string.ok, null)
         return create()
     }
 }
