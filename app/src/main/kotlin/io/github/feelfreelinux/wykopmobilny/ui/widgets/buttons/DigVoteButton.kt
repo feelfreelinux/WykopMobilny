@@ -23,13 +23,30 @@ class DigVoteButton : VoteButton {
 
     override fun setLightThemeDrawable() {
         if (isSelected) {
-            setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_plus_activ, 0, 0, 0);
+            setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_wypok_activ, 0, 0, 0);
         } else {
             val typedArray = context.obtainStyledAttributes(arrayOf(
-                    R.attr.plusDrawable).toIntArray())
+                    R.attr.wypokDrawable).toIntArray())
             setCompoundDrawablesWithIntrinsicBounds(typedArray.getDrawable(0), null, null, null)
             typedArray.recycle()
 
+        }
+    }
+
+    fun setVoteState(voteState : String?) {
+        when (voteState) {
+            "dig" -> {
+                isButtonSelected = true
+                setBackgroundColor(ContextCompat.getColor(context, R.color.plusPressedColor))
+            }
+            "bury" -> {
+                isButtonSelected = true
+                setBackgroundColor(ContextCompat.getColor(context, R.color.minusPressedColor))
+            }
+            else -> {
+                isButtonSelected = false
+                setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
+            }
         }
     }
 }

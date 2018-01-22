@@ -111,11 +111,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="50"/>
 
-            <TextView
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
                 android:id="@+id/diggCountTextView"
                 style="@style/MikroButton"
-                android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/wypokDrawable"
                 android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
                 app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
                 app:layout_constraintTop_toTopOf="parent"
