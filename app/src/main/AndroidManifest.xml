@@ -27,7 +27,7 @@
 
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity"
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity" />
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity" />
