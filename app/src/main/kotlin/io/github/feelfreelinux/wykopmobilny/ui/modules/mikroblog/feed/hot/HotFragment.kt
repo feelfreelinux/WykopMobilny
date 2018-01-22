@@ -15,7 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
 class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
@@ -24,6 +24,7 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
     @Inject lateinit var presenter : HotPresenter
     @Inject lateinit var settingsPreferences : SettingsPreferencesApi
     @Inject lateinit var navigatorApi : NavigatorApi
+    @Inject lateinit var userManagerApi : UserManagerApi
     val fab by lazy { navigation.floatingButton }
     private lateinit var entriesDataFragment : DataFragment<Pair<PagedDataModel<List<Entry>>, String>>
 
@@ -33,7 +34,6 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        fab.isVisible = true
         fab.setOnClickListener {
             navigatorApi.openAddEntryActivity(activity!!)
         }
