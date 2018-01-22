@@ -152,7 +152,6 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
     override fun showUnvoted() {
         diggCountTextView.setBackgroundColor(Color.TRANSPARENT)
         diggCountTextView.setOnClickListener {
-            super.callOnClick()
             presenter.voteUp()
             diggCountTextView.isEnabled = false
         }
