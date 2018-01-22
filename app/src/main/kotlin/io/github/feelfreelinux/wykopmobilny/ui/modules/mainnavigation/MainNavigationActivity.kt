@@ -21,7 +21,6 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
@@ -39,7 +38,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.app_about_bottomsheet.view.*
@@ -147,7 +145,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
             } else openMainFragment()
         }
-        setFABVisibility()
         setupNavigation()
     }
 
@@ -192,7 +189,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             findItem(R.id.login).isVisible = !value
             findItem(R.id.logout).isVisible = value
         }
-        setFABVisibility()
         navHeader.view_container.isVisible = value
         navHeader.view_container.apply {
             nav_notifications_tag.setOnClickListener {
@@ -218,15 +214,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         supportActionBar?.subtitle = null
         fab.isVisible = false
         fab.setOnClickListener(null)
-        if (fragment is BaseNavigationView) fab.isVisible = true
+        fab.isVisible = fragment is BaseNavigationView && userManagerApi.isUserAuthorized()
         supportFragmentManager.beginTransaction().replace(R.id.contentView,
                 fragment, "MAIN_FRAGMENT").commit()
         closeDrawer()
-    }
-
-    fun setFABVisibility() {
-        val fragment = supportFragmentManager.findFragmentById(R.id.contentView)
-        fab.isVisible = fragment != null && fragment is BaseNavigationView && userManagerApi.isUserAuthorized()
     }
 
     fun closeDrawer() =
