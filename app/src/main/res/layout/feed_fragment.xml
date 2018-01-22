@@ -28,6 +28,8 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/search_empty_view" android:visibility="gone"/>
+    <include
+        layout="@layout/search_empty_view"
+        android:visibility="gone"/>
 
 </FrameLayout>

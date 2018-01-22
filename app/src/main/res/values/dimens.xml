@@ -2,7 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
 
-    <dimen name="toolbar_titletext_text_size">18sp</dimen>
+    <dimen name="toolbar_titletext_text_size">17sp</dimen>
+    <dimen name="toolbar_subtitle_text_size">12sp</dimen>
     <dimen name="toolbar_titletext_messages_text_size">16sp</dimen>
     <dimen name="toolbar_subtitle_messages_text_size">12sp</dimen>
 
@@ -19,7 +20,7 @@
     <dimen name="navigation_drawer_text_size">15sp</dimen>
     <dimen name="drawer_header_background_image_height">80dp</dimen>
     <dimen name="drawer_header_avatar_size">80dp</dimen>
-    <dimen name="drawer_header_avatar_elevation">3dp</dimen>
+    <dimen name="drawer_header_avatar_elevation">1.7dp</dimen>
     <dimen name="drawer_header_avatar_radius">3dp</dimen>
     <dimen name="drawer_header_avatar_margin_top">40dp</dimen>
     <dimen name="drawer_header_avatar_margin_bottom">3dp</dimen>
@@ -34,16 +35,14 @@
     <dimen name="drawer_header_notification_item_drawable_padding">6dp</dimen>
 
     <dimen name="cardview_radius">0dp</dimen>
+    <dimen name="cardview_elevation">0.7dp</dimen>
     <dimen name="cardview_margin_vertical">0dp</dimen>
     <dimen name="cardview_margin_horizontal">6dp</dimen>
 
     <dimen name="dialog_edittext_padding">8dp</dimen>
     <dimen name="dialog_edittext_padding_horizontal">8dp</dimen>
     <dimen name="dialog_edittext_text_size">16sp</dimen>
-    <dimen name="dialog_voters_padding_horizontal">12dp</dimen>
-    <dimen name="dialog_voters_padding_vertical">10dp</dimen>
     <dimen name="dialog_voters_text_size">16sp</dimen>
-    <dimen name="dialog_voters_title_text_size">20sp</dimen>
 
     <dimen name="plus_button_padding_left">6dp</dimen>
     <dimen name="author_badge_strip_width">2dp</dimen>
@@ -55,7 +54,7 @@
     <dimen name="author_header_date_padding_bottom">2dp</dimen>
     <dimen name="author_header_date_text_size">12sp</dimen>
 
-    <dimen name="comment_section_left_margin">10dp</dimen>
+    <dimen name="comment_section_left_margin">15dp</dimen>
     <dimen name="comment_layout_author_padding_vertical">8dp</dimen>
     <dimen name="comment_layout_author_padding_horizontal">10dp</dimen>
     <dimen name="comment_layout_button_padding_horizontal">2dp</dimen>
@@ -100,20 +99,20 @@
 
     <dimen name="write_comment_scroll_padding_vertical">4dp</dimen>
 
-    <dimen name="shadow_up_height">4dp</dimen>
-    <dimen name="separator_line_height">1dp</dimen>
+    <dimen name="shadow_up_height">1.1dp</dimen>
+    <dimen name="separator_line_height">0.5dp</dimen>
 
-    <dimen name="markdown_item_size">24dp</dimen>
+    <dimen name="markdown_item_size">26dp</dimen>
     <dimen name="markdown_padding_vertical">6dp</dimen>
 
-    <dimen name="input_toolbar_text_size">15sp</dimen>
+    <dimen name="input_toolbar_text_size">16sp</dimen>
     <dimen name="input_toolbar_text_margin_horizontal">10dp</dimen>
     <dimen name="input_toolbar_text_padding_vertical">10dp</dimen>
     <dimen name="input_toolbar_item_margin_vertical">4dp</dimen>
     <dimen name="input_toolbar_item_margin_horizontal">10dp</dimen>
     <dimen name="input_toolbar_item_size">24dp</dimen>
 
-    <dimen name="floating_image_height">80dp</dimen>
+    <dimen name="floating_image_height">86dp</dimen>
     <dimen name="floating_image_delete_button_margin">10dp</dimen>
 
     <dimen name="autosuggest_item_padding_horizontal">12dp</dimen>
@@ -125,7 +124,7 @@
     <dimen name="pmmessage_sent_layout_card_margin_vertical">6dp</dimen>
     <dimen name="pmmessage_sent_layout_card_margin_flip">80dp</dimen>
     <dimen name="pmmessage_sent_layout_card_radius">3dp</dimen>
-    <dimen name="pmmessage_sent_layout_card_elevation">1dp</dimen>
+    <dimen name="pmmessage_sent_layout_card_elevation">0.7dp</dimen>
     <dimen name="pmmessage_sent_layout_date_text_size">11.5sp</dimen>
     <dimen name="pmmessage_sent_layout_item_padding_horizontal">10dp</dimen>
     <dimen name="pmmessage_sent_layout_item_padding_vertical">8dp</dimen>
@@ -185,5 +184,9 @@
     <dimen name="tabBar_padding_horizontal">6dp</dimen>
     <dimen name="tabBar_text_size">14sp</dimen>
 
+    <dimen name="bottomsheet_item_padding_horizontal">16dp</dimen>
+    <dimen name="bottomsheet_item_padding_vertical">10dp</dimen>
+    <dimen name="bottomsheet_item_title_text_size">20sp</dimen>
     <dimen name="bottomsheet_item_textview_margin_left">16dp</dimen>
+
 </resources>

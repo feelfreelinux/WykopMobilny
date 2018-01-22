@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/bury"/>
 
     </LinearLayout>
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/dig_list"/>
 
     </LinearLayout>
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/bury_list"/>
 
     </LinearLayout>
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/related"/>
 
     </LinearLayout>
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/report"/>
 
     </LinearLayout>

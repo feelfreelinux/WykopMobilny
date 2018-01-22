@@ -9,21 +9,30 @@
     android:orientation="vertical"
     android:background="?attr/cardListColor">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/about"
+        android:textSize="@dimen/bottomsheet_item_title_text_size"
+        android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_line_height"
+        android:background="?attr/lineColor"/>
+
     <LinearLayout
         android:id="@+id/app_version"
         style="@style/BottomSheetMenuItem">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/wypokDrawable"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/app_version_textview"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/app_version"/>
 
     </LinearLayout>
@@ -32,16 +41,10 @@
         android:id="@+id/app_observe_tag"
         style="@style/BottomSheetMenuItem">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetRelated"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/observe_otwartywykopmobilny"/>
 
     </LinearLayout>
@@ -50,16 +53,10 @@
         android:id="@+id/app_report_bug"
         style="@style/BottomSheetMenuItem">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetReport"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/report_bug"/>
 
     </LinearLayout>
@@ -68,16 +65,10 @@
         android:id="@+id/license"
         style="@style/BottomSheetMenuItem">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetEdit"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/bottomsheet_item_textview_margin_left"
             android:text="@string/license"/>
 
     </LinearLayout>
