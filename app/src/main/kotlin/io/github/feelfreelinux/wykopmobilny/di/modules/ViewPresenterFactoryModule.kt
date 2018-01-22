@@ -15,19 +15,4 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 
 @Module
 class ViewPresenterFactoryModule {
-    @Provides
-    fun provideEntryPresenterFactory(schedulers: Schedulers, entriesApi: EntriesApi, clipboardHelperApi: ClipboardHelperApi, newNavigatorApi: NewNavigatorApi, wykopLinkHandlerApi: WykopLinkHandlerApi)
-            = EntryPresenterFactory(schedulers, entriesApi, clipboardHelperApi,  newNavigatorApi,  wykopLinkHandlerApi)
-
-    @Provides
-    fun provideCommentPresenterFactory(schedulers: Schedulers, entriesApi: EntriesApi, clipboardHelperApi: ClipboardHelperApi, newNavigatorApi: NewNavigatorApi, wykopLinkHandlerApi: WykopLinkHandlerApi)
-            = CommentPresenterFactory(schedulers, entriesApi,  clipboardHelperApi,  newNavigatorApi,  wykopLinkHandlerApi)
-
-    @Provides
-    fun provideLinkCommentPresenterFactory(schedulers: Schedulers, linksApi: LinksApi, newNavigatorApi: NewNavigatorApi)
-            = LinkCommentPresenterFactory(schedulers, newNavigatorApi, linksApi)
-
-    @Provides
-    fun provideLinkPresenterFactory(schedulers: Schedulers, linksApi: LinksApi, newNavigatorApi: NewNavigatorApi, linkHandlerApi: WykopLinkHandlerApi)
-            = LinkPresenterFactory(schedulers, newNavigatorApi, linkHandlerApi, linksApi)
 }
