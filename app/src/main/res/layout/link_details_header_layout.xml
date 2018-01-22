@@ -204,7 +204,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="37"/>
 
-            <TextView
+            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
                 android:id="@+id/diggCountTextView"
                 style="@style/MikroButton"
                 android:background="?attr/voteButtonStatelist"

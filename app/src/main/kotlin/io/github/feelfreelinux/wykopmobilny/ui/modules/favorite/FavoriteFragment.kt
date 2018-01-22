@@ -27,7 +27,6 @@ class FavoriteFragment  : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pagerAdapter = FavoritePagerAdapter(resources, childFragmentManager)
-        pager.offscreenPageLimit = 2
         pager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(pager)
     }

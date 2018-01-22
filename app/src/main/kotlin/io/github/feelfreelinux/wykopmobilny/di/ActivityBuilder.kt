@@ -26,9 +26,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNaviga
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryDetailModule
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivityFragmentProvider
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.tag.TagActivityModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
@@ -36,6 +33,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.Conversat
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivityModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsFragmentProvider
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityFragmentProvider
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityModule
 
 @Module
 abstract class ActivityBuilder {
