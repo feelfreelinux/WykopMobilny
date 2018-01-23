@@ -1,9 +1,9 @@
 [![Build Status](https://travis-ci.org/feelfreelinux/WykopMobilny.svg?branch=master)](https://travis-ci.org/feelfreelinux/WykopMobilny)
 # Wykop Mobilny
 Unofficial [wykop.pl](http://wykop.pl) client for Android, written in Kotlin.
+_[Przeczytaj w języku Polskim](README.pl.md)_
 
-![Light theme](screenshots/mainpage_light.png)
-![Dark theme](screenshots/mainpage_dark.png)
+![Light theme](screenshots/link_details_light.png){:height="33%" width="33%"}![Dark theme](screenshots/mainpage_dark.png ){:height="33%" width="33%"}![Light theme](screenshots/tag_light.png ){:height="33%" width="33%"}
 # Features
 - Browse link feed (Main page, Upcoming, Favorite, Tags)
 - Browse entries (MyWykop, Favorite, Hot, Newest, Tags)
