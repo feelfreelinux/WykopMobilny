@@ -68,4 +68,13 @@ class LinkComment(
             override fun newArray(size: Int): Array<LinkComment?> = arrayOfNulls(size)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        return if (other !is LinkComment) false
+        else (other.id == id)
+    }
+
+    override fun hashCode(): Int {
+        return id
+    }
 }

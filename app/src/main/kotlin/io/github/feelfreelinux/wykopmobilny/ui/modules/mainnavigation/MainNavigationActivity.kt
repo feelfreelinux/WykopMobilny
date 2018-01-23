@@ -118,7 +118,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         setSupportActionBar(toolbar)
         JobUtil.hasBootPermission(this)
 
-        // Setup AppUpdater
+        //Setup AppUpdater
         AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
                 .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
@@ -128,7 +128,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 .setButtonDoNotShowAgain(R.string.do_not_show_again)
                 .setButtonUpdate(R.string.update)
                 .start()
-
+//
         if (settingsApi.showNotifications) {
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
