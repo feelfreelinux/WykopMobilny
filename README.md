@@ -3,7 +3,7 @@
 Unofficial [wykop.pl](http://wykop.pl) client for Android, written in Kotlin.
 _[Przeczytaj w języku Polskim](README.pl.md)_
 
-![Light theme](screenshots/link_details_light.png){:height="33%" width="33%"}![Dark theme](screenshots/mainpage_dark.png ){:height="33%" width="33%"}![Light theme](screenshots/tag_light.png ){:height="33%" width="33%"}
+<img src="screenshots/link_details_light.png" height="33%" width="33%"><img src="screenshots/mainpage_dark.png" height="33%" width="33%"><img src="screenshots/tag_light.png" height="33%" width="33%">
 # Features
 - Browse link feed (Main page, Upcoming, Favorite, Tags)
 - Browse entries (MyWykop, Favorite, Hot, Newest, Tags)

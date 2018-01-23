@@ -2,7 +2,7 @@
 # Wykop Mobilny
 Nieoficjalny klient [wykop.pl](http://wykop.pl) na Android, napisany w Kotlin.
 
-![Light theme](screenshots/link_details_light.png){:height="33%" width="33%"}![Dark theme](screenshots/mainpage_dark.png ){:height="33%" width="33%"}![Light theme](screenshots/tag_light.png ){:height="33%" width="33%"}
+<img src="screenshots/link_details_light.png" height="33%" width="33%"><img src="screenshots/mainpage_dark.png" height="33%" width="33%"><img src="screenshots/tag_light.png" height="33%" width="33%">
 # Funkcje
 - Obsługa znalezisk
 - Strona główna
