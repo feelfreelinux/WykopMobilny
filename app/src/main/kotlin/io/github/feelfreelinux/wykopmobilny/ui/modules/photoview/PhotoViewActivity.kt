@@ -47,7 +47,7 @@ class PhotoViewActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share -> photoViewActions.shareImage()
-            R.id.action_save_image -> photoViewActions.saveImage()
+            R.id.action_save_image -> photoViewActions.saveImage(url)
             R.id.action_copy_url -> clipboardHelper.copyTextToClipboard(url, "imageUrl")
             android.R.id.home -> finish()
             else -> return super.onOptionsItemSelected(item)
@@ -55,4 +55,7 @@ class PhotoViewActivity : BaseActivity() {
         return true
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
 }

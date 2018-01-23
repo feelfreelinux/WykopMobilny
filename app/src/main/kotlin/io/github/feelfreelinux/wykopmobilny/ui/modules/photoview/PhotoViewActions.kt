@@ -12,8 +12,10 @@ import android.provider.MediaStore.Images
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
-import io.github.feelfreelinux.wykopmobilny.utils.saveToFile
+import io.reactivex.Completable
 import kotlinx.android.synthetic.main.activity_photoview.*
 import java.io.File
 
@@ -21,7 +23,8 @@ import java.io.File
 interface PhotoViewCallbacks {
     fun shareImage()
     fun getDrawable(): Drawable?
-    fun saveImage()
+    fun saveImage(url: String)
+    fun checkPermissions(): Boolean
 }
 
 class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelperApi) : PhotoViewCallbacks {
@@ -47,27 +50,37 @@ class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelpe
         return null
     }
 
-    override fun saveImage() {
-        val drawable = getDrawable()
-        if (drawable == null || !checkForWriteReadPermission()) {
-            return
+    override fun saveImage(url: String) {
+
+        if (!checkForWriteReadPermission()) {
+            showToastMessage("Brak uprawnień")
         }
-        var path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "wykopmobilny")
-        path = File(path, photoView.url.substringAfterLast('/'))
-        val saveSuccess = drawable.saveToFile(path)
-        showToastMessage(if (saveSuccess) "Zapisano plik" else "Błąd zapisu pliku")
+        Completable.fromAction({
+            val file = Glide.with(context).downloadOnly().load(url).submit().get()
+            var path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    "wykopmobilny")
+            path = File(path, photoView.url.substringAfterLast('/'))
+            file.copyTo(path, true)
+        }).subscribeOn(WykopSchedulers().backgroundThread())
+                .observeOn(WykopSchedulers().mainThread()).subscribe({
+                    showToastMessage("Zapisano plik")
+                }, {
+                    showToastMessage("Błąd podczas zapisu pliku")
+                })
+    }
+
+    override fun checkPermissions(): Boolean {
+
     }
 
     private fun checkForWriteReadPermission() : Boolean {
+        ActivityCompat.requestPermissions(photoView,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 1)
         val writePermission = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
         val readPermission = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
-        return if (writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(photoView, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-            false
-        } else true
+        return writePermission != PackageManager.PERMISSION_DENIED && readPermission != PackageManager.PERMISSION_DENIED
     }
 
     private fun showToastMessage(text : String) {
