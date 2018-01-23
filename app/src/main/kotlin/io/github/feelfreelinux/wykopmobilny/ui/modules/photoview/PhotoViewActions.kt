@@ -4,8 +4,8 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore.Images
@@ -13,50 +13,50 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.saveToFile
 import kotlinx.android.synthetic.main.activity_photoview.*
 import java.io.File
-import java.io.FileOutputStream
 
 
 interface PhotoViewCallbacks {
     fun shareImage()
-    fun getImageBitmap(): Bitmap?
+    fun getDrawable(): Drawable?
     fun saveImage()
 }
 
 class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelperApi) : PhotoViewCallbacks {
     val photoView = context as PhotoViewActivity
     override fun shareImage() {
-        val bitmap = getImageBitmap()
-        if ( bitmap != null && checkForWriteReadPermission()) {
-            val path = Images.Media.insertImage(context.contentResolver, bitmap, "title", null)
-            val uri = Uri.parse(path)
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "image/*"
-            intent.putExtra(Intent.EXTRA_STREAM, uri)
-            context.startActivity(intent)
+        val drawable = getDrawable()
+        if (drawable is BitmapDrawable) {
+            if (checkForWriteReadPermission()) {
+                val path = Images.Media.insertImage(context.contentResolver, drawable.bitmap, "title", null)
+                val uri = Uri.parse(path)
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "image/*"
+                intent.putExtra(Intent.EXTRA_STREAM, uri)
+                context.startActivity(intent)
+            }
         }
     }
 
-    override fun getImageBitmap() : Bitmap? {
+    override fun getDrawable() : Drawable? {
         photoView.image.drawable?.apply {
-            return (this as BitmapDrawable).bitmap
+            return this
         }
         return null
     }
 
     override fun saveImage() {
-        val bitmap = getImageBitmap()
-        if (bitmap != null && checkForWriteReadPermission()) {
-            val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "wykopmobilny")
-            if (!file.exists()) file.mkdirs()
-
-            val pictureFile = File("""${file.absoluteFile}/${photoView.url.substringAfterLast('/')}""")
-            val fos = FileOutputStream(pictureFile)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos)
-            fos.close()
-            showToastMessage("Zapisano obraz")
+        val drawable = getDrawable()
+        if (drawable == null || !checkForWriteReadPermission()) {
+            return
         }
+        var path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                "wykopmobilny")
+        path = File(path, photoView.url.substringAfterLast('/'))
+        val saveSuccess = drawable.saveToFile(path)
+        showToastMessage(if (saveSuccess) "Zapisano plik" else "Błąd zapisu pliku")
     }
 
     private fun checkForWriteReadPermission() : Boolean {
