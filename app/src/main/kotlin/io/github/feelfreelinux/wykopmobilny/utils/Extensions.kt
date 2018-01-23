@@ -119,9 +119,8 @@ class KotlinGlideRequestListener(val failedListener : (GlideException?) -> Unit,
     }
 }
 
-fun Drawable.saveToFile(path: String): Boolean {
+fun Drawable.saveToFile(file: File): Boolean {
     try {
-        var file = File(path)
         if (!file.parentFile.exists()) {
             file.parentFile.mkdirs()
         }

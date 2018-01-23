@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -13,12 +12,10 @@ import android.provider.MediaStore.Images
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
-import com.bumptech.glide.load.resource.gif.GifDrawable
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.saveToFile
 import kotlinx.android.synthetic.main.activity_photoview.*
 import java.io.File
-import java.io.FileOutputStream
-import java.nio.ByteBuffer
 
 
 interface PhotoViewCallbacks {
@@ -55,31 +52,11 @@ class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelpe
         if (drawable == null || !checkForWriteReadPermission()) {
             return
         }
-        if (drawable is BitmapDrawable) {
-            val bitmap = drawable.bitmap
-            val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "wykopmobilny")
-            if (!file.exists()) file.mkdirs()
-
-            val pictureFile = File("""${file.absoluteFile}/${photoView.url.substringAfterLast('/')}""")
-            val fos = FileOutputStream(pictureFile)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos)
-            fos.close()
-            showToastMessage("Zapisano obraz")
-        }
-        else if (drawable is GifDrawable) {
-            val byteBuffer = drawable.buffer
-
-            val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "wykopmobilny")
-            if (!file.exists()) file.mkdirs()
-            val gifFile = File("""${file.absoluteFile}/${photoView.url.substringAfterLast('/')}""")
-
-            val output = FileOutputStream(gifFile)
-            val bytes = ByteArray(byteBuffer.capacity())
-            (byteBuffer.duplicate().clear() as ByteBuffer).get(bytes)
-            output.write(bytes, 0, bytes.size)
-            output.close()
-            showToastMessage("Zapisano GIFa")
-        }
+        var path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                "wykopmobilny")
+        path = File(path, photoView.url.substringAfterLast('/'))
+        val saveSuccess = drawable.saveToFile(path)
+        showToastMessage(if (saveSuccess) "Zapisano plik" else "Błąd zapisu pliku")
     }
 
     private fun checkForWriteReadPermission() : Boolean {
