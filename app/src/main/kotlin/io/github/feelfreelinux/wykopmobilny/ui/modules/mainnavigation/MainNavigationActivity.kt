@@ -116,6 +116,13 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
+        if (intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT != 0) {
+            // Activity was brought to front and not created,
+            // Thus finishing this will get us to the last viewed activity
+            finish()
+            return
+        }
+
         JobUtil.hasBootPermission(this)
 
         //Setup AppUpdater
