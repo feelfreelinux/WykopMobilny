@@ -3,6 +3,8 @@ package io.github.feelfreelinux.wykopmobilny.utils
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContextWrapper
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.OpenableColumns
@@ -15,12 +17,16 @@ import android.widget.ImageView
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import org.ocpsoft.prettytime.PrettyTime
+import java.io.File
+import java.io.FileOutputStream
+import java.nio.ByteBuffer
 import java.util.*
 
 
@@ -111,5 +117,29 @@ class KotlinGlideRequestListener(val failedListener : (GlideException?) -> Unit,
         successListener()
         return false
     }
+}
 
+fun Drawable.saveToFile(file: File): Boolean {
+    try {
+        if (!file.parentFile.exists()) {
+            file.parentFile.mkdirs()
+        }
+        val fileOutputStream = FileOutputStream(file)
+        if (this is BitmapDrawable) {
+            val bitmap = this.bitmap
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fileOutputStream)
+            fileOutputStream.close()
+        }
+        else if (this is GifDrawable) {
+            val buffer = this.buffer
+            val bytes = ByteArray(buffer.capacity())
+            (buffer.duplicate().clear() as ByteBuffer).get(bytes)
+            fileOutputStream.write(bytes, 0, bytes.size)
+            fileOutputStream.close()
+        }
+        return true
+    }
+    catch (ex: Exception) {
+        return false
+    }
 }

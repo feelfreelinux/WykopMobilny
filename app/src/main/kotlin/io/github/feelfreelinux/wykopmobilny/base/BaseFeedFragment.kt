@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.BaseProgressAdapter
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
+import kotlinx.android.synthetic.main.entry_list_item.*
 import kotlinx.android.synthetic.main.feed_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 
@@ -53,7 +55,6 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
     fun initAdapter(feedList: List<T>? = emptyList()) {
         recyclerView.adapter = feedAdapter as RecyclerView.Adapter<*>
         setupInfiniteScrollListeners()
-
         if (feedList == null || feedList.isEmpty()) {
             // Create adapter if no data is saved
             if (feedAdapter.data.isEmpty()) {
@@ -61,7 +62,7 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
                 loadData(true) // Trigger data loading
             }
         } else {
-            feedAdapter.addData(feedList, true)
+            feedAdapter.addData(feedList.filterNot { feedAdapter.data.contains(it) }, true)
             isLoading = false
         }
     }
@@ -76,7 +77,7 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
             isRefreshing = false
             isLoading = false
             recyclerView?.post {
-                feedAdapter.addData(entryList, shouldClearAdapter)
+                feedAdapter.addData(entryList.filterNot { feedAdapter.data.contains(it) }, shouldClearAdapter)
                 if (shouldClearAdapter) recyclerView?.scrollToPosition(0)
             }
         }
