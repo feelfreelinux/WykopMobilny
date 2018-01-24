@@ -18,7 +18,9 @@
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity" />
 
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
+        <activity
+            android:launchMode="singleTask"
+            android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

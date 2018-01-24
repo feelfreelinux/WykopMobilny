@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
-data class Entry(val id : Int,
+class Entry(val id : Int,
                  val author : Author,
                  val body : String,
                  val date : String,
@@ -11,4 +11,13 @@ data class Entry(val id : Int,
                  var voteCount : Int,
                  val commentsCount : Int,
                  val comments : List<EntryComment>,
-                 val app : String?)
+                 val app : String?) {
+    override fun equals(other: Any?): Boolean {
+        return if (other !is Entry) false
+        else (other.id == id)
+    }
+
+    override fun hashCode(): Int {
+        return id
+    }
+}

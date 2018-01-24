@@ -1,7 +1,5 @@
 <resources>
-
     <!-- Base application theme. -->
-
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:textColor">@color/textColor</item>
@@ -48,6 +46,8 @@
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite_light</item>
         <item name="surveyBar">@drawable/survey_bar</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke</item>
+        <item name="expandDrawable">@drawable/comment_expand_light</item>
+        <item name="collapseDrawable">@drawable/comment_collapse_light</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold</item>
@@ -66,10 +66,8 @@
         <item name="bottomSheetBuryList">@drawable/ic_bury_list_light</item>
         <item name="bottomSheetDiggerList">@drawable/ic_dig_list_light</item>
         <item name="bottomSheetRelated">@drawable/ic_related_light</item>
-
         <item name="bottomSheetVoters">@drawable/ic_sheet_voters</item>
         <item name="bottomSheetDelete">@drawable/ic_menu_delete_light</item>
-
     </style>
 
     <style name="AppTheme.Dark" parent="Base.Theme.AppCompat">
@@ -120,6 +118,8 @@
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite</item>
         <item name="surveyBar">@drawable/survey_bar_dark</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke_dark</item>
+        <item name="expandDrawable">@drawable/comment_expand</item>
+        <item name="collapseDrawable">@drawable/comment_collapse</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote_dark</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold_dark</item>
@@ -140,7 +140,25 @@
         <item name="bottomSheetBuryList">@drawable/ic_bury_list</item>
         <item name="bottomSheetDiggerList">@drawable/ic_dig_list</item>
         <item name="bottomSheetRelated">@drawable/ic_related</item>
+    </style>
 
+    <style name="AppTheme.Amoled" parent="AppTheme.Dark">
+        <item name="android:textColor">@color/textColor.Amoled</item>
+        <item name="android:textColorPrimary">@color/textColor.Amoled</item>
+        <item name="android:windowBackground">@color/cardList.Amoled</item>
+        <item name="android:itemBackground">@color/cardList.Amoled</item>
+        <item name="colorPrimary">@color/colorPrimary.Amoled</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark.Amoled</item>
+        <item name="cardListColor">@color/cardList.Amoled</item>
+        <item name="cardViewColor">@color/cardView.Amoled</item>
+        <item name="cardViewSelected">@color/cardViewSelected.Amoled</item>
+        <item name="android:editTextColor">@color/textColor.Amoled</item>
+        <item name="colorControlNormal">@color/cardViewSelected.Amoled</item>
+        <item name="usersMessageColor">@color/usersMessageColor.Amoled</item>
+        <item name="lineColor">@color/lineColor.Amoled</item>
+        <item name="separatorColor">@color/separatorColor.Amoled</item>
+        <item name="expandImageGradient">@drawable/gradient_expand_image_amoled</item>
+        <item name="cardviewStatelist">@drawable/cardview_background_statelist_amoled</item>
     </style>
 
     <style name="AppTheme.Dark.NavigationView">
@@ -231,7 +249,7 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
     </style>
 
@@ -264,9 +282,9 @@
         <item name="tabIndicatorHeight">@dimen/tabBar_indicator_height</item>
         <item name="tabPaddingStart">@dimen/tabBar_padding_horizontal</item>
         <item name="tabPaddingEnd">@dimen/tabBar_padding_horizontal</item>
-        <item name="tabBackground">?attr/colorPrimaryDark</item>
         <item name="tabTextAppearance">@style/TabTextAppearance</item>
         <item name="tabSelectedTextColor">@color/tabBarTextColorSelected</item>
+        <item name="android:background">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">

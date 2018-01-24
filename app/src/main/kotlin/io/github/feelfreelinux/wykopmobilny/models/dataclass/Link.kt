@@ -82,4 +82,13 @@ class Link(
             override fun newArray(size: Int): Array<Link?> = arrayOfNulls(size)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        return if (other !is Link) false
+        else (other.id == id)
+    }
+
+    override fun hashCode(): Int {
+        return id
+    }
 }

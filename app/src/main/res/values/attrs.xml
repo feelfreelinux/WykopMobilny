@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="cardListColor" format="color" />
-    <attr name="cardViewColor" format="color" />
-    <attr name="spacerColor" format="color" />
-    <attr name="drawablesColor" format="color" />
-    <attr name="inputToolbarDrawables" format="color"/>
-    <attr name="cardViewSelected" format="color" />
-    <attr name="authorHeader_date_color" format="color" />
-    <attr name="textColor" format="color"/>
-    <attr name="usersMessageColor" format="reference" />
-    <attr name="adminNickColor" format="reference" />
-    <attr name="usersMessageSubtextDirected" format="reference" />
-    <attr name="lineColor" format="reference" />
-    <attr name="separatorColor" format="reference" />
-    <attr name="expandImageGradient" format="reference" />
-    <attr name="shadowUpGradient" format="reference" />
 
+    <attr name="cardListColor" format="color"/>
+    <attr name="cardViewColor" format="color"/>
+    <attr name="spacerColor" format="color"/>
+    <attr name="drawablesColor" format="color"/>
+    <attr name="inputToolbarDrawables" format="color"/>
+    <attr name="cardViewSelected" format="color"/>
+    <attr name="authorHeader_date_color" format="color"/>
+    <attr name="textColor" format="color"/>
+    <attr name="usersMessageColor" format="reference"/>
+    <attr name="adminNickColor" format="reference"/>
+    <attr name="usersMessageSubtextDirected" format="reference"/>
+    <attr name="lineColor" format="reference"/>
+    <attr name="separatorColor" format="reference"/>
+    <attr name="expandImageGradient" format="reference"/>
+    <attr name="shadowUpGradient" format="reference"/>
     <!-- DRAWABLES -->
+    <attr name="expandDrawable" format="reference"/>
+    <attr name="collapseDrawable" format="reference"/>
+
     <attr name="wypokDrawable" format="reference"/>
     <attr name="commentDrawable" format="reference"/>
     <attr name="plusDrawable" format="reference"/>
@@ -34,9 +37,8 @@
     <attr name="voteMinusButtonStatelist" format="reference"/>
     <attr name="buttonStatelist" format="reference"/>
     <attr name="cardviewStatelist" format="reference"/>
-    <attr name="surveyBar" format="reference" />
-    <attr name="surveyBarStroke" format="reference" />
-
+    <attr name="surveyBar" format="reference"/>
+    <attr name="surveyBarStroke" format="reference"/>
     <!-- DRAWABLES - MARKDOWN -->
     <attr name="markdownFormatBold" format="reference"/>
     <attr name="markdownFormatItalic" format="reference"/>
@@ -47,7 +49,6 @@
     <attr name="markdownInsertLink" format="reference"/>
     <attr name="markdownInsertSpoiler" format="reference"/>
     <attr name="markdownSend" format="reference"/>
-
     <!-- DRAWABLES - BOTTOMSHEET MENU -->
     <attr name="bottomSheetDelete" format="reference"/>
     <attr name="bottomSheetRelated" format="reference"/>

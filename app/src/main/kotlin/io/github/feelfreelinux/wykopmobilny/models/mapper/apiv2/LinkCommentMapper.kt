@@ -15,7 +15,7 @@ class LinkCommentMapper {
                     value.userVote, value.parentId, value.canVote,
                     value.linkId,
                     if (value.embed != null) EmbedMapper.map(value.embed) else null,
-                    value.app)
+                    value.app, false, false)
         }
     }
 }

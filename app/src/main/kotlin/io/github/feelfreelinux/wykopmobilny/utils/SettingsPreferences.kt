@@ -8,6 +8,7 @@ interface SettingsPreferencesApi {
     var defaultScreen : String?
     var showAdultContent : Boolean
     var useDarkTheme : Boolean
+    var useAmoledTheme : Boolean
     var showNotifications : Boolean
 
 }
@@ -18,5 +19,6 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var hotEntriesScreen by stringPref(defaultValue = "newest")
     override var defaultScreen by stringPref(defaultValue = "mainpage")
     override var useDarkTheme by booleanPref(defaultValue = false)
+    override var useAmoledTheme by booleanPref(defaultValue = false)
     override var showNotifications by booleanPref(defaultValue = true)
 }

@@ -65,6 +65,10 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
         comment.body?.let {
             commentContentTextView.prepareBody(comment.body!!, this)
         }
+        collapseButton.setOnClickListener {
+            commentContentTextView.isVisible = false
+            buttonsToolbar.isVisible = false
+        }
         commentContentTextView.isVisible = !comment.body.isNullOrEmpty()
         val margin = if (comment.id != comment.parentId) 16f else 0f
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin, resources.displayMetrics)
@@ -212,6 +216,26 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             mBehavior.peekHeight = bottomSheetView.height
         }
         dialog.show()
+    }
+
+    fun collapseComment() {
+        commentContentTextView.isVisible = false
+        commentImageView.isVisible = false
+        buttonsToolbar.isVisible = false
+        val typedArray = context.obtainStyledAttributes(arrayOf(
+                R.attr.expandDrawable).toIntArray())
+        collapseButton.setImageDrawable(typedArray.getDrawable(0))
+        typedArray.recycle()
+    }
+
+    fun expandComment() {
+        commentContentTextView.isVisible = true
+        commentImageView.isVisible = comment.embed != null
+        buttonsToolbar.isVisible = true
+        val typedArray = context.obtainStyledAttributes(arrayOf(
+                R.attr.collapseDrawable).toIntArray())
+        collapseButton.setImageDrawable(typedArray.getDrawable(0))
+        typedArray.recycle()
     }
 
     override fun showErrorDialog(e: Throwable) {

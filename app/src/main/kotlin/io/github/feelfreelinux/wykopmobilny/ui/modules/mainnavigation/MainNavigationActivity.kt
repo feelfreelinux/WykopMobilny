@@ -116,9 +116,16 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
+        if (intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT != 0) {
+            // Activity was brought to front and not created,
+            // Thus finishing this will get us to the last viewed activity
+            finish()
+            return
+        }
+
         JobUtil.hasBootPermission(this)
 
-        // Setup AppUpdater
+        //Setup AppUpdater
         AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
                 .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
@@ -128,7 +135,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 .setButtonDoNotShowAgain(R.string.do_not_show_again)
                 .setButtonUpdate(R.string.update)
                 .start()
-
+//
         if (settingsApi.showNotifications) {
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
