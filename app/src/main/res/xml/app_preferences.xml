@@ -8,6 +8,11 @@
             android:title="@string/pref_dark_style"
             android:defaultValue="false"/>
 
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="useAmoledTheme"
+            android:title="@string/useAmoledTheme"
+            android:defaultValue="false"/>
+
         <android.support.v7.preference.ListPreference
             android:key="defaultScreen"
             android:title="@string/defaultScreen"

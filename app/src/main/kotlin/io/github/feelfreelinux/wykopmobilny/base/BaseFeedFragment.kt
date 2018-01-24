@@ -77,7 +77,7 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
             isRefreshing = false
             isLoading = false
             recyclerView?.post {
-                feedAdapter.addData(entryList.filterNot { feedAdapter.data.contains(it) }, shouldClearAdapter)
+                feedAdapter.addData(entryList.filterNot { !shouldClearAdapter && feedAdapter.data.contains(it) }, shouldClearAdapter)
                 if (shouldClearAdapter) recyclerView?.scrollToPosition(0)
             }
         }

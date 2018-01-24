@@ -21,7 +21,8 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
 
     private fun initTheme() {
         if (themeSettingsPreferences.useDarkTheme) {
-            setTheme(R.style.AppTheme_Dark)
+            if (themeSettingsPreferences.useAmoledTheme) setTheme(R.style.AppTheme_Amoled)
+            else setTheme(R.style.AppTheme_Dark)
         } else {
             setTheme(R.style.AppTheme)
         }

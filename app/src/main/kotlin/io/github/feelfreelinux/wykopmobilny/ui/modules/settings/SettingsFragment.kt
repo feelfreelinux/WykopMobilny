@@ -33,6 +33,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences)
+        findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
         (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
             summary = entry
         }
@@ -48,12 +49,15 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {
         val pref = findPreference(key)
-
+        findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
         if (pref is ListPreference) {
             pref.setSummary(pref.entry)
         } else if (pref is CheckBoxPreference) {
             when (pref.key) {
                 "useDarkTheme" -> {
+                    restartActivity()
+                }
+                "useAmoledTheme" -> {
                     restartActivity()
                 }
                 "showNotifications" -> {

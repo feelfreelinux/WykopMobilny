@@ -13,6 +13,7 @@
     <string name="pref_content_filter">Filtrowanie treści</string>
     <string name="pref_content_plus18">Pokazuj treści 18+</string>
     <string name="pref_content_filternsfw">Zamazuj treści z tagiem #nsfw</string>
+    <string name="useAmoledTheme">Użyj stylu AMOLED dla trybu nocnego</string>
     <!-- NAVIGATION -->
     <string name="main_page">Strona Główna</string>
     <string name="wykopalisko">Wykopalisko</string>
