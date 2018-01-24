@@ -17,8 +17,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/notifications_list_recycler_padding_top"
-            android:paddingBottom="@dimen/notifications_list_recycler_padding_bottom"
+            android:paddingTop="@dimen/notifications_list_recycler_padding_vertical"
+            android:paddingBottom="@dimen/notifications_list_recycler_padding_vertical"
             android:clipToPadding="false"
             android:visibility="visible"/>
 

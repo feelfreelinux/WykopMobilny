@@ -23,7 +23,7 @@
         android:layout_marginEnd="@dimen/author_header_username_margin_horizontal"
         android:textSize="@dimen/author_header_username_text_size"
         app:layout_constraintStart_toEndOf="@+id/authorAvatarView"
-        app:layout_constraintTop_toTopOf="@id/authorAvatarView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/entryDateTextView"
         tools:text="Username"/>
 
@@ -38,7 +38,7 @@
         android:textColor="?attr/authorHeader_date_color"
         app:layout_constraintStart_toEndOf="@+id/authorAvatarView"
         app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
-        app:layout_constraintBottom_toBottomOf="@id/authorAvatarView"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="1 minute ago"/>
 
 </merge>

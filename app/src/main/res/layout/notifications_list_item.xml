@@ -6,8 +6,8 @@
     style="@style/EntryCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/notifications_list_item_margin_top"
-    android:layout_marginBottom="@dimen/notifications_list_item_margin_bottom"
+    android:layout_marginTop="@dimen/notifications_list_item_margin_vertical"
+    android:layout_marginBottom="@dimen/notifications_list_item_margin_vertical"
     android:clickable="true"
     android:focusable="true">
 

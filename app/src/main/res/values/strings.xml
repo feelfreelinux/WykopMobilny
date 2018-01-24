@@ -1,28 +1,18 @@
 <resources>
+
     <string name="app_name">Wykop Mobilny</string>
-    <string name="period24">Gorące wpisy 24h</string>
-    <string name="period12">Gorące wpisy 12h</string>
-    <string name="period6">Gorące wpisy 6h</string>
+
     <string name="options">Ustawienia</string>
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_dark_style">Styl nocny</string>
+    <string name="defaultScreen">Domyślny ekran aplikacji</string>
+    <string name="defaultHotScreen">Domyślny ekran w gorących wpisach</string>
     <string name="pref_notifications">Powiadomienia</string>
     <string name="pref_notifications_enable">Włącz powiadomienia</string>
     <string name="pref_notifications_frequency">Częstotliwość sprawdzania</string>
     <string name="pref_content_filter">Filtrowanie treści</string>
     <string name="pref_content_plus18">Pokazuj treści 18+</string>
     <string name="pref_content_filternsfw">Zamazuj treści z tagiem #nsfw</string>
-    <string name="not_implemented">Nie zaimplementowano</string>
-    <string name="defaultHotScreen">Domyślny ekran w gorących wpisach</string>
-    <string name="defaultScreen">Domyślny ekran aplikacji</string>
-
-
-    <string name="newest_entries">Najnowsze wpisy</string>
-    <string name="share">Udostępnij</string>
-    <string name="save_image">Zapisz obraz</string>
-    <string name="copy_url">Skopiuj adres URL</string>
-    <string name="error_occured">Błąd.</string>
-    <string name="user_not_logged_in">Aby tego dokonać, musisz się zalogować.</string>
     <!-- NAVIGATION -->
     <string name="main_page">Strona Główna</string>
     <string name="wykopalisko">Wykopalisko</string>
@@ -43,11 +33,22 @@
     <string name="login">Zaloguj się</string>
     <string name="logout">Wyloguj się</string>
     <!--- END NAVIGATION -->
+    <string name="error_occured">Błąd</string>
+    <string name="not_implemented">Nie zaimplementowano</string>
+    <string name="expand_image">rozwiń obrazek</string>
+
+    <string name="newest_entries">Najnowsze wpisy</string>
+    <string name="share">Udostępnij</string>
+    <string name="save_image">Zapisz obraz</string>
+    <string name="copy_url">Skopiuj adres URL</string>
+    <string name="user_not_logged_in">Aby tego dokonać, musisz się zalogować.</string>
     <string name="votes_count">%1$d</string>
     <string name="date_with_user_app">%1$s via %2$s</string>
     <string name="votePercentageCount">%1$d%% (%2$d głosów)</string>
+
     <string name="searchNoResults">¯\\_(ツ)_/¯\nBrak wyników</string>
     <string name="dialogNoVotes">¯\\_(ツ)_/¯\nBrak plusów</string>
+
     <string name="refresh">Odśwież</string>
     <string name="nav_drawer_open">Nawigacja otwarta</string>
     <string name="nav_drawer_closed">Nawigacja zamknięta</string>
@@ -62,8 +63,13 @@
     <string name="insert_link">Wstaw link</string>
     <string name="insert_spoiler">Wstaw spoiler</string>
     <string name="text_quote">Cytat</string>
-    <string name="send">Wyślij</string>
     <string name="insert_emoticon">Wstaw emotikonę</string>
+
+    <string name="insert_photo_galery">Dodaj zdjęcie z galerii</string>
+    <string name="insert_photo_url">Dodaj zdjęcie z adresu URL</string>
+    <string name="mark_nsfw">Oznacz jako 18+</string>
+
+    <string name="send">Wyślij</string>
     <string name="add_comment">Dodaj komentarz</string>
     <string name="add_new_entry">Dodaj nowy wpis</string>
     <string name="edit_entry">Edytuj wpis</string>
@@ -71,8 +77,6 @@
     <string name="sending_entry">Wysyłanie wpisu…</string>
     <string name="url_address">Adres url</string>
     <string name="link_description">Opis linku</string>
-    <string name="insert_photo_galery">Dodaj zdjęcie z galerii</string>
-    <string name="insert_photo_url">Dodaj zdjęcie z adresu URL</string>
     <string name="confirmation">Jesteś pewien?</string>
     <string name="confirm_exit">Czy na pewno chcesz wyjść?</string>
     <string name="confirm_app_exit">Czy na pewno chcesz zamknąć aplikację?</string>
@@ -97,34 +101,42 @@
     <string name="entryRemoved">[Wpis usunięty]</string>
     <string name="commentRemoved">[Komentarz usunięty]</string>
     <string name="notificationsCountMessage">Posiadasz %1$d nowych powiadomień.</string>
+
     <string name="observe_tag">Obserwuj tag</string>
     <string name="unobserve_tag">Przestań obserwować tag</string>
     <string name="block_tag">Zablokuj tag</string>
     <string name="unblock_tag">Odblokuj tag</string>
+
     <string name="update_available">Dostępna aktualizacja</string>
     <string name="update_app">Zaktualizuj aplikację do najnowszej wersji</string>
+    <string name="do_not_show_again">Nie pokazuj ponownie</string>
     <string name="update">Zaktualizuj</string>
     <string name="cancel">Anuluj</string>
+
     <string name="related">Powiązane</string>
     <string name="upvoters">Wykopujący</string>
     <string name="downvoters">Zakopujący</string>
+
+    <string name="period24">Gorące wpisy 24h</string>
+    <string name="period12">Gorące wpisy 12h</string>
+    <string name="period6">Gorące wpisy 6h</string>
+
     <string name="sortby_newest">Najnowsze komentarze</string>
     <string name="sortby_best">Najlepsze komentarze</string>
     <string name="sortby_oldest">Najstarsze komentarze</string>
-    <string name="do_not_show_again">Nie pokazuj ponownie</string>
-    <string name="expand_image">rozwiń obrazek</string>
-    <string name="bury_reason">Powód zakopu</string>
-    <string name="reason_duplicate">Duplikat</string>
-    <string name="reason_spam">Spam</string>
+
     <string name="upcoming_sortby_comments">Komentowane</string>
     <string name="upcoming_sortby_votes">Wykopywane</string>
     <string name="upcoming_sortby_active">Aktywne</string>
     <string name="upcoming_sortby_date">Najnowsze</string>
 
+    <string name="bury_reason">Powód zakopu</string>
+    <string name="reason_duplicate">Duplikat</string>
+    <string name="reason_spam">Spam</string>
     <string name="reason_fake_info">Informacja nieprawdziwa</string>
     <string name="reason_wrong_content">Treść nieodpowiednia</string>
     <string name="reason_unsuitable_content">Nie nadaje się</string>
-    <string name="mark_nsfw">Oznacz jako 18+</string>
+
     <string name="license">Publikacja aplikacji na licencji MIT</string>
     <string name="report_bug">Zgłoś błąd pod tagiem #owmbugi</string>
     <string name="observe_otwartywykopmobilny">Obserwuj tag #otwartywykopmobilny</string>
