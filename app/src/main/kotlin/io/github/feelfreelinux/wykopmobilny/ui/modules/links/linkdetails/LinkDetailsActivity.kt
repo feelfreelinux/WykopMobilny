@@ -79,6 +79,20 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         setContentView(R.layout.activity_link_details)
         setSupportActionBar(toolbar)
         presenter.subscribe(this)
+        adapter.collapseListener = {
+            isCollapsed, id ->
+            adapter.link?.comments?.forEach {
+                when (id) {
+                    it.id -> {
+                        it.isCollapsed = isCollapsed
+                        it.isParentCollapsed = false
+                    }
+                    it.parentId -> it.isParentCollapsed = isCollapsed
+                    else -> it.isParentCollapsed = false
+                }
+            }
+            adapter.notifyDataSetChanged()
+        }
         supportActionBar?.apply {
             title = null
             setDisplayHomeAsUpEnabled(true)
