@@ -46,6 +46,8 @@
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite_light</item>
         <item name="surveyBar">@drawable/survey_bar</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke</item>
+        <item name="expandDrawable">@drawable/comment_expand_light</item>
+        <item name="collapseDrawable">@drawable/comment_collapse_light</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold</item>
@@ -116,6 +118,8 @@
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite</item>
         <item name="surveyBar">@drawable/survey_bar_dark</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke_dark</item>
+        <item name="expandDrawable">@drawable/comment_expand</item>
+        <item name="collapseDrawable">@drawable/comment_collapse</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote_dark</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold_dark</item>

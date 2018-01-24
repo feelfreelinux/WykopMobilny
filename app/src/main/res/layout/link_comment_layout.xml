@@ -25,6 +25,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <ImageView
+            android:id="@+id/collapseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/comment_layout_author_padding_vertical"
+            android:paddingLeft="@dimen/comment_layout_author_padding_horizontal"
+            android:paddingRight="@dimen/comment_layout_author_padding_horizontal"
+            android:paddingTop="@dimen/comment_layout_author_padding_vertical"
+            android:src="?attr/collapseDrawable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <View
             android:id="@+id/lineTop"
             android:layout_width="match_parent"
