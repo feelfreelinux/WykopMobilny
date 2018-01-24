@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string-array name="upload_image_dialog">
         <item>@string/insert_photo_galery</item>
         <item>@string/insert_photo_url</item>
@@ -119,4 +120,5 @@
         <item>( ͡° ͜ʖ ͡° )つ──☆*:・ﾟ</item>
         <item>(╭☞σ ͜ʖσ)╭☞"</item>
     </string-array>
+
 </resources>

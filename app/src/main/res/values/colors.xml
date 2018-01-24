@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="textColor">#212121</color>
     <color name="textColor.Dark">#eaeaea</color>
+    <color name="textColor.Amoled">#ffffff</color>
+
+    <color name="titleTextColor">#417fba</color>
+    <color name="titleTextColor.Dark">#cad6df</color>
+    <color name="descriptionTextColor">#304458</color>
+    <color name="descriptionTextColor.Dark">#cacecf</color>
 
     <color name="colorAccent">#3c84c1</color>
     <color name="colorPrimary">#3a80ba</color>
     <color name="colorPrimaryDark">#3677ae</color>
     <color name="colorAccent.Dark">#3a80bc</color>
     <color name="colorPrimary.Dark">#292929</color>
+    <color name="colorPrimary.Amoled">#121212</color>
     <color name="colorPrimaryDark.Dark">#212121</color>
+    <color name="colorPrimaryDark.Amoled">#0d0d0d</color>
 
     <color name="toolbarItemsColor">#1e1e1e</color>
     <color name="toolbarItemsColor.Dark">#e6e6e6</color>
@@ -18,23 +27,29 @@
 
     <color name="separatorColor">#bebebe</color>
     <color name="separatorColor.Dark">#1a1a1a</color>
+    <color name="separatorColor.Amoled">#101010</color>
 
     <color name="lineColor">#d4d4d4</color>
     <color name="lineColor.Dark">#393939</color>
+    <color name="lineColor.Amoled">#202020</color>
 
     <color name="colorBadgeOwn">#3498db</color>
     <color name="colorBadgeAuthors">#F75616</color>
     <color name="colorBadgeHot">#f71e16</color>
 
     <color name="cardView">#ffffff</color>
-    <color name="cardList">#e6e9ea</color>
+    <color name="cardList">#ecf0f1</color>
     <color name="cardViewSelected">#f5f5f5</color>
-    <color name="cardView.Dark">#282828</color>
+    <color name="cardView.Dark">#2c2c2c</color>
     <color name="cardList.Dark">#181818</color>
     <color name="cardViewSelected.Dark">#252525</color>
+    <color name="cardView.Amoled">#080808</color>
+    <color name="cardList.Amoled">#000000</color>
+    <color name="cardViewSelected.Amoled">#000000</color>
 
     <color name="usersMessageColor">#e1f0ff</color>
     <color name="usersMessageColor.Dark">#2c3945</color>
+    <color name="usersMessageColor.Amoled">#0d1115</color>
     <color name="usersMessageDirected.Dark">#d6d6d6</color>
 
     <color name="navigationSeparator">#404040</color>
