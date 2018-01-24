@@ -17,6 +17,9 @@
     <attr name="expandImageGradient" format="reference"/>
     <attr name="shadowUpGradient" format="reference"/>
     <!-- DRAWABLES -->
+    <attr name="expandDrawable" format="reference"/>
+    <attr name="collapseDrawable" format="reference"/>
+
     <attr name="wypokDrawable" format="reference"/>
     <attr name="commentDrawable" format="reference"/>
     <attr name="plusDrawable" format="reference"/>
