@@ -16,6 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTagResponse
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ObservedTagsAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopNotifier
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
 
 
-class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, SwipeRefreshLayout.OnRefreshListener {
+class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, SwipeRefreshLayout.OnRefreshListener, MyWykopNotifier {
     @Inject lateinit var adapter : ObservedTagsAdapter
     @Inject lateinit var presenter : MyWykopObservedTagsPresenter
     lateinit var dataFragment : DataFragment<List<ObservedTagResponse>>
@@ -60,6 +61,7 @@ class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, Swi
     }
 
     override fun onRefresh() {
+        if (!swiperefresh.isRefreshing) swiperefresh.isRefreshing = true
         presenter.loadTags()
     }
 
@@ -83,6 +85,10 @@ class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, Swi
 
     override fun onPause() {
         super.onPause()
+        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
+    }
+
+    override fun removeDataFragment() {
         if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
     }
 }

@@ -8,10 +8,11 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinkAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopNotifier
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopView
 import javax.inject.Inject
 
-class MyWykopIndexFragment : BaseFeedFragment<EntryLink>(), MyWykopView {
+class MyWykopIndexFragment : BaseFeedFragment<EntryLink>(), MyWykopView, MyWykopNotifier {
     @Inject override lateinit var feedAdapter : EntryLinkAdapter
     @Inject lateinit var presenter : MyWykopIndexPresenter
     lateinit var dataFragment : DataFragment<PagedDataModel<List<EntryLink>>>
@@ -51,6 +52,10 @@ class MyWykopIndexFragment : BaseFeedFragment<EntryLink>(), MyWykopView {
 
     override fun onPause() {
         super.onPause()
+        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
+    }
+
+    override fun removeDataFragment() {
         if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
     }
 }
