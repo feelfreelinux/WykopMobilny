@@ -68,6 +68,7 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
     }
 
     override fun onRefresh() {
+        if (!isRefreshing) isRefreshing = true
         loadData(true)
     }
 
