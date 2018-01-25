@@ -58,7 +58,7 @@
     <dimen name="author_header_date_padding_bottom">2dp</dimen>
     <dimen name="author_header_date_text_size">11.5sp</dimen>
 
-    <dimen name="comment_section_left_margin">15dp</dimen>
+    <dimen name="comment_section_left_margin">16dp</dimen>
     <dimen name="comment_layout_author_padding_vertical">8dp</dimen>
     <dimen name="comment_layout_author_padding_horizontal">10dp</dimen>
     <dimen name="comment_layout_button_padding_horizontal">2dp</dimen>

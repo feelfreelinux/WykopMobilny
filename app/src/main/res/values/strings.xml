@@ -71,6 +71,7 @@
     <string name="mark_nsfw">Oznacz jako 18+</string>
 
     <string name="send">Wyślij</string>
+    <string name="observed_tags">Obserwowane tagi</string>
     <string name="add_comment">Dodaj komentarz</string>
     <string name="add_new_entry">Dodaj nowy wpis</string>
     <string name="edit_entry">Edytuj wpis</string>

@@ -29,6 +29,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
     lateinit var presenter : LinkCommentPresenter
     lateinit var settingsApi : SettingsPreferencesApi
     lateinit var userManagerApi : UserManagerApi
+    lateinit var collapseListener : (Boolean, Int) -> Unit
     init {
         View.inflate(context, R.layout.link_comment_layout, this)
         isClickable = true
@@ -37,6 +38,8 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
         getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
     }
+
+    var showHiddenCommentsCountCard : (Boolean) -> Unit = {}
 
 
     fun setLinkCommentData(linkComment: LinkComment, linkPresenter: LinkCommentPresenter, userManager: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi) {
@@ -70,6 +73,11 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             buttonsToolbar.isVisible = false
         }
         commentContentTextView.isVisible = !comment.body.isNullOrEmpty()
+        if (comment.id != comment.parentId) {
+            showHiddenCommentsCountCard(false)
+            collapseButton.isVisible = false
+        } else collapseButton.isVisible = true
+
         val margin = if (comment.id != comment.parentId) 16f else 0f
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin, resources.displayMetrics)
         val params = layoutParams as MarginLayoutParams
@@ -108,6 +116,8 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
         minusButton.text = comment.voteCountMinus.absoluteValue.toString()
         moreOptionsTextView.setOnClickListener { openLinkCommentMenu() }
         shareTextView.setOnClickListener { shareUrl() }
+        if (comment.isCollapsed) collapseComment(false)
+        else expandComment(false)
 
         plusButton.voteListener = {
             presenter.voteUp()
@@ -218,24 +228,28 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
         dialog.show()
     }
 
-    fun collapseComment() {
-        commentContentTextView.isVisible = false
-        commentImageView.isVisible = false
-        buttonsToolbar.isVisible = false
+    fun collapseComment(shouldCallListener : Boolean = true) {
         val typedArray = context.obtainStyledAttributes(arrayOf(
                 R.attr.expandDrawable).toIntArray())
         collapseButton.setImageDrawable(typedArray.getDrawable(0))
         typedArray.recycle()
+        collapseButton.setOnClickListener {
+            expandComment()
+        }
+        showHiddenCommentsCountCard(true)
+        if (shouldCallListener) collapseListener(true, comment.id)
     }
 
-    fun expandComment() {
-        commentContentTextView.isVisible = true
-        commentImageView.isVisible = comment.embed != null
-        buttonsToolbar.isVisible = true
+    fun expandComment(shouldCallListener : Boolean = true) {
         val typedArray = context.obtainStyledAttributes(arrayOf(
                 R.attr.collapseDrawable).toIntArray())
         collapseButton.setImageDrawable(typedArray.getDrawable(0))
         typedArray.recycle()
+        collapseButton.setOnClickListener {
+            collapseComment()
+        }
+        showHiddenCommentsCountCard(false)
+        if (shouldCallListener) collapseListener(false, comment.id)
     }
 
     override fun showErrorDialog(e: Throwable) {

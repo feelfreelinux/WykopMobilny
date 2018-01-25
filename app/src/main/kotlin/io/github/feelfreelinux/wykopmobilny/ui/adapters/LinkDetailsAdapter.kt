@@ -26,15 +26,17 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
     }
 
     var highlightCommentId = -1
+    lateinit var collapseListener : (Boolean, Int) -> Unit
 
     var link: Link? = null
+    val commentsList : List<LinkComment>? get() = link?.comments?.filterNot { it.isParentCollapsed }
     var onReplyClickedListener : (LinkComment) -> Unit = {}
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder?.itemViewType == HEADER_HOLDER) {
             (holder as LinkHeaderViewHolder).bindView(link!!)
         } else {
-            val comment = link!!.comments[position - 1]
+            val comment = commentsList!![position - 1]
             (holder as LinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
         }
     }
@@ -45,16 +47,16 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
     }
 
     override fun getItemCount(): Int {
-        link?.comments?.let {
+        commentsList?.let {
             return it.size + 1
         }
-        return 0
+        return 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             HEADER_HOLDER -> LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_list_item, parent, false), linkPresenterFactory.create(), userManagerApi)
-            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), onReplyClickedListener, presenterFactory.create(), userManagerApi, settingsPreferencesApi)
+            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), onReplyClickedListener, collapseListener, presenterFactory.create(), userManagerApi, settingsPreferencesApi)
         }
     }
 }
