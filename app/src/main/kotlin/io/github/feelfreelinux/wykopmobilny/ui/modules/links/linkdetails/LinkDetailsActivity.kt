@@ -80,15 +80,13 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         setSupportActionBar(toolbar)
         presenter.subscribe(this)
         adapter.collapseListener = {
-            isCollapsed, id ->
-            adapter.link?.comments?.forEach {
+            isCollapsed, id -> adapter.link?.comments?.forEach {
                 when (id) {
                     it.id -> {
                         it.isCollapsed = isCollapsed
                         it.isParentCollapsed = false
                     }
                     it.parentId -> it.isParentCollapsed = isCollapsed
-                    else -> it.isParentCollapsed = false
                 }
             }
             adapter.notifyDataSetChanged()
