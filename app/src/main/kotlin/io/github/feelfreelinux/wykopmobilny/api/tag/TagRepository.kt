@@ -5,9 +5,11 @@ import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandler
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagEntriesMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagLinksMapper
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTagResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagEntriesResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagLinksResponse
+import io.reactivex.Single
 import retrofit2.Retrofit
 
 class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher) : TagApi {
@@ -22,6 +24,11 @@ class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresh
             .retryWhen(userTokenRefresher)
             .flatMap(ErrorHandler<TagLinksResponse>())
             .map { TagLinksMapper.map(it)}
+
+    override fun getObservedTags() : Single<List<ObservedTagResponse>> =
+            tagApi.getObservedTags()
+            .retryWhen(userTokenRefresher)
+            .compose<List<ObservedTagResponse>>(ErrorHandlerTransformer())
 
     override fun observe(tag : String) = tagApi.observe(tag)
             .retryWhen(userTokenRefresher)
