@@ -7,6 +7,8 @@ import android.widget.ImageView
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 
 
 class WykopImageView: ImageView {
@@ -15,9 +17,8 @@ class WykopImageView: ImageView {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    companion object {
-        val WIDTH_HEIGHT_MULTIPLER = 1.13f
-    }
+
+    val settingsPreferencesApi by lazy { SettingsPreferences(context) as SettingsPreferencesApi }
 
     var isResized = false
 
@@ -25,7 +26,6 @@ class WykopImageView: ImageView {
         setOnClickListener { openImageListener() }
         scaleType = ScaleType.CENTER_CROP
     }
-
 
     fun loadImageFromUrl(url : String) {
         GlideApp.with(context)
@@ -38,6 +38,8 @@ class WykopImageView: ImageView {
                 })
     }
 
+    var forceDisableMinimizedMode = false
+
     fun resetImage() {
         setImageBitmap(null)
     }
@@ -48,11 +50,12 @@ class WykopImageView: ImageView {
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val widthSpec = MeasureSpec.getSize(widthMeasureSpec)
+        val proportion = settingsPreferencesApi.cutImageProportion.toFloat() / 100
+        val widthSpec = MeasureSpec.getSize(if (settingsPreferencesApi.showMinifiedImages && !forceDisableMinimizedMode) widthMeasureSpec/2 else widthMeasureSpec)
         if (drawable != null) {
             val measuredMultipler = (drawable.intrinsicHeight.toFloat() / drawable.intrinsicWidth.toFloat())
             val heightSpec = widthSpec.toFloat() * measuredMultipler
-            if (measuredMultipler > WIDTH_HEIGHT_MULTIPLER && !isResized) {
+            if (measuredMultipler > proportion && !isResized && settingsPreferencesApi.cutImages) {
                 setOnClickListener {
                     isResized = true
                     onResizedListener(true)
@@ -60,7 +63,7 @@ class WykopImageView: ImageView {
                     invalidate()
                     setOnClickListener({ openImageListener() })
                 }
-                setMeasuredDimension(widthSpec, (widthSpec.toFloat() * WIDTH_HEIGHT_MULTIPLER).toInt())
+                setMeasuredDimension(widthSpec, (widthSpec.toFloat() * proportion).toInt())
                 showResizeView(true)
             } else {
                 setMeasuredDimension(widthSpec, heightSpec.toInt())
@@ -68,9 +71,10 @@ class WykopImageView: ImageView {
                 showResizeView(false)
             }
         } else {
-            setMeasuredDimension(widthSpec, (widthSpec.toFloat() * WIDTH_HEIGHT_MULTIPLER).toInt())
+            setMeasuredDimension(widthSpec, (widthSpec.toFloat() * proportion).toInt())
             setOnClickListener { openImageListener() }
             showResizeView(false)
         }
+        if (!settingsPreferencesApi.cutImages) showResizeView(false)
     }
 }
