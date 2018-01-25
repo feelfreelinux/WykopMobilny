@@ -90,6 +90,10 @@
     <string name="voters">Plusujący</string>
     <string name="voters_list">Lista plusujących</string>
     <string name="bury">Zakop</string>
+    <string name="app_config_images">Ustawienia obrazków</string>
+    <string name="app_config_images_cut_image_proportion">Proporcje przycięcia obrazka (szerokość/wysokosć)</string>
+    <string name="app_config_images_cut">Przycinaj obrazek</string>
+    <string name="app_config_images_minified">Wyświetlaj obrazki w trybie miniaturki</string>
     <string name="bury_list">Lista zakopujących (%1$d)</string>
     <string name="dig_list">Lista wykopujących (%1$d)</string>
     <string name="edit">Edytuj</string>

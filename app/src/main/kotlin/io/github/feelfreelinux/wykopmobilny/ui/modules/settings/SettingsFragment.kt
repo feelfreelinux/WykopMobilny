@@ -50,6 +50,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {
         val pref = findPreference(key)
         findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
+        findPreference("cutImageProportion").isEnabled = settingsApi.cutImages
+
         if (pref is ListPreference) {
             pref.setSummary(pref.entry)
         } else if (pref is CheckBoxPreference) {

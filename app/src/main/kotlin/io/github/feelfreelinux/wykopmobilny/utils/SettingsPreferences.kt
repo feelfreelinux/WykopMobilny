@@ -10,6 +10,9 @@ interface SettingsPreferencesApi {
     var useDarkTheme : Boolean
     var useAmoledTheme : Boolean
     var showNotifications : Boolean
+    var showMinifiedImages : Boolean
+    var cutImages : Boolean
+    var cutImageProportion : Int
 
 }
 
@@ -20,5 +23,9 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var defaultScreen by stringPref(defaultValue = "mainpage")
     override var useDarkTheme by booleanPref(defaultValue = false)
     override var useAmoledTheme by booleanPref(defaultValue = false)
+    override var showMinifiedImages by booleanPref(defaultValue = false)
+    override var cutImages by booleanPref(defaultValue = true)
+    override var cutImageProportion by intPref(defaultValue = 113)
+
     override var showNotifications by booleanPref(defaultValue = true)
 }

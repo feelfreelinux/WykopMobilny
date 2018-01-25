@@ -37,6 +37,7 @@ class PMMessageViewHolder(val view: View,
             }
 
             body.prepareBody(message.body, this@PMMessageViewHolder)
+            embedImage.forceDisableMinimizedMode = true
             embedImage.setEmbed(message.embed, settingsPreferencesApi, navigatorApi)
         }
     }

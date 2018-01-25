@@ -28,6 +28,9 @@ class WykopEmbedView: FrameLayout {
     var resized = false
     lateinit var mEmbed : WeakReference<Embed>
     lateinit var navigator : NewNavigatorApi
+    var forceDisableMinimizedMode : Boolean
+        get() = image.forceDisableMinimizedMode
+        set(value) { image.forceDisableMinimizedMode = value }
 
 
     init {
