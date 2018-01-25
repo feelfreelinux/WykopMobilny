@@ -88,7 +88,6 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
                         it.isParentCollapsed = false
                     }
                     it.parentId -> it.isParentCollapsed = isCollapsed
-                    else -> it.isParentCollapsed = false
                 }
             }
             adapter.notifyDataSetChanged()
