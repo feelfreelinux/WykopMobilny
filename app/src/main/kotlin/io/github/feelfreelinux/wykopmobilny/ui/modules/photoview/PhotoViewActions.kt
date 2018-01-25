@@ -6,12 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.FileProvider
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -48,7 +48,7 @@ class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelpe
             it.onSuccess(newFile)
         }).subscribeOn(WykopSchedulers().backgroundThread()).observeOn(WykopSchedulers().mainThread()).subscribe { file: File ->
             addImageToGallery(file.path, context)
-            val url = Uri.fromFile(file)
+            val url = FileProvider.getUriForFile(context, context.applicationContext.packageName + ".fileprovider", file)
             val share = Intent(Intent.ACTION_SEND)
             share.type = getMimeType(url.path)
             share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
