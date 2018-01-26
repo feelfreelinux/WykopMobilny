@@ -43,10 +43,10 @@
         <com.pavelsikun.seekbarpreference.SeekBarPreferenceCompat
             android:key="cutImageProportion"
             android:title="@string/app_config_images_cut_image_proportion"
-            android:defaultValue="113"
-            sample:msbp_minValue="100"
-            sample:msbp_maxValue="200"
-            sample:msbp_interval="1"
+            android:defaultValue="110"
+            sample:msbp_minValue="20"
+            sample:msbp_maxValue="250"
+            sample:msbp_interval="10"
             sample:msbp_measurementUnit="%"
             sample:msbp_dialogEnabled="false"/>
     </android.support.v7.preference.PreferenceCategory>

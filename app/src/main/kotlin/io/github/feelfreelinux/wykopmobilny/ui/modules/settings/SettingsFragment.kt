@@ -34,6 +34,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences)
         findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
+        findPreference("cutImageProportion").isEnabled = settingsApi.cutImages
         (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
             summary = entry
         }
