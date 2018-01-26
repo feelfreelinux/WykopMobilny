@@ -35,7 +35,8 @@
             android:paddingTop="@dimen/comment_layout_author_padding_vertical"
             android:src="?attr/collapseDrawable"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/authorHeaderView"
+            app:layout_constraintBottom_toBottomOf="@id/authorHeaderView"/>
 
         <View
             android:id="@+id/lineTop"
