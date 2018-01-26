@@ -57,7 +57,9 @@ class WykopEmbedView: FrameLayout {
             image.isResized = embed.isResize
             imageExpand.isVisible = false
             isVisible = true
-            if (plus18 && !settingsPreferencesApi.showAdultContent) image.loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
+            if (plus18 && !settingsPreferencesApi.showAdultContent || isNsfw && settingsPreferencesApi.showNsfw) {
+                image.loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
+            }
             else {
                 image.loadImageFromUrl(preview)
             }
