@@ -57,7 +57,7 @@
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
             android:id="@+id/commentImageView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintHeight_default="wrap"
             app:layout_constraintStart_toStartOf="parent"
