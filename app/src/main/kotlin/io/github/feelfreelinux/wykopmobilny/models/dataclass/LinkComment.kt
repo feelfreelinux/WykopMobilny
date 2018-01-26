@@ -23,7 +23,8 @@ class LinkComment(
         val embed: Embed?,
         val app: String?,
         var isCollapsed : Boolean,
-        var isParentCollapsed : Boolean
+        var isParentCollapsed : Boolean,
+        var childCommentCount : Int
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
@@ -42,7 +43,8 @@ class LinkComment(
             source.readParcelable<Embed>(Embed::class.java.classLoader),
             source.readString(),
             1 == source.readInt(),
-            1 == source.readInt()
+            1 == source.readInt(),
+            source.readInt()
     )
 
     override fun describeContents() = 0
@@ -65,7 +67,7 @@ class LinkComment(
         writeString(app)
         writeInt((if (isCollapsed) 1 else 0))
         writeInt((if (isParentCollapsed) 1 else 0))
-
+        writeInt(childCommentCount)
     }
 
     companion object {

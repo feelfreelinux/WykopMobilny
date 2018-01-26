@@ -21,6 +21,7 @@
         android:layout_marginLeft="@dimen/comment_section_left_margin">
 
         <TextView
+            android:id="@+id/messageTextView"
             style="@style/EntryContentTextView"
             android:text="Odpowiedzi do komentarza zostały ukryte."
             android:layout_width="match_parent"

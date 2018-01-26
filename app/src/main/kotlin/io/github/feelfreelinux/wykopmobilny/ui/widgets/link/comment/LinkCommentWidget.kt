@@ -17,6 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -73,7 +74,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             buttonsToolbar.isVisible = false
         }
         commentContentTextView.isVisible = !comment.body.isNullOrEmpty()
-        if (comment.id != comment.parentId) {
+        if ((comment.id != comment.parentId) || comment.childCommentCount == 0) {
             showHiddenCommentsCountCard(false)
             collapseButton.isVisible = false
         } else collapseButton.isVisible = true

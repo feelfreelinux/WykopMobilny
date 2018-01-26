@@ -14,7 +14,7 @@ class LinkMapper {
                     value.commentsCount, value.relatedCount,
                     if (value.author != null) AuthorMapper.map(value.author) else null, value.date, value.preview,
                     value.plus18, value.canVote, value.isHot,
-                    value.status, value.userVote, value.userFavorite ?: false, value.app)
+                    value.status, value.userVote, value.userFavorite ?: false, value.app, false)
         }
     }
 }

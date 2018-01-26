@@ -25,7 +25,6 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var useAmoledTheme by booleanPref(defaultValue = false)
     override var showMinifiedImages by booleanPref(defaultValue = false)
     override var cutImages by booleanPref(defaultValue = true)
-    override var cutImageProportion by intPref(defaultValue = 110)
-
+    override var cutImageProportion by intPref(defaultValue = 60)
     override var showNotifications by booleanPref(defaultValue = true)
 }
