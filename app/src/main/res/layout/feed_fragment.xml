@@ -21,6 +21,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
+            android:scrollbars="vertical"
             android:layout_height="match_parent"
             android:paddingTop="@dimen/entry_recycler_padding_vertical"
             android:paddingBottom="@dimen/entry_recycler_padding_vertical"

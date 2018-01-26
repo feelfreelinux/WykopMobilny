@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.support.design.internal.NavigationMenuView
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.NavigationView
@@ -125,6 +126,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
         JobUtil.hasBootPermission(this)
 
+        (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
         AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
