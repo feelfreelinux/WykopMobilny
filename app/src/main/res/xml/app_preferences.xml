@@ -52,33 +52,6 @@
     </android.support.v7.preference.PreferenceCategory>
 
     <android.support.v7.preference.PreferenceCategory
-        android:title="@string/pref_appearance">
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="useDarkTheme"
-            android:title="@string/pref_dark_style"
-            android:defaultValue="false"/>
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="useAmoledTheme"
-            android:title="@string/useAmoledTheme"
-            android:defaultValue="false"/>
-
-        <android.support.v7.preference.ListPreference
-            android:key="defaultScreen"
-            android:title="@string/defaultScreen"
-            android:entries="@array/preferences_default_screen"
-            android:entryValues="@array/preferences_default_screen_values"
-            android:defaultValue="mainpage"/>
-
-        <android.support.v7.preference.ListPreference
-            android:key="hotEntriesScreen"
-            android:title="@string/defaultHotScreen"
-            android:entries="@array/preferences_hot_screen"
-            android:entryValues="@array/preferences_hot_screen_values"
-            android:defaultValue="newest"/>
-    </android.support.v7.preference.PreferenceCategory>
-
-    <android.support.v7.preference.PreferenceCategory
         android:title="@string/pref_notifications">
         <android.support.v7.preference.CheckBoxPreference
             android:key="showNotifications"
