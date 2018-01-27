@@ -5,6 +5,9 @@ import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesRepository
+import io.github.feelfreelinux.wykopmobilny.api.hits.HitsApi
+import io.github.feelfreelinux.wykopmobilny.api.hits.HitsRepository
+import io.github.feelfreelinux.wykopmobilny.api.hits.HitsRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksRepository
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
@@ -53,4 +56,7 @@ class RepositoryModule {
 
     @Provides
     fun provideSearchApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : SearchApi = SearchRepository(retrofit, userTokenRefresher)
+
+    @Provides
+    fun provideHitsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : HitsApi = HitsRepository(retrofit, userTokenRefresher)
 }

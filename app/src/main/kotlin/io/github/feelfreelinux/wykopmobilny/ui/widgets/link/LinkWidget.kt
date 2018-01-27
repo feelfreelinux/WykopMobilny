@@ -11,8 +11,10 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.MonthYearPickerDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
@@ -189,6 +191,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
             }
 
             link_report.setOnClickListener {
+                MonthYearPickerDialog.newInstance().show((getActivityContext()!! as BaseActivity).supportFragmentManager, "monthYearPickerDialog")
                 dialog.dismiss()
             }
 
