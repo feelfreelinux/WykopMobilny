@@ -8,10 +8,8 @@ class EntryComment(val id : Int,
                         var isVoted : Boolean,
                         val embed : Embed?,
                         var voteCount: Int,
-                        val app : String?) {
-    init {
-        embed?.isNsfw = body.toLowerCase().contains("#nsfw")
-    }
+                        val app : String?,
+                        var isNsfw : Boolean = false) {
     override fun equals(other: Any?): Boolean {
         return if (other !is EntryComment) false
         else (other.id == id)

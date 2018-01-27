@@ -10,8 +10,7 @@ class Embed(val type: String,
             val source: String?,
             val isAnimated: Boolean,
             val size: String,
-            var isResize: Boolean = false,
-            var isNsfw: Boolean = false) : Parcelable {
+            var isResize: Boolean = false) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
@@ -20,7 +19,6 @@ class Embed(val type: String,
             source.readString(),
             1 == source.readInt(),
             source.readString(),
-            1 == source.readInt(),
             1 == source.readInt()
     )
 
@@ -35,7 +33,6 @@ class Embed(val type: String,
         writeInt((if (isAnimated) 1 else 0))
         writeString(size)
         writeInt((if (isResize) 1 else 0))
-        writeInt((if (isNsfw) 1 else 0))
     }
 
     companion object {

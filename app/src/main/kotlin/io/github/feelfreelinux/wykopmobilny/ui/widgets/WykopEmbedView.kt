@@ -48,7 +48,7 @@ class WykopEmbedView: FrameLayout {
         image.openImageListener = { handleUrl() }
     }
 
-    fun setEmbed(embed: Embed?, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi) {
+    fun setEmbed(embed: Embed?, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, isNsfw: Boolean = false) {
         resized = false
         navigator = navigatorApi
         if (embed == null) isVisible = false

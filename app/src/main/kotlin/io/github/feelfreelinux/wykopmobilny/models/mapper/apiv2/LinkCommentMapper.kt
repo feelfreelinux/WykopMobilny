@@ -15,7 +15,8 @@ class LinkCommentMapper {
                     value.userVote, value.parentId, value.canVote,
                     value.linkId,
                     if (value.embed != null) EmbedMapper.map(value.embed) else null,
-                    value.app, false, false, 0)
+                    value.app, false, false, 0,
+                    if (value.body != null) value.body.toLowerCase().contains("#nsfw") else false)
         }
     }
 }

@@ -59,7 +59,7 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
         commentPresenter.commentId = entryComment.id
         commentPresenter.subscribe(this)
         voteButton.setup(userManager)
-        entryImageView.setEmbed(comment.embed, settingsPreferencesApi, commentPresenter.navigatorApi)
+        entryImageView.setEmbed(comment.embed, settingsPreferencesApi, commentPresenter.navigatorApi, entryComment.isNsfw)
         setupHeader()
         setupFooter()
         setupBody()

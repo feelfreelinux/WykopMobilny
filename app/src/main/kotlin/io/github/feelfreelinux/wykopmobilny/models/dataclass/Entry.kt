@@ -11,11 +11,8 @@ class Entry(val id : Int,
                  var voteCount : Int,
                  val commentsCount : Int,
                  val comments : List<EntryComment>,
-                 val app : String?) {
-    init {
-        embed?.isNsfw = body.toLowerCase().contains("#nsfw")
-    }
-
+                 val app : String?,
+                 var isNsfw : Boolean = false) {
     override fun equals(other: Any?): Boolean {
         return if (other !is Entry) false
         else (other.id == id)
