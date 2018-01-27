@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/monthYearTextView"
+        android:background="?attr/colorPrimary"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:padding="8dp"
+        android:textStyle="bold"
+        android:text="Wrzesień, 2017"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/arrowLeft"
+            android:src="@drawable/ic_arrow_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/yearTextView"
+            android:text="2017"
+            android:textSize="22sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/arrowRight"
+            android:src="@drawable/ic_arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:weightSum="1"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/wholeYear"
+            android:text="@string/whole_year"
+            style="@style/MonthYearPickerMonth" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/janTv"
+            android:text="@string/january"
+            style="@style/MonthYearPickerMonth" />
+
+        <TextView
+            android:id="@+id/febTv"
+            android:text="@string/february"
+            style="@style/MonthYearPickerMonth" />
+
+        <TextView
+            android:id="@+id/marTv"
+            android:text="@string/march"
+            style="@style/MonthYearPickerMonth" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/aprTv"
+            android:text="@string/april"
+            style="@style/MonthYearPickerMonth" />
+
+        <TextView
+            android:id="@+id/may"
+            android:text="@string/may"
+            style="@style/MonthYearPickerMonth" />
+
+        <TextView
+            android:id="@+id/junTv"
+            android:text="@string/june"
+            style="@style/MonthYearPickerMonth" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/julTv"
+            android:text="@string/july"
+            style="@style/MonthYearPickerMonth" />
+
+        <TextView
+            android:id="@+id/augTv"
+            android:text="@string/august"
+            style="@style/MonthYearPickerMonth" />
+
+        <TextView
+            android:id="@+id/sepTv"
+            android:text="@string/september"
+            style="@style/MonthYearPickerMonth" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/octTv"
+            android:text="@string/october"
+            style="@style/MonthYearPickerMonth" />
+
+        <TextView
+            android:id="@+id/novTv"
+            android:text="@string/novermber"
+            style="@style/MonthYearPickerMonth" />
+
+        <TextView
+            android:id="@+id/decTv"
+            android:text="@string/december"
+            style="@style/MonthYearPickerMonth" />
+    </LinearLayout>
+</LinearLayout>

@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragmentProvider
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.hits.HitsFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.hits.HitsModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragmentModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upcoming.UpcomingFragment
@@ -47,6 +49,8 @@ abstract class MainNavigationFragmentProvider {
     @ContributesAndroidInjector(modules = [SearchFragmentProvider::class])
     abstract fun provideSearchFragment() : SearchFragment
 
+    @ContributesAndroidInjector(modules = [HitsModule::class])
+    abstract fun provideHitsFragment() : HitsFragment
 
     @ContributesAndroidInjector(modules = [UpcomingModule::class])
     abstract fun provideUpcomingFragment() : UpcomingFragment

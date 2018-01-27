@@ -25,6 +25,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.hits.HitsFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upcoming.UpcomingFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
@@ -85,6 +86,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             R.id.search -> { openFragment(SearchFragment.newInstance()) }
             R.id.favourite -> { openFragment(FavoriteFragment.newInstance()) }
             R.id.nav_wykopalisko -> { openFragment(UpcomingFragment.newInstance()) }
+            R.id.hits -> { openFragment(HitsFragment.newInstance()) }
             R.id.about -> { openAboutSheet() }
             R.id.logout -> {
                 userManagerApi.logoutUser()
