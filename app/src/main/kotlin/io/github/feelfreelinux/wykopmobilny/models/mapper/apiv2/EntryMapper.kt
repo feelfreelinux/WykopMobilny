@@ -15,7 +15,8 @@ class EntryMapper {
                     value.voteCount,
                     value.commentsCount,
                     if (value.comments != null) value.comments.map { EntryCommentMapper.map(it) } else emptyList(),
-                    value.app
+                    value.app,
+                    value.body?.toLowerCase()?.contains("#nsfw") ?: false)
                     )
         }
 

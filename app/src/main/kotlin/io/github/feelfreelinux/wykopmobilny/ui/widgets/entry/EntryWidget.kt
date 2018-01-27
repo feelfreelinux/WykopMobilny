@@ -16,8 +16,11 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
+import io.github.feelfreelinux.wykopmobilny.utils.appendNewSpan
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -60,7 +63,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         presenter.subscribe(this)
         this.entry = entry
         presenter.entryId = entry.id
-        entryImageView.setEmbed(entry.embed, settingsApi, entryPresenter.navigatorApi)
+        entryImageView.setEmbed(entry.embed, settingsApi, entryPresenter.navigatorApi, entry.isNsfw)
         setupHeader()
         setupBody()
         setupButtons()

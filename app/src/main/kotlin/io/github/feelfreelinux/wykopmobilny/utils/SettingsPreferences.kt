@@ -7,6 +7,7 @@ interface SettingsPreferencesApi {
     var hotEntriesScreen : String?
     var defaultScreen : String?
     var showAdultContent : Boolean
+    var showNsfw : Boolean
     var useDarkTheme : Boolean
     var useAmoledTheme : Boolean
     var showNotifications : Boolean
@@ -19,6 +20,7 @@ interface SettingsPreferencesApi {
 class SettingsPreferences(context : Context) : Preferences(context, true), SettingsPreferencesApi {
     override var notificationsSchedulerDelay by stringPref(defaultValue = "15")
     override var showAdultContent by booleanPref(defaultValue = false)
+    override var showNsfw: Boolean by booleanPref(defaultValue = true)
     override var hotEntriesScreen by stringPref(defaultValue = "newest")
     override var defaultScreen by stringPref(defaultValue = "mainpage")
     override var useDarkTheme by booleanPref(defaultValue = false)

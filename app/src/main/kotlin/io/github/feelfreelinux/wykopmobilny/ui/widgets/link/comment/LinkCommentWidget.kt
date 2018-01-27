@@ -6,7 +6,6 @@ import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -17,7 +16,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -65,7 +63,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
     }
 
     private fun setupBody() {
-        commentImageView.setEmbed(comment.embed, settingsApi, presenter.newNavigatorApi)
+        commentImageView.setEmbed(comment.embed, settingsApi, presenter.newNavigatorApi, comment.isNsfw)
         comment.body?.let {
             commentContentTextView.prepareBody(comment.body!!, this)
         }

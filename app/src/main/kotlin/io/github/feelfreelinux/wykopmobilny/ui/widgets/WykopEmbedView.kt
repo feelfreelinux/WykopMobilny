@@ -22,10 +22,11 @@ class WykopEmbedView: FrameLayout {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     companion object {
-        val NSFW_IMAGE_PLACEHOLDER = "https://www.wykop.pl/cdn/c2526412/nsfw.jpg"
+        const val NSFW_IMAGE_PLACEHOLDER = "https://www.wykop.pl/cdn/c2526412/nsfw.jpg"
     }
 
     var resized = false
+    var hiddenPreview: String? = null
     lateinit var mEmbed : WeakReference<Embed>
     lateinit var navigator : NewNavigatorApi
     var forceDisableMinimizedMode : Boolean
@@ -47,7 +48,7 @@ class WykopEmbedView: FrameLayout {
         image.openImageListener = { handleUrl() }
     }
 
-    fun setEmbed(embed: Embed?, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi) {
+    fun setEmbed(embed: Embed?, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, isNsfw: Boolean = false) {
         resized = false
         navigator = navigatorApi
         if (embed == null) isVisible = false
@@ -57,7 +58,10 @@ class WykopEmbedView: FrameLayout {
             image.isResized = embed.isResize
             imageExpand.isVisible = false
             isVisible = true
-            if (plus18 && !settingsPreferencesApi.showAdultContent) image.loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
+            if (plus18 && !settingsPreferencesApi.showAdultContent || isNsfw && settingsPreferencesApi.showNsfw) {
+                image.loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
+                hiddenPreview = preview
+            }
             else {
                 image.loadImageFromUrl(preview)
             }
@@ -101,6 +105,11 @@ class WykopEmbedView: FrameLayout {
     }
 
     fun handleUrl() {
+        if (hiddenPreview != null) {
+            image.loadImageFromUrl(hiddenPreview.toString())
+            hiddenPreview = null
+            return
+        }
         val image = mEmbed.get()!!
         when (image.type) {
             "image" -> {
