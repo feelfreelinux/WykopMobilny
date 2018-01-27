@@ -8,7 +8,7 @@ class LinkCommentMapper {
     companion object : Mapper<LinkCommentResponse, LinkComment> {
         override fun map(value: LinkCommentResponse): LinkComment {
             return LinkComment(value.id, AuthorMapper.map(value.author), value.date,
-                     value.body, value.blocked,
+                    value.body, value.blocked,
                     value.favorite, value.voteCount,
                     value.voteCountPlus,
                     value.voteCount - value.voteCountPlus,
@@ -16,7 +16,8 @@ class LinkCommentMapper {
                     value.linkId,
                     if (value.embed != null) EmbedMapper.map(value.embed) else null,
                     value.app, false, false, 0,
-                    value.body?.toLowerCase()?.contains("#nsfw") ?: false)
+                    value.body?.toLowerCase()?.contains("#nsfw") ?: false
+            )
         }
     }
 }
