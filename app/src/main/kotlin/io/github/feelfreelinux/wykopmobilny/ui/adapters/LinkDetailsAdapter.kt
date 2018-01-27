@@ -32,9 +32,9 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
     val commentsList : List<LinkComment>? get() = link?.comments?.filterNot { it.isParentCollapsed }
     var onReplyClickedListener : (LinkComment) -> Unit = {}
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        if (holder?.itemViewType == HEADER_HOLDER) {
-            (holder as LinkHeaderViewHolder).bindView(link!!)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder.itemViewType == HEADER_HOLDER) {
+            link?.let { (holder as LinkHeaderViewHolder).bindView(link!!) }
         } else {
             val comment = commentsList!![position - 1]
             (holder as LinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
