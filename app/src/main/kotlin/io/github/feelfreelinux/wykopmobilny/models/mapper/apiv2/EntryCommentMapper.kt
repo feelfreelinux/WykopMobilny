@@ -17,7 +17,7 @@ class EntryCommentMapper {
                     if (value.embed != null) EmbedMapper.map(value.embed) else null,
                     value.voteCount,
                     value.app,
-                    if (value.body != null) value.body.toLowerCase()?.contains("#nsfw") else false
+                    value.body?.toLowerCase()?.contains("#nsfw") ?: false)
             )
         }
 
