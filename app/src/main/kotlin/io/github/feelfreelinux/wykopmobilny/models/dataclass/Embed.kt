@@ -1,9 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
-import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 
 class Embed(val type: String,
             val preview: String,

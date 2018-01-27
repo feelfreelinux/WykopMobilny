@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
-<io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentWidget
-    android:id="@+id/linkComment"
-    style="@style/EntryCardView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"/>
-
-<android.support.v7.widget.CardView
-    android:id="@+id/hiddenRepliesView"
-    android:layout_marginStart="@dimen/comment_section_left_margin"
-    android:layout_width="match_parent"
-    android:layout_marginTop="@dimen/cardview_margin_horizontal"
-    android:layout_marginBottom="@dimen/cardview_margin_horizontal"
-    android:layout_height="wrap_content">
-    <TextView
-        style="@style/EntryContentTextView"
-        android:text="Odpowiedzi do tego komentarza zostały ukryte."
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentWidget
+        android:id="@+id/linkComment"
+        style="@style/EntryCardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</android.support.v7.widget.CardView>
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/hiddenRepliesView"
+        style="@style/EntryCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/comment_section_left_margin">
+
+        <TextView
+            android:id="@+id/messageTextView"
+            style="@style/EntryContentTextView"
+            android:text="Odpowiedzi do komentarza zostały ukryte."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>

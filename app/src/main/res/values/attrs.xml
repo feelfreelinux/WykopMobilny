@@ -16,6 +16,8 @@
     <attr name="separatorColor" format="reference"/>
     <attr name="expandImageGradient" format="reference"/>
     <attr name="shadowUpGradient" format="reference"/>
+    <attr name="linkViewClicked" format="color"/>
+
     <!-- DRAWABLES -->
     <attr name="expandDrawable" format="reference"/>
     <attr name="collapseDrawable" format="reference"/>

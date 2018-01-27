@@ -1,6 +1,7 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textColorPrimary">@color/textColor</item>
@@ -48,6 +49,7 @@
         <item name="surveyBarStroke">@drawable/survey_bar_stroke</item>
         <item name="expandDrawable">@drawable/comment_expand_light</item>
         <item name="collapseDrawable">@drawable/comment_collapse_light</item>
+        <item name="linkViewClicked">@color/linkItemClicked</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold</item>
@@ -100,6 +102,7 @@
         <item name="expandImageGradient">@drawable/gradient_expand_image</item>
         <item name="shadowUpGradient">@drawable/gradient_separator_input</item>
         <item name="adminNickColor">@android:color/white</item>
+        <item name="linkViewClicked">@color/linkItemClicked.Dark</item>
 
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list_dark</item>
         <item name="voteMinusButtonStatelist">@drawable/button_minus_vote_background_state_list_dark</item>
@@ -291,7 +294,7 @@
     <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/tabBar_text_size</item>
         <item name="android:textColor">@color/tabBarTextColor</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
 </resources>

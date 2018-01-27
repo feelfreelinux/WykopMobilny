@@ -1,9 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
-import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 
 
 class LinkComment(
@@ -23,7 +21,9 @@ class LinkComment(
         val embed: Embed?,
         val app: String?,
         var isCollapsed : Boolean,
-        var isParentCollapsed : Boolean
+        var isParentCollapsed : Boolean,
+        var childCommentCount : Int,
+        var isNsfw : Boolean = false
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
@@ -42,6 +42,8 @@ class LinkComment(
             source.readParcelable<Embed>(Embed::class.java.classLoader),
             source.readString(),
             1 == source.readInt(),
+            1 == source.readInt(),
+            source.readInt(),
             1 == source.readInt()
     )
 
@@ -65,7 +67,8 @@ class LinkComment(
         writeString(app)
         writeInt((if (isCollapsed) 1 else 0))
         writeInt((if (isParentCollapsed) 1 else 0))
-
+        writeInt(childCommentCount)
+        writeInt((if (isNsfw) 1 else 0))
     }
 
     companion object {

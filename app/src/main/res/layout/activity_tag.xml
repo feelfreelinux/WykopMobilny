@@ -19,7 +19,7 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             app:tabGravity="fill"
             style="@style/TabLayout"
             app:tabTextAppearance="@style/TabTextAppearance"

@@ -3,12 +3,14 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.widget.ImageView
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 
 
 class WykopImageView: ImageView {
@@ -44,13 +46,19 @@ class WykopImageView: ImageView {
         setImageBitmap(null)
     }
 
+    val screenMetrics by lazy {
+        val metrics = DisplayMetrics()
+        getActivityContext()!!.windowManager.defaultDisplay.getMetrics(metrics)
+        metrics
+    }
+
     var openImageListener : () -> Unit = {}
     var onResizedListener : (Boolean) -> Unit = {}
     var showResizeView : (Boolean) -> Unit = {}
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val proportion = settingsPreferencesApi.cutImageProportion.toFloat() / 100
+        val proportion = (screenMetrics.heightPixels.toFloat() * (settingsPreferencesApi.cutImageProportion.toFloat() / 100)) / screenMetrics.widthPixels.toFloat()
         val widthSpec = MeasureSpec.getSize(if (settingsPreferencesApi.showMinifiedImages && !forceDisableMinimizedMode) widthMeasureSpec/2 else widthMeasureSpec)
         if (drawable != null) {
             val measuredMultipler = (drawable.intrinsicHeight.toFloat() / drawable.intrinsicWidth.toFloat())

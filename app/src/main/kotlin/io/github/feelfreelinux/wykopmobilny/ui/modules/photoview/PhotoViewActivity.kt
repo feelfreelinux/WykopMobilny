@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.photoview
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.KotlinGlideRequestListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.activity_photoview.*
+import kotlinx.android.synthetic.main.drawer_header_view_layout.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -33,6 +35,7 @@ class PhotoViewActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photoview)
         setSupportActionBar(toolbar)
+        toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         title = null
         GlideApp.with(this).load(url)
                 .listener(KotlinGlideRequestListener({ loadingView.isVisible = false }, { loadingView.isVisible = false }))

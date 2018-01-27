@@ -43,6 +43,9 @@
     <color name="cardView.Dark">#2c2c2c</color>
     <color name="cardList.Dark">#181818</color>
     <color name="cardViewSelected.Dark">#252525</color>
+    <color name="linkItemClicked.Dark">#222222</color>
+    <color name="linkItemClicked">#f3f3f3</color>
+
     <color name="cardView.Amoled">#080808</color>
     <color name="cardList.Amoled">#000000</color>
     <color name="cardViewSelected.Amoled">#000000</color>

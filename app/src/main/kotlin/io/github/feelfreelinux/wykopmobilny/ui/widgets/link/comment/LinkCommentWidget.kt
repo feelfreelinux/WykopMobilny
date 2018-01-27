@@ -6,7 +6,6 @@ import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -64,7 +63,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
     }
 
     private fun setupBody() {
-        commentImageView.setEmbed(comment.embed, settingsApi, presenter.newNavigatorApi)
+        commentImageView.setEmbed(comment.embed, settingsApi, presenter.newNavigatorApi, comment.isNsfw)
         comment.body?.let {
             commentContentTextView.prepareBody(comment.body!!, this)
         }
@@ -73,17 +72,10 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             buttonsToolbar.isVisible = false
         }
         commentContentTextView.isVisible = !comment.body.isNullOrEmpty()
-        if (comment.id != comment.parentId) {
+        if ((comment.id != comment.parentId) || comment.childCommentCount == 0) {
             showHiddenCommentsCountCard(false)
             collapseButton.isVisible = false
         } else collapseButton.isVisible = true
-
-        val margin = if (comment.id != comment.parentId) 16f else 0f
-        val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin, resources.displayMetrics)
-        val params = layoutParams as MarginLayoutParams
-        params.setMargins(px.toInt(), params.topMargin, params.rightMargin, params.bottomMargin)
-        requestLayout()
-
     }
 
     fun setStyleForComment(isAuthorComment: Boolean, commentId : Int = -1) {

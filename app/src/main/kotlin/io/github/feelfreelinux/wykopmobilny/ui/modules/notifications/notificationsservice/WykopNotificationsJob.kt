@@ -41,6 +41,7 @@ class WykopNotificationsJob(
                 build = JobRequest.Builder(TAG)
                         .setPeriodic(TimeUnit.MINUTES.toMillis(15.toLong()), TimeUnit.MINUTES.toMillis(5))
                         .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+                        .setRequirementsEnforced(true)
                         .setUpdateCurrent(true)
                         .build()
                 build.schedule()

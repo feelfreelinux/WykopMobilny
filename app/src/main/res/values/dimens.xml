@@ -7,9 +7,9 @@
     <dimen name="toolbar_titletext_messages_text_size">16dp</dimen>
     <dimen name="toolbar_subtitle_messages_text_size">12dp</dimen>
 
-    <dimen name="tabBar_indicator_height">2dp</dimen>
-    <dimen name="tabBar_padding_horizontal">6dp</dimen>
-    <dimen name="tabBar_text_size">14dp</dimen>
+    <dimen name="tabBar_indicator_height">2.5dp</dimen>
+    <dimen name="tabBar_padding_horizontal">16dp</dimen>
+    <dimen name="tabBar_text_size">14sp</dimen>
 
     <dimen name="wykop_image_view_max_height">700dp</dimen>
     <dimen name="wykop_image_view_expand_height">24dp</dimen>
@@ -186,5 +186,7 @@
     <dimen name="bottomsheet_item_padding_vertical">10dp</dimen>
     <dimen name="bottomsheet_item_title_text_size">20sp</dimen>
     <dimen name="bottomsheet_item_textview_margin_left">16dp</dimen>
+
+    <dimen name="observed_tag_item_text_size">18sp</dimen>
 
 </resources>

@@ -9,35 +9,23 @@ import javax.inject.Inject
 class WykopNotificationsJobPresenter @Inject constructor(val schedulers: Schedulers, val notificationsApi: NotificationsApi, val userManager: UserManagerApi) : BasePresenter<WykopNotificationsJobView>() {
     fun checkNotifications() {
         if (userManager.isUserAuthorized()) {
-            compositeObservable.add(
-                    notificationsApi.getNotifications(1)
-                            .subscribeOn(schedulers.backgroundThread())
-                            .observeOn(schedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        val unreadNotifications = it.filter { it.new }
+            val notifications = notificationsApi.getNotifications(1)
+                            .blockingGet()
+            val unreadNotifications = notifications.filter { it.new }
 
-                                        // In this case, we should download full notifications list
-                                        when {
-                                            unreadNotifications.size == it.size && unreadNotifications.isNotEmpty() -> getNotificationsCount()
-                                            unreadNotifications.size > 1 -> view?.showNotificationsCount(unreadNotifications.size)
-                                            unreadNotifications.isNotEmpty() -> view?.showNotification(unreadNotifications.first())
-                                            unreadNotifications.isEmpty() -> view?.cancelNotification()
-                                        }
-                                    },
-                                    { view?.showErrorDialog(it) }
-                            )
-            )
+            // In this case, we should download full notifications list
+            when {
+                unreadNotifications.size == notifications.size && unreadNotifications.isNotEmpty() -> getNotificationsCount()
+                unreadNotifications.size > 1 -> view?.showNotificationsCount(unreadNotifications.size)
+                unreadNotifications.isNotEmpty() -> view?.showNotification(unreadNotifications.first())
+                unreadNotifications.isEmpty() -> view?.cancelNotification()
+            }
         }
     }
 
     private fun getNotificationsCount() {
-        compositeObservable.add(
+        view?.showNotificationsCount(
                 notificationsApi.getNotificationCount()
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                { view?.showNotificationsCount(it.count) }, { view?.showErrorDialog(it) })
-        )
+                        .blockingGet().count)
     }
 }
