@@ -16,7 +16,7 @@ class HotPresenter(private val schedulers: Schedulers, private val entriesApi: E
             if (it.isNotEmpty()) {
                 page++
                 view?.addDataToAdapter(it, shouldRefresh)
-            }
+            } else view?.disableLoading()
         }
         val failure : (Throwable) -> Unit  = { view?.showErrorDialog(it) }
 

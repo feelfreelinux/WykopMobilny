@@ -14,10 +14,11 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResp
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityView
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagFragmentNotifier
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView {
+class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView, TagFragmentNotifier {
     @Inject lateinit var presenter : TagEntriesPresenter
     @Inject override lateinit var feedAdapter : FeedAdapter
     val entryTag by lazy { arguments!!.getString(EXTRA_TAG) }
@@ -72,6 +73,10 @@ class TagEntriesFragment : BaseFeedFragment<Entry>(), TagEntriesView {
     override fun onPause() {
         super.onPause()
         if (isRemoving) supportFragmentManager.removeDataFragment(tagDataFragment)
+    }
+
+    override fun removeDataFragment() {
+        supportFragmentManager.removeDataFragment(tagDataFragment)
     }
 
     override fun onDetach() {
