@@ -18,8 +18,6 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view)  {
     val linksPreferences by lazy { LinksPreferences(view.context) }
     fun bindView(link : Link) {
         view.apply {
-            val typedValue = TypedValue()
-            context.theme.resolveAttribute(R.attr.linkViewClicked, typedValue, true)
             title.text = link.title.removeHtml()
             image.isVisible = link.preview != null
             link.preview?.let { image.loadImage(link.preview.stripImageCompression()) }
@@ -33,17 +31,24 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view)  {
             hotBadgeStrip.isVisible = link.isHot
             val gotPreviouslySelected = linksPreferences.readLinksIds.contains("link_${link.id}")
             if (gotPreviouslySelected) {
-                constraintLayout.setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
+                image.alpha = 0.6f
+                title.alpha = 0.6f
+                description.alpha = 0.6f
             } else {
-                constraintLayout.setBackgroundColor(Color.TRANSPARENT)
+                image.alpha = 1f
+                title.alpha = 1f
+                description.alpha = 1f
             }
             setOnClickListener {
                 if (!gotPreviouslySelected) {
-                    constraintLayout.setBackgroundColor(ContextCompat.getColor(context, typedValue.resourceId))
+                    image.alpha = 0.6f
+                    title.alpha = 0.6f
+                    description.alpha = 0.6f
                     linksPreferences.readLinksIds = linksPreferences.readLinksIds.plusElement("link_${link.id}")
                 }
                 view.getActivityContext()!!.startActivity(LinkDetailsActivity.createIntent(view.getActivityContext()!!, link))
             }
+            requestLayout()
         }
     }
 

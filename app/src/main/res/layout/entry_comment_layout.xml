@@ -73,6 +73,7 @@
             <TextView
                 android:id="@+id/shareTextView"
                 style="@style/MikroButton"
+                android:background="?attr/voteButtonStatelist"
                 android:drawableStart="?attr/sharebtnDrawable"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -81,6 +82,7 @@
             <TextView
                 android:id="@+id/replyTextView"
                 style="@style/MikroButton"
+                android:background="?attr/voteButtonStatelist"
                 android:drawableStart="?attr/replyDrawable"
                 app:layout_constraintStart_toEndOf="@id/shareTextView"
                 app:layout_constraintTop_toTopOf="parent"
@@ -98,6 +100,7 @@
             <TextView
                 android:id="@+id/moreOptionsTextView"
                 style="@style/MikroButton"
+                android:background="?attr/voteButtonStatelist"
                 android:drawableStart="?attr/dotsDrawable"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

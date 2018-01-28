@@ -15,8 +15,6 @@ import kotlinx.android.synthetic.main.link_comment_list_item.view.*
 
 class LinkCommentViewHolder(val view: View, val linkCommentReplyListener : (LinkComment) -> Unit, val collapseListener : (Boolean, Int) -> Unit, val linkCommentPresenter: LinkCommentPresenter, val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.ViewHolder(view) {
     fun bindView(comment : LinkComment, isUserAuthor: Boolean, highlightCommentId: Int) {
-        val margin = if (comment.id != comment.parentId) view.resources.getDimensionPixelSize(R.dimen.comment_section_left_margin) else 0
-        view.setPadding(margin, 0, 0, 0)
         view.linkComment.collapseListener = collapseListener
         view.replyTextView.setOnClickListener { linkCommentReplyListener.invoke(comment) }
         view.linkComment.setLinkCommentData(comment, linkCommentPresenter, userManagerApi, settingsPreferencesApi)

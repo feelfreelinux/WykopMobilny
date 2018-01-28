@@ -76,6 +76,11 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             showHiddenCommentsCountCard(false)
             collapseButton.isVisible = false
         } else collapseButton.isVisible = true
+
+        val margin = if (comment.id != comment.parentId) resources.getDimensionPixelSize(R.dimen.comment_section_left_margin) else 0
+        val params = layoutParams as MarginLayoutParams
+        params.setMargins(margin, params.topMargin, params.rightMargin, params.bottomMargin)
+        requestLayout()
     }
 
     fun setStyleForComment(isAuthorComment: Boolean, commentId : Int = -1) {

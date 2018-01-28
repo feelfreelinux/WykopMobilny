@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:gravity="center_horizontal"
     android:orientation="vertical">
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:textColor="@android:color/white"
-        android:padding="16dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:text="Wrzesień, 2017"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical">
 
         <TextView
             android:id="@+id/yearTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2016"
             android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:textSize="@dimen/bottomsheet_item_title_text_size"
+            tools:text="2016"/>
+
     </LinearLayout>
 
     <NumberPicker
-        android:descendantFocusability="blocksDescendants"
         android:id="@+id/yearPicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bottomsheet_item_padding_vertical"
+        android:descendantFocusability="blocksDescendants"/>
+
 </LinearLayout>
