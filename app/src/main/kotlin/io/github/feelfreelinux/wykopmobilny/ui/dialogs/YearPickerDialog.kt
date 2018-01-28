@@ -47,6 +47,7 @@ class YearPickerDialog : DialogFragment() {
             yearPicker.minValue = 2005
             yearPicker.maxValue = currentYear
             yearPicker.value = currentYear
+            yearTextView.text = currentYear.toString()
 
             yearPicker.setOnValueChangedListener {
                 _, _, year ->
