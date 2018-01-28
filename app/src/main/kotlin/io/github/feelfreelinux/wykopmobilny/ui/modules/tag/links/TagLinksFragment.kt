@@ -14,9 +14,10 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityView
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagFragmentNotifier
 import javax.inject.Inject
 
-class TagLinksFragment : BaseFeedFragment<Link>(), TagLinksView {
+class TagLinksFragment : BaseFeedFragment<Link>(), TagLinksView, TagFragmentNotifier {
     @Inject override lateinit var feedAdapter : LinkAdapter
     @Inject lateinit var presenter : TagLinksPresenter
     lateinit var dataFragment : DataFragment<PagedDataModel<List<Link>>>
@@ -68,6 +69,10 @@ class TagLinksFragment : BaseFeedFragment<Link>(), TagLinksView {
     override fun onPause() {
         super.onPause()
         if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
+    }
+
+    override fun removeDataFragment() {
+        supportFragmentManager.removeDataFragment(dataFragment)
     }
 
     override fun setParentMeta(tagMetaResponse: TagMetaResponse) {
