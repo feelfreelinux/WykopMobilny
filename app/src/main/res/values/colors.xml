@@ -3,7 +3,7 @@
 
     <color name="textColor">#212121</color>
     <color name="textColor.Dark">#eaeaea</color>
-    <color name="textColor.Amoled">#ffffff</color>
+    <color name="textColor.Amoled">#e2e2e2</color>
 
     <color name="titleTextColor">#417fba</color>
     <color name="titleTextColor.Dark">#cad6df</color>
@@ -15,9 +15,9 @@
     <color name="colorPrimaryDark">#3677ae</color>
     <color name="colorAccent.Dark">#3a80bc</color>
     <color name="colorPrimary.Dark">#292929</color>
-    <color name="colorPrimary.Amoled">#121212</color>
+    <color name="colorPrimary.Amoled">#080808</color>
     <color name="colorPrimaryDark.Dark">#212121</color>
-    <color name="colorPrimaryDark.Amoled">#0d0d0d</color>
+    <color name="colorPrimaryDark.Amoled">#000000</color>
 
     <color name="toolbarItemsColor">#1e1e1e</color>
     <color name="toolbarItemsColor.Dark">#e6e6e6</color>
@@ -31,7 +31,7 @@
 
     <color name="lineColor">#d4d4d4</color>
     <color name="lineColor.Dark">#393939</color>
-    <color name="lineColor.Amoled">#202020</color>
+    <color name="lineColor.Amoled">#101010</color>
 
     <color name="colorBadgeOwn">#3498db</color>
     <color name="colorBadgeAuthors">#F75616</color>
@@ -46,13 +46,13 @@
     <color name="linkItemClicked.Dark">#222222</color>
     <color name="linkItemClicked">#f3f3f3</color>
 
-    <color name="cardView.Amoled">#080808</color>
+    <color name="cardView.Amoled">#000000</color>
     <color name="cardList.Amoled">#000000</color>
     <color name="cardViewSelected.Amoled">#000000</color>
 
     <color name="usersMessageColor">#e1f0ff</color>
     <color name="usersMessageColor.Dark">#2c3945</color>
-    <color name="usersMessageColor.Amoled">#0d1115</color>
+    <color name="usersMessageColor.Amoled">#080a0d</color>
     <color name="usersMessageDirected.Dark">#d6d6d6</color>
 
     <color name="navigationSeparator">#404040</color>
