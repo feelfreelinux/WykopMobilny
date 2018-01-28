@@ -15,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.MonthYearPickerDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.YearPickerDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -87,7 +88,7 @@ class HitsFragment : BaseFragment(), HitsView {
 
 
             R.id.byYear -> {
-                val pickerFragment = MonthYearPickerDialog.newInstance()
+                val pickerFragment = YearPickerDialog.newInstance()
                 pickerFragment.setTargetFragment(this, PICKER_REQUEST_CODE)
                 pickerFragment.show(supportFragmentManager, "pickerDialogFragment")
             }
@@ -162,25 +163,23 @@ class HitsFragment : BaseFragment(), HitsView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PICKER_REQUEST_CODE) {
             data?.let {
-                if (data.hasExtra(MonthYearPickerDialog.EXTRA_MONTH)) {
-                    presenter.monthSelection = data.getIntExtra(MonthYearPickerDialog.EXTRA_MONTH, 12)
-                    printout(presenter.monthSelection.toString())
-                }
                 if (data.hasExtra(MonthYearPickerDialog.EXTRA_YEAR)) {
                     presenter.yearSelection = data.getIntExtra(MonthYearPickerDialog.EXTRA_YEAR, 2005)
-                    printout(presenter.yearSelection.toString())
                 }
-                if (presenter.monthSelection == 0) {
-                    presenter.currentScreen = HitsPresenter.HITS_YEAR
-                    swiperefresh.isRefreshing = true
-                    presenter.loadData()
-                    setTitle()
-                } else {
+
+                if (data.hasExtra(MonthYearPickerDialog.EXTRA_MONTH)) {
+                    presenter.monthSelection = data.getIntExtra(MonthYearPickerDialog.EXTRA_MONTH, 12)
                     presenter.currentScreen = HitsPresenter.HITS_MONTH
                     swiperefresh.isRefreshing = true
                     presenter.loadData()
                     setTitle()
+                } else {
+                    presenter.currentScreen = HitsPresenter.HITS_YEAR
+                    swiperefresh.isRefreshing = true
+                    presenter.loadData()
+                    setTitle()
                 }
+
             }
         }
     }

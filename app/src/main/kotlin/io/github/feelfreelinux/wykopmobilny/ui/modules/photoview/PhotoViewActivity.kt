@@ -12,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.KotlinGlideRequestListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_photoview.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -37,6 +38,7 @@ class PhotoViewActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         title = null
+        printout(url)
         GlideApp.with(this).load(url)
                 .listener(KotlinGlideRequestListener({ loadingView.isVisible = false }, { loadingView.isVisible = false }))
                 .into(image)

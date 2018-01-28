@@ -26,10 +26,10 @@ class MonthYearPickerDialog : DialogFragment() {
         }
     }
 
-    val years by lazy { (2005 .. Calendar.getInstance().get(Calendar.YEAR)).toList() }
-    var yearIndex = years.size -1
+    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+    var yearSelection = currentYear
     val currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1
-    var selectedMonth = currentMonth
+    var selectedMonth = currentMonth - 1
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogBuilder = AlertDialog.Builder(context)
 
@@ -38,95 +38,71 @@ class MonthYearPickerDialog : DialogFragment() {
             setPositiveButton(android.R.string.ok, {
                 _, _ ->
                 val data = Intent()
-                data.putExtra(EXTRA_YEAR, years[yearIndex])
-                data.putExtra(EXTRA_MONTH, selectedMonth)
+                data.putExtra(EXTRA_YEAR, yearSelection)
+                data.putExtra(EXTRA_MONTH, selectedMonth+1)
                 targetFragment?.onActivityResult(targetRequestCode, RESULTCODE, data)
             })
             setView(dialogView)
         }
         val newDialog = dialogBuilder.create()
         newDialog.window.requestFeature(Window.FEATURE_NO_TITLE)
-
-        setYear(dialogView)
-        dialogView.arrowLeft.setOnClickListener {
-            yearIndex -= 1
-            setYear(dialogView)
-            setTitleDate(dialogView)
-        }
-
-        dialogView.arrowRight.setOnClickListener {
-            yearIndex += 1
-            setYear(dialogView)
-            setTitleDate(dialogView)
-        }
-
-        (0..12).forEach {
-            val monthIndex = it
-            getMonthView(dialogView, monthIndex).setOnClickListener {
-                selectMonth(dialogView, monthIndex)
-                setTitleDate(dialogView)
+        dialogView.apply {
+            yearPicker.minValue = 2005
+            yearPicker.maxValue = currentYear
+            yearPicker.value = currentYear
+            monthPicker.minValue = 0
+            monthPicker.maxValue = 11
+            monthPicker.value = selectedMonth
+            yearPicker.setOnValueChangedListener {
+                _, _, year ->
+                yearSelection = year
+                setYear(this)
             }
-        }
-        setTitleDate(dialogView)
-        selectMonth(dialogView, currentMonth)
 
+            monthPicker.setOnValueChangedListener { _, _, month ->
+                selectedMonth = month
+                setTitleDate(this)
+            }
+            setYear(this)
+        }
         return newDialog
     }
 
     fun setYear(view : View) {
-        view.yearTextView.text = years[yearIndex].toString()
-        view.arrowRight.isVisibleNoGone = (yearIndex != years.size - 1)
-        view.arrowLeft.isVisibleNoGone = (yearIndex != 0)
-        if (yearIndex == (years.size - 1)) {
-            (0..12).forEach {
-                val index = it
-                showMonth(view, index, index <= currentMonth)
-                if (selectedMonth > currentMonth) selectMonth(view, currentMonth)
+        view.apply {
+            when (yearSelection) {
+                currentYear -> {
+                    monthPicker.displayedValues = (1..12).map { getMonthString(it) }.toTypedArray()
+                    monthPicker.minValue = 0
+                    monthPicker.value = currentMonth - 1
+                    monthPicker.maxValue = currentMonth - 1
+                    selectedMonth = currentMonth - 1
+                }
+                2005 -> {
+                    monthPicker.minValue = 11
+                    monthPicker.maxValue = 11
+                    monthPicker.value = 11
+                    monthPicker.displayedValues = arrayOf(getMonthString(12))
+                    selectedMonth = 11
+                }
+                else -> {
+                    monthPicker.displayedValues = (1..12).map { getMonthString(it) }.toTypedArray()
+                    monthPicker.minValue = 0
+                    monthPicker.maxValue = 11
+                }
             }
-        } else if (yearIndex == 0) {
-            (0..11).forEach { showMonth(view, it, false) }
-            showMonth(view, 12, true)
-            selectMonth(view, 12)
-        } else {
-            (0..12).forEach { showMonth(view, it, true) }
-        }
-    }
-
-    var View.isVisibleNoGone : Boolean
-        get() = visibility == View.VISIBLE
-        set(value) { visibility = if (value) View.VISIBLE else View.INVISIBLE  }
-
-    fun showMonth(view: View, index : Int, isVisible : Boolean) {
-        getMonthView(view, index).isVisibleNoGone = isVisible
-    }
-
-    fun selectMonth(view : View, index: Int) {
-        selectedMonth = index
-        (0..12).forEach { getMonthView(view, it).setTypeface(null, Typeface.NORMAL) }
-        getMonthView(view, index).setTypeface(null, Typeface.BOLD)
-    }
-
-    fun getMonthView(view : View, index : Int) : TextView {
-        return when(index) {
-            0 -> view.wholeYear
-            1 -> view.janTv
-            2 -> view.febTv
-            3 -> view.marTv
-            4 -> view.aprTv
-            5 -> view.may
-            6 -> view.junTv
-            7 -> view.julTv
-            8 -> view.augTv
-            9 -> view.sepTv
-            10 -> view.octTv
-            11 -> view.novTv
-            else -> view.decTv
+            setTitleDate(this)
         }
     }
 
     fun setTitleDate(view : View) {
-        val monthString = getString(when(selectedMonth) {
-            0 -> R.string.whole_year
+
+        view.monthTextView.text = getMonthString(selectedMonth+1)
+        view.yearTextView.text = yearSelection.toString()
+    }
+
+    fun getMonthString(index : Int) : String =
+        getString(when(index) {
             1 -> R.string.january
             2 -> R.string.february
             3 -> R.string.march
@@ -140,6 +116,5 @@ class MonthYearPickerDialog : DialogFragment() {
             11 -> R.string.novermber
             else -> R.string.december
         })
-        view.monthYearTextView.text = monthString + ", " + years[yearIndex].toString()
-    }
+
 }

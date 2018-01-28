@@ -24,12 +24,14 @@
         <item>@string/main_page</item>
         <item>@string/mikroblog</item>
         <item>@string/mywykop</item>
+        <item>@string/hits</item>
     </string-array>
 
     <string-array name="preferences_default_screen_values">
         <item>mainpage</item>
         <item>mikroblog</item>
         <item>mywykop</item>
+        <item>hits</item>
     </string-array>
 
     <string-array name="preferences_hot_screen">
