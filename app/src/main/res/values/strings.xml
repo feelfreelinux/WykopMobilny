@@ -148,5 +148,23 @@
     <string name="report_bug">Zgłoś błąd pod tagiem #owmbugi</string>
     <string name="observe_otwartywykopmobilny">Obserwuj tag #otwartywykopmobilny</string>
     <string name="app_version">Wykop Mobilny (%1$s)</string>
+    <string name="january">Styczeń</string>
+    <string name="february">Luty</string>
+    <string name="march">Marzec</string>
+    <string name="april">Kwiecień</string>
+    <string name="may">Maj</string>
+    <string name="june">Czerwiec</string>
+    <string name="july">Lipiec</string>
+    <string name="august">Sierpień</string>
+    <string name="september">Wrzesień</string>
+    <string name="october">Październik</string>
+    <string name="novermber">Listopad</string>
+    <string name="december">Grudzień</string>
+    <string name="whole_year">Cały rok</string>
+    <string name="hits_popular">Ostatnio popularne</string>
+    <string name="hits_day">Hity dnia</string>
+    <string name="hits_week">Hity tygodnia</string>
+    <string name="hits_month">Hity miesiąca</string>
+    <string name="hits_year">Hity roku</string>
 
 </resources>

@@ -25,6 +25,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.links.hits.HitsFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upcoming.UpcomingFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
@@ -36,6 +37,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notific
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.BadgeDrawerDrawable
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
@@ -85,6 +87,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             R.id.search -> { openFragment(SearchFragment.newInstance()) }
             R.id.favourite -> { openFragment(FavoriteFragment.newInstance()) }
             R.id.nav_wykopalisko -> { openFragment(UpcomingFragment.newInstance()) }
+            R.id.hits -> { openFragment(HitsFragment.newInstance()) }
             R.id.about -> { openAboutSheet() }
             R.id.logout -> {
                 userManagerApi.logoutUser()
@@ -113,13 +116,14 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 R.string.nav_drawer_closed)
     }
 
+    private val badgeDrawable by lazy {
+        BadgeDrawerDrawable(supportActionBar!!.themedContext)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setSupportActionBar(toolbar)
-        if (intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT != 0) {
-            // Activity was brought to front and not created,
-            // Thus finishing this will get us to the last viewed activity
+        if (!isTaskRoot) {
             finish()
             return
         }
@@ -137,11 +141,12 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 .setButtonDoNotShowAgain(R.string.do_not_show_again)
                 .setButtonUpdate(R.string.update)
                 .start()
-//
+
         if (settingsApi.showNotifications) {
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
         }
+        actionBarToggle.drawerArrowDrawable = badgeDrawable
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         navHeader.view_container?.showDrawerHeader(userManagerApi.isUserAuthorized(), userManagerApi.getUserCredentials())
 
@@ -217,6 +222,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             "mainpage" -> openFragment(PromotedFragment.newInstance())
             "mikroblog" -> openFragment(HotFragment.newInstance())
             "mywykop" -> openFragment(MyWykopFragment.newInstance())
+            "hits" -> openFragment(HitsFragment.newInstance())
         }
     }
 
@@ -241,6 +247,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     override fun showNotificationsCount(notifications: Int) {
+        badgeDrawable.text = if (notifications > 0) notifications.toString() else null
         drawer_layout.view_container?.apply {
             notificationCount = notifications
         }

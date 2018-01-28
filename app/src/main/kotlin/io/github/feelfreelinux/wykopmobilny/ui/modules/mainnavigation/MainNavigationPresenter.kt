@@ -36,11 +36,11 @@ class MainNavigationPresenter(private val schedulers: Schedulers,
             compositeObservable.add(notificationsApi.getNotificationCount().
                     subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
-                    .subscribe({ view?.showNotificationsCount(it.count) }, { view?.showErrorDialog(it) }) )
+                    .subscribe({ view?.showNotificationsCount(it.count) }, { }) )
             compositeObservable.add(notificationsApi.getHashTagNotificationCount().
                     subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
-                    .subscribe({ view?.showHashNotificationsCount(it.count) }, { view?.showErrorDialog(it) }) )
+                    .subscribe({ view?.showHashNotificationsCount(it.count) }, {  }) )
         }
     }
 }

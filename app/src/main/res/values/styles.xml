@@ -247,6 +247,15 @@
         <item name="android:layout_width">@dimen/markdown_item_size</item>
     </style>
 
+    <style name="MonthYearPickerMonth">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="BottomSheetMenuItem">
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:padding">16dp</item>

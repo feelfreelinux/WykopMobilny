@@ -84,6 +84,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             }
         }
 
+
         if (shouldEnableClickListener) {
             setOnClickListener {
                 presenter.openDetails()
@@ -115,6 +116,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         if (entry.body.isNotEmpty()) {
             entryContentTextView.isVisible = true
             entryContentTextView.prepareBody(entry.body, this)
+            if (shouldEnableClickListener) entryContentTextView.setOnClickListener { presenter.openDetails() }
         } else entryContentTextView.isVisible = false
 
         if (entry.survey != null) {

@@ -80,6 +80,12 @@ class TagActivity : BaseActivity(), TagActivityView {
             R.id.action_block -> presenter.blockTag()
             R.id.action_unblock -> presenter.unblockTag()
             android.R.id.home -> finish()
+            R.id.refresh -> {
+                for (i in 0 until tagPagerAdapter.registeredFragments.size()) {
+                    (tagPagerAdapter.registeredFragments.valueAt(i) as TagFragmentNotifier)
+                            .onRefresh()
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -93,5 +99,14 @@ class TagActivity : BaseActivity(), TagActivityView {
         tagMeta?.isBlocked = tagState.isBlocked
         tagMeta?.isObserved = tagState.isObserved
         invalidateOptionsMenu()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (isFinishing)
+            for (i in 0 until tagPagerAdapter.registeredFragments.size()) {
+                (tagPagerAdapter.registeredFragments.valueAt(i) as TagFragmentNotifier)
+                        .removeDataFragment()
+            }
     }
 }
