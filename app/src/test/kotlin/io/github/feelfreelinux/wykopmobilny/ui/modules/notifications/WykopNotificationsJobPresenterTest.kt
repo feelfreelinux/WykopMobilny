@@ -73,14 +73,4 @@ class WykopNotificationsJobPresenterTest {
         subjectUnderTest.checkNotifications()
         verify(mockView).showNotificationsCount(fullNotificationsCount)
     }
-
-    @Test
-    fun shouldShowError() {
-        val exception = IOException()
-        whenever(mockUserManager.isUserAuthorized()).thenReturn(true)
-        whenever(mockMyWykopApi.getNotifications(1)).thenReturn(Single.error(exception))
-
-        subjectUnderTest.checkNotifications()
-        verify(mockView).showErrorDialog(exception)
-    }
 }
