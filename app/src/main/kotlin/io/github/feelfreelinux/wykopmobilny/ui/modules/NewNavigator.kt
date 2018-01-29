@@ -17,16 +17,16 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upvoters.UpvotersAc
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 
 
 interface NewNavigatorApi {
     fun openMainActivity(targetFragment: String? = null)
-    fun openEntryDetailsActivity(entryId: Int)
+    fun openEntryDetailsActivity(entryId: Int, isRevealed: Boolean)
     fun openTagActivity(tag: String)
     fun openConversationListActivity(user: String)
     fun openPhotoViewActivity(url: String)
@@ -55,8 +55,8 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
                 .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) })
     }
 
-    override fun openEntryDetailsActivity(entryId: Int) {
-        context.startActivity(EntryActivity.createIntent(context, entryId, null))
+    override fun openEntryDetailsActivity(entryId: Int, isRevealed: Boolean) {
+        context.startActivity(EntryActivity.createIntent(context, entryId, null, isRevealed))
     }
 
     override fun openTagActivity(tag: String) {

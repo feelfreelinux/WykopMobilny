@@ -73,7 +73,7 @@ class HitsFragment : BaseFragment(), HitsView {
             }
 
             R.id.byMonth -> {
-                val pickerFragment = MonthYearPickerDialog.newInstance()
+                val pickerFragment = MonthYearPickerDialog.newInstance(presenter.monthSelection, presenter.yearSelection)
                 pickerFragment.setTargetFragment(this, PICKER_REQUEST_CODE)
                 pickerFragment.show(supportFragmentManager, "pickerDialogFragment")
                 setTitle()
@@ -88,7 +88,7 @@ class HitsFragment : BaseFragment(), HitsView {
 
 
             R.id.byYear -> {
-                val pickerFragment = YearPickerDialog.newInstance()
+                val pickerFragment = YearPickerDialog.newInstance(presenter.yearSelection)
                 pickerFragment.setTargetFragment(this, PICKER_REQUEST_CODE)
                 pickerFragment.show(supportFragmentManager, "pickerDialogFragment")
             }
@@ -149,15 +149,13 @@ class HitsFragment : BaseFragment(), HitsView {
     }
 
     fun setTitle() {
-        (activity as BaseActivity).supportActionBar?.setTitle(
-                when(presenter.currentScreen) {
-                    HitsPresenter.HITS_POPULAR -> R.string.hits_popular
-                    HitsPresenter.HITS_MONTH -> R.string.hits_month
-                    HitsPresenter.HITS_YEAR -> R.string.hits_year
-                    HitsPresenter.HITS_WEEK -> R.string.hits_week
-                    else -> R.string.hits_day
-                }
-        )
+        (activity as BaseActivity).supportActionBar?.title = when(presenter.currentScreen) {
+            HitsPresenter.HITS_POPULAR -> getString(R.string.hits_popular)
+            HitsPresenter.HITS_MONTH -> getString(R.string.hits_month_toolbar, presenter.monthSelection, presenter.yearSelection)
+            HitsPresenter.HITS_YEAR -> getString(R.string.hits_year_toolbar, presenter.yearSelection)
+            HitsPresenter.HITS_WEEK -> getString(R.string.hits_week)
+            else -> getString(R.string.hits_day)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

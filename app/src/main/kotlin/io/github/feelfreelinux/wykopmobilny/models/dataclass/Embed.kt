@@ -10,7 +10,8 @@ class Embed(val type: String,
             val source: String?,
             val isAnimated: Boolean,
             val size: String,
-            var isResize: Boolean = false) : Parcelable {
+            var isResize: Boolean = false,
+            var isRevealed: Boolean = false) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
