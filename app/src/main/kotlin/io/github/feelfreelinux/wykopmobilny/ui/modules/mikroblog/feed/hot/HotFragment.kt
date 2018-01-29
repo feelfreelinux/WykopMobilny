@@ -1,4 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -13,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -111,5 +114,18 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
         isRefreshing = true
         presenter.loadData(true)
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                BaseInputActivity.EDIT_ENTRY -> {
+                    val entryBody = data?.getStringExtra("entryBody")
+                    if (entryBody != null) {
+                        onRefresh()
+                    }
+                }
+            }
+        }
     }
 }
