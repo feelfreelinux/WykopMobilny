@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entry_comment_layout.view.*
 import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 
-class CommentWidget : CardView, CommentView, URLClickedListener {
+class CommentWidget : CardView, CommentView {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -103,12 +103,8 @@ class CommentWidget : CardView, CommentView, URLClickedListener {
         replyTextView.setOnClickListener { addReceiver() }
         if (comment.body.isNotEmpty()) {
             entryContentTextView.isVisible = true
-            entryContentTextView.prepareBody(comment.body, this)
+            entryContentTextView.prepareBody(comment.body, { presenter.handleLink(it) })
         } else entryContentTextView.isVisible = false
-    }
-
-    override fun handleUrl(url: String) {
-        presenter.handleLink(url)
     }
 
     fun addReceiver() {

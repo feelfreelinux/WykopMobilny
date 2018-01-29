@@ -65,11 +65,20 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
     private fun setupHeader() {
         dateTextView.text = link.date.toPrettyDate()
         hotBadgeStrip.isVisible = link.isHot
-        avatarView.setAuthor(link.author!!)
+        val author = link.author
+        if (author != null) {
+            avatarView.isVisible = true
+            userTextView.isVisible = true
+            avatarView.setAuthor(link.author!!)
+            userTextView.text = link.author!!.nick
+            userTextView.setTextColor(context.getGroupColor(link.author!!.group))
+        } else {
+            avatarView.isVisible = false
+            userTextView.isVisible = false
+        }
         dateTextView.text = link.date.toPrettyDate()
         urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
-        userTextView.text = link.author!!.nick
-        userTextView.setTextColor(context.getGroupColor(link.author!!.group))
+
         tagsTextView.prepareBody(link.tags.convertToTagsHtml(), this)
     }
 

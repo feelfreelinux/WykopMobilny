@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import static io.github.feelfreelinux.wykopmobilny.utils.LogHelperKt.printout;
+
 /**
  * Handles URL clicks on TextViews. Unlike the default implementation, this:
  * <p>
@@ -35,6 +37,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
     private static final int LINKIFY_NONE = -2;
 
     private OnLinkClickListener onLinkClickListener;
+    private OnTextClickListener onTextClickListener;
     private OnLinkLongClickListener onLinkLongClickListener;
     private final RectF touchedLineBounds = new RectF();
     private boolean isUrlHighlighted;
@@ -50,6 +53,10 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
          * @return True if this click was handled. False to let Android handle the URL.
          */
         boolean onClick(TextView textView, String url);
+    }
+
+    public interface OnTextClickListener {
+        void onClick();
     }
 
     public interface OnLinkLongClickListener {
@@ -166,6 +173,16 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
         return this;
     }
 
+    public BetterLinkMovementMethod setOnTextClickListener(OnTextClickListener clickListener) {
+        if (this == singleInstance) {
+            throw new UnsupportedOperationException("Setting a click listener on the instance returned by getInstance() is not supported to avoid memory " +
+                    "leaks. Please use newInstance() or any of the linkify() methods instead.");
+        }
+
+        this.onTextClickListener = clickListener;
+        return this;
+    }
+
     /**
      * Set a listener that will get called whenever any link is clicked on the TextView.
      */
@@ -240,8 +257,12 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
 
             case MotionEvent.ACTION_UP:
                 // Register a click only if the touch started and ended on the same URL.
-                if (!wasLongPressRegistered && touchStartedOverALink && clickableSpanUnderTouch == clickableSpanUnderTouchOnActionDown) {
-                    dispatchUrlClick(textView, clickableSpanUnderTouch);
+                if (!wasLongPressRegistered) {
+                    if (touchStartedOverALink && clickableSpanUnderTouch == clickableSpanUnderTouchOnActionDown) {
+                        dispatchUrlClick(textView, clickableSpanUnderTouch);
+                    } else {
+                        onTextClickListener.onClick();
+                    }
                 }
                 cleanupOnTouchUp(textView);
 
@@ -386,6 +407,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
         boolean handled = onLinkClickListener != null && onLinkClickListener.onClick(textView, clickableSpanWithText.text());
 
         if (!handled) {
+            printout("AAAAA");
             // Let Android handle this click.
             clickableSpanWithText.span().onClick(textView);
         }
