@@ -7,7 +7,7 @@ interface URLClickedListener {
     fun handleUrl(url : String)
 }
 
-class SpoilerAwareLinkSpan(val url : String) : URLSpan(url) {
+class ClickableSpanNoUnderline(val url : String) : URLSpan(url) {
     override fun updateDrawState(ds: TextPaint) {
         super.updateDrawState(ds)
         ds.isUnderlineText = false

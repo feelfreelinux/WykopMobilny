@@ -10,7 +10,6 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.PMMessage
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
@@ -19,15 +18,10 @@ import kotlinx.android.synthetic.main.pmmessage_sent_layout.view.*
 class PMMessageViewHolder(val view: View,
                           val linkHandlerApi: WykopLinkHandlerApi,
                           val settingsPreferencesApi: SettingsPreferencesApi,
-                          val navigatorApi: NewNavigatorApi) : RecyclerView.ViewHolder(view), URLClickedListener {
-
-    override fun handleUrl(url: String) {
-        linkHandlerApi.handleUrl(url)
-    }
+                          val navigatorApi: NewNavigatorApi) : RecyclerView.ViewHolder(view) {
 
     fun bindView(message: PMMessage) {
         flipMessage(message.isSentFromUser)
-
         view.apply {
             val prettyDate = message.date.toPrettyDate()
             date.text = prettyDate
@@ -36,7 +30,7 @@ class PMMessageViewHolder(val view: View,
                 date.text = context.getString(R.string.date_with_user_app, prettyDate, message.app)
             }
 
-            body.prepareBody(message.body, this@PMMessageViewHolder)
+            body.prepareBody(message.body, { linkHandlerApi.handleUrl(it) })
             embedImage.forceDisableMinimizedMode = true
             embedImage.setEmbed(message.embed, settingsPreferencesApi, navigatorApi)
         }

@@ -21,14 +21,13 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.appendNewSpan
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entry_layout.view.*
 import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 
-class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs),  EntryView, URLClickedListener {
+class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs),  EntryView {
 
     private lateinit var userManagerApi: UserManagerApi
     private lateinit var presenter: EntryPresenter
@@ -115,8 +114,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     private fun setupBody() {
         if (entry.body.isNotEmpty()) {
             entryContentTextView.isVisible = true
-            entryContentTextView.prepareBody(entry.body, this)
-            if (shouldEnableClickListener) entryContentTextView.setOnClickListener { presenter.openDetails(entry.embed?.isRevealed ?: false) }
+            entryContentTextView.prepareBody(entry.body, { presenter.handleLink(it) }, { if (shouldEnableClickListener) presenter.openDetails(true) })
         } else entryContentTextView.isVisible = false
 
         if (entry.survey != null) {
@@ -127,10 +125,6 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
 
     override fun showSurvey(surveyData: Survey) {
         survey.setSurvey(surveyData, userManagerApi)
-    }
-
-    override fun handleUrl(url: String) {
-        presenter.handleLink(url)
     }
 
     override fun showErrorDialog(e: Throwable) =

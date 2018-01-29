@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDet
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.ConversationLinkParser
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.LinkParser
@@ -69,6 +70,7 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
     }
 
     private fun handleLink(url: String, refreshNotifications : Boolean) {
+
         val intent = getLinkIntent(url, context)
         if (intent != null) {
             if (refreshNotifications) context.startActivityForResult(intent, NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE)

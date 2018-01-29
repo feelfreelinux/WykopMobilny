@@ -11,7 +11,6 @@ fun TextView.prepareBody(html: String, listener : URLClickedListener) {
     val method = BetterLinkMovementMethod.linkifyHtml(this)
     method.setOnLinkClickListener({
         textView, url ->
-        textView.isEnabled = false
         if (url.startsWith("spoiler:")) {
             val text = url.substringAfter("spoiler:")
             context.createAlertBuilder().apply {
@@ -21,7 +20,29 @@ fun TextView.prepareBody(html: String, listener : URLClickedListener) {
                 create().show()
             }
         } else listener.handleUrl(url)
-        textView.isEnabled = true
-        false
+        true
+    })
+}
+
+fun TextView.prepareBody(html: String, urlClickListener : (String) -> Unit, clickListener : (() -> Unit)? = null) {
+    text = SpannableStringBuilder(html.toSpannable())
+    val method = BetterLinkMovementMethod.linkifyHtml(this)
+    clickListener?.let {
+        method.setOnTextClickListener {
+            clickListener()
+        }
+    }
+    method.setOnLinkClickListener({
+        _, url ->
+        if (url.startsWith("spoiler:")) {
+            val text = url.substringAfter("spoiler:")
+            context.createAlertBuilder().apply {
+                setTitle("Spoiler")
+                setMessage(URLDecoder.decode(text, "UTF-8"))
+                setPositiveButton(android.R.string.ok, null)
+                create().show()
+            }
+        } else urlClickListener(url)
+        true
     })
 }
