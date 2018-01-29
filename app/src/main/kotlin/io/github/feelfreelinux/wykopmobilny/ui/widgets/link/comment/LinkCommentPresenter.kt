@@ -68,7 +68,7 @@ class LinkCommentPresenter(
         )
     }
 
-    fun openEditCommentActivity(body : String) {
-        newNavigatorApi.openEditLinkCommentActivity(body, linkId)
+    fun openEditCommentActivity(commentId: Int, body : String) {
+        newNavigatorApi.openEditLinkCommentActivity(commentId, body, linkId)
     }
 }

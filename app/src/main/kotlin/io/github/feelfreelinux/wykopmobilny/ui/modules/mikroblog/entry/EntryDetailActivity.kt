@@ -197,10 +197,22 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                 }
 
                 BaseInputActivity.REQUEST_CODE -> {
+                    onRefresh()
+                }
+
+                BaseInputActivity.EDIT_ENTRY_COMMENT -> {
                     val commentId = data?.getIntExtra("commentId", -1)
                     val commentBody = data?.getStringExtra("commentBody")
                     if (commentId != -1 && commentBody != null) {
                         entryFragmentData.data?.comments?.filter { it.id == commentId }?.get(0)?.body = commentBody
+                        onRefresh()
+                    }
+                }
+
+                BaseInputActivity.EDIT_ENTRY -> {
+                    val entryBody = data?.getStringExtra("entryBody")
+                    if (entryBody != null) {
+                        entryFragmentData.data?.body = entryBody
                         onRefresh()
                     }
                 }
