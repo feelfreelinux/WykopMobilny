@@ -79,7 +79,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             text = entry.commentsCount.toString()
             if (shouldEnableClickListener) {
                 setOnClickListener {
-                    presenter.openDetails()
+                    presenter.openDetails(entry.embed?.isRevealed ?: false)
                 }
             }
         }
@@ -87,7 +87,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
 
         if (shouldEnableClickListener) {
             setOnClickListener {
-                presenter.openDetails()
+                presenter.openDetails(entry.embed?.isRevealed ?: false)
             }
         }
 
@@ -116,7 +116,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         if (entry.body.isNotEmpty()) {
             entryContentTextView.isVisible = true
             entryContentTextView.prepareBody(entry.body, this)
-            if (shouldEnableClickListener) entryContentTextView.setOnClickListener { presenter.openDetails() }
+            if (shouldEnableClickListener) entryContentTextView.setOnClickListener { presenter.openDetails(entry.embed?.isRevealed ?: false) }
         } else entryContentTextView.isVisible = false
 
         if (entry.survey != null) {

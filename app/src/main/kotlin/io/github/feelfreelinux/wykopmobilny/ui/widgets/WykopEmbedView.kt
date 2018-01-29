@@ -58,7 +58,7 @@ class WykopEmbedView: FrameLayout {
             image.isResized = embed.isResize
             imageExpand.isVisible = false
             isVisible = true
-            if (plus18 && !settingsPreferencesApi.showAdultContent || isNsfw && settingsPreferencesApi.showNsfw) {
+            if (!embed.isRevealed && (plus18 && !settingsPreferencesApi.showAdultContent || isNsfw && settingsPreferencesApi.showNsfw)) {
                 image.loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
                 hiddenPreview = preview
             }
@@ -108,6 +108,7 @@ class WykopEmbedView: FrameLayout {
         if (hiddenPreview != null) {
             image.loadImageFromUrl(hiddenPreview.toString())
             hiddenPreview = null
+            mEmbed.get()?.isRevealed = true
             return
         }
         val image = mEmbed.get()!!
