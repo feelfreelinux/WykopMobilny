@@ -85,8 +85,8 @@ class EntryPresenter(val schedulers: Schedulers,
         linkHandler.handleUrl(url, false)
     }
 
-    fun openDetails() {
-        navigatorApi.openEntryDetailsActivity(entryId)
+    fun openDetails(isRevealed : Boolean = false) {
+        navigatorApi.openEntryDetailsActivity(entryId, isRevealed)
     }
 
     fun reportContent() {

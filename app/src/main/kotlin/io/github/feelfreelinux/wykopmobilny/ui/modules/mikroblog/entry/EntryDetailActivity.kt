@@ -25,22 +25,24 @@ import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
 import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener {
     val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
+    val isRevealed by lazy { intent.getBooleanExtra(EXTRA_IS_REVEALED, false) }
 
     companion object {
         val EXTRA_ENTRY_ID = "ENTRY_ID"
         val EXTRA_COMMENT_ID = "COMMENT_ID"
         val EXTRA_FRAGMENT_KEY = "ENTRY_ACTIVITY_#"
+        val EXTRA_IS_REVEALED = "IS_REVEALED"
 
-        fun createIntent(context: Context, entryId: Int, commentId: Int?): Intent {
+        fun createIntent(context: Context, entryId: Int, commentId: Int?, isRevealed: Boolean): Intent {
             val intent = Intent(context, EntryActivity::class.java)
             intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
+            intent.putExtra(EntryActivity.EXTRA_IS_REVEALED, isRevealed)
             commentId?.let {
                 intent.putExtra(EntryActivity.EXTRA_COMMENT_ID, commentId)
             }
@@ -142,6 +144,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         inputToolbar.show()
         loadingView.isVisible = false
         swiperefresh.isRefreshing = false
+        entry.embed?.isRevealed = isRevealed
         adapter.notifyDataSetChanged()
         if (intent.hasExtra(EXTRA_COMMENT_ID) && entryFragmentData.data == null) {
             entry.comments.forEachIndexed({ index, comment ->
