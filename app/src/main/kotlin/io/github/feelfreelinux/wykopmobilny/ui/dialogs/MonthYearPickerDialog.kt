@@ -21,8 +21,13 @@ class MonthYearPickerDialog : DialogFragment() {
         val RESULTCODE = 167
         val EXTRA_YEAR = "EXTRA_YEAR"
         val EXTRA_MONTH = "EXTRA_MONTH"
-        fun newInstance() : MonthYearPickerDialog {
-            return MonthYearPickerDialog()
+        fun newInstance(selectedMonth : Int = 0, selectedYear : Int = 0) : MonthYearPickerDialog {
+            val intent = MonthYearPickerDialog()
+            val arguments = Bundle()
+            arguments.putInt(EXTRA_YEAR, selectedYear)
+            arguments.putInt(EXTRA_MONTH, selectedMonth)
+            intent.arguments = arguments
+            return intent
         }
     }
 
@@ -32,7 +37,11 @@ class MonthYearPickerDialog : DialogFragment() {
     var selectedMonth = currentMonth - 1
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogBuilder = AlertDialog.Builder(context)
+        val argumentYear = arguments!!.getInt(EXTRA_YEAR)
+        val argumentMonth = arguments!!.getInt(EXTRA_MONTH)
 
+        yearSelection = if (argumentYear == 0) currentYear else argumentYear
+        selectedMonth = if (argumentMonth == 0) currentMonth else argumentMonth - 1
         val dialogView = View.inflate(context, R.layout.year_month_picker, null)
         dialogBuilder.apply {
             setPositiveButton(android.R.string.ok, {
@@ -49,9 +58,8 @@ class MonthYearPickerDialog : DialogFragment() {
         dialogView.apply {
             yearPicker.minValue = 2005
             yearPicker.maxValue = currentYear
-            yearPicker.value = currentYear
-            monthPicker.minValue = 0
-            monthPicker.maxValue = 11
+            yearPicker.value = yearSelection
+            setYear(this)
             monthPicker.value = selectedMonth
             yearPicker.setOnValueChangedListener {
                 _, _, year ->
@@ -63,7 +71,6 @@ class MonthYearPickerDialog : DialogFragment() {
                 selectedMonth = month
                 setTitleDate(this)
             }
-            setYear(this)
         }
         return newDialog
     }

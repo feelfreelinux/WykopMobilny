@@ -10,7 +10,8 @@ fun TextView.prepareBody(html: String, listener : URLClickedListener) {
     text = SpannableStringBuilder(html.toSpannable())
     val method = BetterLinkMovementMethod.linkifyHtml(this)
     method.setOnLinkClickListener({
-        _, url ->
+        textView, url ->
+        textView.isEnabled = false
         if (url.startsWith("spoiler:")) {
             val text = url.substringAfter("spoiler:")
             context.createAlertBuilder().apply {
@@ -20,6 +21,7 @@ fun TextView.prepareBody(html: String, listener : URLClickedListener) {
                 create().show()
             }
         } else listener.handleUrl(url)
-        true
+        textView.isEnabled = true
+        false
     })
 }

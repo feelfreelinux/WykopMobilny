@@ -47,7 +47,7 @@ class TagActivity : BaseActivity(), TagActivityView {
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "#" + tagString
+            title = "\n#" + tagString
         }
 
         pager.adapter = tagPagerAdapter

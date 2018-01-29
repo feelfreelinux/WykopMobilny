@@ -64,7 +64,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
                 if (contains("<a href=\"spoiler:")) {
                     textBody += removeSpoilerHtml().removeHtml()
                 } else textBody += removeHtml()
-                selectionPosition = textBody.length
+                selectionPosition = if (!contains("\n")) textBody.length else 0
             }
         }
 

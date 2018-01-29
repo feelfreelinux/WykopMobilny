@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
@@ -70,6 +71,7 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     override fun showReadToast() {
         onRefresh()
         Toast.makeText(context, R.string.read_notifications, Toast.LENGTH_SHORT).show()
+        (activity as MainNavigationInterface).forceRefreshNotifications()
     }
 
     override fun disableLoading() {

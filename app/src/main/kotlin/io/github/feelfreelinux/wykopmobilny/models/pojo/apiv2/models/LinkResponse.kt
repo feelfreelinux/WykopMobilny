@@ -10,7 +10,7 @@ class LinkResponse(
         val title : String,
 
         @Json(name="description")
-        val description : String,
+        val description : String?,
 
         @Json(name="tags")
         val tags : String,

@@ -54,6 +54,7 @@ interface MainNavigationInterface {
     fun openFragment(fragment: Fragment)
     fun showErrorDialog(e: Throwable)
     val floatingButton : View
+    fun forceRefreshNotifications()
 }
 
 class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
@@ -334,5 +335,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             mBehavior.peekHeight = bottomSheetView.height
         }
         dialog.show()
+    }
+
+    override fun forceRefreshNotifications() {
+        presenter.checkNotifications(true)
     }
 }

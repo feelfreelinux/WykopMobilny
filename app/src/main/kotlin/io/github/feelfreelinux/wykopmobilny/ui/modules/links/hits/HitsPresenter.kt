@@ -13,8 +13,8 @@ class HitsPresenter(val schedulers: Schedulers, val hitsApi: HitsApi) : BasePres
         val HITS_YEAR = "year"
     }
     var currentScreen = "popular"
-    var yearSelection = 2005
-    var monthSelection = 12
+    var yearSelection = 0
+    var monthSelection = 0
 
     fun loadData() {
         compositeObservable.add(
