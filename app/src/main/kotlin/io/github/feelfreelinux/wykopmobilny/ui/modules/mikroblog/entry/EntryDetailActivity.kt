@@ -25,7 +25,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
 import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -133,6 +132,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     override fun onRefresh() {
         presenter.loadData()
+        adapter.notifyDataSetChanged()
     }
 
     override fun showEntry(entry: Entry) {
@@ -145,8 +145,10 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         adapter.notifyDataSetChanged()
         if (intent.hasExtra(EXTRA_COMMENT_ID) && entryFragmentData.data == null) {
             entry.comments.forEachIndexed({ index, comment ->
-                if (comment.id == intent.getIntExtra(EXTRA_COMMENT_ID, -1))
+                if (comment.id == intent.getIntExtra(EXTRA_COMMENT_ID, -1)) {
                     recyclerView.scrollToPosition(index + 1)
+                }
+                recyclerView.refreshDrawableState()
             })
         }
     }
@@ -195,7 +197,12 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                 }
 
                 BaseInputActivity.REQUEST_CODE -> {
-                    onRefresh()
+                    val commentId = data?.getIntExtra("commentId", -1)
+                    val commentBody = data?.getStringExtra("commentBody")
+                    if (commentId != -1 && commentBody != null) {
+                        entryFragmentData.data?.comments?.filter { it.id == commentId }?.get(0)?.body = commentBody
+                        onRefresh()
+                    }
                 }
             }
         }
