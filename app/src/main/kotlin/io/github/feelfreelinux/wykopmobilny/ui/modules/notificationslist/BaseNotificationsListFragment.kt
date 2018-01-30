@@ -64,7 +64,7 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
         if (notifications.isNotEmpty()) {
             loadingView.isVisible = false
             swiperefresh.isRefreshing = false
-            notificationAdapter.addData(notifications.filterNot { notificationAdapter.data.contains(it) }, shouldClearAdapter)
+            notificationAdapter.addData(if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications, shouldClearAdapter)
         } else notificationAdapter.disableLoading()
     }
 

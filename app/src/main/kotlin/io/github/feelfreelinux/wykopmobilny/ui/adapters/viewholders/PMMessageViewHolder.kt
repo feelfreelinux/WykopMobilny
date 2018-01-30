@@ -29,7 +29,7 @@ class PMMessageViewHolder(val view: View,
                 date.text = context.getString(R.string.date_with_user_app, message.date, message.app)
             }
 
-            body.prepareBody(message.body, { linkHandlerApi.handleUrl(it) })
+            body.prepareBody(message.body, { linkHandlerApi.handleUrl(it) }, null, settingsPreferencesApi.openSpoilersDialog)
             embedImage.forceDisableMinimizedMode = true
             embedImage.setEmbed(message.embed, settingsPreferencesApi, navigatorApi)
         }

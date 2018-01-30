@@ -42,7 +42,7 @@ class CommentWidget : CardView, CommentView {
     lateinit var presenter : CommentPresenter
     private lateinit var userManagerApi: UserManagerApi
     private lateinit var votersDialogListener : (List<Voter>) -> Unit
-
+    lateinit var settingsPreferencesApi : SettingsPreferencesApi
     init {
         View.inflate(context, R.layout.entry_comment_layout, this)
         isClickable = true
@@ -52,8 +52,9 @@ class CommentWidget : CardView, CommentView {
         setBackgroundResource(typedValue.resourceId)
     }
 
-    fun setCommentData(entryComment: EntryComment, userManager : UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, commentPresenter: CommentPresenter) {
+    fun setCommentData(entryComment: EntryComment, userManager : UserManagerApi, settingsApi: SettingsPreferencesApi, commentPresenter: CommentPresenter) {
         this.comment = entryComment
+        settingsPreferencesApi = settingsApi
         presenter = commentPresenter
         userManagerApi = userManager
         commentPresenter.commentId = entryComment.id
@@ -103,7 +104,7 @@ class CommentWidget : CardView, CommentView {
         replyTextView.setOnClickListener { addReceiver() }
         if (comment.body.isNotEmpty()) {
             entryContentTextView.isVisible = true
-            entryContentTextView.prepareBody(comment.body, { presenter.handleLink(it) })
+            entryContentTextView.prepareBody(comment.body, { presenter.handleLink(it) }, null, settingsPreferencesApi.openSpoilersDialog)
         } else entryContentTextView.isVisible = false
     }
 
