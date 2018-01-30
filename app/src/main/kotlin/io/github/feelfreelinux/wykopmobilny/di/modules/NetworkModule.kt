@@ -14,10 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelper
-import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
@@ -62,6 +59,9 @@ class NetworkModule {
 
     @Provides
     fun provideSettingsPreferences(context: Context) : SettingsPreferencesApi = SettingsPreferences(context)
+
+    @Provides
+    fun provideLinksPreferencesApi(context: Context) : LinksPreferencesApi = LinksPreferences(context)
 
     @Provides
     fun provideUserManagerApi(credentialsPreferencesApi: CredentialsPreferencesApi) : UserManagerApi = UserManager(credentialsPreferencesApi)

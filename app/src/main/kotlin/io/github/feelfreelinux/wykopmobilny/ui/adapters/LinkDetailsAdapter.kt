@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkCommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkHeaderViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.LinkPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenterFactory
@@ -58,5 +59,10 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
             HEADER_HOLDER -> LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_list_item, parent, false), linkPresenterFactory.create(), userManagerApi)
             else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), onReplyClickedListener, collapseListener, presenterFactory.create(), userManagerApi, settingsPreferencesApi)
         }
+    }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+        (holder as? RecyclableViewHolder)?.cleanRecycled()
+        super.onViewRecycled(holder)
     }
 }

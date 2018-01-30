@@ -1,3 +1,4 @@
+
 package io.github.feelfreelinux.wykopmobilny.utils.textview
 
 import android.os.Build

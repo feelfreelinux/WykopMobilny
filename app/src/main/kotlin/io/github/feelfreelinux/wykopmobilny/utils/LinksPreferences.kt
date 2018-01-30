@@ -1,7 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.content.Context
+import javax.inject.Inject
 
-class LinksPreferences(context : Context) : Preferences(context, false) {
-    var readLinksIds by stringSetPref(defaultValue = HashSet())
+interface LinksPreferencesApi {
+    var readLinksIds: Set<String>
+}
+
+class LinksPreferences (context : Context) : Preferences(context, false), LinksPreferencesApi {
+    override var readLinksIds by stringSetPref(defaultValue = HashSet())
 }

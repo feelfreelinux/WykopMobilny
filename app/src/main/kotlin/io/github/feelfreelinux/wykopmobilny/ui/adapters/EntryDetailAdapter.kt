@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.CommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
@@ -55,4 +56,10 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
             else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false), addReceiverListener, settingsPreferencesApi, userManagerApi, commentPresenterFactory.create())
         }
     }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+        (holder as? RecyclableViewHolder)?.cleanRecycled()
+        super.onViewRecycled(holder)
+    }
+
 }

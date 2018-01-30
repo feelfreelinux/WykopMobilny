@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.AdvancedProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.CommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -38,6 +40,11 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
         } else if (item.link != null) {
             (holder as LinkViewHolder).bindView(item.link)
         }
+    }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+        (holder as? RecyclableViewHolder)?.cleanRecycled()
+        super.onViewRecycled(holder)
     }
 
 }

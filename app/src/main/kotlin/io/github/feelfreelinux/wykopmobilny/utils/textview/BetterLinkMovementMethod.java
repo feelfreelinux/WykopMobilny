@@ -261,7 +261,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
                     if (touchStartedOverALink && clickableSpanUnderTouch == clickableSpanUnderTouchOnActionDown) {
                         dispatchUrlClick(textView, clickableSpanUnderTouch);
                     } else {
-                        onTextClickListener.onClick();
+                        if (onTextClickListener != null) onTextClickListener.onClick();
                     }
                 }
                 cleanupOnTouchUp(textView);
@@ -407,7 +407,6 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
         boolean handled = onLinkClickListener != null && onLinkClickListener.onClick(textView, clickableSpanWithText.text());
 
         if (!handled) {
-            printout("AAAAA");
             // Let Android handle this click.
             clickableSpanWithText.span().onClick(textView);
         }

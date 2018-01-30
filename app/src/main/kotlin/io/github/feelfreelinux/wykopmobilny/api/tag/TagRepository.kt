@@ -9,10 +9,11 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTag
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagEntriesResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagLinksResponse
+import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
 
-class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher) : TagApi {
+class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi) : TagApi {
     private val tagApi by lazy { retrofit.create(TagRetrofitApi::class.java) }
 
     override fun getTagEntries(tag : String, page : Int) = tagApi.getTagEntries(tag, page)
@@ -23,7 +24,7 @@ class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresh
     override fun getTagLinks(tag : String, page : Int) = tagApi.getTagLinks(tag, page)
             .retryWhen(userTokenRefresher)
             .flatMap(ErrorHandler<TagLinksResponse>())
-            .map { TagLinksMapper.map(it)}
+            .map { TagLinksMapper.map(it, linksPreferencesApi)}
 
     override fun getObservedTags() : Single<List<ObservedTagResponse>> =
             tagApi.getObservedTags()

@@ -63,7 +63,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
     }
 
     private fun setupHeader() {
-        dateTextView.text = link.date.toPrettyDate()
+        dateTextView.text = link.date
         hotBadgeStrip.isVisible = link.isHot
         val author = link.author
         if (author != null) {
@@ -76,9 +76,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
             avatarView.isVisible = false
             userTextView.isVisible = false
         }
-        dateTextView.text = link.date.toPrettyDate()
         urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
-
         tagsTextView.prepareBody(link.tags.convertToTagsHtml(), this)
     }
 
@@ -113,20 +111,6 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         }
         setOnClickListener {
             presenter.navigatorApi.openBrowser(link.sourceUrl)
-        }
-    }
-
-    fun setWykopColorDrawable(isButtonSelected : Boolean) {
-        if (isButtonSelected) {
-            diggCountTextView.setTextColor(Color.WHITE)
-            diggCountTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_wypok_activ, 0, 0, 0);
-        } else {
-            diggCountTextView.setTextColor(description.currentTextColor)
-            val typedArray = context.obtainStyledAttributes(arrayOf(
-                    R.attr.wypokDrawable).toIntArray())
-            diggCountTextView.setCompoundDrawablesWithIntrinsicBounds(typedArray.getDrawable(0), null, null, null)
-            typedArray.recycle()
-
         }
     }
 

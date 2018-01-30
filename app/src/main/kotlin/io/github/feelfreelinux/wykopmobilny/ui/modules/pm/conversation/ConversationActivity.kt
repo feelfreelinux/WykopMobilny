@@ -62,6 +62,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
             prepare()
             adapter = conversationAdapter
             (layoutManager as LinearLayoutManager).reverseLayout = true
+            setHasFixedSize(false)
         }
 
         if (conversationDataFragment.data == null) {
@@ -82,7 +83,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         swiperefresh.isRefreshing = false
         receiver = conversation.receiver
         toolbar.apply {
-            subtitle = conversation.messages.last().date.toPrettyDate()
+            subtitle = conversation.messages.last().date
             avatarview.setAuthor(conversation.receiver)
             avatarview.isVisible = true
         }

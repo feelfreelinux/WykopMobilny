@@ -6,28 +6,27 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.RelativeLayout
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.PMMessage
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
-import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.pmmessage_sent_layout.view.*
 
 class PMMessageViewHolder(val view: View,
                           val linkHandlerApi: WykopLinkHandlerApi,
                           val settingsPreferencesApi: SettingsPreferencesApi,
-                          val navigatorApi: NewNavigatorApi) : RecyclerView.ViewHolder(view) {
+                          val navigatorApi: NewNavigatorApi) : RecyclableViewHolder(view) {
 
     fun bindView(message: PMMessage) {
         flipMessage(message.isSentFromUser)
         view.apply {
-            val prettyDate = message.date.toPrettyDate()
-            date.text = prettyDate
+            date.text = message.date
 
             message.app?.let {
-                date.text = context.getString(R.string.date_with_user_app, prettyDate, message.app)
+                date.text = context.getString(R.string.date_with_user_app, message.date, message.app)
             }
 
             body.prepareBody(message.body, { linkHandlerApi.handleUrl(it) })
@@ -77,7 +76,13 @@ class PMMessageViewHolder(val view: View,
         }
 
         view.cardView.layoutParams = cardViewParams
-        view.invalidate()
-        view.requestLayout()
+    }
+
+    override fun cleanRecycled() {
+        view.apply {
+            date.text = null
+            body.text = null
+            GlideApp.with(this).clear(embedImage)
+        }
     }
 }

@@ -7,32 +7,33 @@ import io.github.feelfreelinux.wykopmobilny.api.getRequestBody
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
+import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 import java.lang.reflect.Type
 
-class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher) : LinksApi {
+class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi) : LinksApi {
     private val linksApi by lazy { retrofit.create(LinksRetrofitApi::class.java) }
 
     override fun getPromoted(page : Int): Single<List<Link>> =
             linksApi.getPromoted(page)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it) } }
+                    .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
 
     override fun getUpcoming(page : Int, sortBy: String): Single<List<Link>> =
             linksApi.getUpcoming(page, sortBy)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it) } }
+                    .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
 
     override fun getObserved(page : Int): Single<List<Link>> =
             linksApi.getObserved(page)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it) } }
+                    .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
 
     override fun getLinkComments(linkId: Int, sortBy: String) =
             linksApi.getLinkComments(linkId, sortBy)
@@ -53,7 +54,7 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
             linksApi.getLink(linkId)
                     .retryWhen(userTokenRefresher)
                     .compose<LinkResponse>(ErrorHandlerTransformer())
-                    .map { LinkMapper.map(it) }
+                    .map { LinkMapper.map(it, linksPreferencesApi) }
 
     override fun commentVoteUp(linkId: Int): Single<LinkVoteResponse> =
             linksApi.commentVoteUp(linkId)

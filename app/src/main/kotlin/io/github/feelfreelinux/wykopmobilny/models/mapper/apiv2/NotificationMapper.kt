@@ -8,6 +8,7 @@ class NotificationMapper {
     companion object : Mapper<NotificationResponse, Notification> {
         override fun map(value: NotificationResponse): Notification {
             return Notification(
+                    value.id,
                     if (value.author != null) AuthorMapper.map(value.author) else null,
                     value.body,
                     value.date,

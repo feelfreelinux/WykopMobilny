@@ -55,7 +55,7 @@ fun getGenderStripResource(authorSex : String) : Int =
 fun String.stripImageCompression() : String {
     val extension = substringAfterLast(".")
     val baseUrl = substringBeforeLast(",")
-    return baseUrl + "." + extension
+    return baseUrl + if (!baseUrl.endsWith(extension)) "." + extension else ""
 }
 
 fun String.encryptMD5() : String{

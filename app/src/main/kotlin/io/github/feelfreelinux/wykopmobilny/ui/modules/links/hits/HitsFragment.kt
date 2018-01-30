@@ -115,6 +115,7 @@ class HitsFragment : BaseFragment(), HitsView {
                 monthSelection = dataFragment.data!!.monthSelection
             }
             loadingView.isVisible = false
+            feedAdapter.disableLoading()
         } else {
             loadData()
             loadingView.isVisible = true

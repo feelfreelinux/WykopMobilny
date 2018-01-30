@@ -48,6 +48,9 @@ fun View.getActivityContext() : Activity? {
 
 fun RecyclerView.prepare() {
     setHasFixedSize(true) // For better performance
+    setItemViewCacheSize(30)
+    isDrawingCacheEnabled = true
+    drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     layoutManager = LinearLayoutManager(context)
 }
 
@@ -61,7 +64,6 @@ fun View.disableFor(millis: Long){
 fun ImageView.loadImage(url : String) {
     GlideApp.with(context)
             .load(url)
-            .transition(GenericTransitionOptions.with(R.anim.fade_in))
             .into(this)
 }
 

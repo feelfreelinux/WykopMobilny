@@ -64,8 +64,8 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
         if (notifications.isNotEmpty()) {
             loadingView.isVisible = false
             swiperefresh.isRefreshing = false
-            notificationAdapter.addData(notifications, shouldClearAdapter)
-        }
+            notificationAdapter.addData(notifications.filterNot { notificationAdapter.data.contains(it) }, shouldClearAdapter)
+        } else notificationAdapter.disableLoading()
     }
 
     override fun showReadToast() {
