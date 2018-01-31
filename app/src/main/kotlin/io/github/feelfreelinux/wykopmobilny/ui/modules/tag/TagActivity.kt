@@ -11,6 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResp
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_tag.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -51,6 +52,9 @@ class TagActivity : BaseActivity(), TagActivityView {
         }
 
         pager.adapter = tagPagerAdapter
+        tagMeta?.let {
+            setMeta(tagMeta!!)
+        }
         tabLayout.setupWithViewPager(pager)
     }
 
@@ -92,6 +96,11 @@ class TagActivity : BaseActivity(), TagActivityView {
 
     override fun setMeta(tagMeta: TagMetaResponse) {
         this.tagMeta = tagMeta
+        backgroundImg.isVisible = tagMeta.background != null
+        tagMeta.background?.let {
+            backgroundImg.loadImage(tagMeta.background)
+            toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
+        }
         invalidateOptionsMenu()
     }
 
