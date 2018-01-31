@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,83 +10,40 @@
         android:layout_height="wrap_content"
         app:elevation="0dp">
 
-        <android.support.constraint.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="match_parent">
+
             <ImageView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/backgroundImg"
                 android:layout_width="match_parent"
-                android:scaleType="centerCrop"
-                android:layout_height="100dp" />
+                android:layout_height="100dp"
+                android:scaleType="centerCrop" />
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/nav_profile_image_card"
-                android:layout_width="wrap_content"
+            <include
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="60dp"
-                android:layout_marginBottom="@dimen/drawer_header_avatar_margin_bottom"
-                android:elevation="@dimen/drawer_header_avatar_elevation"
-                app:cardCornerRadius="@dimen/drawer_header_avatar_radius">
-                <ImageView
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:id="@+id/nav_profile_image"
-                    android:layout_width="@dimen/drawer_header_avatar_size"
-                    android:layout_height="@dimen/drawer_header_avatar_size"/>
-            </android.support.v7.widget.CardView>
+                app:layout_scrollFlags="scroll|enterAlways" />
 
-            <TextView
-                android:id="@+id/nickname"
-                android:text="feelfree"
-                android:textSize="20sp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/nav_profile_image_card"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+        </FrameLayout>
 
-            <TextView
-                android:id="@+id/description"
-                android:text="uts/apk/debug/app-debug.apk: 1 file pushed. 6.0 MB/s (1288791 bytes in 0.205s)"
-                android:textSize="14sp"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintTop_toBottomOf="@id/nickname"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/toolbar"
-            app:layout_scrollFlags="scroll|enterAlways"/>
-
-        </android.support.constraint.ConstraintLayout>
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
-            app:tabMode="scrollable"
-            app:tabGravity="fill"
             style="@style/TabLayout"
-            app:tabTextAppearance="@style/TabTextAppearance"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabTextAppearance" />
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v4.view.ViewPager>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -100,6 +56,7 @@
         app:fabSize="normal"
         app:layout_anchor="@id/pager"
         app:layout_anchorGravity="bottom|right"
-        app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior"/>
+        app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior" />
 
 </android.support.design.widget.CoordinatorLayout>
+

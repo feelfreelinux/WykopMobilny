@@ -79,7 +79,7 @@
             android:title="@string/pref_content_plus18"
             android:defaultValue="false"/>
         <android.support.v7.preference.CheckBoxPreference
-            android:key="showNsfw"
+            android:key="hideNsfw"
             android:title="@string/pref_content_filternsfw"
             android:defaultValue="true"/>
     </android.support.v7.preference.PreferenceCategory>
