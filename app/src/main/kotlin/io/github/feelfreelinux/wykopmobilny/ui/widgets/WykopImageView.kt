@@ -1,19 +1,16 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.widget.ImageView
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
+import com.github.chrisbanes.photoview.PhotoView
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 
 
-class WykopImageView: ImageView {
+class WykopImageView: PhotoView {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -25,7 +22,8 @@ class WykopImageView: ImageView {
     var isResized = false
 
     init {
-        setOnClickListener { openImageListener() }
+        setOnClickListener { clickImageListener() }
+        setOnLongClickListener { longPressListener() }
         scaleType = ScaleType.CENTER_CROP
     }
 
@@ -33,11 +31,12 @@ class WykopImageView: ImageView {
         GlideApp.with(context)
                 .asBitmap()
                 .load(url)
-                .into(object : SimpleTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                        setImageBitmap(resource)
-                    }
-                })
+                .into(this)
+    }
+
+    fun loadGifFromUrl(url : String) {
+        GlideApp.with(context).asGif().load(url.replace(".jpg", ".gif"))
+                .into(this)
     }
 
     var forceDisableMinimizedMode = false
@@ -52,7 +51,8 @@ class WykopImageView: ImageView {
         metrics
     }
 
-    var openImageListener : () -> Unit = {}
+    var clickImageListener: () -> Unit = {}
+    var longPressListener: () -> Boolean = { false }
     var onResizedListener : (Boolean) -> Unit = {}
     var showResizeView : (Boolean) -> Unit = {}
 
@@ -69,18 +69,18 @@ class WykopImageView: ImageView {
                     onResizedListener(true)
                     requestLayout()
                     invalidate()
-                    setOnClickListener({ openImageListener() })
+                    setOnClickListener({ clickImageListener() })
                 }
                 setMeasuredDimension(widthSpec, (widthSpec.toFloat() * proportion).toInt())
                 showResizeView(true)
             } else {
                 setMeasuredDimension(widthSpec, heightSpec.toInt())
-                setOnClickListener { openImageListener() }
+                setOnClickListener { clickImageListener() }
                 showResizeView(false)
             }
         } else {
             setMeasuredDimension(widthSpec, (widthSpec.toFloat() * proportion).toInt())
-            setOnClickListener { openImageListener() }
+            setOnClickListener { clickImageListener() }
             showResizeView(false)
         }
         if (!settingsPreferencesApi.cutImages) showResizeView(false)

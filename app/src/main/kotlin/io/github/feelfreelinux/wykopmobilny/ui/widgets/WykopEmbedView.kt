@@ -27,6 +27,7 @@ class WykopEmbedView: FrameLayout {
 
     var resized = false
     var hiddenPreview: String? = null
+    var isPlaying = false
     lateinit var mEmbed : WeakReference<Embed>
     lateinit var navigator : NewNavigatorApi
     var forceDisableMinimizedMode : Boolean
@@ -45,7 +46,8 @@ class WykopEmbedView: FrameLayout {
                 imageExpand.isVisible = it
             }
         }
-        image.openImageListener = { handleUrl() }
+        image.clickImageListener = { handleUrl() }
+        image.longPressListener = { handleLongPress() }
     }
 
     fun setEmbed(embed: Embed?, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, isNsfw: Boolean = false) {
@@ -111,15 +113,33 @@ class WykopEmbedView: FrameLayout {
             mEmbed.get()?.isRevealed = true
             return
         }
-        val image = mEmbed.get()!!
-        when (image.type) {
+        val embed = mEmbed.get()!!
+        when (embed.type) {
             "image" -> {
                 // APIV2 WTF
-                val url = if (image.isAnimated) image.url.replace(".jpg", ".gif") else image.url
+                val url = if (embed.isAnimated) embed.url.replace(".jpg", ".gif") else embed.url
                 navigator.openPhotoViewActivity(url)
 
             }
-            "video" -> context.openBrowser(image.url) // @TODO replace with some nice implementation
+            "video" -> context.openBrowser(embed.url) // @TODO replace with some nice implementation
         }
+    }
+
+    private fun handleLongPress(): Boolean {
+        val embed = mEmbed.get()!!
+        if (embed.type != "image" || !embed.isAnimated) {
+            return false
+        }
+        isPlaying = when (isPlaying) {
+            true -> {
+                image.loadImageFromUrl(embed.url)
+                false
+            }
+            false -> {
+                image.loadGifFromUrl(embed.url)
+                true
+            }
+        }
+        return true
     }
 }
