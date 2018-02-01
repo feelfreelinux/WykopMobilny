@@ -117,6 +117,7 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        //TODO: get this callback work on hot/mywkop to update edited entry
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 BaseInputActivity.EDIT_ENTRY -> {
