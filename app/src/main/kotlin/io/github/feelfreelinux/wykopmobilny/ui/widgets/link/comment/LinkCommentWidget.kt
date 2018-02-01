@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.link_comment_layout.view.*
 import kotlinx.android.synthetic.main.link_comment_menu_bottomsheet.view.*
 import kotlin.math.absoluteValue
 
-class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), URLClickedListener, LinkCommentView {
+class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), LinkCommentView {
     lateinit var comment : LinkComment
     lateinit var presenter : LinkCommentPresenter
     lateinit var settingsApi : SettingsPreferencesApi
@@ -65,7 +65,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
     private fun setupBody() {
         commentImageView.setEmbed(comment.embed, settingsApi, presenter.newNavigatorApi, comment.isNsfw)
         comment.body?.let {
-            commentContentTextView.prepareBody(comment.body!!, this)
+            commentContentTextView.prepareBody(comment.body!!, { presenter.handleUrl(it) }, null, settingsApi.openSpoilersDialog)
         }
         collapseButton.setOnClickListener {
             commentContentTextView.isVisible = false
@@ -100,10 +100,6 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.plusPressedColor))
         }
 
-    }
-
-    override fun handleUrl(url: String) {
-        presenter.handleUrl(url)
     }
 
     private fun setupButtons() {

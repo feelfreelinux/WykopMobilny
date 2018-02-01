@@ -8,16 +8,17 @@ import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
+import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
 import retrofit2.Retrofit
 
-class SearchRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher) : SearchApi {
+class SearchRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi) : SearchApi {
     private val searchApi by lazy { retrofit.create(SearchRetrofitApi::class.java) }
 
     override fun searchLinks(page: Int, query: String) = searchApi
             .searchLinks(page, query)
             .retryWhen(userTokenRefresher)
             .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-            .map { it.map { LinkMapper.map(it) } }
+            .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
 
     override fun searchEntries(page: Int, query: String) = searchApi
             .searchEntries(page, query)

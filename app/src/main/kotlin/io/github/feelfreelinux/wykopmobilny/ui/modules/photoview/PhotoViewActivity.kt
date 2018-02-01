@@ -38,7 +38,6 @@ class PhotoViewActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         title = null
-        printout(url)
         GlideApp.with(this).load(url)
                 .listener(KotlinGlideRequestListener({ loadingView.isVisible = false }, { loadingView.isVisible = false }))
                 .into(image)

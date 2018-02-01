@@ -13,6 +13,7 @@ interface SettingsPreferencesApi {
     var showNotifications : Boolean
     var showMinifiedImages : Boolean
     var cutImages : Boolean
+    var openSpoilersDialog : Boolean
     var cutImageProportion : Int
 
 }
@@ -28,5 +29,6 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var showMinifiedImages by booleanPref(defaultValue = false)
     override var cutImages by booleanPref(defaultValue = true)
     override var cutImageProportion by intPref(defaultValue = 60)
+    override var openSpoilersDialog by booleanPref(defaultValue = true)
     override var showNotifications by booleanPref(defaultValue = true)
 }

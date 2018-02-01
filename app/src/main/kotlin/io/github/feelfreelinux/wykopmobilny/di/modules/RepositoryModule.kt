@@ -24,6 +24,7 @@ import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagRepository
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginRepository
+import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import retrofit2.Retrofit
 
@@ -36,13 +37,13 @@ class RepositoryModule {
     fun provideNotificationsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : NotificationsApi = NotificationsRepository(retrofit, userTokenRefresher)
 
     @Provides
-    fun provideMyWykopApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher)
+    fun provideMyWykopApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, linksPreferencesApi)
 
     @Provides
-    fun provideLinksApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : LinksApi = LinksRepository(retrofit, userTokenRefresher)
+    fun provideLinksApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : LinksApi = LinksRepository(retrofit, userTokenRefresher, linksPreferencesApi)
 
     @Provides
-    fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : TagApi = TagRepository(retrofit, userTokenRefresher)
+    fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : TagApi = TagRepository(retrofit, userTokenRefresher, linksPreferencesApi)
 
     @Provides
     fun provideUserApi(retrofit: Retrofit, credentialsPreferencesApi : CredentialsPreferencesApi) : LoginApi
@@ -55,8 +56,8 @@ class RepositoryModule {
     fun provideSuggestApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : SuggestApi = SuggestRepository(retrofit, userTokenRefresher)
 
     @Provides
-    fun provideSearchApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : SearchApi = SearchRepository(retrofit, userTokenRefresher)
+    fun provideSearchApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : SearchApi = SearchRepository(retrofit, userTokenRefresher, linksPreferencesApi)
 
     @Provides
-    fun provideHitsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : HitsApi = HitsRepository(retrofit, userTokenRefresher)
+    fun provideHitsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : HitsApi = HitsRepository(retrofit, userTokenRefresher, linksPreferencesApi)
 }

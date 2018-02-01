@@ -52,7 +52,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
          * @param url      The clicked URL.
          * @return True if this click was handled. False to let Android handle the URL.
          */
-        boolean onClick(TextView textView, String url);
+        boolean onClick(TextView textView, ClickableSpanWithText url);
     }
 
     public interface OnTextClickListener {
@@ -261,7 +261,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
                     if (touchStartedOverALink && clickableSpanUnderTouch == clickableSpanUnderTouchOnActionDown) {
                         dispatchUrlClick(textView, clickableSpanUnderTouch);
                     } else {
-                        onTextClickListener.onClick();
+                        if (onTextClickListener != null) onTextClickListener.onClick();
                     }
                 }
                 cleanupOnTouchUp(textView);
@@ -404,10 +404,9 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
 
     protected void dispatchUrlClick(TextView textView, ClickableSpan clickableSpan) {
         ClickableSpanWithText clickableSpanWithText = ClickableSpanWithText.ofSpan(textView, clickableSpan);
-        boolean handled = onLinkClickListener != null && onLinkClickListener.onClick(textView, clickableSpanWithText.text());
+        boolean handled = onLinkClickListener != null && onLinkClickListener.onClick(textView, clickableSpanWithText);
 
         if (!handled) {
-            printout("AAAAA");
             // Let Android handle this click.
             clickableSpanWithText.span().onClick(textView);
         }

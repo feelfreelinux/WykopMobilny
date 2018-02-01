@@ -6,7 +6,7 @@
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_dark_style">Styl nocny</string>
     <string name="defaultScreen">Domyślny ekran aplikacji</string>
-    <string name="defaultHotScreen">Domyślny ekran w gorących wpisach</string>
+    <string name="defaultHotScreen">Domyślny ekran w mirkoblogu</string>
     <string name="pref_notifications">Powiadomienia</string>
     <string name="pref_notifications_enable">Włącz powiadomienia</string>
     <string name="pref_notifications_frequency">Częstotliwość sprawdzania</string>
@@ -166,6 +166,7 @@
     <string name="hits_week">Hity tygodnia</string>
     <string name="hits_month">Hity miesiąca</string>
     <string name="hits_year">Hity roku</string>
+    <string name="open_spoilers_in_dialog">Otwieraj spoilery w okienku</string>
     <string name="hits_month_toolbar">Hity miesiąca (%1$d/%2$d)</string>
     <string name="hits_year_toolbar">Hity roku (%1$d)</string>
 </resources>

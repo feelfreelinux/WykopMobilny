@@ -32,6 +32,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     private lateinit var userManagerApi: UserManagerApi
     private lateinit var presenter: EntryPresenter
     private lateinit var entry: Entry
+    private lateinit var settingsPreferencesApi : SettingsPreferencesApi
     private lateinit var votersDialogListener : (List<Voter>) -> Unit
     var shouldEnableClickListener = true
   
@@ -59,6 +60,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
         presenter = entryPresenter
         userManagerApi = userManager
         voteButton.setup(userManager)
+        settingsPreferencesApi = settingsApi
         presenter.subscribe(this)
         this.entry = entry
         presenter.entryId = entry.id
@@ -114,7 +116,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     private fun setupBody() {
         if (entry.body.isNotEmpty()) {
             entryContentTextView.isVisible = true
-            entryContentTextView.prepareBody(entry.body, { presenter.handleLink(it) }, { if (shouldEnableClickListener) presenter.openDetails(true) })
+            entryContentTextView.prepareBody(entry.body, { presenter.handleLink(it) }, { if (shouldEnableClickListener) presenter.openDetails(true) }, settingsPreferencesApi.openSpoilersDialog)
         } else entryContentTextView.isVisible = false
 
         if (entry.survey != null) {

@@ -1,36 +1,29 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.graphics.Color
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
-import android.util.TypedValue
 import android.view.View
-import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.*
-import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
-import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import kotlinx.android.synthetic.main.link_layout.view.*
 
 
-class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view)  {
+class LinkViewHolder(val view: View) : RecyclableViewHolder(view)  {
     val linksPreferences by lazy { LinksPreferences(view.context) }
     fun bindView(link : Link) {
         view.apply {
-            title.text = link.title.removeHtml()
+            title.text = link.title
             image.isVisible = link.preview != null
-            link.preview?.let { image.loadImage(link.preview.stripImageCompression()) }
-            description.text = link.description.removeHtml()
+            link.preview?.let { image.loadImage(link.preview) }
+            description.text = link.description
             diggCountTextView.voteCount = link.voteCount
             diggCountTextView.isEnabled = false
             diggCountTextView.setVoteState(link.userVote)
 
             commentsCountTextView.text = link.commentsCount.toString()
-            dateTextView.text = link.date.toPrettyDate()
+            dateTextView.text = link.date
             hotBadgeStrip.isVisible = link.isHot
-            val gotPreviouslySelected = linksPreferences.readLinksIds.contains("link_${link.id}")
-            if (gotPreviouslySelected) {
+            if (link.gotSelected) {
                 image.alpha = 0.6f
                 title.alpha = 0.6f
                 description.alpha = 0.6f
@@ -40,15 +33,26 @@ class LinkViewHolder(val view: View) : RecyclerView.ViewHolder(view)  {
                 description.alpha = 1f
             }
             setOnClickListener {
-                if (!gotPreviouslySelected) {
+                view.getActivityContext()!!.startActivity(LinkDetailsActivity.createIntent(view.getActivityContext()!!, link))
+                if (!link.gotSelected) {
                     image.alpha = 0.6f
                     title.alpha = 0.6f
                     description.alpha = 0.6f
+                    link.gotSelected = true
                     linksPreferences.readLinksIds = linksPreferences.readLinksIds.plusElement("link_${link.id}")
                 }
-                view.getActivityContext()!!.startActivity(LinkDetailsActivity.createIntent(view.getActivityContext()!!, link))
             }
-            requestLayout()
+        }
+    }
+
+    override fun cleanRecycled() {
+        view.apply {
+            title.text = null
+            description.text = null
+            diggCountTextView.text = null
+            commentsCountTextView.text = null
+            setOnClickListener(null)
+            GlideApp.with(this).clear(image)
         }
     }
 

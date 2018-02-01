@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.PMMessage
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.PMMessageViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
@@ -23,4 +24,8 @@ class PMMessageAdapter @Inject constructor(val settingsPreferencesApi: SettingsP
     override fun onBindViewHolder(holder: PMMessageViewHolder, position: Int) =
         holder.bindView(messages[position])
 
+    override fun onViewRecycled(holder: PMMessageViewHolder?) {
+        (holder as? RecyclableViewHolder)?.cleanRecycled()
+        super.onViewRecycled(holder)
+    }
 }

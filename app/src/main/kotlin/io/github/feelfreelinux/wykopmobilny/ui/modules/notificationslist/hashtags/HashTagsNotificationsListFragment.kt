@@ -40,6 +40,7 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
             loadingView.isVisible = false
             presenter.page = pagedModel.page
             notificationAdapter.addData(pagedModel.model, true)
+            notificationAdapter.disableLoading()
         } else {
             loadingView.isVisible = true
             onRefresh()

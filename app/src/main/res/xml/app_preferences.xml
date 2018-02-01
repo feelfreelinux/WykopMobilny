@@ -26,6 +26,12 @@
             android:entries="@array/preferences_hot_screen"
             android:entryValues="@array/preferences_hot_screen_values"
             android:defaultValue="newest"/>
+
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="openSpoilersDialog"
+            android:title="@string/open_spoilers_in_dialog"
+            android:defaultValue="true"/>
+
     </android.support.v7.preference.PreferenceCategory>
 
     <android.support.v7.preference.PreferenceCategory
@@ -73,7 +79,7 @@
             android:title="@string/pref_content_plus18"
             android:defaultValue="false"/>
         <android.support.v7.preference.CheckBoxPreference
-            android:key="showNsfw"
+            android:key="hideNsfw"
             android:title="@string/pref_content_filternsfw"
             android:defaultValue="true"/>
     </android.support.v7.preference.PreferenceCategory>

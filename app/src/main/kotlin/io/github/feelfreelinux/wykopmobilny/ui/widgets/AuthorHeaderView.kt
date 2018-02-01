@@ -27,11 +27,10 @@ class AuthorHeaderView : ConstraintLayout {
                 setTextColor(context.getGroupColor(group))
             }
             authorAvatarView.setAuthor(this)
-            val prettyDate = if (date.isNotEmpty()) date.toPrettyDate() else ""
-            entryDateTextView.text = prettyDate
+            entryDateTextView.text = date
 
             app?.let {
-                entryDateTextView.text = context.getString(R.string.date_with_user_app, prettyDate, app)
+                entryDateTextView.text = context.getString(R.string.date_with_user_app, date, app)
             }
         }
     }
