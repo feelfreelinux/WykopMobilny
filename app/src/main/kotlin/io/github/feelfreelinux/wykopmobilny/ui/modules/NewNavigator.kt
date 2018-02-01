@@ -34,7 +34,7 @@ interface NewNavigatorApi {
     fun openLoginScreen(requestCode: Int)
     fun openAddEntryActivity(receiver: String? = null, extraBody : String? = null)
     fun openEditEntryActivity(body: String, entryId: Int)
-    fun openEditLinkCommentActivity(body: String, linkId: Int)
+    fun openEditLinkCommentActivity(commentId: Int, body: String, linkId: Int)
     fun openEditEntryCommentActivity(body: String, entryId: Int, commentId: Int)
     fun openBrowser(url: String)
     fun openReportEntryScreen(entryId: Int)
@@ -84,15 +84,15 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
     }
 
     override fun openEditEntryActivity(body: String, entryId: Int) {
-        context.startActivityForResult(EditEntryActivity.createIntent(context, body, entryId), BaseInputActivity.REQUEST_CODE)
+        context.startActivityForResult(EditEntryActivity.createIntent(context, body, entryId), BaseInputActivity.EDIT_ENTRY)
     }
 
-    override fun openEditLinkCommentActivity(body: String, linkId: Int) {
-        context.startActivityForResult(LinkCommentEditActivity.createIntent(context, body, linkId), BaseInputActivity.REQUEST_CODE)
+    override fun openEditLinkCommentActivity(commentId: Int, body: String, linkId: Int) {
+        context.startActivityForResult(LinkCommentEditActivity.createIntent(context, commentId, body, linkId), BaseInputActivity.EDIT_LINK_COMMENT)
     }
 
     override fun openEditEntryCommentActivity(body: String, entryId: Int, commentId: Int) {
-        context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.REQUEST_CODE)
+        context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.EDIT_ENTRY_COMMENT)
     }
     override fun openBrowser(url: String) {
         context.openBrowser(url)

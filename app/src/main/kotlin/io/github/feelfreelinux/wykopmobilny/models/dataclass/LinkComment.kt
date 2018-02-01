@@ -8,7 +8,7 @@ class LinkComment(
         val id: Int,
         val author: Author,
         val date: String,
-        val body: String?,
+        var body: String?,
         val blocked: Boolean,
         val favorite: Boolean,
         var voteCount: Int,

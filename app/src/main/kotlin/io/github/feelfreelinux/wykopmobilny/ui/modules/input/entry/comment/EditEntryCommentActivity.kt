@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -39,5 +40,13 @@ class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(),
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+    }
+
+    override fun exitActivity() {
+        val data = Intent()
+        data.putExtra("commentId", commentId)
+        data.putExtra("commentBody", textBody)
+        setResult(Activity.RESULT_OK, data)
+        finish()
     }
 }

@@ -27,10 +27,13 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(this, suggestionApi) }
 
     companion object {
-        val EXTRA_RECEIVER = "EXTRA_RECEIVER"
-        val EXTRA_BODY = "EXTRA_BODY"
-        val REQUEST_CODE = 106
-        val USER_ACTION_INSERT_PHOTO = 142
+        const val EXTRA_RECEIVER = "EXTRA_RECEIVER"
+        const val EXTRA_BODY = "EXTRA_BODY"
+        const val REQUEST_CODE = 106
+        const val EDIT_ENTRY_COMMENT = 107
+        const val EDIT_ENTRY = 108
+        const val EDIT_LINK_COMMENT = 109
+        const val USER_ACTION_INSERT_PHOTO = 142
     }
 
     abstract var presenter : T
