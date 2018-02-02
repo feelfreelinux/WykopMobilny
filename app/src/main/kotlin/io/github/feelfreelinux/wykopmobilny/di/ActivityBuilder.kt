@@ -30,6 +30,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificatio
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivityModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileFragmentProvider
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivityModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsFragmentProvider
@@ -83,6 +86,9 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [RelatedModule::class])
     abstract fun bindRelatedActivity() : RelatedActivity
+
+    @ContributesAndroidInjector(modules = [ProfileModule::class, ProfileFragmentProvider::class])
+    abstract fun bindProfileActivity() : ProfileActivity
 
     @ContributesAndroidInjector(modules = [LinkCommentEditModule::class])
     abstract fun bindLinkEditCommentActivity() : LinkCommentEditActivity

@@ -75,7 +75,7 @@ class HitsFragment : BaseFragment(), HitsView {
             R.id.byMonth -> {
                 val pickerFragment = MonthYearPickerDialog.newInstance(presenter.monthSelection, presenter.yearSelection)
                 pickerFragment.setTargetFragment(this, PICKER_REQUEST_CODE)
-                pickerFragment.show(supportFragmentManager, "pickerDialogFragment")
+                pickerFragment.show(childFragmentManager, "pickerDialogFragment")
                 setTitle()
             }
 
@@ -90,7 +90,7 @@ class HitsFragment : BaseFragment(), HitsView {
             R.id.byYear -> {
                 val pickerFragment = YearPickerDialog.newInstance(presenter.yearSelection)
                 pickerFragment.setTargetFragment(this, PICKER_REQUEST_CODE)
-                pickerFragment.show(supportFragmentManager, "pickerDialogFragment")
+                pickerFragment.show(childFragmentManager, "pickerDialogFragment")
             }
 
         }
@@ -100,7 +100,7 @@ class HitsFragment : BaseFragment(), HitsView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
-        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        dataFragment = childFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
 
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.hits)
         presenter.subscribe(this)
@@ -146,7 +146,7 @@ class HitsFragment : BaseFragment(), HitsView {
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
+        if (isRemoving) childFragmentManager.removeDataFragment(dataFragment)
     }
 
     fun setTitle() {

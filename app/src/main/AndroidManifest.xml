@@ -73,6 +73,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.modules.links.related.RelatedActivity" />
+        <activity android:name=".ui.modules.profile.ProfileActivity" />
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>

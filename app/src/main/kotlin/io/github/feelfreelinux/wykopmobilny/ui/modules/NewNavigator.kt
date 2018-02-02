@@ -19,6 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNaviga
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
@@ -43,6 +44,8 @@ interface NewNavigatorApi {
     fun openLinkUpvotersActivity(linkId : Int)
     fun openLinkDownvotersActivity(linkId : Int)
     fun openLinkRelatedActivity(linkId : Int)
+    fun openProfileActivity(username : String)
+
 }
 
 class NewNavigator(val context : Activity) : NewNavigatorApi {
@@ -120,5 +123,9 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
 
     override fun openLinkRelatedActivity(linkId : Int) {
         context.startActivity(RelatedActivity.createIntent(linkId, context))
+    }
+
+    override fun openProfileActivity(username: String) {
+        context.startActivity(ProfileActivity.createIntent(context, username))
     }
 }

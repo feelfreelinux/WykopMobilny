@@ -31,5 +31,7 @@ data class ProfileResponse(
         val rank : Int?,
 
         @Json(name="followers")
-        val followers : Int
+        val followers : Int,
+        @Json(name="about")
+        val description : String?
 )

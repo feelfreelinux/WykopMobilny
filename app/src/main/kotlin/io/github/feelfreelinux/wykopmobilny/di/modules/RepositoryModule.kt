@@ -16,6 +16,8 @@ import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsRepository
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMRepository
+import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileApi
+import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileRepository
 import io.github.feelfreelinux.wykopmobilny.api.search.SearchApi
 import io.github.feelfreelinux.wykopmobilny.api.search.SearchRepository
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
@@ -60,4 +62,7 @@ class RepositoryModule {
 
     @Provides
     fun provideHitsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : HitsApi = HitsRepository(retrofit, userTokenRefresher, linksPreferencesApi)
+
+    @Provides
+    fun provideProfilesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : ProfileApi = ProfileRepository(retrofit, userTokenRefresher, linksPreferencesApi)
 }
