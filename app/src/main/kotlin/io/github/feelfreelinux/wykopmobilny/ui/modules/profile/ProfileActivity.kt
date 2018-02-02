@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.view.MotionEvent
-
+import android.view.View
 
 
 class ProfileActivity : BaseActivity(), ProfileView {
@@ -75,7 +75,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
             description.isVisible = true
             description.text = profileResponse.description
         }
-        backgroundImg.isVisible = profileResponse.background != null
+        backgroundImg.visibility = if (profileResponse.background != null) View.VISIBLE else View.INVISIBLE
         profileResponse.background?.let {
             backgroundImg.isVisible = true
             backgroundImg.loadImage(profileResponse.background)

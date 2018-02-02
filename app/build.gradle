@@ -57,10 +57,15 @@ android {
         }
     }
 
+    dexOptions {
+        jumboMode true
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
+
     lintOptions {
         abortOnError false
     }
@@ -85,7 +90,6 @@ dependencies {
     implementation "com.android.support:support-v4:$versions.supportLibrary"
     implementation "com.android.support:customtabs:$versions.supportLibrary"
     implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
-    implementation "com.google.android.gms:play-services-gcm:11.6.0"
 
     // Utils
     implementation "com.bugsnag:bugsnag-android:4.1.3"
