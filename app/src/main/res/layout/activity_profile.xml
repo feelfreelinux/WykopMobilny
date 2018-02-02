@@ -11,16 +11,16 @@
         app:elevation="0dp">
 
         <android.support.constraint.ConstraintLayout
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/backgroundImg"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop"
+                android:layout_height="99dp"
                 android:background="@color/cardViewSelected.Amoled"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,10 +28,10 @@
                 android:id="@+id/nav_profile_image_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="60dp"
                 android:elevation="@dimen/drawer_header_avatar_elevation"
                 app:cardCornerRadius="@dimen/drawer_header_avatar_radius"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -52,25 +52,31 @@
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nav_profile_image_card" />
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toBottomOf="@id/backgroundImg"
+                app:layout_constraintStart_toEndOf="@id/nav_profile_image_card"/>
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="20dp"
                 android:gravity="center"
                 android:text="opis opis opis opis"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nickname" />
+                app:layout_constraintTop_toBottomOf="@+id/nav_profile_image_card" />
+
+            <ImageView
+                android:src="@drawable/ic_mail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/backgroundImg"
+                android:layout_margin="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
 
             <LinearLayout
@@ -97,6 +103,8 @@
             </LinearLayout>
 
             <include
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 layout="@layout/toolbar"
                 android:visibility="gone"
                 android:layout_width="match_parent"
