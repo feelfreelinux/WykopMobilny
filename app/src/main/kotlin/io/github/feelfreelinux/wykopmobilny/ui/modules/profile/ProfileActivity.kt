@@ -13,11 +13,13 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.actions.ActionsFr
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
+import android.view.MotionEvent
+
+
 
 class ProfileActivity : BaseActivity(), ProfileView {
     val username by lazy { intent.getStringExtra(EXTRA_USERNAME) }
@@ -88,4 +90,12 @@ class ProfileActivity : BaseActivity(), ProfileView {
                         .removeDataFragment()
             }
     }*/
+    public override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_UP) {
+            val per = Math.abs(appBarLayout.getY()) / appBarLayout.getTotalScrollRange()
+            val setExpanded = per <= 0.5f
+            appBarLayout.setExpanded(setExpanded, true)
+        }
+        return super.dispatchTouchEvent(event)
+    }
 }
