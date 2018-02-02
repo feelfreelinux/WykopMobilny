@@ -19,6 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNaviga
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
@@ -34,7 +35,7 @@ interface NewNavigatorApi {
     fun openLoginScreen(requestCode: Int)
     fun openAddEntryActivity(receiver: String? = null, extraBody : String? = null)
     fun openEditEntryActivity(body: String, entryId: Int)
-    fun openEditLinkCommentActivity(body: String, linkId: Int)
+    fun openEditLinkCommentActivity(commentId: Int, body: String, linkId: Int)
     fun openEditEntryCommentActivity(body: String, entryId: Int, commentId: Int)
     fun openBrowser(url: String)
     fun openReportEntryScreen(entryId: Int)
@@ -43,6 +44,8 @@ interface NewNavigatorApi {
     fun openLinkUpvotersActivity(linkId : Int)
     fun openLinkDownvotersActivity(linkId : Int)
     fun openLinkRelatedActivity(linkId : Int)
+    fun openProfileActivity(username : String)
+
 }
 
 class NewNavigator(val context : Activity) : NewNavigatorApi {
@@ -84,15 +87,15 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
     }
 
     override fun openEditEntryActivity(body: String, entryId: Int) {
-        context.startActivityForResult(EditEntryActivity.createIntent(context, body, entryId), BaseInputActivity.REQUEST_CODE)
+        context.startActivityForResult(EditEntryActivity.createIntent(context, body, entryId), BaseInputActivity.EDIT_ENTRY)
     }
 
-    override fun openEditLinkCommentActivity(body: String, linkId: Int) {
-        context.startActivityForResult(LinkCommentEditActivity.createIntent(context, body, linkId), BaseInputActivity.REQUEST_CODE)
+    override fun openEditLinkCommentActivity(commentId: Int, body: String, linkId: Int) {
+        context.startActivityForResult(LinkCommentEditActivity.createIntent(context, commentId, body, linkId), BaseInputActivity.EDIT_LINK_COMMENT)
     }
 
     override fun openEditEntryCommentActivity(body: String, entryId: Int, commentId: Int) {
-        context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.REQUEST_CODE)
+        context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.EDIT_ENTRY_COMMENT)
     }
     override fun openBrowser(url: String) {
         context.openBrowser(url)
@@ -120,5 +123,9 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
 
     override fun openLinkRelatedActivity(linkId : Int) {
         context.startActivity(RelatedActivity.createIntent(linkId, context))
+    }
+
+    override fun openProfileActivity(username: String) {
+        context.startActivity(ProfileActivity.createIntent(context, username))
     }
 }

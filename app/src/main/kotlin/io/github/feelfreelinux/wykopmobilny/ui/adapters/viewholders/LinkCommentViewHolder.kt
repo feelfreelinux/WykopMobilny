@@ -31,6 +31,11 @@ class LinkCommentViewHolder(val view: View, val linkCommentReplyListener : (Link
     override fun cleanRecycled() {
         view.apply {
             GlideApp.with(this).clear(view.linkComment.commentImageView)
+            view.linkComment.collapseListener = {_, _ ->}
+            view.replyTextView.setOnClickListener(null)
+            view.hiddenRepliesView.isVisible = false
+            view.messageTextView.text = null
+            view.hiddenRepliesView.setOnClickListener(null)
         }
     }
 }

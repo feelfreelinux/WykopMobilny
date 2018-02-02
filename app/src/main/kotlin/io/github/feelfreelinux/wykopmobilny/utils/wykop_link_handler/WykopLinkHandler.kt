@@ -61,8 +61,8 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
         }
     }
 
-    private fun handleProfile(login: String) { //@TODO
-
+    private fun handleProfile(login: String) {
+        navigatorApi.openProfileActivity(login.removePrefix("@"))
     }
 
     private fun handleTag(tag: String) {

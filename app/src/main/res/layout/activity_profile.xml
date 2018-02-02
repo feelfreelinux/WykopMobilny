@@ -11,6 +11,7 @@
         app:elevation="0dp">
 
         <android.support.constraint.ConstraintLayout
+            app:layout_scrollFlags="scroll|enterAlways"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -27,7 +28,6 @@
                 android:id="@+id/nav_profile_image_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/drawer_header_avatar_margin_bottom"
                 android:layout_marginTop="60dp"
                 android:elevation="@dimen/drawer_header_avatar_elevation"
                 app:cardCornerRadius="@dimen/drawer_header_avatar_radius"
@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/nav_profile_image"
+                    android:id="@+id/profilePicture"
                     android:layout_width="@dimen/drawer_header_avatar_size"
                     android:layout_height="@dimen/drawer_header_avatar_size"
                     app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="feelfree"
+                android:textStyle="bold"
                 android:textSize="20sp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nav_profile_image_card" />
@@ -58,14 +60,14 @@
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:textColor="@android:color/white"
-                android:text="opis opis opis opis"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
                 android:gravity="center"
+                android:text="opis opis opis opis"
+                android:textColor="@android:color/white"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nickname" />
@@ -95,12 +97,10 @@
             </LinearLayout>
 
             <include
-                android:id="@+id/toolbar"
                 layout="@layout/toolbar"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlways" />
+                android:layout_height="wrap_content" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -115,11 +115,17 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ProgressBar
+        android:layout_gravity="center"
+        android:id="@+id/loadingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v4.view.ViewPager>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

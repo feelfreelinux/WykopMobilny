@@ -135,6 +135,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     override fun onRefresh() {
         presenter.loadData()
+        adapter.notifyDataSetChanged()
     }
 
     override fun showEntry(entry: Entry) {
@@ -148,8 +149,10 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         adapter.notifyDataSetChanged()
         if (intent.hasExtra(EXTRA_COMMENT_ID) && entryFragmentData.data == null) {
             entry.comments.forEachIndexed({ index, comment ->
-                if (comment.id == intent.getIntExtra(EXTRA_COMMENT_ID, -1))
+                if (comment.id == intent.getIntExtra(EXTRA_COMMENT_ID, -1)) {
                     recyclerView.scrollToPosition(index + 1)
+                }
+                recyclerView.refreshDrawableState()
             })
         }
     }
@@ -199,6 +202,23 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
                 BaseInputActivity.REQUEST_CODE -> {
                     onRefresh()
+                }
+
+                BaseInputActivity.EDIT_ENTRY_COMMENT -> {
+                    val commentId = data?.getIntExtra("commentId", -1)
+                    val commentBody = data?.getStringExtra("commentBody")
+                    if (commentId != -1 && commentBody != null) {
+                        entryFragmentData.data?.comments?.filter { it.id == commentId }?.get(0)?.body = commentBody
+                        onRefresh()
+                    }
+                }
+
+                BaseInputActivity.EDIT_ENTRY -> {
+                    val entryBody = data?.getStringExtra("entryBody")
+                    if (entryBody != null) {
+                        entryFragmentData.data?.body = entryBody
+                        onRefresh()
+                    }
                 }
             }
         }

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.UserManager
 import android.support.v4.app.ShareCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -22,9 +21,10 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkDetailsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.LinkParser
 import kotlinx.android.synthetic.main.activity_link_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -198,6 +198,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     override fun onRefresh() {
         presenter.loadComments()
         presenter.updateLink()
+        adapter.notifyDataSetChanged()
     }
 
     override fun showLinkComments(comments: List<LinkComment>) {
@@ -265,6 +266,15 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
 
                 BaseInputActivity.REQUEST_CODE -> {
                     onRefresh()
+                }
+
+                BaseInputActivity.EDIT_LINK_COMMENT -> {
+                    val commentId = data?.getIntExtra("commentId", -1)
+                    val commentBody = data?.getStringExtra("commentBody")
+                    if (commentId != -1 && commentBody != null) {
+                        linkFragmentData.data?.first?.comments?.filter { it.id == commentId }?.get(0)?.body = commentBody
+                        onRefresh()
+                    }
                 }
             }
         }

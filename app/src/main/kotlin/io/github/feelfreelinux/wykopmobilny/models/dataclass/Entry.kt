@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
 class Entry(val id : Int,
                  val author : Author,
-                 val body : String,
+                 var body : String,
                  val date : String,
                  var isVoted : Boolean,
                  var isFavorite : Boolean,

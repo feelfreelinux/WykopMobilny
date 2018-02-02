@@ -27,6 +27,11 @@
     <string name="user">Użytkownik</string>
     <string name="your_profile">Twój profil</string>
     <string name="favourite">Ulubione</string>
+    <string name="link_added">Dodane</string>
+    <string name="published">Opublikowane</string>
+    <string name="buried">Zakopywane</string>
+    <string name="digged">Wykopywane</string>
+    <string name="commented">Komentarze</string>
     <string name="messages">Wiadomości</string>
     <string name="application">Aplikacja</string>
     <string name="settings">Ustawienia</string>
@@ -37,6 +42,7 @@
     <string name="error_occured">Błąd</string>
     <string name="not_implemented">Nie zaimplementowano</string>
     <string name="expand_image">rozwiń obrazek</string>
+    <string name="actions">Akcje</string>
 
     <string name="newest_entries">Najnowsze wpisy</string>
     <string name="share">Udostępnij</string>

@@ -203,7 +203,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             }
 
             comment_menu_edit.setOnClickListener {
-                presenter.openEditCommentActivity(comment.body!!)
+                presenter.openEditCommentActivity(comment.id, comment.body!!)
                 dialog.dismiss()
             }
 
