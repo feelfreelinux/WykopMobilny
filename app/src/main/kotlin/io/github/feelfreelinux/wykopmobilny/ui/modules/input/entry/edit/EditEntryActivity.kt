@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -34,5 +35,13 @@ class EditEntryActivity : BaseInputActivity<EditEntryPresenter>(), EditEntryView
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+    }
+
+    override fun exitActivity() {
+        val data = Intent()
+        data.putExtra("entryId", entryId)
+        data.putExtra("entryBody", textBody)
+        setResult(Activity.RESULT_OK, data)
+        finish()
     }
 }
