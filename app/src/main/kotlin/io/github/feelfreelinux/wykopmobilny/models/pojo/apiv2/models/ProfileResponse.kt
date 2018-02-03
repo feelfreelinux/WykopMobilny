@@ -17,7 +17,10 @@ data class ProfileResponse(
 
         @Json(name="signup_at")
         val signupAt : String,
-
+        @Json(name="is_blocked")
+        val isBlocked : Boolean? = false,
+        @Json(name="is_observed")
+        val isObserved : Boolean? = false,
         @Json(name="background")
         val background : String?,
 

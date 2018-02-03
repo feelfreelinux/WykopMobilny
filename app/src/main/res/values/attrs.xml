@@ -52,6 +52,10 @@
     <attr name="markdownInsertSpoiler" format="reference"/>
     <attr name="markdownSend" format="reference"/>
     <!-- DRAWABLES - BOTTOMSHEET MENU -->
+    <attr name="bottomSheetObserve" format="reference"/>
+    <attr name="bottomSheetUnobserve" format="reference"/>
+    <attr name="bottomSheetLock" format="reference"/>
+    <attr name="bottomSheetUnlock" format="reference"/>
     <attr name="bottomSheetDelete" format="reference"/>
     <attr name="bottomSheetRelated" format="reference"/>
     <attr name="bottomSheetDig" format="reference"/>

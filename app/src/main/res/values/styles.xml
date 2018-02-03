@@ -61,6 +61,10 @@
         <item name="markdownInsertSpoiler">@drawable/ic_insert_spoiler</item>
         <item name="markdownSend">@drawable/ic_send</item>
 
+        <item name="bottomSheetObserve">@drawable/ic_observe_light</item>
+        <item name="bottomSheetUnobserve">@drawable/ic_unobserve_light</item>
+        <item name="bottomSheetLock">@drawable/ic_lock_light</item>
+        <item name="bottomSheetUnlock">@drawable/ic_lock_open_light</item>
         <item name="bottomSheetEdit">@drawable/ic_pen_light</item>
         <item name="bottomSheetCopy">@drawable/ic_copy_content_light</item>
         <item name="bottomSheetReport">@drawable/ic_report_light</item>
@@ -135,6 +139,10 @@
         <item name="markdownInsertPhoto">@drawable/ic_insert_photo_dark</item>
         <item name="markdownSend">@drawable/ic_send_dark</item>
 
+        <item name="bottomSheetObserve">@drawable/ic_observe</item>
+        <item name="bottomSheetUnobserve">@drawable/ic_unobserve</item>
+        <item name="bottomSheetLock">@drawable/ic_lock</item>
+        <item name="bottomSheetUnlock">@drawable/ic_lock_open</item>
         <item name="bottomSheetEdit">@drawable/ic_pen</item>
         <item name="bottomSheetCopy">@drawable/ic_copy_content</item>
         <item name="bottomSheetReport">@drawable/ic_report</item>

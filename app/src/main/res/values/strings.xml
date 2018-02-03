@@ -175,4 +175,8 @@
     <string name="open_spoilers_in_dialog">Otwieraj spoilery w okienku</string>
     <string name="hits_month_toolbar">Hity miesiąca (%1$d/%2$d)</string>
     <string name="hits_year_toolbar">Hity roku (%1$d)</string>
+    <string name="unblock_user">Odblokuj użytkownika</string>
+    <string name="block_user">Zablokuj użytkownika</string>
+    <string name="unobserve_user">Przestań obserwować</string>
+    <string name="observe_user">Obserwuj (%1$d)</string>
 </resources>

@@ -3,6 +3,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.profile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.view.MotionEvent
 import android.view.View
+import kotlinx.android.synthetic.main.profile_options_bottomsheet.*
 
 
 class ProfileActivity : BaseActivity(), ProfileView {
@@ -82,20 +85,21 @@ class ProfileActivity : BaseActivity(), ProfileView {
         }
     }
 
-    /*override fun onPause() {
-        super.onPause()
-        if (isFinishing)
-            for (i in 0 until tagPagerAdapter.registeredFragments.size()) {
-                (tagPagerAdapter.registeredFragments.valueAt(i) as TagFragmentNotifier)
-                        .removeDataFragment()
-            }
-    }*/
-    public override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_UP) {
-            val per = Math.abs(appBarLayout.getY()) / appBarLayout.getTotalScrollRange()
-            val setExpanded = per <= 0.5f
-            appBarLayout.setExpanded(setExpanded, true)
+    fun showOptionsMenu() {
+        /*val activityContext = getActivityContext()!!
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.profile_options_bottomsheet, null)
+        dialog.setContentView(bottomSheetView)
+
+        bottomSheetView.apply {
+            profile_observe.setOnClickListener {
+                dialog.dismiss()
         }
-        return super.dispatchTouchEvent(event)
+
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        dialog.setOnShowListener {
+            mBehavior.peekHeight = bottomSheetView.height
+        }
+        dialog.show()*/
     }
 }
