@@ -119,21 +119,5 @@ class ProfileActivity : BaseActivity(), ProfileView {
     }
 
     fun showOptionsMenu() {
-        /*val activityContext = this
-        val dialog = BottomSheetDialog(activityContext)
-        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.profile_options_bottomsheet, null)
-        dialog.setContentView(bottomSheetView)
-
-        bottomSheetView.apply {
-            profile_observe.setOnClickListener {
-                dialog.dismiss()
-            }
-
-            val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
-            dialog.setOnShowListener {
-                mBehavior.peekHeight = bottomSheetView.height
-            }
-            dialog.show()
-        }*/
     }
 }

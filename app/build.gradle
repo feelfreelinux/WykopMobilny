@@ -94,7 +94,7 @@ dependencies {
     // Utils
     implementation "com.bugsnag:bugsnag-android:4.1.3"
     implementation "org.ocpsoft.prettytime:prettytime:$versions.prettytime"
-    implementation "com.github.chrisbanes:PhotoView:$versions.photoview"
+    implementation "com.jsibbold:zoomage:1.1.0"
     implementation "com.pavelsikun:material-seekbar-preference:2.3.0"
 
     // Retrofit
@@ -109,6 +109,7 @@ dependencies {
 
     // AppUpdater
     implementation "com.github.javiersantos:AppUpdater:$versions.appUpdater"
+
 
     // Dagger 2
     implementation "com.google.dagger:dagger:2.13"
