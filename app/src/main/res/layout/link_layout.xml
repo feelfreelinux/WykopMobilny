@@ -24,7 +24,6 @@
             android:scaleType="centerCrop"
             android:clickable="false"
             android:focusable="false"
-            android:src="@drawable/ic_wykopmobilny"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/separator"/>

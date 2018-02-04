@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
+import android.view.Menu
+import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -21,6 +23,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.view.MotionEvent
 import android.view.View
+import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
+import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.profile_options_bottomsheet.*
 
 
@@ -50,10 +54,13 @@ class ProfileActivity : BaseActivity(), ProfileView {
         setSupportActionBar(toolbar)
         presenter.subscribe(this)
         presenter.userName = username
+
         supportActionBar?.apply {
+            title = null
             setDisplayHomeAsUpEnabled(true)
         }
-        toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
+        supportActionBar?.title = null
+
         tabLayout.setupWithViewPager(pager)
         if (dataFragment.data != null) {
             showProfile(dataFragment.data!!)
@@ -70,6 +77,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         pager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(pager)
         profilePicture.loadImage(profileResponse.avatar)
+        signup.text = profileResponse.signupAt.toPrettyDate()
         nickname.text = profileResponse.login
         nickname.setTextColor(getGroupColor(profileResponse.color))
         loadingView.isVisible = false
@@ -78,28 +86,38 @@ class ProfileActivity : BaseActivity(), ProfileView {
             description.isVisible = true
             description.text = profileResponse.description
         }
-        backgroundImg.visibility = if (profileResponse.background != null) View.VISIBLE else View.INVISIBLE
+        if (profileResponse.rank != 0)
+        {
+            rank.isVisible = true
+            rank.text = "#" + profileResponse.rank
+            rank.setBackgroundColor(getGroupColor(profileResponse.color))
+        }
+        profileResponse.sex?.let {
+            genderStripImageView.isVisible = true
+            genderStripImageView.setBackgroundResource(getGenderStripResource(profileResponse.sex))
+        }
+        backgroundImg.visibility = View.VISIBLE
         profileResponse.background?.let {
             backgroundImg.isVisible = true
             backgroundImg.loadImage(profileResponse.background)
+            toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.profile_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.more -> showOptionsMenu()
+            android.R.id.home -> finish()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
     fun showOptionsMenu() {
-        val dialog = BottomSheetDialog(this)
-        val bottomSheetView = layoutInflater.inflate(R.layout.profile_options_bottomsheet, null)
-        dialog.setContentView(bottomSheetView)
-
-        bottomSheetView.apply {
-            profile_observe.setOnClickListener {
-                dialog.dismiss()
-            }
-        }
-
-        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
-        dialog.setOnShowListener {
-            mBehavior.peekHeight = bottomSheetView.height
-        }
-        dialog.show()
     }
 }
