@@ -8,8 +8,10 @@ import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.link_related_layout.view.*
@@ -33,8 +35,6 @@ class RelatedWidget(context: Context, attrs: AttributeSet) : CardView(context, a
         presenter = relatedWidgetPresenter
         title.text = related.title
         urlTextView.text = related.url
-        userNameTextView.text = related.author.nick
-        userNameTextView.setTextColor(context.getGroupColor(related.author.group))
         presenter.subscribe(this)
         presenter.relatedId = relatedItem.id
         title.setOnClickListener {
@@ -47,12 +47,23 @@ class RelatedWidget(context: Context, attrs: AttributeSet) : CardView(context, a
             context.openBrowser(related.url)
         }
         setVoteCount(related.voteCount)
-        authorHeaderView.setAuthor(related.author)
+        authorHeaderView.isVisible = related.author != null
+        userNameTextView.isVisible = related.author != null
+        related.author?.apply {
+            userNameTextView.text = nick
+            userNameTextView.setOnClickListener { openProfile() }
+            authorHeaderView.setOnClickListener { openProfile() }
+            authorHeaderView.setAuthor(this)
+            userNameTextView.setTextColor(context.getGroupColor(group))
+        }
         setupButtons()
         plusButton.setup(userManagerApi)
         minusButton.setup(userManagerApi)
     }
 
+    fun openProfile() {
+        getActivityContext()!!.startActivity(ProfileActivity.createIntent(getActivityContext()!!, relatedItem.author!!.nick))
+    }
     fun setupButtons() {
         when (relatedItem.userVote) {
             1 -> {

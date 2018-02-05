@@ -41,7 +41,8 @@ class PublishedLinksFragment : BaseFeedFragment<Link>(), PublishedLinksView {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        dataFragment.data = PagedDataModel(presenter.page , data)
+        if (::dataFragment.isInitialized)
+            dataFragment.data = PagedDataModel(presenter.page , data)
     }
 
     override fun onDetach() {

@@ -31,7 +31,7 @@ class ProfileRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
                     .map { it.map { EntryLinkMapper.map(it, linksPreferencesApi) } }
 
     override fun getPublished(username : String, page : Int): Single<List<Link>> =
-            profileApi.getDigged(username, page)
+            profileApi.getPublished(username, page)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
                     .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }

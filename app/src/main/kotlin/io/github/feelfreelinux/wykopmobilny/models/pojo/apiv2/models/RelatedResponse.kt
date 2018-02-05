@@ -10,7 +10,7 @@ class RelatedResponse (
         @Json(name="vote_count")
         val voteCount : Int,
         @Json(name="author")
-        val author : AuthorResponse,
+        val author : AuthorResponse?,
         @Json(name="title")
         val title : String,
 

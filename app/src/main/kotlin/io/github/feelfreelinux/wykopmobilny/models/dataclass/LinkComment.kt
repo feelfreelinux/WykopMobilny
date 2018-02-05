@@ -15,7 +15,7 @@ class LinkComment(
         var voteCountPlus: Int,
         var voteCountMinus: Int,
         var userVote: Int,
-        val parentId: Int,
+        var parentId: Int,
         val canVote: Boolean,
         val linkId: Int,
         val embed: Embed?,

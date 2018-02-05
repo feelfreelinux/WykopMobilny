@@ -25,6 +25,10 @@ class LinkPresenter(
         linkHandlerApi.handleUrl(url)
     }
 
+    fun openProfile(nickname : String) {
+        navigatorApi.openProfileActivity(nickname)
+    }
+
     fun openUpvotersList() {
         navigatorApi.openLinkUpvotersActivity(linkId)
     }

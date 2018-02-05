@@ -24,8 +24,10 @@ import javax.inject.Inject
 import android.view.MotionEvent
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
+import io.github.feelfreelinux.wykopmobilny.utils.toDurationPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.profile_options_bottomsheet.*
+import org.ocpsoft.prettytime.PrettyTime
 
 
 class ProfileActivity : BaseActivity(), ProfileView {
@@ -77,7 +79,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         pager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(pager)
         profilePicture.loadImage(profileResponse.avatar)
-        signup.text = profileResponse.signupAt.toPrettyDate()
+        signup.text = profileResponse.signupAt.toDurationPrettyDate()
         nickname.text = profileResponse.login
         nickname.setTextColor(getGroupColor(profileResponse.color))
         loadingView.isVisible = false
@@ -96,9 +98,8 @@ class ProfileActivity : BaseActivity(), ProfileView {
             genderStripImageView.isVisible = true
             genderStripImageView.setBackgroundResource(getGenderStripResource(profileResponse.sex))
         }
-        backgroundImg.visibility = View.VISIBLE
+        backgroundImg.isVisible = true
         profileResponse.background?.let {
-            backgroundImg.isVisible = true
             backgroundImg.loadImage(profileResponse.background)
             toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         }

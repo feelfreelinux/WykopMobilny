@@ -28,6 +28,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
     lateinit var presenter : LinkCommentPresenter
     lateinit var settingsApi : SettingsPreferencesApi
     lateinit var userManagerApi : UserManagerApi
+    var shouldEnableClickListener = false
     lateinit var collapseListener : (Boolean, Int) -> Unit
     init {
         View.inflate(context, R.layout.link_comment_layout, this)
@@ -64,8 +65,11 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
 
     private fun setupBody() {
         commentImageView.setEmbed(comment.embed, settingsApi, presenter.newNavigatorApi, comment.isNsfw)
+        val clickListener =  { presenter.handleUrl(url) }
+        if (shouldEnableClickListener) setOnClickListener { clickListener() }
+        else setOnClickListener(null)
         comment.body?.let {
-            commentContentTextView.prepareBody(comment.body!!, { presenter.handleUrl(it) }, null, settingsApi.openSpoilersDialog)
+            commentContentTextView.prepareBody(comment.body!!, { presenter.handleUrl(it) }, if (shouldEnableClickListener) clickListener else null, settingsApi.openSpoilersDialog)
         }
         collapseButton.setOnClickListener {
             commentContentTextView.isVisible = false

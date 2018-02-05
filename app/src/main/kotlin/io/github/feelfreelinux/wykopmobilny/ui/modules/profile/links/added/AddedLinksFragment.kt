@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import kotlinx.android.synthetic.main.feed_fragment.*
 import javax.inject.Inject
 
 class AddedLinksFragment : BaseFeedFragment<Link>(), AddedLinksView {
@@ -41,6 +42,7 @@ class AddedLinksFragment : BaseFeedFragment<Link>(), AddedLinksView {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        if (::dataFragment.isInitialized)
         dataFragment.data = PagedDataModel(presenter.page , data)
     }
 

@@ -15,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.feed_fragment.*
 import javax.inject.Inject
 
@@ -68,7 +69,8 @@ class ActionsFragment : BaseFragment(), ActionsView {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        dataFragment.data =feedAdapter.data
+        if (::dataFragment.isInitialized)
+            dataFragment.data = feedAdapter.data
     }
 
     override fun onDetach() {
@@ -79,5 +81,11 @@ class ActionsFragment : BaseFragment(), ActionsView {
     override fun onPause() {
         super.onPause()
         if (isRemoving) childFragmentManager.removeDataFragment(dataFragment)
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (isVisibleToUser) {
+            printout("visible ACTIONS")
+        }
     }
 }

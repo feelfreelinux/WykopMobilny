@@ -26,15 +26,11 @@ class LinksFragment : BaseFragment() {
         return inflater.inflate(R.layout.profile_subtab_layout, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        pager.offscreenPageLimit = 6
-        pager.adapter = pagerAdapter
-        tabLayout.setupWithViewPager(pager)
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (isVisibleToUser && pager.adapter != pagerAdapter) {
+            pager.offscreenPageLimit = 1
+            pager.adapter = pagerAdapter
+            tabLayout.setupWithViewPager(pager)
+        }
     }
 }

@@ -10,7 +10,7 @@ data class ProfileResponse(
         val color : Int,
 
         @Json(name="sex")
-        val sex : String,
+        val sex : String?,
 
         @Json(name="avatar")
         val avatar : String,

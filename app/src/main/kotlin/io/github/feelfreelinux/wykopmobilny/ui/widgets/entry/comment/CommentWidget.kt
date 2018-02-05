@@ -40,6 +40,7 @@ class CommentWidget : CardView, CommentView {
 
     var addReceiverListener: ((Author) -> Unit)? = null
     lateinit var presenter : CommentPresenter
+    var shouldEnableClickListener = false
     private lateinit var userManagerApi: UserManagerApi
     private lateinit var votersDialogListener : (List<Voter>) -> Unit
     lateinit var settingsPreferencesApi : SettingsPreferencesApi
@@ -102,9 +103,11 @@ class CommentWidget : CardView, CommentView {
     private fun setupBody() {
         moreOptionsTextView.setOnClickListener { openOptionsMenu() }
         replyTextView.setOnClickListener { addReceiver() }
+        val clickListener =  { presenter.handleLink(url) }
+        if (shouldEnableClickListener) setOnClickListener { clickListener() }
         if (comment.body.isNotEmpty()) {
             entryContentTextView.isVisible = true
-            entryContentTextView.prepareBody(comment.body, { presenter.handleLink(it) }, null, settingsPreferencesApi.openSpoilersDialog)
+            entryContentTextView.prepareBody(comment.body, { presenter.handleLink(it) }, if (shouldEnableClickListener) clickListener else null, settingsPreferencesApi.openSpoilersDialog)
         } else entryContentTextView.isVisible = false
     }
 

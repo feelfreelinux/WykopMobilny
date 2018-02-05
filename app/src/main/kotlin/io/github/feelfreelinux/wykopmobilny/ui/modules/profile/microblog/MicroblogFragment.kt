@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.profile_subtab_layout.*
 
 class MicroblogFragment : BaseFragment() {
@@ -24,10 +25,11 @@ class MicroblogFragment : BaseFragment() {
         return inflater.inflate(R.layout.profile_subtab_layout, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        pager.offscreenPageLimit = 2
-        pager.adapter = pagerAdapter
-        tabLayout.setupWithViewPager(pager)
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (isVisibleToUser && pager.adapter != pagerAdapter) {
+            pager.offscreenPageLimit = 1
+            pager.adapter = pagerAdapter
+            tabLayout.setupWithViewPager(pager)
+        }
     }
 }

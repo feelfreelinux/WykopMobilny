@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.entry_comment_layout.view.*
 
 class CommentViewHolder(val view: View, private val addReceiverListener : (Author) -> Unit, val settingsPreferencesApi: SettingsPreferencesApi, val userManagerApi: UserManagerApi, val commentPresenter: CommentPresenter) : RecyclableViewHolder(view) {
     fun bindView(comment : EntryComment, isAuthorComment: Boolean, commentId : Int?) {
+        view.entryComment.shouldEnableClickListener = true
         view.entryComment.addReceiverListener = addReceiverListener
         view.entryComment.setCommentData(comment, userManagerApi, settingsPreferencesApi, commentPresenter)
         view.entryComment.setStyleForComment(isAuthorComment, commentId ?: -1)

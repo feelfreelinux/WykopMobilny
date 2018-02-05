@@ -95,14 +95,14 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
         get() = feedAdapter.data
 
     var isLoading: Boolean
-        get() = loadingView.isVisible
+        get() = loadingView?.isVisible ?: false
         set(value) {
-            loadingView.isVisible = value
+            loadingView?.isVisible = value
         }
 
     var isRefreshing: Boolean
-        get() = swiperefresh.isRefreshing
+        get() = swiperefresh?.isRefreshing ?: true
         set(value) {
-            swiperefresh.isRefreshing = value
+            swiperefresh?.isRefreshing = value
         }
 }

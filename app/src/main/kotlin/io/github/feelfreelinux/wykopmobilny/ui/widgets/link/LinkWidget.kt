@@ -69,6 +69,8 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         if (author != null) {
             avatarView.isVisible = true
             userTextView.isVisible = true
+            userTextView.setOnClickListener { presenter.openProfile(link.author!!.nick) }
+            avatarView.setOnClickListener { presenter.openProfile(link.author!!.nick) }
             avatarView.setAuthor(link.author!!)
             userTextView.text = link.author!!.nick
             userTextView.setTextColor(context.getGroupColor(link.author!!.group))
@@ -76,6 +78,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
             avatarView.isVisible = false
             userTextView.isVisible = false
         }
+
         urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
         tagsTextView.prepareBody(link.tags.convertToTagsHtml(), this)
     }

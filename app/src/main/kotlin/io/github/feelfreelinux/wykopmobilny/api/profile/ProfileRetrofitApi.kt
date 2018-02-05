@@ -32,10 +32,10 @@ interface ProfileRetrofitApi {
     @GET("/profiles/entries/{username}/page/{page}/appkey/$APP_KEY")
     fun getEntries(@Path("username") username : String, @Path("page") page : Int) : Single<WykopApiResponse<List<EntryResponse>>>
 
-    @GET("/profiles/EntriesComments/{username}/page/{page}/appkey/$APP_KEY")
+    @GET("/profiles/entriescomments/{username}/page/{page}/appkey/$APP_KEY")
     fun getEntriesComments(@Path("username") username : String, @Path("page") page : Int) : Single<WykopApiResponse<List<EntryCommentResponse>>>
 
-    @GET("/profiles/Related/{username}/page/{page}/appkey/$APP_KEY")
-    fun getRelated(@Path("username") username : String, @Path("page") page : Int) : Single<WykopApiResponse<List<RelatedResponse>>>
+    @GET("/profiles/related/{username}/page/{page}/appkey/$APP_KEY")
+    fun getRelated(@Path("username") username : String, @Path("page") page : Int)  : Single<WykopApiResponse<List<RelatedResponse>>>
 
 }
