@@ -131,8 +131,12 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             adapter.notifyDataSetChanged()
             loadingView.isVisible = true
             hideInputToolbar()
-            presenter.loadComments()
-            presenter.updateLink()
+            if (adapter.link != null) {
+                presenter.loadComments()
+                presenter.updateLink()
+            } else {
+                presenter.loadLinkAndComments()
+            }
         }
 
         setSubtitle()

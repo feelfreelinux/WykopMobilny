@@ -23,6 +23,18 @@ class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi) :
         )
     }
 
+    fun loadLinkAndComments(scrollCommentId : Int? = null) {
+        compositeObservable.add(
+                linksApi.getLink(linkId)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({
+                            view?.updateLink(it)
+                            loadComments(scrollCommentId)
+                        }, { view?.showErrorDialog(it) })
+        )
+    }
+
     fun updateLink() {
         compositeObservable.add(
                 linksApi.getLink(linkId)

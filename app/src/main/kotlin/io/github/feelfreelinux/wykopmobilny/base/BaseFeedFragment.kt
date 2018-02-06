@@ -44,7 +44,7 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
     }
 
     private fun setupInfiniteScrollListeners() {
-        recyclerView.apply {
+        recyclerView?.apply {
             clearOnScrollListeners()
             addOnScrollListener(InfiniteScrollListener({
                 loadData(false)
@@ -53,7 +53,7 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
     }
 
     fun initAdapter(feedList: List<T>? = emptyList()) {
-        recyclerView.adapter = feedAdapter as RecyclerView.Adapter<*>
+        recyclerView?.adapter = feedAdapter as RecyclerView.Adapter<*>
         setupInfiniteScrollListeners()
         if (feedList == null || feedList.isEmpty()) {
             // Create adapter if no data is saved
