@@ -15,17 +15,16 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ProfileResp
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.actions.ActionsFragment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.view.MotionEvent
 import android.view.View
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
-import io.github.feelfreelinux.wykopmobilny.utils.toDurationPrettyDate
-import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.profile_options_bottomsheet.*
 import org.ocpsoft.prettytime.PrettyTime
 
@@ -35,6 +34,8 @@ class ProfileActivity : BaseActivity(), ProfileView {
     @Inject lateinit var navigator : NavigatorApi
     @Inject lateinit var presenter : ProfilePresenter
     @Inject lateinit var userManagerApi : UserManagerApi
+    private var observeStateResponse : ObserveStateResponse? = null
+
     val pagerAdapter by lazy { ProfilePagerAdapter(resources, supportFragmentManager) }
     lateinit var dataFragment : DataFragment<ProfileResponse>
 
@@ -88,6 +89,10 @@ class ProfileActivity : BaseActivity(), ProfileView {
             description.isVisible = true
             description.text = profileResponse.description
         }
+        profileResponse.isObserved?.let {
+            observeStateResponse = ObserveStateResponse(profileResponse.isObserved, profileResponse.isBlocked!!)
+            invalidateOptionsMenu()
+        }
         if (profileResponse.rank != 0)
         {
             rank.isVisible = true
@@ -105,14 +110,35 @@ class ProfileActivity : BaseActivity(), ProfileView {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.profile_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+        if (userManagerApi.isUserAuthorized()) {
+            menu.findItem(R.id.pw).isVisible = true
+            observeStateResponse?.apply {
+                menu.apply {
+                    findItem(R.id.observe_profile).title = getString(R.string.observe_user, dataFragment.data!!.followers)
+                    findItem(R.id.unobserve_profile).isVisible = isObserved
+                    findItem(R.id.observe_profile).isVisible = !isObserved
+                    findItem(R.id.block).isVisible = !isBlocked
+                    findItem(R.id.unblock).isVisible = isBlocked
+                }
+            }
+        }
+        return true
+    }
+
+    override fun showButtons(observeState: ObserveStateResponse) {
+        observeStateResponse = observeState
+        invalidateOptionsMenu()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.more -> showOptionsMenu()
+            R.id.pw -> dataFragment.data?.let { navigator.openConversationListActivity(this, dataFragment.data!!.login) }
+            R.id.unblock -> { presenter.markUnblocked() }
+            R.id.block -> { presenter.markBlocked() }
+            R.id.observe_profile -> { presenter.markObserved() }
+            R.id.unobserve_profile -> { presenter.markUnobserved() }
             android.R.id.home -> finish()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -120,5 +146,15 @@ class ProfileActivity : BaseActivity(), ProfileView {
     }
 
     fun showOptionsMenu() {
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (isFinishing) {
+            for (i in 0 .. pagerAdapter.registeredFragments.size()) {
+                (pagerAdapter.registeredFragments.get(i) as? ProfileFragmentNotifier)?.removeDataFragment()
+            }
+        }
+        presenter.unsubscribe()
     }
 }

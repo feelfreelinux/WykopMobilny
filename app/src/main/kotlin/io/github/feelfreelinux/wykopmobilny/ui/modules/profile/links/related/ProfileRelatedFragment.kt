@@ -7,12 +7,14 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
+import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ProfileRelatedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.RelatedListAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileFragmentNotifier
 import javax.inject.Inject
 
-class ProfileRelatedFragment : BaseFeedFragment<Related>(), ProfileRelatedView {
+class ProfileRelatedFragment : BaseFeedFragment<Related>(), ProfileRelatedView, ProfileFragmentNotifier {
     val username by lazy { (activity as ProfileActivity).username }
     @Inject override lateinit var feedAdapter : ProfileRelatedAdapter
     @Inject lateinit var presenter : ProfileRelatedPresenter
@@ -51,5 +53,9 @@ class ProfileRelatedFragment : BaseFeedFragment<Related>(), ProfileRelatedView {
     override fun onDetach() {
         super.onDetach()
         presenter.unsubscribe()
+    }
+
+    override fun removeDataFragment() {
+        if (isAdded) childFragmentManager.removeDataFragment(dataFragment)
     }
 }

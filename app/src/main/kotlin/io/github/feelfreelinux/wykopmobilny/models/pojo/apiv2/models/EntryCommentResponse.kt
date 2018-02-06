@@ -5,6 +5,8 @@ import com.squareup.moshi.Json
 data class EntryCommentResponse(
         @Json(name = "id")
         val id : Int,
+        @Json(name = "entry_id")
+        val entryId : Int?,
         @Json(name = "author")
         val author : AuthorResponse,
         @Json(name = "date")

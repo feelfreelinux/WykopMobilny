@@ -28,7 +28,7 @@ class MyWykopIndexFragment : BaseFeedFragment<EntryLink>(), MyWykopView, MyWykop
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
-        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        dataFragment = childFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         dataFragment.data?.apply {
             presenter.page = page
         }
@@ -52,10 +52,10 @@ class MyWykopIndexFragment : BaseFeedFragment<EntryLink>(), MyWykopView, MyWykop
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
+        if (isRemoving) childFragmentManager.removeDataFragment(dataFragment)
     }
 
     override fun removeDataFragment() {
-        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
+        childFragmentManager.removeDataFragment(dataFragment)
     }
 }

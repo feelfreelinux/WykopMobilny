@@ -32,10 +32,20 @@ interface ProfileRetrofitApi {
     @GET("/profiles/entries/{username}/page/{page}/appkey/$APP_KEY")
     fun getEntries(@Path("username") username : String, @Path("page") page : Int) : Single<WykopApiResponse<List<EntryResponse>>>
 
-    @GET("/profiles/entriescomments/{username}/page/{page}/appkey/$APP_KEY")
+    @GET("/profiles/entriescomments/{username}/page/{page}/appkey/$APP_KEY/data/full")
     fun getEntriesComments(@Path("username") username : String, @Path("page") page : Int) : Single<WykopApiResponse<List<EntryCommentResponse>>>
 
     @GET("/profiles/related/{username}/page/{page}/appkey/$APP_KEY")
     fun getRelated(@Path("username") username : String, @Path("page") page : Int)  : Single<WykopApiResponse<List<RelatedResponse>>>
 
-}
+    @GET("/profiles/observe/{username}/appkey/$APP_KEY")
+    fun observe(@Path("username") username : String) : Single<WykopApiResponse<ObserveStateResponse>>
+
+    @GET("/profiles/unobserve/{username}/appkey/$APP_KEY")
+    fun unobserve(@Path("username") username : String) : Single<WykopApiResponse<ObserveStateResponse>>
+
+    @GET("/profiles/block/{username}/appkey/$APP_KEY")
+    fun block(@Path("username") username : String) : Single<WykopApiResponse<ObserveStateResponse>>
+
+    @GET("/profiles/unblock/{username}/appkey/$APP_KEY")
+    fun unblock(@Path("username") username : String) : Single<WykopApiResponse<ObserveStateResponse>>}

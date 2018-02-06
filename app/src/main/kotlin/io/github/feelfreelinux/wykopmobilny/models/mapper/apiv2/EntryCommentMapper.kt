@@ -10,7 +10,7 @@ class EntryCommentMapper {
         override fun map(value: EntryCommentResponse): EntryComment {
             return EntryComment(
                     value.id,
-                    0,
+                    value.entryId ?: 0,
                     AuthorMapper.map(value.author),
                     value.body ?: "",
                     value.date.toPrettyDate(),

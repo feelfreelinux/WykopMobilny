@@ -22,7 +22,7 @@ class EntryCommentAdapter @Inject constructor(val presenterFactory: CommentPrese
                                               val userManagerApi: UserManagerApi,
                                               val settingsPreferencesApi: SettingsPreferencesApi) : SimpleBaseProgressAdapter<CommentViewHolder, EntryComment>() {
     override fun bindHolder(holder: CommentViewHolder, position: Int) {
-        holder.bindView(data[position], true, -1)
+        holder.bindView(data[position], false, -1, true)
     }
 
     override fun createViewHolder(parent: ViewGroup): CommentViewHolder =

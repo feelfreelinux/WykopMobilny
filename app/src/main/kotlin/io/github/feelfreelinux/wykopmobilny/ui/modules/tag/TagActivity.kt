@@ -8,7 +8,7 @@ import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
@@ -104,7 +104,7 @@ class TagActivity : BaseActivity(), TagActivityView {
         invalidateOptionsMenu()
     }
 
-    override fun setObserveState(tagState: TagStateResponse) {
+    override fun setObserveState(tagState: ObserveStateResponse) {
         tagMeta?.isBlocked = tagState.isBlocked
         tagMeta?.isObserved = tagState.isObserved
         invalidateOptionsMenu()

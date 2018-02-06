@@ -6,11 +6,13 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
+import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileFragmentNotifier
 import javax.inject.Inject
 
-class PublishedLinksFragment : BaseFeedFragment<Link>(), PublishedLinksView {
+class PublishedLinksFragment : BaseFeedFragment<Link>(), PublishedLinksView, ProfileFragmentNotifier {
     val username by lazy { (activity as ProfileActivity).username }
     @Inject override lateinit var feedAdapter : LinkAdapter
     @Inject lateinit var presenter : PublishedLinksPresenter
@@ -48,5 +50,9 @@ class PublishedLinksFragment : BaseFeedFragment<Link>(), PublishedLinksView {
     override fun onDetach() {
         super.onDetach()
         presenter.unsubscribe()
+    }
+
+    override fun removeDataFragment() {
+        if (isAdded) childFragmentManager.removeDataFragment(dataFragment)
     }
 }

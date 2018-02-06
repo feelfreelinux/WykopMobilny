@@ -14,4 +14,44 @@ class ProfilePresenter(val schedulers: Schedulers, val profileApi: ProfileApi) :
                         .subscribe({ view?.showProfile(it) }, { view?.showErrorDialog(it) })
         )
     }
+
+    fun markObserved() {
+        compositeObservable.add(
+                profileApi.observe(userName)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
+
+        )
+    }
+
+    fun markUnobserved() {
+        compositeObservable.add(
+                profileApi.unobserve(userName)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
+
+        )
+    }
+
+    fun markBlocked() {
+        compositeObservable.add(
+                profileApi.block(userName)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
+
+        )
+    }
+
+    fun markUnblocked() {
+        compositeObservable.add(
+                profileApi.unblock(userName)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
+
+        )
+    }
 }

@@ -35,6 +35,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificatio
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.BadgeDrawerDrawable
@@ -87,6 +88,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             R.id.nav_home -> { openFragment(PromotedFragment.newInstance()) }
             R.id.search -> { openFragment(SearchFragment.newInstance()) }
             R.id.favourite -> { openFragment(FavoriteFragment.newInstance()) }
+            R.id.your_profile -> { startActivity(ProfileActivity.createIntent(this, userManagerApi.getUserCredentials()!!.login)) }
             R.id.nav_wykopalisko -> { openFragment(UpcomingFragment.newInstance()) }
             R.id.hits -> { openFragment(HitsFragment.newInstance()) }
             R.id.about -> { openAboutSheet() }

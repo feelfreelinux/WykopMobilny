@@ -71,4 +71,20 @@ class ProfileRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
                     .retryWhen(userTokenRefresher)
                     .compose<List<RelatedResponse>>(ErrorHandlerTransformer())
                     .map { it.map { RelatedMapper.map(it) } }
+
+    override fun observe(tag : String) = profileApi.observe(tag)
+            .retryWhen(userTokenRefresher)
+            .compose<ObserveStateResponse>(ErrorHandlerTransformer())
+
+    override fun unobserve(tag : String) = profileApi.unobserve(tag)
+            .retryWhen(userTokenRefresher)
+            .compose<ObserveStateResponse>(ErrorHandlerTransformer())
+
+    override fun block(tag : String) = profileApi.block(tag)
+            .retryWhen(userTokenRefresher)
+            .compose<ObserveStateResponse>(ErrorHandlerTransformer())
+
+    override fun unblock(tag : String) = profileApi.unblock(tag)
+            .retryWhen(userTokenRefresher)
+            .compose<ObserveStateResponse>(ErrorHandlerTransformer())
 }

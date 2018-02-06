@@ -10,9 +10,10 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileFragmentNotifier
 import javax.inject.Inject
 
-class MicroblogEntriesFragment : BaseFeedFragment<Entry>(), MicroblogEntriesView {
+class MicroblogEntriesFragment : BaseFeedFragment<Entry>(), MicroblogEntriesView, ProfileFragmentNotifier {
     val username by lazy { (activity as ProfileActivity).username }
     @Inject override lateinit var feedAdapter : FeedAdapter
     @Inject lateinit var presenter : MicroblogEntriesPresenter
@@ -51,5 +52,9 @@ class MicroblogEntriesFragment : BaseFeedFragment<Entry>(), MicroblogEntriesView
     override fun onDetach() {
         super.onDetach()
         presenter.unsubscribe()
+    }
+
+    override fun removeDataFragment() {
+        if (isAdded) childFragmentManager.removeDataFragment(dataFragment)
     }
 }

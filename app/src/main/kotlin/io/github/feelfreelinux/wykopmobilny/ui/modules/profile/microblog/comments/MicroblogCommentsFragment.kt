@@ -8,11 +8,13 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
+import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryCommentAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileFragmentNotifier
 import javax.inject.Inject
 
-class MicroblogCommentsFragment : BaseFeedFragment<EntryComment>(), MicroblogCommentsView {
+class MicroblogCommentsFragment : BaseFeedFragment<EntryComment>(), MicroblogCommentsView, ProfileFragmentNotifier {
     val username by lazy { (activity as ProfileActivity).username }
     @Inject override lateinit var feedAdapter : EntryCommentAdapter
     @Inject lateinit var presenter : MicroblogCommentsPresenter
@@ -44,11 +46,15 @@ class MicroblogCommentsFragment : BaseFeedFragment<EntryComment>(), MicroblogCom
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (::dataFragment.isInitialized)
-            dataFragment.data = PagedDataModel(presenter.page , data)
+            dataFragment.data = PagedDataModel(presenter.page, data)
     }
 
     override fun onDetach() {
         super.onDetach()
         presenter.unsubscribe()
+    }
+
+    override fun removeDataFragment() {
+        if (isAdded) childFragmentManager.removeDataFragment(dataFragment)
     }
 }

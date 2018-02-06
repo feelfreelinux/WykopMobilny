@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.tag.entries
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
-import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -11,7 +10,6 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityView
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagFragmentNotifier

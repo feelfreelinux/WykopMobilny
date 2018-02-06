@@ -48,7 +48,7 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/profile"
+            android:id="@+id/your_profile"
             android:icon="@drawable/ic_navi_profile"
             android:title="@string/your_profile"/>
 

@@ -13,13 +13,14 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileFragmentNotifier
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.feed_fragment.*
 import javax.inject.Inject
 
-class ActionsFragment : BaseFragment(), ActionsView {
+class ActionsFragment : BaseFragment(), ActionsView, ProfileFragmentNotifier {
     val username by lazy { (activity as ProfileActivity).username }
     companion object {
         val DATA_FRAGMENT_TAG = "ACTION_FRAGMENT_TAG"
@@ -78,14 +79,7 @@ class ActionsFragment : BaseFragment(), ActionsView {
         presenter.unsubscribe()
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving) childFragmentManager.removeDataFragment(dataFragment)
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        if (isVisibleToUser) {
-            printout("visible ACTIONS")
-        }
+    override fun removeDataFragment(){
+        if (isAdded) childFragmentManager.removeDataFragment(dataFragment)
     }
 }

@@ -20,7 +20,7 @@ class ProfileLinkCommentViewHolder(val view: View, val linkCommentPresenter: Lin
         view.linkComment.shouldEnableClickListener = true
         view.linkComment.collapseListener = {_, _ ->}
         view.linkComment.setLinkCommentData(comment, linkCommentPresenter, userManagerApi, settingsPreferencesApi)
-        view.linkComment.setStyleForComment(true, -1)
+        view.linkComment.setStyleForComment(false, -1)
         view.hiddenRepliesView.isVisible = false
         view.linkComment.showHiddenCommentsCountCard(false)
         view.replyTextView.isVisible =false

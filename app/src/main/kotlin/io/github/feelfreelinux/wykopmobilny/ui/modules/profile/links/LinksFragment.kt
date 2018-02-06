@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileFragmentNotifier
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.profile_subtab_layout.*
 
-class LinksFragment : BaseFragment() {
+class LinksFragment : BaseFragment(), ProfileFragmentNotifier {
     companion object {
         val DATA_FRAGMENT_TAG = "USER_LINKS_FRAGMENT"
 
@@ -31,6 +32,14 @@ class LinksFragment : BaseFragment() {
             pager.offscreenPageLimit = 1
             pager.adapter = pagerAdapter
             tabLayout.setupWithViewPager(pager)
+        }
+    }
+
+    override fun removeDataFragment() {
+        if (isAdded) {
+            for (i in 0..pagerAdapter.registeredFragments.size()) {
+                (pagerAdapter.registeredFragments.get(i) as? ProfileFragmentNotifier)?.removeDataFragment()
+            }
         }
     }
 }

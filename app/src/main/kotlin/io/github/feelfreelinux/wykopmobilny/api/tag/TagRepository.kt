@@ -6,7 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransfo
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagEntriesMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagLinksMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTagResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagStateResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagEntriesResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagLinksResponse
 import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
@@ -33,17 +33,17 @@ class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresh
 
     override fun observe(tag : String) = tagApi.observe(tag)
             .retryWhen(userTokenRefresher)
-            .compose<TagStateResponse>(ErrorHandlerTransformer())
+            .compose<ObserveStateResponse>(ErrorHandlerTransformer())
 
     override fun unobserve(tag : String) = tagApi.unobserve(tag)
             .retryWhen(userTokenRefresher)
-            .compose<TagStateResponse>(ErrorHandlerTransformer())
+            .compose<ObserveStateResponse>(ErrorHandlerTransformer())
 
     override fun block(tag : String) = tagApi.block(tag)
             .retryWhen(userTokenRefresher)
-            .compose<TagStateResponse>(ErrorHandlerTransformer())
+            .compose<ObserveStateResponse>(ErrorHandlerTransformer())
 
     override fun unblock(tag : String) = tagApi.unblock(tag)
             .retryWhen(userTokenRefresher)
-            .compose<TagStateResponse>(ErrorHandlerTransformer())
+            .compose<ObserveStateResponse>(ErrorHandlerTransformer())
 }
