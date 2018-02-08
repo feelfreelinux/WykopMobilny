@@ -55,5 +55,4 @@ class LinkViewHolder(val view: View) : RecyclableViewHolder(view)  {
             GlideApp.with(this).clear(image)
         }
     }
-
 }

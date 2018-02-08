@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.comment_list_item.view.*
 import kotlinx.android.synthetic.main.entry_comment_layout.view.*
@@ -22,6 +23,10 @@ class CommentViewHolder(val view: View, private val addReceiverListener : (Autho
     override fun cleanRecycled() {
         view.apply {
             GlideApp.with(this).clear(view.entryComment.entryImageView)
+            view.entryComment.shouldEnableClickListener = false
+            view.entryComment.entryContentTextView.text = null
+            view.entryComment.addReceiverListener = null
+            view.entryComment.setOnClickListener(null)
         }
     }
 }

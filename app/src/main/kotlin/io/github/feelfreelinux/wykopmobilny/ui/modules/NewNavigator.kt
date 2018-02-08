@@ -17,6 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.links.upvoters.UpvotersAc
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
@@ -45,7 +46,7 @@ interface NewNavigatorApi {
     fun openLinkDownvotersActivity(linkId : Int)
     fun openLinkRelatedActivity(linkId : Int)
     fun openProfileActivity(username : String)
-
+    fun openNotificationsListActivity(preselectIndex : Int = NotificationsListActivity.PRESELECT_NOTIFICATIONS)
 }
 
 class NewNavigator(val context : Activity) : NewNavigatorApi {
@@ -127,5 +128,9 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
 
     override fun openProfileActivity(username: String) {
         context.startActivity(ProfileActivity.createIntent(context, username))
+    }
+
+    override fun openNotificationsListActivity(preselectIndex: Int) {
+        context.startActivity(NotificationsListActivity.createIntent(context, preselectIndex))
     }
 }

@@ -40,4 +40,10 @@
         android:title="@string/block_user"
         app:showAsAction="never"/>
 
+    <item
+        android:visible="true"
+        android:id="@+id/badges"
+        android:title="@string/badges"
+        app:showAsAction="never"/>
+
 </menu>

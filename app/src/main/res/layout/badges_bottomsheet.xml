@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    android:id="@+id/badgesList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?attr/cardListColor">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/badges"
+        android:textSize="@dimen/bottomsheet_item_title_text_size"
+        android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_line_height"
+        android:background="?attr/lineColor"/>
+
+    <ProgressBar
+        android:id="@+id/loadingView"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -27,6 +27,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNaviga
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryDetailModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListFragmentProvider
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivityModule
@@ -92,4 +95,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [LinkCommentEditModule::class])
     abstract fun bindLinkEditCommentActivity() : LinkCommentEditActivity
+
+    @ContributesAndroidInjector(modules = [NotificationsListFragmentProvider::class, NotificationsListModule::class])
+    abstract fun bindNotificationsActivity() : NotificationsListActivity
 }

@@ -21,10 +21,14 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.view.MotionEvent
 import android.view.View
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.BadgeResponse
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
+import kotlinx.android.synthetic.main.badge_list_item.view.*
+import kotlinx.android.synthetic.main.badges_bottomsheet.view.*
 import kotlinx.android.synthetic.main.profile_options_bottomsheet.*
 import org.ocpsoft.prettytime.PrettyTime
 
@@ -35,6 +39,8 @@ class ProfileActivity : BaseActivity(), ProfileView {
     @Inject lateinit var presenter : ProfilePresenter
     @Inject lateinit var userManagerApi : UserManagerApi
     private var observeStateResponse : ObserveStateResponse? = null
+    private lateinit var badgesDialogListener : (List<BadgeResponse>) -> Unit
+
 
     val pagerAdapter by lazy { ProfilePagerAdapter(resources, supportFragmentManager) }
     lateinit var dataFragment : DataFragment<ProfileResponse>
@@ -139,13 +145,36 @@ class ProfileActivity : BaseActivity(), ProfileView {
             R.id.block -> { presenter.markBlocked() }
             R.id.observe_profile -> { presenter.markObserved() }
             R.id.unobserve_profile -> { presenter.markUnobserved() }
+            R.id.badges -> { showBadgesDialog() }
             android.R.id.home -> finish()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
     }
 
-    fun showOptionsMenu() {
+    fun showBadgesDialog() {
+        val dialog = BottomSheetDialog(this)
+        val badgesDialogView = layoutInflater.inflate(R.layout.badges_bottomsheet, null)
+        badgesDialogView.badgesList
+        dialog.setContentView(badgesDialogView)
+        badgesDialogListener = {
+            if (dialog.isShowing) {
+                badgesDialogView.loadingView.isVisible = false
+                for (badge in it) {
+                    val item = layoutInflater.inflate(R.layout.badge_list_item, null)
+                    item.description.text = badge.description
+                    item.date.text = badge.date.toPrettyDate()
+                    item.badgeTitle.text = badge.name
+                    item.badgeImg.loadImage(badge.icon)
+                    badgesDialogView.badgesList.addView(item)
+                }
+            }
+        }
+        dialog.show()
+        presenter.getBadges()
+    }
+    override fun showBadges(badges: List<BadgeResponse>) {
+        badgesDialogListener(badges)
     }
 
     override fun onDestroy() {

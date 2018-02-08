@@ -11,6 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 import java.util.concurrent.TimeUnit
@@ -80,7 +81,7 @@ class WykopNotificationsJob(
     override fun showNotificationsCount(count: Int) {
         if (settingsApi.showNotifications) {
             // Create intent
-            val intent = MainNavigationActivity.getIntent(context, MainNavigationActivity.TARGET_NOTIFICATIONS)
+            val intent = NotificationsListActivity.createIntent(context)
             intent.action = System.currentTimeMillis().toString()
             intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)

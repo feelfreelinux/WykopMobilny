@@ -64,6 +64,7 @@ fun View.disableFor(millis: Long){
 fun ImageView.loadImage(url : String) {
     GlideApp.with(context)
             .load(url)
+            .override(Target.SIZE_ORIGINAL)
             .into(this)
 }
 

@@ -15,15 +15,14 @@
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/comment_layout_author_padding_vertical"
             android:paddingBottom="@dimen/comment_layout_author_padding_vertical"
             android:paddingLeft="@dimen/comment_layout_author_padding_horizontal"
             android:paddingRight="@dimen/comment_layout_author_padding_horizontal"
+            android:paddingTop="@dimen/comment_layout_author_padding_vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/lineTop"

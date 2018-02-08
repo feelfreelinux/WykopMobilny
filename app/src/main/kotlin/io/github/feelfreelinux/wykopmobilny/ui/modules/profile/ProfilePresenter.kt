@@ -54,4 +54,13 @@ class ProfilePresenter(val schedulers: Schedulers, val profileApi: ProfileApi) :
 
         )
     }
+
+    fun getBadges() {
+        compositeObservable.add(
+                profileApi.getBadges(userName, 0)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.showBadges(it) }, { view?.showErrorDialog(it) })
+        )
+    }
 }

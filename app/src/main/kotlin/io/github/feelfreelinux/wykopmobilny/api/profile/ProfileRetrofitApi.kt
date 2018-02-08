@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api.profile
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.common.WykopApiResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.BadgeResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -48,4 +49,8 @@ interface ProfileRetrofitApi {
     fun block(@Path("username") username : String) : Single<WykopApiResponse<ObserveStateResponse>>
 
     @GET("/profiles/unblock/{username}/appkey/$APP_KEY")
-    fun unblock(@Path("username") username : String) : Single<WykopApiResponse<ObserveStateResponse>>}
+    fun unblock(@Path("username") username : String) : Single<WykopApiResponse<ObserveStateResponse>>
+
+    @GET("/profiles/badges/{username}/page/{page}/appkey/$APP_KEY")
+    fun getBadges(@Path("username") username : String, @Path("page") page: Int) : Single<WykopApiResponse<List<BadgeResponse>>>
+}

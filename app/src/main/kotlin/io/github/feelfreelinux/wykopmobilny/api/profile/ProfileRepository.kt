@@ -6,6 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsRetro
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.BadgeResponse
 import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
@@ -65,6 +66,12 @@ class ProfileRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
                     .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
+
+    override fun getBadges(username: String, page: Int): Single<List<BadgeResponse>> =
+            profileApi.getBadges(username, page)
+                    .retryWhen(userTokenRefresher)
+                    .compose<List<BadgeResponse>>(ErrorHandlerTransformer())
+
 
     override fun getRelated(username: String, page: Int): Single<List<Related>> =
             profileApi.getRelated(username, page)

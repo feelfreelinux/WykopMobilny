@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api.profile
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ProfileResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.BadgeResponse
 import io.reactivex.Single
 
 interface ProfileApi {
@@ -16,6 +17,7 @@ interface ProfileApi {
     fun getEntries(username : String, page : Int) : Single<List<Entry>>
     fun getEntriesComments(username : String, page : Int) : Single<List<EntryComment>>
     fun getRelated(username : String, page : Int) : Single<List<Related>>
+    fun getBadges(username : String, page : Int): Single<List<BadgeResponse>>
 
     fun observe(tag: String): Single<ObserveStateResponse>
     fun unobserve(tag: String): Single<ObserveStateResponse>

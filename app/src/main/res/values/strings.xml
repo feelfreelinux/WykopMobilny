@@ -179,4 +179,5 @@
     <string name="block_user">Zablokuj użytkownika</string>
     <string name="unobserve_user">Przestań obserwować</string>
     <string name="observe_user">Obserwuj (%1$d)</string>
+    <string name="badges">Osiągnięcia</string>
 </resources>

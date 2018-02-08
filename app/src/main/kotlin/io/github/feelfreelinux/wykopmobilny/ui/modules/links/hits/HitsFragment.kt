@@ -75,7 +75,7 @@ class HitsFragment : BaseFragment(), HitsView {
             R.id.byMonth -> {
                 val pickerFragment = MonthYearPickerDialog.newInstance(presenter.monthSelection, presenter.yearSelection)
                 pickerFragment.setTargetFragment(this, PICKER_REQUEST_CODE)
-                pickerFragment.show(childFragmentManager, "pickerDialogFragment")
+                pickerFragment.show(supportFragmentManager, "pickerDialogFragment")
                 setTitle()
             }
 
@@ -90,7 +90,7 @@ class HitsFragment : BaseFragment(), HitsView {
             R.id.byYear -> {
                 val pickerFragment = YearPickerDialog.newInstance(presenter.yearSelection)
                 pickerFragment.setTargetFragment(this, PICKER_REQUEST_CODE)
-                pickerFragment.show(childFragmentManager, "pickerDialogFragment")
+                pickerFragment.show(supportFragmentManager, "pickerDialogFragment")
             }
 
         }

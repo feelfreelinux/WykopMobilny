@@ -13,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDet
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
@@ -95,5 +96,9 @@ class Navigator : NavigatorApi {
 
     override fun openLinkDetailsActivity(context: Activity, link : Link) {
         context.startActivity(LinkDetailsActivity.createIntent(context, link))
+    }
+
+    fun openNotificationsListActivity(context : Activity) {
+        context.startActivity(NotificationsListActivity.createIntent(context))
     }
 }

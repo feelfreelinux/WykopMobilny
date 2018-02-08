@@ -40,7 +40,6 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity).supportActionBar?.setTitle(R.string.notifications_title)
 
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         if (entryFragmentData.data != null && entryFragmentData.data!!.model.isNotEmpty()) {

@@ -32,8 +32,6 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
         super.onCreate(savedInstanceState)
-        (activity as BaseActivity).supportActionBar?.setTitle(R.string.hashtags_notifications_title)
-
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         val pagedModel = entryFragmentData.data
         if (pagedModel != null && pagedModel.model.isNotEmpty()) {

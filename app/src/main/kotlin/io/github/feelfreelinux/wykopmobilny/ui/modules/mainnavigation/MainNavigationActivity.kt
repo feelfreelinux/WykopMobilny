@@ -32,6 +32,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenAc
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
@@ -208,13 +209,13 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         navHeader.view_container.isVisible = value
         navHeader.view_container.apply {
             nav_notifications_tag.setOnClickListener {
-                openFragment(HashTagsNotificationsListFragment.newInstance())
                 deselectItems()
+                navigator.openNotificationsListActivity(NotificationsListActivity.PRESELECT_HASHTAGS)
             }
 
             nav_notifications.setOnClickListener {
-                openFragment(NotificationsListFragment.newInstance())
                 deselectItems()
+                navigator.openNotificationsListActivity(NotificationsListActivity.PRESELECT_NOTIFICATIONS)
             }
         }
     }
