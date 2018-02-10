@@ -45,26 +45,26 @@ class UpvotersActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, U
         supportActionBar?.title = resources.getString(R.string.upvoters)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         swiperefresh.setOnRefreshListener(this)
-        recyclerView.apply {
+        recyclerView?.apply {
             prepare()
             adapter = upvotersAdapter
         }
-        swiperefresh.isRefreshing = false
+        swiperefresh?.isRefreshing = false
         presenter.linkId = intent.getIntExtra(EXTRA_LINKID, -1)
         presenter.subscribe(this)
 
         if (upvotersDataFragment.data == null) {
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             onRefresh()
         } else {
             upvotersAdapter.dataset.addAll(upvotersDataFragment.data!!)
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
         }
     }
 
     override fun showUpvoters(upvoter: List<Upvoter>) {
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         upvotersAdapter.apply {
             dataset.clear()
             dataset.addAll(upvoter)

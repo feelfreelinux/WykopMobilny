@@ -166,7 +166,7 @@ class CommentWidget : CardView, CommentView {
             }
 
             entry_comment_menu_report.setOnClickListener {
-                presenter.reportContent()
+                presenter.reportContent(comment.violationUrl)
                 dialog.dismiss()
             }
 

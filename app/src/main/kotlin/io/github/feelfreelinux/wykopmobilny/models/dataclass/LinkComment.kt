@@ -23,6 +23,7 @@ class LinkComment(
         var isCollapsed : Boolean,
         var isParentCollapsed : Boolean,
         var childCommentCount : Int,
+        val violationUrl : String,
         var isNsfw : Boolean = false
 ) : Parcelable {
     constructor(source: Parcel) : this(
@@ -44,6 +45,7 @@ class LinkComment(
             1 == source.readInt(),
             1 == source.readInt(),
             source.readInt(),
+            source.readString(),
             1 == source.readInt()
     )
 
@@ -68,6 +70,7 @@ class LinkComment(
         writeInt((if (isCollapsed) 1 else 0))
         writeInt((if (isParentCollapsed) 1 else 0))
         writeInt(childCommentCount)
+        writeString(violationUrl)
         writeInt((if (isNsfw) 1 else 0))
     }
 

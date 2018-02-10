@@ -26,5 +26,7 @@ data class EntryCommentResponse(
         @Json(name = "embed")
         val embed : EmbedResponse?,
         @Json(name = "app")
-        val app : String?
+        val app : String?,
+        @Json(name="violation_url")
+        val violationUrl : String?
 )

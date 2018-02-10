@@ -203,6 +203,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             }
 
             comment_menu_report.setOnClickListener {
+                presenter.reportContent(comment.violationUrl)
                 dialog.dismiss()
             }
 

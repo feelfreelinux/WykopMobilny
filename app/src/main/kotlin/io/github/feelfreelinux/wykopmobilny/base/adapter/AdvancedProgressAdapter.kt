@@ -11,6 +11,10 @@ abstract class AdvancedProgressAdapter<A : Any> : RecyclerView.Adapter<RecyclerV
         val VIEWTYPE_PROGRESS = 0 // For any other viewtype use value greater than 0
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     internal val dataset = arrayListOf<A?>()
 
     override val data: List<A>

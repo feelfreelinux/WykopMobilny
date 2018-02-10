@@ -53,20 +53,20 @@ class HitsFragment : BaseFragment(), HitsView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.refresh -> {
-                swiperefresh.isRefreshing = true
+                swiperefresh?.isRefreshing = true
                 loadData()
                 setTitle()
             }
 
             R.id.byDay -> {
-                swiperefresh.isRefreshing = true
+                swiperefresh?.isRefreshing = true
                 presenter.currentScreen = HitsPresenter.HITS_DAY
                 presenter.loadData()
                 setTitle()
             }
 
             R.id.byWeek -> {
-                swiperefresh.isRefreshing = true
+                swiperefresh?.isRefreshing = true
                 presenter.currentScreen = HitsPresenter.HITS_WEEK
                 presenter.loadData()
                 setTitle()
@@ -80,7 +80,7 @@ class HitsFragment : BaseFragment(), HitsView {
             }
 
             R.id.popular -> {
-                swiperefresh.isRefreshing = true
+                swiperefresh?.isRefreshing = true
                 presenter.currentScreen = HitsPresenter.HITS_POPULAR
                 presenter.loadData()
                 setTitle()
@@ -104,8 +104,8 @@ class HitsFragment : BaseFragment(), HitsView {
 
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.hits)
         presenter.subscribe(this)
-        recyclerView.prepare()
-        recyclerView.adapter = feedAdapter
+        recyclerView?.prepare()
+        recyclerView?.adapter = feedAdapter
         swiperefresh.setOnRefreshListener { loadData() }
         if (dataFragment.data != null) {
             feedAdapter.addData(dataFragment.data!!.hits, true)
@@ -114,11 +114,11 @@ class HitsFragment : BaseFragment(), HitsView {
                 yearSelection = dataFragment.data!!.yearSelection
                 monthSelection = dataFragment.data!!.monthSelection
             }
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
             feedAdapter.disableLoading()
         } else {
             loadData()
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
         }
         setTitle()
     }
@@ -128,8 +128,8 @@ class HitsFragment : BaseFragment(), HitsView {
     }
 
     override fun showHits(links: List<Link>) {
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         feedAdapter.addData(links, true)
         feedAdapter.disableLoading()
     }
@@ -169,12 +169,12 @@ class HitsFragment : BaseFragment(), HitsView {
                 if (data.hasExtra(MonthYearPickerDialog.EXTRA_MONTH)) {
                     presenter.monthSelection = data.getIntExtra(MonthYearPickerDialog.EXTRA_MONTH, 12)
                     presenter.currentScreen = HitsPresenter.HITS_MONTH
-                    swiperefresh.isRefreshing = true
+                    swiperefresh?.isRefreshing = true
                     presenter.loadData()
                     setTitle()
                 } else {
                     presenter.currentScreen = HitsPresenter.HITS_YEAR
-                    swiperefresh.isRefreshing = true
+                    swiperefresh?.isRefreshing = true
                     presenter.loadData()
                     setTitle()
                 }

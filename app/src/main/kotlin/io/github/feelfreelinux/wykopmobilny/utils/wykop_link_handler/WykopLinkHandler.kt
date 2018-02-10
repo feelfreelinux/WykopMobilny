@@ -8,12 +8,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.printout
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.ConversationLinkParser
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.LinkParser
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.*
 
 interface WykopLinkHandlerApi {
     fun handleUrl(url: String, refreshNotifications : Boolean = false)
@@ -25,6 +23,7 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
         const val TAG_PREFIX = '#'
         const val ENTRY_MATCHER = "wpis"
         const val LINK_MATCHER = "link"
+        const val PROFILE_MATCHER = "ludzie"
         const val TAG_MATCHER = "tag"
         const val PM_MATCHER = "wiadomosc-prywatna"
         const val DELIMITER = "/"
@@ -42,6 +41,9 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
                 }
                 Companion.PM_MATCHER -> {
                     ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
+                }
+                Companion.PROFILE_MATCHER -> {
+                    ProfileActivity.createIntent(context, ProfileLinkParser.getProfile(url))
                 }
                 Companion.LINK_MATCHER -> {
                     val linkId = LinkParser.getLinkId(url)

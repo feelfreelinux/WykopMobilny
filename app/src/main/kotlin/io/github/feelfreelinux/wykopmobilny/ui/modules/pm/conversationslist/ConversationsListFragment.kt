@@ -41,25 +41,25 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRe
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.messages)
         swiperefresh.setOnRefreshListener(this)
 
-        recyclerView.apply {
+        recyclerView?.apply {
             prepare()
             adapter = conversationsAdapter
         }
-        swiperefresh.isRefreshing = false
+        swiperefresh?.isRefreshing = false
         presenter.subscribe(this)
 
         if (conversationsDataFragment.data == null) {
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             onRefresh()
         } else {
             conversationsAdapter.dataset.addAll(conversationsDataFragment.data!!)
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
         }
     }
 
     override fun showConversations(items : List<Conversation>) {
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         conversationsAdapter.apply {
             dataset.clear()
             dataset.addAll(items)

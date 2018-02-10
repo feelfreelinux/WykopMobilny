@@ -40,7 +40,8 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         swiperefresh.setOnRefreshListener(this)
-        recyclerView.prepare()
+        feedAdapter.setHasStableIds(true)
+        recyclerView?.prepare()
     }
 
     private fun setupInfiniteScrollListeners() {

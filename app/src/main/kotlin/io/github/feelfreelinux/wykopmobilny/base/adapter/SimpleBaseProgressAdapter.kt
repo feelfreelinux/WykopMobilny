@@ -9,6 +9,10 @@ import io.github.feelfreelinux.wykopmobilny.R
 abstract class SimpleBaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), BaseProgressAdapter<A> {
     private val dataset = arrayListOf<A?>()
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     override val data: List<A>
         get() = dataset.filterNotNull()
 
@@ -32,7 +36,7 @@ abstract class SimpleBaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
                 addAll(items)
                 add(null)
             }
-            notifyDataSetChanged()
+            notifyItemInserted(items.size)
         } else {
             if (dataset.last() == null) {
                 dataset.removeAt(dataset.size - 1)

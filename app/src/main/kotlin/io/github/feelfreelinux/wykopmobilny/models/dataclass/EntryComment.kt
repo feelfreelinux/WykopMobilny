@@ -9,6 +9,7 @@ class EntryComment(val id : Int,
                         val embed : Embed?,
                         var voteCount: Int,
                         val app : String?,
+                        val violationUrl : String,
                         var isNsfw : Boolean = false) {
     override fun equals(other: Any?): Boolean {
         return if (other !is EntryComment) false

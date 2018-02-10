@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.OnRefreshListener, SearchFragmentNotifier {
     override fun showUsers(entryList: List<Author>) {
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         searchEmptyView.isVisible = entryList.isEmpty()
         profilesAdapter.apply {
             dataset.clear()
@@ -50,7 +50,7 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
             queryString = parent.searchQuery
             if (::presenter.isInitialized) {
                 onRefresh()
-            } else { loadingView.isVisible = false }
+            } else { loadingView?.isVisible = false }
         }
     }
 
@@ -65,29 +65,29 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
         presenter.subscribe(this)
         swiperefresh.setOnRefreshListener(this)
 
-        recyclerView.apply {
+        recyclerView?.apply {
             prepare()
             adapter = profilesAdapter
         }
-        swiperefresh.isRefreshing = false
+        swiperefresh?.isRefreshing = false
 
         if (dataFragment.data == null) {
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
             notifyQueryChanged()
         } else {
             profilesAdapter.dataset.addAll(dataFragment.data!!)
             profilesAdapter.notifyDataSetChanged()
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
         }
     }
 
     override fun onRefresh() {
         if (queryString.length > 2) {
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             presenter.searchProfiles(queryString)
         }
         else {
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
         }
     }
 

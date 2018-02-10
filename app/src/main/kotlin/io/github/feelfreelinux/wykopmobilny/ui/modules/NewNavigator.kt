@@ -39,8 +39,7 @@ interface NewNavigatorApi {
     fun openEditLinkCommentActivity(commentId: Int, body: String, linkId: Int)
     fun openEditEntryCommentActivity(body: String, entryId: Int, commentId: Int)
     fun openBrowser(url: String)
-    fun openReportEntryScreen(entryId: Int)
-    fun openReportEntryCommentScreen(entryCommentId: Int)
+    fun openReportScreen(violationUrl: String)
     fun openLinkDetailsActivity(link: Link)
     fun openLinkUpvotersActivity(linkId : Int)
     fun openLinkDownvotersActivity(linkId : Int)
@@ -102,12 +101,8 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
         context.openBrowser(url)
     }
 
-    override fun openReportEntryScreen(entryId: Int) {
-        context.openBrowser(ENTRY_REPORT_URL +entryId)
-    }
-
-    override fun openReportEntryCommentScreen(entryCommentId: Int) {
-        context.openBrowser(ENTRYCOMMENT_REPORT_URL +entryCommentId)
+    override fun openReportScreen(violationUrl : String) {
+        context.openBrowser(violationUrl)
     }
 
     override fun openLinkDetailsActivity(link : Link) {
@@ -131,6 +126,6 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
     }
 
     override fun openNotificationsListActivity(preselectIndex: Int) {
-        context.startActivity(NotificationsListActivity.createIntent(context, preselectIndex))
+        context.startActivityForResult(NotificationsListActivity.createIntent(context, preselectIndex), STARTED_FROM_NOTIFICATIONS_CODE)
     }
 }

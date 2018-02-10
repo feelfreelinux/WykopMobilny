@@ -183,7 +183,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             }
 
             entry_menu_report.setOnClickListener {
-                presenter.reportContent()
+                presenter.reportContent(entry.violationUrl)
                 dialog.dismiss()
             }
 

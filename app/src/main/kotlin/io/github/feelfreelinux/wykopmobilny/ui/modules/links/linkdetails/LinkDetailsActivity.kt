@@ -103,7 +103,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         }
 
         // Prepare RecyclerView
-        recyclerView.apply {
+        recyclerView?.apply {
             prepare()
             // Set margin, adapter
             this.adapter = this@LinkDetailsActivity.adapter
@@ -126,10 +126,10 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             adapter.link = linkFragmentData.data?.first
             presenter.sortBy = linkFragmentData.data?.second ?: "best"
             adapter.notifyDataSetChanged()
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
         } else {
             adapter.notifyDataSetChanged()
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             hideInputToolbar()
             if (adapter.link != null) {
                 presenter.loadComments()
@@ -162,20 +162,20 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
                 presenter.sortBy = "best"
                 setSubtitle()
                 presenter.loadComments()
-                swiperefresh.isRefreshing = true
+                swiperefresh?.isRefreshing = true
             }
             R.id.sortbyNewest -> {
                 presenter.sortBy = "new"
                 setSubtitle()
                 presenter.loadComments()
-                swiperefresh.isRefreshing = true
+                swiperefresh?.isRefreshing = true
             }
 
             R.id.sortbyOldest -> {
                 presenter.sortBy = "old"
                 setSubtitle()
                 presenter.loadComments()
-                swiperefresh.isRefreshing = true
+                swiperefresh?.isRefreshing = true
             }
 
             R.id.copyUrl -> copyUrl()
@@ -207,8 +207,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
 
     override fun showLinkComments(comments: List<LinkComment>) {
         adapter.link?.comments = comments
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         adapter.notifyDataSetChanged()
         inputToolbar.show()
         if (linkCommentId != -1 && linkFragmentData.data == null) {
@@ -219,7 +219,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     override fun scrollToComment(id : Int) {
         adapter.link!!.comments.forEachIndexed({ index, comment ->
             if (comment.id == id) {
-                recyclerView.scrollToPosition(index + 1)
+                recyclerView?.scrollToPosition(index + 1)
             }
         })
     }

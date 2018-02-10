@@ -51,6 +51,6 @@ interface ProfileRetrofitApi {
     @GET("/profiles/unblock/{username}/appkey/$APP_KEY")
     fun unblock(@Path("username") username : String) : Single<WykopApiResponse<ObserveStateResponse>>
 
-    @GET("/profiles/badges/{username}/page/{page}/appkey/$APP_KEY")
+    @GET("/profiles/badges/{username}/page/{page}/appkey/$APP_KEY/data/full")
     fun getBadges(@Path("username") username : String, @Path("page") page: Int) : Single<WykopApiResponse<List<BadgeResponse>>>
 }

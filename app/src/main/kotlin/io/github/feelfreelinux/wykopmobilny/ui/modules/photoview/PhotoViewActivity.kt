@@ -40,7 +40,7 @@ class PhotoViewActivity : BaseActivity() {
         title = null
         printout(url)
         GlideApp.with(this).load(url)
-                .listener(KotlinGlideRequestListener({ loadingView.isVisible = false }, { loadingView.isVisible = false }))
+                .listener(KotlinGlideRequestListener({ loadingView?.isVisible = false }, { loadingView?.isVisible = false }))
                 .dontTransform()
                 .override(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
                 .into(image)

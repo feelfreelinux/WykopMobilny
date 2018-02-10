@@ -43,6 +43,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.BadgeDrawerDrawable
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.app_about_bottomsheet.view.*
@@ -61,6 +62,7 @@ interface MainNavigationInterface {
 
 class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override val activityToolbar: Toolbar get() = toolbar
+    var tapDoubleClickedMilis = 0L
 
     override val floatingButton: View
         get() = fab
@@ -235,7 +237,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         fab.setOnClickListener(null)
         fab.isVisible = fragment is BaseNavigationView && userManagerApi.isUserAuthorized()
         supportFragmentManager.beginTransaction().replace(R.id.contentView,
-                fragment, "MAIN_FRAGMENT").commit()
+                fragment).commit()
         closeDrawer()
     }
 
@@ -265,8 +267,14 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     override fun onBackPressed() {
-        if(drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
-        else AppExitConfirmationDialog(this, { finish() }).show()
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
+        else {
+            if (tapDoubleClickedMilis + 2000L > System.currentTimeMillis()) {
+                super.onBackPressed()
+                return
+            } else Toast.makeText(this, R.string.doubleback_to_exit, Toast.LENGTH_SHORT).show()
+            tapDoubleClickedMilis = System.currentTimeMillis()
+        }
     }
 
     override fun restartActivity() {

@@ -46,4 +46,9 @@ class AuthorHeaderView : ConstraintLayout {
         getActivityContext()!!.startActivity(ProfileActivity.createIntent(getActivityContext()!!, username))
     }
 
+    fun disableClickListeners() {
+        authorAvatarView.setOnClickListener(null)
+        setOnClickListener(null)
+    }
+
 }

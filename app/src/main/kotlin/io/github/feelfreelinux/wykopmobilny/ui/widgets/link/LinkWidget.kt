@@ -185,13 +185,6 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
                 presenter.openRelatedList()
                 dialog.dismiss()
             }
-
-            link_report.setOnClickListener {
-                MonthYearPickerDialog.newInstance().show((getActivityContext()!! as BaseActivity).supportFragmentManager, "monthYearPickerDialog")
-                dialog.dismiss()
-            }
-
-            link_report.isVisible = userManager.isUserAuthorized()
             link_bury.isVisible = userManager.isUserAuthorized()
         }
 

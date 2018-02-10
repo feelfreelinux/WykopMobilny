@@ -71,4 +71,8 @@ class LinkCommentPresenter(
     fun openEditCommentActivity(commentId: Int, body : String) {
         newNavigatorApi.openEditLinkCommentActivity(commentId, body, linkId)
     }
+
+    fun reportContent(violationUrl : String) {
+        newNavigatorApi.openReportScreen(violationUrl)
+    }
 }

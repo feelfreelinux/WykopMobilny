@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.profile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.view.Menu
 import android.view.MenuItem
@@ -13,29 +12,23 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ProfileResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.actions.ActionsFragment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
-import android.view.MotionEvent
-import android.view.View
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.BadgeResponse
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
 import kotlinx.android.synthetic.main.badge_list_item.view.*
 import kotlinx.android.synthetic.main.badges_bottomsheet.view.*
-import kotlinx.android.synthetic.main.profile_options_bottomsheet.*
-import org.ocpsoft.prettytime.PrettyTime
 
 
 class ProfileActivity : BaseActivity(), ProfileView {
     val username by lazy { intent.getStringExtra(EXTRA_USERNAME) }
-    @Inject lateinit var navigator : NavigatorApi
+    @Inject lateinit var navigator : NewNavigatorApi
     @Inject lateinit var presenter : ProfilePresenter
     @Inject lateinit var userManagerApi : UserManagerApi
     private var observeStateResponse : ObserveStateResponse? = null
@@ -75,7 +68,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
             showProfile(dataFragment.data!!)
         } else {
             presenter.loadData()
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             appBarLayout.isVisible = true
         }
     }
@@ -89,7 +82,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         signup.text = profileResponse.signupAt.toDurationPrettyDate()
         nickname.text = profileResponse.login
         nickname.setTextColor(getGroupColor(profileResponse.color))
-        loadingView.isVisible = false
+        loadingView?.isVisible = false
         description.isVisible = profileResponse.description != null
         profileResponse.description?.let {
             description.isVisible = true
@@ -118,7 +111,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.profile_menu, menu)
-        if (userManagerApi.isUserAuthorized()) {
+        if (userManagerApi.isUserAuthorized() && userManagerApi.getUserCredentials()!!.login != username) {
             menu.findItem(R.id.pw).isVisible = true
             observeStateResponse?.apply {
                 menu.apply {
@@ -140,12 +133,13 @@ class ProfileActivity : BaseActivity(), ProfileView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.pw -> dataFragment.data?.let { navigator.openConversationListActivity(this, dataFragment.data!!.login) }
+            R.id.pw -> dataFragment.data?.let { navigator.openConversationListActivity(dataFragment.data!!.login) }
             R.id.unblock -> { presenter.markUnblocked() }
             R.id.block -> { presenter.markBlocked() }
             R.id.observe_profile -> { presenter.markObserved() }
             R.id.unobserve_profile -> { presenter.markUnobserved() }
             R.id.badges -> { showBadgesDialog() }
+            R.id.report -> { navigator.openReportScreen(dataFragment.data!!.violationUrl!!) }
             android.R.id.home -> finish()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -159,7 +153,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         dialog.setContentView(badgesDialogView)
         badgesDialogListener = {
             if (dialog.isShowing) {
-                badgesDialogView.loadingView.isVisible = false
+                badgesDialogView.loadingView?.isVisible = false
                 for (badge in it) {
                     val item = layoutInflater.inflate(R.layout.badge_list_item, null)
                     item.description.text = badge.description

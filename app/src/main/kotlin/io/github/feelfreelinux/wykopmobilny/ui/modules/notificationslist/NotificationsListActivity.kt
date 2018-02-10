@@ -36,9 +36,17 @@ class NotificationsListActivity : BaseActivity() {
         tabLayout.setupWithViewPager(pager)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.notification_list_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             android.R.id.home -> { finish() }
+            R.id.markAsRead -> {
+                (pagerAdapter.registeredFragments.get(pager.currentItem) as? BaseNotificationsListFragment)?.markAsRead()
+            }
         }
         return true
     }

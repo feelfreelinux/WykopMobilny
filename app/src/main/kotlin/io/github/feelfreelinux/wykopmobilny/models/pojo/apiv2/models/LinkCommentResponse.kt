@@ -29,6 +29,8 @@ data class LinkCommentResponse(
         val linkId : Int,
         @Json(name = "embed")
         val embed : EmbedResponse?,
+        @Json(name="violation_url")
+        val violationUrl : String?,
         @Json(name = "app")
         val app : String?
 )

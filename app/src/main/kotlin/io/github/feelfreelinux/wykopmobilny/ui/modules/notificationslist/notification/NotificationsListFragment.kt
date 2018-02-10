@@ -43,12 +43,12 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
 
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         if (entryFragmentData.data != null && entryFragmentData.data!!.model.isNotEmpty()) {
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
             presenter.page = entryFragmentData.data!!.page
             notificationAdapter.addData(entryFragmentData.data!!.model, true)
             notificationAdapter.disableLoading()
         } else {
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             onRefresh()
         }
     }

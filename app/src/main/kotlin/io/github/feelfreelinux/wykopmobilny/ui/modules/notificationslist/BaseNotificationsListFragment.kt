@@ -34,20 +34,19 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.activity_notifications_list, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         swiperefresh.setOnRefreshListener(this)
 
-        recyclerView.apply {
+        recyclerView?.apply {
             prepare()
             adapter = notificationAdapter
             clearOnScrollListeners()
             setInfiniteScrollListener()
         }
-        swiperefresh.isRefreshing = false
+        swiperefresh?.isRefreshing = false
         super.onActivityCreated(savedInstanceState)
     }
 
@@ -62,8 +61,8 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter : Boolean) {
         if (shouldClearAdapter) setInfiniteScrollListener()
         if (notifications.isNotEmpty()) {
-            loadingView.isVisible = false
-            swiperefresh.isRefreshing = false
+            loadingView?.isVisible = false
+            swiperefresh?.isRefreshing = false
             notificationAdapter.addData(if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications, shouldClearAdapter)
         } else notificationAdapter.disableLoading()
     }
@@ -71,23 +70,11 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     override fun showReadToast() {
         onRefresh()
         Toast.makeText(context, R.string.read_notifications, Toast.LENGTH_SHORT).show()
-        (activity as MainNavigationInterface).forceRefreshNotifications()
     }
 
     override fun disableLoading() {
-        recyclerView.clearOnScrollListeners()
+        recyclerView?.clearOnScrollListeners()
         notificationAdapter.disableLoading()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.notification_list_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.markAsRead -> markAsRead()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 }

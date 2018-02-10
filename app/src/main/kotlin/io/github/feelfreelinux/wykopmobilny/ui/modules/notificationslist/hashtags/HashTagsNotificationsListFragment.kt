@@ -35,12 +35,12 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         val pagedModel = entryFragmentData.data
         if (pagedModel != null && pagedModel.model.isNotEmpty()) {
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
             presenter.page = pagedModel.page
             notificationAdapter.addData(pagedModel.model, true)
             notificationAdapter.disableLoading()
         } else {
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             onRefresh()
         }
     }

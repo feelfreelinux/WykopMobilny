@@ -58,7 +58,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
         presenter.subscribe(this)
         presenter.user = user
-        recyclerView.apply {
+        recyclerView?.apply {
             prepare()
             adapter = conversationAdapter
             (layoutManager as LinearLayoutManager).reverseLayout = true
@@ -67,7 +67,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
         if (conversationDataFragment.data == null) {
             toolbar.avatarview.isVisible = false
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             presenter.loadConversation()
         } else {
             showConversation(conversationDataFragment.data!!)
@@ -79,8 +79,8 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
     }
 
     override fun showConversation(conversation: FullConversation) {
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         receiver = conversation.receiver
         toolbar.apply {
             subtitle = if (conversation.messages.isNotEmpty()) conversation.messages.last().date else null
@@ -93,7 +93,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
             messages.addAll(conversation.messages.reversed())
             notifyDataSetChanged()
         }
-        recyclerView.invalidate()
+        recyclerView?.invalidate()
     }
 
     override fun onDestroy() {

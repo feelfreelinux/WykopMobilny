@@ -71,7 +71,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         supportActionBar?.title = null
 
         // Prepare RecyclerView
-        recyclerView.apply {
+        recyclerView?.apply {
             prepare()
             // Set margin, adapter
             addItemDecoration(EntryCommentItemDecoration(resources.getDimensionPixelOffset(R.dimen.comment_section_left_margin)))
@@ -92,7 +92,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             adapter.entry = entryFragmentData.data
         else {
             // Trigger data loading
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             presenter.loadData()
         }
     }
@@ -125,7 +125,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             android.R.id.home -> onBackPressed()
             R.id.copyUrl -> clipboardHelper.copyTextToClipboard(url, "entryUrl")
             R.id.refresh -> {
-                swiperefresh.isRefreshing = true
+                swiperefresh?.isRefreshing = true
                 onRefresh()
             }
             R.id.share -> shareUrl()
@@ -143,16 +143,16 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         entry.comments.forEach { it.entryId = entry.id }
         inputToolbar.setDefaultAddressant(entry.author.nick)
         inputToolbar.show()
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         entry.embed?.isRevealed = isRevealed
         adapter.notifyDataSetChanged()
         if (intent.hasExtra(EXTRA_COMMENT_ID) && entryFragmentData.data == null) {
             entry.comments.forEachIndexed({ index, comment ->
                 if (comment.id == intent.getIntExtra(EXTRA_COMMENT_ID, -1)) {
-                    recyclerView.scrollToPosition(index + 1)
+                    recyclerView?.scrollToPosition(index + 1)
                 }
-                recyclerView.refreshDrawableState()
+                recyclerView?.refreshDrawableState()
             })
         }
     }

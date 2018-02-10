@@ -45,16 +45,16 @@ class ActionsFragment : BaseFragment(), ActionsView, ProfileFragmentNotifier {
         presenter.username = username
         dataFragment = childFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         presenter.subscribe(this)
-        recyclerView.prepare()
-        recyclerView.adapter = feedAdapter
+        recyclerView?.prepare()
+        recyclerView?.adapter = feedAdapter
         swiperefresh.setOnRefreshListener { loadData() }
         if (dataFragment.data != null) {
             feedAdapter.addData(dataFragment.data!!, true)
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
             feedAdapter.disableLoading()
         } else {
             loadData()
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
         }
     }
     fun loadData() {
@@ -62,8 +62,8 @@ class ActionsFragment : BaseFragment(), ActionsView, ProfileFragmentNotifier {
     }
 
     override fun showActions(links: List<EntryLink>) {
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         feedAdapter.addData(links, true)
         feedAdapter.disableLoading()
     }

@@ -36,5 +36,7 @@ data class ProfileResponse(
         @Json(name="followers")
         val followers : Int,
         @Json(name="about")
-        val description : String?
+        val description : String?,
+        @Json(name="violation_url")
+        val violationUrl : String?
 )

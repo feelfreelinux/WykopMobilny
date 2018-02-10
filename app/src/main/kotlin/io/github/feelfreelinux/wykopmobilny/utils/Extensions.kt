@@ -47,8 +47,8 @@ fun View.getActivityContext() : Activity? {
 }
 
 fun RecyclerView.prepare() {
-    setHasFixedSize(true) // For better performance
-    setItemViewCacheSize(30)
+    setItemViewCacheSize(20)
+    setHasFixedSize(true)
     isDrawingCacheEnabled = true
     drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     layoutManager = LinearLayoutManager(context)

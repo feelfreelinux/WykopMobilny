@@ -54,8 +54,8 @@ class CommentPresenter(val schedulers: Schedulers,
         linkHandler.handleUrl(url, false)
     }
 
-    fun reportContent() {
-        navigatorApi.openReportEntryCommentScreen(commentId)
+    fun reportContent(violationUrl : String) {
+        navigatorApi.openReportScreen(violationUrl)
     }
 
     fun getVoters() {

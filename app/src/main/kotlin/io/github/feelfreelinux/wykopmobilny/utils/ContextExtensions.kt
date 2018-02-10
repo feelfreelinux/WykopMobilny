@@ -14,6 +14,7 @@ fun Context.openBrowser(url : String) {
     val builder = CustomTabsIntent.Builder()
     val customTabsIntent = builder.build()
     builder.setToolbarColor(R.attr.colorPrimaryDark)
+    printout(url)
     customTabsIntent.launchUrl(this, Uri.parse(url))
 }
 

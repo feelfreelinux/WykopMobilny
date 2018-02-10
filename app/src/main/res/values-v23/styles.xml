@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EntryContentTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:breakStrategy">simple</item>
+        <item name="android:paddingRight">@dimen/entry_content_padding_horizontal</item>
+        <item name="android:paddingLeft">@dimen/entry_content_padding_horizontal</item>
+        <item name="android:paddingTop">@dimen/entry_content_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/entry_content_padding_vertical</item>
+        <item name="android:textSize">@dimen/entry_content_text_size</item>
+    </style>
+</resources>

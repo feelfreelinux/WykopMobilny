@@ -47,27 +47,27 @@ class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, Swi
         dataFragment = childFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         presenter.subscribe(this)
         swiperefresh.setOnRefreshListener(this)
-        recyclerView.prepare()
-        recyclerView.adapter = adapter
+        recyclerView?.prepare()
+        recyclerView?.adapter = adapter
 
         if (dataFragment.data != null) {
             adapter.dataset.clear()
             adapter.dataset.addAll(dataFragment.data!!)
             adapter.notifyDataSetChanged()
         } else {
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             presenter.loadTags()
         }
     }
 
     override fun onRefresh() {
-        if (!swiperefresh.isRefreshing) swiperefresh.isRefreshing = true
+        if (!swiperefresh.isRefreshing) swiperefresh?.isRefreshing = true
         presenter.loadTags()
     }
 
     override fun showTags(tags: List<ObservedTagResponse>) {
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         adapter.dataset.clear()
         adapter.dataset.addAll(tags)
         adapter.notifyDataSetChanged()

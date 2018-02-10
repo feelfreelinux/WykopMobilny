@@ -38,6 +38,7 @@
     <string name="about">O aplikacji</string>
     <string name="login">Zaloguj się</string>
     <string name="logout">Wyloguj się</string>
+    <string name="doubleback_to_exit">Kliknij przcisk wstecz aby wyjść</string>
     <!--- END NAVIGATION -->
     <string name="error_occured">Błąd</string>
     <string name="not_implemented">Nie zaimplementowano</string>

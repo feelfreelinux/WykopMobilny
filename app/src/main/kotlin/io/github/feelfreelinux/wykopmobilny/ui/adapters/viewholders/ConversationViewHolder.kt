@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.conversation_list_item.view.*
 class ConversationViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     fun bindView(conversation : Conversation) {
         view.authorHeaderView.setAuthorData(conversation.user, conversation.lastUpdate)
+        view.authorHeaderView.disableClickListeners()
         view.setOnClickListener {
             view.context?.apply {
                 view.getActivityContext()!!.startActivity(ConversationActivity.createIntent(view.context, conversation.user.nick) )

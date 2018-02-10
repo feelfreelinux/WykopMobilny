@@ -91,7 +91,7 @@ class EntryPresenter(val schedulers: Schedulers,
         navigatorApi.openEntryDetailsActivity(entryId, isRevealed)
     }
 
-    fun reportContent() {
-        navigatorApi.openReportEntryScreen(entryId)
+    fun reportContent(violationUrl : String) {
+        navigatorApi.openReportScreen(violationUrl)
     }
 }

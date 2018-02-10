@@ -47,26 +47,26 @@ class RelatedActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Re
         supportActionBar?.title = resources.getString(R.string.related)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         swiperefresh.setOnRefreshListener(this)
-        recyclerView.apply {
+        recyclerView?.apply {
             prepare()
             adapter = relatedAdapter
         }
-        swiperefresh.isRefreshing = false
+        swiperefresh?.isRefreshing = false
         presenter.linkId = intent.getIntExtra(EXTRA_LINKID, -1)
         presenter.subscribe(this)
 
         if (relatedDataFragment.data == null) {
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             onRefresh()
         } else {
             relatedAdapter.dataset.addAll(relatedDataFragment.data!!)
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
         }
     }
 
     override fun showRelated(related: List<Related>) {
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         relatedAdapter.apply {
             dataset.clear()
             dataset.addAll(related)

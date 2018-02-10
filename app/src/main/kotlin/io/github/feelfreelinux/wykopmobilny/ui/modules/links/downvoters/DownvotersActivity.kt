@@ -45,26 +45,26 @@ class DownvotersActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener,
         supportActionBar?.title = resources.getString(R.string.downvoters)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         swiperefresh.setOnRefreshListener(this)
-        recyclerView.apply {
+        recyclerView?.apply {
             prepare()
             adapter = downvotersAdapter
         }
-        swiperefresh.isRefreshing = false
+        swiperefresh?.isRefreshing = false
         presenter.linkId = intent.getIntExtra(EXTRA_LINKID, -1)
         presenter.subscribe(this)
 
         if (downvotersDataFragment.data == null) {
-            loadingView.isVisible = true
+            loadingView?.isVisible = true
             onRefresh()
         } else {
             downvotersAdapter.dataset.addAll(downvotersDataFragment.data!!)
-            loadingView.isVisible = false
+            loadingView?.isVisible = false
         }
     }
 
     override fun showDownvoters(downvoters: List<Downvoter>) {
-        loadingView.isVisible = false
-        swiperefresh.isRefreshing = false
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
         downvotersAdapter.apply {
             dataset.clear()
             dataset.addAll(downvoters)

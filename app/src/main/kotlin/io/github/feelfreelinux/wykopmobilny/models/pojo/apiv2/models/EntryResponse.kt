@@ -30,11 +30,16 @@ class EntryResponse(
 
         @Json(name="embed")
         val embed : EmbedResponse?,
-        @Json(name="survey")
 
+        @Json(name="survey")
         val survey : SurveyResponse?,
+
         @Json(name="user_vote")
         val userVote : Int,
+
+        @Json(name="violation_url")
+        val violationUrl : String?,
+
         @Json(name="app")
         val app : String?
 )
