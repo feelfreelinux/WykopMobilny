@@ -2,48 +2,61 @@
 
     <string name="app_name">Wykop Mobilny</string>
 
+    <string name="main_page">Strona Główna</string>
+    <string name="wykopalisko">Wykopalisko</string>
+    <string name="hits">Hity</string>
+    <string name="mikroblog">Mikroblog</string>
+    <string name="mywykop">Mój Wykop</string>
+    <string name="search">Wyszukiwarka</string>
+    <string name="your_profile">Twój profil</string>
+    <string name="favourite">Ulubione</string>
+    <string name="messages">Wiadomości</string>
+    <string name="settings">Ustawienia</string>
+    <string name="about">O aplikacji</string>
+    <string name="login">Zaloguj się</string>
+    <string name="logout">Wyloguj się</string>
+
+    <string name="application">Aplikacja</string>
+    <string name="profiles">Użytkownicy</string>
+    <string name="user">Użytkownik</string>
+    <string name="actions">Akcje</string>
+    <string name="links">Znaleziska</string>
+    <string name="link_added">Dodane</string>
+    <string name="published">Opublikowane</string>
+    <string name="commented">Komentarze</string>
+    <string name="buried">Zakopywane</string>
+    <string name="digged">Wykopywane</string>
+    <string name="entries">Wpisy</string>
+
     <string name="options">Ustawienia</string>
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_dark_style">Styl nocny</string>
+    <string name="useAmoledTheme">Tryb AMOLED dla stylu nocnego</string>
     <string name="defaultScreen">Domyślny ekran aplikacji</string>
     <string name="defaultHotScreen">Domyślny ekran w mirkoblogu</string>
+    <string name="open_spoilers_in_dialog">Otwieraj spoilery w okienku</string>
+    <string name="app_config_images">Ustawienia obrazków</string>
+    <string name="app_config_images_minified">Obrazki w trybie miniaturki</string>
+    <string name="app_config_images_cut">Zwijaj długie obrazki</string>
+    <string name="app_config_images_cut_image_proportion">Wysokość obrazka względem ekranu</string>
     <string name="pref_notifications">Powiadomienia</string>
     <string name="pref_notifications_enable">Włącz powiadomienia</string>
     <string name="pref_notifications_frequency">Częstotliwość sprawdzania</string>
     <string name="pref_content_filter">Filtrowanie treści</string>
     <string name="pref_content_plus18">Pokazuj treści 18+</string>
-    <string name="pref_content_filternsfw">Zamazuj treści z tagiem #nsfw</string>
-    <string name="useAmoledTheme">Użyj stylu AMOLED dla trybu nocnego</string>
-    <!-- NAVIGATION -->
-    <string name="main_page">Strona Główna</string>
-    <string name="wykopalisko">Wykopalisko</string>
-    <string name="mikroblog">Mikroblog</string>
-    <string name="mywykop">Mój Wykop</string>
-    <string name="hits">Hity</string>
-    <string name="search">Wyszukiwarka</string>
-    <string name="links">Znaleziska</string>
-    <string name="entries">Wpisy</string>
-    <string name="profiles">Użytkownicy</string>
-    <string name="user">Użytkownik</string>
-    <string name="your_profile">Twój profil</string>
-    <string name="favourite">Ulubione</string>
-    <string name="link_added">Dodane</string>
-    <string name="published">Opublikowane</string>
-    <string name="buried">Zakopywane</string>
-    <string name="digged">Wykopywane</string>
-    <string name="commented">Komentarze</string>
-    <string name="messages">Wiadomości</string>
-    <string name="application">Aplikacja</string>
-    <string name="settings">Ustawienia</string>
-    <string name="about">O aplikacji</string>
-    <string name="login">Zaloguj się</string>
-    <string name="logout">Wyloguj się</string>
-    <string name="doubleback_to_exit">Kliknij przcisk wstecz aby wyjść</string>
-    <!--- END NAVIGATION -->
+    <string name="pref_content_filternsfw">Ukryj treści z tagiem #nsfw</string>
+
+    <string name="license">Publikacja aplikacji na licencji MIT</string>
+    <string name="report_bug">Zgłoś błąd pod tagiem #owmbugi</string>
+    <string name="observe_otwartywykopmobilny">Obserwuj tag #otwartywykopmobilny</string>
+    <string name="app_version">Wykop Mobilny (%1$s)</string>
+
+    <string name="badges">Osiągnięcia</string>
+
     <string name="error_occured">Błąd</string>
     <string name="not_implemented">Nie zaimplementowano</string>
+    <string name="doubleback_to_exit">Naciśnij wstecz aby wyjść z aplikacji</string>
     <string name="expand_image">rozwiń obrazek</string>
-    <string name="actions">Akcje</string>
 
     <string name="newest_entries">Najnowsze wpisy</string>
     <string name="share">Udostępnij</string>
@@ -97,10 +110,6 @@
     <string name="voters">Plusujący</string>
     <string name="voters_list">Lista plusujących</string>
     <string name="bury">Zakop</string>
-    <string name="app_config_images">Ustawienia obrazków</string>
-    <string name="app_config_images_cut_image_proportion">Maksymalna wysokość obrazka (% wysokości ekranu)</string>
-    <string name="app_config_images_cut">Zwijaj długie obrazki</string>
-    <string name="app_config_images_minified">Wyświetlaj obrazki w trybie miniaturki</string>
     <string name="bury_list">Lista zakopujących (%1$d)</string>
     <string name="dig_list">Lista wykopujących (%1$d)</string>
     <string name="edit">Edytuj</string>
@@ -151,10 +160,6 @@
     <string name="reason_unsuitable_content">Nie nadaje się</string>
     <string name="hidden_replies">%1$d ukrytych odpowiedzi</string>
 
-    <string name="license">Publikacja aplikacji na licencji MIT</string>
-    <string name="report_bug">Zgłoś błąd pod tagiem #owmbugi</string>
-    <string name="observe_otwartywykopmobilny">Obserwuj tag #otwartywykopmobilny</string>
-    <string name="app_version">Wykop Mobilny (%1$s)</string>
     <string name="january">Styczeń</string>
     <string name="february">Luty</string>
     <string name="march">Marzec</string>
@@ -168,17 +173,20 @@
     <string name="novermber">Listopad</string>
     <string name="december">Grudzień</string>
     <string name="whole_year">Cały rok</string>
+
     <string name="hits_popular">Ostatnio popularne</string>
     <string name="hits_day">Hity dnia</string>
     <string name="hits_week">Hity tygodnia</string>
     <string name="hits_month">Hity miesiąca</string>
     <string name="hits_year">Hity roku</string>
-    <string name="open_spoilers_in_dialog">Otwieraj spoilery w okienku</string>
     <string name="hits_month_toolbar">Hity miesiąca (%1$d/%2$d)</string>
     <string name="hits_year_toolbar">Hity roku (%1$d)</string>
-    <string name="unblock_user">Odblokuj użytkownika</string>
-    <string name="block_user">Zablokuj użytkownika</string>
-    <string name="unobserve_user">Przestań obserwować</string>
-    <string name="observe_user">Obserwuj (%1$d)</string>
-    <string name="badges">Osiągnięcia</string>
+
+    <string name="private_message">Wiadomość prywatna</string>
+    <string name="followers">%1$d obserwujących</string>
+    <string name="observe_user">Obserwuj</string>
+    <string name="unobserve_user">Nie obserwuj</string>
+    <string name="block_user">Zablokuj</string>
+    <string name="unblock_user">Odblokuj</string>
+
 </resources>

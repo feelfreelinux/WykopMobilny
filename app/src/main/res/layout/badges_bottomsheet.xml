@@ -10,12 +10,12 @@
     android:background="?attr/cardListColor">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/badges"
         android:textSize="@dimen/bottomsheet_item_title_text_size"
-        android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
-        android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingLeft="@dimen/bottomsheet_item_padding_horizontal"
+        android:paddingRight="@dimen/bottomsheet_item_padding_horizontal"
         android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
         android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
 
@@ -26,7 +26,10 @@
 
     <ProgressBar
         android:id="@+id/loadingView"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+
 </LinearLayout>

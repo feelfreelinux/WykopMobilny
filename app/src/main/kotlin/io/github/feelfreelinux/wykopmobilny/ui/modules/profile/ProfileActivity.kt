@@ -92,10 +92,15 @@ class ProfileActivity : BaseActivity(), ProfileView {
             observeStateResponse = ObserveStateResponse(profileResponse.isObserved, profileResponse.isBlocked!!)
             invalidateOptionsMenu()
         }
+        if (profileResponse.followers != 0)
+        {
+            followers.isVisible = true
+            followers.text = getString(R.string.followers, dataFragment.data!!.followers)
+        }
         if (profileResponse.rank != 0)
         {
             rank.isVisible = true
-            rank.text = "#" + profileResponse.rank
+            rank.text = "# ${profileResponse.rank}"
             rank.setBackgroundColor(getGroupColor(profileResponse.color))
         }
         profileResponse.sex?.let {
@@ -115,7 +120,6 @@ class ProfileActivity : BaseActivity(), ProfileView {
             menu.findItem(R.id.pw).isVisible = true
             observeStateResponse?.apply {
                 menu.apply {
-                    findItem(R.id.observe_profile).title = getString(R.string.observe_user, dataFragment.data!!.followers)
                     findItem(R.id.unobserve_profile).isVisible = isObserved
                     findItem(R.id.observe_profile).isVisible = !isObserved
                     findItem(R.id.block).isVisible = !isBlocked

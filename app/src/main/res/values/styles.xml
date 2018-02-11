@@ -331,7 +331,7 @@
     </style>
 
     <style name="TabLayoutProfileDetail" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">?attr/colorPrimary</item>
+        <item name="tabIndicatorColor">?attr/lineColor</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabPaddingStart">10dp</item>
         <item name="tabPaddingEnd">10dp</item>
