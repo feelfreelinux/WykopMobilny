@@ -100,7 +100,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         if (profileResponse.rank != 0)
         {
             rank.isVisible = true
-            rank.text = "# ${profileResponse.rank}"
+            rank.text = "#${profileResponse.rank}"
             rank.setBackgroundColor(getGroupColor(profileResponse.color))
         }
         profileResponse.sex?.let {
