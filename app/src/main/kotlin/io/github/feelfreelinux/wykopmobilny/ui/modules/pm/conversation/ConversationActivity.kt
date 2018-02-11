@@ -52,7 +52,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         conversationDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Rozmowa z $user"
+        supportActionBar?.title = user
         swiperefresh.setOnRefreshListener { presenter.loadConversation() }
         inputToolbar.setCustomHint(getString(R.string.reply))
 

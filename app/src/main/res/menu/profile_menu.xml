@@ -6,21 +6,9 @@
     <item
         android:id="@+id/pw"
         android:visible="false"
-        android:title="Wiadomość prywatna"
+        android:title="@string/private_message"
         android:icon="@drawable/ic_pw"
         app:showAsAction="always"/>
-
-    <item
-        android:visible="false"
-        android:id="@+id/block"
-        android:title="@string/block_user"
-        app:showAsAction="never"/>
-
-    <item
-        android:visible="false"
-        android:id="@+id/unblock"
-        android:title="@string/unblock_user"
-        app:showAsAction="never"/>
 
     <item
         android:visible="false"
@@ -36,8 +24,20 @@
 
     <item
         android:visible="false"
-        android:id="@+id/report"
+        android:id="@+id/block"
         android:title="@string/block_user"
+        app:showAsAction="never"/>
+
+    <item
+        android:visible="false"
+        android:id="@+id/unblock"
+        android:title="@string/unblock_user"
+        app:showAsAction="never"/>
+
+    <item
+        android:visible="false"
+        android:id="@+id/report"
+        android:title="@string/report"
         app:showAsAction="never"/>
 
     <item

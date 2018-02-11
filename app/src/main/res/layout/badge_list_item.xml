@@ -1,68 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/EntryCardView"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:layout_marginTop="4dp"
-    android:clickable="true"
-    android:focusable="true"
-    tools:parentTag="android.support.v7.widget.CardView">
+    android:addStatesFromChildren="true"
+    android:paddingRight="@dimen/bottomsheet_item_padding_horizontal"
+    android:paddingLeft="@dimen/bottomsheet_item_padding_horizontal"
+    android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+    android:paddingBottom="@dimen/bottomsheet_item_padding_vertical">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/badgeImg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:addStatesFromChildren="true"
-        android:background="?attr/cardviewStatelist">
-
-        <ImageView
-            android:id="@+id/badgeImg"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/bottomsheet_item_padding_horizontal"
+        app:layout_constraintStart_toEndOf="@id/badgeImg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/badgeTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Sylwestrowicz"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/badgeImg"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="14sp"
+            tools:text="Sylwestrowicz"/>
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="22 dni temu"
             android:textColor="?attr/authorHeader_date_color"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/badgeImg"
-            app:layout_constraintTop_toBottomOf="@+id/badgeTitle" />
+            tools:text="22 dni temu"/>
 
         <TextView
             android:id="@+id/description"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="Za udział w wykopowej zabawie sylwestrowej"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/badgeImg"
-            app:layout_constraintTop_toBottomOf="@+id/date" />
+            tools:text="Za udział w wykopowej zabawie sylwestrowej"/>
 
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

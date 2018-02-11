@@ -88,9 +88,23 @@
                 android:paddingEnd="12dp"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@id/nav_profile_image_card"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/followers"
                 app:layout_constraintTop_toBottomOf="@id/backgroundImg"
                 tools:text="2 lata 4 mieś."/>
+
+            <TextView
+                android:id="@+id/followers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="2dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/backgroundImg"
+                tools:text="12 obserwujących"/>
 
             <TextView
                 android:id="@+id/nickname"
