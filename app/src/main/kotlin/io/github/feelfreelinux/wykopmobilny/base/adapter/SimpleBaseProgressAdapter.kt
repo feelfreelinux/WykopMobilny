@@ -10,7 +10,7 @@ abstract class SimpleBaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
     private val dataset = arrayListOf<A?>()
 
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return dataset[position]?.hashCode()?.toLong() ?: position.toLong()
     }
 
     override val data: List<A>
@@ -36,7 +36,7 @@ abstract class SimpleBaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
                 addAll(items)
                 add(null)
             }
-            notifyItemInserted(items.size)
+            notifyDataSetChanged()
         } else {
             if (dataset.last() == null) {
                 dataset.removeAt(dataset.size - 1)

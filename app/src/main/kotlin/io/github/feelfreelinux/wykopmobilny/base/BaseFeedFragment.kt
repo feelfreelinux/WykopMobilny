@@ -40,7 +40,6 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         swiperefresh.setOnRefreshListener(this)
-        feedAdapter.setHasStableIds(true)
         recyclerView?.prepare()
     }
 
@@ -54,8 +53,11 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
     }
 
     fun initAdapter(feedList: List<T>? = emptyList()) {
+        if (!(feedAdapter as RecyclerView.Adapter<*>).hasObservers()) feedAdapter.setHasStableIds(true)
         recyclerView?.adapter = feedAdapter as RecyclerView.Adapter<*>
+
         setupInfiniteScrollListeners()
+
         if (feedList == null || feedList.isEmpty()) {
             // Create adapter if no data is saved
             if (feedAdapter.data.isEmpty()) {

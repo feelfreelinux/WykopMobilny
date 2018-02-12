@@ -60,7 +60,7 @@ fun TextView.openSpoilers(span : ClickableSpan, rawText : String) {
     textBuilder.getSpans(0, textBuilder.length, ParcelableSpan::class.java).forEach {
         val spanStart = textBuilder.getSpanStart(it)
         val spanEnd = textBuilder.getSpanEnd(it)
-        val totalStart = if (spanStart < start) spanStart else spanStart - 15 + spoilerText.length
+        val totalStart = if (spanStart < start) spanStart else if ((spanStart - spanEnd) <= 15) spanStart else spanStart + spoilerText.length
         val totalEnd = if (spanEnd < end) spanEnd else spanEnd - 15 + spoilerText.length
         if (span != it) ssb.setSpan(it, totalStart, totalEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
     }
