@@ -52,7 +52,7 @@ fun TextView.prepareBody(html: String, urlClickListener : (String) -> Unit, clic
 }
 
 fun TextView.openSpoilers(span : ClickableSpan, rawText : String) {
-    val spoilerText = URLDecoder.decode(rawText.substringAfter("spoiler:"), "UTF-8").toSpannable()
+    val spoilerText = URLDecoder.decode(rawText.substringAfter("spoiler:"), "UTF-8")
     val textBuilder = (text as SpannableString)
     val start = textBuilder.getSpanStart(span)
     val end = textBuilder.getSpanEnd(span)
@@ -60,14 +60,11 @@ fun TextView.openSpoilers(span : ClickableSpan, rawText : String) {
     textBuilder.getSpans(0, textBuilder.length, ParcelableSpan::class.java).forEach {
         val spanStart = textBuilder.getSpanStart(it)
         val spanEnd = textBuilder.getSpanEnd(it)
-        val totalStart = if (spanStart < start) spanStart else if ((spanStart - spanEnd) <= 15) spanStart else spanStart + spoilerText.length
-        val totalEnd = if (spanEnd < end) spanEnd else spanEnd - 15 + spoilerText.length
-        if (span != it) ssb.setSpan(it, totalStart, totalEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+        val totalStart = if (spanStart < start) spanStart else spanStart - 15 +spoilerText.length
+        val totalEnd = if (spanEnd < start) spanEnd else spanEnd - 15 + spoilerText.length
+        if (span != it && spanStart != start && spanEnd != end) ssb.setSpan(it, totalStart, totalEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
     }
 
-    spoilerText.getSpans(0, spoilerText.length, ParcelableSpan::class.java).forEach {
-        val spanStart = spoilerText.getSpanStart(it)
-        ssb.setSpan(it, start + spanStart, end + spanStart, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-    }
     text = ssb
 }
+
