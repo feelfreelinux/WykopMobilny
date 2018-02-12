@@ -72,7 +72,7 @@ fun String.toPrettyDate() : String {
     return PrettyTime(Locale("pl")).format(parseDate(this))
 }
 fun String.toDurationPrettyDate() : String {
-    return PrettyTime(Locale("pl")).formatDuration(parseDate(this))
+    return PrettyTime(Locale("pl")).formatDurationUnrounded(parseDate(this))
 }
 fun Uri.queryFileName(contentResolver: ContentResolver) : String {
     var result: String? = null

@@ -9,8 +9,9 @@ import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 
 // This class should be extended in all activities in this app. Place global-activity settings here
 abstract class BaseActivity : DaggerAppCompatActivity() {
-    fun showErrorDialog(e : Throwable) =
+    fun showErrorDialog(e : Throwable) {
         showExceptionDialog(e)
+    }
 
     private val themeSettingsPreferences by lazy { SettingsPreferences(this) as SettingsPreferencesApi }
 

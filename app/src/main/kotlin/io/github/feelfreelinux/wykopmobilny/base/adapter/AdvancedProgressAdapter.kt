@@ -12,7 +12,7 @@ abstract class AdvancedProgressAdapter<A : Any> : RecyclerView.Adapter<RecyclerV
     }
 
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return dataset[position]?.hashCode()?.toLong() ?: position.toLong()
     }
 
     internal val dataset = arrayListOf<A?>()
