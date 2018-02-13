@@ -6,6 +6,9 @@ import android.net.Uri
 import android.util.TypedValue
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.printout
+import org.threeten.bp.LocalDate
+import org.threeten.bp.ZoneId
+import org.threeten.bp.format.DateTimeFormatter
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
@@ -14,6 +17,11 @@ fun parseDate(date : String) : Date {
     val format = SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.GERMANY)
     format.timeZone = TimeZone.getTimeZone("Europe/Warsaw")
     return format.parse(date)
+}
+
+fun parseDateJavaTime(date : String) : LocalDate {
+    val format = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss", Locale.GERMANY)
+    return LocalDate.parse(date, format.withZone(ZoneId.of("Europe/Warsaw")))
 }
 
 fun getGroupColor(role : Int, isUsingDarkTheme : Boolean = true) : Int = when(role) {

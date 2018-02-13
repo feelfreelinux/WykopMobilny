@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny
 import android.content.Context
 import com.bugsnag.android.Bugsnag
 import com.evernote.android.job.JobManager
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import dagger.android.AndroidInjector
@@ -31,6 +32,7 @@ class WykopApp : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        AndroidThreeTen.init(this)
         refWatcher = LeakCanary.install(this)
         JobManager.create(this).addJobCreator(jobCreator)
         if (!BuildConfig.DEBUG) {

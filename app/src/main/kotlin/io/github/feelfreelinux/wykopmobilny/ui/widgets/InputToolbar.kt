@@ -9,11 +9,13 @@ import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
 
@@ -146,6 +148,13 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         defaultText = ""
         body.requestFocus()
         textBody += "@$user: "
+        selectionPosition = textBody.length
+    }
+
+    fun addQuoteText(quote : String, quoteAuthor : String) {
+        defaultText = ""
+        body.requestFocus()
+        textBody += "\n> @$quoteAuthor: ${quote.removeHtml()}"
         selectionPosition = textBody.length
     }
 

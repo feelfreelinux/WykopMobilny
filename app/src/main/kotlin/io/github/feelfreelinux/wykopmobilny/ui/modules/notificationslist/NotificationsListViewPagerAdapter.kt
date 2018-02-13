@@ -34,7 +34,7 @@ class NotificationsListViewPagerAdapter(val resources : Resources, fragmentManag
     override fun getPageTitle(position: Int): CharSequence {
         super.getPageTitle(position)
         return when(position) {
-            0 -> resources.getString(R.string.notifications_title)
+            0 -> resources.getString(R.string.notifications_directed)
             else -> resources.getString(R.string.hashtags_notifications_title)
         }
     }

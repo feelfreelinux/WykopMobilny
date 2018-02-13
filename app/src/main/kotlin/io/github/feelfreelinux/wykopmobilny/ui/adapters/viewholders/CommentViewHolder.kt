@@ -12,12 +12,13 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.comment_list_item.view.*
 import kotlinx.android.synthetic.main.entry_comment_layout.view.*
 
-class CommentViewHolder(val view: View, private val addReceiverListener : (Author) -> Unit, val settingsPreferencesApi: SettingsPreferencesApi, val userManagerApi: UserManagerApi, val commentPresenter: CommentPresenter) : RecyclableViewHolder(view) {
+class CommentViewHolder(val view: View, private val addReceiverListener : (Author) -> Unit, val quoteListener : (EntryComment) -> Unit, val settingsPreferencesApi: SettingsPreferencesApi, val userManagerApi: UserManagerApi, val commentPresenter: CommentPresenter) : RecyclableViewHolder(view) {
     fun bindView(comment : EntryComment, isAuthorComment: Boolean, commentId : Int?, shouldEnableClickListener : Boolean = false) {
         view.entryComment.shouldEnableClickListener = shouldEnableClickListener
         view.entryComment.addReceiverListener = addReceiverListener
         view.entryComment.setCommentData(comment, userManagerApi, settingsPreferencesApi, commentPresenter)
         view.entryComment.setStyleForComment(isAuthorComment, commentId ?: -1)
+        view.entryComment.quoteCommentListener = quoteListener
     }
 
     override fun cleanRecycled() {
@@ -26,6 +27,7 @@ class CommentViewHolder(val view: View, private val addReceiverListener : (Autho
             view.entryComment.shouldEnableClickListener = false
             view.entryComment.entryContentTextView.text = null
             view.entryComment.addReceiverListener = null
+            view.entryComment.quoteCommentListener = null
             view.entryComment.setOnClickListener(null)
         }
     }
