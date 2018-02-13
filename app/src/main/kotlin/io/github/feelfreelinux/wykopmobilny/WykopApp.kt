@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny
 
 import android.content.Context
+import android.support.multidex.MultiDex
 import com.bugsnag.android.Bugsnag
 import com.evernote.android.job.JobManager
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -28,6 +29,11 @@ class WykopApp : DaggerApplication() {
     fun getRefWatcher(context: Context): RefWatcher {
         val application = context.applicationContext as WykopApp
         return application.refWatcher!!
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     override fun onCreate() {
