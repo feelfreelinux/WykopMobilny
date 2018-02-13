@@ -63,6 +63,9 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         setSupportActionBar(toolbar)
         adapter.commentId = intent.getIntExtra(EXTRA_COMMENT_ID, -1)
         adapter.addReceiverListener = { inputToolbar.addAddressant(it.nick) }
+        adapter.quoteCommentListener = {
+            inputToolbar.addQuoteText(it.body, it.author.nick)
+        }
 
         supportActionBar?.apply {
             title = null

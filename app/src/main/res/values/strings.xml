@@ -146,6 +146,7 @@
     <string name="sortby_newest">Najnowsze komentarze</string>
     <string name="sortby_best">Najlepsze komentarze</string>
     <string name="sortby_oldest">Najstarsze komentarze</string>
+    <string name="notifications_directed">Do mnie</string>
 
     <string name="upcoming_sortby_comments">Komentowane</string>
     <string name="upcoming_sortby_votes">Wykopywane</string>

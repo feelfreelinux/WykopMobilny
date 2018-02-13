@@ -1,8 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny
 
 import android.content.Context
+import android.support.multidex.MultiDex
 import com.bugsnag.android.Bugsnag
 import com.evernote.android.job.JobManager
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import dagger.android.AndroidInjector
@@ -29,8 +31,14 @@ class WykopApp : DaggerApplication() {
         return application.refWatcher!!
     }
 
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
+
     override fun onCreate() {
         super.onCreate()
+        AndroidThreeTen.init(this)
         refWatcher = LeakCanary.install(this)
         JobManager.create(this).addJobCreator(jobCreator)
         if (!BuildConfig.DEBUG) {

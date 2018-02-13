@@ -12,6 +12,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
@@ -35,6 +36,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     private lateinit var settingsPreferencesApi : SettingsPreferencesApi
     private lateinit var votersDialogListener : (List<Voter>) -> Unit
     var shouldEnableClickListener = true
+    var replyListener : ((Author) -> Unit)? = null
   
     init {
         View.inflate(context, R.layout.entry_layout, this)
@@ -85,11 +87,15 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             }
         }
 
-
+        replyTextView.isVisible = !shouldEnableClickListener
         if (shouldEnableClickListener) {
+            replyTextView.setOnClickListener(null)
             setOnClickListener {
                 presenter.openDetails(entry.embed?.isRevealed ?: false)
             }
+        } else {
+            replyTextView.setOnClickListener { replyListener?.invoke(entry.author) }
+
         }
 
         voteButton.apply {

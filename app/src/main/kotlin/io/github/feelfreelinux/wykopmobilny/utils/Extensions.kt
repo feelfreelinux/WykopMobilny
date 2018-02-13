@@ -14,13 +14,19 @@ import android.webkit.MimeTypeMap
 import android.widget.ImageView
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
+import io.github.feelfreelinux.wykopmobilny.utils.api.parseDateJavaTime
 import org.ocpsoft.prettytime.PrettyTime
+import org.threeten.bp.Duration
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
+import org.threeten.bp.Period
 import java.util.*
 
 
@@ -64,6 +70,7 @@ fun View.disableFor(millis: Long){
 fun ImageView.loadImage(url : String) {
     GlideApp.with(context)
             .load(url)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .override(Target.SIZE_ORIGINAL)
             .into(this)
 }
@@ -72,6 +79,14 @@ fun String.toPrettyDate() : String {
     return PrettyTime(Locale("pl")).format(parseDate(this))
 }
 fun String.toDurationPrettyDate() : String {
+    val duration = Period.between(parseDateJavaTime(this), LocalDate.now())
+    if (duration.years > 1 && duration.months > 0) {
+        return "${duration.years} lata ${duration.months} mies."
+    } else if (duration.years == 1 && duration.months > 0) {
+        return "${duration.years} rok ${duration.months} mies."
+    } else if (duration.years == 0) {
+        return "${duration.months} mies."
+    }
     return PrettyTime(Locale("pl")).formatDurationUnrounded(parseDate(this))
 }
 fun Uri.queryFileName(contentResolver: ContentResolver) : String {

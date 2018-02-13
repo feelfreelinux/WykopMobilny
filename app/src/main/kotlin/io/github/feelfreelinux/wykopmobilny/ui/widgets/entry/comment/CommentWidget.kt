@@ -36,6 +36,8 @@ class CommentWidget : CardView, CommentView {
     lateinit var comment : EntryComment
 
     var addReceiverListener: ((Author) -> Unit)? = null
+    var quoteCommentListener: ((EntryComment) -> Unit)? = null
+
     lateinit var presenter : CommentPresenter
     var shouldEnableClickListener = false
     private lateinit var userManagerApi: UserManagerApi
@@ -100,6 +102,7 @@ class CommentWidget : CardView, CommentView {
     private fun setupBody() {
         moreOptionsTextView.setOnClickListener { openOptionsMenu() }
         replyTextView.setOnClickListener { addReceiver() }
+        quoteTextView.setOnClickListener { quoteCommentListener?.invoke(comment) }
         val clickListener =  { presenter.handleLink(url) }
         if (shouldEnableClickListener) setOnClickListener { clickListener() }
         if (comment.body.isNotEmpty()) {

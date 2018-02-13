@@ -87,6 +87,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
+            <TextView
+                android:id="@+id/quoteTextView"
+                style="@style/MikroButton"
+                android:background="?attr/voteButtonStatelist"
+                android:drawableStart="?attr/markdownFormatQuote"
+                app:layout_constraintStart_toEndOf="@id/replyTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
                 android:id="@+id/voteButton"
                 style="@style/MikroButton"
