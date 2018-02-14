@@ -87,7 +87,7 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             }
         }
 
-        replyTextView.isVisible = !shouldEnableClickListener
+        replyTextView.isVisible = !shouldEnableClickListener && userManagerApi.isUserAuthorized()
         if (shouldEnableClickListener) {
             replyTextView.setOnClickListener(null)
             setOnClickListener {

@@ -64,6 +64,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
     }
 
     private fun setupBody() {
+        replyTextView.isVisible = userManagerApi.isUserAuthorized()
         commentImageView.setEmbed(comment.embed, settingsApi, presenter.newNavigatorApi, comment.isNsfw)
         val clickListener =  { presenter.handleUrl(url) }
         if (shouldEnableClickListener) setOnClickListener { clickListener() }

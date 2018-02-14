@@ -154,7 +154,8 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     fun addQuoteText(quote : String, quoteAuthor : String) {
         defaultText = ""
         body.requestFocus()
-        textBody += "\n> @$quoteAuthor: ${quote.removeHtml()}"
+        if(textBody.length > 0) textBody += "\n\n"
+        textBody += "> ${quote.removeHtml().replace("\n", "\n> ")}\n@$quoteAuthor: "
         selectionPosition = textBody.length
     }
 

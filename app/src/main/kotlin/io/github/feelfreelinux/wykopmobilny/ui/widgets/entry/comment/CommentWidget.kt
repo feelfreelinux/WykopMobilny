@@ -101,7 +101,9 @@ class CommentWidget : CardView, CommentView {
 
     private fun setupBody() {
         moreOptionsTextView.setOnClickListener { openOptionsMenu() }
+        replyTextView.isVisible = userManagerApi.isUserAuthorized()
         replyTextView.setOnClickListener { addReceiver() }
+        quoteTextView.isVisible = userManagerApi.isUserAuthorized()
         quoteTextView.setOnClickListener { quoteCommentListener?.invoke(comment) }
         val clickListener =  { presenter.handleLink(url) }
         if (shouldEnableClickListener) setOnClickListener { clickListener() }
