@@ -79,20 +79,20 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
-                android:id="@+id/replyTextView"
+                android:id="@+id/quoteTextView"
                 style="@style/MikroButton"
                 android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/replyDrawable"
+                android:drawableStart="?attr/quoteDrawable"
                 app:layout_constraintStart_toEndOf="@id/shareTextView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
-                android:id="@+id/quoteTextView"
+                android:id="@+id/replyTextView"
                 style="@style/MikroButton"
                 android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/markdownFormatQuote"
-                app:layout_constraintStart_toEndOf="@id/replyTextView"
+                android:drawableStart="?attr/replyDrawable"
+                app:layout_constraintStart_toEndOf="@id/quoteTextView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -127,4 +127,5 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
+
 </merge>
