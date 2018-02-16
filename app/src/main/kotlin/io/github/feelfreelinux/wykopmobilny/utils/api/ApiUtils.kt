@@ -6,6 +6,8 @@ import android.net.Uri
 import android.util.TypedValue
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.printout
+import org.intellij.markdown.html.HtmlGenerator
+import org.intellij.markdown.parser.MarkdownParser
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
@@ -64,6 +66,18 @@ fun String.stripImageCompression() : String {
     val extension = substringAfterLast(".")
     val baseUrl = substringBeforeLast(",")
     return baseUrl + if (!baseUrl.endsWith(extension)) "." + extension else ""
+}
+
+fun String.convertMarkdownToHtml() : String {
+    val flavour = WykopFlavorDescriptor()
+    val parsedTree = MarkdownParser(flavour)
+            .buildMarkdownTreeFromString(this)
+    var html = HtmlGenerator(this, parsedTree, flavour).generateHtml()
+    val regex = Regex("#\\w+")
+    regex.findAll(html).forEach {
+        html = html.replace(it.value, "#<a href=\"${it.value}\">${it.value.removePrefix("#")}</a>")
+    }
+    return html.removePrefix("<body><p>").removeSuffix("</p></body>")
 }
 
 fun String.encryptMD5() : String{
