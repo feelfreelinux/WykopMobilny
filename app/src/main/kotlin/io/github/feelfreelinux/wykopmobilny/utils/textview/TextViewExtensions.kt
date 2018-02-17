@@ -7,6 +7,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.ClickableSpan
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
+import io.github.feelfreelinux.wykopmobilny.utils.api.convertMarkdownToHtml
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import java.net.URLDecoder
 import java.sql.Struct
@@ -52,7 +53,7 @@ fun TextView.prepareBody(html: String, urlClickListener : (String) -> Unit, clic
 }
 
 fun TextView.openSpoilers(span : ClickableSpan, rawText : String) {
-    val spoilerText = URLDecoder.decode(rawText.substringAfter("spoiler:"), "UTF-8")
+    val spoilerText = URLDecoder.decode(rawText.substringAfter("spoiler:"), "UTF-8").convertMarkdownToHtml().toSpannable()
     val textBuilder = (text as SpannableString)
     val start = textBuilder.getSpanStart(span)
     val end = textBuilder.getSpanEnd(span)
@@ -63,6 +64,10 @@ fun TextView.openSpoilers(span : ClickableSpan, rawText : String) {
         val totalStart = if (spanStart < start) spanStart else spanStart - 15 +spoilerText.length
         val totalEnd = if (spanEnd < start) spanEnd else spanEnd - 15 + spoilerText.length
         if (span != it && spanStart != start && spanEnd != end) ssb.setSpan(it, totalStart, totalEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+    }
+
+    spoilerText.getSpans(0, spoilerText.length, ParcelableSpan::class.java).forEach {
+        ssb.setSpan(it, start + spoilerText.getSpanStart(it), start + spoilerText.getSpanEnd(it), Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
     }
 
     text = ssb

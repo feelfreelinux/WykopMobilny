@@ -75,6 +75,7 @@ android {
 repositories {
     mavenCentral()
 	maven { url 'https://jitpack.io' }
+    maven { url 'http://dl.bintray.com/jetbrains/markdown' }
 }
 
 dependencies {
@@ -110,6 +111,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
     implementation "io.reactivex.rxjava2:rxjava:$versions.rxjava"
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    implementation  'org.jetbrains:markdown:0.1.25'
 
     // AppUpdater
     implementation "com.github.javiersantos:AppUpdater:$versions.appUpdater"
