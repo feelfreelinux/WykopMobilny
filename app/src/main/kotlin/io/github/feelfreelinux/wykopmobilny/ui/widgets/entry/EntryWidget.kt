@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
@@ -24,12 +25,29 @@ import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entry_layout.view.*
 import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 
-class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs),  EntryView {
+class EntryWidget: CardView,  EntryView, LayoutContainer {
+    constructor(context: Context) : super(context)
 
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    override val containerView: View? = View.inflate(context, R.layout.entry_layout, this)
+
+    companion object {
+        fun createView(context : Context): EntryWidget {
+            val widget = EntryWidget(context)
+            widget.layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT)
+            return widget
+        }
+    }
     private lateinit var userManagerApi: UserManagerApi
     private lateinit var presenter: EntryPresenter
     private lateinit var entry: Entry
@@ -37,11 +55,9 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
     private lateinit var votersDialogListener : (List<Voter>) -> Unit
     var shouldEnableClickListener = true
     var replyListener : ((Author) -> Unit)? = null
-  
+
     init {
-        View.inflate(context, R.layout.entry_layout, this)
-        isClickable = true
-        isFocusable = true
+        //layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val typedValue = TypedValue()
         getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
@@ -129,6 +145,8 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
             survey.voteAnswerListener = { presenter.voteAnswer(it) }
             survey.setSurvey(entry.survey!!, userManagerApi)
         } else survey.isVisible = false
+
+
     }
 
     override fun showSurvey(surveyData: Survey) {
@@ -253,6 +271,15 @@ class EntryWidget(context: Context, attrs: AttributeSet) : CardView(context, att
                 .setChooserTitle(R.string.share)
                 .setText(url)
                 .startChooser()
+    }
+
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        val margins = layoutParams as MarginLayoutParams
+        val horizontal = resources.getDimensionPixelSize(R.dimen.cardview_margin_horizontal)
+        val vertical = resources.getDimensionPixelSize(R.dimen.cardview_margin_vertical)
+        margins.setMargins(vertical, horizontal, vertical, horizontal)
+        layoutParams = margins
     }
 
     val url : String

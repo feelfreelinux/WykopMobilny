@@ -5,13 +5,13 @@ import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.*
-import kotlinx.android.synthetic.main.link_layout.view.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.link_layout.*
 
 
-class LinkViewHolder(val view: View) : RecyclableViewHolder(view)  {
-    val linksPreferences by lazy { LinksPreferences(view.context) }
+class LinkViewHolder(override val containerView: View) : RecyclableViewHolder(containerView), LayoutContainer {
+    val linksPreferences by lazy { LinksPreferences(containerView.context) }
     fun bindView(link : Link) {
-        view.apply {
             title.text = link.title
             image.isVisible = link.preview != null
             link.preview?.let { image.loadImage(link.preview) }
@@ -32,8 +32,8 @@ class LinkViewHolder(val view: View) : RecyclableViewHolder(view)  {
                 title.alpha = 1f
                 description.alpha = 1f
             }
-            setOnClickListener {
-                view.getActivityContext()!!.startActivity(LinkDetailsActivity.createIntent(view.getActivityContext()!!, link))
+            containerView.setOnClickListener {
+                containerView.getActivityContext()!!.startActivity(LinkDetailsActivity.createIntent(containerView.getActivityContext()!!, link))
                 if (!link.gotSelected) {
                     image.alpha = 0.6f
                     title.alpha = 0.6f
@@ -41,18 +41,16 @@ class LinkViewHolder(val view: View) : RecyclableViewHolder(view)  {
                     link.gotSelected = true
                     linksPreferences.readLinksIds = linksPreferences.readLinksIds.plusElement("link_${link.id}")
                 }
-            }
         }
     }
 
     override fun cleanRecycled() {
-        view.apply {
             title.text = null
             description.text = null
             diggCountTextView.text = null
             commentsCountTextView.text = null
-            setOnClickListener(null)
-            GlideApp.with(this).clear(image)
-        }
+            containerView.setOnClickListener(null)
+            GlideApp.with(containerView).clear(image)
+
     }
 }

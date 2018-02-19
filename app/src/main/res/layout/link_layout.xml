@@ -5,8 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="android.support.v7.widget.CardView"
     style="@style/EntryCardView"
-    android:clickable="true"
-    android:focusable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -14,7 +12,6 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:addStatesFromChildren="true"
         android:background="?attr/cardviewStatelist">
 
         <ImageView
@@ -71,22 +68,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description"/>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/buttonsToolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/link_layout_button_padding_horizontal"
-            android:paddingRight="@dimen/link_layout_button_padding_horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separator">
-
-            <TextView
+        <TextView
                 android:id="@+id/shareTextView"
                 style="@style/MikroButton"
                 android:drawableStart="?attr/sharebtnDrawable"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
@@ -98,7 +85,7 @@
                 android:textSize="@dimen/link_layout_date_text_size"
                 android:textStyle="normal"
                 app:layout_constraintStart_toEndOf="@id/shareTextView"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="3 godz. temu"/>
 
@@ -109,30 +96,28 @@
                 android:focusable="false"
                 android:drawableStart="?attr/commentDrawable"
                 app:layout_constraintEnd_toStartOf="@+id/diggCountTextView"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="50"/>
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
-                android:id="@+id/diggCountTextView"
-                style="@style/MikroButton"
-                android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
-                app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:clickable="false"
-                android:focusable="false"
-                tools:text="2137"/>
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
+            android:id="@+id/diggCountTextView"
+            style="@style/MikroButton"
+            android:clickable="false"
+            android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
+            android:focusable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
+            app:layout_constraintTop_toBottomOf="@+id/separator"
+            tools:text="2137" />
 
-            <TextView
-                android:id="@+id/moreOptionsTextView"
-                style="@style/MikroButton"
-                android:drawableStart="?attr/dotsDrawable"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/moreOptionsTextView"
+            style="@style/MikroButton"
+            android:drawableStart="?attr/dotsDrawable"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separator" />
 
         <View
             android:id="@+id/hotBadgeStrip"

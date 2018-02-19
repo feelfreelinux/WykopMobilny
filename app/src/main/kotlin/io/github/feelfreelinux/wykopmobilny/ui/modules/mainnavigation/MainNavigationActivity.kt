@@ -154,8 +154,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         actionBarToggle.drawerArrowDrawable = badgeDrawable
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         navHeader.view_container?.showDrawerHeader(userManagerApi.isUserAuthorized(), userManagerApi.getUserCredentials())
-
+        setupNavigation()
         showUsersMenu(userManagerApi.isUserAuthorized())
+
         if (savedInstanceState == null) {
             if (intent.hasExtra(TARGET_FRAGMENT_KEY)) {
                 when (intent.getStringExtra(TARGET_FRAGMENT_KEY)) {
@@ -164,7 +165,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
             } else openMainFragment()
         }
-        setupNavigation()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -236,9 +236,14 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         fab.isVisible = false
         fab.setOnClickListener(null)
         fab.isVisible = fragment is BaseNavigationView && userManagerApi.isUserAuthorized()
-        supportFragmentManager.beginTransaction().replace(R.id.contentView,
-                fragment).commit()
+        val ft = supportFragmentManager.beginTransaction()
+        ft.setCustomAnimations(
+                R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_popup_enter, R.anim.abc_popup_exit)
+        ft.replace(R.id.contentView, fragment)
+        ft.commit()
         closeDrawer()
+
+
     }
 
     fun closeDrawer() =

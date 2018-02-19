@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.PreCachingLayoutManager
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDateJavaTime
 import org.ocpsoft.prettytime.PrettyTime
@@ -54,10 +55,10 @@ fun View.getActivityContext() : Activity? {
 
 fun RecyclerView.prepare() {
     setItemViewCacheSize(20)
-    setHasFixedSize(true)
-    isDrawingCacheEnabled = true
     drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
+    isDrawingCacheEnabled = true
     layoutManager = LinearLayoutManager(context)
+
 }
 
 fun View.disableFor(millis: Long){
@@ -71,7 +72,6 @@ fun ImageView.loadImage(url : String) {
     GlideApp.with(context)
             .load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .override(Target.SIZE_ORIGINAL)
             .into(this)
 }
 

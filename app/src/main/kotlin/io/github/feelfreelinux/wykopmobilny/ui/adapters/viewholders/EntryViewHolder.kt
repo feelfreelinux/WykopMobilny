@@ -1,20 +1,19 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.support.v7.widget.RecyclerView
-import android.view.View
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.entry_layout.view.*
-import kotlinx.android.synthetic.main.entry_list_item.view.*
 
 
-class EntryViewHolder(val view: View, val userManagerApi: UserManagerApi, val entryReplyListener : ((Author) -> Unit)?, val settingsPreferencesApi: SettingsPreferencesApi, val entryPresenter: EntryPresenter) : RecyclableViewHolder(view) {
+class EntryViewHolder(override val containerView: EntryWidget, val userManagerApi: UserManagerApi, val entryReplyListener : ((Author) -> Unit)?, val settingsPreferencesApi: SettingsPreferencesApi, val entryPresenter: EntryPresenter) : RecyclableViewHolder(containerView), LayoutContainer {
     fun bindView(entry : Entry, enableClickListener : Boolean = true) {
-        view.entry.apply {
+        containerView.apply {
             shouldEnableClickListener = enableClickListener
             replyListener = entryReplyListener
             setEntryData(entry, userManagerApi, settingsPreferencesApi, entryPresenter)
@@ -22,8 +21,6 @@ class EntryViewHolder(val view: View, val userManagerApi: UserManagerApi, val en
     }
 
     override fun cleanRecycled() {
-        view.apply {
-            GlideApp.with(this).clear(view.entry.entryImageView)
-        }
+            GlideApp.with(containerView).clear(containerView.entryImageView)
     }
 }
