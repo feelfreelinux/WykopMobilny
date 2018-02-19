@@ -64,7 +64,7 @@
         <ImageView
             android:id="@+id/newNotificationMark"
             android:layout_width="@dimen/notifications_list_item_mark_width"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:src="@drawable/ic_notification_unread"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

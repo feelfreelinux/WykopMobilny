@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.base.adapter.SimpleBaseProgressAdapt
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import javax.inject.Inject
 
 class LinkAdapter @Inject constructor() : SimpleBaseProgressAdapter<LinkViewHolder, Link>() {
@@ -15,8 +16,13 @@ class LinkAdapter @Inject constructor() : SimpleBaseProgressAdapter<LinkViewHold
         holder.bindView(data[position])
     }
 
-    override fun createViewHolder(parent: ViewGroup): LinkViewHolder =
-            LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false))
+    override fun createViewHolder(parent: ViewGroup): LinkViewHolder {
+        val currentTimeMilist = System.currentTimeMillis()
+        val ddd = LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false))
+        printout((System.currentTimeMillis() - currentTimeMilist).toString())
+        return ddd
+
+    }
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()
