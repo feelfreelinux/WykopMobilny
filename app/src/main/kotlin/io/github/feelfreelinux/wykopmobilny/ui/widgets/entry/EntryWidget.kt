@@ -57,7 +57,6 @@ class EntryWidget: CardView,  EntryView, LayoutContainer {
     var replyListener : ((Author) -> Unit)? = null
 
     init {
-        //layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val typedValue = TypedValue()
         getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)

@@ -15,6 +15,9 @@ import java.util.*
 
 const val REMOVE_USERKEY_HEADER = "REMOVE_USERKEY"
 class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
+    companion object {
+        val MAX_RETRY_COUNT = 3
+    }
     override fun intercept(chain: Interceptor.Chain?): Response? {
         val API_SIGN_HEADER = "apisign"
         val request = chain!!.request()
@@ -59,6 +62,15 @@ class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
             addHeader(API_SIGN_HEADER, encodeUrl.encryptMD5())
             removeHeader("@")
         }
-        return chain.proceed(builder.build())
+
+        val newRequest = builder.build()
+
+        var response = chain.proceed(newRequest)
+        var tryCount = 0
+        while (!response.isSuccessful && response.code() != 401 && tryCount < MAX_RETRY_COUNT) {
+            tryCount++
+            response = chain.proceed(newRequest)
+        }
+        return response
     }
 }
