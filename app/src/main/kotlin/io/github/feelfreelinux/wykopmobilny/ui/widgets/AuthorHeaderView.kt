@@ -33,7 +33,7 @@ class AuthorHeaderView : ConstraintLayout {
             authorAvatarView.setOnClickListener {
                 openProfile(author.nick)
             }
-            setOnClickListener { openProfile(author.nick) }
+            userNameTextView.setOnClickListener { openProfile(author.nick) }
             entryDateTextView.text = date
 
             app?.let {

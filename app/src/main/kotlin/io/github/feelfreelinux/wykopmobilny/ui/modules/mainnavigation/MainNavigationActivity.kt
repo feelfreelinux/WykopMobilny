@@ -208,6 +208,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             findItem(R.id.login).isVisible = !value
             findItem(R.id.logout).isVisible = value
         }
+
         navHeader.view_container.isVisible = value
         navHeader.view_container.apply {
             nav_notifications_tag.setOnClickListener {

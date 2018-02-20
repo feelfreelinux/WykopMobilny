@@ -5,6 +5,8 @@ import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserCredentials
@@ -36,6 +38,9 @@ class DrawerHeaderWidget : ConstraintLayout {
         if (isUserAuthorized) {
             isVisible = true
             nav_profile_image.loadImage(credentials!!.avatarUrl)
+            nav_profile_image.setOnClickListener {
+                getActivityContext()!!.startActivity(ProfileActivity.createIntent(getActivityContext()!!, credentials.login))
+            }
             if (credentials.backgroundUrl != null) {
                 backgroundImage.loadImage(credentials.backgroundUrl)
             } else {
