@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class FeedAdapter @Inject constructor(val userManagerApi: UserManagerApi, val se
     }
 
     override fun createViewHolder(parent: ViewGroup): EntryViewHolder =
-            EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
+            EntryViewHolder(EntryWidget.createView(parent.context), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()

@@ -73,9 +73,9 @@ fun String.convertMarkdownToHtml() : String {
     val parsedTree = MarkdownParser(flavour)
             .buildMarkdownTreeFromString(this)
     var html = HtmlGenerator(this, parsedTree, flavour).generateHtml()
-    val regex = Regex("#\\w+")
+    val regex = Regex("[#@]\\w+")
     regex.findAll(html).forEach {
-        html = html.replace(it.value, "#<a href=\"${it.value}\">${it.value.removePrefix("#")}</a>")
+        html = html.replace(it.value, "${it.value[0]}<a href=\"${it.value}\">${it.value.removePrefix("#")}</a>")
     }
     return html.removePrefix("<body><p>").removeSuffix("</p></body>")
 }

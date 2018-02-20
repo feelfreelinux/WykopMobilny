@@ -11,6 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHol
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
@@ -29,7 +30,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
             when (viewType) {
-                ENTRY_VIEWTYPE -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
+                ENTRY_VIEWTYPE -> EntryViewHolder(EntryWidget.createView(parent.context), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
                 else -> LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false))
             }
 

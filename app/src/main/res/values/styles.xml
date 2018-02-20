@@ -244,7 +244,7 @@
     </style>
 
     <style name="WykopImageViewExpand">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">@dimen/wykop_image_view_expand_height</item>
         <item name="android:background">?attr/expandImageGradient</item>
         <item name="android:text">@string/expand_image</item>

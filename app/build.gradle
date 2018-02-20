@@ -91,7 +91,7 @@ dependencies {
     implementation "com.android.support:design:$versions.supportLibrary"
     implementation "com.android.support:support-v4:$versions.supportLibrary"
     implementation "com.android.support:customtabs:$versions.supportLibrary"
-    implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta5'
     implementation "com.google.android.gms:play-services-gcm:11.8.0"
     implementation 'com.android.support:multidex:1.0.2'
     // Utils
@@ -100,6 +100,7 @@ dependencies {
     implementation "com.jsibbold:zoomage:1.1.0"
     implementation "com.github.chrisbanes:PhotoView:2.1.3"
     implementation "com.pavelsikun:material-seekbar-preference:2.3.0"
+    debugCompile "com.github.brianPlummer:tinydancer:0.1.2"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
@@ -115,6 +116,7 @@ dependencies {
 
     // AppUpdater
     implementation "com.github.javiersantos:AppUpdater:$versions.appUpdater"
+    compile 'com.github.romainguy:ViewServer:-SNAPSHOT'
 
 
     // Dagger 2
