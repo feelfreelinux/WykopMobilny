@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.bugsnag.android.Bugsnag
-import com.codemonkeylabs.fpslibrary.TinyDancer
 import com.evernote.android.job.JobManager
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
@@ -30,8 +29,6 @@ class WykopApp : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        TinyDancer.create()
-                .show(this)
         AndroidThreeTen.init(this)
         JobManager.create(this).addJobCreator(jobCreator)
         if (!BuildConfig.DEBUG) {
