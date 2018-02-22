@@ -6,6 +6,7 @@ import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
 import android.support.v7.widget.CardView
 import android.text.SpannableStringBuilder
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -23,6 +24,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.appendNewSpan
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.extensions.LayoutContainer
@@ -30,7 +32,7 @@ import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entry_layout.view.*
 import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 
-class EntryWidget: CardView,  EntryView, LayoutContainer {
+class EntryWidget : CardView, EntryView, LayoutContainer {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -40,7 +42,7 @@ class EntryWidget: CardView,  EntryView, LayoutContainer {
     override val containerView: View? = View.inflate(context, R.layout.entry_layout, this)
 
     companion object {
-        fun createView(context : Context): EntryWidget {
+        fun createView(context: Context): EntryWidget {
             val widget = EntryWidget(context)
             widget.layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -48,13 +50,14 @@ class EntryWidget: CardView,  EntryView, LayoutContainer {
             return widget
         }
     }
+
     private lateinit var userManagerApi: UserManagerApi
     private lateinit var presenter: EntryPresenter
     private lateinit var entry: Entry
-    private lateinit var settingsPreferencesApi : SettingsPreferencesApi
-    private lateinit var votersDialogListener : (List<Voter>) -> Unit
+    private lateinit var settingsPreferencesApi: SettingsPreferencesApi
+    private lateinit var votersDialogListener: (List<Voter>) -> Unit
     var shouldEnableClickListener = true
-    var replyListener : ((Author) -> Unit)? = null
+    var replyListener: ((Author) -> Unit)? = null
 
     init {
         val typedValue = TypedValue()
@@ -65,7 +68,7 @@ class EntryWidget: CardView,  EntryView, LayoutContainer {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (::presenter.isInitialized)
-        presenter.subscribe(this)
+            presenter.subscribe(this)
     }
 
     override fun onDetachedFromWindow() {
@@ -73,7 +76,7 @@ class EntryWidget: CardView,  EntryView, LayoutContainer {
         presenter.unsubscribe()
     }
 
-    fun setEntryData(entry: Entry, userManager: UserManagerApi, settingsApi : SettingsPreferencesApi, entryPresenter: EntryPresenter) {
+    fun setEntryData(entry: Entry, userManager: UserManagerApi, settingsApi: SettingsPreferencesApi, entryPresenter: EntryPresenter) {
         presenter = entryPresenter
         userManagerApi = userManager
         voteButton.setup(userManager)
@@ -136,8 +139,21 @@ class EntryWidget: CardView,  EntryView, LayoutContainer {
 
     private fun setupBody() {
         if (entry.body.isNotEmpty()) {
-            entryContentTextView.isVisible = true
-            entryContentTextView.prepareBody(entry.body, { presenter.handleLink(it) }, { if (shouldEnableClickListener) presenter.openDetails(true) }, settingsPreferencesApi.openSpoilersDialog)
+            entryContentTextView.apply {
+                isVisible = true
+                if (shouldEnableClickListener) {
+                    maxLines = EllipsizingTextView.MAX_LINES
+                    ellipsize = TextUtils.TruncateAt.END
+                }
+                prepareBody(entry.body, { presenter.handleLink(it) }, {
+                    if (shouldEnableClickListener && !isEllipsized) {
+                        presenter.openDetails(true)
+                    } else if (shouldEnableClickListener) {
+                        maxLines = Int.MAX_VALUE
+                        ellipsize = null
+                    }
+                }, settingsPreferencesApi.openSpoilersDialog)
+            }
         } else entryContentTextView.isVisible = false
 
         if (entry.survey != null) {
@@ -242,8 +258,7 @@ class EntryWidget: CardView,  EntryView, LayoutContainer {
                 val spannableStringBuilder = SpannableStringBuilder()
                 it
                         .map { it.author }
-                        .forEachIndexed {
-                            index, author ->
+                        .forEachIndexed { index, author ->
                             val span = ForegroundColorSpan(getGroupColor(author.group))
                             spannableStringBuilder.appendNewSpan(author.nick, span, 0)
                             if (index < it.size - 1) spannableStringBuilder.append(", ")
@@ -259,7 +274,7 @@ class EntryWidget: CardView,  EntryView, LayoutContainer {
         presenter.getVoters()
     }
 
-    override fun showVoters(voters : List<Voter>) {
+    override fun showVoters(voters: List<Voter>) {
         votersDialogListener(voters)
     }
 
@@ -281,6 +296,6 @@ class EntryWidget: CardView,  EntryView, LayoutContainer {
         layoutParams = margins
     }
 
-    val url : String
+    val url: String
         get() = "https://www.wykop.pl/wpis/${entry.id}"
 }
