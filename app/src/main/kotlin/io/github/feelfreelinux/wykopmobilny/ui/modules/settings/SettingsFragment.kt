@@ -35,6 +35,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         addPreferencesFromResource(R.xml.app_preferences)
         findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
         findPreference("cutImageProportion").isEnabled = settingsApi.cutImages
+        findPreference("linkImagePosition").isEnabled = !settingsApi.linkSimpleList && settingsApi.linkShowImage
+        findPreference("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
         (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
             summary = entry
         }
@@ -46,26 +48,29 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         (findPreference("defaultScreen") as ListPreference).apply {
             summary = entry
         }
+
+        (findPreference("linkImagePosition") as ListPreference).apply {
+            summary = entry
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {
         val pref = findPreference(key)
         findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
         findPreference("cutImageProportion").isEnabled = settingsApi.cutImages
+        findPreference("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
+        findPreference("linkImagePosition").isEnabled = !settingsApi.linkSimpleList
 
         if (pref is ListPreference) {
             pref.setSummary(pref.entry)
+            when(pref.key) {
+                "linkImagePosition" -> restartActivity()
+            }
         } else if (pref is CheckBoxPreference) {
             when (pref.key) {
-                "useDarkTheme" -> {
-                    restartActivity()
-                }
-                "useAmoledTheme" -> {
-                    restartActivity()
-                }
-                "showNotifications" -> {
-                    WykopNotificationsJob.schedule(settingsApi)
-                }
+                "linkShowAuthor", "linkSimpleList", "linkShowImage" -> restartActivity()
+                "useDarkTheme", "useAmoledTheme" -> restartActivity()
+                "showNotifications" -> WykopNotificationsJob.schedule(settingsApi)
             }
         }
     }
@@ -86,5 +91,4 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         startActivity(intent)
         activity?.finish()
     }
-
 }

@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/backgroundImage"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/drawer_header_background_image_height"
         android:scaleType="centerCrop"
         android:background="?attr/colorPrimary"
@@ -40,7 +40,6 @@
     <TextView
         android:id="@+id/nav_notifications"
         style="@style/NavigationDrawerNotificationItem"
-        android:layout_marginStart="@dimen/drawer_header_notification_message_margin_start"
         android:layout_marginEnd="@dimen/drawer_header_notification_message_margin_end"
         android:drawableStart="?attr/mailDrawable"
         app:layout_constraintStart_toEndOf="@id/nav_profile_image_card"
@@ -51,7 +50,6 @@
         android:id="@+id/nav_notifications_tag"
         style="@style/NavigationDrawerNotificationItem"
         android:layout_marginStart="@dimen/drawer_header_notification_tag_margin_start"
-        android:layout_marginEnd="@dimen/drawer_header_notification_tag_margin_end"
         android:drawableStart="?attr/notificationDrawable"
         app:layout_constraintStart_toEndOf="@id/nav_notifications"
         app:layout_constraintEnd_toEndOf="parent"

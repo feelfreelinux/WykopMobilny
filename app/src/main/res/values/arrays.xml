@@ -34,18 +34,32 @@
         <item>hits</item>
     </string-array>
 
+    <string-array name="preferences_link_image_position">
+        <item>@string/link_image_position_left</item>
+        <item>@string/link_image_position_right</item>
+        <item>@string/link_image_position_top</item>
+        <item>@string/link_image_position_bottom</item>
+    </string-array>
+
+    <string-array name="preferences_link_image_position_values">
+        <item>left</item>
+        <item>right</item>
+        <item>top</item>
+        <item>bottom</item>
+    </string-array>
+
     <string-array name="preferences_hot_screen">
-        <item>@string/period24</item>
-        <item>@string/period12</item>
-        <item>@string/period6</item>
         <item>@string/newest_entries</item>
+        <item>@string/period6</item>
+        <item>@string/period12</item>
+        <item>@string/period24</item>
     </string-array>
 
     <string-array name="preferences_hot_screen_values">
-        <item>24</item>
-        <item>12</item>
-        <item>6</item>
         <item>newest</item>
+        <item>6</item>
+        <item>12</item>
+        <item>24</item>
     </string-array>
 
     <string-array name="preferences_notifications_frequency_values">

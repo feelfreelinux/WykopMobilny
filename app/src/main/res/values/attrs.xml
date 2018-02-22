@@ -22,6 +22,7 @@
     <attr name="expandDrawable" format="reference"/>
     <attr name="collapseDrawable" format="reference"/>
 
+    <attr name="digCountDrawable" format="reference"/>
     <attr name="wypokDrawable" format="reference"/>
     <attr name="commentDrawable" format="reference"/>
     <attr name="plusDrawable" format="reference"/>
@@ -29,6 +30,7 @@
     <attr name="dotsDrawable" format="reference"/>
     <attr name="replyDrawable" format="reference"/>
     <attr name="quoteDrawable" format="reference"/>
+    <attr name="reportDrawable" format="reference"/>
     <attr name="relatedDrawable" format="reference"/>
     <attr name="sharebtnDrawable" format="reference"/>
     <attr name="MirkoButtonStyle" format="reference"/>

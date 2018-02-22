@@ -7,7 +7,6 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="?attr/colorPrimaryDark"
@@ -17,11 +16,14 @@
         android:minHeight="?attr/actionBarSize"
         app:buttonGravity="top"
         app:contentInsetStartWithNavigation="0dp"
-        app:subtitleTextAppearance="@style/Toolbar.Subtitle.Messages"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="Rozmowa z m__b"
         app:titleTextAppearance="@style/Toolbar.TitleText.Messages"
-        tools:layout_editor_absoluteY="0dp">
+        app:subtitleTextAppearance="@style/Toolbar.Subtitle.Messages"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="0dp"
+        tools:title="feelfree">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
             android:id="@+id/avatarview"
@@ -29,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/conversation_avatar_margin_end"
-            android:visibility="visible" />
+            android:visibility="visible"/>
 
     </android.support.v7.widget.Toolbar>
 

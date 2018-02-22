@@ -33,7 +33,6 @@
             android:paddingBottom="@dimen/link_layout_title_padding_bottom"
             android:textSize="@dimen/link_details_layout_title_font_size"
             android:textStyle="bold"
-            android:maxLines="5"
             android:clickable="false"
             android:focusable="false"
             android:duplicateParentState="true"
@@ -50,7 +49,6 @@
             android:paddingEnd="@dimen/link_layout_description_padding_horizontal"
             android:paddingBottom="@dimen/link_layout_description_padding_bottom"
             android:textSize="@dimen/link_details_layout_description_font_size"
-            android:maxLines="10"
             android:clickable="false"
             android:focusable="false"
             android:duplicateParentState="true"
@@ -208,6 +206,7 @@
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
                 android:id="@+id/diggCountTextView"
                 style="@style/MikroButton"
+                android:background="?attr/voteButtonStatelist"
                 android:drawableStart="?attr/wypokDrawable"
                 android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
                 app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"

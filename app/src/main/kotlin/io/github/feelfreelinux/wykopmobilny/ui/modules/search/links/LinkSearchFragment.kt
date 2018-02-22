@@ -14,7 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentQuer
 import javax.inject.Inject
 
 class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragmentNotifier {
-    override val feedAdapter by lazy { LinkAdapter() }
+    @Inject override lateinit var feedAdapter : LinkAdapter
     lateinit var dataFragment : DataFragment<PagedDataModel<List<Link>>>
     @Inject lateinit var presenter : LinkSearchPresenter
     var queryString = ""
