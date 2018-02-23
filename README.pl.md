@@ -29,6 +29,11 @@ Możesz zgłosić błąd bezpośrednio na githubie, lub opisz swój problem pod 
 
 # Lista zmian
 Zwykle opisuje postępy w pracach nad aplikacją wraz z listą zmian [tutaj](https://wykop.pl/tag/otwartywykopmobilny).
+
+# Darowizny
+Możesz wesprzeć mnie poprzez [PayPal](https://www.paypal.me/WykopMobilny/).
+[![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/WykopMobilny/)
+
 # Pobierz aplikacje
 [Pobierz najnowszą wersję aplikacji.](https://github.com/feelfreelinux/WykopMobilny/releases/latest) Aplikacja automatycznie powiadomi cię o nowych wersjach :)
 # [Zrzuty ekranu](https://github.com/feelfreelinux/WykopMobilny/tree/master/screenshots)

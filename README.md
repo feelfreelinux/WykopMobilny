@@ -24,6 +24,11 @@ You can report an issue in this repository, or just describe your issue under [#
 
 # Changelogs
 Usually I report all progress along with changelogs [here](https://wykop.pl/tag/otwartywykopmobilny).
+
+# Donating
+You can support me via [PayPal](https://www.paypal.me/WykopMobilny/).
+[![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/WykopMobilny/)
+
 # Downloads
 [Download newest release with built-in update notifier](https://github.com/feelfreelinux/WykopMobilny/releases/latest)
 # [Screenshots](https://github.com/feelfreelinux/WykopMobilny/tree/master/screenshots)
