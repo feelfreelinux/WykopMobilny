@@ -31,7 +31,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
             when (viewType) {
                 ENTRY_VIEWTYPE -> EntryViewHolder(EntryWidget.createView(parent.context), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
-                else -> LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false))
+                else -> LinkViewHolder.createLinkViewHolder(settingsPreferencesApi, parent)
             }
 
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {

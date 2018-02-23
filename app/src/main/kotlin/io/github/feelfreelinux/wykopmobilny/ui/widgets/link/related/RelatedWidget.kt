@@ -5,6 +5,7 @@ import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import android.support.v4.app.ShareCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
@@ -37,14 +38,11 @@ class RelatedWidget(context: Context, attrs: AttributeSet) : CardView(context, a
         urlTextView.text = related.url
         presenter.subscribe(this)
         presenter.relatedId = relatedItem.id
-        title.setOnClickListener {
-            context.openBrowser(related.url)
-        }
-        userNameTextView.setOnClickListener {
-            context.openBrowser(related.url)
-        }
         setOnClickListener {
             context.openBrowser(related.url)
+        }
+        shareTextView.setOnClickListener {
+            shareUrl()
         }
         setVoteCount(related.voteCount)
         authorHeaderView.isVisible = related.author != null
@@ -114,9 +112,24 @@ class RelatedWidget(context: Context, attrs: AttributeSet) : CardView(context, a
     override fun setVoteCount(voteCount: Int) {
         relatedItem.voteCount = voteCount
         voteCountTextView.text = if (relatedItem.voteCount > 0) "+${relatedItem.voteCount}" else "${relatedItem.voteCount}"
+        if(relatedItem.voteCount > 0) voteCountTextView.setTextColor(resources.getColor(R.color.plusPressedColor))
+        else if(relatedItem.voteCount < 0) voteCountTextView.setTextColor(resources.getColor(R.color.minusPressedColor))
     }
 
     override fun showErrorDialog(e: Throwable) {
         context.showExceptionDialog(e)
     }
+
+    fun shareUrl() {
+        ShareCompat.IntentBuilder
+                .from(getActivityContext()!!)
+                .setType("text/plain")
+                .setChooserTitle(R.string.share)
+                .setText(url)
+                .startChooser()
+    }
+
+    val url : String
+        get() = relatedItem.url
+
 }

@@ -12,18 +12,79 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/cardviewStatelist">
+        android:background="?attr/cardviewStatelist"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
+            android:id="@+id/authorHeaderView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingTop="@dimen/entry_layout_author_padding_vertical"
+            android:paddingBottom="@dimen/entry_layout_author_padding_vertical"
+            android:paddingLeft="@dimen/entry_layout_author_padding_horizontal"
+            android:paddingRight="@dimen/entry_layout_author_padding_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:id="@+id/lineTop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_line_height"
+            android:background="?attr/lineColor"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/authorHeaderView"/>
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/image_left"
             android:layout_width="@dimen/link_layout_image_width"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/link_layout_image_height"
             android:scaleType="centerCrop"
             android:clickable="false"
             android:focusable="false"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/separator"/>
+            app:layout_constraintTop_toBottomOf="@id/image_top"
+            app:layout_constraintBottom_toTopOf="@id/image_bottom"/>
+
+        <ImageView
+            android:id="@+id/image_right"
+            android:layout_width="@dimen/link_layout_image_width"
+            android:layout_height="@dimen/link_layout_image_height"
+            android:scaleType="centerCrop"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_top"
+            app:layout_constraintBottom_toTopOf="@id/image_bottom"/>
+
+        <ImageView
+            android:id="@+id/image_top"
+            android:layout_width="@dimen/link_layout_image_full_width"
+            android:layout_height="@dimen/link_layout_image_full_height"
+            android:scaleType="centerCrop"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lineTop"/>
+
+        <ImageView
+            android:id="@+id/image_bottom"
+            android:layout_width="@dimen/link_layout_image_full_width"
+            android:layout_height="@dimen/link_layout_image_full_height"
+            android:scaleType="centerCrop"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description"/>
 
         <TextView
             android:id="@+id/title"
@@ -38,9 +99,9 @@
             android:maxLines="2"
             android:clickable="false"
             android:focusable="false"
-            app:layout_constraintStart_toEndOf="@id/image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_left"
+            app:layout_constraintEnd_toStartOf="@id/image_right"
+            app:layout_constraintTop_toBottomOf="@id/image_top"
             tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet."/>
 
         <TextView
@@ -54,73 +115,161 @@
             android:maxLines="3"
             android:clickable="false"
             android:focusable="false"
-            app:layout_constraintStart_toEndOf="@id/image"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_left"
+            app:layout_constraintEnd_toStartOf="@id/image_right"
             app:layout_constraintTop_toBottomOf="@+id/title"
             tools:text="Mauris et elementum diam. Nam laoreet nunc ac urna dapibus, porttitor faucibus magna pretium."/>
 
         <View
             android:id="@id/separator"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/separator_line_height"
             android:background="?attr/lineColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description"/>
+            app:layout_constraintTop_toBottomOf="@id/image_bottom"/>
 
         <TextView
-                android:id="@+id/shareTextView"
-                style="@style/MikroButton"
-                android:drawableStart="?attr/sharebtnDrawable"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/separator"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+            android:id="@+id/shareTextView"
+            style="@style/MikroButton"
+            android:drawableStart="?attr/sharebtnDrawable"
+            android:background="?attr/voteButtonStatelist"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator"/>
 
-            <TextView
-                android:id="@+id/dateTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/link_layout_date_padding_horizontal"
-                android:paddingRight="@dimen/link_layout_date_padding_horizontal"
-                android:textSize="@dimen/link_layout_date_text_size"
-                android:textStyle="normal"
-                app:layout_constraintStart_toEndOf="@id/shareTextView"
-                app:layout_constraintTop_toBottomOf="@id/separator"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="3 godz. temu"/>
+        <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
+            android:id="@+id/favoriteButton"
+            style="@style/MikroButton"
+            app:layout_constraintStart_toEndOf="@id/shareTextView"
+            app:layout_constraintTop_toBottomOf="@id/separator"/>
 
-            <TextView
-                android:id="@+id/commentsCountTextView"
-                style="@style/MikroButton"
-                android:clickable="false"
-                android:focusable="false"
-                android:drawableStart="?attr/commentDrawable"
-                app:layout_constraintEnd_toStartOf="@+id/diggCountTextView"
-                app:layout_constraintTop_toBottomOf="@id/separator"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="50"/>
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/link_layout_date_padding_horizontal"
+            android:paddingRight="@dimen/link_layout_date_padding_horizontal"
+            android:textSize="@dimen/link_layout_date_text_size"
+            android:textStyle="normal"
+            app:layout_constraintStart_toEndOf="@id/favoriteButton"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            app:layout_constraintBottom_toBottomOf="@id/shareTextView"
+            tools:text="3 godz. temu"/>
+
+        <TextView
+            android:id="@+id/commentsCountTextView"
+            style="@style/MikroButton"
+            android:drawableStart="?attr/commentDrawable"
+            android:background="?attr/voteButtonStatelist"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toStartOf="@+id/diggCountTextView"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            tools:text="50"/>
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
             android:id="@+id/diggCountTextView"
             style="@style/MikroButton"
-            android:clickable="false"
             android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
-            android:focusable="false"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="?attr/voteButtonStatelist"
             app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
             app:layout_constraintTop_toBottomOf="@+id/separator"
-            tools:text="2137" />
+            tools:text="2137"/>
 
         <TextView
             android:id="@+id/moreOptionsTextView"
             style="@style/MikroButton"
             android:drawableStart="?attr/dotsDrawable"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="?attr/voteButtonStatelist"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/separator" />
+            app:layout_constraintTop_toBottomOf="@+id/separator"/>
 
         <View
             android:id="@+id/hotBadgeStrip"
+            android:layout_width="@dimen/link_layout_hot_badge_strip_width"
+            android:layout_height="0dp"
+            android:background="@color/colorBadgeHot"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayoutSimple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/cardviewStatelist"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <View
+            android:id="@+id/simple_digg"
+            android:layout_width="54dp"
+            android:layout_height="52dp"
+            android:background="?attr/digCountDrawable"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View
+            android:id="@+id/simple_digg_hot"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:background="@drawable/ic_hot_dig"
+            app:layout_constraintEnd_toEndOf="@id/simple_digg"
+            app:layout_constraintTop_toTopOf="@id/simple_digg"/>
+
+        <TextView
+            android:id="@+id/simple_digg_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:textColor="@color/digCountColor"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="@id/simple_digg"
+            app:layout_constraintEnd_toEndOf="@id/simple_digg"
+            app:layout_constraintTop_toTopOf="@id/simple_digg"
+            app:layout_constraintBottom_toBottomOf="@id/simple_digg"
+            tools:text="2137"/>
+
+        <TextView
+            android:id="@+id/simple_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/link_layout_title_padding_horizontal"
+            android:paddingEnd="@dimen/link_layout_title_padding_horizontal"
+            android:paddingTop="@dimen/link_layout_title_padding_top"
+            android:paddingBottom="@dimen/link_layout_title_padding_top"
+            android:textSize="@dimen/link_layout_title_font_size"
+            android:minLines="3"
+            android:maxLines="3"
+            android:clickable="false"
+            android:focusable="false"
+            app:layout_constraintStart_toEndOf="@id/simple_digg"
+            app:layout_constraintEnd_toStartOf="@id/simple_image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet."/>
+
+        <ImageView
+            android:id="@+id/simple_image"
+            android:layout_width="@dimen/link_layout_image_width"
+            android:layout_height="@dimen/link_layout_image_height"
+            android:scaleType="centerCrop"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View
+            android:id="@+id/hotBadgeStripSimple"
             android:layout_width="@dimen/link_layout_hot_badge_strip_width"
             android:layout_height="0dp"
             android:background="@color/colorBadgeHot"

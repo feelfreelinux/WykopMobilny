@@ -90,10 +90,10 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         moreOptionsTextView.setOnClickListener {
             openOptionsMenu()
         }
-
         shareTextView.setOnClickListener {
             shareUrl()
         }
+        commentsCountTextView.setOnClickListener {}
 
         favoriteButton.isVisible = userManager.isUserAuthorized()
         favoriteButton.isFavorite = link.userFavorite

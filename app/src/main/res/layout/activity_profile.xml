@@ -42,13 +42,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/profilePicture"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    <ImageView
+                        android:id="@+id/profilePicture"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/rank"
@@ -64,15 +64,15 @@
                         app:layout_constraintBottom_toBottomOf="@id/profilePicture"
                         tools:text="#1013"/>
 
-                <ImageView
-                    android:id="@+id/genderStripImageView"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/male_strip"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="@id/profilePicture"
-                    app:layout_constraintEnd_toEndOf="@id/profilePicture"
-                    app:layout_constraintTop_toBottomOf="@id/profilePicture"/>
+                    <ImageView
+                        android:id="@+id/genderStripImageView"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/male_strip"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/profilePicture"
+                        app:layout_constraintEnd_toEndOf="@id/profilePicture"
+                        app:layout_constraintTop_toBottomOf="@id/profilePicture"/>
 
                 </android.support.constraint.ConstraintLayout>
 

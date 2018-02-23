@@ -26,7 +26,7 @@ class PMMessageViewHolder(val view: View,
             date.text = message.date
 
             message.app?.let {
-                date.text = context.getString(R.string.date_with_user_app, message.date, message.app)
+                date.text = message.date
             }
 
             body.prepareBody(message.body, { linkHandlerApi.handleUrl(it) }, null, settingsPreferencesApi.openSpoilersDialog)

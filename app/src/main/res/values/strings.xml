@@ -190,4 +190,14 @@
     <string name="block_user">Zablokuj</string>
     <string name="unblock_user">Odblokuj</string>
 
+    <string name="link_simple_list">Prosta lista znalezisk</string>
+    <string name="link_show_author">Pokaż autora znaleziska</string>
+    <string name="link_show_image">Pokaż miniaturkę znaleziska</string>
+
+    <string name="linkImagePosition">Styl miniaturki znaleziska</string>
+    <string name="link_image_position_left">Mała po lewej stronie</string>
+    <string name="link_image_position_right">Mała po prawej stronie</string>
+    <string name="link_image_position_top">Duża nad tekstem</string>
+    <string name="link_image_position_bottom">Duża pod tekstem</string>
+
 </resources>

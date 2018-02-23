@@ -10,7 +10,9 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
             android:id="@+id/authorHeaderView"
@@ -27,15 +29,17 @@
 
         <TextView
             android:id="@+id/userNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:textSize="@dimen/author_header_username_text_size"
-            tools:text="m__b"
+            android:gravity="center_vertical"
             android:layout_marginStart="@dimen/author_header_username_margin_horizontal"
             android:layout_marginEnd="@dimen/author_header_username_margin_horizontal"
             app:layout_constraintStart_toEndOf="@id/authorHeaderView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/lineTop"/>
+            app:layout_constraintBottom_toBottomOf="@id/lineTop"
+            tools:text="feelfree"/>
 
         <View
             android:id="@+id/lineTop"
@@ -51,7 +55,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/link_related_layout_title_text_size"
-            android:textStyle="bold"
             android:paddingStart="@dimen/link_related_layout_padding_vertical"
             android:paddingEnd="@dimen/link_related_layout_padding_vertical"
             android:paddingTop="@dimen/link_related_layout_title_padding_top"
@@ -66,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/link_related_layout_link_text_size"
-            android:textStyle="italic"
+            android:textColor="?attr/colorAccent"
             android:paddingStart="@dimen/link_related_layout_padding_vertical"
             android:paddingEnd="@dimen/link_related_layout_padding_vertical"
             android:paddingBottom="@dimen/link_related_layout_link_padding_bottom"
@@ -92,26 +95,30 @@
             android:paddingRight="@dimen/comment_layout_button_padding_horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lineBottom"
-            android:clickable="true"
-            android:focusable="true">
+            app:layout_constraintTop_toBottomOf="@id/lineBottom">
 
             <TextView
                 android:id="@+id/shareTextView"
                 style="@style/MikroButton"
                 android:drawableStart="?attr/sharebtnDrawable"
-                android:clickable="true"
-                android:focusable="true"
+                android:background="?attr/voteButtonStatelist"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/reportTextView"
+                style="@style/MikroButton"
+                android:drawableStart="?attr/reportDrawable"
+                android:background="?attr/voteButtonStatelist"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@id/shareTextView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/voteCountTextView"
                 style="@style/MikroButton"
-                android:layout_marginEnd="@dimen/link_related_layout_vote_margin_end"
-                android:clickable="true"
-                android:focusable="true"
                 app:layout_constraintEnd_toStartOf="@id/plusButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

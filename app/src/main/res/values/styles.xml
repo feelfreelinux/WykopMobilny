@@ -45,12 +45,14 @@
         <item name="quoteDrawable">@drawable/ic_quote_light</item>
         <item name="relatedDrawable">@drawable/ic_related_link_light</item>
         <item name="sharebtnDrawable">@drawable/ic_sharebtn_light</item>
+        <item name="reportDrawable">@drawable/ic_buttontoolbar_report_light</item>
         <item name="favoriteDrawable">@drawable/ic_favorite_selected_light</item>
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite_light</item>
         <item name="surveyBar">@drawable/survey_bar</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke</item>
         <item name="expandDrawable">@drawable/comment_expand_light</item>
         <item name="collapseDrawable">@drawable/comment_collapse_light</item>
+        <item name="digCountDrawable">@drawable/ic_dig_light</item>
         <item name="linkViewClicked">@color/linkItemClicked</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote</item>
@@ -125,12 +127,14 @@
         <item name="quoteDrawable">@drawable/ic_quote</item>
         <item name="relatedDrawable">@drawable/ic_related_link</item>
         <item name="sharebtnDrawable">@drawable/ic_sharebtn</item>
+        <item name="reportDrawable">@drawable/ic_buttontoolbar_report</item>
         <item name="favoriteDrawable">@drawable/ic_favorite_selected</item>
         <item name="favoriteOutlineDrawable">@drawable/ic_favorite</item>
         <item name="surveyBar">@drawable/survey_bar_dark</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke_dark</item>
         <item name="expandDrawable">@drawable/comment_expand</item>
         <item name="collapseDrawable">@drawable/comment_collapse</item>
+        <item name="digCountDrawable">@drawable/ic_dig</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote_dark</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold_dark</item>

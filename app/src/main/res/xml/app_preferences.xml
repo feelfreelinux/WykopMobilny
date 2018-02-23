@@ -30,6 +30,28 @@
             android:defaultValue="newest"/>
 
         <android.support.v7.preference.CheckBoxPreference
+            android:key="linkSimpleList"
+            android:title="@string/link_simple_list"
+            android:defaultValue="false"/>
+
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="linkShowImage"
+            android:title="@string/link_show_image"
+            android:defaultValue="true"/>
+
+        <android.support.v7.preference.ListPreference
+            android:key="linkImagePosition"
+            android:title="@string/linkImagePosition"
+            android:entries="@array/preferences_link_image_position"
+            android:entryValues="@array/preferences_link_image_position_values"
+            android:defaultValue="left"/>
+
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="linkShowAuthor"
+            android:title="@string/link_show_author"
+            android:defaultValue="false"/>
+
+        <android.support.v7.preference.CheckBoxPreference
             android:key="openSpoilersDialog"
             android:title="@string/open_spoilers_in_dialog"
             android:defaultValue="true"/>

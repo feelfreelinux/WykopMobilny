@@ -9,6 +9,7 @@
     <color name="titleTextColor.Dark">#cad6df</color>
     <color name="descriptionTextColor">#304458</color>
     <color name="descriptionTextColor.Dark">#cacecf</color>
+    <color name="digCountColor">#ef5213</color>
 
     <color name="colorAccent">#3c84c1</color>
     <color name="colorPrimary">#3a80ba</color>
@@ -58,7 +59,7 @@
     <color name="navigationSeparator">#404040</color>
     <color name="drawablesColor.Dark">#e6e6e6</color>
     <color name="mikroblogControlsColor.Dark">#424242</color>
-    <color name="plusPressedColor">#2AB364</color>
+    <color name="plusPressedColor">#27ae60</color>
     <color name="minusPressedColor">#c0392b</color>
     <color name="authorHeader_date.Dark">#757575</color>
     <color name="hintColor.Dark">#9e9e9e</color>

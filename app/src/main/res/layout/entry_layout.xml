@@ -11,7 +11,8 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false">
+        android:clickable="false"
+        android:focusable="false">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"
@@ -37,6 +38,7 @@
             android:id="@+id/entryContentTextView"
             style="@style/EntryContentTextView"
             android:clickable="true"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lineTop"/>
