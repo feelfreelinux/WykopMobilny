@@ -17,9 +17,11 @@ import kotlinx.android.synthetic.main.link_layout.*
 class LinkViewHolder(override val containerView: View, settingsApi: SettingsPreferencesApi) : BaseLinkViewHolder(containerView, settingsApi) {
     override fun bindView(link: Link) {
         this.link = link
-        title.maxLines = 5
-        description.maxLines = 10
-        image_top.isVisible = link.preview != null
+        if (settingsApi.linkImagePosition == "top" || settingsApi.linkImagePosition == "bottom") {
+            title.maxLines = 5
+            description.maxLines = 10
+        }
+        getCorrectImageView().isVisible = link.preview != null
         if (settingsApi.linkShowImage) {
             getCorrectImageView().apply {
                 isVisible = link.preview != null
