@@ -32,6 +32,7 @@ Zwykle opisuje postępy w pracach nad aplikacją wraz z listą zmian [tutaj](htt
 
 # Darowizny
 Możesz wesprzeć mnie poprzez [PayPal](https://www.paypal.me/WykopMobilny/).
+
 [![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/WykopMobilny/)
 
 # Pobierz aplikacje

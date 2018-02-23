@@ -27,6 +27,7 @@ Usually I report all progress along with changelogs [here](https://wykop.pl/tag/
 
 # Donating
 You can support me via [PayPal](https://www.paypal.me/WykopMobilny/).
+
 [![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/WykopMobilny/)
 
 # Downloads
