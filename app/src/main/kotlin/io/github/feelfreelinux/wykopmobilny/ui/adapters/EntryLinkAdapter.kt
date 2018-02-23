@@ -6,10 +6,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.AdvancedProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.CommentViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
@@ -20,18 +17,20 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
     companion object {
         val ENTRY_VIEWTYPE = 1
         val LINK_VIEWTYPE = 2
+        val SIMPLE_LINK_VIEWTYPE = 3
     }
 
     override fun getItemViewType(position: Int): Int = when {
         dataset[position] == null -> AdvancedProgressAdapter.VIEWTYPE_PROGRESS
         dataset[position]!!.entry != null -> ENTRY_VIEWTYPE
-        else -> LINK_VIEWTYPE
+        else -> if (settingsPreferencesApi.linkSimpleList) SIMPLE_LINK_VIEWTYPE else LINK_VIEWTYPE
     }
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
             when (viewType) {
                 ENTRY_VIEWTYPE -> EntryViewHolder(EntryWidget.createView(parent.context), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
-                else -> LinkViewHolder.createLinkViewHolder(settingsPreferencesApi, parent)
+                LINK_VIEWTYPE -> LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false), settingsPreferencesApi)
+                else -> SimpleLinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.simple_link_layout, parent, false), settingsPreferencesApi)
             }
 
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -39,7 +38,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
         if (item.entry != null) {
             (holder as EntryViewHolder).bindView(item.entry, true)
         } else if (item.link != null) {
-            (holder as LinkViewHolder).bindView(item.link)
+            (holder as BaseLinkViewHolder).bindView(item.link)
         }
     }
 
