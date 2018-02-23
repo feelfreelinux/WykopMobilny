@@ -1,9 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.utils.textview;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Layout;
@@ -17,10 +19,13 @@ import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import io.github.feelfreelinux.wykopmobilny.R;
 
 /**
  * A {@link android.widget.TextView} that ellipsizes more intelligently.
@@ -32,7 +37,7 @@ import java.util.regex.Pattern;
 public class EllipsizingTextView extends AppCompatTextView {
     public static final int ELLIPSIZE_ALPHA = 0x88;
     public static final int MAX_LINES = 8;
-    private SpannableString ELLIPSIS = new SpannableString("\u2026");
+    private SpannableString ELLIPSIS = new SpannableString("\u0020[pokaż\u00A0całość]");
 
     private static final Pattern DEFAULT_END_PUNCTUATION
             = Pattern.compile("[\\.!?,;:\u2026]*$", Pattern.DOTALL);
@@ -69,8 +74,11 @@ public class EllipsizingTextView extends AppCompatTextView {
         a.recycle();
         setEndPunctuationPattern(DEFAULT_END_PUNCTUATION);
         final int currentTextColor = getCurrentTextColor();
-        final int ellipsizeColor = Color.argb(ELLIPSIZE_ALPHA, Color.red(currentTextColor), Color.green(currentTextColor), Color.blue(currentTextColor));
-        ELLIPSIS.setSpan(new ForegroundColorSpan(ellipsizeColor), 0, ELLIPSIS.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
+        @ColorInt int color = typedValue.data;
+        ELLIPSIS.setSpan(new ForegroundColorSpan(color), 0, ELLIPSIS.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     public void setEndPunctuationPattern(Pattern pattern) {
@@ -337,7 +345,7 @@ public class EllipsizingTextView extends AppCompatTextView {
             SpannableStringBuilder dest = new SpannableStringBuilder(workingText);
 
             if (fullText instanceof Spanned) {
-                TextUtils.copySpansFrom((Spanned) fullText, 0, workingText.length(), null, dest, 0);
+                TextUtils.copySpansFrom((Spanned) fullText, 0, workingText.length() - 15, null, dest, 0);
             }
             return dest;
         }
