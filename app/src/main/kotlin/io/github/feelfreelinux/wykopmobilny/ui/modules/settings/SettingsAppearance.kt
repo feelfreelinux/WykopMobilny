@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.preference.CheckBoxPreference
 import android.support.v7.preference.ListPreference
-import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -18,7 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificatio
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import javax.inject.Inject
 
-class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
+class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
     @Inject
     lateinit var settingsApi: SettingsPreferencesApi
     @Inject lateinit var childFragmentInjector : DispatchingAndroidInjector<Fragment>
@@ -33,23 +32,41 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        addPreferencesFromResource(R.xml.app_preferences)
-        (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
+        addPreferencesFromResource(R.xml.app_preferences_appearance)
+        findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
+        findPreference("cutImageProportion").isEnabled = settingsApi.cutImages
+        findPreference("linkImagePosition").isEnabled = !settingsApi.linkSimpleList && settingsApi.linkShowImage
+        findPreference("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
+
+        (findPreference("hotEntriesScreen") as ListPreference).apply {
             summary = entry
         }
 
-        (findPreference("appearance") as Preference).setOnPreferenceClickListener {
-            (activity as SettingsActivity).openFragment(SettingsAppearance(), "appearance")
-            true
+        (findPreference("defaultScreen") as ListPreference).apply {
+            summary = entry
         }
 
+        (findPreference("linkImagePosition") as ListPreference).apply {
+            summary = entry
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {
         val pref = findPreference(key)
-        if (pref is CheckBoxPreference) {
+        findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
+        findPreference("cutImageProportion").isEnabled = settingsApi.cutImages
+        findPreference("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
+        findPreference("linkImagePosition").isEnabled = !settingsApi.linkSimpleList
+
+        if (pref is ListPreference) {
+            pref.setSummary(pref.entry)
+            when(pref.key) {
+                "linkImagePosition" -> restartActivity()
+            }
+        } else if (pref is CheckBoxPreference) {
             when (pref.key) {
-                "showNotifications" -> WykopNotificationsJob.schedule(settingsApi)
+                "linkShowAuthor", "linkSimpleList", "linkShowImage" -> restartActivity()
+                "useDarkTheme", "useAmoledTheme" -> restartActivity()
             }
         }
     }
@@ -67,6 +84,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     private fun restartActivity() {
         val intent = Intent(context, SettingsActivity::class.java)
         intent.putExtra(SettingsActivity.THEME_CHANGED_EXTRA, true)
+        intent.putExtra(SettingsActivity.EXTRA_SCREEN, SettingsActivity.SCREEN_APPEARANCE)
         startActivity(intent)
         activity?.finish()
     }

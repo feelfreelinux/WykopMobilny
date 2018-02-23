@@ -141,7 +141,7 @@ class EntryWidget : CardView, EntryView, LayoutContainer {
         if (entry.body.isNotEmpty()) {
             entryContentTextView.apply {
                 isVisible = true
-                if (shouldEnableClickListener) {
+                if (shouldEnableClickListener && settingsPreferencesApi.cutLongEntries) {
                     maxLines = EllipsizingTextView.MAX_LINES
                     ellipsize = TextUtils.TruncateAt.END
                 }

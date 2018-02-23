@@ -2,86 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sample="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.preference.PreferenceCategory
-        android:title="@string/pref_appearance">
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="useDarkTheme"
-            android:title="@string/pref_dark_style"
-            android:defaultValue="false"/>
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="useAmoledTheme"
-            android:title="@string/useAmoledTheme"
-            android:defaultValue="false"/>
-
-        <android.support.v7.preference.ListPreference
-            android:key="defaultScreen"
-            android:title="@string/defaultScreen"
-            android:entries="@array/preferences_default_screen"
-            android:entryValues="@array/preferences_default_screen_values"
-            android:defaultValue="mainpage"/>
-
-        <android.support.v7.preference.ListPreference
-            android:key="hotEntriesScreen"
-            android:title="@string/defaultHotScreen"
-            android:entries="@array/preferences_hot_screen"
-            android:entryValues="@array/preferences_hot_screen_values"
-            android:defaultValue="newest"/>
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="linkSimpleList"
-            android:title="@string/link_simple_list"
-            android:defaultValue="false"/>
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="linkShowImage"
-            android:title="@string/link_show_image"
-            android:defaultValue="true"/>
-
-        <android.support.v7.preference.ListPreference
-            android:key="linkImagePosition"
-            android:title="@string/linkImagePosition"
-            android:entries="@array/preferences_link_image_position"
-            android:entryValues="@array/preferences_link_image_position_values"
-            android:defaultValue="left"/>
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="linkShowAuthor"
-            android:title="@string/link_show_author"
-            android:defaultValue="false"/>
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="openSpoilersDialog"
-            android:title="@string/open_spoilers_in_dialog"
-            android:defaultValue="true"/>
-
-    </android.support.v7.preference.PreferenceCategory>
-
-    <android.support.v7.preference.PreferenceCategory
-        android:title="@string/app_config_images">
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="showMinifiedImages"
-            android:title="@string/app_config_images_minified"
-            android:defaultValue="false"/>
-
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="cutImages"
-            android:title="@string/app_config_images_cut"
-            android:defaultValue="true"/>
-
-        <com.pavelsikun.seekbarpreference.SeekBarPreferenceCompat
-            android:key="cutImageProportion"
-            android:title="@string/app_config_images_cut_image_proportion"
-            android:defaultValue="60"
-            sample:msbp_minValue="20"
-            sample:msbp_maxValue="150"
-            sample:msbp_interval="10"
-            sample:msbp_measurementUnit="%"
-            sample:msbp_dialogEnabled="false"/>
-
-    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.Preference
+        android:key="appearance"
+        android:title="Ustawienia wyglądu aplikacji"/>
 
     <android.support.v7.preference.PreferenceCategory
         android:title="@string/pref_notifications">
