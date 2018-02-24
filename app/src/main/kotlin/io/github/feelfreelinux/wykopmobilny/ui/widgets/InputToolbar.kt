@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
@@ -14,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAd
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -128,6 +130,11 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     }
 
     fun resetState() {
+        getActivityContext()?.currentFocus?.apply {
+            val imm = getActivityContext()?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(windowToken, 0)
+        }
+
         textBody = defaultText
         selectionPosition = textBody.length
         markdownToolbar.apply {

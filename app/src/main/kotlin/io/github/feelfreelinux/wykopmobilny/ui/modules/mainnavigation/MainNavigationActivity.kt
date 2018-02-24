@@ -238,13 +238,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         fab.setOnClickListener(null)
         fab.isVisible = fragment is BaseNavigationView && userManagerApi.isUserAuthorized()
         val ft = supportFragmentManager.beginTransaction()
-        ft.setCustomAnimations(
-                R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_popup_enter, R.anim.abc_popup_exit)
+        ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
         ft.replace(R.id.contentView, fragment)
         ft.commit()
         closeDrawer()
-
-
     }
 
     fun closeDrawer() =
@@ -337,6 +334,11 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
             app_observe_tag.setOnClickListener {
                 navigator.openTagActivity("otwartywykopmobilny")
+                dialog.dismiss()
+            }
+
+            app_donate.setOnClickListener {
+                navigator.openBrowser("https://paypal.me/WykopMobilny")
                 dialog.dismiss()
             }
 

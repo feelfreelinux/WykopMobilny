@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.link_layout.*
 
 class LinkViewHolder(override val containerView: View, settingsApi: SettingsPreferencesApi) : BaseLinkViewHolder(containerView, settingsApi) {
     override fun bindView(link: Link) {
-        this.link = link
+        super.bindView(link)
         if (settingsApi.linkImagePosition == "top" || settingsApi.linkImagePosition == "bottom") {
             title.maxLines = 5
             description.maxLines = 10

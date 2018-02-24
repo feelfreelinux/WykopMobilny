@@ -135,12 +135,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/separator" />
 
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
-            android:id="@+id/favoriteButton"
-            style="@style/MikroButton"
-            app:layout_constraintStart_toEndOf="@id/shareTextView"
-            app:layout_constraintTop_toBottomOf="@id/separator" />
-
         <TextView
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
@@ -149,9 +143,10 @@
             android:paddingRight="@dimen/link_layout_date_padding_horizontal"
             android:textSize="@dimen/link_layout_date_text_size"
             android:textStyle="normal"
+            app:layout_constraintStart_toEndOf="@id/shareTextView"
             app:layout_constraintBottom_toBottomOf="@id/shareTextView"
-            app:layout_constraintStart_toEndOf="@id/favoriteButton"
             app:layout_constraintTop_toBottomOf="@id/separator"
+            tools:layout_editor_absoluteX="59dp"
             tools:text="3 godz. temu" />
 
         <TextView
