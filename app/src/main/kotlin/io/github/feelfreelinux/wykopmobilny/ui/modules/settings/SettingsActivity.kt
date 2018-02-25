@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class SettingsActivity : BaseActivity() {
+    override val enableSwipeBackLayout: Boolean = true
     companion object {
         val THEME_CHANGED_EXTRA = "THEME_CHANGED"
         val THEME_CHANGED_RESULT = 154

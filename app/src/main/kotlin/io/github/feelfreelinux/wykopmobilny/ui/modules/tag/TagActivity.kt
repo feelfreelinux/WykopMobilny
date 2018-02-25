@@ -19,6 +19,7 @@ import javax.inject.Inject
 
 class TagActivity : BaseActivity(), TagActivityView {
     val tagString by lazy { intent.getStringExtra(EXTRA_TAG) }
+    override val enableSwipeBackLayout: Boolean = true
     @Inject lateinit var navigator : NavigatorApi
     @Inject lateinit var presenter : TagActivityPresenter
     @Inject lateinit var userManagerApi : UserManagerApi

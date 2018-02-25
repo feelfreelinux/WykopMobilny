@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 
 class NotificationsListActivity : BaseActivity() {
+    override val enableSwipeBackLayout: Boolean = true
     companion object {
         val EXTRA_PRESELECT_INDEX = "PRESELECT_INDEX"
         val PRESELECT_NOTIFICATIONS = 0

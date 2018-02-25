@@ -11,6 +11,39 @@ class LinkPresenter(
         val navigatorApi: NewNavigatorApi,
         val linkHandlerApi: WykopLinkHandlerApi,
         val linksApi: LinksApi) : BasePresenter<LinkView>() {
+    override fun subscribe(view: LinkView) {
+        super.subscribe(view)
+        compositeObservable.addAll(
+                linksApi.digSubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe {
+                            if (linkId == it.linkId) {
+                                view?.showDigged()
+                                view?.showVoteCount(it.voteResponse)
+                            }
+                        },
+                linksApi.burySubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe {
+                            if (linkId == it.linkId) {
+                                view?.showBurried()
+                                view?.showVoteCount(it.voteResponse)
+                            }
+                        },
+                linksApi.voteRemoveSubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe {
+                            if (linkId == it.linkId) {
+                                view?.showUnvoted()
+                                view?.showVoteCount(it.voteResponse)
+                            }
+                        }
+        )
+    }
+
     var linkId = -1
 
     companion object {

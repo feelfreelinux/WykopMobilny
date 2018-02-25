@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.badges_bottomsheet.view.*
 
 
 class ProfileActivity : BaseActivity(), ProfileView {
+    override val enableSwipeBackLayout: Boolean = true
     val username by lazy { intent.getStringExtra(EXTRA_USERNAME) }
     @Inject lateinit var navigator : NewNavigatorApi
     @Inject lateinit var presenter : ProfilePresenter

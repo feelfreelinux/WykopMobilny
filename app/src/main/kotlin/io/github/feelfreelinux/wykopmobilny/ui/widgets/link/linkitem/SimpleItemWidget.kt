@@ -63,6 +63,12 @@ class SimpleItemWidget(context: Context) : BaseLinkItemWidget(context) {
     }
 
     fun setupBody() {
+        if (link.gotSelected) {
+            setWidgetAlpha(ALPHA_VISITED)
+        } else {
+            setWidgetAlpha(ALPHA_NEW)
+        }
+
         when (link.userVote) {
             "dig" -> showDigged()
             "bury" -> showBurried()

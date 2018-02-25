@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener {
+    override val enableSwipeBackLayout: Boolean = true
     val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
     val isRevealed by lazy { intent.getBooleanExtra(EXTRA_IS_REVEALED, false) }
 

@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.OnRefreshListener, InputToolbarListener {
+    override val enableSwipeBackLayout: Boolean = true
     companion object {
         val EXTRA_LINK = "LINK_PARCEL"
         val EXTRA_FRAGMENT_KEY = "LINK_ACTIVITY_#"
