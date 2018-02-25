@@ -29,6 +29,8 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
     }
 
     init {
+        cardElevation = resources.getDimension(R.dimen.cardview_elevation)
+        radius = resources.getDimension(R.dimen.cardview_radius)
         val typedValue = TypedValue()
         getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
