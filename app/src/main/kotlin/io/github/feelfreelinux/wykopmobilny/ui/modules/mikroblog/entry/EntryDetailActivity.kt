@@ -22,6 +22,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
+import io.github.feelfreelinux.wykopmobilny.utils.api.convertMarkdownToHtml
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -211,13 +212,13 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                     val commentId = data?.getIntExtra("commentId", -1)
                     val commentBody = data?.getStringExtra("commentBody")
                     if (commentId != -1 && commentBody != null) {
-                        entryFragmentData.data?.comments?.filter { it.id == commentId }?.get(0)?.body = commentBody
+                        entryFragmentData.data?.comments?.filter { it.id == commentId }?.get(0)?.body = commentBody.convertMarkdownToHtml()
                         onRefresh()
                     }
                 }
 
                 BaseInputActivity.EDIT_ENTRY -> {
-                    val entryBody = data?.getStringExtra("entryBody")
+                    val entryBody = data?.getStringExtra("entryBody")?.convertMarkdownToHtml()
                     if (entryBody != null) {
                         entryFragmentData.data?.body = entryBody
                         onRefresh()

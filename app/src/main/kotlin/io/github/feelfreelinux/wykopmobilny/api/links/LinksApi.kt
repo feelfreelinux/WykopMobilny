@@ -7,8 +7,13 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteRes
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
 import io.reactivex.Single
+import io.reactivex.subjects.PublishSubject
 
 interface LinksApi {
+    val burySubject : PublishSubject<LinkVoteResponsePublishModel>
+    val digSubject : PublishSubject<LinkVoteResponsePublishModel>
+    val voteRemoveSubject : PublishSubject<LinkVoteResponsePublishModel>
+
     fun getPromoted(page : Int) : Single<List<Link>>
     fun getUpcoming(page : Int, sortBy: String) : Single<List<Link>>
 
@@ -37,9 +42,9 @@ interface LinksApi {
                    plus18 : Boolean,
                    linkId: Int) : Single<LinkComment>
     fun commentEdit(body : String, linkId: Int) : Single<LinkComment>
-    fun voteUp(linkId: Int) : Single<DigResponse>
-    fun voteDown(linkId: Int, reason : Int) : Single<DigResponse>
-    fun voteRemove(linkId: Int) : Single<DigResponse>
+    fun voteUp(linkId: Int, notifyPublisher : Boolean = true) : Single<DigResponse>
+    fun voteDown(linkId: Int, reason : Int, notifyPublisher : Boolean = true) : Single<DigResponse>
+    fun voteRemove(linkId: Int, notifyPublisher : Boolean = true) : Single<DigResponse>
     fun getUpvoters(linkId: Int) : Single<List<Upvoter>>
     fun getDownvoters(linkId: Int) : Single<List<Downvoter>>
     fun markFavorite(linkId : Int) : Single<Boolean>

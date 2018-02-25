@@ -19,11 +19,8 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.appendNewSpan
-import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -56,7 +53,7 @@ class EntryWidget : CardView, EntryView, LayoutContainer {
     private lateinit var entry: Entry
     private lateinit var settingsPreferencesApi: SettingsPreferencesApi
     private lateinit var votersDialogListener: (List<Voter>) -> Unit
-    var shouldEnableClickListener = true
+    override var shouldEnableClickListener = true
     var replyListener: ((Author) -> Unit)? = null
 
     init {

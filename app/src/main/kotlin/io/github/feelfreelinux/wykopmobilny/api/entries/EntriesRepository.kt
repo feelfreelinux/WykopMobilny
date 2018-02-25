@@ -3,10 +3,14 @@ package io.github.feelfreelinux.wykopmobilny.api.entries
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.getRequestBody
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryVotePublishModel
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.SurveyMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.VoterMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
+import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.ReplaySubject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -17,14 +21,27 @@ data class TypedInputStream(val fileName : String, val mimeType : String, val in
 class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher) : EntriesApi {
     private val entriesApi by lazy { retrofit.create(EntriesRetrofitApi::class.java) }
 
-    override fun voteEntry(entryId: Int) = entriesApi.voteEntry(entryId)
+    override val entryVoteSubject = PublishSubject.create<EntryVotePublishModel>()
+    override val entryUnVoteSubject = PublishSubject.create<EntryVotePublishModel>()
+
+    override fun voteEntry(entryId: Int, notifySubject : Boolean) = entriesApi.voteEntry(entryId)
             .retryWhen(userTokenRefresher)
             .compose<VoteResponse>(ErrorHandlerTransformer())
+            .doOnSuccess {
+                if (notifySubject) {
+                    printout("WYSYŁAMY")
+                    entryVoteSubject.onNext(EntryVotePublishModel(entryId, it))
+                }
+            }
 
-    override fun unvoteEntry(entryId: Int) = entriesApi.unvoteEntry(entryId)
+    override fun unvoteEntry(entryId: Int, notifySubject : Boolean) = entriesApi.unvoteEntry(entryId)
             .retryWhen(userTokenRefresher)
             .compose<VoteResponse>(ErrorHandlerTransformer())
-
+            .doOnSuccess {
+                if (notifySubject) {
+                    entryUnVoteSubject.onNext(EntryVotePublishModel(entryId, it))
+                }
+            }
 
     override fun voteComment(commentId: Int) = entriesApi.voteComment(commentId)
             .retryWhen(userTokenRefresher)

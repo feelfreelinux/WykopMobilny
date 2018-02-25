@@ -11,11 +11,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BaseLinkView
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.SimpleLinkViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.LinkItemPresenterFactory
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.LinkItemWidget
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.SimpleItemWidget
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import javax.inject.Inject
 
-class LinkAdapter @Inject constructor(val settingsPreferencesApi : SettingsPreferencesApi) : AdvancedProgressAdapter<Link>() {
+class LinkAdapter @Inject constructor(val settingsPreferencesApi : SettingsPreferencesApi, val linkItemPresenterFactory: LinkItemPresenterFactory) : AdvancedProgressAdapter<Link>() {
     companion object {
         val LINK_VIEWTYPE = 1
         val SIMPLE_LINK_VIEWTYPE = 2
@@ -28,13 +31,14 @@ class LinkAdapter @Inject constructor(val settingsPreferencesApi : SettingsPrefe
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
             when (viewType) {
-                LINK_VIEWTYPE -> LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false), settingsPreferencesApi)
-                else -> SimpleLinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.simple_link_layout, parent, false), settingsPreferencesApi)
+                LINK_VIEWTYPE -> LinkViewHolder(LinkItemWidget.createView(parent.context), settingsPreferencesApi, linkItemPresenterFactory.create())
+                else -> SimpleLinkViewHolder(SimpleItemWidget.createView(parent.context), settingsPreferencesApi, linkItemPresenterFactory.create())
             }
 
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!
-        (holder as BaseLinkViewHolder).bindView(item)
+        if (holder is SimpleLinkViewHolder) holder.bindView(item)
+        else (holder as? LinkViewHolder)?.bindView(item)
     }
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {

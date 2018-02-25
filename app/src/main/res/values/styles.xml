@@ -180,16 +180,16 @@
         <item name="cardviewStatelist">@drawable/cardview_background_statelist_amoled</item>
     </style>
 
-    <style name="AppTheme.Dark.NavigationView">
+    <style name="AppTheme.Dark.NavigationView" parent="">
         <item name="android:listDivider">@color/navigationSeparator</item>
         <item name="android:textColorSecondary">@color/textColor.Dark</item>
     </style>
 
-    <style name="NavigationDrawerStyle">
+    <style name="NavigationDrawerStyle" parent="">
         <item name="android:textSize">@dimen/navigation_drawer_text_size</item>
     </style>
 
-    <style name="NavigationDrawerNotificationItem">
+    <style name="NavigationDrawerNotificationItem" parent="">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">@dimen/drawer_header_notification_item_height</item>
         <item name="android:layout_marginTop">@dimen/drawer_header_notification_item_margin_top</item>
@@ -220,7 +220,7 @@
         <item name="android:layout_marginTop">@dimen/cardview_margin_horizontal</item>
     </style>
 
-    <style name="EntryContentTextView">
+    <style name="EntryContentTextView" parent="">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingRight">@dimen/entry_content_padding_horizontal</item>
@@ -230,7 +230,7 @@
         <item name="android:textSize">@dimen/entry_content_text_size</item>
     </style>
 
-    <style name="MikroButton">
+    <style name="MikroButton" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/mirko_button_height</item>
         <item name="android:paddingRight">@dimen/mirko_button_padding</item>
@@ -242,12 +242,12 @@
         <item name="android:background">@drawable/button_background_deselected</item>
     </style>
 
-    <style name="WykopImageView">
+    <style name="WykopImageView" parent="">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="WykopImageViewExpand">
+    <style name="WykopImageViewExpand" parent="">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">@dimen/wykop_image_view_expand_height</item>
         <item name="android:background">?attr/expandImageGradient</item>
@@ -256,13 +256,13 @@
         <item name="android:textSize">@dimen/wykop_image_view_expand_text_size</item>
     </style>
 
-    <style name="MarkdownButton">
+    <style name="MarkdownButton" parent="">
         <item name="android:scaleType">centerCrop</item>
         <item name="android:layout_height">@dimen/markdown_item_size</item>
         <item name="android:layout_width">@dimen/markdown_item_size</item>
     </style>
 
-    <style name="MonthYearPickerMonth">
+    <style name="MonthYearPickerMonth" parent="">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
@@ -271,7 +271,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="BottomSheetMenuItem">
+    <style name="BottomSheetMenuItem" parent="">
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:padding">16dp</item>
         <item name="android:orientation">horizontal</item>

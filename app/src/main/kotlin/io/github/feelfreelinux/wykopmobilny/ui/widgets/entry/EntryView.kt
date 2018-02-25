@@ -11,4 +11,5 @@ interface EntryView : BaseView {
     fun markEntryFavorite(isFavorite : Boolean)
     fun showSurvey(surveyData : Survey)
     fun showVoters(voters : List<Voter>)
+    var shouldEnableClickListener : Boolean
 }

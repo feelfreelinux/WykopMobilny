@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
 import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
 import io.reactivex.Single
+import io.reactivex.subjects.PublishSubject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -16,6 +17,9 @@ import java.lang.reflect.Type
 
 class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi) : LinksApi {
     private val linksApi by lazy { retrofit.create(LinksRetrofitApi::class.java) }
+    override val voteRemoveSubject = PublishSubject.create<LinkVoteResponsePublishModel>()
+    override val digSubject = PublishSubject.create<LinkVoteResponsePublishModel>()
+    override val burySubject = PublishSubject.create<LinkVoteResponsePublishModel>()
 
     override fun getPromoted(page : Int): Single<List<Link>> =
             linksApi.getPromoted(page)
@@ -83,20 +87,35 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .retryWhen(userTokenRefresher)
                     .compose<LinkVoteResponse>(ErrorHandlerTransformer())
 
-    override fun voteUp(linkId: Int): Single<DigResponse> =
+    override fun voteUp(linkId: Int, notifyPublisher : Boolean): Single<DigResponse> =
             linksApi.voteUp(linkId)
                     .retryWhen(userTokenRefresher)
                     .compose<DigResponse>(ErrorHandlerTransformer())
+                    .doOnSuccess {
+                        if (notifyPublisher) {
+                            digSubject.onNext(LinkVoteResponsePublishModel(linkId, it))
+                        }
+                    }
 
-    override fun voteDown(linkId: Int, reason : Int): Single<DigResponse> =
+    override fun voteDown(linkId: Int, reason : Int, notifyPublisher: Boolean): Single<DigResponse> =
             linksApi.voteDown(linkId, reason)
                     .retryWhen(userTokenRefresher)
                     .compose<DigResponse>(ErrorHandlerTransformer())
+                    .doOnSuccess {
+                        if (notifyPublisher) {
+                            burySubject.onNext(LinkVoteResponsePublishModel(linkId, it))
+                        }
+                    }
 
-    override fun voteRemove(linkId: Int) : Single<DigResponse> =
+    override fun voteRemove(linkId: Int, notifyPublisher: Boolean) : Single<DigResponse> =
             linksApi.voteRemove(linkId)
                     .retryWhen(userTokenRefresher)
                     .compose<DigResponse>(ErrorHandlerTransformer())
+                    .doOnSuccess {
+                        if (notifyPublisher) {
+                            voteRemoveSubject.onNext(LinkVoteResponsePublishModel(linkId, it))
+                        }
+                    }
 
     override fun commentAdd(body: String, embed: String?, plus18 : Boolean, linkId: Int): Single<LinkComment> =
             linksApi.addComment(body, linkId, embed, plus18)

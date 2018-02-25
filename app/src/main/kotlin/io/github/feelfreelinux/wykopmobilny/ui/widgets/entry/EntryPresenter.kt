@@ -16,6 +16,28 @@ class EntryPresenter(val schedulers: Schedulers,
                      val navigatorApi: NewNavigatorApi,
                      val linkHandler: WykopLinkHandlerApi) : BasePresenter<EntryView>() {
     var entryId = -1
+    override fun subscribe(view: EntryView) {
+        super.subscribe(view)
+        compositeObservable.addAll(
+                entriesApi.entryVoteSubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe {
+                    if (entryId == it.entryId) {
+                        view?.markEntryVoted(it.voteResponse.voteCount)
+                    }
+                },
+                entriesApi.entryUnVoteSubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe {
+                    if (entryId == it.entryId) {
+                        view?.markEntryUnvoted(it.voteResponse.voteCount)
+                    }
+                }
+        )
+    }
+
     fun deleteEntry() {
         compositeObservable.add(
                 entriesApi.deleteEntry(entryId)
@@ -27,7 +49,7 @@ class EntryPresenter(val schedulers: Schedulers,
 
     fun voteEntry() {
         compositeObservable.add(
-                entriesApi.voteEntry(entryId)
+                entriesApi.voteEntry(entryId, !view!!.shouldEnableClickListener)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({ view?.markEntryVoted(it.voteCount) }, { view?.showErrorDialog(it) })
@@ -36,7 +58,7 @@ class EntryPresenter(val schedulers: Schedulers,
 
     fun unvoteEntry() {
         compositeObservable.add(
-                entriesApi.unvoteEntry(entryId)
+                entriesApi.unvoteEntry(entryId, !view!!.shouldEnableClickListener)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({ view?.markEntryUnvoted(it.voteCount) }, { view?.showErrorDialog(it) })

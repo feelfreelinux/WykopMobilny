@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.entries
 
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryVotePublishModel
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryCommentResponse
@@ -8,10 +9,14 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryRespon
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
 import io.reactivex.Single
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.ReplaySubject
 
 interface EntriesApi {
-    fun voteEntry(entryId: Int): Single<VoteResponse>
-    fun unvoteEntry(entryId: Int): Single<VoteResponse>
+    val entryVoteSubject : PublishSubject<EntryVotePublishModel>
+    val entryUnVoteSubject : PublishSubject<EntryVotePublishModel>
+    fun voteEntry(entryId: Int, notifySubject : Boolean = true): Single<VoteResponse>
+    fun unvoteEntry(entryId: Int, notifySubject : Boolean = true): Single<VoteResponse>
     fun voteComment(commentId: Int): Single<VoteResponse>
     fun unvoteComment(commentId: Int): Single<VoteResponse>
     fun addEntry(body : String, inputStream: TypedInputStream, plus18: Boolean): Single<EntryResponse>

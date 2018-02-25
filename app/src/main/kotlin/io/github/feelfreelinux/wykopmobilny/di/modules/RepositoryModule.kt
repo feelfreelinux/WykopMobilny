@@ -29,10 +29,12 @@ import io.github.feelfreelinux.wykopmobilny.api.user.LoginRepository
 import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
 @Module
 class RepositoryModule {
     @Provides
+    @Singleton
     fun provideEntriesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : EntriesApi = EntriesRepository(retrofit, userTokenRefresher)
 
     @Provides
@@ -42,6 +44,7 @@ class RepositoryModule {
     fun provideMyWykopApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, linksPreferencesApi)
 
     @Provides
+    @Singleton
     fun provideLinksApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : LinksApi = LinksRepository(retrofit, userTokenRefresher, linksPreferencesApi)
 
     @Provides
