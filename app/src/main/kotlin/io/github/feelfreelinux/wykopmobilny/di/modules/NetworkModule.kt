@@ -17,6 +17,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotifi
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.rx.AppSchedulerProvider
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SchedulerProvider
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -72,6 +74,11 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideWykopNotificationManager(mgr: NotificationManager) : WykopNotificationManagerApi = WykopNotificationManager(mgr)
+
+    @Provides
+    internal fun provideSchedulerProvider(): SchedulerProvider {
+        return AppSchedulerProvider()
+    }
 
     @Provides
     @Singleton

@@ -6,6 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.rx.SchedulerProvider
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
@@ -13,7 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 @Module
 class LoginScreenModule {
     @Provides
-    fun providesLoginScreenPresenter(schedulers: Schedulers, userManager: UserManagerApi, loginApi: LoginApi) =
+    fun providesLoginScreenPresenter(schedulers: SchedulerProvider, userManager: UserManagerApi, loginApi: LoginApi) =
             LoginScreenPresenter(schedulers, userManager, loginApi)
 
     @Provides
