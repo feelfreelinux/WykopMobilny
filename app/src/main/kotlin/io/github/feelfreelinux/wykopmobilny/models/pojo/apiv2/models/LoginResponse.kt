@@ -7,5 +7,5 @@ data class LoginResponse(
         val profile : ProfileResponse,
 
         @Json(name="userkey")
-        val userkey : String? = null
+        val userkey : String
 )

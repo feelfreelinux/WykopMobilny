@@ -4,39 +4,39 @@ import com.squareup.moshi.Json
 
 data class ProfileResponse(
         @Json(name="login")
-        val login  : String? = null,
+        val login  : String,
 
         @Json(name="color")
-        val color : Int?= 0,
+        val color : Int,
 
         @Json(name="sex")
-        val sex : String? = null,
+        val sex : String?,
 
         @Json(name="avatar")
-        val avatar : String? = null,
+        val avatar : String,
 
         @Json(name="signup_at")
-        val signupAt : String? = null,
+        val signupAt : String,
         @Json(name="is_blocked")
         val isBlocked : Boolean? = false,
         @Json(name="is_observed")
         val isObserved : Boolean? = false,
         @Json(name="background")
-        val background : String? = null,
+        val background : String?,
 
         @Json(name="links_added_count")
-        val linksAddedCount : Int?=0,
+        val linksAddedCount : Int,
 
         @Json(name="links_published_count")
-        val linksPublishedCount : Int?=0,
+        val linksPublishedCount : Int,
 
         @Json(name="rank")
-        val rank : Int?=0,
+        val rank : Int?,
 
         @Json(name="followers")
-        val followers : Int?=0,
+        val followers : Int,
         @Json(name="about")
-        val description : String? = null,
+        val description : String?,
         @Json(name="violation_url")
-        val violationUrl : String? = null
+        val violationUrl : String?
 )
