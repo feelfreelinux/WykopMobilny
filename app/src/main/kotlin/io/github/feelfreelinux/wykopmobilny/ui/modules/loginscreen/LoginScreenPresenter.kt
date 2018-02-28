@@ -32,7 +32,8 @@ class LoginScreenPresenter(
     private fun extractToken(url: String): LoginCredentials? {
         if (url.contains("ConnectSuccess")) {
             url.apply {
-                printout(this)
+                //Commented a log cause it's static class , to make it coverage we have to use powermock or move to somewhere else.
+               // printout(this)
                 if (!contains("/token/") and !contains("/login/")) {
                     view?.showErrorDialog(IllegalStateException("Redirect url ($url) doesn't contain userData"))
                     return null
