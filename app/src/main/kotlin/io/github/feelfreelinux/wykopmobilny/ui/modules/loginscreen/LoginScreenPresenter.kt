@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
-
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
@@ -33,9 +32,7 @@ class LoginScreenPresenter(
 	private fun extractToken(url: String): LoginCredentials? {
 		if (url.contains("ConnectSuccess")) {
 			url.apply {
-				 //Comment this log due to test cases failing in static method, We need to add
-				// powermock to test the logger file.
-				//printout(this)
+				printout(this)
 				if (!contains("/token/") and !contains("/login/")) {
 					view?.showErrorDialog(IllegalStateException("Redirect url ($url) doesn't contain userData"))
 					return null
