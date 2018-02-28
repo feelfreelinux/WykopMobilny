@@ -79,10 +79,10 @@ class ProfileActivity : BaseActivity(), ProfileView {
         pager.offscreenPageLimit = 2
         pager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(pager)
-        profilePicture.loadImage(profileResponse.avatar!!)
-        signup.text = profileResponse.signupAt?.toDurationPrettyDate()
+        profilePicture.loadImage(profileResponse.avatar)
+        signup.text = profileResponse.signupAt.toDurationPrettyDate()
         nickname.text = profileResponse.login
-        nickname.setTextColor(getGroupColor(profileResponse.color!!))
+        nickname.setTextColor(getGroupColor(profileResponse.color))
         loadingView?.isVisible = false
         description.isVisible = profileResponse.description != null
         profileResponse.description?.let {
@@ -138,7 +138,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.pw -> dataFragment.data?.let { navigator.openConversationListActivity(dataFragment.data!!.login!!) }
+            R.id.pw -> dataFragment.data?.let { navigator.openConversationListActivity(dataFragment.data!!.login) }
             R.id.unblock -> { presenter.markUnblocked() }
             R.id.block -> { presenter.markBlocked() }
             R.id.observe_profile -> { presenter.markObserved() }

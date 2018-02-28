@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.util.rx
 
-import io.github.feelfreelinux.wykopmobilny.utils.rx.SchedulerProvider
+import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.TestScheduler
 
@@ -9,18 +9,14 @@ import io.reactivex.schedulers.TestScheduler
  * Created by hrskrs on 5/8/2017.
  */
 
-class TestSchedulerProvider() : SchedulerProvider {
+class TestSchedulerProvider() : Schedulers {
 
 	val mTestScheduler: TestScheduler = TestScheduler()
-	override fun ui(): Scheduler {
+	override fun mainThread(): Scheduler {
 		return mTestScheduler
 	}
 
-	override fun computation(): Scheduler {
-		return mTestScheduler
-	}
-
-	override fun io(): Scheduler {
+	override fun backgroundThread(): Scheduler {
 		return mTestScheduler
 	}
 
