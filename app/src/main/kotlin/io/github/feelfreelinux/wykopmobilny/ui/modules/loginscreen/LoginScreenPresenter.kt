@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.rx.SchedulerProvider
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.LoginCredentials
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 class LoginScreenPresenter(
         private val schedulers : SchedulerProvider,

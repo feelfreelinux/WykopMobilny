@@ -11,40 +11,56 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subscribers.TestSubscriber
-import org.junit.Before
-import org.junit.Test
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import android.R.attr.password
 import io.github.feelfreelinux.wykopmobilny.TestSchedulers
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ProfileResponse
 import io.github.feelfreelinux.wykopmobilny.util.rx.RxImmediateSchedulerRule
 import io.github.feelfreelinux.wykopmobilny.util.rx.TestSchedulerProvider
 import io.reactivex.Observable
-import org.junit.ClassRule
 import org.mockito.MockitoAnnotations
+import io.reactivex.schedulers.Schedulers.trampoline
+import io.reactivex.android.plugins.RxAndroidPlugins
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.trampoline
+import org.junit.*
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 
-
+@RunWith(MockitoJUnitRunner::class)
 class LoginScreenPresenterTest {
 	lateinit var systemUnderTest: LoginScreenPresenter
 	private val mockOfView = mock<LoginScreenView>()
 	private val mockOfUserManager = mock<UserManagerApi>()
-	private val mockOfUserApi = mock<LoginApi>()
+//	private val mockOfUserApi = mock<LoginApi>()
+
+	@Mock
+	private val mockOfUserApi: LoginApi = mock()
 	private val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
 
-	private var mTestScheduler: TestScheduler? = null
+//	private var mTestScheduler: TestScheduler? = null
 
+	@get:Rule
+	val mOverrideSchedulersRule = RxImmediateSchedulerRule()
+	lateinit var testSchedulerProvider: TestSchedulerProvider
 	companion object {
-		@ClassRule
-		@JvmField
-		val schedulers = RxImmediateSchedulerRule()
+		@BeforeClass
+		@JvmStatic
+		fun intialize() {
+			MockitoAnnotations.initMocks(this)
+//			RxAndroidPlugins.setInitMainThreadSchedulerHandler { _ -> Schedulers.trampoline() }
+//			val mOverrideSchedulersRule = RxImmediateSchedulerRule()
+		}
+
 	}
+
 
 	@Before
 	fun setup() {
-		MockitoAnnotations.initMocks(this)
-
-		mTestScheduler = TestScheduler()
-		var testSchedulerProvider = TestSchedulerProvider(mTestScheduler!!)
+//		mTestScheduler = TestScheduler()
+		testSchedulerProvider = TestSchedulerProvider()
 		systemUnderTest = LoginScreenPresenter(testSchedulerProvider, mockOfUserManager, mockOfUserApi)
 		systemUnderTest.subscribe(mockOfView)
 //		whenever(mockOfUserApi.getUserSessionToken()).thenReturn(Single.just(mock()))
@@ -52,16 +68,20 @@ class LoginScreenPresenterTest {
 
 	@Test
 	fun shouldSaveCredentials() {
+		var loginResponse = LoginResponse(ProfileResponse(),"1")
+		val single: Single<LoginResponse> = Single.create {
+			emitter ->
+			emitter.onSuccess(loginResponse)
+		}
 		val expectedCredentials = LoginCredentials("feuer", "example_token")
 
-		var result: Single<LoginResponse> = mock()
-		doReturn(result)
-				.`when`(mockOfUserApi)
-				.getUserSessionToken()
+		whenever(mockOfUserApi.getUserSessionToken()).thenReturn(single)
 
 		val url = "https://a2.wykop.pl/user/ConnectSuccess/appkey/example_key/login/${expectedCredentials.login}/token/${expectedCredentials.token}/"
 		systemUnderTest.handleUrl(url)
-		mTestScheduler?.triggerActions()
+		testSchedulerProvider.mTestScheduler.triggerActions()
+
+	   //mTestScheduler?.triggerActions()
 
 		verify(mockOfUserManager).loginUser(expectedCredentials)
 		verify(mockOfView).goBackToSplashScreen()
