@@ -82,7 +82,7 @@ class SwipeLayoutUtils {
          */
         private fun convertActivityToTranslucentAfterL(activity: Activity) {
             try {
-                val getActivityOptions = Activity::class.java.getDeclaredMethod("getActivityOptions")
+                /*val getActivityOptions = Activity::class.java.getDeclaredMethod("getActivityOptions")
                 getActivityOptions.isAccessible = true
                 val options = getActivityOptions.invoke(activity)
 
@@ -96,7 +96,7 @@ class SwipeLayoutUtils {
                 val convertToTranslucent = Activity::class.java.getDeclaredMethod("convertToTranslucent",
                         translucentConversionListenerClazz, ActivityOptions::class.java)
                 convertToTranslucent.isAccessible = true
-                convertToTranslucent.invoke(activity, null, options)
+                convertToTranslucent.invoke(activity, null, options)*/
             } catch (ignored: Throwable) {
             }
 

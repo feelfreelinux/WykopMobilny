@@ -29,6 +29,9 @@ class PhotoViewActivity : BaseActivity() {
             return intent
         }
     }
+
+    override val enableSwipeBackLayout: Boolean = true
+    override val isActivityTransfluent: Boolean = true
     val url: String by lazy { intent.getStringExtra(URL_EXTRA) }
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     private val photoViewActions by lazy { PhotoViewActions(this, clipboardHelper) as PhotoViewCallbacks }

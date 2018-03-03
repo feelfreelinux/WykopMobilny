@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.devbrackets.android.exomedia.ui.widget.FitsSystemWindowRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/controls_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/exomedia_controls_current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:paddingRight="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@android:color/white"
+            tools:ignore="RtlHardcoded"
+            tools:text="1:06:29" />
+
+        <SeekBar
+            android:id="@+id/player_seekbar"
+            style="?android:seekBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            app:layout_constraintStart_toEndOf="@id/exomedia_controls_current_time"
+            app:layout_constraintEnd_toStartOf="@id/exomedia_controls_end_time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/exomedia_controls_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@android:color/white"
+            tools:ignore="RtlHardcoded"
+            tools:text="1:23:49" />
+
+
+        <ImageButton
+            android:id="@+id/exomedia_controls_previous_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:minHeight="@dimen/exomedia_min_button_height"
+            android:minWidth="@dimen/exomedia_min_button_height"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/exomedia_controls_play_pause_btn"
+            app:layout_constraintEnd_toStartOf="@id/exomedia_controls_play_pause_btn"
+            app:layout_constraintTop_toTopOf="@+id/exomedia_controls_play_pause_btn"
+            app:srcCompat="@drawable/exomedia_ic_skip_previous_white"
+            tools:ignore="ContentDescription,RtlHardcoded"
+            tools:visibility="visible" />
+
+
+        <ImageButton
+            android:id="@+id/exomedia_controls_next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:minHeight="@dimen/exomedia_min_button_height"
+            android:minWidth="@dimen/exomedia_min_button_height"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/exomedia_controls_play_pause_btn"
+            app:layout_constraintStart_toEndOf="@+id/exomedia_controls_play_pause_btn"
+            app:layout_constraintTop_toTopOf="@+id/exomedia_controls_play_pause_btn"
+            app:srcCompat="@drawable/exomedia_ic_skip_next_white"
+            tools:ignore="ContentDescription,RtlHardcoded"
+            tools:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/exomedia_controls_play_pause_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@android:color/transparent"
+            android:minHeight="70dp"
+            android:minWidth="70dp"
+            app:srcCompat="@drawable/exomedia_ic_play_arrow_white"
+            tools:ignore="ContentDescription" />
+
+        <ProgressBar
+            android:id="@+id/exomedia_controls_video_loading"
+            style="?android:progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="visible" />
+
+        <LinearLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="horizontal"
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</com.devbrackets.android.exomedia.ui.widget.FitsSystemWindowRelativeLayout>

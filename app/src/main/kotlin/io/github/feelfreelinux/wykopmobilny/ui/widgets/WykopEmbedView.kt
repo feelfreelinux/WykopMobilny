@@ -119,7 +119,9 @@ class WykopEmbedView: FrameLayout {
                 navigator.openPhotoViewActivity(url)
 
             }
-            "video" -> context.openBrowser(image.url) // @TODO replace with some nice implementation
+            "video" -> {
+                navigator.openEmbedActivity(image.url)
+            }
         }
     }
 }

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
+    <style name="WykopAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textColorPrimary">@color/textColor</item>
-        <item name="android:windowBackground">@color/cardList</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -80,7 +79,7 @@
         <item name="bottomSheetDelete">@drawable/ic_menu_delete_light</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="Base.Theme.AppCompat">
+    <style name="WykopAppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
         <item name="preferenceTheme">@style/DarkPreferencesTheme</item>
         <item name="android:textColor">@color/textColor.Dark</item>
@@ -145,7 +144,6 @@
         <item name="markdownInsertSpoiler">@drawable/ic_insert_spoiler_dark</item>
         <item name="markdownInsertPhoto">@drawable/ic_insert_photo_dark</item>
         <item name="markdownSend">@drawable/ic_send_dark</item>
-
         <item name="bottomSheetObserve">@drawable/ic_observe</item>
         <item name="bottomSheetUnobserve">@drawable/ic_unobserve</item>
         <item name="bottomSheetLock">@drawable/ic_lock</item>
@@ -161,7 +159,7 @@
         <item name="bottomSheetRelated">@drawable/ic_related</item>
     </style>
 
-    <style name="AppTheme.Amoled" parent="AppTheme.Dark">
+    <style name="WykopAppTheme.Amoled" parent="WykopAppTheme.Dark">
         <item name="android:textColor">@color/textColor.Amoled</item>
         <item name="android:textColorPrimary">@color/textColor.Amoled</item>
         <item name="android:windowBackground">@color/cardList.Amoled</item>
@@ -357,6 +355,11 @@
         <item name="shadow_left">@drawable/shadow_left</item>
         <item name="shadow_right">@drawable/shadow_right</item>
         <item name="shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
+
+    <style name="TransparentActivityTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 </resources>

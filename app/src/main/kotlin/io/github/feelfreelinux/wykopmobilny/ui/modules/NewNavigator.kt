@@ -5,6 +5,8 @@ import android.content.Intent
 import io.github.feelfreelinux.wykopmobilny.api.ENTRYCOMMENT_REPORT_URL
 import io.github.feelfreelinux.wykopmobilny.api.ENTRY_REPORT_URL
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.YoutubeViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
@@ -46,6 +48,8 @@ interface NewNavigatorApi {
     fun openLinkRelatedActivity(linkId : Int)
     fun openProfileActivity(username : String)
     fun openNotificationsListActivity(preselectIndex : Int = NotificationsListActivity.PRESELECT_NOTIFICATIONS)
+    fun openEmbedActivity(url : String)
+    fun openYoutubeActivity(url : String)
 }
 
 class NewNavigator(val context : Activity) : NewNavigatorApi {
@@ -127,5 +131,13 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
 
     override fun openNotificationsListActivity(preselectIndex: Int) {
         context.startActivityForResult(NotificationsListActivity.createIntent(context, preselectIndex), STARTED_FROM_NOTIFICATIONS_CODE)
+    }
+
+    override fun openEmbedActivity(url: String) {
+        context.startActivity(EmbedViewActivity.createIntent(context, url))
+    }
+
+    override fun openYoutubeActivity(url: String) {
+        context.startActivity(YoutubeViewActivity.createIntent(context, url))
     }
 }

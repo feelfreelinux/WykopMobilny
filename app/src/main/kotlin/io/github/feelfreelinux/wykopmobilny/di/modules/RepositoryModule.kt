@@ -3,6 +3,8 @@ package io.github.feelfreelinux.wykopmobilny.di.modules
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
+import io.github.feelfreelinux.wykopmobilny.api.embed.EmbedApi
+import io.github.feelfreelinux.wykopmobilny.api.embed.EmbedRepository
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesRepository
 import io.github.feelfreelinux.wykopmobilny.api.hits.HitsApi
@@ -68,4 +70,7 @@ class RepositoryModule {
 
     @Provides
     fun provideProfilesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : ProfileApi = ProfileRepository(retrofit, userTokenRefresher, linksPreferencesApi)
+
+    @Provides
+    fun provideEmbedApi(retrofit: Retrofit) : EmbedApi = EmbedRepository(retrofit)
 }

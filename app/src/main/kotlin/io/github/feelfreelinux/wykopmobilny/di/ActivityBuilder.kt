@@ -2,6 +2,9 @@ package io.github.feelfreelinux.wykopmobilny.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.YoutubeViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivityModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
@@ -98,4 +101,10 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [NotificationsListFragmentProvider::class, NotificationsListModule::class])
     abstract fun bindNotificationsActivity() : NotificationsListActivity
+
+    @ContributesAndroidInjector(modules = [EmbedViewModule::class])
+    abstract fun bindEmbedActivity() : EmbedViewActivity
+
+    @ContributesAndroidInjector(modules = [])
+    abstract fun bindYoutubeActivity() : YoutubeViewActivity
 }

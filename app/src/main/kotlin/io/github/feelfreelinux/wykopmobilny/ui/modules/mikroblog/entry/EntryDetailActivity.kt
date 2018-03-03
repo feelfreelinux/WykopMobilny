@@ -19,6 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryDetailAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.decorators.EntryCommentItemDecoration
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
@@ -130,6 +131,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             android.R.id.home -> onBackPressed()
             R.id.copyUrl -> clipboardHelper.copyTextToClipboard(url, "entryUrl")
             R.id.refresh -> {
+                startActivity(Intent(this, EmbedViewActivity::class.java))
                 swiperefresh?.isRefreshing = true
                 onRefresh()
             }

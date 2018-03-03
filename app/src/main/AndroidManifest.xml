@@ -15,9 +15,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme">
+        android:theme="@style/WykopAppTheme">
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"/>
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity"
+            android:theme="@style/TransparentActivityTheme" />
 
         <activity
             android:launchMode="singleTop"
@@ -29,18 +30,25 @@
         </activity>
 
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
+            android:theme="@style/TransparentActivityTheme"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity"
+            android:theme="@style/TransparentActivityTheme"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity" />
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity" />
         <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
-        <activity android:name=".ui.modules.pm.conversation.ConversationActivity" />
-        <activity android:name=".ui.modules.settings.SettingsActivity" />
+        <activity android:name=".ui.modules.pm.conversation.ConversationActivity"
+            android:theme="@style/TransparentActivityTheme" />
+        <activity android:name=".ui.modules.settings.SettingsActivity"
+            android:theme="@style/TransparentActivityTheme" />
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity"
+            android:theme="@style/TransparentActivityTheme"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
-        <activity android:name=".ui.modules.links.upvoters.UpvotersActivity" />
-        <activity android:name=".ui.modules.links.downvoters.DownvotersActivity" />
+        <activity android:name=".ui.modules.links.upvoters.UpvotersActivity"
+            android:theme="@style/TransparentActivityTheme" />
+        <activity android:name=".ui.modules.links.downvoters.DownvotersActivity"
+            android:theme="@style/TransparentActivityTheme" />
         <activity android:name=".ui.modules.input.link.edit.LinkCommentEditActivity" />
         <activity android:name=".ui.modules.DeepLinkActivity">
             <intent-filter>
@@ -75,9 +83,18 @@
                 <data android:host="www.wykop.pl" android:pathPrefix="/wpis" android:scheme="https"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.modules.links.related.RelatedActivity" />
-        <activity android:name=".ui.modules.profile.ProfileActivity" />
-        <activity android:name=".ui.modules.notificationslist.NotificationsListActivity" />
+        <activity android:name=".ui.modules.links.related.RelatedActivity"
+            android:theme="@style/TransparentActivityTheme" />
+        <activity android:name=".ui.modules.profile.ProfileActivity"
+            android:theme="@style/TransparentActivityTheme" />
+        <activity android:name=".ui.modules.notificationslist.NotificationsListActivity"
+            android:theme="@style/TransparentActivityTheme" />
+        <activity android:name=".ui.modules.embedview.EmbedViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/TransparentActivityTheme" />
+        <activity android:name=".ui.modules.embedview.YoutubeViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/TransparentActivityTheme"/>
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>

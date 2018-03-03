@@ -1,0 +1,263 @@
+package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
+
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.content.Context
+import android.support.constraint.ConstraintLayout
+import android.util.AttributeSet
+import com.devbrackets.android.exomedia.ui.widget.VideoControls
+import com.devbrackets.android.exomedia.util.TimeFormatUtil
+import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import kotlinx.android.synthetic.main.media_controls.view.*
+import android.widget.SeekBar
+import com.devbrackets.android.exomedia.ui.animation.TopViewHideShowAnimation
+import com.devbrackets.android.exomedia.ui.animation.BottomViewHideShowAnimation
+import android.os.Build
+import android.annotation.TargetApi
+import android.view.View
+import android.widget.LinearLayout
+import io.github.feelfreelinux.wykopmobilny.utils.printout
+import java.util.*
+
+
+class WykopMediaControls : VideoControls {
+    lateinit var seekBar: SeekBar
+    lateinit var extraViewsContainer: LinearLayout
+
+    class FadeInListener(val view : View) : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator?) {
+            super.onAnimationEnd(animation)
+            view.isVisible = true
+
+        }
+
+        companion object {
+            fun animateVisibility(view : View) {
+                view.animate()
+                        .setDuration(300)
+                        .alpha(1f)
+                        .setListener(FadeInListener(view))
+            }
+        }
+    }
+
+    class FadeOutListener(val view : View) : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator?) {
+            super.onAnimationEnd(animation)
+            view.isVisible = false
+        }
+
+        companion object {
+            fun animateVisibility(view : View) {
+                view.animate()
+                        .setDuration(300)
+                        .alpha(0.0f)
+                        .setListener(FadeOutListener(view))
+            }
+        }
+    }
+
+    protected var userInteracting = false
+
+    constructor(context: Context) : super(context) {}
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+    }
+
+    override fun getLayoutResource(): Int {
+        return R.layout.media_controls
+    }
+
+    override fun setPosition(position: Long) {
+        currentTimeTextView.text = TimeFormatUtil.formatMs(position)
+        seekBar.progress = position.toInt()
+    }
+
+    override fun setDuration(duration: Long) {
+        if (duration != seekBar.max.toLong()) {
+            endTimeTextView.text = TimeFormatUtil.formatMs(duration)
+            seekBar.max = duration.toInt()
+        }
+    }
+
+    override fun updateProgress(position: Long, duration: Long, bufferPercent: Int) {
+        if (!userInteracting) {
+            seekBar.secondaryProgress = (seekBar.max * (bufferPercent.toFloat() / 100)).toInt()
+            seekBar.progress = position.toInt()
+            currentTimeTextView.text = TimeFormatUtil.formatMs(position)
+        }
+    }
+
+    override fun retrieveViews() {
+        super.retrieveViews()
+        seekBar = findViewById(R.id.player_seekbar)
+        extraViewsContainer = findViewById(R.id.test)
+    }
+
+    override fun registerListeners() {
+        super.registerListeners()
+        seekBar.setOnSeekBarChangeListener(SeekBarChanged())
+    }
+
+    override fun addExtraView(view: View) {
+        extraViewsContainer.addView(view)
+    }
+
+    override fun removeExtraView(view: View) {
+        extraViewsContainer.removeView(view)
+    }
+
+    override fun getExtraViews(): List<View> {
+        val childCount = extraViewsContainer.childCount
+        if (childCount <= 0) {
+            return super.getExtraViews()
+        }
+
+        //Retrieves the layouts children
+        val children = LinkedList<View>()
+        for (i in 0 until childCount) {
+            children.add(extraViewsContainer.getChildAt(i))
+        }
+
+        return children
+    }
+
+    override fun hideDelayed(delay: Long) {
+        hideDelay = delay
+
+        if (delay < 0 || !canViewHide || isLoading) {
+            return
+        }
+
+        //If the user is interacting with controls we don't want to start the delayed hide yet
+        if (!userInteracting) {
+            visibilityHandler.postDelayed({ animateVisibility(false) }, delay)
+        }
+    }
+
+    override fun animateVisibility(toVisible: Boolean) {
+        if (isVisible == toVisible) {
+            return
+        }
+
+        if (!isLoading) {
+            if (toVisible) {
+                FadeInListener.animateVisibility(endTimeTextView)
+                FadeInListener.animateVisibility(currentTimeTextView)
+                FadeInListener.animateVisibility(seekBar)
+                FadeInListener.animateVisibility(playPauseButton)
+            } else {
+                playPauseButton.alpha = 1f
+                FadeOutListener.animateVisibility(endTimeTextView)
+                FadeOutListener.animateVisibility(currentTimeTextView)
+                FadeOutListener.animateVisibility(seekBar)
+                FadeOutListener.animateVisibility(playPauseButton)
+
+            }
+        }
+
+        isVisible = toVisible
+        onVisibilityChanged()
+    }
+
+    override fun updateTextContainerVisibility() {
+        if (!isVisible) {
+            return
+        }
+    }
+
+    override fun showLoading(initialLoad: Boolean) {
+        if (isLoading) {
+            return
+        }
+
+        isLoading = true
+        loadingProgressBar.isVisible = false
+
+        if (initialLoad) {
+            endTimeTextView.isVisible = false
+            currentTimeTextView.isVisible = false
+            seekBar.isVisible = false
+            playPauseButton.isVisible = false
+        } else {
+            playPauseButton.isEnabled = false
+            previousButton.isEnabled = false
+            nextButton.isEnabled = false
+        }
+
+        show()
+    }
+
+    override fun show() {
+        super.show()
+        endTimeTextView.isVisible = true
+        currentTimeTextView.isVisible = true
+        seekBar.isVisible = true
+        playPauseButton.isVisible = true
+    }
+
+    override fun hide() {
+        super.hide()
+        animateVisibility(false)
+    }
+
+    override fun finishLoading() {
+        if (!isLoading) {
+            return
+        }
+
+        isLoading = false
+        loadingProgressBar.isVisible = false
+
+        playPauseButton.isEnabled = true
+        previousButton.isEnabled = true
+        nextButton.isEnabled = true
+        updatePlaybackState(true)
+        hide()
+    }
+
+
+
+    override fun updatePlaybackState(isPlaying: Boolean) {
+        updatePlayPauseImage(isPlaying)
+        progressPollRepeater.start()
+    }
+
+    /**
+     * Listens to the seek bar change events and correctly handles the changes
+     */
+    protected inner class SeekBarChanged : SeekBar.OnSeekBarChangeListener {
+        private var seekToTime: Long = 0
+
+        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+            if (!fromUser) {
+                return
+            }
+
+            seekToTime = progress.toLong()
+            if (currentTimeTextView != null) {
+                currentTimeTextView.text = TimeFormatUtil.formatMs(seekToTime)
+            }
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar) {
+            userInteracting = true
+            if (seekListener == null || !seekListener!!.onSeekStarted()) {
+                internalListener.onSeekStarted()
+            }
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar) {
+            userInteracting = false
+            if (seekListener == null || !seekListener!!.onSeekEnded(seekToTime)) {
+                internalListener.onSeekEnded(seekToTime)
+            }
+        }
+    }
+}
