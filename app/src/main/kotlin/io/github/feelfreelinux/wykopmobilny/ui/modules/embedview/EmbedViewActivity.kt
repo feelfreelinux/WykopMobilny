@@ -8,13 +8,14 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import com.devbrackets.android.exomedia.core.source.MediaSourceProvider
-import com.devbrackets.android.exomedia.ui.widget.VideoControlsMobile
 import com.google.android.exoplayer2.source.LoopingMediaSource
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_embedview.*
+import java.net.URL
 import javax.inject.Inject
 
 
@@ -37,14 +38,15 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_embedview)
         if (savedInstanceState == null) {
+            printout(extraUrl)
             presenter.subscribe(this)
             presenter.playUrl(extraUrl)
         }
     }
 
-    override fun playUrl(url: String) {
+    override fun playUrl(url: URL) {
         prepareVideoView()
-        playLoopingSource(Uri.parse(url))
+        playLoopingSource(Uri.parse(url.toString()))
     }
 
     fun prepareVideoView() {

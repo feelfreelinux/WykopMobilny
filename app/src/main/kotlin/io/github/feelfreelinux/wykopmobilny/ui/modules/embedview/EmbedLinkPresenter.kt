@@ -21,10 +21,14 @@ class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : 
     lateinit var linkDomain : String
 
     fun playUrl(url : String) {
-        linkDomain = getDomainName(url)
+        linkDomain = if (!url.contains(GFYCAT_MATCHER)) {
+            url.getDomainName()
+        } else {
+            GFYCAT_MATCHER
+        }
         when (linkDomain) {
             GFYCAT_MATCHER -> {
-                val id = url.removeSuffix("/").substringAfterLast("/")
+                val id = url.formatGfycat()
                 embedApi.getGfycatWebmUrl(id)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
@@ -37,7 +41,7 @@ class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : 
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({
-                            view?.playUrl("https://$it")
+                            view?.playUrl(it)
                         }, { view?.showErrorDialog(it) })
             }
 
@@ -47,8 +51,17 @@ class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : 
 
     }
 
-    fun getDomainName(url: String): String {
-        val uri = URI(url)
+    fun String.formatGfycat() : String {
+        return this
+                .replace(".gif", "")
+                .replace(".mp4", "")
+                .replace("-size_restricted", "")
+                .removeSuffix("/").substringAfterLast("/")
+
+    }
+
+    fun String.getDomainName(): String {
+        val uri = URI(this)
         val domain = uri.host
         return if (domain.startsWith("www.")) domain.substring(4) else domain
     }
