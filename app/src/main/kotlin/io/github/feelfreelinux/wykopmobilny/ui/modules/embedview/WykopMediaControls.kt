@@ -24,6 +24,7 @@ import java.util.*
 class WykopMediaControls : VideoControls {
     lateinit var seekBar: SeekBar
     lateinit var extraViewsContainer: LinearLayout
+    lateinit var controlsView : View
 
     class FadeInListener(val view : View) : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator?) {
@@ -96,8 +97,9 @@ class WykopMediaControls : VideoControls {
 
     override fun retrieveViews() {
         super.retrieveViews()
-        seekBar = findViewById(R.id.player_seekbar)
-        extraViewsContainer = findViewById(R.id.test)
+        controlsView = controls_layout
+        seekBar = player_seekbar
+        extraViewsContainer = test
     }
 
     override fun registerListeners() {
@@ -152,13 +154,13 @@ class WykopMediaControls : VideoControls {
                 FadeInListener.animateVisibility(currentTimeTextView)
                 FadeInListener.animateVisibility(seekBar)
                 FadeInListener.animateVisibility(playPauseButton)
+                controlsView.animate().setDuration(300).alpha(1f)
             } else {
-                playPauseButton.alpha = 1f
+                controlsView.animate().setDuration(300).alpha(0f)
                 FadeOutListener.animateVisibility(endTimeTextView)
                 FadeOutListener.animateVisibility(currentTimeTextView)
                 FadeOutListener.animateVisibility(seekBar)
                 FadeOutListener.animateVisibility(playPauseButton)
-
             }
         }
 
@@ -196,6 +198,7 @@ class WykopMediaControls : VideoControls {
 
     override fun show() {
         super.show()
+        controlsView.animate().setDuration(300).alpha(1f)
         endTimeTextView.isVisible = true
         currentTimeTextView.isVisible = true
         seekBar.isVisible = true

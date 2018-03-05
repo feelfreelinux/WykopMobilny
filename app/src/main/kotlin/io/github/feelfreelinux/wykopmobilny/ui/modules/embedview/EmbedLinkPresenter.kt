@@ -29,6 +29,7 @@ class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : 
         when (linkDomain) {
             GFYCAT_MATCHER -> {
                 val id = url.formatGfycat()
+                printout(id)
                 embedApi.getGfycatWebmUrl(id)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
@@ -55,6 +56,7 @@ class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : 
         return this
                 .replace(".gif", "")
                 .replace(".mp4", "")
+                .replace(".webm", "")
                 .replace("-size_restricted", "")
                 .removeSuffix("/").substringAfterLast("/")
 
