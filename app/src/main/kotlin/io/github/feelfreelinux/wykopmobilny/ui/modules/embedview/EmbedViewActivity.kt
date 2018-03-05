@@ -13,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.BuildConfig
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_embedview.*
 import java.net.URL
@@ -38,10 +39,12 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_embedview)
         if (savedInstanceState == null) {
-            printout(extraUrl)
             presenter.subscribe(this)
             presenter.playUrl(extraUrl)
         }
+        videoView.setControls(WykopMediaControls(this))
+        videoView.setHandleAudioFocus(false)
+        videoView.isFocusable = false
     }
 
     override fun playUrl(url: URL) {
@@ -50,9 +53,9 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     }
 
     fun prepareVideoView() {
-        videoView.setControls(WykopMediaControls(this))
-        videoView.setHandleAudioFocus(false)
         videoView.setOnPreparedListener {
+            videoView.isVisible = true
+            loadingView.isVisible = false
             videoView.start()
         }
     }
