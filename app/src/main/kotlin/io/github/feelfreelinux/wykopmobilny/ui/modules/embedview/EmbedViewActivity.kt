@@ -16,7 +16,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_embedview.*
-import kotlinx.android.synthetic.main.activity_youtubeplayer.*
 import java.net.URL
 import javax.inject.Inject
 
@@ -77,12 +76,5 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     override fun exitAndOpenYoutubeActivity() {
         navigatorApi.openYoutubeActivity(extraUrl)
         finish()
-    }
-
-    override fun onBackPressed() {
-        if (youtubePlayerView.isFullScreen)
-            youtubePlayerView.exitFullScreen()
-        else
-            super.onBackPressed()
     }
 }

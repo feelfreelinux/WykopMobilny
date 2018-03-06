@@ -79,7 +79,6 @@ class YoutubeViewActivity : BaseActivity() {
             val matcher = compiledPattern.matcher(youTubeLinkWithoutProtocolAndDomain)
 
             if (matcher.find()) {
-                printout("GOTITTT" + matcher.group(1))
                 return matcher.group(1)
             }
         }
@@ -96,4 +95,10 @@ class YoutubeViewActivity : BaseActivity() {
         } else url
     }
 
+    override fun onBackPressed() {
+        if (youtubePlayerView.isFullScreen)
+            youtubePlayerView.exitFullScreen()
+        else
+            super.onBackPressed()
+    }
 }

@@ -12,7 +12,7 @@ class LinkMapper {
     companion object {
         fun map(value: LinkResponse, linksPreferencesApi: LinksPreferencesApi): Link {
             return Link(value.id,
-                    value.title.removeHtml(),
+                    value.title?.removeHtml() ?: "",
                     value.description?.removeHtml() ?: "", value.tags, value.sourceUrl,
                     value.voteCount, value.buryCount, emptyList(),
                     value.commentsCount, value.relatedCount,

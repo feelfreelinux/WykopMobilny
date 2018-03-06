@@ -6,6 +6,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 abstract class BaseFragment : DaggerFragment() {
     val supportFragmentManager by lazy { (activity as BaseActivity).supportFragmentManager }
     fun showErrorDialog(e : Throwable) {
-        activity?.showExceptionDialog(e)
+        val baseActivity = activity as? BaseActivity
+        if (activity != null && activity is BaseActivity && baseActivity!!.isRunning) {
+            activity?.showExceptionDialog(e)
+        }
     }
 }

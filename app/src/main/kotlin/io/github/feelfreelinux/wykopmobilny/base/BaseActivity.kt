@@ -27,12 +27,24 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     lateinit var swipeBackHandler : SwipeBackActivityHelper
     open val enableSwipeBackLayout : Boolean = false
     open val isActivityTransfluent : Boolean = false
+    public var isRunning = false
     fun showErrorDialog(e : Throwable) {
-        showExceptionDialog(e)
+        if (isRunning) {
+            showExceptionDialog(e)
+        }
     }
 
     private val themeSettingsPreferences by lazy { SettingsPreferences(this) as SettingsPreferencesApi }
 
+    override fun onResume() {
+        isRunning = true
+        super.onResume()
+    }
+
+    override fun onPause() {
+        isRunning = false
+        super.onPause()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         initTheme()
         super.onCreate(savedInstanceState)

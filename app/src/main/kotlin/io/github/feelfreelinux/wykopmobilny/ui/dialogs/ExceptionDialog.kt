@@ -4,9 +4,12 @@ import android.app.AlertDialog
 import android.content.Context
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.WykopExceptionParser
+import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 
 fun Context.showExceptionDialog(e : Throwable) {
-    ExceptionDialog(this, e)?.show()
+    if (this is BaseActivity && isRunning) {
+        ExceptionDialog(this, e)?.show()
+    }
 }
 
 fun ExceptionDialog(context : Context, e: Throwable) : AlertDialog? {
