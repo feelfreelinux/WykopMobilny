@@ -15,8 +15,18 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_save_mp4"
+        android:title="@string/save_as_mp4"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_copy_url"
         android:title="@string/copy_url"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_open_browser"
+        android:title="@string/open_in"
         app:showAsAction="never"/>
 
 </menu>

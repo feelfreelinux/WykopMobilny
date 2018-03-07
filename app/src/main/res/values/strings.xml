@@ -199,5 +199,7 @@
     <string name="link_image_position_right">Mała po prawej stronie</string>
     <string name="link_image_position_top">Duża nad tekstem</string>
     <string name="link_image_position_bottom">Duża pod tekstem</string>
+    <string name="open_in">Otwórz w ...</string>
+    <string name="save_as_mp4">Zapisz do mp4</string>
 
 </resources>

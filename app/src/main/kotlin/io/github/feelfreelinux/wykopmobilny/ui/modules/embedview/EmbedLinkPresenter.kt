@@ -19,6 +19,7 @@ class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : 
     }
 
     lateinit var linkDomain : String
+    lateinit var mp4Url : String
 
     fun playUrl(url : String) {
         linkDomain = if (!url.contains(GFYCAT_MATCHER)) {
@@ -29,11 +30,12 @@ class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : 
         when (linkDomain) {
             GFYCAT_MATCHER -> {
                 val id = url.formatGfycat()
-                printout(id)
                 embedApi.getGfycatWebmUrl(id)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
-                        .subscribe({ view?.playUrl(it) }, { view?.showErrorDialog(it) })
+                        .subscribe({
+                            mp4Url = it.toString()
+                            view?.playUrl(it) }, { view?.showErrorDialog(it) })
             }
 
             STREAMABLE_MATCHER -> {
@@ -42,6 +44,7 @@ class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : 
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({
+                            mp4Url = it.toString()
                             view?.playUrl(it)
                         }, { view?.showErrorDialog(it) })
             }

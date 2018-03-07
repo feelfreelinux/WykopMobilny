@@ -63,6 +63,8 @@ class PhotoViewActivity : BaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.photoview_menu, menu)
+
+        menu?.findItem(R.id.action_save_mp4)?.isVisible = false
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -71,6 +73,11 @@ class PhotoViewActivity : BaseActivity() {
             R.id.action_share -> photoViewActions.shareImage(url)
             R.id.action_save_image -> photoViewActions.saveImage(url)
             R.id.action_copy_url -> clipboardHelper.copyTextToClipboard(url, "imageUrl")
+            R.id.action_open_browser -> {
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
+            }
             android.R.id.home -> finish()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -122,7 +129,7 @@ class PhotoViewActivity : BaseActivity() {
     fun loadGif() {
         image.isVisible = false
         gif.isVisible = true
-        GlideApp.with(applicationContext).load(url)
+        GlideApp.with(this).load(url)
                 .listener(KotlinGlideRequestListener({ loadingView?.isVisible = false }, { loadingView?.isVisible = false }))
                 .dontTransform()
                 .override(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
