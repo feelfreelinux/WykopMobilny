@@ -4,6 +4,8 @@ import android.content.Context
 import android.support.multidex.MultiDex
 import com.bugsnag.android.Bugsnag
 import com.evernote.android.job.JobManager
+import com.github.piasy.biv.BigImageViewer
+import com.github.piasy.biv.loader.glide.GlideImageLoader
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -31,6 +33,7 @@ class WykopApp : DaggerApplication() {
         super.onCreate()
         AndroidThreeTen.init(this)
         JobManager.create(this).addJobCreator(jobCreator)
+        BigImageViewer.initialize(GlideImageLoader.with(applicationContext))
         if (!BuildConfig.DEBUG) {
             Bugsnag.init(this, "3b54bcbf963f13ae9aa8f8376ea7c1cc")
             Bugsnag.setReleaseStage(BuildConfig.BUILD_TYPE)

@@ -58,9 +58,9 @@ class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelpe
     }
 
     override fun getDrawable() : Drawable? {
-        photoView.image.drawable?.apply {
+        /*photoView.image.drawable?.apply {
             return this
-        }
+        }*/
         return null
     }
 

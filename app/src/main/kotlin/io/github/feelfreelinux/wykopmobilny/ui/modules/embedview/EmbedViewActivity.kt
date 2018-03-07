@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import com.devbrackets.android.exomedia.core.source.MediaSourceProvider
 import com.google.android.exoplayer2.source.LoopingMediaSource
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
@@ -62,7 +63,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
 
     fun playLoopingSource(url : Uri) {
         if (android.os.Build.VERSION.SDK_INT >= 17) {
-            val mediaSource = MediaSourceProvider().generate(this, Handler(), url, null)
+            val mediaSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), url, null)
             val loopingMediaSource = LoopingMediaSource(mediaSource)
             videoView.setVideoURI(null, loopingMediaSource)
         } else {

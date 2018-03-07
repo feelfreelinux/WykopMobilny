@@ -3,29 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="#96000000"
     android:layout_height="match_parent">
-
-    <FrameLayout
+    <com.github.piasy.biv.view.BigImageView
+        android:id="@+id/image"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent"/>
 
-        <ProgressBar
-            android:id="@+id/loadingView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
-        <com.github.chrisbanes.photoview.PhotoView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </FrameLayout>
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/gif"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <include
         android:layout_width="match_parent"
@@ -34,5 +26,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+    <ProgressBar
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"/>
 
 </android.support.constraint.ConstraintLayout>

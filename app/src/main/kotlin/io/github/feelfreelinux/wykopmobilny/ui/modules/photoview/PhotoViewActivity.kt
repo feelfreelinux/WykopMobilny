@@ -3,9 +3,18 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.photoview
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import com.github.piasy.biv.BigImageViewer
+import com.github.piasy.biv.indicator.ProgressIndicator
+import com.github.piasy.biv.indicator.progresspie.ProgressPieIndicator
+import com.github.piasy.biv.loader.ImageLoader
+import com.github.piasy.biv.loader.glide.GlideImageLoader
+import com.github.piasy.biv.view.BigImageView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
@@ -16,6 +25,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_photoview.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.io.File
+import java.lang.Exception
 import javax.inject.Inject
 
 class PhotoViewActivity : BaseActivity() {
@@ -40,13 +51,13 @@ class PhotoViewActivity : BaseActivity() {
         setContentView(R.layout.activity_photoview)
         setSupportActionBar(toolbar)
         toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
+        loadingView.isIndeterminate = true
         title = null
-        printout(url)
-        GlideApp.with(this).load(url)
-                .listener(KotlinGlideRequestListener({ loadingView?.isVisible = false }, { loadingView?.isVisible = false }))
-                .dontTransform()
-                .override(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
-                .into(image)
+        if (url.endsWith(".gif")) {
+            loadGif()
+        } else {
+            loadImage()
+        }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -72,5 +83,49 @@ class PhotoViewActivity : BaseActivity() {
         if (requestCode == SHARE_REQUEST_CODE) {
 
         }
+    }
+
+    fun loadImage() {
+        image.isVisible = true
+        gif.isVisible = false
+        image.setImageLoaderCallback(object : ImageLoader.Callback {
+            override fun onFinish() {
+            }
+
+            override fun onSuccess(image: File?) {
+                loadingView.isVisible = false
+            }
+
+            override fun onFail(error: Exception?) {
+            }
+
+            override fun onCacheHit(image: File?) {
+            }
+
+            override fun onCacheMiss(image: File?) {
+            }
+
+            override fun onProgress(progress: Int) {
+                runOnUiThread {
+                    loadingView.progress = progress
+                }
+            }
+
+            override fun onStart() {
+                loadingView.isIndeterminate = false
+            }
+
+        })
+        image.showImage(Uri.parse(url))
+    }
+
+    fun loadGif() {
+        image.isVisible = false
+        gif.isVisible = true
+        GlideApp.with(applicationContext).load(url)
+                .listener(KotlinGlideRequestListener({ loadingView?.isVisible = false }, { loadingView?.isVisible = false }))
+                .dontTransform()
+                .override(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
+                .into(gif)
     }
 }
