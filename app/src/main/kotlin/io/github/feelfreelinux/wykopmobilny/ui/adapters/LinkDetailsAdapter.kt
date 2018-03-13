@@ -6,10 +6,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkCommentViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkHeaderViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.LinkPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenterFactory
@@ -23,6 +20,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
                                              val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val HEADER_HOLDER = 0
+        private const val TOP_COMMENT_HOLDER = 1
         private const val COMMENT_HOLDER = 1
     }
 
@@ -38,12 +36,16 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
             link?.let { (holder as LinkHeaderViewHolder).bindView(link!!) }
         } else {
             val comment = commentsList!![position - 1]
-            (holder as LinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
+            if (holder.itemViewType == TOP_COMMENT_HOLDER)
+            (holder as TopLinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
+            else
+                (holder as LinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) HEADER_HOLDER
+        else if (link!!.comments[position-1].parentId ==link!!.comments[position-1].id) TOP_COMMENT_HOLDER
         else COMMENT_HOLDER
     }
 
@@ -57,6 +59,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             HEADER_HOLDER -> LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_list_item, parent, false), linkPresenterFactory.create(), userManagerApi)
+            TOP_COMMENT_HOLDER -> TopLinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_top_comment_list_item, parent, false), onReplyClickedListener, collapseListener, presenterFactory.create(), userManagerApi, settingsPreferencesApi)
             else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), onReplyClickedListener, collapseListener, presenterFactory.create(), userManagerApi, settingsPreferencesApi)
         }
     }
