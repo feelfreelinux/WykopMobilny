@@ -1,22 +1,22 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class TagMetaResponse(
-        @Json(name="tag")
+        @JsonProperty("tag")
         val tag: String,
 
-        @Json(name="is_observed")
+        @JsonProperty("is_observed")
         var isObserved: Boolean,
 
-        @Json(name="is_blocked")
+        @JsonProperty("is_blocked")
         var isBlocked: Boolean,
 
-        @Json(name="is_own")
+        @JsonProperty("is_own")
         val isOwn : Boolean,
 
-        @Json(name="description")
+        @JsonProperty("description")
         val description : String?,
 
-        @Json(name="background")
+        @JsonProperty("background")
         val background : String?)

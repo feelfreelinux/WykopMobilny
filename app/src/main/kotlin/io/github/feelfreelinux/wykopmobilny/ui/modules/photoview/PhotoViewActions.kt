@@ -34,6 +34,10 @@ interface PhotoViewCallbacks {
 
 class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelperApi) : PhotoViewCallbacks {
     val photoView = context as PhotoViewActivity
+    companion object {
+        val SAVED_FOLDER = "wykopmobilny"
+        val SHARED_FOLDER = "udostępnione"
+    }
 
     override fun shareImage(url: String) {
         if (!checkForWriteReadPermission()) {
@@ -43,7 +47,7 @@ class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelpe
         Single.create(SingleOnSubscribe<File>{
             val file = Glide.with(context).downloadOnly().load(url).submit().get()
             val newFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "wykopmobilny/udostępnione/" + url.substringAfterLast("/"))
+                    "$SAVED_FOLDER/$SHARED_FOLDER/" + url.substringAfterLast("/"))
             file.copyTo(newFile, true)
             it.onSuccess(newFile)
         }).subscribeOn(WykopSchedulers().backgroundThread()).observeOn(WykopSchedulers().mainThread()).subscribe { file: File ->
@@ -71,7 +75,7 @@ class PhotoViewActions(val context : Context, clipboardHelperApi: ClipboardHelpe
         Completable.fromAction({
             val file = Glide.with(context).downloadOnly().load(url).submit().get()
             var path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "wykopmobilny")
+                    SAVED_FOLDER)
             path = File(path, photoView.url.substringAfterLast('/'))
             file.copyTo(path, true)
             addImageToGallery(path.path, context)

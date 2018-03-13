@@ -1,26 +1,26 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class EmbedResponse(
-        @Json(name="type")
+        @JsonProperty("type")
         val type : String,
 
-        @Json(name="url")
+        @JsonProperty("url")
         val url : String,
 
-        @Json(name="source")
+        @JsonProperty("source")
         val source : String?,
 
-        @Json(name="preview")
+        @JsonProperty("preview")
         val preview : String,
 
-        @Json(name="plus18")
+        @JsonProperty("plus18")
         val plus18 : Boolean,
 
-        @Json(name="size")
+        @JsonProperty("size")
         val size : String?,
 
-        @Json(name="animated")
+        @JsonProperty("animated")
         val animated : Boolean
 )

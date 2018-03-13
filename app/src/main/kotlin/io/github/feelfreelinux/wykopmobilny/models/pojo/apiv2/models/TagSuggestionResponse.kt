@@ -1,11 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class TagSuggestionResponse(
-        @Json(name="tag")
+        @JsonProperty("tag")
         val tag : String,
 
-        @Json(name="followers")
+        @JsonProperty("followers")
         val followers : Int
 )

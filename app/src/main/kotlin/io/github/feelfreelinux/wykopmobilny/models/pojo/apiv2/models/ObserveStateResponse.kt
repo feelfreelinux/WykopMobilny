@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 class ObserveStateResponse(
-        @Json(name="is_observed")
+        @JsonProperty("is_observed")
         val isObserved : Boolean,
-        @Json(name="is_blocked")
+        @JsonProperty("is_blocked")
         val isBlocked : Boolean
 )

@@ -1,42 +1,42 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class ProfileResponse(
-        @Json(name="login")
+        @JsonProperty("login")
         val login  : String,
 
-        @Json(name="color")
+        @JsonProperty("color")
         val color : Int,
 
-        @Json(name="sex")
+        @JsonProperty("sex")
         val sex : String?,
 
-        @Json(name="avatar")
+        @JsonProperty("avatar")
         val avatar : String,
 
-        @Json(name="signup_at")
+        @JsonProperty("signup_at")
         val signupAt : String,
-        @Json(name="is_blocked")
+        @JsonProperty("is_blocked")
         val isBlocked : Boolean? = false,
-        @Json(name="is_observed")
+        @JsonProperty("is_observed")
         val isObserved : Boolean? = false,
-        @Json(name="background")
+        @JsonProperty("background")
         val background : String?,
 
-        @Json(name="links_added_count")
+        @JsonProperty("links_added_count")
         val linksAddedCount : Int,
 
-        @Json(name="links_published_count")
+        @JsonProperty("links_published_count")
         val linksPublishedCount : Int,
 
-        @Json(name="rank")
+        @JsonProperty("rank")
         val rank : Int?,
 
-        @Json(name="followers")
+        @JsonProperty("followers")
         val followers : Int,
-        @Json(name="about")
+        @JsonProperty("about")
         val description : String?,
-        @Json(name="violation_url")
+        @JsonProperty("violation_url")
         val violationUrl : String?
 )

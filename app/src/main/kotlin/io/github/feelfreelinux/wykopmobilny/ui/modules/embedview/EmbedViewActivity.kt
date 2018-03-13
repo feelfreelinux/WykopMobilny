@@ -1,39 +1,71 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
 
+import android.Manifest
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
+import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ShareCompat
+import android.support.v4.content.ContextCompat
+import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import com.devbrackets.android.exomedia.ExoMedia
 import com.devbrackets.android.exomedia.core.source.MediaSourceProvider
+import com.ftinc.kit.util.Utils.getMimeType
+import com.google.android.exoplayer2.DefaultLoadControl
+import com.google.android.exoplayer2.DefaultRenderersFactory
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.source.ClippingMediaSource
 import com.google.android.exoplayer2.source.LoopingMediaSource
+import com.google.android.exoplayer2.source.MergingMediaSource
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DataSpec
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.upstream.TransferListener
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActions
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.reactivex.Completable
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_embedview.*
 import kotlinx.android.synthetic.main.toolbar.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okio.Okio
+import java.io.File
 import java.net.URL
+import java.nio.charset.Charset
 import javax.inject.Inject
 
 
 class EmbedViewActivity : BaseActivity(), EmbedView {
+
     override val enableSwipeBackLayout: Boolean = true
     override val isActivityTransfluent: Boolean = true
     @Inject lateinit var presenter : EmbedLinkPresenter
     @Inject lateinit var navigatorApi : NewNavigatorApi
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
+    val audioPlayer by lazy { ExoPlayerFactory.newSimpleInstance(applicationContext, DefaultTrackSelector(AdaptiveTrackSelection.Factory(DefaultBandwidthMeter())), DefaultLoadControl(), null, DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF) }
+    var usingMuxedAudio = false
     val extraUrl by lazy { intent.getStringExtra(EXTRA_URL) }
+    lateinit var audioSource : LoopingMediaSource
 
     companion object {
         val EXTRA_URL = "EXTRA_URL"
@@ -43,6 +75,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             return intent
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_embedview)
@@ -59,9 +92,52 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         videoView.isFocusable = false
     }
 
+    private fun decodeCoubUrl(input: String): String? {
+        val source = StringBuilder(input)
+        for (a in 0 until source.length) {
+            val c = source[a]
+            val lower = Character.toLowerCase(c)
+            source.setCharAt(a, if (c == lower) Character.toUpperCase(c) else lower)
+        }
+        try {
+            return String(Base64.decode(source.toString(), Base64.DEFAULT), Charset.forName("UTF-8"))
+        } catch (ignore: Exception) {
+            return null
+        }
+
+    }
+
     override fun playUrl(url: URL) {
         prepareVideoView()
         playLoopingSource(Uri.parse(url.toString()))
+    }
+
+    override fun playCoub(coub: Coub) {
+        val coubUrl = decodeCoubUrl(coub.fileVersions.mobile.gifv)
+        presenter.mp4Url = coubUrl!!
+        prepareVideoView()
+        val videoSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coubUrl!!), null)
+        val srcAudio = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coub.fileVersions.mobile.audio[0]), null)
+        audioPlayer.playWhenReady = true
+        usingMuxedAudio = true
+        videoView.setVideoURI(null, LoopingMediaSource(videoSource))
+        videoView.setVolume(0f)
+        audioSource = LoopingMediaSource(srcAudio)
+        audioPlayer.prepare(audioSource, true, true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (usingMuxedAudio) {
+            audioPlayer.stop()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (usingMuxedAudio && ::audioSource.isInitialized) {
+            audioPlayer.prepare(audioSource, false, false)
+        }
     }
 
     fun prepareVideoView() {
@@ -107,6 +183,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             R.id.action_share -> {
                 shareUrl()
             }
+            R.id.action_save_mp4 -> if (checkForWriteReadPermission()) saveFile()
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
@@ -119,5 +196,58 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
                 .setChooserTitle(R.string.share)
                 .setText(extraUrl)
                 .startChooser()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (usingMuxedAudio) {
+            audioPlayer.release()
+        }
+    }
+
+    fun saveFile() {
+        Single.create<String> {
+            val url = presenter.mp4Url
+            val path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    PhotoViewActions.SAVED_FOLDER)
+
+            val file = File(path, url.substringAfterLast("/"))
+            val request = Request.Builder()
+                    .url(url)
+                    .build()
+            val result = OkHttpClient().newCall(request).execute()
+            if (result.isSuccessful) {
+                val sink = Okio.buffer(Okio.sink(file))
+                sink.writeAll(result.body()!!.source())
+                sink.close()
+            } else {
+                it.onError(Exception())
+            }
+            it.onSuccess(path.path)
+
+
+        }.subscribeOn(WykopSchedulers().backgroundThread())
+                .observeOn(WykopSchedulers().mainThread())
+                .subscribe({
+                    val values = ContentValues()
+
+                    values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+                    values.put(MediaStore.Images.Media.MIME_TYPE, getMimeType(it))
+                    values.put(MediaStore.MediaColumns.DATA, it)
+                    Toast.makeText(this, "Zapisano plik", Toast.LENGTH_SHORT).show()
+                    contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                }, {
+                    Toast.makeText(this, "Błąd podczas zapisu pliku", Toast.LENGTH_SHORT).show()
+                })
+    }
+
+    private fun checkForWriteReadPermission() : Boolean {
+        ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+        val writePermission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val readPermission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+        return writePermission != PackageManager.PERMISSION_DENIED && readPermission != PackageManager.PERMISSION_DENIED
     }
 }

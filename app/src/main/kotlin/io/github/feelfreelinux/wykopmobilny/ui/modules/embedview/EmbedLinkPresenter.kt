@@ -6,6 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import java.net.URI
+import java.net.URL
 import java.net.URLDecoder
 import javax.inject.Inject
 
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : BasePresenter<EmbedView>() {
     companion object {
         val GFYCAT_MATCHER = "gfycat.com"
+        val COUB_MATCHER = "coub.com"
         val STREAMABLE_MATCHER = "streamable.com"
         val YOUTUBE_MATCHER = "youtube.com"
         val SIMPLE_YOUTUBE_MATCHER = "youtu.be"
@@ -30,12 +32,20 @@ class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : 
         when (linkDomain) {
             GFYCAT_MATCHER -> {
                 val id = url.formatGfycat()
-                embedApi.getGfycatWebmUrl(id)
+                embedApi.getGfycat(id)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({
-                            mp4Url = it.toString()
-                            view?.playUrl(it) }, { view?.showErrorDialog(it) })
+                            mp4Url = it.gfyItem.mp4Url
+                            view?.playUrl(URL(it.gfyItem.webmUrl)) }, { view?.showErrorDialog(it) })
+            }
+
+            COUB_MATCHER -> {
+                val id = url.removeSuffix("/").substringAfterLast("/view/")
+                embedApi.getCoub(id)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.playCoub(it) }, { view?.showErrorDialog(it) })
             }
 
             STREAMABLE_MATCHER -> {

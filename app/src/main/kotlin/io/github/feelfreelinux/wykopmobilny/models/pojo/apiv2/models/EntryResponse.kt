@@ -1,45 +1,45 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 class EntryResponse(
-        @Json(name="id")
+        @JsonProperty("id")
         val id : Int,
-        @Json(name="date")
+        @JsonProperty("date")
         val date : String,
 
-        @Json(name="body")
+        @JsonProperty("body")
         val body : String?,
 
-        @Json(name="author")
+        @JsonProperty("author")
         val author : AuthorResponse,
-        @Json(name="blocked")
+        @JsonProperty("blocked")
         val blocked : Boolean,
-        @Json(name="favorite")
+        @JsonProperty("favorite")
         val favorite : Boolean,
-        @Json(name="vote_count")
+        @JsonProperty("vote_count")
         val voteCount : Int,
-        @Json(name="comments_count")
+        @JsonProperty("comments_count")
         val commentsCount : Int,
 
-        @Json(name="comments")
+        @JsonProperty("comments")
         val comments : List<EntryCommentResponse>?,
 
-        @Json(name="status")
+        @JsonProperty("status")
         val status : String,
 
-        @Json(name="embed")
+        @JsonProperty("embed")
         val embed : EmbedResponse?,
 
-        @Json(name="survey")
+        @JsonProperty("survey")
         val survey : SurveyResponse?,
 
-        @Json(name="user_vote")
+        @JsonProperty("user_vote")
         val userVote : Int,
 
-        @Json(name="violation_url")
+        @JsonProperty("violation_url")
         val violationUrl : String?,
 
-        @Json(name="app")
+        @JsonProperty("app")
         val app : String?
 )

@@ -1,14 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class ConversationResponse(
-        @Json(name="last_update")
+        @JsonProperty("last_update")
         val lastUpdate : String,
 
-        @Json(name="receiver")
+        @JsonProperty("receiver")
         val receiver : AuthorResponse,
 
-        @Json(name="status")
+        @JsonProperty("status")
         val status : String
 )

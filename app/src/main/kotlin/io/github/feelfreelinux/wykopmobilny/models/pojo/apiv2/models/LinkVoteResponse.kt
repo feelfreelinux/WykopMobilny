@@ -1,12 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
-import kotlin.math.absoluteValue
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 class LinkVoteResponse(
-        @Json(name = "vote_count_plus")
+        @JsonProperty("vote_count_plus")
         val voteCountPlus : Int,
 
-        @Json(name = "vote_count")
+        @JsonProperty("vote_count")
         val voteCount : Int
 ) { val voteCountMinus : Int get() = voteCount - voteCountPlus }

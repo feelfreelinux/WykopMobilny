@@ -1,17 +1,17 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses
 
-import com.squareup.moshi.Json
-
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class BadgeResponse(
-        @Json(name = "name")
+        @JsonProperty("name")
         val name : String,
 
-        @Json(name = "date")
+        @JsonProperty("date")
         val date : String,
 
-        @Json(name = "description")
+        @JsonProperty("description")
         val description : String,
 
-        @Json(name = "icon")
+        @JsonProperty("icon")
         val icon : String
 )

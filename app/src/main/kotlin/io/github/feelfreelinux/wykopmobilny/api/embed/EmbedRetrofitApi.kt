@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.embed
 
 import io.github.feelfreelinux.wykopmobilny.api.REMOVE_USERKEY_HEADER
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Gfycat
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Streamable
 import io.reactivex.Single
@@ -16,4 +17,8 @@ interface EmbedRetrofitApi {
     @Headers("@: $REMOVE_USERKEY_HEADER")
     @GET("https://api.streamable.com/videos/{streamableId}")
     fun getStreamableFile(@Path("streamableId") streamableId : String) : Single<Streamable>
+
+    @Headers("@: $REMOVE_USERKEY_HEADER")
+    @GET("https://coub.com/api/v2/coubs/{coubId}")
+    fun getCoub(@Path("coubId") coubId : String) : Single<Coub>
 }

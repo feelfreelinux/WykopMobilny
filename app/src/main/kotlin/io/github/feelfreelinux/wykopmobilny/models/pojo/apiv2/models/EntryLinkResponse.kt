@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class EntryLinkResponse(
-        @Json(name="entry")
+        @JsonProperty("entry")
         val entry : EntryResponse?,
-        @Json(name="link")
+        @JsonProperty("link")
         val link : LinkResponse?
 )

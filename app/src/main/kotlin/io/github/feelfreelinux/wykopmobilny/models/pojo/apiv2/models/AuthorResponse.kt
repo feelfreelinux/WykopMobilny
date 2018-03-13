@@ -1,17 +1,17 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class AuthorResponse(
-        @Json(name = "login")
+        @JsonProperty("login")
         val login : String,
 
-        @Json(name = "color")
+        @JsonProperty("color")
         val color : Int,
 
-        @Json(name = "sex")
+        @JsonProperty("sex")
         val sex : String?,
 
-        @Json(name = "avatar")
+        @JsonProperty("avatar")
         val avatar : String
 )

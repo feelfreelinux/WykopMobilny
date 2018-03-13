@@ -1,5 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.embed
 
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Gfycat
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.reactivex.Single
 import retrofit2.Retrofit
@@ -23,6 +25,12 @@ class EmbedRepository(val retrofit: Retrofit) : EmbedApi {
     override fun getStreamableUrl(streamableId: String): Single<URL> =
             embedApi.getStreamableFile(streamableId)
                     .map { URL("https:${it.files.mp4Mobile.url}") }
+
+    override fun getCoub(coubId: String): Single<Coub> =
+            embedApi.getCoub(coubId)
+
+    override fun getGfycat(gfycatId: String): Single<Gfycat> =
+            embedApi.getGfycat(gfycatId)
 
     private val embedApi by lazy { retrofit.create(EmbedRetrofitApi::class.java) }
 }

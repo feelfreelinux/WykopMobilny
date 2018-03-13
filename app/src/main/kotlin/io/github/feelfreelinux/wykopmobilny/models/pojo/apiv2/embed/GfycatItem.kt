@@ -1,12 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class GfycatItem(
-        @Json(name="mp4Url")
+        @JsonProperty("mp4Url")
         val mp4Url : String,
-        @Json(name="gifUrl")
+        @JsonProperty("gifUrl")
         val gifUrl : String,
-        @Json(name="webmUrl")
+        @JsonProperty("webmUrl")
         val webmUrl : String
 )

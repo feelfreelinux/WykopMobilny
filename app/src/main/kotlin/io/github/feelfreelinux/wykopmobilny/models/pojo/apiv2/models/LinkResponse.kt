@@ -1,62 +1,62 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 class LinkResponse(
-        @Json(name="id")
+        @JsonProperty("id")
         val id : Int,
 
-        @Json(name="title")
+        @JsonProperty("title")
         val title : String?,
 
-        @Json(name="description")
+        @JsonProperty("description")
         val description : String?,
 
-        @Json(name="tags")
+        @JsonProperty("tags")
         val tags : String,
 
-        @Json(name="source_url")
+        @JsonProperty("source_url")
         val sourceUrl : String,
 
-        @Json(name="vote_count")
+        @JsonProperty("vote_count")
         val voteCount : Int,
 
-        @Json(name="bury_count")
+        @JsonProperty("bury_count")
         val buryCount : Int,
 
-        @Json(name="comments_count")
+        @JsonProperty("comments_count")
         val commentsCount : Int,
 
-        @Json(name="related_count")
+        @JsonProperty("related_count")
         val relatedCount : Int,
 
-        @Json(name="author")
+        @JsonProperty("author")
         val author : AuthorResponse?,
 
-        @Json(name="date")
+        @JsonProperty("date")
         val date : String,
 
-        @Json(name="preview")
+        @JsonProperty("preview")
         val preview : String?,
 
-        @Json(name="plus18")
+        @JsonProperty("plus18")
         val plus18 : Boolean,
 
-        @Json(name="can_vote")
+        @JsonProperty("can_vote")
         val canVote : Boolean,
 
-        @Json(name="is_hot")
+        @JsonProperty("is_hot")
         val isHot : Boolean,
 
-        @Json(name="status")
+        @JsonProperty("status")
         val status : String,
 
-        @Json(name="user_vote")
+        @JsonProperty("user_vote")
         val userVote : String?,
 
-        @Json(name="user_favorite")
+        @JsonProperty("user_favorite")
         val userFavorite : Boolean?,
 
-        @Json(name="app")
+        @JsonProperty("app")
         val app : String?
 )

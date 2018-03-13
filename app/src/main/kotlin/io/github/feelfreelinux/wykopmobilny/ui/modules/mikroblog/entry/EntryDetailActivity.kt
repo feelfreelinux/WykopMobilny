@@ -26,6 +26,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.convertMarkdownToHtml
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -107,7 +108,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         super.onResume()
         presenter.subscribe(this)
         presenter.entryId = entryId
-        loadData()
+        if (adapter.entry == null) loadData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -207,13 +208,10 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                     inputToolbar.setPhoto(data?.data)
                 }
 
-                BaseInputActivity.REQUEST_CODE -> {
-                    onRefresh()
-                }
-
                 BaseInputActivity.EDIT_ENTRY_COMMENT -> {
                     val commentId = data?.getIntExtra("commentId", -1)
                     val commentBody = data?.getStringExtra("commentBody")
+                    printout("GMM")
                     if (commentId != -1 && commentBody != null) {
                         entryFragmentData.data?.comments?.filter { it.id == commentId }?.get(0)?.body = commentBody.convertMarkdownToHtml()
                         onRefresh()
@@ -223,6 +221,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                 BaseInputActivity.EDIT_ENTRY -> {
                     val entryBody = data?.getStringExtra("entryBody")?.convertMarkdownToHtml()
                     if (entryBody != null) {
+                        printout("GMM2")
                         entryFragmentData.data?.body = entryBody
                         onRefresh()
                     }

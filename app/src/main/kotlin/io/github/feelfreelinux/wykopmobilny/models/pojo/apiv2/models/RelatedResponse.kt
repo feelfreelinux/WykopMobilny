@@ -1,19 +1,19 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 class RelatedResponse (
-        @Json(name="id")
+        @JsonProperty("id")
         val id : Int,
-        @Json(name="url")
+        @JsonProperty("url")
         val url : String,
-        @Json(name="vote_count")
+        @JsonProperty("vote_count")
         val voteCount : Int,
-        @Json(name="author")
+        @JsonProperty("author")
         val author : AuthorResponse?,
-        @Json(name="title")
+        @JsonProperty("title")
         val title : String,
 
-        @Json(name="user_vote")
+        @JsonProperty("user_vote")
         val userVote : Int?
 )

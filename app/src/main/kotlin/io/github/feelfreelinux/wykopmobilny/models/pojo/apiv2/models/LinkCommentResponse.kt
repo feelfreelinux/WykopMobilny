@@ -1,36 +1,36 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class LinkCommentResponse(
-        @Json(name = "id")
+        @JsonProperty("id")
         val id : Int,
-        @Json(name = "author")
+        @JsonProperty("author")
         val author : AuthorResponse,
-        @Json(name = "date")
+        @JsonProperty("date")
         val date : String,
-        @Json(name = "body")
+        @JsonProperty("body")
         val body : String?,
-        @Json(name = "blocked")
+        @JsonProperty("blocked")
         val blocked : Boolean,
-        @Json(name = "favorite")
+        @JsonProperty("favorite")
         val favorite : Boolean,
-        @Json(name = "vote_count")
+        @JsonProperty("vote_count")
         val voteCount : Int,
-        @Json(name = "vote_count_plus")
+        @JsonProperty("vote_count_plus")
         val voteCountPlus : Int,
-        @Json(name = "user_vote")
+        @JsonProperty("user_vote")
         val userVote : Int,
-        @Json(name = "parent_id")
+        @JsonProperty("parent_id")
         val parentId : Int,
-        @Json(name = "can_vote")
+        @JsonProperty("can_vote")
         val canVote : Boolean,
-        @Json(name = "link_id")
+        @JsonProperty("link_id")
         val linkId : Int,
-        @Json(name = "embed")
+        @JsonProperty("embed")
         val embed : EmbedResponse?,
-        @Json(name="violation_url")
+        @JsonProperty("violation_url")
         val violationUrl : String?,
-        @Json(name = "app")
+        @JsonProperty("app")
         val app : String?
 )

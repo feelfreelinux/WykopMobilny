@@ -1,22 +1,22 @@
 package io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackson.annotation.JsonIgnoreProperties @JsonIgnoreProperties(ignoreUnknown = true)
 
 data class NotificationResponse(
-        @Json(name = "id")
+        @JsonProperty("id")
         val id : Int,
-        @Json(name = "author")
+        @JsonProperty("author")
         val author : AuthorResponse?,
-        @Json(name = "date")
+        @JsonProperty("date")
         val date : String,
-        @Json(name = "body")
+        @JsonProperty("body")
         val body : String,
-        @Json(name = "type")
+        @JsonProperty("type")
         val type : String,
-        @Json(name = "item_id")
+        @JsonProperty("item_id")
         val itemId : String?,
-        @Json(name = "url")
+        @JsonProperty("url")
         val url : String?,
-        @Json(name = "new")
+        @JsonProperty("new")
         val new : Boolean
 )
