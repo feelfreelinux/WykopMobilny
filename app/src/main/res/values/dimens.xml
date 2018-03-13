@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
+    <dimen tools:override="true" name="design_navigation_icon_padding">16dp</dimen>
+    <dimen tools:override="true" name="design_navigation_separator_vertical_padding">2dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
 
     <dimen name="toolbar_titletext_text_size">17dp</dimen>
@@ -9,20 +11,12 @@
     <dimen name="toolbar_subtitle_messages_text_size">12dp</dimen>
 
     <dimen name="tabBar_indicator_height">2.5dp</dimen>
-    <dimen name="tabBar_padding_horizontal">16dp</dimen>
-    <dimen name="tabBar_text_size">14sp</dimen>
-
-    <dimen name="wykop_image_view_max_height">700dp</dimen>
-    <dimen name="wykop_image_view_expand_height">24dp</dimen>
-    <dimen name="wykop_image_view_expand_text_size">11sp</dimen>
 
     <dimen name="mirko_button_height">34dp</dimen>
     <dimen name="mirko_button_drawable_padding">3dp</dimen>
     <dimen name="mirko_button_padding">10dp</dimen>
     <dimen name="mirko_button_text_size">15sp</dimen>
-    <dimen name="mirko_button_margin">8dp</dimen>
 
-    <dimen name="navigation_drawer_text_size">15sp</dimen>
     <dimen name="drawer_header_background_image_height">80dp</dimen>
     <dimen name="drawer_header_avatar_size">80dp</dimen>
     <dimen name="drawer_header_avatar_elevation">1.7dp</dimen>
@@ -40,7 +34,7 @@
     <dimen name="drawer_header_notification_item_drawable_padding">6dp</dimen>
 
     <dimen name="cardview_radius">0dp</dimen>
-    <dimen name="cardview_elevation">0.7dp</dimen>
+    <dimen name="cardview_elevation">0.5dp</dimen>
     <dimen name="cardview_margin_vertical">0dp</dimen>
     <dimen name="cardview_margin_horizontal">3.5dp</dimen>
 
@@ -49,19 +43,13 @@
     <dimen name="dialog_edittext_text_size">16sp</dimen>
     <dimen name="dialog_voters_text_size">16sp</dimen>
 
-    <dimen name="plus_button_padding_left">6dp</dimen>
-    <dimen name="author_badge_strip_width">2dp</dimen>
-
-    <dimen name="author_header_avatar_width">34dp</dimen>
+    <dimen name="author_header_avatar_width">30dp</dimen>
     <dimen name="author_header_username_margin_horizontal">10dp</dimen>
-    <dimen name="author_header_username_text_size">13.5sp</dimen>
+    <dimen name="author_header_username_text_size">13sp</dimen>
     <dimen name="author_header_date_margin_horizontal">10dp</dimen>
     <dimen name="author_header_date_padding_bottom">2dp</dimen>
-    <dimen name="author_header_date_text_size">11.5sp</dimen>
+    <dimen name="author_header_date_text_size">11sp</dimen>
 
-    <dimen name="comment_section_left_margin">16dp</dimen>
-    <dimen name="comment_layout_author_padding_vertical">8dp</dimen>
-    <dimen name="comment_layout_author_padding_horizontal">10dp</dimen>
     <dimen name="comment_layout_button_padding_horizontal">2dp</dimen>
 
     <dimen name="entry_recycler_padding_vertical">3.5dp</dimen>
@@ -72,7 +60,7 @@
     <dimen name="entry_layout_survey_padding_horizontal">12dp</dimen>
     <dimen name="entry_content_padding_vertical">8dp</dimen>
     <dimen name="entry_content_padding_horizontal">12dp</dimen>
-    <dimen name="entry_content_text_size">13.5sp</dimen>
+    <dimen name="entry_content_text_size">14sp</dimen>
 
     <dimen name="conversations_list_recycler_padding_top">5dp</dimen>
     <dimen name="conversations_list_recycler_padding_bottom">2dp</dimen>
@@ -83,22 +71,8 @@
     <dimen name="conversation_list_item_margin_bottom">5dp</dimen>
     <dimen name="conversation_list_item_author_margin">12dp</dimen>
 
-    <dimen name="notifications_list_recycler_padding_vertical">3.5dp</dimen>
-    <dimen name="notifications_list_item_margin_vertical">3.5dp</dimen>
-    <dimen name="notifications_list_item_padding_start">6dp</dimen>
-    <dimen name="notifications_list_item_padding_end">0dp</dimen>
-    <dimen name="notifications_list_item_mark_width">5dp</dimen>
-    <dimen name="notifications_list_item_date_width">70dp</dimen>
-    <dimen name="notifications_list_item_date_padding_start">8dp</dimen>
-    <dimen name="notifications_list_item_date_padding_end">14dp</dimen>
-    <dimen name="notifications_list_item_date_text_size">11sp</dimen>
-    <dimen name="notifications_list_item_body_padding_start">6dp</dimen>
-    <dimen name="notifications_list_item_body_padding_end">2dp</dimen>
-    <dimen name="notifications_list_item_body_padding_vertical">8dp</dimen>
-    <dimen name="notifications_list_item_body_text_size">13sp</dimen>
-    <dimen name="notifications_list_item_avatar_width">58dp</dimen>
-    <dimen name="notifications_list_item_avatar_padding_horizontal">6dp</dimen>
-    <dimen name="notifications_list_item_avatar_padding_vertical">8dp</dimen>
+    <dimen name="notifications_list_recycler_padding_vertical">0dp</dimen>
+    <dimen name="notifications_list_item_margin_vertical">0.1dp</dimen>
 
     <dimen name="write_comment_scroll_padding_vertical">4dp</dimen>
 
@@ -117,11 +91,6 @@
 
     <dimen name="floating_image_height">86dp</dimen>
     <dimen name="floating_image_delete_button_margin">10dp</dimen>
-
-    <dimen name="autosuggest_item_padding_horizontal">12dp</dimen>
-    <dimen name="autosuggest_item_padding_vertical">6dp</dimen>
-    <dimen name="autosuggest_item_text_size">14sp</dimen>
-    <dimen name="autosuggest_item_separator_height">0.3dp</dimen>
 
     <dimen name="pmmessage_sent_layout_card_margin_horizontal">12dp</dimen>
     <dimen name="pmmessage_sent_layout_card_margin_vertical">6dp</dimen>
@@ -174,8 +143,8 @@
     <dimen name="link_details_layout_scroll_item_padding_vertical">12dp</dimen>
     <dimen name="link_details_layout_scroll_item_text_size">13sp</dimen>
 
-    <dimen name="link_related_layout_avatar_width">40dp</dimen>
-    <dimen name="link_related_layout_avatar_padding_start">10dp</dimen>
+    <dimen name="link_related_layout_avatar_width">36dp</dimen>
+    <dimen name="link_related_layout_avatar_padding_start">12dp</dimen>
     <dimen name="link_related_layout_avatar_padding_end">0dp</dimen>
     <dimen name="link_related_layout_avatar_padding_vertical">6dp</dimen>
     <dimen name="link_related_layout_title_text_size">15sp</dimen>
@@ -192,5 +161,63 @@
     <dimen name="bottomsheet_item_textview_margin_left">16dp</dimen>
 
     <dimen name="observed_tag_item_text_size">18sp</dimen>
+
+    <dimen name="text_tiny_size_tiny">9sp</dimen>
+    <dimen name="text_tiny_size_small">11sp</dimen>
+    <dimen name="text_tiny_size_normal">12sp</dimen>
+    <dimen name="text_tiny_size_large">14sp</dimen>
+    <dimen name="text_tiny_size_huge">16sp</dimen>
+
+    <dimen name="text_small_size_tiny">10sp</dimen>
+    <dimen name="text_small_size_small">12sp</dimen>
+    <dimen name="text_small_size_normal">13sp</dimen>
+    <dimen name="text_small_size_large">15sp</dimen>
+    <dimen name="text_small_size_huge">17sp</dimen>
+
+    <dimen name="text_normal_size_tiny">11sp</dimen>
+    <dimen name="text_normal_size_small">13sp</dimen>
+    <dimen name="text_normal_size_normal">14sp</dimen>
+    <dimen name="text_normal_size_large">16sp</dimen>
+    <dimen name="text_normal_size_huge">18sp</dimen>
+
+    <dimen name="text_large_size_tiny">12sp</dimen>
+    <dimen name="text_large_size_small">14sp</dimen>
+    <dimen name="text_large_size_normal">15sp</dimen>
+    <dimen name="text_large_size_large">17sp</dimen>
+    <dimen name="text_large_size_huge">19sp</dimen>
+
+    <dimen name="text_huge_size_tiny">13sp</dimen>
+    <dimen name="text_huge_size_small">15sp</dimen>
+    <dimen name="text_huge_size_normal">16sp</dimen>
+    <dimen name="text_huge_size_large">18sp</dimen>
+    <dimen name="text_huge_size_huge">20sp</dimen>
+
+    <dimen name="padding_dp_mini">4dp</dimen>
+    <dimen name="padding_dp_tiny">6dp</dimen>
+    <dimen name="padding_dp_small">8dp</dimen>
+    <dimen name="padding_dp_normal">10dp</dimen>
+    <dimen name="padding_dp_large">12dp</dimen>
+    <dimen name="padding_dp_huge">16dp</dimen>
+
+    <dimen name="margin_dp_mini">4dp</dimen>
+    <dimen name="margin_dp_tiny">6dp</dimen>
+    <dimen name="margin_dp_small">8dp</dimen>
+    <dimen name="margin_dp_normal">10dp</dimen>
+    <dimen name="margin_dp_large">12dp</dimen>
+    <dimen name="margin_dp_huge">16dp</dimen>
+
+    <dimen name="buttontextview_height">34dp</dimen>
+
+    <dimen name="separator_mini">0.1dp</dimen>
+    <dimen name="separator_tiny">0.3dp</dimen>
+    <dimen name="separator_small">0.5dp</dimen>
+    <dimen name="separator_normal">1dp</dimen>
+    <dimen name="separator_large">3dp</dimen>
+    <dimen name="separator_huge">6dp</dimen>
+
+    <dimen name="comment_reply_padding">24dp</dimen>
+
+    <dimen name="avatar_comment_width">38dp</dimen>
+    <dimen name="avatar_comment_width_small">44dp</dimen>
 
 </resources>

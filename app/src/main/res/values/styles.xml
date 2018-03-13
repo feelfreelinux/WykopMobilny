@@ -4,6 +4,9 @@
     <style name="WykopAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="textColorGrey">@color/textColorGrey</item>
+        <item name="textColorLight">@color/textColorLight</item>
+        <item name="textColorButtonToolbar">@color/textColorButtonToolbar</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textColorPrimary">@color/textColor</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -11,15 +14,16 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:itemBackground">@color/cardList</item>
-        <item name="cardListColor">@color/cardList</item>
-        <item name="cardViewColor">@color/cardView</item>
+        <item name="android:itemBackground">@color/windowBackground</item>
+        <item name="backgroundColor">@color/windowBackground</item>
+        <item name="itemBackgroundColor">@color/itemBackground</item>
+        <item name="itemBackgroundColorSelected">@color/itemBackgroundSelected</item>
+        <item name="itemBackgroundColorStatelist">@drawable/item_background_statelist</item>
         <item name="spacerColor">@color/surveyBarColor</item>
         <item name="drawablesColor">@color/drawablesColor.Dark</item>
-        <item name="cardViewSelected">@color/cardViewSelected</item>
         <item name="authorHeader_date_color">@color/authorHeader_date.Dark</item>
-        <item name="MirkoButtonStyle">@style/MikroButton</item>
-        <item name="colorControlNormal">@color/cardViewSelected.Dark</item>
+        <item name="MirkoButtonStyle">@style/ButtonToolbar</item>
+        <item name="colorControlNormal">@color/itemBackgroundSelected</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor</item>
         <item name="usersMessageColor">@color/usersMessageColor</item>
         <item name="usersMessageSubtextDirected">@color/authorHeader_date.Dark</item>
@@ -30,29 +34,30 @@
         <item name="adminNickColor">@android:color/black</item>
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list</item>
         <item name="voteMinusButtonStatelist">@drawable/button_minus_vote_background_state_list</item>
-
         <item name="buttonStatelist">@drawable/button_background_state_list</item>
-        <item name="cardviewStatelist">@drawable/cardview_background_statelist</item>
-        <item name="notificationDrawable">@drawable/ic_tag_light</item>
-        <item name="mailDrawable">@drawable/ic_mail_light</item>
-        <item name="wypokDrawable">@drawable/ic_wypok_light</item>
-        <item name="commentDrawable">@drawable/ic_comment_light</item>
-        <item name="plusDrawable">@drawable/ic_plus_light</item>
-        <item name="minusDrawable">@drawable/ic_minus_light</item>
-        <item name="dotsDrawable">@drawable/ic_dots_light</item>
-        <item name="replyDrawable">@drawable/ic_reply_light</item>
-        <item name="quoteDrawable">@drawable/ic_quote_light</item>
-        <item name="relatedDrawable">@drawable/ic_related_link_light</item>
-        <item name="sharebtnDrawable">@drawable/ic_sharebtn_light</item>
-        <item name="reportDrawable">@drawable/ic_buttontoolbar_report_light</item>
-        <item name="favoriteDrawable">@drawable/ic_favorite_selected_light</item>
-        <item name="favoriteOutlineDrawable">@drawable/ic_favorite_light</item>
+
+        <item name="wypokDrawable">@drawable/ic_buttontoolbar_wykop</item>
+        <item name="commentDrawable">@drawable/ic_buttontoolbar_comment</item>
+        <item name="plusDrawable">@drawable/ic_buttontoolbar_plus</item>
+        <item name="minusDrawable">@drawable/ic_buttontoolbar_minus</item>
+        <item name="dotsDrawable">@drawable/ic_buttontoolbar_dots</item>
+        <item name="replyDrawable">@drawable/ic_buttontoolbar_reply</item>
+        <item name="quoteDrawable">@drawable/ic_buttontoolbar_quote</item>
+        <item name="relatedDrawable">@drawable/ic_buttontoolbar_related</item>
+        <item name="sharebtnDrawable">@drawable/ic_buttontoolbar_share</item>
+        <item name="reportDrawable">@drawable/ic_buttontoolbar_report</item>
+        <item name="favoriteDrawable">@drawable/ic_buttontoolbar_favorite_selected</item>
+        <item name="favoriteOutlineDrawable">@drawable/ic_buttontoolbar_favorite</item>
+
         <item name="surveyBar">@drawable/survey_bar</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke</item>
         <item name="expandDrawable">@drawable/comment_expand_light</item>
         <item name="collapseDrawable">@drawable/comment_collapse_light</item>
         <item name="digCountDrawable">@drawable/ic_dig_light</item>
         <item name="linkViewClicked">@color/linkItemClicked</item>
+        <item name="notificationDrawable">@drawable/ic_tag_light</item>
+        <item name="mailDrawable">@drawable/ic_mail_light</item>
+        <item name="hotOutlineDrawable">@drawable/ic_hot_outline</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold</item>
@@ -77,29 +82,39 @@
         <item name="bottomSheetRelated">@drawable/ic_related_light</item>
         <item name="bottomSheetVoters">@drawable/ic_sheet_voters</item>
         <item name="bottomSheetDelete">@drawable/ic_menu_delete_light</item>
+
+        <item name="textSizeTiny">@dimen/text_normal_size_tiny</item>
+        <item name="textSizeSmall">@dimen/text_normal_size_small</item>
+        <item name="textSizeNormal">@dimen/text_normal_size_normal</item>
+        <item name="textSizeLarge">@dimen/text_normal_size_large</item>
+        <item name="textSizeHuge">@dimen/text_normal_size_huge</item>
     </style>
 
     <style name="WykopAppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
         <item name="preferenceTheme">@style/DarkPreferencesTheme</item>
+        <item name="textColorGrey">@color/textColorGrey.Dark</item>
+        <item name="textColorLight">@color/textColorLight.Dark</item>
+        <item name="textColorButtonToolbar">@color/textColorButtonToolbar.Dark</item>
         <item name="android:textColor">@color/textColor.Dark</item>
         <item name="android:textColorPrimary">@color/textColor.Dark</item>
-        <item name="android:windowBackground">@color/cardList.Dark</item>
-        <item name="android:itemBackground">@color/cardList.Dark</item>
+        <item name="android:windowBackground">@color/windowBackground.Dark</item>
+        <item name="android:itemBackground">@color/windowBackground.Dark</item>
         <item name="colorPrimary">@color/colorPrimary.Dark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark.Dark</item>
         <item name="colorAccent">@color/colorAccent.Dark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="cardListColor">@color/cardList.Dark</item>
-        <item name="cardViewColor">@color/cardView.Dark</item>
+        <item name="backgroundColor">@color/windowBackground.Dark</item>
+        <item name="itemBackgroundColor">@color/itemBackground.Dark</item>
+        <item name="itemBackgroundColorSelected">@color/itemBackgroundSelected.Dark</item>
+        <item name="itemBackgroundColorStatelist">@drawable/item_background_statelist_dark</item>
         <item name="spacerColor">@color/surveyBarColor.Dark</item>
         <item name="drawablesColor">@color/drawablesColor.Dark</item>
-        <item name="cardViewSelected">@color/cardViewSelected.Dark</item>
         <item name="authorHeader_date_color">@color/authorHeader_date.Dark</item>
         <item name="android:editTextColor">@color/textColor.Dark</item>
-        <item name="MirkoButtonStyle">@style/MikroButton</item>
-        <item name="colorControlNormal">@color/cardViewSelected.Dark</item>
+        <item name="MirkoButtonStyle">@style/ButtonToolbar</item>
+        <item name="colorControlNormal">@color/itemBackgroundSelected.Dark</item>
         <item name="android:textColorHint">@color/hintColor.Dark</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
         <item name="usersMessageColor">@color/usersMessageColor.Dark</item>
@@ -110,30 +125,31 @@
         <item name="shadowUpGradient">@drawable/gradient_separator_input</item>
         <item name="adminNickColor">@android:color/white</item>
         <item name="linkViewClicked">@color/linkItemClicked.Dark</item>
-
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list_dark</item>
         <item name="voteMinusButtonStatelist">@drawable/button_minus_vote_background_state_list_dark</item>
         <item name="buttonStatelist">@drawable/button_background_state_list_dark</item>
-        <item name="cardviewStatelist">@drawable/cardview_background_statelist_dark</item>
-        <item name="notificationDrawable">@drawable/ic_tag</item>
-        <item name="mailDrawable">@drawable/ic_mail</item>
-        <item name="wypokDrawable">@drawable/ic_wypok</item>
-        <item name="commentDrawable">@drawable/ic_comment</item>
-        <item name="plusDrawable">@drawable/ic_plus</item>
-        <item name="minusDrawable">@drawable/ic_minus</item>
-        <item name="dotsDrawable">@drawable/ic_dots</item>
-        <item name="replyDrawable">@drawable/ic_reply</item>
-        <item name="quoteDrawable">@drawable/ic_quote</item>
-        <item name="relatedDrawable">@drawable/ic_related_link</item>
-        <item name="sharebtnDrawable">@drawable/ic_sharebtn</item>
-        <item name="reportDrawable">@drawable/ic_buttontoolbar_report</item>
-        <item name="favoriteDrawable">@drawable/ic_favorite_selected</item>
-        <item name="favoriteOutlineDrawable">@drawable/ic_favorite</item>
+
+        <item name="wypokDrawable">@drawable/ic_buttontoolbar_wykop_dark</item>
+        <item name="commentDrawable">@drawable/ic_buttontoolbar_comment_dark</item>
+        <item name="plusDrawable">@drawable/ic_buttontoolbar_plus_dark</item>
+        <item name="minusDrawable">@drawable/ic_buttontoolbar_minus_dark</item>
+        <item name="dotsDrawable">@drawable/ic_buttontoolbar_dots_dark</item>
+        <item name="replyDrawable">@drawable/ic_buttontoolbar_reply_dark</item>
+        <item name="quoteDrawable">@drawable/ic_buttontoolbar_quote_dark</item>
+        <item name="relatedDrawable">@drawable/ic_buttontoolbar_related_dark</item>
+        <item name="sharebtnDrawable">@drawable/ic_buttontoolbar_share_dark</item>
+        <item name="reportDrawable">@drawable/ic_buttontoolbar_report_dark</item>
+        <item name="favoriteDrawable">@drawable/ic_buttontoolbar_favorite_selected_dark</item>
+        <item name="favoriteOutlineDrawable">@drawable/ic_buttontoolbar_favorite_dark</item>
+
         <item name="surveyBar">@drawable/survey_bar_dark</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke_dark</item>
         <item name="expandDrawable">@drawable/comment_expand</item>
         <item name="collapseDrawable">@drawable/comment_collapse</item>
         <item name="digCountDrawable">@drawable/ic_dig</item>
+        <item name="notificationDrawable">@drawable/ic_tag</item>
+        <item name="mailDrawable">@drawable/ic_mail</item>
+        <item name="hotOutlineDrawable">@drawable/ic_hot_outline_dark</item>
 
         <item name="markdownFormatQuote">@drawable/ic_format_quote_dark</item>
         <item name="markdownFormatBold">@drawable/ic_format_bold_dark</item>
@@ -144,6 +160,7 @@
         <item name="markdownInsertSpoiler">@drawable/ic_insert_spoiler_dark</item>
         <item name="markdownInsertPhoto">@drawable/ic_insert_photo_dark</item>
         <item name="markdownSend">@drawable/ic_send_dark</item>
+
         <item name="bottomSheetObserve">@drawable/ic_observe</item>
         <item name="bottomSheetUnobserve">@drawable/ic_unobserve</item>
         <item name="bottomSheetLock">@drawable/ic_lock</item>
@@ -157,25 +174,35 @@
         <item name="bottomSheetBuryList">@drawable/ic_bury_list</item>
         <item name="bottomSheetDiggerList">@drawable/ic_dig_list</item>
         <item name="bottomSheetRelated">@drawable/ic_related</item>
+
+        <item name="textSizeTiny">@dimen/text_normal_size_tiny</item>
+        <item name="textSizeSmall">@dimen/text_normal_size_small</item>
+        <item name="textSizeNormal">@dimen/text_normal_size_normal</item>
+        <item name="textSizeLarge">@dimen/text_normal_size_large</item>
+        <item name="textSizeHuge">@dimen/text_normal_size_huge</item>
     </style>
 
     <style name="WykopAppTheme.Amoled" parent="WykopAppTheme.Dark">
+        <item name="textColorGrey">@color/textColorGrey.Amoled</item>
+        <item name="textColorLight">@color/textColorLight.Amoled</item>
         <item name="android:textColor">@color/textColor.Amoled</item>
         <item name="android:textColorPrimary">@color/textColor.Amoled</item>
-        <item name="android:windowBackground">@color/cardList.Amoled</item>
-        <item name="android:itemBackground">@color/cardList.Amoled</item>
+        <item name="android:windowBackground">@color/windowBackground.Amoled</item>
+        <item name="android:itemBackground">@color/windowBackground.Amoled</item>
         <item name="colorPrimary">@color/colorPrimary.Amoled</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark.Amoled</item>
-        <item name="cardListColor">@color/cardList.Amoled</item>
-        <item name="cardViewColor">@color/cardView.Amoled</item>
-        <item name="cardViewSelected">@color/cardViewSelected.Amoled</item>
+        <item name="backgroundColor">@color/windowBackground.Amoled</item>
+        <item name="itemBackgroundColor">@color/itemBackground.Amoled</item>
+        <item name="itemBackgroundColorSelected">@color/itemBackgroundSelected.Amoled</item>
+        <item name="itemBackgroundColorStatelist">@drawable/item_background_statelist_amoled</item>
         <item name="android:editTextColor">@color/textColor.Amoled</item>
-        <item name="colorControlNormal">@color/cardViewSelected.Amoled</item>
+        <item name="colorControlNormal">@color/itemBackgroundSelected.Amoled</item>
         <item name="usersMessageColor">@color/usersMessageColor.Amoled</item>
         <item name="lineColor">@color/lineColor.Amoled</item>
         <item name="separatorColor">@color/separatorColor.Amoled</item>
         <item name="expandImageGradient">@drawable/gradient_expand_image_amoled</item>
-        <item name="cardviewStatelist">@drawable/cardview_background_statelist_amoled</item>
+
+        <item name="hotOutlineDrawable">@drawable/ic_hot_outline_amoled</item>
     </style>
 
     <style name="AppTheme.Dark.NavigationView" parent="">
@@ -184,22 +211,12 @@
     </style>
 
     <style name="NavigationDrawerStyle" parent="">
-        <item name="android:textSize">@dimen/navigation_drawer_text_size</item>
-    </style>
-
-    <style name="NavigationDrawerNotificationItem" parent="">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/drawer_header_notification_item_height</item>
-        <item name="android:layout_marginTop">@dimen/drawer_header_notification_item_margin_top</item>
-        <item name="android:drawablePadding">@dimen/drawer_header_notification_item_drawable_padding</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:textSize">@dimen/drawer_header_notification_item_text_size</item>
-        <item name="android:text">0</item>
+        <item name="android:fontFamily">sans-serif-normal</item>
+        <item name="android:textSize">?attr/textSizeLarge</item>
     </style>
 
     <style name="BaseCardView" parent="CardView">
-        <item name="cardBackgroundColor">?attr/cardViewColor</item>
+        <item name="cardBackgroundColor">?attr/itemBackgroundColor</item>
         <item name="cardCornerRadius">@dimen/cardview_radius</item>
         <item name="cardElevation">@dimen/cardview_elevation</item>
     </style>
@@ -221,14 +238,119 @@
     <style name="EntryContentTextView" parent="">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingRight">@dimen/entry_content_padding_horizontal</item>
-        <item name="android:paddingLeft">@dimen/entry_content_padding_horizontal</item>
-        <item name="android:paddingTop">@dimen/entry_content_padding_vertical</item>
-        <item name="android:paddingBottom">@dimen/entry_content_padding_vertical</item>
-        <item name="android:textSize">@dimen/entry_content_text_size</item>
+        <item name="android:paddingBottom">@dimen/padding_dp_small</item>
+        <item name="android:paddingLeft">@dimen/padding_dp_large</item>
+        <item name="android:paddingRight">@dimen/padding_dp_large</item>
+        <item name="android:textSize">?attr/textSizeNormal</item>
+        <item name="android:textIsSelectable">true</item>
     </style>
 
-    <style name="MikroButton" parent="">
+    <style name="ContentTextView" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">@dimen/padding_dp_small</item>
+        <item name="android:paddingLeft">@dimen/padding_dp_large</item>
+        <item name="android:paddingRight">@dimen/padding_dp_large</item>
+        <item name="android:textSize">?attr/textSizeNormal</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+
+    <style name="ContentTextViewComment" parent="ContentTextView">
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+    </style>
+
+    <style name="AuthorHeaderView" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/padding_dp_small</item>
+        <item name="android:paddingBottom">@dimen/padding_dp_small</item>
+        <item name="android:paddingLeft">@dimen/padding_dp_large</item>
+        <item name="android:paddingRight">@dimen/padding_dp_large</item>
+    </style>
+
+    <style name="ButtonTextView" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/buttontextview_height</item>
+        <item name="android:paddingLeft">@dimen/padding_dp_small</item>
+        <item name="android:paddingRight">@dimen/padding_dp_small</item>
+        <item name="android:background">?attr/buttonStatelist</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CommentButtonTextView" parent="ButtonTextView">
+        <item name="android:paddingLeft">@dimen/padding_dp_tiny</item>
+        <item name="android:paddingRight">@dimen/padding_dp_normal</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:textSize">?attr/textSizeLarge</item>
+        <item name="android:textColor">?attr/textColorButtonToolbar</item>
+    </style>
+
+    <style name="VoteButtonTextView" parent="CommentButtonTextView">
+        <item name="android:paddingRight">@dimen/padding_dp_normal</item>
+        <item name="android:paddingLeft">@dimen/padding_dp_mini</item>
+        <item name="android:drawablePadding">-1dp</item>
+    </style>
+
+    <style name="AvatarViewComment" parent="">
+        <item name="android:layout_width">@dimen/avatar_comment_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/padding_dp_normal</item>
+        <item name="android:paddingBottom">@dimen/padding_dp_normal</item>
+        <item name="android:paddingLeft">@dimen/padding_dp_large</item>
+    </style>
+
+    <style name="AuthorTextViewComment" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_dp_normal</item>
+        <item name="android:paddingTop">@dimen/padding_dp_small</item>
+        <item name="android:textSize">?attr/textSizeSmall</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="layout_constraintWidth_default">wrap</item>
+        <item name="layout_constraintHorizontal_bias">0.0</item>
+        <item name="layout_constraintHorizontal_chainStyle">packed</item>
+    </style>
+
+    <style name="DotTextViewComment" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/padding_dp_small</item>
+        <item name="android:paddingLeft">@dimen/padding_dp_tiny</item>
+        <item name="android:paddingRight">@dimen/padding_dp_tiny</item>
+        <item name="android:textColor">?attr/textColorGrey</item>
+        <item name="android:text">•</item>
+    </style>
+
+    <style name="DateTextViewComment" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/padding_dp_small</item>
+        <item name="android:paddingEnd">@dimen/padding_dp_normal</item>
+        <item name="android:textSize">?attr/textSizeTiny</item>
+        <item name="android:textColor">?attr/textColorGrey</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="layout_constraintWidth_default">wrap</item>
+    </style>
+
+    <style name="ImageViewComment" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_dp_small</item>
+    </style>
+
+    <style name="AuthorBadgeStrip" parent="">
+        <item name="android:layout_width">3dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:background">@color/colorBadgeAuthors</item>
+    </style>
+
+    <style name="ButtonToolbar" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/mirko_button_height</item>
         <item name="android:paddingRight">@dimen/mirko_button_padding</item>
@@ -237,7 +359,8 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/mirko_button_text_size</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:background">@drawable/button_background_deselected</item>
+        <item name="android:textColor">?attr/textColorButtonToolbar</item>
+        <item name="android:background">?attr/buttonStatelist</item>
     </style>
 
     <style name="WykopImageView" parent="">
@@ -247,11 +370,12 @@
 
     <style name="WykopImageViewExpand" parent="">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/wykop_image_view_expand_height</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/padding_dp_tiny</item>
         <item name="android:background">?attr/expandImageGradient</item>
         <item name="android:text">@string/expand_image</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/wykop_image_view_expand_text_size</item>
+        <item name="android:textSize">?attr/textSizeTiny</item>
     </style>
 
     <style name="MarkdownButton" parent="">
@@ -303,20 +427,36 @@
         <item name="android:textSize">@dimen/toolbar_subtitle_messages_text_size</item>
     </style>
 
+    <style name="TabLayoutTest" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/tabBarIndicatorColor</item>
+        <item name="tabIndicatorHeight">@dimen/tabBar_indicator_height</item>
+        <item name="tabPaddingStart">@dimen/padding_dp_huge</item>
+        <item name="tabPaddingEnd">@dimen/padding_dp_huge</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/tabBarTextColorSelected</item>
+        <item name="android:background">?attr/colorPrimaryDark</item>
+    </style>
+
+    <style name="TabTextAppearanceTest" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">?attr/textSizeNormal</item>
+        <item name="android:textColor">@color/tabBarTextColor</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
     <style name="TabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/tabBarIndicatorColor</item>
         <item name="tabIndicatorHeight">@dimen/tabBar_indicator_height</item>
-        <item name="tabPaddingStart">@dimen/tabBar_padding_horizontal</item>
-        <item name="tabPaddingEnd">@dimen/tabBar_padding_horizontal</item>
+        <item name="tabPaddingStart">@dimen/padding_dp_huge</item>
+        <item name="tabPaddingEnd">@dimen/padding_dp_huge</item>
         <item name="tabTextAppearance">@style/TabTextAppearance</item>
         <item name="tabSelectedTextColor">@color/tabBarTextColorSelected</item>
         <item name="android:background">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">@dimen/tabBar_text_size</item>
+        <item name="android:textSize">?attr/textSizeNormal</item>
         <item name="android:textColor">@color/tabBarTextColor</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <style name="TabLayoutProfile" parent="Widget.Design.TabLayout">
@@ -325,11 +465,11 @@
         <item name="tabPaddingStart">6dp</item>
         <item name="tabPaddingEnd">6dp</item>
         <item name="tabTextAppearance">@style/TabTextAppearanceProfile</item>
-        <item name="android:background">?attr/cardViewColor</item>
+        <item name="android:background">?attr/itemBackgroundColor</item>
     </style>
 
     <style name="TabTextAppearanceProfile" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">@dimen/tabBar_text_size</item>
+        <item name="android:textSize">?attr/textSizeNormal</item>
         <item name="android:textStyle">normal</item>
         <item name="textAllCaps">false</item>
     </style>
@@ -340,7 +480,7 @@
         <item name="tabPaddingStart">10dp</item>
         <item name="tabPaddingEnd">10dp</item>
         <item name="tabTextAppearance">@style/TabTextAppearanceProfileDetail</item>
-        <item name="android:background">?attr/cardViewSelected</item>
+        <item name="android:background">?attr/itemBackgroundColorSelected</item>
     </style>
 
     <style name="TabTextAppearanceProfileDetail" parent="TextAppearance.Design.Tab">

@@ -4,13 +4,13 @@
     android:shape="rectangle">
 
     <corners
-        android:radius="0dp"/>
+        android:radius="0dp" />
 
     <solid
-        android:color="@color/cardViewSelected.Dark"/>
+        android:color="@color/itemBackgroundSelected.Dark" />
 
     <stroke
         android:color="@color/toolbarItemsColor.Dark"
-        android:width="0dp"/>
+        android:width="0dp" />
 
 </shape>

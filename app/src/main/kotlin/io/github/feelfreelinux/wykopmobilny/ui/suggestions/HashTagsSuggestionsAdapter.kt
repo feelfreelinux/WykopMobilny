@@ -9,6 +9,7 @@ import android.widget.Filterable
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.TagSuggestion
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.autosuggest_item.view.*
 
@@ -24,6 +25,7 @@ class HashTagsSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi
         val view = convertView ?: View.inflate(context, R.layout.autosuggest_item, null)
         val item = mData[position]
         view.textView.text = "${item.tag} (${item.followers})"
+        view.avatarView.isVisible = false
         return view
     }
 

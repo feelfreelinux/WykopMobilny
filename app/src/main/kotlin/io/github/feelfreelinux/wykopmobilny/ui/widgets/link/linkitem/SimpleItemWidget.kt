@@ -5,11 +5,9 @@ import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BaseLinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import kotlinx.android.synthetic.main.simple_link_layout.*
 
@@ -38,7 +36,7 @@ class SimpleItemWidget(context: Context) : BaseLinkItemWidget(context) {
 
     init {
         val typedValue = TypedValue()
-        getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.itemBackgroundColorStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
     }
 

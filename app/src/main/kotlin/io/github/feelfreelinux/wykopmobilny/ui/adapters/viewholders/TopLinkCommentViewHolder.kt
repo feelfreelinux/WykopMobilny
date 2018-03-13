@@ -20,12 +20,12 @@ class TopLinkCommentViewHolder(val view: View, val linkCommentReplyListener : (L
         view.replyTextView.setOnClickListener { linkCommentReplyListener.invoke(comment) }
         view.linkComment.setLinkCommentData(comment, linkCommentPresenter, userManagerApi, settingsPreferencesApi)
         view.linkComment.setStyleForComment(isUserAuthor, highlightCommentId)
-        view.hiddenRepliesView.isVisible = comment.isCollapsed && comment.childCommentCount > 0
+        view.messageTextView.isVisible = comment.isCollapsed && comment.childCommentCount > 0
         view.messageTextView.text = view.resources.getString(R.string.hidden_replies, comment.childCommentCount)
-        view.hiddenRepliesView.setOnClickListener {
+        view.messageTextView.setOnClickListener {
             view.linkComment.expandComment()
         }
-        view.linkComment.showHiddenCommentsCountCard = { view.hiddenRepliesView.isVisible = it }
+        view.linkComment.showHiddenCommentsCountCard = { view.messageTextView.isVisible = it }
     }
 
     override fun cleanRecycled() {
@@ -33,9 +33,9 @@ class TopLinkCommentViewHolder(val view: View, val linkCommentReplyListener : (L
             GlideApp.with(this).clear(view.linkComment.commentImageView)
             view.linkComment.collapseListener = {_, _ ->}
             view.replyTextView.setOnClickListener(null)
-            view.hiddenRepliesView.isVisible = false
+            view.messageTextView.isVisible = false
             view.messageTextView.text = null
-            view.hiddenRepliesView.setOnClickListener(null)
+            view.messageTextView.setOnClickListener(null)
         }
     }
 }

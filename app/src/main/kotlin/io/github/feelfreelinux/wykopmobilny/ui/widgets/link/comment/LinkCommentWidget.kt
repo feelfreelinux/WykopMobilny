@@ -1,11 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -13,17 +13,18 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.link_comment_layout.view.*
 import kotlinx.android.synthetic.main.link_comment_menu_bottomsheet.view.*
 import kotlin.math.absoluteValue
 
-class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), LinkCommentView {
+class LinkCommentWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs), LinkCommentView {
     lateinit var comment : LinkComment
     lateinit var presenter : LinkCommentPresenter
     lateinit var settingsApi : SettingsPreferencesApi
@@ -35,7 +36,7 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
         isClickable = true
         isFocusable = true
         val typedValue = TypedValue()
-        getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.itemBackgroundColorStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
     }
 
@@ -60,7 +61,24 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
     }
 
     private fun setupHeader() {
-        authorHeaderView.setAuthorData(comment.author, comment.date, comment.app)
+        comment.author.apply {
+            //val params = avatarView.layoutParams
+            //params.width = if (comment.id != comment.parentId) resources.getDimensionPixelSize(R.dimen.avatar_comment_width_small) else resources.getDimensionPixelSize(R.dimen.avatar_comment_width)
+            //avatarView.layoutParams = params
+            avatarView.setAuthor(this)
+            avatarView.setOnClickListener { openProfile(nick) }
+            authorTextView.apply {
+                text = nick
+                setTextColor(context.getGroupColor(group))
+                setOnClickListener { openProfile(nick) }
+            }
+            dateTextView.text = comment.date.replace(" temu", "")
+            authorHeaderView.setAuthorData(comment.author, comment.date, comment.app)
+        }
+    }
+
+    fun openProfile(username : String) {
+        getActivityContext()!!.startActivity(ProfileActivity.createIntent(getActivityContext()!!, username))
     }
 
     private fun setupBody() {
@@ -74,7 +92,6 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
         }
         collapseButton.setOnClickListener {
             commentContentTextView.isVisible = false
-            buttonsToolbar.isVisible = false
         }
         commentContentTextView.isVisible = !comment.body.isNullOrEmpty()
         if ((comment.id != comment.parentId) || comment.childCommentCount == 0) {
@@ -82,9 +99,28 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : CardView(contex
             collapseButton.isVisible = false
         } else collapseButton.isVisible = true
 
-        val margin = if (comment.id != comment.parentId) resources.getDimensionPixelSize(R.dimen.comment_section_left_margin) else 0
-        val params = layoutParams as MarginLayoutParams
-        params.setMargins(margin, params.topMargin, params.rightMargin, params.bottomMargin)
+        val params = separatorView.layoutParams
+
+        //avatarView.layoutParams = params
+        if (comment.id != comment.parentId) {
+            authorHeaderView.isVisible = false
+            avatarView.isVisible = true
+            authorTextView.isVisible = true
+            dotTextView.isVisible = true
+            dateTextView.isVisible = true
+            params.height = resources.getDimensionPixelSize(R.dimen.separator_normal)
+            commentContentTextView.setPadding(0, commentContentTextView.paddingTop, commentContentTextView.paddingRight, commentContentTextView.paddingBottom)
+        } else {
+            authorHeaderView.isVisible = true
+            avatarView.isVisible = false
+            authorTextView.isVisible = false
+            dotTextView.isVisible = false
+            dateTextView.isVisible = false
+            params.height = resources.getDimensionPixelSize(R.dimen.separator_large)
+            commentContentTextView.setPadding(resources.getDimensionPixelSize(R.dimen.padding_dp_large), commentContentTextView.paddingTop, commentContentTextView.paddingRight, commentContentTextView.paddingBottom)
+        }
+        separatorView.layoutParams = params
+        //setPadding(if (comment.id != comment.parentId) resources.getDimensionPixelSize(R.dimen.comment_reply_padding) else 0, paddingTop, paddingRight, paddingBottom)
         requestLayout()
     }
 

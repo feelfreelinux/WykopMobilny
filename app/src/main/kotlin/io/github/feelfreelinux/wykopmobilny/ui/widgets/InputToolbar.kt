@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
@@ -63,7 +62,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     init {
         val typedValue = TypedValue()
         val theme = context.theme
-        theme.resolveAttribute(R.attr.cardViewColor, typedValue, true)
+        theme.resolveAttribute(R.attr.itemBackgroundColor, typedValue, true)
         setBackgroundColor(typedValue.data)
 
         // Inflate view

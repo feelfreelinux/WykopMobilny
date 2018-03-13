@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/avatarImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@mipmap/ic_launcher_foreground"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:background="#e1e1e1" />
 
     <ImageView
         android:id="@+id/genderStripImageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/male_strip"
-        app:layout_constraintStart_toStartOf="@id/avatarImageView"
-        app:layout_constraintEnd_toEndOf="@id/avatarImageView"
-        app:layout_constraintTop_toBottomOf="@id/avatarImageView"/>
+        app:layout_constraintTop_toBottomOf="@id/avatarImageView"
+        app:layout_constraintLeft_toLeftOf="@id/avatarImageView"
+        app:layout_constraintRight_toRightOf="@id/avatarImageView"
+        tools:background="@drawable/male_strip" />
 
-    </android.support.constraint.ConstraintLayout>
-
-</merge>
+</android.support.constraint.ConstraintLayout>

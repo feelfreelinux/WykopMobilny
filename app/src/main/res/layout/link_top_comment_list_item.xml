@@ -7,26 +7,22 @@
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.TopLinkCommentWidget
         android:id="@+id/linkComment"
-        style="@style/EntryCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:focusable="true"/>
+        android:focusable="true" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/hiddenRepliesView"
-        style="@style/EntryCardView"
+    <TextView
+        android:id="@+id/messageTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/comment_section_left_margin">
-
-        <TextView
-            android:id="@+id/messageTextView"
-            style="@style/EntryContentTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/voteButtonStatelist"/>
-
-    </android.support.v7.widget.CardView>
+        android:layout_marginLeft="@dimen/avatar_comment_width"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:paddingBottom="@dimen/padding_dp_small"
+        android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingRight="@dimen/padding_dp_large"
+        android:textSize="?attr/textSizeNormal"
+        android:textColor="?attr/textColorGrey"
+        android:background="?attr/voteButtonStatelist" />
 
 </LinearLayout>

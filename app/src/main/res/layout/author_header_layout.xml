@@ -11,34 +11,47 @@
         android:id="@+id/authorAvatarView"
         android:layout_width="@dimen/author_header_avatar_width"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/userNameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/author_header_username_margin_horizontal"
-        android:layout_marginEnd="@dimen/author_header_username_margin_horizontal"
-        android:textSize="@dimen/author_header_username_text_size"
-        app:layout_constraintStart_toEndOf="@+id/authorAvatarView"
+        android:layout_marginLeft="@dimen/margin_dp_normal"
+        android:layout_marginRight="@dimen/margin_dp_normal"
+        android:textSize="?attr/textSizeSmall"
+        android:lines="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintWidth_default="wrap"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/entryDateTextView"
-        tools:text="Username"/>
+        app:layout_constraintLeft_toRightOf="@+id/authorAvatarView"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="Kroguc" />
 
     <TextView
         android:id="@+id/entryDateTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/author_header_date_margin_horizontal"
-        android:layout_marginEnd="@dimen/author_header_date_margin_horizontal"
-        android:paddingBottom="@dimen/author_header_date_padding_bottom"
-        android:textSize="@dimen/author_header_date_text_size"
-        android:textColor="?attr/authorHeader_date_color"
-        app:layout_constraintStart_toEndOf="@+id/authorAvatarView"
+        android:layout_marginLeft="@dimen/margin_dp_normal"
+        android:layout_marginRight="@dimen/margin_dp_normal"
+        android:textSize="?attr/textSizeTiny"
+        android:textColor="?attr/textColorLight"
+        android:lines="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintWidth_default="wrap"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="1 minute ago"/>
+        app:layout_constraintLeft_toRightOf="@+id/authorAvatarView"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="1 min. temu" />
 
 </merge>

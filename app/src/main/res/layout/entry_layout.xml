@@ -3,140 +3,93 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="android.support.v7.widget.CardView"
+    tools:parentTag="android.support.constraint.ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
+        android:id="@+id/authorHeaderView"
+        style="@style/AuthorHeaderView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
+        android:id="@+id/entryContentTextView"
+        style="@style/ContentTextView"
+        app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
+        android:id="@+id/survey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false">
+        android:paddingBottom="@dimen/padding_dp_small"
+        android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingRight="@dimen/padding_dp_large"
+        app:layout_constraintTop_toBottomOf="@id/entryContentTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
-            android:id="@+id/authorHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/entry_layout_author_padding_vertical"
-            android:paddingBottom="@dimen/entry_layout_author_padding_vertical"
-            android:paddingLeft="@dimen/entry_layout_author_padding_horizontal"
-            android:paddingRight="@dimen/entry_layout_author_padding_horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
+        android:id="@+id/entryImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/survey"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <View
-            android:id="@+id/lineTop"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_line_height"
-            android:background="?attr/lineColor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/authorHeaderView"/>
+    <TextView
+        android:id="@+id/shareTextView"
+        style="@style/ButtonTextView"
+        android:drawableStart="?attr/sharebtnDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageView"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-        <io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
-            android:id="@+id/entryContentTextView"
-            style="@style/EntryContentTextView"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lineTop"/>
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
+        android:id="@+id/favoriteButton"
+        style="@style/ButtonTextView"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/entryImageView"
+        app:layout_constraintLeft_toRightOf="@id/shareTextView" />
 
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
-            android:id="@+id/survey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/entry_layout_survey_padding_vertical"
-            android:paddingBottom="@dimen/entry_layout_survey_padding_vertical"
-            android:paddingLeft="@dimen/entry_layout_survey_padding_horizontal"
-            android:paddingRight="@dimen/entry_layout_survey_padding_horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/entryContentTextView"/>
+    <TextView
+        android:id="@+id/replyTextView"
+        style="@style/ButtonTextView"
+        android:drawableStart="?attr/replyDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageView"
+        app:layout_constraintLeft_toRightOf="@id/favoriteButton" />
 
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
-            android:id="@+id/entryImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/survey"/>
+    <TextView
+        android:id="@+id/commentsCountTextView"
+        style="@style/CommentButtonTextView"
+        android:drawableStart="?attr/commentDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageView"
+        app:layout_constraintRight_toLeftOf="@+id/voteButton"
+        tools:text="3" />
 
-        <View
-            android:id="@+id/lineBottom"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_line_height"
-            android:background="?attr/lineColor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/entryImageView"/>
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
+        android:id="@+id/voteButton"
+        style="@style/VoteButtonTextView"
+        android:drawableStart="?attr/plusDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageView"
+        app:layout_constraintRight_toLeftOf="@+id/moreOptionsTextView"
+        tools:text="2" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/buttonsToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/entry_layout_button_padding_horizontal"
-            android:paddingRight="@dimen/entry_layout_button_padding_horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lineBottom">
+    <TextView
+        android:id="@+id/moreOptionsTextView"
+        style="@style/ButtonTextView"
+        android:drawableStart="?attr/dotsDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageView"
+        app:layout_constraintRight_toRightOf="parent" />
 
-            <TextView
-                android:id="@+id/shareTextView"
-                style="@style/MikroButton"
-                android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/sharebtnDrawable"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
-                android:id="@+id/favoriteButton"
-                style="@style/MikroButton"
-                app:layout_constraintStart_toEndOf="@id/shareTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/replyTextView"
-                style="@style/MikroButton"
-                android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/replyDrawable"
-                app:layout_constraintStart_toEndOf="@id/favoriteButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/commentsCountTextView"
-                style="@style/MikroButton"
-                android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/commentDrawable"
-                app:layout_constraintEnd_toStartOf="@+id/voteButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="3"/>
-
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
-                android:id="@+id/voteButton"
-                style="@style/MikroButton"
-                android:paddingLeft="@dimen/plus_button_padding_left"
-                android:drawableStart="?attr/plusDrawable"
-                app:layout_constraintEnd_toStartOf="@+id/moreOptionsTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="2"/>
-
-            <TextView
-                android:id="@+id/moreOptionsTextView"
-                style="@style/MikroButton"
-                android:background="?attr/voteButtonStatelist"
-                android:drawableStart="?attr/dotsDrawable"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.constraint.ConstraintLayout>
+    <View
+        android:id="@+id/separatorView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_large"
+        android:background="?attr/lineColor"
+        app:layout_constraintTop_toBottomOf="@id/moreOptionsTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </merge>

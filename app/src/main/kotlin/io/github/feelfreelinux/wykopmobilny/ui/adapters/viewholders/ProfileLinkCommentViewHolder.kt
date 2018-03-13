@@ -21,7 +21,7 @@ class ProfileLinkCommentViewHolder(val view: View, val linkCommentPresenter: Lin
         view.linkComment.collapseListener = {_, _ ->}
         view.linkComment.setLinkCommentData(comment, linkCommentPresenter, userManagerApi, settingsPreferencesApi)
         view.linkComment.setStyleForComment(false, -1)
-        view.hiddenRepliesView.isVisible = false
+        view.messageTextView.isVisible = false
         view.linkComment.showHiddenCommentsCountCard(false)
         view.replyTextView.isVisible =false
         view.linkComment.collapseButton.isVisible = false
@@ -32,9 +32,9 @@ class ProfileLinkCommentViewHolder(val view: View, val linkCommentPresenter: Lin
             GlideApp.with(this).clear(view.linkComment.commentImageView)
             view.linkComment.collapseListener = {_, _ ->}
             view.replyTextView.setOnClickListener(null)
-            view.hiddenRepliesView.isVisible = false
+            view.messageTextView.isVisible = false
             view.messageTextView.text = null
-            view.hiddenRepliesView.setOnClickListener(null)
+            view.messageTextView.setOnClickListener(null)
         }
     }
 }

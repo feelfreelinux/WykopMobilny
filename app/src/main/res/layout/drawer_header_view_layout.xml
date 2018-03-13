@@ -13,46 +13,64 @@
         android:layout_height="@dimen/drawer_header_background_image_height"
         android:scaleType="centerCrop"
         android:background="?attr/colorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/nav_profile_image_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/drawer_header_avatar_margin_start"
         android:layout_marginTop="@dimen/drawer_header_avatar_margin_top"
-        android:layout_marginBottom="@dimen/drawer_header_avatar_margin_bottom"
+        android:layout_marginBottom="@dimen/margin_dp_mini"
+        android:layout_marginLeft="@dimen/margin_dp_large"
         android:elevation="@dimen/drawer_header_avatar_elevation"
         app:cardCornerRadius="@dimen/drawer_header_avatar_radius"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" >
 
         <ImageView
             android:id="@+id/nav_profile_image"
             android:layout_width="@dimen/drawer_header_avatar_size"
-            android:layout_height="@dimen/drawer_header_avatar_size"/>
+            android:layout_height="@dimen/drawer_header_avatar_size" />
 
     </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/nav_notifications"
-        style="@style/NavigationDrawerNotificationItem"
-        android:layout_marginEnd="@dimen/drawer_header_notification_message_margin_end"
-        android:drawableStart="?attr/mailDrawable"
-        app:layout_constraintStart_toEndOf="@id/nav_profile_image_card"
-        app:layout_constraintEnd_toStartOf="@id/nav_notifications_tag"
-        app:layout_constraintTop_toTopOf="@id/nav_profile_image_card"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_dp_normal"
+        android:paddingBottom="@dimen/padding_dp_normal"
+        android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingRight="@dimen/padding_dp_tiny"
+        android:drawableLeft="?attr/mailDrawable"
+        android:drawablePadding="@dimen/padding_dp_small"
+        android:textSize="18dp"
+        android:text="0"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/backgroundImage"
+        app:layout_constraintLeft_toRightOf="@id/nav_profile_image_card"
+        app:layout_constraintRight_toLeftOf="@id/nav_notifications_tag" />
 
     <TextView
         android:id="@+id/nav_notifications_tag"
-        style="@style/NavigationDrawerNotificationItem"
-        android:layout_marginStart="@dimen/drawer_header_notification_tag_margin_start"
-        android:drawableStart="?attr/notificationDrawable"
-        app:layout_constraintStart_toEndOf="@id/nav_notifications"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/nav_profile_image_card"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_dp_normal"
+        android:paddingBottom="@dimen/padding_dp_normal"
+        android:paddingLeft="@dimen/padding_dp_tiny"
+        android:paddingRight="@dimen/padding_dp_normal"
+        android:drawableLeft="?attr/notificationDrawable"
+        android:drawablePadding="@dimen/padding_dp_small"
+        android:textSize="18dp"
+        android:text="0"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/backgroundImage"
+        app:layout_constraintLeft_toRightOf="@id/nav_notifications"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </merge>

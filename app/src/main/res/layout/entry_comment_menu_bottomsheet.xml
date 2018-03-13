@@ -6,8 +6,51 @@
     android:id="@+id/fragment_history_menu_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="?attr/cardListColor">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_dp_normal"
+            android:paddingLeft="@dimen/padding_dp_normal"
+            android:paddingRight="@dimen/padding_dp_normal"
+            android:textSize="?attr/textSizeLarge"
+            android:textColor="@android:color/white"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="1"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_dp_mini"
+            android:paddingBottom="@dimen/padding_dp_normal"
+            android:paddingLeft="@dimen/padding_dp_normal"
+            android:paddingRight="@dimen/padding_dp_normal"
+            android:textSize="?attr/textSizeNormal"
+            android:textColor="@android:color/white"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="1"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="?attr/backgroundColor">
 
     <LinearLayout
         android:id="@+id/entry_comment_menu_voters"
@@ -99,4 +142,5 @@
 
     </LinearLayout>
 
+</LinearLayout>
 </LinearLayout>

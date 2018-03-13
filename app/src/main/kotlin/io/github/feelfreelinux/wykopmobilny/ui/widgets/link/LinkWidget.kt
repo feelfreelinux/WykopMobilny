@@ -1,20 +1,16 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link
 
 import android.content.Context
-import android.graphics.Color
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.MonthYearPickerDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
@@ -24,7 +20,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
-import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.link_bury_menu_bottomsheet.view.*
 import kotlinx.android.synthetic.main.link_details_header_layout.view.*
@@ -42,7 +37,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
         isClickable = true
         isFocusable = true
         val typedValue = TypedValue()
-        getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.itemBackgroundColorStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
     }
 

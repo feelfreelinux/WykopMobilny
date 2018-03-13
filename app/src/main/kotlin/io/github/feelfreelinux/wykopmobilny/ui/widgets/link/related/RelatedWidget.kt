@@ -23,7 +23,7 @@ class RelatedWidget(context: Context, attrs: AttributeSet) : CardView(context, a
         isClickable = true
         isFocusable = true
         val typedValue = TypedValue()
-        getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.itemBackgroundColorStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
     }
 

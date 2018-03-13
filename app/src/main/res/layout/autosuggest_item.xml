@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_dp_small"
+    android:paddingBottom="@dimen/padding_dp_small"
+    android:paddingLeft="@dimen/padding_dp_large"
+    android:paddingRight="@dimen/padding_dp_large"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
+        android:id="@+id/avatarView"
+        android:layout_width="22dp"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/autosuggest_item_padding_vertical"
-        android:paddingBottom="@dimen/autosuggest_item_padding_vertical"
-        android:paddingRight="@dimen/autosuggest_item_padding_horizontal"
-        android:paddingLeft="@dimen/autosuggest_item_padding_horizontal"
-        android:textSize="@dimen/autosuggest_item_text_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separator"/>
-
-    <View
-        android:id="@+id/separator"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/autosuggest_item_separator_height"
-        android:background="?attr/separatorColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/padding_dp_large"
+        android:paddingLeft="@dimen/padding_dp_large"
+        android:textSize="?attr/textSizeNormal"
+        tools:text="Kroguc" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

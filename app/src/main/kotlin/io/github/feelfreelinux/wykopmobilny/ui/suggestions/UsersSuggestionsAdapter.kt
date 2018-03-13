@@ -10,6 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.autosuggest_item.view.*
 
 class UsersSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi) : ArrayAdapter<Author>(context, R.layout.autosuggest_item), Filterable {
@@ -46,7 +47,9 @@ class UsersSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi) :
         val view = convertView ?: View.inflate(context, R.layout.autosuggest_item, null)
         val item = mData[position]
         view.textView.setTextColor(getGroupColor(item.group, false))
-        view.textView.text = "@${item.nick}"
+        view.textView.text = item.nick
+        view.avatarView.isVisible = true
+        view.avatarView.setAuthor(item)
         return view
     }
 

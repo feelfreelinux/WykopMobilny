@@ -1,11 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
@@ -17,16 +18,17 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.textview.URLClickedListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.android.synthetic.main.author_header_layout.view.*
 import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entry_comment_layout.view.*
 import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 
-class CommentWidget : CardView, CommentView {
+class CommentWidget : ConstraintLayout, CommentView {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -48,7 +50,7 @@ class CommentWidget : CardView, CommentView {
         isClickable = true
         isFocusable = true
         val typedValue = TypedValue()
-        getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.itemBackgroundColorStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
     }
 
@@ -86,7 +88,20 @@ class CommentWidget : CardView, CommentView {
     }
 
     private fun setupHeader() {
-        authorHeaderView.setAuthorData(comment.author, comment.date, comment.app)
+        comment.author.apply {
+            avatarView.setAuthor(this)
+            avatarView.setOnClickListener { openProfile(nick) }
+            authorTextView.apply {
+                text = nick
+                setTextColor(context.getGroupColor(group))
+                setOnClickListener { openProfile(nick) }
+            }
+            dateTextView.text = comment.date.replace(" temu", "")
+        }
+    }
+
+    fun openProfile(username : String) {
+        getActivityContext()!!.startActivity(ProfileActivity.createIntent(getActivityContext()!!, username))
     }
 
     private fun setupFooter() {
@@ -148,8 +163,12 @@ class CommentWidget : CardView, CommentView {
         val dialog = BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_comment_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
-
         bottomSheetView.apply {
+            author.text = comment.author.nick
+            date.text = comment.date
+            comment.app?.let {
+                date.text = context.getString(R.string.date_with_user_app, comment.date, comment.app)
+            }
             entry_comment_menu_copy.setOnClickListener {
                 presenter.copyContent(comment)
                 dialog.dismiss()

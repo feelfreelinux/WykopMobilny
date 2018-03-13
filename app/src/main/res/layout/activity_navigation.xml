@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/toolbar"
-                app:layout_scrollFlags="scroll|enterAlways"/>
+                app:layout_scrollFlags="scroll|enterAlways" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -28,21 +28,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
+            android:layout_gravity="bottom|end"
             android:src="@drawable/ic_pen"
             app:elevation="5dp"
             app:fabSize="normal"
             app:layout_anchor="@id/contentView"
             app:layout_anchorGravity="bottom|right"
-            app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior"/>
+            app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior" />
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -53,9 +52,9 @@
         android:layout_gravity="start"
         android:scrollbars="none"
         app:headerLayout="@layout/navigation_header"
+        app:menu="@menu/navigation_menu"
+        app:itemIconTint="?attr/textColorGrey"
         app:itemTextColor="?android:textColor"
-        app:itemIconTint="?android:textColor"
-        app:itemTextAppearance="@style/NavigationDrawerStyle"
-        app:menu="@menu/navigation_menu"/>
+        app:itemTextAppearance="@style/NavigationDrawerStyle" />
 
 </android.support.v4.widget.DrawerLayout>

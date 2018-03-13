@@ -12,19 +12,19 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/cardviewStatelist">
+        android:background="?attr/itemBackgroundColorStatelist">
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/entry_layout_author_padding_vertical"
             android:paddingBottom="@dimen/entry_layout_author_padding_vertical"
             android:paddingLeft="@dimen/entry_layout_author_padding_horizontal"
             android:paddingRight="@dimen/entry_layout_author_padding_horizontal"
-            android:paddingTop="@dimen/entry_layout_author_padding_vertical"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:visibility="gone" />
 
         <View
             android:id="@+id/lineTop"
@@ -96,7 +96,6 @@
             android:paddingStart="@dimen/link_layout_title_padding_horizontal"
             android:paddingTop="@dimen/link_layout_title_padding_top"
             android:textSize="@dimen/link_layout_title_font_size"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/image_right"
             app:layout_constraintStart_toEndOf="@id/image_left"
             app:layout_constraintTop_toBottomOf="@id/image_top"
@@ -113,6 +112,7 @@
             android:paddingEnd="@dimen/link_layout_description_padding_horizontal"
             android:paddingStart="@dimen/link_layout_description_padding_horizontal"
             android:textSize="@dimen/link_layout_description_font_size"
+            android:textColor="?attr/textColorGrey"
             app:layout_constraintEnd_toStartOf="@id/image_right"
             app:layout_constraintStart_toEndOf="@id/image_left"
             app:layout_constraintTop_toBottomOf="@+id/title"
@@ -129,7 +129,7 @@
 
         <TextView
             android:id="@+id/shareTextView"
-            style="@style/MikroButton"
+            style="@style/ButtonToolbar"
             android:background="?attr/voteButtonStatelist"
             android:drawableStart="?attr/sharebtnDrawable"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,6 +143,7 @@
             android:paddingRight="@dimen/link_layout_date_padding_horizontal"
             android:textSize="@dimen/link_layout_date_text_size"
             android:textStyle="normal"
+            android:textColor="?attr/textColorButtonToolbar"
             app:layout_constraintStart_toEndOf="@id/shareTextView"
             app:layout_constraintBottom_toBottomOf="@id/shareTextView"
             app:layout_constraintTop_toBottomOf="@id/separator"
@@ -151,7 +152,7 @@
 
         <TextView
             android:id="@+id/commentsCountTextView"
-            style="@style/MikroButton"
+            style="@style/ButtonToolbar"
             android:background="?attr/voteButtonStatelist"
             android:clickable="true"
             android:drawableStart="?attr/commentDrawable"
@@ -162,7 +163,7 @@
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
             android:id="@+id/diggCountTextView"
-            style="@style/MikroButton"
+            style="@style/ButtonToolbar"
             android:background="?attr/voteButtonStatelist"
             android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
             app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
@@ -171,7 +172,7 @@
 
         <TextView
             android:id="@+id/moreOptionsTextView"
-            style="@style/MikroButton"
+            style="@style/ButtonToolbar"
             android:background="?attr/voteButtonStatelist"
             android:drawableStart="?attr/dotsDrawable"
             app:layout_constraintEnd_toEndOf="parent"

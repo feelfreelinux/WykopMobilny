@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
+import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
@@ -19,7 +20,10 @@ class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             // Setup widgets
             body.setText(notification.body.removeHtml(), TextView.BufferType.SPANNABLE)
             date.text = notification.date.toPrettyDate()
-            newNotificationMark.isVisible = notification.new
+            unreadMark.isVisible = notification.new
+            unreadDotMark.isVisible = notification.new
+            if (notification.new) date.setTypeface(null, Typeface.BOLD)
+            else date.setTypeface(null, Typeface.NORMAL)
 
             if (notification.author != null) {
                 avatarView.isVisible = true
@@ -35,7 +39,7 @@ class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
                 avatarView.isVisible = false
             }
 
-            cardView.setOnClickListener {
+            notificationItem.setOnClickListener {
                 itemClickListener()
             }
         }

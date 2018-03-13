@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
-import android.support.v7.widget.CardView
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entry_layout.view.*
 import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 
-class EntryWidget : CardView, EntryView, LayoutContainer {
+class EntryWidget : ConstraintLayout, EntryView, LayoutContainer {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -57,10 +57,8 @@ class EntryWidget : CardView, EntryView, LayoutContainer {
     var replyListener: ((Author) -> Unit)? = null
 
     init {
-        cardElevation = resources.getDimension(R.dimen.cardview_elevation)
-        radius = resources.getDimension(R.dimen.cardview_radius)
         val typedValue = TypedValue()
-        getActivityContext()!!.theme?.resolveAttribute(R.attr.cardviewStatelist, typedValue, true)
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.itemBackgroundColorStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
     }
 
@@ -284,15 +282,6 @@ class EntryWidget : CardView, EntryView, LayoutContainer {
                 .setChooserTitle(R.string.share)
                 .setText(url)
                 .startChooser()
-    }
-
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        val margins = layoutParams as MarginLayoutParams
-        val horizontal = resources.getDimensionPixelSize(R.dimen.cardview_margin_horizontal)
-        val vertical = resources.getDimensionPixelSize(R.dimen.cardview_margin_vertical)
-        margins.setMargins(vertical, horizontal, vertical, horizontal)
-        layoutParams = margins
     }
 
     val url: String

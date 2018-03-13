@@ -169,7 +169,7 @@
 
             <TextView
                 android:id="@+id/shareTextView"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 android:background="?attr/voteButtonStatelist"
                 android:drawableStart="?attr/sharebtnDrawable"
                 app:layout_constraintStart_toStartOf="parent"
@@ -178,14 +178,14 @@
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
                 android:id="@+id/favoriteButton"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 app:layout_constraintStart_toEndOf="@id/shareTextView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/relatedCountTextView"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 android:background="?attr/voteButtonStatelist"
                 android:drawableStart="?attr/relatedDrawable"
                 app:layout_constraintEnd_toStartOf="@+id/commentsCountTextView"
@@ -195,7 +195,7 @@
 
             <TextView
                 android:id="@+id/commentsCountTextView"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 android:background="?attr/voteButtonStatelist"
                 android:drawableStart="?attr/commentDrawable"
                 app:layout_constraintEnd_toStartOf="@+id/diggCountTextView"
@@ -205,7 +205,7 @@
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
                 android:id="@+id/diggCountTextView"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 android:background="?attr/voteButtonStatelist"
                 android:drawableStart="?attr/wypokDrawable"
                 android:drawablePadding="@dimen/link_layout_digg_drawable_padding"
@@ -216,7 +216,7 @@
 
             <TextView
                 android:id="@+id/moreOptionsTextView"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 android:background="?attr/voteButtonStatelist"
                 android:drawableStart="?attr/dotsDrawable"
                 app:layout_constraintEnd_toEndOf="parent"

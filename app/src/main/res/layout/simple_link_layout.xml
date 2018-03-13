@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.support.v7.widget.CardView"
     style="@style/EntryCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -11,82 +12,83 @@
         android:id="@+id/constraintLayoutSimple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/cardviewStatelist">
+        android:background="?attr/itemBackgroundColorStatelist">
 
         <View
             android:id="@+id/simple_digg"
             android:layout_width="54dp"
             android:layout_height="52dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:background="?attr/digCountDrawable"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <View
             android:id="@+id/simple_digg_hot"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:background="@drawable/ic_hot_dig"
-            app:layout_constraintEnd_toEndOf="@id/simple_digg"
-            app:layout_constraintTop_toTopOf="@id/simple_digg" />
+            android:background="?attr/hotOutlineDrawable"
+            app:layout_constraintTop_toTopOf="@id/simple_digg"
+            app:layout_constraintRight_toRightOf="@id/simple_digg" />
 
         <TextView
             android:id="@+id/simple_digg_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="false"
-            android:gravity="center"
-            android:textColor="@color/digCountColor"
             android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/simple_digg"
-            app:layout_constraintEnd_toEndOf="@id/simple_digg"
-            app:layout_constraintStart_toStartOf="@id/simple_digg"
+            android:textColor="@color/digCountColor"
+            android:gravity="center"
+            android:clickable="false"
+            android:focusable="false"
             app:layout_constraintTop_toTopOf="@id/simple_digg"
+            app:layout_constraintBottom_toBottomOf="@id/simple_digg"
+            app:layout_constraintLeft_toLeftOf="@id/simple_digg"
+            app:layout_constraintRight_toRightOf="@id/simple_digg"
             tools:text="2137" />
 
         <TextView
             android:id="@+id/simple_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/link_layout_title_padding_top"
+            android:paddingBottom="@dimen/link_layout_title_padding_top"
+            android:paddingLeft="@dimen/link_layout_title_padding_horizontal"
+            android:paddingRight="@dimen/link_layout_title_padding_horizontal"
+            android:textSize="@dimen/link_layout_title_font_size"
+            android:minLines="3"
+            android:maxLines="3"
             android:clickable="false"
             android:focusable="false"
-            android:maxLines="3"
-            android:minLines="3"
-            android:paddingBottom="@dimen/link_layout_title_padding_top"
-            android:paddingEnd="@dimen/link_layout_title_padding_horizontal"
-            android:paddingStart="@dimen/link_layout_title_padding_horizontal"
-            android:paddingTop="@dimen/link_layout_title_padding_top"
-            android:textSize="@dimen/link_layout_title_font_size"
-            app:layout_constraintEnd_toStartOf="@id/simple_image"
-            app:layout_constraintStart_toEndOf="@id/simple_digg"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/simple_digg"
+            app:layout_constraintRight_toLeftOf="@id/simple_image"
             tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet." />
 
         <ImageView
             android:id="@+id/simple_image"
-            android:layout_width="@dimen/link_layout_image_width"
-            android:layout_height="@dimen/link_layout_image_height"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
             android:clickable="false"
             android:focusable="false"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <View
             android:id="@+id/hotBadgeStripSimple"
             android:layout_width="@dimen/link_layout_hot_badge_strip_width"
             android:layout_height="0dp"
             android:background="@color/colorBadgeHot"
-            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:visibility="visible" />
 
     </android.support.constraint.ConstraintLayout>
 
-</android.support.v7.widget.CardView>
+</merge>

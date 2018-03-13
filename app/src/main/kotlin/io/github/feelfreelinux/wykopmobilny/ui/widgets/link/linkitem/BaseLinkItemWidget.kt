@@ -47,15 +47,6 @@ abstract class BaseLinkItemWidget(context: Context) : CardView(context, null, R.
                 .startChooser()
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        val margins = layoutParams as MarginLayoutParams
-        val horizontal = resources.getDimensionPixelSize(R.dimen.cardview_margin_horizontal)
-        val vertical = resources.getDimensionPixelSize(R.dimen.cardview_margin_vertical)
-        margins.setMargins(vertical, horizontal, vertical, horizontal)
-        layoutParams = margins
-    }
-
     val url: String
         get() = "https://www.wykop.pl/link/${link.id}"
 }

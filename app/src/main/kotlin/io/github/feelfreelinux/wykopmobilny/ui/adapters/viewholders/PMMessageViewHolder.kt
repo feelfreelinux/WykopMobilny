@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.View
 import android.widget.RelativeLayout
@@ -39,7 +38,7 @@ class PMMessageViewHolder(val view: View,
      * This function flips the message depending on the direction.
      */
     fun flipMessage(isSentFromUser: Boolean) {
-        val cardViewParams = view.cardView.layoutParams as RelativeLayout.LayoutParams
+        val cardViewParams = view.notificationItem.layoutParams as RelativeLayout.LayoutParams
         // Resolve colors from attr
         val theme = view.getActivityContext()!!.theme
         val usersMessageColor = TypedValue()
@@ -49,15 +48,15 @@ class PMMessageViewHolder(val view: View,
         theme?.resolveAttribute(R.attr.usersMessageSubtextDirected, usersMessageSubtextDirected, true)
 
         val cardBackgroundColor = TypedValue()
-        theme?.resolveAttribute(R.attr.cardViewColor, cardBackgroundColor, true)
+        theme?.resolveAttribute(R.attr.itemBackgroundColor, cardBackgroundColor, true)
 
         val marginVertical = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_vertical).toInt()
         val marginHorizontal = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_horizontal).toInt()
         val marginFlip = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_flip).toInt()
 
         if (isSentFromUser) {
-            view.cardView.setCardBackgroundColor(usersMessageColor.data)
-            view.cardView.date.setTextColor(usersMessageSubtextDirected.data)
+            view.notificationItem.setCardBackgroundColor(usersMessageColor.data)
+            view.notificationItem.date.setTextColor(usersMessageSubtextDirected.data)
             cardViewParams.setMargins(marginFlip, marginVertical, marginHorizontal, marginVertical)
             cardViewParams.apply {
                 removeRule(RelativeLayout.ALIGN_PARENT_START)
@@ -65,8 +64,8 @@ class PMMessageViewHolder(val view: View,
                 height = RelativeLayout.LayoutParams.WRAP_CONTENT
             }
         } else {
-            view.cardView.setCardBackgroundColor(cardBackgroundColor.data)
-            view.cardView.date.setTextColor(ContextCompat.getColor(view.context, R.color.authorHeader_date_Dark))
+            view.notificationItem.setCardBackgroundColor(cardBackgroundColor.data)
+            view.notificationItem.date.setTextColor(ContextCompat.getColor(view.context, R.color.authorHeader_date_Dark))
             cardViewParams.setMargins(marginHorizontal, marginVertical, marginFlip, marginVertical)
             cardViewParams.apply {
                 removeRule(RelativeLayout.ALIGN_PARENT_END)
@@ -75,7 +74,7 @@ class PMMessageViewHolder(val view: View,
             }
         }
 
-        view.cardView.layoutParams = cardViewParams
+        view.notificationItem.layoutParams = cardViewParams
     }
 
     override fun cleanRecycled() {

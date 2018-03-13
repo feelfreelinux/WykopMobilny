@@ -23,7 +23,7 @@ class DigVoteButton : VoteButton {
 
     override fun setLightThemeDrawable() {
         if (isSelected) {
-            setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_wypok_activ, 0, 0, 0);
+            setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_buttontoolbar_wykop_activ, 0, 0, 0);
         } else {
             val typedArray = context.obtainStyledAttributes(arrayOf(
                     R.attr.wypokDrawable).toIntArray())

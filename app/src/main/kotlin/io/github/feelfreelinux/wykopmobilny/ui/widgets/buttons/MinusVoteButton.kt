@@ -23,7 +23,7 @@ class MinusVoteButton : VoteButton {
 
     override fun setLightThemeDrawable() {
         if (isSelected) {
-            setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_minus_activ, 0, 0, 0);
+            setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_buttontoolbar_minus_activ, 0, 0, 0);
         } else {
             val typedArray = context.obtainStyledAttributes(arrayOf(
                     R.attr.minusDrawable).toIntArray())

@@ -18,14 +18,14 @@
             android:id="@+id/authorHeaderView"
             android:layout_width="@dimen/link_related_layout_avatar_width"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/link_related_layout_avatar_padding_vertical"
-            android:paddingBottom="@dimen/link_related_layout_avatar_padding_vertical"
-            android:paddingStart="@dimen/link_related_layout_avatar_padding_start"
-            android:paddingEnd="@dimen/link_related_layout_avatar_padding_end"
+            android:paddingTop="@dimen/padding_dp_tiny"
+            android:paddingBottom="@dimen/padding_dp_tiny"
+            android:paddingLeft="@dimen/padding_dp_large"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/title"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/userNameTextView"
@@ -99,7 +99,7 @@
 
             <TextView
                 android:id="@+id/shareTextView"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 android:drawableStart="?attr/sharebtnDrawable"
                 android:background="?attr/voteButtonStatelist"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +108,7 @@
 
             <TextView
                 android:id="@+id/reportTextView"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 android:drawableStart="?attr/reportDrawable"
                 android:background="?attr/voteButtonStatelist"
                 android:visibility="gone"
@@ -118,7 +118,7 @@
 
             <TextView
                 android:id="@+id/voteCountTextView"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 app:layout_constraintEnd_toStartOf="@id/plusButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -126,7 +126,7 @@
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
                 android:id="@+id/plusButton"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 android:drawableStart="?attr/plusDrawable"
                 android:drawablePadding="0dp"
                 app:layout_constraintEnd_toStartOf="@id/minusButton"
@@ -135,7 +135,7 @@
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
                 android:id="@+id/minusButton"
-                style="@style/MikroButton"
+                style="@style/ButtonToolbar"
                 android:drawableStart="?attr/minusDrawable"
                 android:drawablePadding="0dp"
                 app:layout_constraintEnd_toEndOf="parent"

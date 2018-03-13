@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#96000000"
+    android:background="#e6000000"
     android:focusableInTouchMode="true"
     android:focusable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
