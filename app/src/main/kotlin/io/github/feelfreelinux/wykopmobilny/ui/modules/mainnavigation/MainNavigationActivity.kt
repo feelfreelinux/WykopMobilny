@@ -133,6 +133,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             finish()
             return
         }
+        presenter.subscribe(this)
 
         JobUtil.hasBootPermission(this)
 
