@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentWidget android:id="@+id/linkComment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentWidget
-        android:id="@+id/linkComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true" />
-
-    <TextView
-        android:id="@+id/messageTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/avatar_comment_width"
-        android:paddingTop="@dimen/padding_dp_small"
-        android:paddingBottom="@dimen/padding_dp_small"
-        android:paddingLeft="@dimen/padding_dp_large"
-        android:paddingRight="@dimen/padding_dp_large"
-        android:textSize="?attr/textSizeNormal"
-        android:textColor="?attr/textColorGrey"
-        android:background="?attr/voteButtonStatelist" />
-
-</LinearLayout>
+    android:clickable="true"
+    android:focusable="true"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

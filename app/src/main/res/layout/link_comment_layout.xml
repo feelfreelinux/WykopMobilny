@@ -7,6 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
+
     <View
         android:id="@+id/separatorView"
         android:layout_width="match_parent"
@@ -15,13 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
-        android:id="@+id/authorHeaderView"
-        style="@style/AuthorHeaderView"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/separatorView"
-        app:layout_constraintLeft_toLeftOf="parent" />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/avatarView"
@@ -50,11 +45,11 @@
         app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
         app:layout_constraintBottom_toBottomOf="@id/authorTextView"
         app:layout_constraintLeft_toRightOf="@id/dotTextView"
-        app:layout_constraintRight_toLeftOf="@id/collapseButton"
+        app:layout_constraintRight_toLeftOf="@id/collapseButtonImageView"
         tools:text="5 godz." />
 
     <ImageView
-        android:id="@+id/collapseButton"
+        android:id="@+id/collapseButtonImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/margin_dp_small"
@@ -73,7 +68,7 @@
         tools:text="Wesoły komentarz do znaleziska" />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
-        android:id="@+id/commentImageView"
+        android:id="@+id/wykopEmbedView"
         style="@style/ImageViewComment"
         app:layout_constraintTop_toBottomOf="@id/commentContentTextView"
         app:layout_constraintLeft_toLeftOf="@id/authorTextView"
@@ -83,29 +78,29 @@
         android:id="@+id/shareTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/sharebtnDrawable"
-        app:layout_constraintTop_toBottomOf="@id/commentImageView"
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
         app:layout_constraintLeft_toRightOf="@id/avatarView" />
 
     <TextView
         android:id="@+id/replyTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/replyDrawable"
-        app:layout_constraintTop_toBottomOf="@id/commentImageView"
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
         app:layout_constraintLeft_toRightOf="@id/shareTextView" />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
-        android:id="@+id/plusButton"
+        android:id="@+id/plusVoteButton"
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/plusDrawable"
-        app:layout_constraintTop_toBottomOf="@id/commentImageView"
-        app:layout_constraintRight_toLeftOf="@+id/minusButton"
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
+        app:layout_constraintRight_toLeftOf="@id/minusVoteButton"
         tools:text="7" />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
-        android:id="@+id/minusButton"
+        android:id="@+id/minusVoteButton"
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/minusDrawable"
-        app:layout_constraintTop_toBottomOf="@id/commentImageView"
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
         app:layout_constraintRight_toLeftOf="@+id/moreOptionsTextView"
         tools:text="1" />
 
@@ -113,11 +108,11 @@
         android:id="@+id/moreOptionsTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/dotsDrawable"
-        app:layout_constraintTop_toBottomOf="@id/commentImageView"
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
         app:layout_constraintRight_toRightOf="parent" />
 
     <View
-        android:id="@+id/authorBadgeStrip"
+        android:id="@+id/authorBadgeStripView"
         style="@style/AuthorBadgeStrip"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

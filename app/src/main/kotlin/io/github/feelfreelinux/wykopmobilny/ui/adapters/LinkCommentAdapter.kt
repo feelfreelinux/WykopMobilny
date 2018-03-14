@@ -24,7 +24,7 @@ class LinkCommentAdapter @Inject constructor(val presenterFactory: LinkCommentPr
     }
 
     override fun createViewHolder(parent: ViewGroup): ProfileLinkCommentViewHolder =
-            ProfileLinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), presenterFactory.create(), userManagerApi, settingsPreferencesApi)
+            ProfileLinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_top_comment_list_item, parent, false), presenterFactory.create(), userManagerApi, settingsPreferencesApi)
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()

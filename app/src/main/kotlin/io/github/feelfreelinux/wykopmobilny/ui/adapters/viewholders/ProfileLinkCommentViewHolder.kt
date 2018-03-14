@@ -11,8 +11,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentP
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.link_comment_layout.view.*
-import kotlinx.android.synthetic.main.link_comment_list_item.view.*
+import kotlinx.android.synthetic.main.top_link_comment_layout.view.*
+import kotlinx.android.synthetic.main.link_top_comment_list_item.view.*
 
 class ProfileLinkCommentViewHolder(val view: View, val linkCommentPresenter: LinkCommentPresenter, val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi) : RecyclableViewHolder(view) {
     fun bindView(comment : LinkComment) {

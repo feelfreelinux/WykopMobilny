@@ -21,7 +21,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
     companion object {
         private const val HEADER_HOLDER = 0
         private const val TOP_COMMENT_HOLDER = 1
-        private const val COMMENT_HOLDER = 1
+        private const val COMMENT_HOLDER = 2
     }
 
     var highlightCommentId = -1
@@ -45,7 +45,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) HEADER_HOLDER
-        else if (link!!.comments[position-1].parentId ==link!!.comments[position-1].id) TOP_COMMENT_HOLDER
+        else if (commentsList!![position-1].parentId == commentsList!![position-1].id) TOP_COMMENT_HOLDER
         else COMMENT_HOLDER
     }
 
@@ -60,7 +60,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
         return when (viewType) {
             HEADER_HOLDER -> LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_list_item, parent, false), linkPresenterFactory.create(), userManagerApi)
             TOP_COMMENT_HOLDER -> TopLinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_top_comment_list_item, parent, false), onReplyClickedListener, collapseListener, presenterFactory.create(), userManagerApi, settingsPreferencesApi)
-            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), onReplyClickedListener, collapseListener, presenterFactory.create(), userManagerApi, settingsPreferencesApi)
+            else -> LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_list_item, parent, false), onReplyClickedListener, presenterFactory.create(), userManagerApi, settingsPreferencesApi)
         }
     }
 
