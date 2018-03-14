@@ -3,17 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    android:background="@android:color/transparent"
     android:id="@+id/fragment_history_menu_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
+            android:background="@android:color/transparent"
             android:id="@+id/author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,6 +32,7 @@
             android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left" />
 
         <TextView
+            android:background="@android:color/transparent"
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

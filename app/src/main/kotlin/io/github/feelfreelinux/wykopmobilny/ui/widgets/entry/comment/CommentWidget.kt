@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
@@ -163,6 +164,7 @@ class CommentWidget : ConstraintLayout, CommentView {
         val dialog = BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_comment_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
+        (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
         bottomSheetView.apply {
             author.text = comment.author.nick
             date.text = comment.date
@@ -212,6 +214,7 @@ class CommentWidget : ConstraintLayout, CommentView {
         val activityContext = getActivityContext()!!
         val dialog = BottomSheetDialog(activityContext)
         val votersDialogView = activityContext.layoutInflater.inflate(R.layout.dialog_voters, null)
+
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView)
         votersDialogListener = {

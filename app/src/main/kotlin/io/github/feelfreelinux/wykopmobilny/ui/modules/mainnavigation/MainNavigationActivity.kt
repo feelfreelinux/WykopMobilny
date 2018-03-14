@@ -309,7 +309,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
             else -> {
                 if (resultCode == SettingsActivity.THEME_CHANGED_RESULT) {
-                    printout("DDD")
                     restartActivity()
                 }
             }

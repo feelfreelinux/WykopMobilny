@@ -91,6 +91,7 @@
     </style>
 
     <style name="WykopAppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="bottomSheetStyle">@style/WykopBottomSheet</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
         <item name="preferenceTheme">@style/DarkPreferencesTheme</item>
         <item name="textColorGrey">@color/textColorGrey.Dark</item>
@@ -502,4 +503,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="WykopBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>
