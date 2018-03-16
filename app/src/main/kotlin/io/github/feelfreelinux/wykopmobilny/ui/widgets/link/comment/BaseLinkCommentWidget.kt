@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment
 
 import android.content.Context
+import android.graphics.Color
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
@@ -202,8 +203,15 @@ abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : Co
         val dialog = BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_comment_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
+        (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
 
         bottomSheetView.apply {
+            author.text = comment.author.nick
+            date.text = comment.date
+            comment.app?.let {
+                date.text = context.getString(R.string.date_with_user_app, comment.date, comment.app)
+            }
+
             comment_menu_copy.setOnClickListener {
                 dialog.dismiss()
             }

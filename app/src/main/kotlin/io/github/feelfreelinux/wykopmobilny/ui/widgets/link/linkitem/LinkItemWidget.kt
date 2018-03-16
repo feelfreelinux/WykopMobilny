@@ -89,6 +89,7 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
     fun setupButtons() {
         diggCountTextView.voteCount = link.voteCount
         diggCountTextView.setup(linkPresenter.userManagerApi)
+        diggCountTextView.setVoteState(link.userVote)
         when (link.userVote) {
             "dig" -> showDigged()
             "bury" -> showBurried()
