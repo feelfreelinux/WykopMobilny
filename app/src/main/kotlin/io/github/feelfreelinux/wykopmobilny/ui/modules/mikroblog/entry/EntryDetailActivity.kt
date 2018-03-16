@@ -207,10 +207,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                     inputToolbar.setPhoto(data?.data)
                 }
 
-                BaseInputActivity.REQUEST_CODE -> {
-                    onRefresh()
-                }
-
                 BaseInputActivity.EDIT_ENTRY_COMMENT -> {
                     val commentId = data?.getIntExtra("commentId", -1)
                     val commentBody = data?.getStringExtra("commentBody")
