@@ -37,6 +37,10 @@ data class ProfileResponse(
         val followers : Int,
         @JsonProperty("about")
         val description : String?,
+
         @JsonProperty("violation_url")
-        val violationUrl : String?
+        val violationUrl : String?,
+
+        @JsonProperty("ban")
+        val ban : BanResponse?
 )

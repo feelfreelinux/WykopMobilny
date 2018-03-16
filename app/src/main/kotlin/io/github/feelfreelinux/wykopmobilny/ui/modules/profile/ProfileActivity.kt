@@ -108,6 +108,11 @@ class ProfileActivity : BaseActivity(), ProfileView {
             genderStripImageView.isVisible = true
             genderStripImageView.setBackgroundResource(getGenderStripResource(profileResponse.sex))
         }
+
+        profileResponse.ban?.apply {
+            banTextView.isVisible = true
+            banTextView.text = "Użytkownik zbanowany do $date za $reason"
+        }
         backgroundImg.isVisible = true
         profileResponse.background?.let {
             backgroundImg.loadImage(profileResponse.background)

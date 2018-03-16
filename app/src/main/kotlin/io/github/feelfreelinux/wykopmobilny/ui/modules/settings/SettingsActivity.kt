@@ -25,6 +25,8 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
+    var shouldRestartMainscreen = false
+
     @Inject
     lateinit var navigatorApi: NewNavigatorApi
 
@@ -63,7 +65,7 @@ class SettingsActivity : BaseActivity() {
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1){
-            if (intent.hasExtra(THEME_CHANGED_EXTRA)) {
+            if (intent.hasExtra(THEME_CHANGED_EXTRA) || shouldRestartMainscreen) {
                 setResult(THEME_CHANGED_RESULT)
                 navigatorApi.openMainActivity()
             }

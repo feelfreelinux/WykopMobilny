@@ -61,11 +61,11 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
         if (pref is ListPreference) {
             pref.setSummary(pref.entry)
             when(pref.key) {
-                "linkImagePosition" -> restartActivity()
+                "linkImagePosition" -> (activity as SettingsActivity).shouldRestartMainscreen = true
             }
         } else if (pref is CheckBoxPreference) {
             when (pref.key) {
-                "linkShowAuthor", "linkSimpleList", "linkShowImage" -> restartActivity()
+                "linkShowAuthor", "linkSimpleList", "linkShowImage" -> (activity as SettingsActivity).shouldRestartMainscreen = true
                 "useDarkTheme", "useAmoledTheme" -> restartActivity()
             }
         }

@@ -125,16 +125,32 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="8dp"
                 android:gravity="start"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
                 android:textSize="13sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nickname"
-                tools:text="opis użytkownika, pozdrawiam"/>
+                tools:text="opis użytkownika, pozdrawiam" />
+
+            <TextView
+                android:id="@+id/banTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:textSize="13sp"
+                android:textColor="@color/minusPressedColor"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                tools:text="powód bana" />
 
             <View
                 android:id="@+id/lineTop"
@@ -144,7 +160,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description"/>
+                app:layout_constraintTop_toBottomOf="@id/banTextView"/>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/userActivityBar"
