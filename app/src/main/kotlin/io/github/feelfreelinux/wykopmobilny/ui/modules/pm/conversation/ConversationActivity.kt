@@ -17,6 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.PMMessageAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
@@ -86,6 +87,10 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
             subtitle = if (conversation.messages.isNotEmpty()) conversation.messages.last().date else null
             avatarview.setAuthor(conversation.receiver)
             avatarview.isVisible = true
+        }
+
+        avatarview.setOnClickListener {
+            startActivity(ProfileActivity.createIntent(this, receiver?.nick!!))
         }
 
         conversationAdapter.apply {

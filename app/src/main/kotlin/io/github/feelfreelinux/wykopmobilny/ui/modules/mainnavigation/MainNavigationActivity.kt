@@ -165,6 +165,8 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 }
 
             } else openMainFragment()
+        } else {
+            printout("DDD")
         }
     }
 

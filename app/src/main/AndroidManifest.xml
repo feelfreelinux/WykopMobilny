@@ -22,6 +22,7 @@
 
         <activity
             android:launchMode="singleTop"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

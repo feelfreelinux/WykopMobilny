@@ -15,6 +15,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.Notific
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 import java.util.concurrent.TimeUnit
+import android.media.RingtoneManager
+
+
 
 
 class WykopNotificationsJob(
@@ -23,10 +26,12 @@ class WykopNotificationsJob(
         val notificationManager: WykopNotificationManagerApi) : Job(), WykopNotificationsJobView {
 
     private fun buildNotification(body: String, intent: PendingIntent): Notification {
+        val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         return NotificationCompat.Builder(context, WykopNotificationManager.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_wykopmobilny)
                 .setContentIntent(intent)
                 .setContentTitle(context.getString(R.string.app_name))
+                .setSound(alarmSound)
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
                 .setContentText(body).build()
