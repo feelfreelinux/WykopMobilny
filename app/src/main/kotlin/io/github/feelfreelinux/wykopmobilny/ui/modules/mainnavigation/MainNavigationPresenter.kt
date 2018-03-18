@@ -44,4 +44,12 @@ class MainNavigationPresenter(private val schedulers: Schedulers,
                     .subscribe({ view?.showHashNotificationsCount(it.count) }, {  }) )
         }
     }
+
+    fun checkUpdates() {
+
+    }
+
+    fun checkWeeklyUpdates() {
+
+    }
 }

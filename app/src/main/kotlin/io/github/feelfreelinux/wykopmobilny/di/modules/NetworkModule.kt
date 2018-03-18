@@ -24,9 +24,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import io.github.feelfreelinux.wykopmobilny.api.CacheControlInterceptor
+import okhttp3.Cache
 
 @Module
 class NetworkModule {
@@ -35,12 +36,14 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(userManagerApi: UserManagerApi): OkHttpClient {
+    fun provideOkHttpClient(userManagerApi: UserManagerApi, cache : Cache, context: Context): OkHttpClient {
         val httpLogging = HttpLoggingInterceptor()
         httpLogging.level = HttpLoggingInterceptor.Level.BASIC
         return OkHttpClient.Builder()
+                //.addNetworkInterceptor(CacheControlInterceptor(context))
                 .addInterceptor(ApiSignInterceptor(userManagerApi))
                 .addInterceptor(httpLogging)
+                //.cache(cache)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
@@ -52,6 +55,12 @@ class NetworkModule {
     fun provideMoshi() =
             Moshi.Builder().build()
 
+    @Provides
+    @Singleton
+    fun provideHttpCache(application: WykopApp): Cache {
+        val cacheSize = 10 * 1024 * 1024
+        return Cache(application.cacheDir, cacheSize.toLong())
+    }
 
     @Provides
     fun provideCredentialsPreferences(context: Context) : CredentialsPreferencesApi = CredentialsPreferences(context)

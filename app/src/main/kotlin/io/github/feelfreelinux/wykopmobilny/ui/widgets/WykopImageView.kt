@@ -5,8 +5,11 @@ import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.widget.ImageView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.signature.ObjectKey
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
@@ -33,6 +36,9 @@ class WykopImageView: ImageView {
         GlideApp.with(context)
                 .asBitmap()
                 .load(url)
+                .apply(RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .signature(ObjectKey(url)))
                 .into(object : SimpleTarget<Bitmap>() {
                     override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                         setImageBitmap(resource)

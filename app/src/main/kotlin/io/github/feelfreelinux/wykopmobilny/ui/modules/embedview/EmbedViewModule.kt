@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
 
 import dagger.Module
 import dagger.Provides
-import io.github.feelfreelinux.wykopmobilny.api.embed.EmbedApi
+import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
@@ -12,7 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 @Module
 class EmbedViewModule {
     @Provides
-    fun providesEmbedViewPresenter(schedulers: Schedulers, embedApi: EmbedApi) = EmbedLinkPresenter(embedApi, schedulers)
+    fun providesEmbedViewPresenter(schedulers: Schedulers, embedApi: ExternalApi) = EmbedLinkPresenter(embedApi, schedulers)
 
     @Provides
     fun provideNavigator(activity : EmbedViewActivity) : NewNavigatorApi = NewNavigator(activity)

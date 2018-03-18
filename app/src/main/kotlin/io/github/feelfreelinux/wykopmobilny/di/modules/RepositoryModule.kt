@@ -3,13 +3,12 @@ package io.github.feelfreelinux.wykopmobilny.di.modules
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
-import io.github.feelfreelinux.wykopmobilny.api.embed.EmbedApi
-import io.github.feelfreelinux.wykopmobilny.api.embed.EmbedRepository
+import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
+import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalRepository
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesRepository
 import io.github.feelfreelinux.wykopmobilny.api.hits.HitsApi
 import io.github.feelfreelinux.wykopmobilny.api.hits.HitsRepository
-import io.github.feelfreelinux.wykopmobilny.api.hits.HitsRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksRepository
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
@@ -72,5 +71,5 @@ class RepositoryModule {
     fun provideProfilesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : ProfileApi = ProfileRepository(retrofit, userTokenRefresher, linksPreferencesApi)
 
     @Provides
-    fun provideEmbedApi(retrofit: Retrofit) : EmbedApi = EmbedRepository(retrofit)
+    fun provideEmbedApi(retrofit: Retrofit) : ExternalApi = ExternalRepository(retrofit)
 }

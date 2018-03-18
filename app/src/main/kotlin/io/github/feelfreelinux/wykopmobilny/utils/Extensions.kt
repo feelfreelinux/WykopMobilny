@@ -17,7 +17,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.signature.ObjectKey
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.PreCachingLayoutManager
@@ -68,11 +70,19 @@ fun View.disableFor(millis: Long){
     }, millis)
 }
 
-fun ImageView.loadImage(url : String) {
-    GlideApp.with(context)
-            .load(url)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(this)
+fun ImageView.loadImage(url : String, signature : Int? = null) {
+    if (signature == null) {
+        GlideApp.with(context)
+                .load(url)
+                .into(this)
+    } else {
+        GlideApp.with(context)
+                .load(url)
+                .apply(RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .signature(ObjectKey(signature)))
+                .into(this)
+    }
 }
 
 fun String.toPrettyDate() : String {

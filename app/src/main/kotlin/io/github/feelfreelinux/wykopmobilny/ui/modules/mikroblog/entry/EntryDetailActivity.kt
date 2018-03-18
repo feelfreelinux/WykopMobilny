@@ -107,7 +107,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         super.onResume()
         presenter.subscribe(this)
         presenter.entryId = entryId
-        loadData()
+        if (adapter.entry == null) loadData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

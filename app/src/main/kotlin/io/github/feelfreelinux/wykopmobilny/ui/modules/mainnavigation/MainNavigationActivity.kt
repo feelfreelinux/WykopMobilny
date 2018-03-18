@@ -21,6 +21,7 @@ import com.github.javiersantos.appupdater.enums.UpdateFrom
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopMobilnyUpdate
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.AppExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
@@ -51,6 +52,10 @@ import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
+import android.R.attr.versionName
+import android.content.pm.PackageInfo
+
+
 
 interface MainNavigationInterface {
     val activityToolbar : Toolbar
@@ -155,7 +160,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         actionBarToggle.drawerArrowDrawable = badgeDrawable
         toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         navHeader.view_container?.showDrawerHeader(userManagerApi.isUserAuthorized(), userManagerApi.getUserCredentials())
-        setupNavigation()
         showUsersMenu(userManagerApi.isUserAuthorized())
 
         if (savedInstanceState == null) {
@@ -165,9 +169,8 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 }
 
             } else openMainFragment()
-        } else {
-            printout("DDD")
         }
+        setupNavigation()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -360,5 +363,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
     override fun forceRefreshNotifications() {
         presenter.checkNotifications(true)
+    }
+
+    override fun checkUpdate(wykopMobilnyUpdate: WykopMobilnyUpdate) {
+        val pInfo = this.packageManager.getPackageInfo(packageName, 0)
+        val version = pInfo.versionName.split(".")
     }
 }

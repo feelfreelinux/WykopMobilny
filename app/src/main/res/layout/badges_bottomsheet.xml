@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-    android:id="@+id/badgesList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="?attr/backgroundColor">
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-    <TextView
+    <LinearLayout
+
+        android:id="@+id/badgesList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/badges"
-        android:textSize="@dimen/bottomsheet_item_title_text_size"
-        android:paddingLeft="@dimen/bottomsheet_item_padding_horizontal"
-        android:paddingRight="@dimen/bottomsheet_item_padding_horizontal"
-        android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
-        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+        android:background="?attr/backgroundColor"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_line_height"
-        android:background="?attr/lineColor"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"
+            android:paddingLeft="@dimen/bottomsheet_item_padding_horizontal"
+            android:paddingRight="@dimen/bottomsheet_item_padding_horizontal"
+            android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
+            android:text="@string/badges"
+            android:textSize="@dimen/bottomsheet_item_title_text_size" />
 
-    <ProgressBar
-        android:id="@+id/loadingView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
-        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_line_height"
+            android:background="?attr/lineColor" />
 
-</LinearLayout>
+        <ProgressBar
+            android:id="@+id/loadingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"
+            android:paddingTop="@dimen/bottomsheet_item_padding_vertical" />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

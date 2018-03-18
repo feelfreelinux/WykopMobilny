@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.api.embed
 
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopMobilnyUpdate
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Gfycat
 import io.github.feelfreelinux.wykopmobilny.utils.printout
@@ -7,7 +8,7 @@ import io.reactivex.Single
 import retrofit2.Retrofit
 import java.net.URL
 
-class EmbedRepository(val retrofit: Retrofit) : EmbedApi {
+class ExternalRepository(val retrofit: Retrofit) : ExternalApi {
     override fun getGfycatMp4Url(gfycatId: String): Single<URL> =
             embedApi.getGfycat(gfycatId)
                     .map { URL(it.gfyItem.mp4Url) }
@@ -32,5 +33,13 @@ class EmbedRepository(val retrofit: Retrofit) : EmbedApi {
     override fun getGfycat(gfycatId: String): Single<Gfycat> =
             embedApi.getGfycat(gfycatId)
 
-    private val embedApi by lazy { retrofit.create(EmbedRetrofitApi::class.java) }
+    override fun checkUpdates(): Single<WykopMobilnyUpdate> =
+            embedApi.checkUpdates()
+                    .map { it.first() }
+
+    override fun checkWeeklyUpdates() : Single<WykopMobilnyUpdate> =
+            embedApi.checkWeeklyUpdates()
+                    .map { it.first() }
+
+    private val embedApi by lazy { retrofit.create(ExternalRetrofitApi::class.java) }
 }

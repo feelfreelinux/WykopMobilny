@@ -1,17 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
 
 import io.reactivex.Single
-import io.github.feelfreelinux.wykopmobilny.api.embed.EmbedApi
+import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import java.net.URI
 import java.net.URL
-import java.net.URLDecoder
-import javax.inject.Inject
 
 
-class EmbedLinkPresenter (val embedApi: EmbedApi, val schedulers: Schedulers) : BasePresenter<EmbedView>() {
+class EmbedLinkPresenter (val embedApi: ExternalApi, val schedulers: Schedulers) : BasePresenter<EmbedView>() {
     companion object {
         val GFYCAT_MATCHER = "gfycat.com"
         val COUB_MATCHER = "coub.com"

@@ -33,8 +33,10 @@ class RetryInterceptor() : Interceptor {
         var tryCount = 0
         while (!response.isSuccessful && response.code() != 401 && tryCount < MAX_RETRY_COUNT) {
             tryCount++
+            response.close()
             response = chain.proceed(newRequest)
         }
+        response.close()
         return response
     }
 }
