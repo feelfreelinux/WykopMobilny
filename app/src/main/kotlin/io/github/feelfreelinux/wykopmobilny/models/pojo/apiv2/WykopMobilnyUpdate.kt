@@ -8,6 +8,8 @@ data class WykopMobilnyUpdate(
         @JsonProperty("tag_name")
         val tagName : String,
 
+        @JsonProperty("name")
+        val name : String,
         @JsonProperty("prerelease")
         val isPrelease : Boolean,
 

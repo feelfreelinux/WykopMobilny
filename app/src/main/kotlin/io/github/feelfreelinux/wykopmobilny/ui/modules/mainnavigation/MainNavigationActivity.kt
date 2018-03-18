@@ -54,7 +54,11 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.R.attr.versionName
 import android.content.pm.PackageInfo
-
+import android.net.Uri
+import io.github.feelfreelinux.wykopmobilny.BuildConfig
+import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
+import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 
 
 interface MainNavigationInterface {
@@ -144,15 +148,28 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
-        AppUpdater(this)
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
-                .setTitleOnUpdateAvailable(R.string.update_available)
-                .setContentOnUpdateAvailable(R.string.update_app)
-                .setButtonDismiss(R.string.cancel)
-                .setButtonDoNotShowAgain(R.string.do_not_show_again)
-                .setButtonUpdate(R.string.update)
-                .start()
+        if (BuildConfig.IS_WEEKLY == "true") {
+            AppUpdater(this)
+                    .setUpdateFrom(UpdateFrom.GITHUB)
+                    .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
+                    .setTitleOnUpdateAvailable(R.string.update_available)
+                    .setContentOnUpdateAvailable(R.string.update_app)
+                    .setButtonDismiss(R.string.cancel)
+                    .setButtonDoNotShowAgain(R.string.do_not_show_again)
+                    .setButtonUpdate(R.string.update)
+                    .start()
+        }
+        else {
+            AppUpdater(this)
+                    .setUpdateFrom(UpdateFrom.GITHUB)
+                    .setGitHubUserAndRepo("feelfreelinux", "WykopMobilnyWeekly")
+                    .setTitleOnUpdateAvailable(R.string.update_available)
+                    .setContentOnUpdateAvailable(R.string.update_app)
+                    .setButtonDismiss(R.string.cancel)
+                    .setButtonDoNotShowAgain(R.string.do_not_show_again)
+                    .setButtonUpdate(R.string.update)
+                    .start()
+        }
         if (settingsApi.showNotifications) {
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
@@ -367,6 +384,42 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
     override fun checkUpdate(wykopMobilnyUpdate: WykopMobilnyUpdate) {
         val pInfo = this.packageManager.getPackageInfo(packageName, 0)
-        val version = pInfo.versionName.split(".")
+        val owmVersion = if (wykopMobilnyUpdate.tagName.contains("untagged")) wykopMobilnyUpdate.name else wykopMobilnyUpdate.tagName
+        printout(pInfo.versionName)
+        if (versionCompare(owmVersion, pInfo.versionName) == 1) {
+            createAlertBuilder()
+                    .setTitle(R.string.update_available)
+                    .setMessage("Aktualizacja $owmVersion jest dostępna.")
+                    .setPositiveButton("Pobierz nową wersje", { _, _ ->
+                        printout(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
+                        val intentUri = Uri.parse(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
+                        val intent = Intent()
+                        intent.action = Intent.ACTION_VIEW
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.data = intentUri
+                        startActivity(intent)
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+        }
+
+    }
+
+    fun versionCompare(str1: String, str2: String): Int {
+        val vals1 = str1.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val vals2 = str2.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        var i = 0
+        // set index to first non-equal ordinal or length of shortest version string
+        while (i < vals1.size && i < vals2.size && vals1[i] == vals2[i]) {
+            i++
+        }
+        // compare first non-equal ordinal number
+        if (i < vals1.size && i < vals2.size) {
+            val diff = Integer.valueOf(vals1[i]).compareTo(Integer.valueOf(vals2[i]))
+            return Integer.signum(diff)
+        }
+        // the strings are equal or one string is a substring of the other
+        // e.g. "1.2.3" = "1.2.3" or "1.2.3" < "1.2.3.4"
+        return Integer.signum(vals1.size - vals2.size)
     }
 }

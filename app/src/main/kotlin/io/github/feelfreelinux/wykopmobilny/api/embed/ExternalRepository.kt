@@ -35,11 +35,9 @@ class ExternalRepository(val retrofit: Retrofit) : ExternalApi {
 
     override fun checkUpdates(): Single<WykopMobilnyUpdate> =
             embedApi.checkUpdates()
-                    .map { it.first() }
 
     override fun checkWeeklyUpdates() : Single<WykopMobilnyUpdate> =
             embedApi.checkWeeklyUpdates()
-                    .map { it.first() }
 
     private val embedApi by lazy { retrofit.create(ExternalRetrofitApi::class.java) }
 }

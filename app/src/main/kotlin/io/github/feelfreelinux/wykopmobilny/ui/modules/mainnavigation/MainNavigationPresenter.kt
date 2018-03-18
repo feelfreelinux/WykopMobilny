@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation
 
+import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
@@ -11,7 +12,8 @@ import java.util.concurrent.TimeUnit
 
 class MainNavigationPresenter(private val schedulers: Schedulers,
                               private val notificationsApi: NotificationsApi,
-                              private val userManagerApi: UserManagerApi) : BasePresenter<MainNavigationView>() {
+                              private val userManagerApi: UserManagerApi,
+                              private val externalApi: ExternalApi) : BasePresenter<MainNavigationView>() {
     var lastCheckMilis = 0L
 
     fun startListeningForNotifications() {
@@ -46,10 +48,21 @@ class MainNavigationPresenter(private val schedulers: Schedulers,
     }
 
     fun checkUpdates() {
+        compositeObservable.add(
+                externalApi.checkUpdates()
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.checkUpdate(it) }, {})
+        )
 
     }
 
     fun checkWeeklyUpdates() {
-
+        compositeObservable.add(
+                externalApi.checkWeeklyUpdates()
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.checkUpdate(it) }, {})
+        )
     }
 }

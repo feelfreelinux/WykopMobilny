@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation
 
 import dagger.Module
 import dagger.Provides
+import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
@@ -13,7 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 @Module
 class MainNavigationModule {
     @Provides
-    fun provideMainNavigationPresenter(schedulers: Schedulers, notificationsApi: NotificationsApi, userManagerApi: UserManagerApi) = MainNavigationPresenter(schedulers, notificationsApi, userManagerApi)
+    fun provideMainNavigationPresenter(schedulers: Schedulers, notificationsApi: NotificationsApi, userManagerApi: UserManagerApi, externalApi: ExternalApi) = MainNavigationPresenter(schedulers, notificationsApi, userManagerApi, externalApi)
 
     @Provides
     fun provideNavigator(activity : MainNavigationActivity) : NewNavigatorApi = NewNavigator(activity)

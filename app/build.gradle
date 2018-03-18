@@ -22,7 +22,7 @@ static def getBugsnagKey() {
 }
 
 static def isWeeklyBuild() {
-    return System.getenv('IS_WEEKLY') ? true : false
+    return System.getenv('IS_WEEKLY') ? "true" : "false"
 }
 
 android {
@@ -33,14 +33,14 @@ android {
         minSdkVersion 17
         targetSdkVersion 27
         versionCode project.ext.versionMajor * 10000 + project.ext.versionMinor * 1000 + project.ext.versionPatch * 100 + project.ext.versionBuild
-        versionName "${project.ext.versionMajor}.${project.ext.versionMinor}.${project.ext.versionPatch}"
+        versionName "${project.ext.versionMajor}.${project.ext.versionMinor}.${project.ext.versionPatch}.${project.ext.versionBuild}"
         multiDexEnabled true
 
         def credentialsPropertiesFile = rootProject.file("credentials.properties")
         def credentialsProperties = new Properties()
         credentialsProperties.load(new FileInputStream(credentialsPropertiesFile))
 
-        buildConfigField "boolean", "IS_WEEKLY", "\"${isWeeklyBuild()}\""
+        buildConfigField "String", "IS_WEEKLY", "\"${isWeeklyBuild()}\""
         buildConfigField "String", "BUGSNAG_KEY", "\"${getBugsnagKey()}\""
         buildConfigField 'String', 'APP_SECRET', credentialsProperties['apiSecret']
         buildConfigField 'String', 'APP_KEY', credentialsProperties['apiKey']

@@ -24,10 +24,10 @@ interface ExternalRetrofitApi {
     fun getCoub(@Path("coubId") coubId : String) : Single<Coub>
 
     @Headers("@: $REMOVE_USERKEY_HEADER")
-    @GET("https://api.github.com/repos/feelfreelinux/WykopMobilny/releases")
-    fun checkUpdates() : Single<List<WykopMobilnyUpdate>>
+    @GET("https://api.github.com/repos/feelfreelinux/WykopMobilny/releases/latest")
+    fun checkUpdates() : Single<WykopMobilnyUpdate>
 
     @Headers("@: $REMOVE_USERKEY_HEADER")
-    @GET("https://api.github.com/repos/feelfreelinux/WykopMobilnyWeekly/releases")
-    fun checkWeeklyUpdates() : Single<List<WykopMobilnyUpdate>>
+    @GET("https://api.github.com/repos/feelfreelinux/WykopMobilnyWeekly/releases/latest")
+    fun checkWeeklyUpdates() : Single<WykopMobilnyUpdate>
 }

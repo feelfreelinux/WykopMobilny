@@ -9,6 +9,7 @@ data class WykopMobilnyApk(
         val contentType : String,
         @JsonProperty("name")
         val name : String,
+
         @JsonProperty("browser_download_url")
         val browserDownloadUrl : String
 )
