@@ -149,26 +149,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
         if (BuildConfig.IS_WEEKLY == "true") {
-            AppUpdater(this)
-                    .setUpdateFrom(UpdateFrom.GITHUB)
-                    .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
-                    .setTitleOnUpdateAvailable(R.string.update_available)
-                    .setContentOnUpdateAvailable(R.string.update_app)
-                    .setButtonDismiss(R.string.cancel)
-                    .setButtonDoNotShowAgain(R.string.do_not_show_again)
-                    .setButtonUpdate(R.string.update)
-                    .start()
+            presenter.checkWeeklyUpdates()
         }
         else {
-            AppUpdater(this)
-                    .setUpdateFrom(UpdateFrom.GITHUB)
-                    .setGitHubUserAndRepo("feelfreelinux", "WykopMobilnyWeekly")
-                    .setTitleOnUpdateAvailable(R.string.update_available)
-                    .setContentOnUpdateAvailable(R.string.update_app)
-                    .setButtonDismiss(R.string.cancel)
-                    .setButtonDoNotShowAgain(R.string.do_not_show_again)
-                    .setButtonUpdate(R.string.update)
-                    .start()
+            presenter.checkUpdates()
         }
         if (settingsApi.showNotifications) {
             // Schedules notification service
