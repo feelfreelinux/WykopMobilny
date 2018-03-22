@@ -75,7 +75,7 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
                 link.preview?.let { loadImage(link.preview!!) }
             }
         }
-        if (settingsPreferencesApi.linkShowAuthor) {
+        if (settingsPreferencesApi.linkShowAuthor && link.author != null) {
             authorHeaderView.setAuthorData(link.author!!, link.date, link.app)
             authorHeaderView.isVisible = true
             lineTop.isVisible = true

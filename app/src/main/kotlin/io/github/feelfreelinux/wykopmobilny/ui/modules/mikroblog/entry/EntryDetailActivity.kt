@@ -131,7 +131,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             android.R.id.home -> onBackPressed()
             R.id.copyUrl -> clipboardHelper.copyTextToClipboard(url, "entryUrl")
             R.id.refresh -> {
-                startActivity(Intent(this, EmbedViewActivity::class.java))
                 swiperefresh?.isRefreshing = true
                 onRefresh()
             }
