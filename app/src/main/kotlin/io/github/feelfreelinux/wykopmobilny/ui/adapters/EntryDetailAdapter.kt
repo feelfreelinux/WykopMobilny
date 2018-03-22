@@ -13,7 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableVi
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentPresenterFactory
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 

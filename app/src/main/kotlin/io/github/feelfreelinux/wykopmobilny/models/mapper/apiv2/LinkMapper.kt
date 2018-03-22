@@ -1,9 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2
 
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
-import io.github.feelfreelinux.wykopmobilny.models.mapper.Mapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
-import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate

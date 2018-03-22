@@ -2,10 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem
 
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
-import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
 class LinkItemPresenter(val schedulers: Schedulers, val linksApi: LinksApi,

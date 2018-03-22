@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.utils.api
 
 import android.content.Context
-import io.github.feelfreelinux.wykopmobilny.utils.Preferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.Preferences
 
 interface CredentialsPreferencesApi {
     var login: String?

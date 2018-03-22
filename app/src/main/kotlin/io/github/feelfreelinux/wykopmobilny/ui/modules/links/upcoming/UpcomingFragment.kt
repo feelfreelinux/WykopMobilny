@@ -10,12 +10,14 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.fragments.*
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import javax.inject.Inject
 
 class UpcomingFragment : BaseFeedFragment<Link>(), UpcomingView {
     @Inject override lateinit var feedAdapter : LinkAdapter
     @Inject lateinit var presenter : UpcomingPresenter
     val navigation by lazy { activity as MainNavigationInterface }
+    @Inject lateinit var linksPreferencesApi : LinksPreferencesApi
     lateinit var dataFragment : DataFragment<SortedPagedDataModel<List<Link>>>
 
     companion object {
@@ -45,24 +47,28 @@ class UpcomingFragment : BaseFeedFragment<Link>(), UpcomingView {
             }
             R.id.sortByComments -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_COMMENTS
+                linksPreferencesApi.upcomingDefaultSort = UpcomingPresenter.SORTBY_COMMENTS
                 setSubtitle()
                 isRefreshing = true
                 onRefresh()
             }
             R.id.sortByVotes -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_VOTES
+                linksPreferencesApi.upcomingDefaultSort = UpcomingPresenter.SORTBY_VOTES
                 setSubtitle()
                 isRefreshing = true
                 onRefresh()
             }
             R.id.sortByDate -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_DATE
+                linksPreferencesApi.upcomingDefaultSort = UpcomingPresenter.SORTBY_DATE
                 setSubtitle()
                 isRefreshing = true
                 onRefresh()
             }
             R.id.sortByActive -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_ACTIVE
+                linksPreferencesApi.upcomingDefaultSort = UpcomingPresenter.SORTBY_ACTIVE
                 setSubtitle()
                 isRefreshing = true
                 onRefresh()
@@ -75,6 +81,7 @@ class UpcomingFragment : BaseFeedFragment<Link>(), UpcomingView {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
         dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
+        presenter.sortBy = linksPreferencesApi.upcomingDefaultSort!!
         dataFragment.data?.apply {
             presenter.page = page
             presenter.sortBy = sortby

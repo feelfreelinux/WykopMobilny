@@ -17,6 +17,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotifi
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import okhttp3.OkHttpClient
@@ -26,7 +28,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import io.github.feelfreelinux.wykopmobilny.api.CacheControlInterceptor
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import okhttp3.Cache
 
 @Module

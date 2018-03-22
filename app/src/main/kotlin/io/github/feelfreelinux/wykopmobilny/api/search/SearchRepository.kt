@@ -8,7 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
-import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import retrofit2.Retrofit
 
 class SearchRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi) : SearchApi {

@@ -9,7 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTag
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagEntriesResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagLinksResponse
-import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
 

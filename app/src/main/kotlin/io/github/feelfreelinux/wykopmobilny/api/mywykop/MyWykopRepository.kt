@@ -5,7 +5,7 @@ import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransfo
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryLinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryLinkResponse
-import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
 

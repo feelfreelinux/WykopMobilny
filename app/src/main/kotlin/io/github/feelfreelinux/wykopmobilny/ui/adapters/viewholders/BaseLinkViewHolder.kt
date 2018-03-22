@@ -1,13 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.support.v4.app.ShareCompat
-import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import kotlinx.android.extensions.LayoutContainer
 
 abstract class BaseLinkViewHolder(override val containerView: View, val settingsApi: SettingsPreferencesApi) : RecyclableViewHolder(containerView), LayoutContainer {

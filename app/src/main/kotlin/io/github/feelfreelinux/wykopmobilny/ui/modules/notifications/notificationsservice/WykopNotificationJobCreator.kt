@@ -3,7 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificati
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobCreator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import javax.inject.Inject
 
 class WykopNotificationJobCreator @Inject constructor(val settingsPreferencesApi: SettingsPreferencesApi,

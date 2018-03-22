@@ -2,12 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.api.profile
 
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
-import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.BadgeResponse
-import io.github.feelfreelinux.wykopmobilny.utils.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
 

@@ -1,11 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import dagger.android.DaggerBroadcastReceiver
-import io.github.feelfreelinux.wykopmobilny.WykopApp
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import javax.inject.Inject
 
 class WykopNotificationsBroadcastReceiver : DaggerBroadcastReceiver() {

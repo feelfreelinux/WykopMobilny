@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.SimpleBaseProgressAdapter
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkCommentViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.ProfileLinkCommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenterFactory
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 

@@ -1,13 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentPresenter
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.comment_list_item.view.*
 import kotlinx.android.synthetic.main.entry_comment_layout.view.*

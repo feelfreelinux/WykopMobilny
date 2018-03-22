@@ -4,14 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Patterns
 import android.view.View
-import android.webkit.URLUtil
 import android.widget.FrameLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.wykopembedview.view.*
 import java.lang.ref.WeakReference

@@ -5,21 +5,14 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.support.v4.view.MotionEventCompat
-import android.view.View
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrConfig
-import com.r0adkll.slidr.model.SlidrListener
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.ui.swipeback.app.SwipeBackActivityBase
 import io.github.feelfreelinux.wykopmobilny.ui.swipeback.app.SwipeBackActivityHelper
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.ui.swipeback.SwipeBackLayout
-import io.github.feelfreelinux.wykopmobilny.ui.swipeback.SwipeLayoutUtils
-import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 
 
 // This class should be extended in all activities in this app. Place global-activity settings here

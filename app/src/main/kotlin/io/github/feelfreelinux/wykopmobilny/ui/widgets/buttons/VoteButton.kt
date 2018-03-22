@@ -1,14 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
 @Suppress("LeakingThis")

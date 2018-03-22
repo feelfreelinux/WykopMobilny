@@ -4,7 +4,7 @@ import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.LinkItemPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.SimpleItemWidget
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import kotlinx.android.synthetic.main.simple_link_layout.*
 
 class SimpleLinkViewHolder(val view: SimpleItemWidget, val settingsApi: SettingsPreferencesApi, val linkItemPresenter: LinkItemPresenter) : RecyclableViewHolder(view) {

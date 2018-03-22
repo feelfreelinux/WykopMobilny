@@ -3,7 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.dialogs
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
-import io.github.feelfreelinux.wykopmobilny.utils.SettingsPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
 
 @Suppress("DEPRECATION")
 fun Context.createAlertBuilder() : AlertDialog.Builder {

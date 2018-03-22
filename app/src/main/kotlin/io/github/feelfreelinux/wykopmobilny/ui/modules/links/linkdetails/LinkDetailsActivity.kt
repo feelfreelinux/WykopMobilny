@@ -23,6 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_link_details.*
@@ -74,6 +75,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     @Inject lateinit var presenter: LinkDetailsPresenter
     private lateinit var linkFragmentData: DataFragment<Pair<Link, String>> // link, sortby
+    @Inject lateinit var linkPreferences : LinksPreferencesApi
     @Inject lateinit var adapter : LinkDetailsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,10 +127,11 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         linkFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + linkId)
         if (linkFragmentData.data != null) {
             adapter.link = linkFragmentData.data?.first
-            presenter.sortBy = linkFragmentData.data?.second ?: "best"
+            presenter.sortBy = linkFragmentData.data?.second ?: linkPreferences.linkCommentsDefaultSort!!
             adapter.notifyDataSetChanged()
             loadingView?.isVisible = false
         } else {
+            presenter.sortBy = linkPreferences.linkCommentsDefaultSort ?: "best"
             adapter.notifyDataSetChanged()
             loadingView?.isVisible = true
             hideInputToolbar()
@@ -161,12 +164,14 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
             R.id.refresh -> onRefresh()
             R.id.sortbyBest -> {
                 presenter.sortBy = "best"
+                linkPreferences.linkCommentsDefaultSort = "best"
                 setSubtitle()
                 presenter.loadComments()
                 swiperefresh?.isRefreshing = true
             }
             R.id.sortbyNewest -> {
                 presenter.sortBy = "new"
+                linkPreferences.linkCommentsDefaultSort = "new"
                 setSubtitle()
                 presenter.loadComments()
                 swiperefresh?.isRefreshing = true
@@ -174,6 +179,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
 
             R.id.sortbyOldest -> {
                 presenter.sortBy = "old"
+                linkPreferences.linkCommentsDefaultSort = "old"
                 setSubtitle()
                 presenter.loadComments()
                 swiperefresh?.isRefreshing = true
