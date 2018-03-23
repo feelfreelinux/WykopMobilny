@@ -5,11 +5,6 @@ import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import android.support.annotation.ColorInt
-import android.content.res.Resources.Theme
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 
 
 class DigVoteButton : VoteButton {
@@ -21,7 +16,6 @@ class DigVoteButton : VoteButton {
 
     override fun setLightThemeDrawable() {
 
-
     }
 
     fun setVoteState(voteState : String?) {
@@ -29,18 +23,17 @@ class DigVoteButton : VoteButton {
             "dig" -> {
                 val color = ContextCompat.getColor(context, R.color.plusPressedColor)
                 setTextColor(color)
-                setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_wypok_digged), null, null, null)
+                setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_buttontoolbar_wykop_digged), null, null, null)
             }
             "bury" -> {
                 isButtonSelected = true
                 val color = ContextCompat.getColor(context, R.color.minusPressedColor)
                 setTextColor(color)
-                setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_wypok_buried), null, null, null)
-
+                setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_buttontoolbar_wykop_buried), null, null, null)
             }
             else -> {
                 val typedValue = TypedValue()
-                context.theme.resolveAttribute(R.attr.textColorGrey, typedValue, true)
+                context.theme.resolveAttribute(R.attr.textColorButtonToolbar, typedValue, true)
                 val color = typedValue.data
                 isButtonSelected = false
                 setTextColor(color)

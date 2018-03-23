@@ -4,13 +4,13 @@
     android:shape="rectangle">
 
     <corners
-        android:radius="3dp"/>
+        android:radius="3dp" />
 
     <solid
-        android:color="@color/colorAccent"/>
+        android:color="@color/colorAccent" />
 
     <stroke
         android:color="@color/surveyBarColor"
-        android:width="1dp"/>
+        android:width="1dp" />
 
 </shape>

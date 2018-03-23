@@ -18,8 +18,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/conversations_list_recycler_padding_top"
-            android:paddingBottom="@dimen/conversations_list_recycler_padding_bottom"
             android:clipToPadding="false"
             android:visibility="visible"/>
 

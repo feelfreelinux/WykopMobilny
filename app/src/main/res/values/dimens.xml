@@ -2,12 +2,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <dimen tools:override="true" name="design_navigation_icon_padding">16dp</dimen>
-    <dimen tools:override="true" name="design_navigation_separator_vertical_padding">2dp</dimen>
+    <dimen tools:override="true" name="design_navigation_separator_vertical_padding">0dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
 
-    <dimen name="toolbar_titletext_text_size">17dp</dimen>
+    <dimen name="toolbar_titletext_text_size">18dp</dimen>
     <dimen name="toolbar_subtitle_text_size">12dp</dimen>
-    <dimen name="toolbar_titletext_messages_text_size">16dp</dimen>
+    <dimen name="toolbar_titletext_messages_text_size">18dp</dimen>
     <dimen name="toolbar_subtitle_messages_text_size">12dp</dimen>
 
     <dimen name="tabBar_indicator_height">2.5dp</dimen>

@@ -6,16 +6,16 @@
         android:angle="45"
         android:endColor="#e63677ae"
         android:centerColor="#e63a80ba"
-        android:startColor="#e63677ae"/>
+        android:startColor="#e63677ae" />
 
     <corners
-        android:radius="6dp"/>
+        android:radius="3dp" />
 
     <size
-        android:width="3dp"/>
+        android:width="3dp" />
 
     <padding
         android:left="0.5dp"
-        android:right="0.5dp"/>
+        android:right="0.5dp" />
 
 </shape>

@@ -16,7 +16,6 @@
         android:id="@+id/messageTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/avatar_comment_width"
         android:paddingTop="@dimen/padding_dp_small"
         android:paddingBottom="@dimen/padding_dp_small"
         android:paddingLeft="@dimen/padding_dp_large"

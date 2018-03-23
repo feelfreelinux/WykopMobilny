@@ -18,7 +18,7 @@
     <color name="textColorLight.Amoled">#94ffffff</color>
 
     <color name="textColorButtonToolbar">#8c000000</color>
-    <color name="textColorButtonToolbar.Dark">#8cffffff</color>
+    <color name="textColorButtonToolbar.Dark">#80ffffff</color>
 
     <color name="colorAccent">#3c84c1</color>
     <color name="colorAccent.Dark">#3a80bc</color>
@@ -37,7 +37,7 @@
 
     <color name="itemBackgroundSelected">#f5f5f5</color>
     <color name="itemBackgroundSelected.Dark">#252525</color>
-    <color name="itemBackgroundSelected.Amoled">#000000</color>
+    <color name="itemBackgroundSelected.Amoled">#080808</color>
 
     <color name="toolbarItemsColor">#1e1e1e</color>
     <color name="toolbarItemsColor.Dark">#e6e6e6</color>
@@ -65,7 +65,7 @@
     <color name="usersMessageColor.Amoled">#080a0d</color>
     <color name="usersMessageDirected.Dark">#d6d6d6</color>
 
-    <color name="navigationSeparator">#404040</color>
+    <color name="navigationSeparator">#667f7f7f</color>
     <color name="drawablesColor.Dark">#e6e6e6</color>
     <color name="mikroblogControlsColor.Dark">#424242</color>
     <color name="plusPressedColor">#27ae60</color>

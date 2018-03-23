@@ -97,6 +97,9 @@ class CommentWidget : ConstraintLayout, CommentView {
                 setOnClickListener { openProfile(nick) }
             }
             dateTextView.text = comment.date.replace(" temu", "")
+            comment.app?.let {
+                dateTextView.text = context.getString(R.string.date_with_user_app, comment.date.replace(" temu", ""), comment.app)
+            }
         }
     }
 
@@ -170,6 +173,7 @@ class CommentWidget : ConstraintLayout, CommentView {
             comment.app?.let {
                 date.text = context.getString(R.string.date_with_user_app, comment.date, comment.app)
             }
+
             entry_comment_menu_copy.setOnClickListener {
                 presenter.copyContent(comment)
                 dialog.dismiss()

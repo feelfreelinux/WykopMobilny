@@ -20,7 +20,8 @@
         android:id="@+id/authorHeaderView"
         style="@style/AuthorHeaderView"
         app:layout_constraintTop_toBottomOf="@id/separatorView"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/collapseButtonImageView"/>
 
     <ImageView
         android:id="@+id/collapseButtonImageView"
@@ -36,6 +37,7 @@
     <TextView
         android:id="@+id/commentContentTextView"
         style="@style/ContentTextView"
+        android:paddingBottom="0dp"
         app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

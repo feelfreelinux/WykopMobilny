@@ -23,6 +23,6 @@
         app:layout_constraintTop_toBottomOf="@id/avatarImageView"
         app:layout_constraintLeft_toLeftOf="@id/avatarImageView"
         app:layout_constraintRight_toRightOf="@id/avatarImageView"
-        tools:background="@drawable/male_strip" />
+        tools:background="@drawable/strip_male" />
 
 </android.support.constraint.ConstraintLayout>

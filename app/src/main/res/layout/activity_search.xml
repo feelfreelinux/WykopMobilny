@@ -9,16 +9,22 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        android:background="?attr/backgroundColor">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/TabLayout"
-            app:tabMode="scrollable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             app:tabGravity="fill"
-            app:tabTextAppearance="@style/TabTextAppearance"/>
+            app:tabMode="scrollable" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_normal"
+            android:background="?attr/lineColor" />
 
     </android.support.design.widget.AppBarLayout>
 

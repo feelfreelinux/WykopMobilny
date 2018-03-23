@@ -7,18 +7,20 @@
         android:id="@+id/share"
         android:title="@string/share"
         android:icon="@drawable/ic_share"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:visible="false" />
 
     <item
         android:id="@+id/copyUrl"
         android:title="@string/copy_entry_url"
-        android:icon="@drawable/ic_insert_link_dark"
-        app:showAsAction="always"/>
+        android:icon="@drawable/ic_link_dark"
+        app:showAsAction="always"
+        android:visible="false" />
 
     <item
         android:id="@+id/refresh"
         android:title="@string/refresh"
         android:icon="@drawable/ic_refresh"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 </menu>

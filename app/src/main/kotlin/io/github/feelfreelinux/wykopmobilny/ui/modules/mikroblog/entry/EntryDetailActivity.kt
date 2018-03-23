@@ -74,7 +74,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             title = null
             setDisplayHomeAsUpEnabled(true)
         }
-        supportActionBar?.title = null
+        supportActionBar?.title = "Wpis"
 
         // Prepare RecyclerView
         recyclerView?.apply {

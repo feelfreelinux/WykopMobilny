@@ -69,7 +69,7 @@
                         android:id="@+id/genderStripImageView"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/male_strip"
+                        android:background="@drawable/strip_male"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="@id/profilePicture"
                         app:layout_constraintEnd_toEndOf="@id/profilePicture"
