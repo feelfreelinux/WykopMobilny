@@ -19,6 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
@@ -87,6 +88,9 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
             subtitle = if (conversation.messages.isNotEmpty()) conversation.messages.last().date else null
             avatarview.setAuthor(conversation.receiver)
             avatarview.isVisible = true
+            avatarview.setOnClickListener {
+                getActivityContext()!!.startActivity(ProfileActivity.createIntent(getActivityContext()!!, conversation.receiver.nick))
+            }
         }
 
         avatarview.setOnClickListener {

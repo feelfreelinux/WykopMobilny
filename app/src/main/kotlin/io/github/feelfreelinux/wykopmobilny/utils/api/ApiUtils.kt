@@ -57,8 +57,8 @@ fun Context.getGroupColor(role : Int) : Int = when(role) {
 
 fun getGenderStripResource(authorSex : String) : Int =
     when (authorSex) {
-        "male" -> R.drawable.male_strip
-        "female" -> R.drawable.female_strip
+        "male" -> R.drawable.strip_male
+        "female" -> R.drawable.strip_female
         else -> 0
     }
 

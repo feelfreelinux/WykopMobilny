@@ -10,7 +10,8 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        android:background="?attr/backgroundColor">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -34,11 +35,16 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             style="@style/TabLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             app:tabGravity="fill"
-            app:tabMode="scrollable"
-            app:tabTextAppearance="@style/TabTextAppearance"/>
+            app:tabMode="scrollable" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_normal"
+            android:background="?attr/lineColor" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -56,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_pen"
+        android:src="@drawable/ic_pen_dark"
         app:elevation="5dp"
         app:fabSize="normal"
         app:layout_anchor="@id/pager"

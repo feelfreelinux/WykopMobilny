@@ -90,7 +90,7 @@ class SimpleItemWidget(context: Context) : BaseLinkItemWidget(context) {
     override fun showBurried() {
         link.userVote = "bury"
         simple_digg.isEnabled = true
-        simple_digg.background = ContextCompat.getDrawable(context, R.drawable.ic_dig_bury)
+        simple_digg.background = ContextCompat.getDrawable(context, R.drawable.ic_frame_votes_buried)
         simple_digg.setOnClickListener {
             linkPresenter.userManagerApi.runIfLoggedIn(context) {
                 simple_digg.isEnabled = false
@@ -102,7 +102,7 @@ class SimpleItemWidget(context: Context) : BaseLinkItemWidget(context) {
     override fun showDigged() {
         link.userVote = "dig"
         simple_digg.isEnabled = true
-        simple_digg.background = ContextCompat.getDrawable(context, R.drawable.ic_dig_vote)
+        simple_digg.background = ContextCompat.getDrawable(context, R.drawable.ic_frame_votes_digged)
         simple_digg.setOnClickListener {
             linkPresenter.userManagerApi.runIfLoggedIn(context) {
                 simple_digg.isEnabled = false

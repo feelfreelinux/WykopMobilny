@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_gravity="bottom|end"
-            android:src="@drawable/ic_pen"
+            android:src="@drawable/ic_pen_dark"
             app:elevation="5dp"
             app:fabSize="normal"
             app:layout_anchor="@id/contentView"

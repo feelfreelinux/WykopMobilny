@@ -6,28 +6,29 @@
     <item
         android:id="@+id/copyUrl"
         android:title="@string/copy_entry_url"
-        android:icon="@drawable/ic_insert_link_dark"
-        app:showAsAction="always"/>
+        android:icon="@drawable/ic_link_dark"
+        app:showAsAction="always"
+        android:visible="false" />
 
     <item
         android:id="@+id/refresh"
         android:title="@string/refresh"
         android:icon="@drawable/ic_refresh"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/sortbyBest"
         android:title="@string/sortby_best"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/sortbyOldest"
         android:title="@string/sortby_oldest"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/sortbyNewest"
         android:title="@string/sortby_newest"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
 </menu>

@@ -27,6 +27,7 @@
     <!-- DRAWABLES -->
     <attr name="expandDrawable" format="reference"/>
     <attr name="collapseDrawable" format="reference"/>
+    <attr name="closeDrawable" format="reference"/>
 
     <attr name="digCountDrawable" format="reference"/>
     <attr name="wypokDrawable" format="reference"/>
@@ -61,6 +62,7 @@
     <attr name="markdownInsertSpoiler" format="reference"/>
     <attr name="markdownSend" format="reference"/>
     <!-- DRAWABLES - BOTTOMSHEET MENU -->
+    <attr name="bottomSheetLink" format="reference"/>
     <attr name="bottomSheetObserve" format="reference"/>
     <attr name="bottomSheetUnobserve" format="reference"/>
     <attr name="bottomSheetLock" format="reference"/>

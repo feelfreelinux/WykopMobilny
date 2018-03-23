@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry
 
 import android.content.Context
+import android.graphics.Color
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
@@ -19,6 +20,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
@@ -196,15 +198,33 @@ class EntryWidget : ConstraintLayout, EntryView, LayoutContainer {
         entry.voteCount = voteCount
     }
 
+    fun openProfile(username : String) {
+        getActivityContext()!!.startActivity(ProfileActivity.createIntent(getActivityContext()!!, username))
+    }
+
     fun openOptionsMenu() {
         val activityContext = getActivityContext()!!
         val dialog = BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
-
+        (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
         bottomSheetView.apply {
+            author.apply {
+                text = entry.author.nick
+                setOnClickListener { openProfile(entry.author.nick) }
+            }
+            date.text = entry.date
+            entry.app?.let {
+                date.text = context.getString(R.string.date_with_user_app, entry.date, entry.app)
+            }
+
             entry_menu_copy.setOnClickListener {
                 presenter.copyContent(entry)
+                dialog.dismiss()
+            }
+
+            entry_menu_copy_entry_url.setOnClickListener {
+                presenter.copyUrl(url)
                 dialog.dismiss()
             }
 

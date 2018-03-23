@@ -100,6 +100,10 @@ class EntryPresenter(val schedulers: Schedulers,
         clipboardHelperApi.copyTextToClipboard(entry.body.removeHtml(), "entry-text-copied")
     }
 
+    fun copyUrl(url : String) {
+        clipboardHelperApi.copyTextToClipboard(url, "entryUrl")
+    }
+
     fun editEntry(entry : Entry) {
         navigatorApi.openEditEntryActivity(entry.body, entry.id)
     }

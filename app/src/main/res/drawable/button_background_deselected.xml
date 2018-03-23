@@ -3,14 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <corners
-        android:radius="0dp" />
-
     <solid
         android:color="@android:color/transparent" />
-
-    <stroke
-        android:color="@color/toolbarItemsColor"
-        android:width="0dp" />
 
 </shape>

@@ -8,7 +8,7 @@
         android:state_pressed="true" />
 
     <item
-        android:drawable="@drawable/item_background_deselected_dark"
+        android:drawable="@drawable/item_background_deselected"
         android:state_focused="false"
         android:state_pressed="false" />
 

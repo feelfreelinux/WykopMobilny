@@ -14,6 +14,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:itemBackground">@color/windowBackground</item>
         <item name="backgroundColor">@color/windowBackground</item>
         <item name="itemBackgroundColor">@color/itemBackground</item>
@@ -29,8 +30,8 @@
         <item name="usersMessageSubtextDirected">@color/authorHeader_date.Dark</item>
         <item name="lineColor">@color/lineColor</item>
         <item name="separatorColor">@color/separatorColor</item>
-        <item name="expandImageGradient">@drawable/gradient_expand_image_light</item>
-        <item name="shadowUpGradient">@drawable/gradient_separator_input_light</item>
+        <item name="expandImageGradient">@drawable/gradient_expand_image</item>
+        <item name="shadowUpGradient">@drawable/gradient_separator_input</item>
         <item name="adminNickColor">@android:color/black</item>
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list</item>
         <item name="voteMinusButtonStatelist">@drawable/button_minus_vote_background_state_list</item>
@@ -51,37 +52,39 @@
 
         <item name="surveyBar">@drawable/survey_bar</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke</item>
-        <item name="expandDrawable">@drawable/comment_expand_light</item>
-        <item name="collapseDrawable">@drawable/comment_collapse_light</item>
-        <item name="digCountDrawable">@drawable/ic_dig_light</item>
+        <item name="closeDrawable">@drawable/ic_close</item>
+        <item name="expandDrawable">@drawable/ic_expand</item>
+        <item name="collapseDrawable">@drawable/ic_collapse</item>
+        <item name="digCountDrawable">@drawable/ic_frame_votes</item>
         <item name="linkViewClicked">@color/linkItemClicked</item>
-        <item name="notificationDrawable">@drawable/ic_tag_light</item>
-        <item name="mailDrawable">@drawable/ic_mail_light</item>
+        <item name="notificationDrawable">@drawable/ic_tag</item>
+        <item name="mailDrawable">@drawable/ic_mail</item>
         <item name="hotOutlineDrawable">@drawable/ic_hot_outline</item>
 
-        <item name="markdownFormatQuote">@drawable/ic_format_quote</item>
-        <item name="markdownFormatBold">@drawable/ic_format_bold</item>
-        <item name="markdownFormatCode">@drawable/ic_format_code</item>
-        <item name="markdownFormatItalic">@drawable/ic_format_italic</item>
-        <item name="markdownInsertEmoticon">@drawable/ic_insert_emoticon</item>
-        <item name="markdownInsertLink">@drawable/ic_insert_link</item>
-        <item name="markdownInsertPhoto">@drawable/ic_insert_photo</item>
-        <item name="markdownInsertSpoiler">@drawable/ic_insert_spoiler</item>
+        <item name="markdownFormatQuote">@drawable/ic_markdowntoolbar_quote</item>
+        <item name="markdownFormatBold">@drawable/ic_markdowntoolbar_bold</item>
+        <item name="markdownFormatCode">@drawable/ic_markdowntoolbar_code</item>
+        <item name="markdownFormatItalic">@drawable/ic_markdowntoolbar_italic</item>
+        <item name="markdownInsertEmoticon">@drawable/ic_markdowntoolbar_emoticon</item>
+        <item name="markdownInsertLink">@drawable/ic_markdowntoolbar_link</item>
+        <item name="markdownInsertPhoto">@drawable/ic_markdowntoolbar_photo</item>
+        <item name="markdownInsertSpoiler">@drawable/ic_markdowntoolbar_spoiler</item>
         <item name="markdownSend">@drawable/ic_send</item>
 
-        <item name="bottomSheetObserve">@drawable/ic_observe_light</item>
-        <item name="bottomSheetUnobserve">@drawable/ic_unobserve_light</item>
-        <item name="bottomSheetLock">@drawable/ic_lock_light</item>
-        <item name="bottomSheetUnlock">@drawable/ic_lock_open_light</item>
-        <item name="bottomSheetEdit">@drawable/ic_pen_light</item>
+        <item name="bottomSheetLink">@drawable/ic_link</item>
+        <item name="bottomSheetObserve">@drawable/ic_observe</item>
+        <item name="bottomSheetUnobserve">@drawable/ic_unobserve</item>
+        <item name="bottomSheetLock">@drawable/ic_lock</item>
+        <item name="bottomSheetUnlock">@drawable/ic_lock_open</item>
+        <item name="bottomSheetEdit">@drawable/ic_pen</item>
         <item name="bottomSheetCopy">@drawable/ic_copy_content_light</item>
-        <item name="bottomSheetReport">@drawable/ic_report_light</item>
-        <item name="bottomSheetBury">@drawable/ic_bury_light</item>
-        <item name="bottomSheetBuryList">@drawable/ic_bury_list_light</item>
-        <item name="bottomSheetDiggerList">@drawable/ic_dig_list_light</item>
-        <item name="bottomSheetRelated">@drawable/ic_related_light</item>
-        <item name="bottomSheetVoters">@drawable/ic_sheet_voters</item>
-        <item name="bottomSheetDelete">@drawable/ic_menu_delete_light</item>
+        <item name="bottomSheetReport">@drawable/ic_report</item>
+        <item name="bottomSheetBury">@drawable/ic_bury</item>
+        <item name="bottomSheetBuryList">@drawable/ic_bury_list</item>
+        <item name="bottomSheetDiggerList">@drawable/ic_dig_list</item>
+        <item name="bottomSheetRelated">@drawable/ic_related</item>
+        <item name="bottomSheetVoters">@drawable/ic_dig_list</item>
+        <item name="bottomSheetDelete">@drawable/ic_delete</item>
 
         <item name="textSizeTiny">@dimen/text_normal_size_tiny</item>
         <item name="textSizeSmall">@dimen/text_normal_size_small</item>
@@ -122,8 +125,8 @@
         <item name="usersMessageSubtextDirected">@color/usersMessageDirected.Dark</item>
         <item name="lineColor">@color/lineColor.Dark</item>
         <item name="separatorColor">@color/separatorColor.Dark</item>
-        <item name="expandImageGradient">@drawable/gradient_expand_image</item>
-        <item name="shadowUpGradient">@drawable/gradient_separator_input</item>
+        <item name="expandImageGradient">@drawable/gradient_expand_image_dark</item>
+        <item name="shadowUpGradient">@drawable/gradient_separator_input_dark</item>
         <item name="adminNickColor">@android:color/white</item>
         <item name="linkViewClicked">@color/linkItemClicked.Dark</item>
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list_dark</item>
@@ -145,36 +148,38 @@
 
         <item name="surveyBar">@drawable/survey_bar_dark</item>
         <item name="surveyBarStroke">@drawable/survey_bar_stroke_dark</item>
-        <item name="expandDrawable">@drawable/comment_expand</item>
-        <item name="collapseDrawable">@drawable/comment_collapse</item>
-        <item name="digCountDrawable">@drawable/ic_dig</item>
-        <item name="notificationDrawable">@drawable/ic_tag</item>
-        <item name="mailDrawable">@drawable/ic_mail</item>
+        <item name="closeDrawable">@drawable/ic_close_dark</item>
+        <item name="expandDrawable">@drawable/ic_expand_dark</item>
+        <item name="collapseDrawable">@drawable/ic_collapse_dark</item>
+        <item name="digCountDrawable">@drawable/ic_frame_votes_dark</item>
+        <item name="notificationDrawable">@drawable/ic_tag_dark</item>
+        <item name="mailDrawable">@drawable/ic_mail_dark</item>
         <item name="hotOutlineDrawable">@drawable/ic_hot_outline_dark</item>
 
-        <item name="markdownFormatQuote">@drawable/ic_format_quote_dark</item>
-        <item name="markdownFormatBold">@drawable/ic_format_bold_dark</item>
-        <item name="markdownFormatCode">@drawable/ic_format_code_dark</item>
-        <item name="markdownFormatItalic">@drawable/ic_format_italic_dark</item>
-        <item name="markdownInsertEmoticon">@drawable/ic_insert_emoticon_dark</item>
-        <item name="markdownInsertLink">@drawable/ic_insert_link_dark</item>
-        <item name="markdownInsertSpoiler">@drawable/ic_insert_spoiler_dark</item>
-        <item name="markdownInsertPhoto">@drawable/ic_insert_photo_dark</item>
+        <item name="markdownFormatQuote">@drawable/ic_markdowntoolbar_quote_dark</item>
+        <item name="markdownFormatBold">@drawable/ic_markdowntoolbar_bold_dark</item>
+        <item name="markdownFormatCode">@drawable/ic_markdowntoolbar_code_dark</item>
+        <item name="markdownFormatItalic">@drawable/ic_markdowntoolbar_italic_dark</item>
+        <item name="markdownInsertEmoticon">@drawable/ic_markdowntoolbar_emoticon_dark</item>
+        <item name="markdownInsertLink">@drawable/ic_markdowntoolbar_link_dark</item>
+        <item name="markdownInsertSpoiler">@drawable/ic_markdowntoolbar_spoiler_dark</item>
+        <item name="markdownInsertPhoto">@drawable/ic_markdowntoolbar_photo_dark</item>
         <item name="markdownSend">@drawable/ic_send_dark</item>
 
-        <item name="bottomSheetObserve">@drawable/ic_observe</item>
-        <item name="bottomSheetUnobserve">@drawable/ic_unobserve</item>
-        <item name="bottomSheetLock">@drawable/ic_lock</item>
-        <item name="bottomSheetUnlock">@drawable/ic_lock_open</item>
-        <item name="bottomSheetEdit">@drawable/ic_pen</item>
+        <item name="bottomSheetLink">@drawable/ic_link_dark</item>
+        <item name="bottomSheetObserve">@drawable/ic_observe_dark</item>
+        <item name="bottomSheetUnobserve">@drawable/ic_unobserve_dark</item>
+        <item name="bottomSheetLock">@drawable/ic_lock_dark</item>
+        <item name="bottomSheetUnlock">@drawable/ic_lock_open_dark</item>
+        <item name="bottomSheetEdit">@drawable/ic_pen_dark</item>
         <item name="bottomSheetCopy">@drawable/ic_copy_content</item>
-        <item name="bottomSheetReport">@drawable/ic_report</item>
-        <item name="bottomSheetVoters">@drawable/ic_sheet_voters_light</item>
-        <item name="bottomSheetDelete">@drawable/ic_menu_delete</item>
-        <item name="bottomSheetBury">@drawable/ic_bury</item>
-        <item name="bottomSheetBuryList">@drawable/ic_bury_list</item>
-        <item name="bottomSheetDiggerList">@drawable/ic_dig_list</item>
-        <item name="bottomSheetRelated">@drawable/ic_related</item>
+        <item name="bottomSheetReport">@drawable/ic_report_dark</item>
+        <item name="bottomSheetVoters">@drawable/ic_dig_list_dark</item>
+        <item name="bottomSheetDelete">@drawable/ic_delete_dark</item>
+        <item name="bottomSheetBury">@drawable/ic_bury_dark</item>
+        <item name="bottomSheetBuryList">@drawable/ic_bury_list_dark</item>
+        <item name="bottomSheetDiggerList">@drawable/ic_dig_list_dark</item>
+        <item name="bottomSheetRelated">@drawable/ic_related_dark</item>
 
         <item name="textSizeTiny">@dimen/text_normal_size_tiny</item>
         <item name="textSizeSmall">@dimen/text_normal_size_small</item>
@@ -335,7 +340,9 @@
         <item name="android:textColor">?attr/textColorGrey</item>
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="layout_constraintWidth_min">60dp</item>
         <item name="layout_constraintWidth_default">wrap</item>
     </style>
 
@@ -404,6 +411,22 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <style name="BottomSheetAuthor" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/padding_dp_huge</item>
+        <item name="android:paddingRight">@dimen/padding_dp_huge</item>
+        <item name="android:textSize">?attr/textSizeNormal</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:shadowColor">@android:color/black</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowRadius">4</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
     <style name="DarkPreferencesTheme" parent="PreferenceThemeOverlay.v14.Material">
         <item name="colorControlNormal">@color/toolbarItemsColor.Dark</item>
     </style>
@@ -426,38 +449,6 @@
 
     <style name="Toolbar.Subtitle.Messages" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:textSize">@dimen/toolbar_subtitle_messages_text_size</item>
-    </style>
-
-    <style name="TabLayoutTest" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/tabBarIndicatorColor</item>
-        <item name="tabIndicatorHeight">@dimen/tabBar_indicator_height</item>
-        <item name="tabPaddingStart">@dimen/padding_dp_huge</item>
-        <item name="tabPaddingEnd">@dimen/padding_dp_huge</item>
-        <item name="tabTextAppearance">@style/TabTextAppearance</item>
-        <item name="tabSelectedTextColor">@color/tabBarTextColorSelected</item>
-        <item name="android:background">?attr/colorPrimaryDark</item>
-    </style>
-
-    <style name="TabTextAppearanceTest" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">?attr/textSizeNormal</item>
-        <item name="android:textColor">@color/tabBarTextColor</item>
-        <item name="textAllCaps">false</item>
-    </style>
-
-    <style name="TabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">@color/tabBarIndicatorColor</item>
-        <item name="tabIndicatorHeight">@dimen/tabBar_indicator_height</item>
-        <item name="tabPaddingStart">@dimen/padding_dp_huge</item>
-        <item name="tabPaddingEnd">@dimen/padding_dp_huge</item>
-        <item name="tabTextAppearance">@style/TabTextAppearance</item>
-        <item name="tabSelectedTextColor">@color/tabBarTextColorSelected</item>
-        <item name="android:background">?attr/colorPrimaryDark</item>
-    </style>
-
-    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">?attr/textSizeNormal</item>
-        <item name="android:textColor">@color/tabBarTextColor</item>
-        <item name="textAllCaps">false</item>
     </style>
 
     <style name="TabLayoutProfile" parent="Widget.Design.TabLayout">
@@ -486,6 +477,22 @@
 
     <style name="TabTextAppearanceProfileDetail" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabMinWidth">100dp</item>
+        <item name="tabPaddingStart">@dimen/padding_dp_huge</item>
+        <item name="tabPaddingEnd">@dimen/padding_dp_huge</item>
+        <item name="android:background">?attr/backgroundColor</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">normal</item>
         <item name="textAllCaps">false</item>
     </style>

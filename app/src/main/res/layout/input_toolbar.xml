@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/input_toolbar_item_margin_vertical"
             android:layout_marginBottom="@dimen/input_toolbar_item_margin_vertical"
             android:animateLayoutChanges="true"
-            android:src="@drawable/ic_close"
+            android:src="?attr/closeDrawable"
             app:layout_constraintStart_toEndOf="@id/markdownToolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -91,7 +91,7 @@
         android:layout_marginTop="@dimen/input_toolbar_item_margin_vertical"
         android:layout_marginBottom="@dimen/input_toolbar_item_margin_vertical"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_arrow_upward"
+        android:src="?attr/collapseDrawable"
         app:layout_constraintEnd_toStartOf="@+id/send"
         app:layout_constraintTop_toTopOf="@id/body"
         app:layout_constraintBottom_toBottomOf="@id/body"/>

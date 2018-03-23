@@ -1,51 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     android:id="@+id/fragment_history_menu_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:orientation="vertical"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/gradient_toolbar_down">
 
         <TextView
             android:id="@+id/author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:background="@android:color/transparent"
-            android:paddingLeft="@dimen/padding_dp_normal"
-            android:paddingRight="@dimen/padding_dp_normal"
-            android:paddingTop="@dimen/padding_dp_normal"
-            android:shadowColor="@android:color/black"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="1"
-            android:textColor="@android:color/white"
+            style="@style/BottomSheetAuthor"
+            android:paddingTop="@dimen/padding_dp_huge"
             android:textSize="?attr/textSizeLarge" />
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:background="@android:color/transparent"
-            android:paddingBottom="@dimen/padding_dp_normal"
-            android:paddingLeft="@dimen/padding_dp_normal"
-            android:paddingRight="@dimen/padding_dp_normal"
+            style="@style/BottomSheetAuthor"
             android:paddingTop="@dimen/padding_dp_mini"
-            android:shadowColor="@android:color/black"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="1"
-            android:textColor="@android:color/white"
-            android:textSize="?attr/textSizeNormal" />
+            android:paddingBottom="@dimen/padding_dp_normal" />
 
     </LinearLayout>
 

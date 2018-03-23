@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
@@ -12,7 +13,7 @@
         android:pivotX="10">
 
         <path
-            android:fillColor="#8cffffff"
+            android:fillColor="#80ffffff"
             android:pathData="M10,9V5L3,12L10,19V14.9C15,14.9 18.5,16.5 21,20C20,15 17,10 10,9Z" />
 
     </group>

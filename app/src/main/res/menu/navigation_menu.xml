@@ -28,17 +28,17 @@
 
         <item
             android:id="@+id/nav_mikroblog"
-            android:icon="@drawable/ic_navi_mirko"
+            android:icon="@drawable/ic_navi_mirkoblog"
             android:title="@string/mikroblog"/>
 
         <item
             android:id="@+id/nav_mojwykop"
-            android:icon="@drawable/ic_navi_moj_wykop_2"
+            android:icon="@drawable/ic_navi_my_wykop"
             android:title="@string/mywykop"/>
 
         <item
             android:id="@+id/search"
-            android:icon="@drawable/ic_navi_search_3"
+            android:icon="@drawable/ic_navi_search"
             android:title="@string/search"/>
 
     </group>
@@ -54,7 +54,7 @@
 
         <item
             android:id="@+id/favourite"
-            android:icon="@drawable/ic_navi_favourite_2"
+            android:icon="@drawable/ic_navi_favourite"
             android:title="@string/favourite"/>
 
         <item

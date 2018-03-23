@@ -7,12 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-
     <View
         android:id="@+id/separatorView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_large"
+        android:layout_height="@dimen/separator_normal"
         android:background="?attr/lineColor"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
