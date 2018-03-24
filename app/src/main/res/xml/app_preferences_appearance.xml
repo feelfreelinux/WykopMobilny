@@ -21,6 +21,13 @@
             android:entries="@array/preferences_default_screen"
             android:entryValues="@array/preferences_default_screen_values"
             android:defaultValue="mainpage"/>
+
+        <android.support.v7.preference.ListPreference
+            android:key="fontSize"
+            android:title="@string/pref_fontsize"
+            android:entries="@array/preferences_fontsize"
+            android:entryValues="@array/preferences_fontsize_values"
+            android:defaultValue="normal"/>
     </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory
         android:title="Mikroblog">

@@ -20,6 +20,7 @@ interface SettingsPreferencesApi {
     var cutImages : Boolean
     var openSpoilersDialog : Boolean
     var cutImageProportion : Int
+    var fontSize : String?
 
 }
 
@@ -29,6 +30,7 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var hideNsfw: Boolean by booleanPref(defaultValue = true)
     override var hotEntriesScreen by stringPref(defaultValue = "newest")
     override var defaultScreen by stringPref(defaultValue = "mainpage")
+    override var fontSize by stringPref(defaultValue = "normal")
     override var linkImagePosition by stringPref(defaultValue = "left")
     override var linkShowImage by booleanPref(defaultValue = true)
     override var linkSimpleList by booleanPref(defaultValue = false)

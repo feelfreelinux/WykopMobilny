@@ -67,5 +67,14 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
             theme.applyStyle(R.style.TransparentActivityTheme, true)
             getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
+
+        when (themeSettingsPreferences.fontSize) {
+            "tiny" -> theme.applyStyle(R.style.TextSizeTiny, true)
+            "small" -> theme.applyStyle(R.style.TextSizeSmall, true)
+            "normal" -> theme.applyStyle(R.style.TextSizeNormal, true)
+            "large" -> theme.applyStyle(R.style.TextSizeLarge, true)
+            "huge" -> theme.applyStyle(R.style.TextSizeHuge, true)
+
+        }
     }
 }

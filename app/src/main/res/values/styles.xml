@@ -497,6 +497,46 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="TextSizeTiny">
+        <item name="textSizeTiny">@dimen/text_tiny_size_tiny</item>
+        <item name="textSizeSmall">@dimen/text_tiny_size_small</item>
+        <item name="textSizeNormal">@dimen/text_tiny_size_normal</item>
+        <item name="textSizeLarge">@dimen/text_tiny_size_large</item>
+        <item name="textSizeHuge">@dimen/text_tiny_size_huge</item>m>
+    </style>
+
+    <style name="TextSizeSmall">
+        <item name="textSizeTiny">@dimen/text_small_size_tiny</item>
+        <item name="textSizeSmall">@dimen/text_small_size_small</item>
+        <item name="textSizeNormal">@dimen/text_small_size_normal</item>
+        <item name="textSizeLarge">@dimen/text_small_size_large</item>
+        <item name="textSizeHuge">@dimen/text_small_size_huge</item>m>
+    </style>
+
+    <style name="TextSizeNormal">
+        <item name="textSizeTiny">@dimen/text_normal_size_tiny</item>
+        <item name="textSizeSmall">@dimen/text_normal_size_small</item>
+        <item name="textSizeNormal">@dimen/text_normal_size_normal</item>
+        <item name="textSizeLarge">@dimen/text_normal_size_large</item>
+        <item name="textSizeHuge">@dimen/text_normal_size_huge</item>m>
+    </style>
+
+    <style name="TextSizeLarge">
+        <item name="textSizeTiny">@dimen/text_large_size_tiny</item>
+        <item name="textSizeSmall">@dimen/text_large_size_small</item>
+        <item name="textSizeNormal">@dimen/text_large_size_normal</item>
+        <item name="textSizeLarge">@dimen/text_large_size_large</item>
+        <item name="textSizeHuge">@dimen/text_large_size_huge</item>m>
+    </style>
+
+    <style name="TextSizeHuge">
+        <item name="textSizeTiny">@dimen/text_huge_size_tiny</item>
+        <item name="textSizeSmall">@dimen/text_huge_size_small</item>
+        <item name="textSizeNormal">@dimen/text_huge_size_normal</item>
+        <item name="textSizeLarge">@dimen/text_huge_size_large</item>
+        <item name="textSizeHuge">@dimen/text_huge_size_huge</item>m>
+    </style>
+
     <!-- SwipeBackLayout -->
     <style name="SwipeBackLayout">
         <item name="edge_size">50dip</item>

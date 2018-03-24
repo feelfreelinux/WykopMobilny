@@ -41,6 +41,10 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
             summary = entry
         }
 
+        (findPreference("fontSize") as ListPreference).apply {
+            summary = entry
+        }
+
         (findPreference("defaultScreen") as ListPreference).apply {
             summary = entry
         }
@@ -60,7 +64,7 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
         if (pref is ListPreference) {
             pref.setSummary(pref.entry)
             when(pref.key) {
-                "linkImagePosition" -> (activity as SettingsActivity).shouldRestartMainscreen = true
+                "linkImagePosition", "fontSize" -> (activity as SettingsActivity).shouldRestartMainscreen = true
             }
         } else if (pref is CheckBoxPreference) {
             when (pref.key) {

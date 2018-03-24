@@ -34,6 +34,22 @@
         <item>hits</item>
     </string-array>
 
+    <string-array name="preferences_fontsize">
+        <item>@string/fontsize_tiny</item>
+        <item>@string/fontsize_small</item>
+        <item>@string/fontsize_normal</item>
+        <item>@string/fontsize_large</item>
+        <item>@string/fontsize_huge</item>
+    </string-array>
+
+    <string-array name="preferences_fontsize_values">
+        <item>tiny</item>
+        <item>small</item>
+        <item>normal</item>
+        <item>large</item>
+        <item>huge</item>
+    </string-array>
+
     <string-array name="preferences_link_image_position">
         <item>@string/link_image_position_left</item>
         <item>@string/link_image_position_right</item>

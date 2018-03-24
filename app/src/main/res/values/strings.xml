@@ -147,6 +147,12 @@
     <string name="sortby_best">Najlepsze komentarze</string>
     <string name="sortby_oldest">Najstarsze komentarze</string>
     <string name="notifications_directed">Do mnie</string>
+    <string name="fontsize_small">Mała</string>
+    <string name="fontsize_tiny">Bardzo mała</string>
+    <string name="fontsize_normal">Standardowa</string>
+    <string name="fontsize_large">Duża</string>
+    <string name="fontsize_huge">Bardzo duża</string>
+    <string name="pref_fontsize">Wielkość czcionki</string>
 
     <string name="upcoming_sortby_comments">Komentowane</string>
     <string name="upcoming_sortby_votes">Wykopywane</string>
