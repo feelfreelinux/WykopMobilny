@@ -8,26 +8,24 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import com.github.piasy.biv.BigImageViewer
-import com.github.piasy.biv.indicator.ProgressIndicator
-import com.github.piasy.biv.indicator.progresspie.ProgressPieIndicator
-import com.github.piasy.biv.loader.ImageLoader
-import com.github.piasy.biv.loader.glide.GlideImageLoader
-import com.github.piasy.biv.view.BigImageView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.KotlinGlideRequestListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_photoview.*
-import kotlinx.android.synthetic.main.drawer_header_view_layout.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.io.File
-import java.lang.Exception
 import javax.inject.Inject
+import com.davemorrissey.labs.subscaleview.ImageSource
+import android.os.Handler
+import com.bumptech.glide.request.RequestOptions
+import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
+import io.reactivex.Single
+import java.util.concurrent.ExecutionException
+import java.util.concurrent.Executors
+
 
 class PhotoViewActivity : BaseActivity() {
     companion object {
@@ -95,35 +93,22 @@ class PhotoViewActivity : BaseActivity() {
     fun loadImage() {
         image.isVisible = true
         gif.isVisible = false
-        image.setImageLoaderCallback(object : ImageLoader.Callback {
-            override fun onFinish() {
-            }
 
-            override fun onSuccess(image: File?) {
-                loadingView.isVisible = false
-            }
+        Single.create<File?> {
+            val cache = GlideApp.with(this).load(url).downloadOnly(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
 
-            override fun onFail(error: Exception?) {
-            }
+            val file: File?
+            file = cache.get()
+            it.onSuccess(file)
+        }.subscribeOn(WykopSchedulers().backgroundThread())
+                .observeOn(WykopSchedulers().mainThread())
+                .subscribe({
+                    it?.apply {
+                        loadingView.isVisible = false
+                        image.setImage(ImageSource.uri(it!!.path).tilingEnabled())
+                    }
+                }, {})
 
-            override fun onCacheHit(image: File?) {
-            }
-
-            override fun onCacheMiss(image: File?) {
-            }
-
-            override fun onProgress(progress: Int) {
-                runOnUiThread {
-                    loadingView.progress = progress
-                }
-            }
-
-            override fun onStart() {
-                loadingView.isIndeterminate = false
-            }
-
-        })
-        image.showImage(Uri.parse(url))
     }
 
     fun loadGif() {

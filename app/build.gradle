@@ -107,10 +107,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.2'
     implementation 'com.devbrackets.android:exomedia:4.1.0'
     implementation 'com.google.android.exoplayer:extension-okhttp:2.6.0'
-    compile 'com.github.piasy:BigImageViewer:1.4.6'
-    implementation ('com.github.piasy:GlideImageLoader:1.4.6') {
-        exclude group: 'com.github.bumptech.glide'
-    }
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     implementation 'com.github.piasy:ProgressPieIndicator:1.4.6'
 
 
