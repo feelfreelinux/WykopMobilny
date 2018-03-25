@@ -3,6 +3,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets
 import android.content.Context
 import android.net.Uri
 import android.support.constraint.ConstraintLayout
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -95,6 +97,17 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
                 body.setAdapter(hashTagsSuggestionAdapter)
         }))
         body.threshold = 3
+        body.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (textBody.length > 2 && send.isEnabled == false) {
+                    enableSendButton()
+                } else if (textBody.length < 3) disableSendButton()
+            }
+        })
         send.setOnClickListener {
             showProgress(true)
             val typedInputStream = markdownToolbar.getPhotoTypedInputStream()
@@ -104,6 +117,8 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
                 inputToolbarListener?.sendPhoto(markdownToolbar.photoUrl, body.text.toString(), markdownToolbar.containsAdultContent)
             }
         }
+
+        disableSendButton()
     }
 
     fun setup(userManagerApi: UserManagerApi, suggestionApi: SuggestApi) {
@@ -141,6 +156,8 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
             photoUrl = null
             containsAdultContent = false
         }
+
+        if (textBody.length < 3) disableSendButton()
         closeMarkdownToolbar()
     }
 
@@ -154,6 +171,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         defaultText = ""
         body.requestFocus()
         textBody += "@$user: "
+        if (textBody.length > 2) enableSendButton()
         selectionPosition = textBody.length
     }
 
@@ -163,6 +181,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         if(textBody.length > 0) textBody += "\n\n"
         textBody += "> ${quote.removeHtml().replace("\n", "\n> ")}\n@$quoteAuthor: "
         selectionPosition = textBody.length
+        if (textBody.length > 2) enableSendButton()
     }
 
     fun setCustomHint(hint : String) {
@@ -173,6 +192,16 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
     fun hide() {
         isVisible = false
+    }
+
+    fun disableSendButton() {
+        send.alpha = 0.3f
+        send.isEnabled = false
+    }
+
+    fun enableSendButton() {
+        send.alpha = 1f
+        send.isEnabled = true
     }
 
     fun show() {
