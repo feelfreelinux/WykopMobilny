@@ -7,7 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.RelatedResp
 class RelatedMapper {
     companion object : Mapper<RelatedResponse, Related> {
         override fun map(value: RelatedResponse): Related {
-            return Related(value.id, value.url, value.voteCount, if (value.author != null ) AuthorMapper.map(value.author) else null, value.title, value.userVote ?: 0)
+            return Related(value.id, value.url, value.voteCount, if (value.author != null ) AuthorMapper.map(value.author!!) else null, value.title, value.userVote ?: 0)
         }
     }
 }

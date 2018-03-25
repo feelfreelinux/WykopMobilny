@@ -13,8 +13,10 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.apache.commons.lang3.StringEscapeUtils
 import retrofit2.Retrofit
 import java.io.InputStream
+import java.net.URLEncoder
 
 data class TypedInputStream(val fileName : String, val mimeType : String, val inputStream: InputStream)
 
@@ -58,7 +60,7 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .retryWhen(userTokenRefresher)
             .compose<EntryResponse>(ErrorHandlerTransformer())
 
-    override fun addEntry(body : String, embed: String?, plus18 : Boolean) = entriesApi.addEntry(body, embed, plus18)
+    override fun addEntry(body : String, embed: String?, plus18 : Boolean) = entriesApi.addEntry(body.encodeBody(), embed, plus18)
             .retryWhen(userTokenRefresher)
             .compose<EntryResponse>(ErrorHandlerTransformer())
 
@@ -68,7 +70,7 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
                     .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
     override fun addEntryComment(body : String, entryId: Int, embed: String?, plus18: Boolean) =
-            entriesApi.addEntryComment(body, embed, plus18, entryId)
+            entriesApi.addEntryComment(body.encodeBody(), embed, plus18, entryId)
             .retryWhen(userTokenRefresher)
             .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
@@ -100,7 +102,7 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
 
-    private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
+    private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this.encodeBody())!!
     private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
 
     override fun getHot(page : Int, period : String) = entriesApi.getHot(page, period)
@@ -132,4 +134,8 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .retryWhen(userTokenRefresher)
             .compose<List<VoterResponse>>(ErrorHandlerTransformer())
             .map { it.map { VoterMapper.map(it) } }
+
+    fun String.encodeBody() : String {
+        return this
+    }
 }

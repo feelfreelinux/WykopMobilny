@@ -60,7 +60,7 @@ interface EntriesRetrofitApi {
 
     @Multipart
     @POST("/entries/commentadd/{entryId}/appkey/$APP_KEY")
-    fun addEntryComment(@Part("body") body: RequestBody,
+    fun addEntryComment(@Part("body") body : RequestBody,
                         @Part("adultmedia") plus18 : RequestBody,
                         @Path("entryId") entryId : Int,
                         @Part file : MultipartBody.Part) : Single<WykopApiResponse<EntryCommentResponse>>

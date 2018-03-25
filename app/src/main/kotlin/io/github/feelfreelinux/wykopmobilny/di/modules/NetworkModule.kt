@@ -25,12 +25,15 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import okhttp3.Cache
+import retrofit2.converter.gson.GsonConverterFactory
+import com.google.gson.GsonBuilder
+import retrofit2.converter.jackson.JacksonConverterFactory
+
 
 @Module
 class NetworkModule {

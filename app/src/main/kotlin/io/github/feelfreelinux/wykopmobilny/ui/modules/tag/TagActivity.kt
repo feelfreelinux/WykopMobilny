@@ -99,7 +99,7 @@ class TagActivity : BaseActivity(), TagActivityView {
         this.tagMeta = tagMeta
         backgroundImg.isVisible = tagMeta.background != null
         tagMeta.background?.let {
-            backgroundImg.loadImage(tagMeta.background)
+            backgroundImg.loadImage(tagMeta.background!!)
             toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         }
         invalidateOptionsMenu()

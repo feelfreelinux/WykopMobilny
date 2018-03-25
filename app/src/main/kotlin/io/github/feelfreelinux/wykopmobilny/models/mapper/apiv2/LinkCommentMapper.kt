@@ -15,7 +15,7 @@ class LinkCommentMapper {
                     value.voteCount - value.voteCountPlus,
                     value.userVote, value.parentId, value.canVote,
                     value.linkId,
-                    if (value.embed != null) EmbedMapper.map(value.embed) else null,
+                    if (value.embed != null) EmbedMapper.map(value.embed!!) else null,
                     value.app, false, false, 0,
                     value.violationUrl ?: "",
                     value.body?.toLowerCase()?.contains("#nsfw") ?: false

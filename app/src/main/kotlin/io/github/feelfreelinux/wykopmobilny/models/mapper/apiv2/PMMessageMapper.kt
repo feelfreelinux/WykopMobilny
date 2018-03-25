@@ -9,7 +9,7 @@ class PMMessageMapper {
     companion object : Mapper<PMMessageResponse, PMMessage> {
         override fun map(value: PMMessageResponse): PMMessage {
             return PMMessage(value.date.toPrettyDate(), value.body ?: "",
-                    if (value.embed != null) EmbedMapper.map(value.embed) else null,
+                    if (value.embed != null) EmbedMapper.map(value.embed!!) else null,
                     value.direction != "received",
                     value.app)
         }

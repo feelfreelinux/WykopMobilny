@@ -15,7 +15,7 @@ class LinkMapper {
                     value.description?.removeHtml() ?: "", value.tags, value.sourceUrl,
                     value.voteCount, value.buryCount, emptyList(),
                     value.commentsCount, value.relatedCount,
-                    if (value.author != null) AuthorMapper.map(value.author) else null, value.date.toPrettyDate(), value.preview?.stripImageCompression(),
+                    if (value.author != null) AuthorMapper.map(value.author!!) else null, value.date.toPrettyDate(), value.preview?.stripImageCompression(),
                     value.plus18, value.canVote, value.isHot,
                     value.status, value.userVote, value.userFavorite ?: false, value.app, linksPreferencesApi.readLinksIds.contains("link_${value.id}"))
         }

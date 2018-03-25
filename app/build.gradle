@@ -6,6 +6,11 @@ apply plugin: 'kotlin-android-extensions'
 kapt {
     generateStubs = true
     correctErrorTypes = true
+    arguments {
+        arg("stagDebug", "true")
+        arg("stagGeneratedPackageName", "com.vimeo.sample.stag.generated")
+        arg("stagAssumeHungarianNotation", "false")
+    }
 }
 
 androidExtensions {
@@ -44,6 +49,15 @@ android {
         buildConfigField "String", "BUGSNAG_KEY", "\"${getBugsnagKey()}\""
         buildConfigField 'String', 'APP_SECRET', credentialsProperties['apiSecret']
         buildConfigField 'String', 'APP_KEY', credentialsProperties['apiKey']
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        stagAssumeHungarianNotation: 'false',
+                        stagDebug                  : 'true'
+                ]
+            }
+        }
     }
     
     signingConfigs {
@@ -108,10 +122,8 @@ dependencies {
     implementation 'com.devbrackets.android:exomedia:4.1.0'
     implementation 'com.google.android.exoplayer:extension-okhttp:2.6.0'
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
-    implementation 'com.github.piasy:ProgressPieIndicator:1.4.6'
-
-
-
+    implementation 'org.apache.commons:commons-lang3:3.6'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     // Utils
     implementation 'com.github.PierfrancescoSoffritti:AndroidYouTubePlayer:4.1.5'
@@ -125,6 +137,7 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-jackson:$versions.retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_interceptor"

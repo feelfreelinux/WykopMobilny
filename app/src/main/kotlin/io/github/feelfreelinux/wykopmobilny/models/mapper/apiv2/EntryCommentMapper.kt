@@ -15,7 +15,7 @@ class EntryCommentMapper {
                     value.body ?: "",
                     value.date.toPrettyDate(),
                     value.userVote > 0,
-                    if (value.embed != null) EmbedMapper.map(value.embed) else null,
+                    if (value.embed != null) EmbedMapper.map(value.embed!!) else null,
                     value.voteCount,
                     value.app,
                     value.violationUrl ?: "",

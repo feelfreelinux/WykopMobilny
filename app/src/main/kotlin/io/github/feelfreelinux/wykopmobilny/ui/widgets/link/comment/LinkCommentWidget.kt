@@ -42,6 +42,9 @@ class LinkCommentWidget(context: Context, attrs: AttributeSet) : BaseLinkComment
                 setOnClickListener { openProfile(nick) }
             }
             dateTextView.text = comment.date.replace(" temu", "")
+            comment.app?.let {
+                dateTextView.text = context.getString(R.string.date_with_user_app, comment.date.replace(" temu", ""), comment.app)
+            }
         }
     }
 }

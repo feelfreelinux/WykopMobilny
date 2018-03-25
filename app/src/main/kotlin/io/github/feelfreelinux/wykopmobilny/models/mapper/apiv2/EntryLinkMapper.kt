@@ -8,8 +8,8 @@ class EntryLinkMapper {
     companion object {
         fun map(value: EntryLinkResponse, linksPreferencesApi : LinksPreferencesApi): EntryLink {
             return  EntryLink(
-                    if (value.link != null) LinkMapper.map(value.link, linksPreferencesApi) else null,
-                    if (value.entry != null) EntryMapper.map(value.entry) else null
+                    if (value.link != null) LinkMapper.map(value.link!!, linksPreferencesApi) else null,
+                    if (value.entry != null) EntryMapper.map(value.entry!!) else null
             )
         }
     }

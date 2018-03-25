@@ -8,7 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 class ConversationMapper {
     companion object : Mapper<ConversationResponse, Conversation> {
         override fun map(value: ConversationResponse): Conversation {
-            return Conversation(AuthorMapper.map(value.receiver), value.lastUpdate.toPrettyDate())
+            return Conversation(AuthorMapper.map(value.receiver), value.lastUpdate!!.toPrettyDate())
         }
     }
 }

@@ -90,7 +90,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
             description.text = profileResponse.description
         }
         profileResponse.isObserved?.let {
-            observeStateResponse = ObserveStateResponse(profileResponse.isObserved, profileResponse.isBlocked!!)
+            observeStateResponse = ObserveStateResponse(profileResponse.isObserved!!, profileResponse.isBlocked!!)
             invalidateOptionsMenu()
         }
         if (profileResponse.followers != 0)
@@ -106,7 +106,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         }
         profileResponse.sex?.let {
             genderStripImageView.isVisible = true
-            genderStripImageView.setBackgroundResource(getGenderStripResource(profileResponse.sex))
+            genderStripImageView.setBackgroundResource(getGenderStripResource(profileResponse.sex!!))
         }
 
         profileResponse.ban?.apply {
@@ -115,7 +115,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         }
         backgroundImg.isVisible = true
         profileResponse.background?.let {
-            backgroundImg.loadImage(profileResponse.background)
+            backgroundImg.loadImage(profileResponse.background!!)
             toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         }
     }
