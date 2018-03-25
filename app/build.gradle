@@ -27,7 +27,7 @@ static def getBugsnagKey() {
 }
 
 static def isWeeklyBuild() {
-    return System.getenv('IS_WEEKLY') ? "true" : "false"
+    return System.getenv('TRAVIS_EVENT_TYPE') == "cron" ? "true" : "false"
 }
 
 android {
