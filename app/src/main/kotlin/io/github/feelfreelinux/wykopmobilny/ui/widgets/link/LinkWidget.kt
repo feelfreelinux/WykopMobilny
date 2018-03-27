@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.link_details_header_layout.view.*
 import kotlinx.android.synthetic.main.link_menu_bottomsheet.view.*
 import java.net.URL
 
-class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), LinkView, URLClickedListener {
+class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs), LinkView, URLClickedListener {
 
     lateinit var link : Link
     lateinit var presenter : LinkPresenter
@@ -98,7 +99,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : CardView(context, attr
     }
 
     private fun setupBody() {
-        title.text = link.title.removeHtml()
+        titleTextView.text = link.title.removeHtml()
         image.isVisible = link.preview != null
         link.preview?.let { image.loadImage(link.preview!!.stripImageCompression()) }
         description.text = link.description.removeHtml()

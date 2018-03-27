@@ -3,13 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="android.support.v7.widget.CardView"
+    tools:parentTag="android.support.constraint.ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/image"
@@ -24,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/titleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/link_layout_title_padding_horizontal"
@@ -54,7 +50,7 @@
             android:duplicateParentState="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
             tools:text="Opis znaleziska"/>
 
         <View
@@ -234,7 +230,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </android.support.constraint.ConstraintLayout>
 
 </merge>
