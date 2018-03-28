@@ -3,16 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="android.support.v7.widget.CardView"
+    tools:parentTag="android.support.constraint.ConstraintLayout"
     style="@style/EntryCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutSimple"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/itemBackgroundColorStatelist">
 
         <View
             android:id="@+id/simple_digg"
@@ -88,7 +82,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:visibility="visible" />
-
-    </android.support.constraint.ConstraintLayout>
 
 </merge>

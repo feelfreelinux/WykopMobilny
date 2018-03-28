@@ -29,8 +29,6 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
     }
 
     init {
-        cardElevation = resources.getDimension(R.dimen.cardview_elevation)
-        radius = resources.getDimension(R.dimen.cardview_radius)
         val typedValue = TypedValue()
         getActivityContext()!!.theme?.resolveAttribute(R.attr.itemBackgroundColorStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
@@ -65,7 +63,7 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
         }
 
         if (settingsPreferencesApi.linkImagePosition == "top" || settingsPreferencesApi.linkImagePosition == "bottom") {
-            title.maxLines = 5
+            titleTextView.maxLines = 5
             description.maxLines = 10
         }
         val correctImage = getCorrectImageView()
@@ -83,7 +81,7 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
             dateTextView.isVisible = false
         }
 
-        title.text = link.title
+        titleTextView.text = link.title
         description.text = link.description
     }
 
@@ -161,7 +159,7 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
 
     override fun setWidgetAlpha(alpha: Float) {
         getCorrectImageView().alpha = alpha
-        title.alpha = alpha
+        titleTextView.alpha = alpha
         description.alpha = alpha
     }
 }

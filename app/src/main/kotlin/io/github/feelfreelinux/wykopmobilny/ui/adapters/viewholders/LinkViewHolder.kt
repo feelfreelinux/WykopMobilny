@@ -16,7 +16,7 @@ class LinkViewHolder(val view: LinkItemWidget, val settingsApi: SettingsPreferen
 
     override fun cleanRecycled() {
         view.apply {
-            title.text = null
+            titleTextView.text = null
             description.text = null
             diggCountTextView.text = null
             commentsCountTextView.text = null

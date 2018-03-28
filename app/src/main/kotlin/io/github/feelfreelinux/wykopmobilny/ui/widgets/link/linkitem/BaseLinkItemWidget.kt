@@ -1,8 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
 import android.support.v4.app.ShareCompat
 import android.support.v7.widget.CardView
+import android.util.TypedValue
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
@@ -11,7 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import kotlinx.android.extensions.LayoutContainer
 
-abstract class BaseLinkItemWidget(context: Context) : CardView(context, null, R.style.EntryCardView), LinkItemView, LayoutContainer {
+abstract class BaseLinkItemWidget(context: Context) : ConstraintLayout(context, null, R.style.EntryCardView), LinkItemView, LayoutContainer {
     override fun showErrorDialog(e: Throwable) {
         context.showExceptionDialog(e)
     }
@@ -22,6 +24,14 @@ abstract class BaseLinkItemWidget(context: Context) : CardView(context, null, R.
     companion object {
         val ALPHA_NEW = 1f
         val ALPHA_VISITED = 0.6f
+    }
+
+    init {
+        isClickable = true
+        isFocusable = true
+        val typedValue = TypedValue()
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.itemBackgroundColorStatelist, typedValue, true)
+        setBackgroundResource(typedValue.resourceId)
     }
     abstract fun setWidgetAlpha(alpha : Float)
 
