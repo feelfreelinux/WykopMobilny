@@ -5,4 +5,5 @@ import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
 
 interface BlacklistView : BaseView {
     fun importBlacklist(blacklist : Blacklist)
+    fun refreshResults()
 }

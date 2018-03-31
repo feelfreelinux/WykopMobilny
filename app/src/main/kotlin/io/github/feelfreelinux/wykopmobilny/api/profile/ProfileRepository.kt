@@ -6,11 +6,12 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.BadgeResponse
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
 
-class ProfileRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi : LinksPreferencesApi) : ProfileApi {
+class ProfileRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi : LinksPreferencesApi, val blacklistPreferences: BlacklistPreferences) : ProfileApi {
     private val profileApi by lazy { retrofit.create(ProfileRetrofitApi::class.java) }
 
     override fun getIndex(username : String): Single<ProfileResponse> =
@@ -89,8 +90,16 @@ class ProfileRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
     override fun block(tag : String) = profileApi.block(tag)
             .retryWhen(userTokenRefresher)
             .compose<ObserveStateResponse>(ErrorHandlerTransformer())
+            .doOnSuccess {
+                if (!blacklistPreferences.blockedUsers.contains(tag.removePrefix("@")))
+                    blacklistPreferences.blockedUsers = blacklistPreferences.blockedUsers.plus(tag.removePrefix("@"))
+            }
 
     override fun unblock(tag : String) = profileApi.unblock(tag)
             .retryWhen(userTokenRefresher)
             .compose<ObserveStateResponse>(ErrorHandlerTransformer())
+            .doOnSuccess {
+                if (blacklistPreferences.blockedUsers.contains(tag.removePrefix("@")))
+                    blacklistPreferences.blockedUsers = blacklistPreferences.blockedUsers.minus(tag.removePrefix("@"))
+            }
 }

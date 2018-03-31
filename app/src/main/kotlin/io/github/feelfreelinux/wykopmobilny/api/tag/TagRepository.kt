@@ -9,11 +9,12 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTag
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagEntriesResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagLinksResponse
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
 
-class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi) : TagApi {
+class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi, val blacklistPreferences: BlacklistPreferences) : TagApi {
     private val tagApi by lazy { retrofit.create(TagRetrofitApi::class.java) }
 
     override fun getTagEntries(tag : String, page : Int) = tagApi.getTagEntries(tag, page)
@@ -42,8 +43,16 @@ class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresh
     override fun block(tag : String) = tagApi.block(tag)
             .retryWhen(userTokenRefresher)
             .compose<ObserveStateResponse>(ErrorHandlerTransformer())
+            .doOnSuccess {
+                if (!blacklistPreferences.blockedTags.contains(tag.removePrefix("#")))
+                    blacklistPreferences.blockedTags = blacklistPreferences.blockedTags.plus(tag.removePrefix("#"))
+            }
 
     override fun unblock(tag : String) = tagApi.unblock(tag)
             .retryWhen(userTokenRefresher)
             .compose<ObserveStateResponse>(ErrorHandlerTransformer())
+            .doOnSuccess {
+                if (blacklistPreferences.blockedTags.contains(tag.removePrefix("#")))
+                blacklistPreferences.blockedTags = blacklistPreferences.blockedTags.minus(tag.removePrefix("#"))
+            }
 }

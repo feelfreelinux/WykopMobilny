@@ -9,32 +9,32 @@
     android:clickable="true"
     android:focusable="true">
 
-    <TextView
-        android:id="@+id/blockedTextView"
+    <EditText
+        android:id="@+id/blockUserEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/padding_dp_small"
         android:paddingLeft="@dimen/padding_dp_huge"
         android:paddingRight="@dimen/padding_dp_huge"
         android:paddingTop="@dimen/padding_dp_small"
-        android:textSize="?attr/textSizeNormal"
+        android:singleLine="true"
+        android:textSize="?attr/textSizeHuge"
+        android:background="@android:color/transparent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separatorView"
-        app:layout_constraintRight_toLeftOf="@id/unlockImageView"
-        tools:text="#otwartywykopmobilny" />
+        app:layout_constraintRight_toLeftOf="@id/lockImageView"
+        tools:text="Tag / użytkownik do zablokowania" />
 
     <ImageView
-        android:id="@+id/unlockImageView"
+        android:id="@+id/lockImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/padding_dp_small"
         android:paddingBottom="@dimen/padding_dp_small"
         android:paddingLeft="@dimen/padding_dp_huge"
         android:paddingRight="@dimen/padding_dp_huge"
-        android:src="?attr/bottomSheetUnlock"
+        android:src="?attr/bottomSheetLock"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separatorView"
         app:layout_constraintRight_toRightOf="parent" />
 
     <View
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/separator_normal"
         android:background="?attr/lineColor"
-        app:layout_constraintTop_toBottomOf="@id/blockedTextView"
+        app:layout_constraintTop_toBottomOf="@id/blockUserEditText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

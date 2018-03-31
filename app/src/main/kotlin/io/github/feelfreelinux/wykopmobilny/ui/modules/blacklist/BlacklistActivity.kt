@@ -12,11 +12,16 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_blacklist.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class BlacklistActivity : BaseActivity(), BlacklistView {
+    override val enableSwipeBackLayout = true
+
+    val updateDataSubject = PublishSubject.create<Boolean>()
+
     companion object {
         fun createIntent(context : Context) : Intent {
             return Intent(context, BlacklistActivity::class.java)
@@ -26,21 +31,11 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
     @Inject lateinit var blacklistPreferences : BlacklistPreferences
 
     override fun importBlacklist(blacklist: Blacklist) {
-        val tagsSet = HashSet<String>(blacklistPreferences.blockedTags)
-        blacklist.tags.blockedTags.forEach {
-            if (!tagsSet.contains(it.tag)) {
-                tagsSet.add(it.tag)
-            }
-        }
-        blacklistPreferences.blockedTags = tagsSet
+        blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags.blockedTags.map { it.tag.removePrefix("#") })
 
-        val usersSet = HashSet<String>(blacklistPreferences.blockedUsers)
-        blacklist.users.blockedUsers.forEach {
-            if (!usersSet.contains(it.nick)) {
-                usersSet.add(it.nick)
-            }
-        }
-        blacklistPreferences.blockedUsers = usersSet
+        blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users.blockedUsers.map { it.nick.removePrefix("@") })
+
+        updateDataSubject.onNext(true)
     }
 
     @Inject lateinit var presenter : BlacklistPresenter
@@ -53,16 +48,30 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
         setContentView(R.layout.activity_blacklist)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "Zarządzaj czarną listą"
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         presenter.subscribe(this)
         pager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(pager)
     }
 
-    fun unlockTag(tag : String) {}
+    fun unblockTag(tag : String) {
+        presenter.unblockTag(tag)
+    }
 
-    fun unlockUser(user : String) {
+    fun unblockUser(user : String) {
+        presenter.unblockUser(user)
+    }
 
+    fun blockTag(tag : String) {
+        presenter.blockTag(tag)
+    }
+
+    fun blockUser(user : String) {
+        presenter.blockUser(user)
+    }
+
+    override fun refreshResults() {
+        updateDataSubject.onNext(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -76,5 +85,10 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribe()
     }
 }
