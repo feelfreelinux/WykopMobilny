@@ -75,6 +75,11 @@
             android:title="@string/link_show_author"
             android:defaultValue="false"/>
 
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="hideLinkCommentsByDefault"
+            android:title="Zwijaj wszyskie komentarze"
+            android:defaultValue="false"/>
+
     </android.support.v7.preference.PreferenceCategory>
 
     <android.support.v7.preference.PreferenceCategory

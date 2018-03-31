@@ -1,7 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.SimpleBaseProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
@@ -18,7 +20,7 @@ class FeedAdapter @Inject constructor(val userManagerApi: UserManagerApi, val se
     }
 
     override fun createViewHolder(parent: ViewGroup): EntryViewHolder =
-            EntryViewHolder(EntryWidget.createView(parent.context), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
+            EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()

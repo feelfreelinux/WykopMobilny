@@ -3,11 +3,14 @@ package io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.mapper.Mapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryCommentResponse
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.containsTagInBody
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
 class EntryCommentMapper {
-    companion object : Mapper<EntryCommentResponse, EntryComment> {
-        override fun map(value: EntryCommentResponse): EntryComment {
+    companion object {
+        fun map(value: EntryCommentResponse, blacklistPreferencesApi: BlacklistPreferencesApi, settingsPreferencesApi: SettingsPreferencesApi): EntryComment {
             return EntryComment(
                     value.id,
                     value.entryId ?: 0,
@@ -19,7 +22,11 @@ class EntryCommentMapper {
                     value.voteCount,
                     value.app,
                     value.violationUrl ?: "",
-                    value.body?.toLowerCase()?.contains("#nsfw") ?: false
+                    value.body?.toLowerCase()?.contains("#nsfw") ?: false,
+                    value.blocked ||
+                            (blacklistPreferencesApi.blockedUsers.contains(value.author.login)) ||
+                            blacklistPreferencesApi.blockedTags.containsTagInBody(value.body?.toLowerCase() ?: "") ||
+                            settingsPreferencesApi.hideLowRangeAuthors && value.author.color == 0
             )
         }
     }

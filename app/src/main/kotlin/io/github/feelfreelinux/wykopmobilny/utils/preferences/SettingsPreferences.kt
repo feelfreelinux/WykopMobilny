@@ -19,15 +19,17 @@ interface SettingsPreferencesApi {
     var cutLongEntries : Boolean
     var cutImages : Boolean
     var openSpoilersDialog : Boolean
+    var hideLowRangeAuthors : Boolean
     var cutImageProportion : Int
     var fontSize : String?
-
+    var hideLinkCommentsByDefault : Boolean
 }
 
 class SettingsPreferences(context : Context) : Preferences(context, true), SettingsPreferencesApi {
     override var notificationsSchedulerDelay by stringPref(defaultValue = "15")
     override var showAdultContent by booleanPref(defaultValue = false)
     override var hideNsfw: Boolean by booleanPref(defaultValue = true)
+    override var hideLowRangeAuthors: Boolean by booleanPref(defaultValue = false)
     override var hotEntriesScreen by stringPref(defaultValue = "newest")
     override var defaultScreen by stringPref(defaultValue = "mainpage")
     override var fontSize by stringPref(defaultValue = "normal")
@@ -43,4 +45,5 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var cutImageProportion by intPref(defaultValue = 60)
     override var openSpoilersDialog by booleanPref(defaultValue = true)
     override var showNotifications by booleanPref(defaultValue = true)
+    override var hideLinkCommentsByDefault by booleanPref(defaultValue = false)
 }

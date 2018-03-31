@@ -36,6 +36,11 @@
             android:title="@string/pref_content_filternsfw"
             android:defaultValue="true"/>
 
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="hideLowRangeAuthors"
+            android:title="Ukrywaj wpisy zielonek"
+            android:defaultValue="false"/>
+
     </android.support.v7.preference.PreferenceCategory>
 
     <android.support.v7.preference.Preference

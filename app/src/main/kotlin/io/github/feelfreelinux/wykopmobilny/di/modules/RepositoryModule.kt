@@ -33,6 +33,8 @@ import io.github.feelfreelinux.wykopmobilny.api.user.LoginRepository
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import pl.droidsonroids.retrofit2.JspoonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -42,20 +44,20 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideEntriesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : EntriesApi = EntriesRepository(retrofit, userTokenRefresher)
+    fun provideEntriesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, blacklistPreferencesApi: BlacklistPreferencesApi, settingsPreferencesApi: SettingsPreferencesApi) : EntriesApi = EntriesRepository(retrofit, userTokenRefresher, blacklistPreferencesApi, settingsPreferencesApi)
 
     @Provides
     fun provideNotificationsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : NotificationsApi = NotificationsRepository(retrofit, userTokenRefresher)
 
     @Provides
-    fun provideMyWykopApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, linksPreferencesApi)
+    fun provideMyWykopApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi, blacklistPreferencesApi: BlacklistPreferencesApi, settingsPreferencesApi: SettingsPreferencesApi) : MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi)
 
     @Provides
     @Singleton
-    fun provideLinksApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : LinksApi = LinksRepository(retrofit, userTokenRefresher, linksPreferencesApi)
+    fun provideLinksApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi, blacklistPreferencesApi: BlacklistPreferencesApi, settingsPreferencesApi: SettingsPreferencesApi) : LinksApi = LinksRepository(retrofit, userTokenRefresher, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi)
 
     @Provides
-    fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi, blacklistPreferences: BlacklistPreferences) : TagApi = TagRepository(retrofit, userTokenRefresher, linksPreferencesApi,blacklistPreferences)
+    fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi, blacklistPreferencesApi: BlacklistPreferencesApi, settingsPreferencesApi: SettingsPreferencesApi) : TagApi = TagRepository(retrofit, userTokenRefresher, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi)
 
     @Provides
     fun provideUserApi(retrofit: Retrofit, credentialsPreferencesApi : CredentialsPreferencesApi) : LoginApi
@@ -68,13 +70,13 @@ class RepositoryModule {
     fun provideSuggestApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : SuggestApi = SuggestRepository(retrofit, userTokenRefresher)
 
     @Provides
-    fun provideSearchApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : SearchApi = SearchRepository(retrofit, userTokenRefresher, linksPreferencesApi)
+    fun provideSearchApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi, blacklistPreferencesApi: BlacklistPreferencesApi, settingsPreferencesApi: SettingsPreferencesApi) : SearchApi = SearchRepository(retrofit, userTokenRefresher, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi)
 
     @Provides
-    fun provideHitsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi) : HitsApi = HitsRepository(retrofit, userTokenRefresher, linksPreferencesApi)
+    fun provideHitsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi, blacklistPreferencesApi: BlacklistPreferencesApi, settingsPreferencesApi: SettingsPreferencesApi) : HitsApi = HitsRepository(retrofit, userTokenRefresher, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi)
 
     @Provides
-    fun provideProfilesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi, blacklistPreferences: BlacklistPreferences) : ProfileApi = ProfileRepository(retrofit, userTokenRefresher, linksPreferencesApi, blacklistPreferences)
+    fun provideProfilesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, linksPreferencesApi: LinksPreferencesApi, blacklistPreferences: BlacklistPreferencesApi, settingsPreferencesApi: SettingsPreferencesApi) : ProfileApi = ProfileRepository(retrofit, userTokenRefresher, linksPreferencesApi, blacklistPreferences, settingsPreferencesApi)
 
     @Provides
     fun provideEmbedApi(retrofit: Retrofit) : ExternalApi = ExternalRepository(retrofit)

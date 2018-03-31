@@ -8,23 +8,25 @@ import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import retrofit2.Retrofit
 
-class SearchRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi) : SearchApi {
+class SearchRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi, val blacklistPreferencesApi: BlacklistPreferencesApi, val settingsPreferencesApi: SettingsPreferencesApi) : SearchApi {
     private val searchApi by lazy { retrofit.create(SearchRetrofitApi::class.java) }
 
     override fun searchLinks(page: Int, query: String) = searchApi
             .searchLinks(page, query)
             .retryWhen(userTokenRefresher)
             .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-            .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
+            .map { it.map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) } }
 
     override fun searchEntries(page: Int, query: String) = searchApi
             .searchEntries(page, query)
             .retryWhen(userTokenRefresher)
             .compose<List<EntryResponse>>(ErrorHandlerTransformer())
-            .map { it.map { EntryMapper.map(it) } }
+            .map { it.map { EntryMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) } }
 
     override fun searchProfiles(query: String) = searchApi
             .searchProfiles(query)

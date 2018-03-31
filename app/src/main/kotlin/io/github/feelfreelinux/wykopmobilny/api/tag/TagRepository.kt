@@ -10,22 +10,24 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStat
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagEntriesResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagLinksResponse
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
 
-class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi, val blacklistPreferences: BlacklistPreferences) : TagApi {
+class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi, val blacklistPreferencesApi: BlacklistPreferencesApi, val settingsPreferencesApi: SettingsPreferencesApi) : TagApi {
     private val tagApi by lazy { retrofit.create(TagRetrofitApi::class.java) }
 
     override fun getTagEntries(tag : String, page : Int) = tagApi.getTagEntries(tag, page)
             .retryWhen(userTokenRefresher)
             .flatMap(ErrorHandler<TagEntriesResponse>())
-            .map { TagEntriesMapper.map(it)}
+            .map { TagEntriesMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi)}
 
     override fun getTagLinks(tag : String, page : Int) = tagApi.getTagLinks(tag, page)
             .retryWhen(userTokenRefresher)
             .flatMap(ErrorHandler<TagLinksResponse>())
-            .map { TagLinksMapper.map(it, linksPreferencesApi)}
+            .map { TagLinksMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi)}
 
     override fun getObservedTags() : Single<List<ObservedTagResponse>> =
             tagApi.getObservedTags()
@@ -44,15 +46,15 @@ class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresh
             .retryWhen(userTokenRefresher)
             .compose<ObserveStateResponse>(ErrorHandlerTransformer())
             .doOnSuccess {
-                if (!blacklistPreferences.blockedTags.contains(tag.removePrefix("#")))
-                    blacklistPreferences.blockedTags = blacklistPreferences.blockedTags.plus(tag.removePrefix("#"))
+                if (!blacklistPreferencesApi.blockedTags.contains(tag.removePrefix("#")))
+                    blacklistPreferencesApi.blockedTags = blacklistPreferencesApi.blockedTags.plus(tag.removePrefix("#"))
             }
 
     override fun unblock(tag : String) = tagApi.unblock(tag)
             .retryWhen(userTokenRefresher)
             .compose<ObserveStateResponse>(ErrorHandlerTransformer())
             .doOnSuccess {
-                if (blacklistPreferences.blockedTags.contains(tag.removePrefix("#")))
-                blacklistPreferences.blockedTags = blacklistPreferences.blockedTags.minus(tag.removePrefix("#"))
+                if (blacklistPreferencesApi.blockedTags.contains(tag.removePrefix("#")))
+                    blacklistPreferencesApi.blockedTags = blacklistPreferencesApi.blockedTags.minus(tag.removePrefix("#"))
             }
 }

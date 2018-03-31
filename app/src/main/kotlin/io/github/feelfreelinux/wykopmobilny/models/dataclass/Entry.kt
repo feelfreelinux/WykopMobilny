@@ -13,7 +13,8 @@ class Entry(val id: Int,
             val comments: List<EntryComment>,
             val app: String?,
             val violationUrl: String,
-            var isNsfw: Boolean = false) {
+            var isNsfw: Boolean = false,
+            var isBlocked: Boolean = false) {
     override fun equals(other: Any?): Boolean {
         return if (other !is Entry) false
         else (other.id == id)

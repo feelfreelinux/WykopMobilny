@@ -56,7 +56,7 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ENTRY_HOLDER -> EntryViewHolder(EntryWidget.createView(parent.context), userManagerApi, addReceiverListener, settingsPreferencesApi, entryPresenterFactory.create())
+            ENTRY_HOLDER -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false), userManagerApi, addReceiverListener, settingsPreferencesApi, entryPresenterFactory.create())
             else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false), addReceiverListener, quoteCommentListener, settingsPreferencesApi, userManagerApi, commentPresenterFactory.create())
         }
     }

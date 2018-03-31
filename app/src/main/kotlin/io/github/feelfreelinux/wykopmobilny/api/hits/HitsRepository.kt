@@ -5,24 +5,26 @@ import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransfo
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
 
-class HitsRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi) : HitsApi {
+class HitsRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi, val blacklistPreferencesApi: BlacklistPreferencesApi, val settingsPreferencesApi: SettingsPreferencesApi) : HitsApi {
     private val hitsApi by lazy { retrofit.create(HitsRetrofitApi::class.java) }
     override fun byMonth(year: Int, month: Int): Single<List<Link>> =
             hitsApi.byMonth(year, month)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
+                    .map { it.map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) } }
 
 
     override fun currentDay(): Single<List<Link>>  =
             hitsApi.currentDay()
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
+                    .map { it.map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) } }
 
 
 
@@ -30,20 +32,20 @@ class HitsRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRe
             hitsApi.byYear(year)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
+                    .map { it.map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) } }
 
 
     override fun currentWeek(): Single<List<Link>> =
             hitsApi.currentWeek()
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
+                    .map { it.map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) } }
 
 
     override fun popular(): Single<List<Link>> =
             hitsApi.popular()
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it, linksPreferencesApi) } }
+                    .map { it.map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) } }
 
 }

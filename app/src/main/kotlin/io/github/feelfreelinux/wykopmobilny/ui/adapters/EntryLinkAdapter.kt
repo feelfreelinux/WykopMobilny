@@ -1,7 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.AdvancedProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
@@ -31,7 +33,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
             when (viewType) {
-                ENTRY_VIEWTYPE -> EntryViewHolder(EntryWidget.createView(parent.context), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
+                ENTRY_VIEWTYPE -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
                 LINK_VIEWTYPE -> LinkViewHolder(LinkItemWidget.createView(parent.context), settingsPreferencesApi, linkItemPresenterFactory.create())
                 else -> SimpleLinkViewHolder(SimpleItemWidget.createView(parent.context), settingsPreferencesApi, linkItemPresenterFactory.create())
             }

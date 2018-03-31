@@ -26,7 +26,8 @@ class Link(
         var userVote: String?,
         var userFavorite: Boolean,
         val app: String?,
-        var gotSelected : Boolean
+        var gotSelected : Boolean,
+        var isBlocked : Boolean = false
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
@@ -49,8 +50,9 @@ class Link(
             source.readString(),
             1 == source.readInt(),
             source.readString(),
+            1 == source.readInt(),
             1 == source.readInt()
-            )
+    )
 
     override fun describeContents() = 0
 
@@ -76,6 +78,7 @@ class Link(
         writeInt((if (userFavorite) 1 else 0))
         writeString(app)
         writeInt((if (gotSelected) 1 else 0))
+        writeInt((if (isBlocked) 1 else 0))
     }
 
     companion object {

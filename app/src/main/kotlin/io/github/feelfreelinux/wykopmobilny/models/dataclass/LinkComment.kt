@@ -24,7 +24,8 @@ class LinkComment(
         var isParentCollapsed : Boolean,
         var childCommentCount : Int,
         val violationUrl : String,
-        var isNsfw : Boolean = false
+        var isNsfw : Boolean = false,
+        var isBlocked : Boolean = false
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
@@ -46,8 +47,9 @@ class LinkComment(
             1 == source.readInt(),
             source.readInt(),
             source.readString(),
+            1 == source.readInt(),
             1 == source.readInt()
-    )
+            )
 
     override fun describeContents() = 0
 
@@ -72,6 +74,7 @@ class LinkComment(
         writeInt(childCommentCount)
         writeString(violationUrl)
         writeInt((if (isNsfw) 1 else 0))
+        writeInt((if (isBlocked) 1 else 0))
     }
 
     companion object {
