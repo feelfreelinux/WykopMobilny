@@ -131,7 +131,7 @@
                     android:background="?attr/lineColor"/>
 
                 <TextView
-                    android:id="@+id/tagsTextView"
+                    android:id="@+id/blockedTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"

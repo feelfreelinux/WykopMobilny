@@ -11,17 +11,28 @@
 
     <TextView
         android:id="@+id/blockedTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="?attr/textSizeHuge"
+        android:paddingBottom="@dimen/padding_dp_small"
+        android:paddingLeft="@dimen/padding_dp_huge"
+        android:paddingRight="@dimen/padding_dp_huge"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:textSize="?attr/textSizeNormal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="#otwartywykopmobilny" />
+
+    <ImageView
+        android:id="@+id/unlockImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingTop="@dimen/padding_dp_small"
         android:paddingBottom="@dimen/padding_dp_small"
         android:paddingLeft="@dimen/padding_dp_huge"
         android:paddingRight="@dimen/padding_dp_huge"
+        android:src="?attr/bottomSheetUnlock"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:text="#otwartywykopmobilny" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <View
         android:id="@+id/separatorView"

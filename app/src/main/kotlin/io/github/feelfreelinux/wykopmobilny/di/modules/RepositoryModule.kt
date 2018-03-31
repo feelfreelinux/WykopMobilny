@@ -19,6 +19,9 @@ import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMRepository
 import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileApi
 import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileRepository
+import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileRetrofitApi
+import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
+import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperRepository
 import io.github.feelfreelinux.wykopmobilny.api.search.SearchApi
 import io.github.feelfreelinux.wykopmobilny.api.search.SearchRepository
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
@@ -29,7 +32,9 @@ import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginRepository
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import pl.droidsonroids.retrofit2.JspoonConverterFactory
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import javax.inject.Singleton
 
 @Module
@@ -72,4 +77,15 @@ class RepositoryModule {
 
     @Provides
     fun provideEmbedApi(retrofit: Retrofit) : ExternalApi = ExternalRepository(retrofit)
+
+    @Provides
+    fun provideScraperApi() : ScraperApi = ScraperRepository(createScraperRetrofit())
+
+    fun createScraperRetrofit() : Retrofit {
+        return Retrofit.Builder()
+                .baseUrl("https://wykop.pl")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(JspoonConverterFactory.create())
+                .build()
+    }
 }

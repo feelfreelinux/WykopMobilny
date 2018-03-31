@@ -38,4 +38,8 @@
 
     </android.support.v7.preference.PreferenceCategory>
 
+    <android.support.v7.preference.Preference
+        android:key="blacklist"
+        android:title="Zarządzaj czarną listą"/>
+
 </android.support.v7.preference.PreferenceScreen>

@@ -14,6 +14,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import javax.inject.Inject
@@ -40,6 +41,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         (findPreference("appearance") as Preference).setOnPreferenceClickListener {
             (activity as SettingsActivity).openFragment(SettingsAppearance(), "appearance")
+            true
+        }
+
+        (findPreference("blacklist") as Preference).setOnPreferenceClickListener {
+            startActivity(BlacklistActivity.createIntent(activity!!))
             true
         }
 

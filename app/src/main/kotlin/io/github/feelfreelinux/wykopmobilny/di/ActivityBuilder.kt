@@ -2,6 +2,9 @@ package io.github.feelfreelinux.wykopmobilny.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistFragmentProvider
+import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.YoutubeViewActivity
@@ -107,4 +110,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [])
     abstract fun bindYoutubeActivity() : YoutubeViewActivity
+
+    @ContributesAndroidInjector(modules = [BlacklistModule::class, BlacklistFragmentProvider::class])
+    abstract fun bindBlacklistACtivity() : BlacklistActivity
 }

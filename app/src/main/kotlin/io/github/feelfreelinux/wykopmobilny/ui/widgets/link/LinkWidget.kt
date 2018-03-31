@@ -5,7 +5,6 @@ import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
-import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -76,7 +75,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         }
 
         urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
-        tagsTextView.prepareBody(link.tags.convertToTagsHtml(), this)
+        blockedTextView.prepareBody(link.tags.convertToTagsHtml(), this)
     }
 
     private fun setupButtons() {
