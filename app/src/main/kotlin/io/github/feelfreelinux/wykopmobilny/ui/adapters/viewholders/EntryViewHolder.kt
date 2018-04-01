@@ -36,12 +36,10 @@ class EntryViewHolder(override val containerView: View, val userManagerApi: User
                 showHiddenTextView.setText(text, TextView.BufferType.SPANNABLE)
             }
 
-            separatorView.isVisible = (entry.isBlocked && enableClickListener)
             showHiddenTextView.setOnClickListener {
                 entry.isBlocked = false
                 entryWidget.isVisible = true
                 showHiddenTextView.isVisible = false
-                separatorView.isVisible = false
             }
         }
     }

@@ -17,8 +17,8 @@ abstract class SimpleBaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
         get() = dataset.filterNotNull()
 
     companion object {
-        val ITEM_TYPE = 0
-        val ITEM_PROGRESS = 1
+        val ITEM_TYPE = 2002
+        val ITEM_PROGRESS = 2001
     }
 
     override fun disableLoading() {

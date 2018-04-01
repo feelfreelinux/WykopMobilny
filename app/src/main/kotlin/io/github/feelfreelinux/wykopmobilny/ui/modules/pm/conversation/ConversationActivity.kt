@@ -19,10 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
-import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
+import io.github.feelfreelinux.wykopmobilny.utils.*
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_conversation.*
 import kotlinx.android.synthetic.main.activity_conversation.view.*
@@ -61,7 +58,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         presenter.subscribe(this)
         presenter.user = user
         recyclerView?.apply {
-            prepare()
+            prepareNoDivider()
             adapter = conversationAdapter
             (layoutManager as LinearLayoutManager).reverseLayout = true
             setHasFixedSize(false)

@@ -18,9 +18,9 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
                                              val userManagerApi: UserManagerApi,
                                              val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
-        private const val HEADER_HOLDER = 0
-        private const val TOP_COMMENT_HOLDER = 1
-        private const val COMMENT_HOLDER = 2
+        val HEADER_HOLDER = 4
+        val TOP_COMMENT_HOLDER = 5
+        val COMMENT_HOLDER = 6
     }
 
     var highlightCommentId = -1

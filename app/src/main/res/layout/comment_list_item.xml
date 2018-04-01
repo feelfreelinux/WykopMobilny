@@ -12,12 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <View
-        android:id="@+id/separatorView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_large"
-        android:background="?attr/lineColor"/>
-
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentWidget
         android:id="@+id/entryComment"
         android:layout_width="match_parent"

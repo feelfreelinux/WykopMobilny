@@ -25,6 +25,7 @@ import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.PreCachingLayoutManager
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDateJavaTime
+import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ViewHolderDependentItemDecorator
 import org.ocpsoft.prettytime.PrettyTime
 import org.threeten.bp.Duration
 import org.threeten.bp.Instant
@@ -60,7 +61,15 @@ fun RecyclerView.prepare() {
     drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     isDrawingCacheEnabled = true
     layoutManager = LinearLayoutManager(context)
+    addItemDecoration(ViewHolderDependentItemDecorator(context))
 
+}
+
+fun RecyclerView.prepareNoDivider() {
+    setItemViewCacheSize(20)
+    drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
+    isDrawingCacheEnabled = true
+    layoutManager = LinearLayoutManager(context)
 }
 
 fun View.disableFor(millis: Long){

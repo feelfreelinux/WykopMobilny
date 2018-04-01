@@ -11,11 +11,6 @@
         android:padding="@dimen/_8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <View
-        android:id="@+id/separatorView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_large"
-        android:background="?attr/lineColor"/>
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
         android:id="@+id/entryWidget"

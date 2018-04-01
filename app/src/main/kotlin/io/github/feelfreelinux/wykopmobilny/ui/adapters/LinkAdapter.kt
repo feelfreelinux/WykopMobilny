@@ -16,7 +16,7 @@ import javax.inject.Inject
 class LinkAdapter @Inject constructor(val settingsPreferencesApi : SettingsPreferencesApi, val linkItemPresenterFactory: LinkItemPresenterFactory) : AdvancedProgressAdapter<Link>() {
     companion object {
         val LINK_VIEWTYPE = 1
-        val SIMPLE_LINK_VIEWTYPE = 2
+        val SIMPLE_LINK_VIEWTYPE = 3
     }
 
     override fun getItemViewType(position: Int): Int = when {

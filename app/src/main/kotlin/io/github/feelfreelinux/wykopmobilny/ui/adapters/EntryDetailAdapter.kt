@@ -22,8 +22,8 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
                                              val entryPresenterFactory: EntryPresenterFactory,
                                              val commentPresenterFactory: CommentPresenterFactory) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
-        private const val ENTRY_HOLDER = 0
-        private const val COMMENT_HOLDER = 1
+        val ENTRY_HOLDER = 0
+        val COMMENT_HOLDER = 2
     }
     lateinit var addReceiverListener: (Author) -> Unit
     lateinit var quoteCommentListener: (EntryComment) -> Unit

@@ -20,7 +20,7 @@
         android:textSize="?attr/textSizeNormal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separatorView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/unlockImageView"
         tools:text="#otwartywykopmobilny" />
 
@@ -34,16 +34,7 @@
         android:paddingRight="@dimen/padding_dp_huge"
         android:src="?attr/bottomSheetUnlock"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separatorView"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <View
-        android:id="@+id/separatorView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_normal"
-        android:background="?attr/lineColor"
-        app:layout_constraintTop_toBottomOf="@id/blockedTextView"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

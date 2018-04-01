@@ -7,19 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/separatorView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_large"
-        android:background="?attr/lineColor"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
         android:id="@+id/authorHeaderView"
         style="@style/AuthorHeaderView"
-        app:layout_constraintTop_toBottomOf="@id/separatorView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/collapseButtonImageView"/>
 
