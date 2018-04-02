@@ -21,6 +21,9 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
         val HEADER_HOLDER = 4
         val TOP_COMMENT_HOLDER = 5
         val COMMENT_HOLDER = 6
+        val COMMENT_TYPE_LARGE = "LARGE_TYPE"
+        val COMMENT_TYPE_NORMAL = "NORMAL_TYPE"
+        val COMMENT_TYPE = 156
     }
 
     var highlightCommentId = -1
@@ -35,10 +38,15 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
             link?.let { (holder as LinkHeaderViewHolder).bindView(link!!) }
         } else {
             val comment = commentsList!![position - 1]
-            if (holder.itemViewType == TOP_COMMENT_HOLDER)
-            (holder as TopLinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
-            else
+            if (holder.itemViewType == TOP_COMMENT_HOLDER) {
+                (holder as TopLinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
+                holder.itemView.tag = if (comment.childCommentCount > 0) COMMENT_TYPE_LARGE else COMMENT_TYPE_NORMAL
+            } else {
+                val parent = commentsList!!.first { it.id == comment.parentId }
+                val index = commentsList!!.subList(commentsList!!.indexOf(parent), position-1).size
                 (holder as LinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
+                holder.itemView.tag = if (parent.childCommentCount == index) COMMENT_TYPE_LARGE else COMMENT_TYPE_NORMAL
+            }
         }
     }
 

@@ -39,11 +39,18 @@ class ViewHolderDependentItemDecorator(val context: Context) : RecyclerView.Item
 
     }
 
-    override fun getItemOffsets(outRect: Rect, view: View?, parent: RecyclerView, state: RecyclerView.State?) {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
         val position = parent.getChildAdapterPosition(view)
         val viewType = parent.adapter.getItemViewType(position)
+
         if (viewType == EntryDetailAdapter.ENTRY_HOLDER || viewType == LinkDetailsAdapter.HEADER_HOLDER || viewType == LinkAdapter.LINK_VIEWTYPE || viewType == LinkAdapter.SIMPLE_LINK_VIEWTYPE) {
             outRect.set(0, 0, 0, largeHeight)
+        } else if (viewType == LinkDetailsAdapter.COMMENT_HOLDER || viewType == LinkDetailsAdapter.TOP_COMMENT_HOLDER) {
+            if (view.tag == LinkDetailsAdapter.COMMENT_TYPE_NORMAL) {
+                outRect.set(0, 0, 0, normalHeight)
+            } else if (view.tag == LinkDetailsAdapter.COMMENT_TYPE_LARGE) {
+                outRect.set(0, 0, 0, largeHeight)
+            }
         } else if (viewType != SimpleBaseProgressAdapter.ITEM_PROGRESS) {
             outRect.set(0, 0, 0, normalHeight)
         }
@@ -58,6 +65,12 @@ class ViewHolderDependentItemDecorator(val context: Context) : RecyclerView.Item
                 val viewType = parent.adapter.getItemViewType(position)
                 if (viewType == EntryDetailAdapter.ENTRY_HOLDER || viewType == LinkDetailsAdapter.HEADER_HOLDER || viewType == LinkAdapter.LINK_VIEWTYPE || viewType == LinkAdapter.SIMPLE_LINK_VIEWTYPE) {
                     c.drawRect(view.left.toFloat(), view.bottom.toFloat(), view.right.toFloat(), (view.bottom + largeHeight).toFloat(), paint)
+                } else if (viewType == LinkDetailsAdapter.COMMENT_HOLDER || viewType == LinkDetailsAdapter.TOP_COMMENT_HOLDER) {
+                    if (view.tag == LinkDetailsAdapter.COMMENT_TYPE_NORMAL) {
+                        c.drawRect(view.left.toFloat(), view.bottom.toFloat(), view.right.toFloat(), (view.bottom + normalHeight).toFloat(), paint)
+                    } else if (view.tag == LinkDetailsAdapter.COMMENT_TYPE_LARGE) {
+                        c.drawRect(view.left.toFloat(), view.bottom.toFloat(), view.right.toFloat(), (view.bottom + largeHeight).toFloat(), paint)
+                    }
                 } else if (viewType != SimpleBaseProgressAdapter.ITEM_PROGRESS) {
                     c.drawRect(view.left.toFloat(), view.bottom.toFloat(), view.right.toFloat(), (view.bottom + normalHeight).toFloat(), paint)
                 }
