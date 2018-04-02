@@ -16,8 +16,9 @@ abstract class SimpleBaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
     override val data: List<A>
         get() = dataset.filterNotNull()
 
+    open val ITEM_TYPE = 2002
+
     companion object {
-        val ITEM_TYPE = 2002
         val ITEM_PROGRESS = 2001
     }
 

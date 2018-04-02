@@ -26,4 +26,6 @@ class FeedAdapter @Inject constructor(val userManagerApi: UserManagerApi, val se
         (holder as? RecyclableViewHolder)?.cleanRecycled()
         super.onViewRecycled(holder)
     }
+
+    override val ITEM_TYPE = EntryDetailAdapter.ENTRY_HOLDER
 }
