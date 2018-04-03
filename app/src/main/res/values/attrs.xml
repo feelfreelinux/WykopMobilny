@@ -16,6 +16,7 @@
     <attr name="textColorLight" format="color"/>
     <attr name="textColorButtonToolbar" format="color"/>
     <attr name="usersMessageColor" format="reference"/>
+    <attr name="yourMessageColor" format="reference"/>
     <attr name="adminNickColor" format="reference"/>
     <attr name="usersMessageSubtextDirected" format="reference"/>
     <attr name="lineColor" format="reference"/>

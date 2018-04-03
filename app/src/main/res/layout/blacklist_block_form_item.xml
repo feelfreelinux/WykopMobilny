@@ -29,12 +29,13 @@
         android:id="@+id/lockImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/padding_dp_small"
-        android:paddingBottom="@dimen/padding_dp_small"
+        android:paddingTop="@dimen/padding_dp_tiny"
+        android:paddingBottom="@dimen/padding_dp_tiny"
         android:paddingLeft="@dimen/padding_dp_huge"
         android:paddingRight="@dimen/padding_dp_huge"
         android:src="?attr/bottomSheetLock"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/blockUserEditText"
+        app:layout_constraintBottom_toBottomOf="@id/blockUserEditText"
         app:layout_constraintRight_toRightOf="parent" />
 
 

@@ -9,13 +9,14 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/notificationItem"
-        style="@style/EntryCommentsCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/pmmessage_sent_layout_card_margin_horizontal"
-        android:layout_marginRight="@dimen/pmmessage_sent_layout_card_margin_horizontal"
-        app:cardCornerRadius="@dimen/pmmessage_sent_layout_card_radius"
-        app:cardElevation="@dimen/pmmessage_sent_layout_card_elevation"
+        android:layout_marginTop="@dimen/margin_dp_mini"
+        android:layout_marginBottom="@dimen/margin_dp_mini"
+        android:layout_marginLeft="@dimen/margin_dp_large"
+        android:layout_marginRight="@dimen/margin_dp_large"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp"
         android:layout_alignParentStart="true"
         android:clickable="true"
         android:focusable="true">

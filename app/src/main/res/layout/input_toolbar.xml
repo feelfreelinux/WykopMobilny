@@ -10,124 +10,89 @@
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_line_height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/markdownToolbarHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:animateLayoutChanges="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/separator">
-
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbar
-            android:id="@+id/markdownToolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/markdown_close"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageView
-            android:id="@+id/markdown_close"
-            android:layout_width="@dimen/markdown_item_size"
-            android:layout_height="@dimen/markdown_item_size"
-            android:layout_marginStart="@dimen/input_toolbar_item_margin_horizontal"
-            android:layout_marginEnd="@dimen/input_toolbar_item_margin_horizontal"
-            android:layout_marginTop="@dimen/input_toolbar_item_margin_vertical"
-            android:layout_marginBottom="@dimen/input_toolbar_item_margin_vertical"
-            android:animateLayoutChanges="true"
-            android:src="?attr/closeDrawable"
-            app:layout_constraintStart_toEndOf="@id/markdownToolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <View
-            android:id="@+id/separatorHolder"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_line_height"
-            android:background="?attr/separatorColor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </android.support.constraint.ConstraintLayout>
+        android:layout_height="@dimen/separator_normal"
+        android:background="?attr/lineColor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <MultiAutoCompleteTextView
         android:id="@+id/body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/input_toolbar_text_margin_horizontal"
-        android:layout_marginEnd="@dimen/input_toolbar_text_margin_horizontal"
-        android:paddingTop="@dimen/input_toolbar_text_padding_vertical"
-        android:paddingBottom="@dimen/input_toolbar_text_padding_vertical"
-        android:layout_toStartOf="@id/send"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:textSize="@dimen/input_toolbar_text_size"
+        android:layout_marginLeft="@dimen/margin_dp_normal"
+        android:layout_marginRight="@dimen/margin_dp_normal"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:paddingBottom="@dimen/padding_dp_small"
+        android:textSize="?attr/textSizeLarge"
         android:hint="@string/write_comment"
         android:minLines="1"
         android:maxLines="5"
         android:background="@null"
         android:dropDownWidth="wrap_content"
         android:inputType="textMultiLine|textCapSentences"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/show_markdown_menu"
-        app:layout_constraintTop_toBottomOf="@id/markdownToolbarHolder"/>
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@id/separator"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-    <ImageView
-        android:id="@+id/show_markdown_menu"
-        android:layout_width="@dimen/input_toolbar_item_size"
-        android:layout_height="@dimen/input_toolbar_item_size"
-        android:layout_marginStart="@dimen/input_toolbar_item_margin_horizontal"
-        android:layout_marginEnd="@dimen/input_toolbar_item_margin_horizontal"
-        android:layout_marginTop="@dimen/input_toolbar_item_margin_vertical"
-        android:layout_marginBottom="@dimen/input_toolbar_item_margin_vertical"
-        android:layout_alignParentEnd="true"
-        android:src="?attr/collapseDrawable"
-        app:layout_constraintEnd_toStartOf="@+id/send"
-        app:layout_constraintTop_toTopOf="@id/body"
-        app:layout_constraintBottom_toBottomOf="@id/body"/>
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbar
+        android:id="@+id/markdownToolbar"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:paddingTop="@dimen/padding_dp_mini"
+        android:paddingLeft="@dimen/padding_dp_small"
+        android:paddingRight="@dimen/padding_dp_large"
+        android:visibility="gone"
+        android:alpha="0.6"
+        app:layout_constraintTop_toBottomOf="@id/body"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/separatorButton"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/separatorButton"
+        android:layout_width="@dimen/separator_normal"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_dp_mini"
+        android:layout_marginBottom="@dimen/margin_dp_large"
+        android:background="?attr/lineColor"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/body"
+        app:layout_constraintBottom_toBottomOf="@id/markdownToolbar"
+        app:layout_constraintRight_toLeftOf="@id/send"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/send"
-        android:layout_width="@dimen/input_toolbar_item_size"
-        android:layout_height="@dimen/input_toolbar_item_size"
-        android:layout_marginStart="@dimen/input_toolbar_item_margin_horizontal"
-        android:layout_marginEnd="@dimen/input_toolbar_item_margin_horizontal"
-        android:layout_marginTop="@dimen/input_toolbar_item_margin_vertical"
-        android:layout_marginBottom="@dimen/input_toolbar_item_margin_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:paddingTop="@dimen/padding_dp_mini"
+        android:paddingBottom="@dimen/padding_dp_tiny"
+        android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingRight="@dimen/padding_dp_large"
         android:src="?attr/markdownSend"
-        app:layout_constraintEnd_toStartOf="@id/progressBar"
-        app:layout_constraintTop_toTopOf="@id/body"
-        app:layout_constraintBottom_toBottomOf="@id/body"/>
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/body"
+        app:layout_constraintRight_toLeftOf="@id/progressBar"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="@dimen/input_toolbar_item_size"
-        android:layout_height="@dimen/input_toolbar_item_size"
-        android:layout_marginStart="@dimen/input_toolbar_item_margin_horizontal"
-        android:layout_marginEnd="@dimen/input_toolbar_item_margin_horizontal"
-        android:layout_marginTop="@dimen/input_toolbar_item_margin_vertical"
-        android:layout_marginBottom="@dimen/input_toolbar_item_margin_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:paddingTop="@dimen/padding_dp_mini"
+        android:paddingBottom="@dimen/padding_dp_tiny"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/body"
-        app:layout_constraintBottom_toBottomOf="@id/body"/>
+        app:layout_constraintTop_toBottomOf="@id/body"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
         android:id="@+id/floatingImageView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/floating_image_height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/body"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/markdownToolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </merge>

@@ -48,9 +48,9 @@ class PMMessageViewHolder(val view: View,
         theme?.resolveAttribute(R.attr.usersMessageSubtextDirected, usersMessageSubtextDirected, true)
 
         val cardBackgroundColor = TypedValue()
-        theme?.resolveAttribute(R.attr.itemBackgroundColor, cardBackgroundColor, true)
+        theme?.resolveAttribute(R.attr.yourMessageColor, cardBackgroundColor, true)
 
-        val marginVertical = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_vertical).toInt()
+        val marginVertical = view.resources.getDimension(R.dimen.padding_dp_mini).toInt()
         val marginHorizontal = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_horizontal).toInt()
         val marginFlip = view.resources.getDimension(R.dimen.pmmessage_sent_layout_card_margin_flip).toInt()
 

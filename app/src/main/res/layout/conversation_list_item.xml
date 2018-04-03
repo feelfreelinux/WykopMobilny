@@ -5,16 +5,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/padding_dp_normal"
-    android:paddingBottom="@dimen/padding_dp_normal"
-    android:paddingLeft="@dimen/padding_dp_large"
-    android:paddingRight="@dimen/padding_dp_large"
     android:background="?attr/itemBackgroundColorStatelist">
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/authorAvatarView"
         android:layout_width="@dimen/author_header_avatar_width"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_dp_normal"
+        android:layout_marginBottom="@dimen/margin_dp_normal"
+        android:layout_marginLeft="@dimen/margin_dp_normal"
+        android:layout_marginRight="@dimen/margin_dp_normal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -25,17 +25,18 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_dp_normal"
         android:layout_marginRight="@dimen/margin_dp_normal"
-        android:textSize="?attr/textSizeNormal"
+        android:ellipsize="end"
         android:lines="1"
         android:maxLines="1"
-        android:ellipsize="end"
-        app:layout_constraintWidth_default="wrap"
+        android:textSize="?attr/textSizeNormal"
+        app:layout_constraintBottom_toTopOf="@id/entryDateTextView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/entryDateTextView"
         app:layout_constraintLeft_toRightOf="@+id/authorAvatarView"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_default="wrap"
         tools:text="Kroguc" />
 
     <TextView
@@ -44,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_dp_normal"
         android:layout_marginRight="@dimen/margin_dp_normal"
-        android:paddingBottom="@dimen/padding_dp_mini"
         android:textSize="?attr/textSizeTiny"
         android:textColor="?attr/textColorLight"
         android:lines="1"

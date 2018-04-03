@@ -9,7 +9,7 @@
         android:id="@+id/controls_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#64000000"
+        android:background="@color/windowBackgroundTransparent"
         android:layout_alignParentBottom="true"
         android:paddingBottom="16dp"
         android:paddingTop="16dp">

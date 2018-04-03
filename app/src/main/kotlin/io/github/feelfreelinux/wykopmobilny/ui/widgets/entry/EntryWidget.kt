@@ -210,10 +210,7 @@ class EntryWidget : ConstraintLayout, EntryView, LayoutContainer {
         dialog.setContentView(bottomSheetView)
         (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
         bottomSheetView.apply {
-            author.apply {
-                text = entry.author.nick
-                setOnClickListener { openProfile(entry.author.nick) }
-            }
+            author.text = entry.author.nick
             date.text = entry.date
             entry.app?.let {
                 date.text = context.getString(R.string.date_with_user_app, entry.date, entry.app)

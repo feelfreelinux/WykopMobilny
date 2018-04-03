@@ -40,7 +40,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
             val comment = commentsList!![position - 1]
             if (holder.itemViewType == TOP_COMMENT_HOLDER) {
                 (holder as TopLinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
-                holder.itemView.tag = if (comment.childCommentCount > 0) COMMENT_TYPE_LARGE else COMMENT_TYPE_NORMAL
+                holder.itemView.tag = if (comment.childCommentCount > 0) COMMENT_TYPE_NORMAL else COMMENT_TYPE_LARGE
             } else {
                 val parent = commentsList!!.first { it.id == comment.parentId }
                 val index = commentsList!!.subList(commentsList!!.indexOf(parent), position-1).size

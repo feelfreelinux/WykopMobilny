@@ -27,6 +27,7 @@
         <item name="colorControlNormal">@color/itemBackgroundSelected</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor</item>
         <item name="usersMessageColor">@color/usersMessageColor</item>
+        <item name="yourMessageColor">@color/yourMessageColor</item>
         <item name="usersMessageSubtextDirected">@color/authorHeader_date.Dark</item>
         <item name="lineColor">@color/lineColor</item>
         <item name="separatorColor">@color/separatorColor</item>
@@ -122,6 +123,7 @@
         <item name="android:textColorHint">@color/hintColor.Dark</item>
         <item name="inputToolbarDrawables">@color/toolbarItemsColor.Dark</item>
         <item name="usersMessageColor">@color/usersMessageColor.Dark</item>
+        <item name="yourMessageColor">@color/yourMessageColor.Dark</item>
         <item name="usersMessageSubtextDirected">@color/usersMessageDirected.Dark</item>
         <item name="lineColor">@color/lineColor.Dark</item>
         <item name="separatorColor">@color/separatorColor.Dark</item>
@@ -204,11 +206,21 @@
         <item name="android:editTextColor">@color/textColor.Amoled</item>
         <item name="colorControlNormal">@color/itemBackgroundSelected.Amoled</item>
         <item name="usersMessageColor">@color/usersMessageColor.Amoled</item>
+        <item name="yourMessageColor">@color/yourMessageColor.Amoled</item>
         <item name="lineColor">@color/lineColor.Amoled</item>
         <item name="separatorColor">@color/separatorColor.Amoled</item>
         <item name="expandImageGradient">@drawable/gradient_expand_image_amoled</item>
 
         <item name="hotOutlineDrawable">@drawable/ic_hot_outline_amoled</item>
+
+        <item name="markdownFormatQuote">@drawable/ic_markdowntoolbar_quote_amoled</item>
+        <item name="markdownFormatBold">@drawable/ic_markdowntoolbar_bold_amoled</item>
+        <item name="markdownFormatCode">@drawable/ic_markdowntoolbar_code_amoled</item>
+        <item name="markdownFormatItalic">@drawable/ic_markdowntoolbar_italic_amoled</item>
+        <item name="markdownInsertEmoticon">@drawable/ic_markdowntoolbar_emoticon_amoled</item>
+        <item name="markdownInsertLink">@drawable/ic_markdowntoolbar_link_amoled</item>
+        <item name="markdownInsertPhoto">@drawable/ic_markdowntoolbar_photo_amoled</item>
+        <item name="markdownInsertSpoiler">@drawable/ic_markdowntoolbar_spoiler_amoled</item>
     </style>
 
     <style name="AppTheme.Dark.NavigationView" parent="">
@@ -254,7 +266,7 @@
     <style name="ContentTextView" parent="">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingBottom">@dimen/padding_dp_small</item>
+        <item name="android:paddingTop">@dimen/padding_dp_small</item>
         <item name="android:paddingLeft">@dimen/padding_dp_large</item>
         <item name="android:paddingRight">@dimen/padding_dp_large</item>
         <item name="android:textSize">?attr/textSizeNormal</item>
@@ -263,7 +275,6 @@
 
     <style name="ContentTextViewComment" parent="ContentTextView">
         <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingBottom">0dp</item>
         <item name="android:paddingLeft">0dp</item>
     </style>
 
@@ -271,7 +282,6 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">@dimen/padding_dp_small</item>
-        <item name="android:paddingBottom">@dimen/padding_dp_small</item>
         <item name="android:paddingLeft">@dimen/padding_dp_large</item>
         <item name="android:paddingRight">@dimen/padding_dp_large</item>
     </style>
@@ -289,7 +299,7 @@
         <item name="android:paddingLeft">@dimen/padding_dp_tiny</item>
         <item name="android:paddingRight">@dimen/padding_dp_normal</item>
         <item name="android:drawablePadding">2dp</item>
-        <item name="android:textSize">?attr/textSizeLarge</item>
+        <item name="android:textSize">16dp</item>
         <item name="android:textColor">?attr/textColorButtonToolbar</item>
     </style>
 
@@ -349,7 +359,8 @@
     <style name="ImageViewComment" parent="">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/margin_dp_small</item>
+        <item name="android:layout_marginTop">@dimen/margin_dp_normal</item>
+        <item name="android:layout_marginRight">@dimen/margin_dp_large</item>
     </style>
 
     <style name="AuthorBadgeStrip" parent="">
@@ -387,9 +398,8 @@
     </style>
 
     <style name="MarkdownButton" parent="">
-        <item name="android:scaleType">centerCrop</item>
-        <item name="android:layout_height">@dimen/markdown_item_size</item>
-        <item name="android:layout_width">@dimen/markdown_item_size</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:layout_width">28dp</item>
     </style>
 
     <style name="MonthYearPickerMonth" parent="">
@@ -432,7 +442,7 @@
     </style>
 
     <style name="CheckBoxStyle"  parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="colorControlNormal">?attr/spacerColor</item>
+        <item name="colorControlNormal">#808080</item>
     </style>
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">

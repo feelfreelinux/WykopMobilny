@@ -8,43 +8,38 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="@dimen/padding_dp_small"
+        android:paddingLeft="@dimen/padding_dp_normal"
+        android:paddingRight="@dimen/padding_dp_normal"
         android:background="?attr/itemBackgroundColor">
 
-        <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_line_height"
-            android:background="?attr/separatorColor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <ScrollView
-            android:id="@+id/imageViewScrollView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separator">
+        <android.support.v7.widget.CardView
+            android:id="@+id/imageCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="3dp"
+            android:background="?attr/lineColor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"/>
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop" />
 
-        </ScrollView>
+        </android.support.v7.widget.CardView>
 
         <ImageView
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/floating_image_delete_button_margin"
+            android:layout_marginLeft="@dimen/margin_dp_large"
             android:background="@drawable/ic_trash"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separator"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/imageCard"
+            app:layout_constraintBottom_toBottomOf="@id/imageCard"
+            app:layout_constraintLeft_toRightOf="@id/imageCard" />
 
     </android.support.constraint.ConstraintLayout>
 
