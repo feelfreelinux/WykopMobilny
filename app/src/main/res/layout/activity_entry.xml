@@ -57,15 +57,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <View
-        android:id="@+id/shadowUp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/shadow_up_height"
-        android:background="?attr/shadowUpGradient"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/inputToolbar"/>
-
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
         android:id="@+id/inputToolbar"
         android:layout_width="match_parent"

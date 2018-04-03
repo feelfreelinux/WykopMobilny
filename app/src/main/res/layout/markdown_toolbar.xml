@@ -3,63 +3,60 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/markdown_padding_vertical">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/format_bold"
         style="@style/MarkdownButton"
         android:src="?attr/markdownFormatBold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/format_italic"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ImageView
         android:id="@+id/format_italic"
         style="@style/MarkdownButton"
         android:src="?attr/markdownFormatItalic"
-        app:layout_constraintStart_toEndOf="@+id/format_bold"
-        app:layout_constraintEnd_toStartOf="@id/format_quote"/>
+        app:layout_constraintLeft_toRightOf="@+id/format_bold"
+        app:layout_constraintRight_toLeftOf="@id/format_quote" />
 
     <ImageView
         android:id="@+id/format_quote"
         style="@style/MarkdownButton"
         android:src="?attr/markdownFormatQuote"
-        app:layout_constraintStart_toEndOf="@+id/format_italic"
-        app:layout_constraintEnd_toStartOf="@id/insert_link"/>
+        app:layout_constraintLeft_toRightOf="@+id/format_italic"
+        app:layout_constraintRight_toLeftOf="@id/insert_link" />
 
     <ImageView
         android:id="@+id/insert_link"
         style="@style/MarkdownButton"
         android:src="?attr/markdownInsertLink"
-        app:layout_constraintStart_toEndOf="@+id/format_quote"
-        app:layout_constraintEnd_toStartOf="@id/insert_code"/>
+        app:layout_constraintLeft_toRightOf="@+id/format_quote"
+        app:layout_constraintRight_toLeftOf="@id/insert_code" />
 
     <ImageView
         android:id="@+id/insert_code"
         style="@style/MarkdownButton"
         android:src="?attr/markdownFormatCode"
-        app:layout_constraintStart_toEndOf="@+id/insert_link"
-        app:layout_constraintEnd_toStartOf="@id/insert_spoiler"/>
+        app:layout_constraintLeft_toRightOf="@+id/insert_link"
+        app:layout_constraintRight_toLeftOf="@id/insert_spoiler" />
 
     <ImageView
         android:id="@+id/insert_spoiler"
         style="@style/MarkdownButton"
         android:src="?attr/markdownInsertSpoiler"
-        app:layout_constraintStart_toEndOf="@+id/insert_code"
-        app:layout_constraintEnd_toStartOf="@id/insert_emoticon"/>
+        app:layout_constraintLeft_toRightOf="@+id/insert_code"
+        app:layout_constraintRight_toLeftOf="@id/insert_emoticon" />
 
     <ImageView
         android:id="@+id/insert_emoticon"
         style="@style/MarkdownButton"
         android:src="?attr/markdownInsertEmoticon"
-        app:layout_constraintStart_toEndOf="@+id/insert_spoiler"
-        app:layout_constraintEnd_toStartOf="@id/insert_photo"/>
+        app:layout_constraintLeft_toRightOf="@+id/insert_spoiler"
+        app:layout_constraintRight_toLeftOf="@id/insert_photo" />
 
     <ImageView
         android:id="@+id/insert_photo"
         style="@style/MarkdownButton"
         android:src="?attr/markdownInsertPhoto"
-        app:layout_constraintStart_toEndOf="@+id/insert_emoticon"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

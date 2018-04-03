@@ -52,7 +52,6 @@
 
     <dimen name="comment_layout_button_padding_horizontal">2dp</dimen>
 
-    <dimen name="entry_recycler_padding_vertical">3.5dp</dimen>
     <dimen name="entry_layout_author_padding_vertical">8dp</dimen>
     <dimen name="entry_layout_author_padding_horizontal">10dp</dimen>
     <dimen name="entry_layout_button_padding_horizontal">2dp</dimen>

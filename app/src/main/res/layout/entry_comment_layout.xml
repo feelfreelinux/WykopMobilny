@@ -48,7 +48,6 @@
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
         android:id="@+id/entryImageView"
         style="@style/ImageViewComment"
-        android:layout_marginRight="@dimen/margin_dp_large"
         app:layout_constraintTop_toBottomOf="@id/entryContentTextView"
         app:layout_constraintLeft_toLeftOf="@id/authorTextView"
         app:layout_constraintRight_toRightOf="parent" />
@@ -92,8 +91,8 @@
     <View
         android:id="@+id/authorBadgeStrip"
         style="@style/AuthorBadgeStrip"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
 </merge>

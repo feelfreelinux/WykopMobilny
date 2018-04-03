@@ -47,45 +47,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/shadowUp">
+        app:layout_constraintBottom_toTopOf="@id/markupToolbar">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/notificationItem"
-            style="@style/EntryCardView"
+        <MultiAutoCompleteTextView
+            android:id="@+id/body"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <MultiAutoCompleteTextView
-                android:id="@+id/body"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/input_toolbar_text_margin_horizontal"
-                android:layout_marginEnd="@dimen/input_toolbar_text_margin_horizontal"
-                android:paddingTop="@dimen/input_toolbar_text_padding_vertical"
-                android:paddingBottom="@dimen/input_toolbar_text_padding_vertical"
-                android:textSize="@dimen/input_toolbar_text_size"
-                android:background="@null"
-                android:dropDownWidth="wrap_content"
-                android:inputType="textMultiLine|textCapSentences"/>
-
-        </android.support.v7.widget.CardView>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/input_toolbar_text_margin_horizontal"
+            android:layout_marginEnd="@dimen/input_toolbar_text_margin_horizontal"
+            android:paddingTop="@dimen/input_toolbar_text_padding_vertical"
+            android:paddingBottom="@dimen/input_toolbar_text_padding_vertical"
+            android:textSize="@dimen/input_toolbar_text_size"
+            android:background="@null"
+            android:dropDownWidth="wrap_content"
+            android:inputType="textMultiLine|textCapSentences"/>
 
     </ScrollView>
-
-    <View
-        android:id="@+id/shadowUp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/shadow_up_height"
-        android:background="?attr/shadowUpGradient"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/markupToolbar"/>
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbar
         android:id="@+id/markupToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:paddingBottom="@dimen/padding_dp_tiny"
+        android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingRight="@dimen/padding_dp_large"
         android:background="?attr/itemBackgroundColor"
+        android:alpha="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/floatingImageView"/>
@@ -95,7 +83,6 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/floating_image_height"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

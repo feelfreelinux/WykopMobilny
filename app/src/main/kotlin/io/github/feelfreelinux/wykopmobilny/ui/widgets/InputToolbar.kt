@@ -44,6 +44,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(context, suggestApi) }
 
     var defaultText = ""
+    var showToolbar = false
 
     override fun openGalleryImageChooser() {
         inputToolbarListener?.openGalleryImageChooser()
@@ -74,18 +75,11 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         markdownToolbar.floatingImageView = floatingImageView
 
         // Setup listeners
-        show_markdown_menu.setOnClickListener {
-            showMarkdownToolbar()
-        }
-
-        markdown_close.setOnClickListener {
-            closeMarkdownToolbar()
-        }
-
         body.setOnFocusChangeListener {
             _, focused ->
             if (focused && !hasUserEditedContent()) {
                 textBody = defaultText
+                showMarkdownToolbar()
             }
         }
 
@@ -129,13 +123,15 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
     fun showMarkdownToolbar() {
         if (!hasUserEditedContent()) textBody = defaultText
-        markdownToolbarHolder.isVisible = true
-        show_markdown_menu.isVisible = false
+        markdownToolbar.isVisible = true
+        separatorButton.isVisible = true
+        send.isVisible = true
     }
 
     fun closeMarkdownToolbar() {
-        markdownToolbarHolder.isVisible = false
-        show_markdown_menu.isVisible = true
+        markdownToolbar.isVisible = false
+        separatorButton.isVisible = false
+        send.isVisible = false
     }
 
     fun showProgress(shouldShowProgress : Boolean) {
