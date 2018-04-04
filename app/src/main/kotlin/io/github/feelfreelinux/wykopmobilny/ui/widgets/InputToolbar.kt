@@ -113,6 +113,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         }
 
         disableSendButton()
+        closeMarkdownToolbar()
     }
 
     fun setup(userManagerApi: UserManagerApi, suggestionApi: SuggestApi) {
@@ -145,7 +146,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
             imm?.hideSoftInputFromWindow(windowToken, 0)
         }
 
-        textBody = defaultText
+        textBody = ""
         selectionPosition = textBody.length
         markdownToolbar.apply {
             photo = null
@@ -155,6 +156,10 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
         if (textBody.length < 3) disableSendButton()
         closeMarkdownToolbar()
+        body.isFocusableInTouchMode = false
+        body.isFocusable = false
+        body.isFocusableInTouchMode = true
+        body.isFocusable = true
     }
 
     fun setDefaultAddressant(user : String) {

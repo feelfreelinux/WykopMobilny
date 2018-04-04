@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentWidget android:id="@+id/linkComment"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/showHiddenTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8dp"
+        android:text="Ukryty komentarz od @feelfree"
+        android:textSize="?attr/textSizeLarge"
+        android:visibility="gone" />
+
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentWidget
+        android:id="@+id/linkComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true" />
+</LinearLayout>
