@@ -6,11 +6,13 @@ import javax.inject.Inject
 interface BlacklistPreferencesApi {
     var blockedTags : Set<String>
     var blockedUsers : Set<String>
+    var scraperSession : String?
 }
 
 class BlacklistPreferences @Inject constructor (context : Context) : Preferences(context, false), BlacklistPreferencesApi {
     override var blockedTags: Set<String> by stringSetPref("blockedTagsSet")
     override var blockedUsers: Set<String> by stringSetPref("blockedUsersSet")
+    override var scraperSession: String? by stringPref("sessionString", "nosession")
 }
 
 fun Set<String>.containsTagInBody(body : String) : Boolean {

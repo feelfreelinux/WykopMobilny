@@ -43,9 +43,7 @@ class ViewHolderDependentItemDecorator(val context: Context) : RecyclerView.Item
         val position = parent.getChildAdapterPosition(view)
         val viewType = parent.adapter.getItemViewType(position)
 
-        if (position == parent.adapter.itemCount - 1) {
-            outRect.setEmpty()
-        } else if (viewType == EntryDetailAdapter.ENTRY_HOLDER || viewType == LinkDetailsAdapter.HEADER_HOLDER || viewType == LinkAdapter.LINK_VIEWTYPE || viewType == LinkAdapter.SIMPLE_LINK_VIEWTYPE) {
+        if (viewType == EntryDetailAdapter.ENTRY_HOLDER || viewType == LinkDetailsAdapter.HEADER_HOLDER || viewType == LinkAdapter.LINK_VIEWTYPE || viewType == LinkAdapter.SIMPLE_LINK_VIEWTYPE) {
             outRect.set(0, 0, 0, largeHeight)
         } else if (viewType == LinkDetailsAdapter.COMMENT_HOLDER || viewType == LinkDetailsAdapter.TOP_COMMENT_HOLDER) {
             if (view.tag == LinkDetailsAdapter.COMMENT_TYPE_NORMAL) {
@@ -60,7 +58,7 @@ class ViewHolderDependentItemDecorator(val context: Context) : RecyclerView.Item
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
         super.onDraw(c, parent, state)
-        for (i in 0 until parent.childCount - 1) {
+        for (i in 0 until parent.childCount) {
             val view = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(view)
             if (position > -1 && parent.adapter.itemCount >= position) {

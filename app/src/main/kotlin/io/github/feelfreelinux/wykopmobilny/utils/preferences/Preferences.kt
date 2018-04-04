@@ -4,6 +4,8 @@ package io.github.feelfreelinux.wykopmobilny.utils.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.securepreferences.SecurePreferences
+import io.github.feelfreelinux.wykopmobilny.APP_SECRET
 import kotlin.reflect.KProperty
 
 
@@ -13,7 +15,7 @@ abstract class Preferences(var context: Context? = null, useDefaultFile : Boolea
         if (context != null && useDefaultFile)
             PreferenceManager.getDefaultSharedPreferences(context)
         else if (context != null)
-            context!!.getSharedPreferences(javaClass.simpleName, Context.MODE_PRIVATE)
+            SecurePreferences(context, APP_SECRET, javaClass.simpleName + ".xml")
         else
             throw IllegalStateException("Context was not initialized. Call Preferences.init(context) before using it")
     }
