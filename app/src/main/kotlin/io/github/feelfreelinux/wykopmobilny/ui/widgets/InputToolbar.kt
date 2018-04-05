@@ -2,10 +2,12 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets
 
 import android.content.Context
 import android.net.Uri
+import android.os.Parcelable
 import android.support.constraint.ConstraintLayout
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.SparseArray
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -21,6 +23,9 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
+import android.os.Parcel
+
+
 
 
 interface InputToolbarListener {
@@ -35,7 +40,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         set(value) { body.setSelection(value) }
 
     override var textBody: String
-        get() =  body.text.toString()
+        get() = body.text.toString()
         set(value) { body.setText(value) }
 
     lateinit var userManager : UserManagerApi
@@ -113,7 +118,8 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         }
 
         disableSendButton()
-        closeMarkdownToolbar()
+        if (showToolbar) showMarkdownToolbar()
+        else closeMarkdownToolbar()
     }
 
     fun setup(userManagerApi: UserManagerApi, suggestionApi: SuggestApi) {
@@ -127,12 +133,14 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         markdownToolbar.isVisible = true
         separatorButton.isVisible = true
         send.isVisible = true
+        showToolbar = true
     }
 
     fun closeMarkdownToolbar() {
         markdownToolbar.isVisible = false
         separatorButton.isVisible = false
         send.isVisible = false
+        showToolbar = false
     }
 
     fun showProgress(shouldShowProgress : Boolean) {
@@ -208,5 +216,56 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     fun show() {
         // Only show if user's logged in
         isVisible = userManager.isUserAuthorized()
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val savedState = state as? SavedState
+        super.onRestoreInstanceState(savedState?.superState)
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        val superState = super.onSaveInstanceState()
+        return SavedState(superState, showToolbar)
+    }
+
+    override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>?) {
+        super.dispatchFreezeSelfOnly(container)
+    }
+
+    override fun dispatchRestoreInstanceState(container: SparseArray<Parcelable>?) {
+        super.dispatchThawSelfOnly(container)
+    }
+
+    class SavedState : View.BaseSavedState {
+
+        val isOpened: Boolean
+
+        constructor(superState: Parcelable, opened : Boolean) : super(superState) {
+            isOpened = opened
+        }
+
+        constructor(`in`: Parcel) : super(`in`) {
+            isOpened = `in`.readInt() == 1
+        }
+
+        override fun writeToParcel(destination: Parcel, flags: Int) {
+            super.writeToParcel(destination, flags)
+            destination.writeInt(if (isOpened) 1 else 0)
+        }
+
+        companion object {
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+
+                override fun createFromParcel(`in`: Parcel): SavedState {
+                    return SavedState(`in`)
+                }
+
+                override fun newArray(size: Int): Array<SavedState?> {
+                    return arrayOfNulls(size)
+                }
+
+            }
+        }
+
     }
 }
