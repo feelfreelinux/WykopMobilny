@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true">
 
-    <EditText
+    <MultiAutoCompleteTextView
         android:id="@+id/blockUserEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,10 +20,13 @@
         android:singleLine="true"
         android:textSize="?attr/textSizeHuge"
         android:background="@android:color/transparent"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-_"
+        android:inputType="textFilter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@id/lockImageView"
-        tools:text="Tag / użytkownik do zablokowania" />
+        tools:text="Tag / użytkownik do zablokowania"
+        android:dropDownWidth="wrap_content" />
 
     <ImageView
         android:id="@+id/lockImageView"

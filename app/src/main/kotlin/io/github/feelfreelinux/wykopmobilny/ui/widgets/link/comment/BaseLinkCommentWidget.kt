@@ -284,4 +284,15 @@ abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : Co
 
     val url : String
         get() = "https://www.wykop.pl/link/${comment.linkId}/#comment-${comment.id}"
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (::presenter.isInitialized)
+            presenter.subscribe(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        presenter.unsubscribe()
+    }
 }

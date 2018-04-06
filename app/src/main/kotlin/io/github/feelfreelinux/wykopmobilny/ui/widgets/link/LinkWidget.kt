@@ -262,4 +262,15 @@ class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     val url : String
         get() = "https://www.wykop.pl/link/${link.id}"
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (::presenter.isInitialized)
+            presenter.subscribe(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        presenter.unsubscribe()
+    }
 }

@@ -87,6 +87,17 @@ class CommentWidget : ConstraintLayout, CommentView {
 
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (::presenter.isInitialized)
+            presenter.subscribe(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        presenter.unsubscribe()
+    }
+
     private fun setupHeader() {
         comment.author.apply {
             avatarView.setAuthor(this)

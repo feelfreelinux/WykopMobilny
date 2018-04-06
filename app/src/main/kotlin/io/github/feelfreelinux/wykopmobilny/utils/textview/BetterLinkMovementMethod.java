@@ -236,7 +236,12 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (clickableSpanUnderTouch != null) {
-                    highlightUrl(textView, clickableSpanUnderTouch, text);
+                    try {
+                        highlightUrl(textView, clickableSpanUnderTouch, text);
+
+                    } catch (Exception e) {
+
+                    }
                 }
 
                 if (touchStartedOverALink && onLinkLongClickListener != null) {
