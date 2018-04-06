@@ -34,6 +34,21 @@ class LinkCommentViewHolder(val view: View, val linkCommentReplyListener : (Link
             view.linkComment.isVisible = true
             view.showHiddenTextView.isVisible = false
         }
+
+        view.linkComment.isVisible = !comment.isBlocked
+        view.showHiddenTextView.isVisible = comment.isBlocked
+
+        if (comment.isBlocked) {
+            val text = SpannableString("Pokaż ukryty komentarz od @" + comment.author.nick)
+            text.setSpan(ForegroundColorSpan(getGroupColor(comment.author.group)), text.length-(comment.author.nick.length+1), text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            view.showHiddenTextView.setText(text, TextView.BufferType.SPANNABLE)
+        }
+
+        view.showHiddenTextView.setOnClickListener {
+            comment.isBlocked = false
+            view.linkComment.isVisible = true
+            view.showHiddenTextView.isVisible = false
+        }
     }
 
     override fun cleanRecycled() {
