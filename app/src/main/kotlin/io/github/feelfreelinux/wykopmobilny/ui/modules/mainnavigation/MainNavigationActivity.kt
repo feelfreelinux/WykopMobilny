@@ -51,6 +51,7 @@ import javax.inject.Inject
 import android.net.Uri
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 
 
 interface MainNavigationInterface {
@@ -65,6 +66,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     override val activityToolbar: Toolbar get() = toolbar
     var tapDoubleClickedMilis = 0L
 
+    @Inject lateinit var blacklistPreferencesApi : BlacklistPreferencesApi
     override val floatingButton: View
         get() = fab
 
@@ -97,6 +99,8 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             R.id.hits -> { openFragment(HitsFragment.newInstance()) }
             R.id.about -> { openAboutSheet() }
             R.id.logout -> {
+                blacklistPreferencesApi.blockedTags = emptySet()
+                blacklistPreferencesApi.blockedUsers = emptySet()
                 userManagerApi.logoutUser()
                 restartActivity()
             }

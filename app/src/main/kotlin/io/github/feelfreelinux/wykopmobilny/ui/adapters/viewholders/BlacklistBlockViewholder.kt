@@ -16,10 +16,10 @@ class BlacklistBlockViewholder(val view : View) : RecyclerView.ViewHolder(view) 
         view.apply {
             val usersSuggestionAdapter = UsersSuggestionsAdapter(context, suggestApi)
             val hashTagsSuggestionAdapter = HashTagsSuggestionsAdapter(context, suggestApi)
-            var prefix = if (isUserView) "@" else "#"
+            val prefix = if (isUserView) "@" else "#"
             blockUserEditText.hint = if (isUserView) "Zablokuj użytkownika" else "Zablokuj tag"
             lockImageView.setOnClickListener {
-                blockListener(blockUserEditText.text.toString())
+                blockListener(blockUserEditText.text.toString().removePrefix(prefix))
             }
             blockUserEditText.setText(prefix, false)
             Selection.setSelection(blockUserEditText.text, blockUserEditText.text.length)

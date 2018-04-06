@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -8,7 +9,10 @@ import android.webkit.CookieManager
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import kotlinx.android.synthetic.main.activity_webview.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -24,11 +28,21 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
             return Intent(context, LoginScreenActivity::class.java)
         }
     }
-
+    val session by lazy { CookieManager.getInstance().getCookie("https://wykop.pl") }
+    val progressDialog by lazy { ProgressDialog(this) }
     @Inject
     lateinit var navigatorApi: NewNavigatorApi
     @Inject
     lateinit var presenter: LoginScreenPresenter
+    @Inject lateinit var blacklistPreferences : BlacklistPreferences
+
+    override fun importBlacklist(blacklist: Blacklist) {
+        blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags.blockedTags.map { it.tag.removePrefix("#") })
+
+        blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users.blockedUsers.map { it.nick.removePrefix("@") })
+        progressDialog.hide()
+        finishActivity()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +58,22 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     }
 
     override fun goBackToSplashScreen() {
+        val builder = createAlertBuilder()
+        builder.setTitle("Zaimportuj czarną listę")
+        builder.setMessage("Czy chcesz zaimportować czarną listę użytkowników oraz tagów?")
+        builder.setPositiveButton("Zaimportuj", {
+            _,_ ->
+            progressDialog.isIndeterminate = true
+            progressDialog.setTitle("Importowanie czarnej listy...")
+            progressDialog.show()
+            presenter.importBlacklist(session)
+        })
+        builder.setNegativeButton(android.R.string.cancel, {_,_ -> finishActivity() })
+        builder.setCancelable(false)
+        builder.show()
+    }
+
+    fun finishActivity() {
         navigatorApi.openMainActivity()
         setResult(USER_LOGGED_IN)
         finish()

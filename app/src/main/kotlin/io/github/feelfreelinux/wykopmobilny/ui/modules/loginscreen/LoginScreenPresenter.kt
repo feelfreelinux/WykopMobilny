@@ -1,8 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
+import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.LoginCredentials
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -11,6 +13,7 @@ import io.reactivex.Single
 class LoginScreenPresenter(
         private val schedulers : Schedulers,
         private val userManager: UserManagerApi,
+        private val scraperApi: ScraperApi,
                            private val userApi: LoginApi) : BasePresenter<LoginScreenView>() {
     fun handleUrl(url: String) {
         extractToken(url)?.apply {
@@ -52,5 +55,14 @@ class LoginScreenPresenter(
             else null
         }
         return null
+    }
+
+    fun importBlacklist(session : String) {
+        compositeObservable.add(
+                scraperApi.getBlacklist(session)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })
+        )
     }
 }
