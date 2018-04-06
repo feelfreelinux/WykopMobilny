@@ -17,11 +17,13 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
     @Inject
     lateinit var settingsApi: SettingsPreferencesApi
+    @Inject lateinit var userManagerApi : UserManagerApi
     @Inject lateinit var childFragmentInjector : DispatchingAndroidInjector<Fragment>
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
@@ -45,7 +47,9 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
 
         (findPreference("blacklist") as Preference).setOnPreferenceClickListener {
-            startActivity(BlacklistActivity.createIntent(activity!!))
+            userManagerApi.runIfLoggedIn(activity!!) {
+                startActivity(BlacklistActivity.createIntent(activity!!))
+            }
             true
         }
 

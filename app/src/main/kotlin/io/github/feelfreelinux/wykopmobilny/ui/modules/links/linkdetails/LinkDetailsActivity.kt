@@ -306,4 +306,9 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
 
     val url : String
         get() = "https://www.wykop.pl/link/$linkId"
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unsubscribe()
+    }
 }

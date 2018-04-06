@@ -26,6 +26,7 @@ class SettingsActivity : BaseActivity() {
     }
 
     var shouldRestartMainscreen = false
+    override val isActivityTransfluent = true
 
     @Inject
     lateinit var navigatorApi: NewNavigatorApi
