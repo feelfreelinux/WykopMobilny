@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTagResponse
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlacklistBlockViewholder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlacklistViewholder
@@ -11,7 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.ObservedTagV
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import javax.inject.Inject
 
-class BlacklistAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BlacklistAdapter @Inject constructor(val suggestionApi : SuggestApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var unblockListener : (String) -> Unit = {}
     var blockListener : (String) -> Unit = {}
     var isBlockUser : Boolean = false
@@ -24,7 +25,7 @@ class BlacklistAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         if (holder is BlacklistViewholder) {
             holder.bind(dataset[position - 1], unblockListener)
         } else if (holder is BlacklistBlockViewholder) {
-            holder.bind(isBlockUser, blockListener)
+            holder.bind(isBlockUser, blockListener, suggestionApi)
         }
     }
 
