@@ -27,10 +27,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDateJavaTime
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ViewHolderDependentItemDecorator
 import org.ocpsoft.prettytime.PrettyTime
-import org.threeten.bp.Duration
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDate
-import org.threeten.bp.Period
+import org.threeten.bp.*
+import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
 
 
@@ -98,13 +96,23 @@ fun String.toPrettyDate() : String {
     return PrettyTime(Locale("pl")).format(parseDate(this))
 }
 fun String.toDurationPrettyDate() : String {
-    val duration = Period.between(parseDateJavaTime(this), LocalDate.now())
-    if (duration.years > 1 && duration.months > 0) {
-        return "${duration.years} lata ${duration.months} mies."
-    } else if (duration.years == 1 && duration.months > 0) {
-        return "${duration.years} rok ${duration.months} mies."
-    } else if (duration.years == 0) {
-        return "${duration.months} mies."
+    val period = Period.between(parseDateJavaTime(this), LocalDate.now())
+    if (period.years > 1 && period.months > 0) {
+        return "${period.years} lata ${period.months} mies."
+    } else if (period.years == 1 && period.months > 0) {
+        return "${period.years} rok ${period.months} mies."
+    } else if (period.years == 0 && period.months > 0) {
+        return "${period.months} mies."
+    } else if (period.months == 0 && period.days > 0) {
+        return "${period.days} dni"
+    } else {
+        val durationTime = LocalTime.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss", Locale.GERMAN))
+        val duration = Duration.between(durationTime, LocalTime.now())
+        if (period.days == 0 && duration.toHours().toInt() > 0) {
+            return "${duration.toHours().toInt()} godz."
+        } else if (duration.toHours().toInt() == 0) {
+            return "${duration.toMinutes().toInt()} min."
+        }
     }
     return PrettyTime(Locale("pl")).formatDurationUnrounded(parseDate(this))
 }

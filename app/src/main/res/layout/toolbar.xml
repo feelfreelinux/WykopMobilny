@@ -7,6 +7,7 @@
     android:minHeight="?attr/actionBarSize"
     android:fitsSystemWindows="true"
     app:elevation="0dp"
+    android:focusableInTouchMode="true"
     app:contentInsetStartWithNavigation="0dp"
     app:titleTextAppearance="@style/Toolbar.TitleText"
     app:subtitleTextAppearance="@style/Toolbar.Subtitle"

@@ -108,7 +108,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
             presenter.openRelatedList()
         }
         setOnClickListener {
-            presenter.navigatorApi.openBrowser(link.sourceUrl)
+            handleUrl(link.sourceUrl)
         }
     }
 

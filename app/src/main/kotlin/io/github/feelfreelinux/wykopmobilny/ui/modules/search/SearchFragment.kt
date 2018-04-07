@@ -83,6 +83,7 @@ class SearchFragment : BaseFragment(), SearchFragmentQuery {
 
         })
         searchView.setIconifiedByDefault(false)
+        searchView.isIconified = false
     }
 
     override fun onPause() {

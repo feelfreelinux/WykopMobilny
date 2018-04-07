@@ -16,16 +16,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/WykopAppTheme">
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity" />
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity"
-            android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+            android:theme="@style/TransparentActivityTheme" />
 
         <activity
             android:launchMode="singleTop"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateUnchanged|adjustResize"
             android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,36 +32,26 @@
 
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
             android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity"
             android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity" />
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
-        <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
         <activity android:name=".ui.modules.pm.conversation.ConversationActivity"
-            android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+            android:theme="@style/TransparentActivityTheme"/>
         <activity android:name=".ui.modules.settings.SettingsActivity"
-            android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+            android:theme="@style/TransparentActivityTheme"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity"
             android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name=".ui.modules.links.upvoters.UpvotersActivity"
-            android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+            android:theme="@style/TransparentActivityTheme"/>
         <activity android:name=".ui.modules.links.downvoters.DownvotersActivity"
-            android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
-        <activity android:name=".ui.modules.input.link.edit.LinkCommentEditActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+            android:theme="@style/TransparentActivityTheme"/>
+        <activity android:name=".ui.modules.input.link.edit.LinkCommentEditActivity"/>
         <activity android:name=".ui.modules.DeepLinkActivity"
             android:windowSoftInputMode="stateUnchanged|adjustResize">
             <intent-filter>
@@ -112,11 +99,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TransparentActivityTheme" />
         <activity android:name=".ui.modules.embedview.YoutubeViewActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustResize"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TransparentActivityTheme"/>
-        <activity android:name=".ui.modules.blacklist.BlacklistActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity android:name=".ui.modules.blacklist.BlacklistActivity" />
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>

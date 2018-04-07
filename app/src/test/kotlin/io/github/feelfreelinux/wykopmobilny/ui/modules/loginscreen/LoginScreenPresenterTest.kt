@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
+import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LoginResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ProfileResponse
@@ -23,6 +24,8 @@ class LoginScreenPresenterTest {
 	private val mockOfView = mock<LoginScreenView>()
 	private val mockOfUserManager = mock<UserManagerApi>()
 	private val mockOfUserApi = mock<LoginApi>()
+	private val mockOfScraperApi = mock<ScraperApi>()
+
 	private val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
 
 	lateinit var testSchedulerProvider: TestSchedulerProvider
@@ -31,7 +34,7 @@ class LoginScreenPresenterTest {
 	@Before
 	fun setup() {
 		testSchedulerProvider = TestSchedulerProvider()
-		systemUnderTest = LoginScreenPresenter(testSchedulerProvider, mockOfUserManager, mockOfUserApi)
+		systemUnderTest = LoginScreenPresenter(testSchedulerProvider, mockOfUserManager, mockOfScraperApi, mockOfUserApi)
 		systemUnderTest.subscribe(mockOfView)
 	}
 

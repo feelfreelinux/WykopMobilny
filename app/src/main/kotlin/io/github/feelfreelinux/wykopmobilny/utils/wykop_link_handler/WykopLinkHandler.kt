@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
@@ -12,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.*
+import java.net.URI
 
 interface WykopLinkHandlerApi {
     fun handleUrl(url: String, refreshNotifications : Boolean = false)
@@ -29,27 +31,36 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
         const val DELIMITER = "/"
 
         fun getLinkIntent(url: String, context : Context): Intent? {
-            val resource = url.substringAfter("wykop.pl/")
-            return when (resource.substringBefore(Companion.DELIMITER)) {
-                Companion.ENTRY_MATCHER -> {
-                    val entryId = EntryLinkParser.getEntryId(url)
-                    if (entryId != null) EntryActivity.createIntent(context, entryId, EntryLinkParser.getEntryCommentId(url), false)
-                    else null
-                }
-                Companion.TAG_MATCHER -> {
-                    TagActivity.createIntent(context, TagLinkParser.getTag(url))
-                }
-                Companion.PM_MATCHER -> {
-                    ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
-                }
-                Companion.PROFILE_MATCHER -> {
-                    ProfileActivity.createIntent(context, ProfileLinkParser.getProfile(url))
-                }
-                Companion.LINK_MATCHER -> {
-                    val linkId = LinkParser.getLinkId(url)
-                    if (linkId != null) LinkDetailsActivity.createIntent(context, linkId, LinkParser.getLinkCommentId(url))
-                    else null
-                }
+            val parsedUrl = URI(url.replace("\\", ""))
+            val domain = parsedUrl.host.replace("www.", "").substringBeforeLast(".")
+                    .substringAfterLast(".")
+            return when (domain) {
+                    "wykop" -> {
+                        val resource = url.substringAfter("wykop.pl/")
+                        when (resource.substringBefore(Companion.DELIMITER)) {
+                            Companion.ENTRY_MATCHER -> {
+                                val entryId = EntryLinkParser.getEntryId(url)
+                                if (entryId != null) EntryActivity.createIntent(context, entryId, EntryLinkParser.getEntryCommentId(url), false)
+                                else null
+                            }
+                            Companion.TAG_MATCHER -> {
+                                TagActivity.createIntent(context, TagLinkParser.getTag(url))
+                            }
+                            Companion.PM_MATCHER -> {
+                                ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
+                            }
+                            Companion.PROFILE_MATCHER -> {
+                                ProfileActivity.createIntent(context, ProfileLinkParser.getProfile(url))
+                            }
+                            Companion.LINK_MATCHER -> {
+                                val linkId = LinkParser.getLinkId(url)
+                                if (linkId != null) LinkDetailsActivity.createIntent(context, linkId, LinkParser.getLinkCommentId(url))
+                                else null
+                            }
+                            else -> null
+                        }
+                    }
+                "youtu", "youtube", "gfycat", "vimeo", "streamable", "coub" -> EmbedViewActivity.createIntent(context, url)
                 else -> null
             }
         }

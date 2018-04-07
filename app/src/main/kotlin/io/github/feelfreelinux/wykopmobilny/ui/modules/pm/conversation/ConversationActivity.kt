@@ -27,6 +27,8 @@ import javax.inject.Inject
 
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
     @Inject lateinit var conversationAdapter : PMMessageAdapter
+    override val enableSwipeBackLayout = true
+    override val isActivityTransfluent = true
     val user by lazy { intent.getStringExtra(EXTRA_USER) }
     var receiver : Author? = null
     @Inject lateinit var presenter: ConversationPresenter
