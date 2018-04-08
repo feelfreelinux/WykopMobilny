@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.webkit.CookieManager
+import android.webkit.CookieSyncManager
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -28,7 +29,10 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
             return Intent(context, LoginScreenActivity::class.java)
         }
     }
-    val session by lazy { CookieManager.getInstance().getCookie("https://wykop.pl") }
+    val session by lazy {
+        val cookieManager = CookieManager.getInstance()
+        cookieManager.getCookie("https://wykop.pl")
+    }
     val progressDialog by lazy { ProgressDialog(this) }
     @Inject
     lateinit var navigatorApi: NewNavigatorApi
@@ -82,6 +86,8 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
 
     private fun setupWebView() {
         webView.apply {
+            CookieSyncManager.createInstance(this@LoginScreenActivity)
+            CookieSyncManager.getInstance().startSync()
             val cookieManager = CookieManager.getInstance()
 
             if (Build.VERSION.SDK_INT >= 21) {
@@ -91,9 +97,7 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
             } else {
                 cookieManager.setAcceptCookie(true)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                cookieManager.removeAllCookies(null)
-            else cookieManager.removeAllCookie()
+            settings.javaScriptEnabled = true
 
             webViewClient = LoginActivityWebClient({ presenter.handleUrl(it) })
             loadUrl(CONNECT_URL)

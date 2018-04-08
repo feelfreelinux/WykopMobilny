@@ -12,7 +12,7 @@ class LoginActivityWebClient(private val tokenUrlCallback: TokenUrlCallback) : W
     @Suppress("OverridingDeprecatedMember")
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         url?.let { tokenUrlCallback.invoke(it) }
-        return false
+        return super.shouldOverrideUrlLoading(view, url)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -20,6 +20,6 @@ class LoginActivityWebClient(private val tokenUrlCallback: TokenUrlCallback) : W
         request?.let {
             tokenUrlCallback.invoke(it.url.toString())
         }
-        return false
+        return super.shouldOverrideUrlLoading(view, request)
     }
 }
