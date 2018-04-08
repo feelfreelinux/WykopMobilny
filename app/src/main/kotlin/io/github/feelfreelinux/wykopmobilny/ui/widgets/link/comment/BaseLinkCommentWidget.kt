@@ -76,6 +76,7 @@ abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : Co
         commentImageView.isVisible = false
     }
 
+
     fun openProfile(username : String) {
         getActivityContext()!!.startActivity(ProfileActivity.createIntent(getActivityContext()!!, username))
     }
@@ -293,6 +294,6 @@ abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : Co
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        presenter.unsubscribe()
+        if (::presenter.isInitialized) presenter.unsubscribe()
     }
 }

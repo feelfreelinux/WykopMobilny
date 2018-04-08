@@ -73,7 +73,7 @@ class EntryWidget : ConstraintLayout, EntryView, LayoutContainer {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        presenter.unsubscribe()
+        if (::presenter.isInitialized) presenter.unsubscribe()
     }
 
     fun setEntryData(entry: Entry, userManager: UserManagerApi, settingsApi: SettingsPreferencesApi, entryPresenter: EntryPresenter) {

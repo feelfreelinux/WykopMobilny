@@ -60,7 +60,7 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
                             else -> null
                         }
                     }
-                "youtu", "youtube", "gfycat", "vimeo", "streamable", "coub" -> EmbedViewActivity.createIntent(context, url)
+                "youtu", "youtube", "gfycat", "streamable", "coub" -> EmbedViewActivity.createIntent(context, url)
                 else -> null
             }
         }

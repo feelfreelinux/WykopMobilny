@@ -95,7 +95,7 @@ class CommentWidget : ConstraintLayout, CommentView {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        presenter.unsubscribe()
+        if (::presenter.isInitialized) presenter.unsubscribe()
     }
 
     private fun setupHeader() {

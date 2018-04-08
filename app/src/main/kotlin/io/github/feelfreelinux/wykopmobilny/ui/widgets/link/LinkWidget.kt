@@ -271,6 +271,6 @@ class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        presenter.unsubscribe()
+        if (::presenter.isInitialized) presenter.unsubscribe()
     }
 }

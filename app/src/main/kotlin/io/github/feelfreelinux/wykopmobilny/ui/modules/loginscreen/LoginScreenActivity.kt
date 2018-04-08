@@ -49,12 +49,13 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
         setContentView(R.layout.activity_webview)
         toolbar.title = getString(R.string.login)
         setSupportActionBar(toolbar)
+        presenter.subscribe(this)
+        setupWebView()
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.subscribe(this)
-        setupWebView()
+
     }
 
     override fun goBackToSplashScreen() {
@@ -82,6 +83,14 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     private fun setupWebView() {
         webView.apply {
             val cookieManager = CookieManager.getInstance()
+
+            if (Build.VERSION.SDK_INT >= 21) {
+                // AppRTC requires third party cookies to work
+                cookieManager.setAcceptCookie(true)
+                cookieManager.setAcceptThirdPartyCookies(webView, true)
+            } else {
+                cookieManager.setAcceptCookie(true)
+            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                 cookieManager.removeAllCookies(null)
             else cookieManager.removeAllCookie()

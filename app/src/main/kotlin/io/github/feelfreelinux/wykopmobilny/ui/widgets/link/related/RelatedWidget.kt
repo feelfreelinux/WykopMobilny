@@ -39,7 +39,7 @@ class RelatedWidget(context: Context, attrs: AttributeSet) : CardView(context, a
         presenter.subscribe(this)
         presenter.relatedId = relatedItem.id
         setOnClickListener {
-            context.openBrowser(related.url)
+            presenter.handleLink(related.url)
         }
         shareTextView.setOnClickListener {
             shareUrl()
