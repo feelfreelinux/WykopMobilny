@@ -10,7 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.Conversation
 class ConversationsListAdapter : RecyclerView.Adapter<ConversationViewHolder>() {
     val dataset = ArrayList<Conversation>()
 
-    override fun onBindViewHolder(holder: ConversationViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: ConversationViewHolder, position: Int) {
         holder?.bindView(dataset[position])
     }
 

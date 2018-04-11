@@ -41,9 +41,12 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     @Inject lateinit var blacklistPreferences : BlacklistPreferences
 
     override fun importBlacklist(blacklist: Blacklist) {
-        blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags.blockedTags.map { it.tag.removePrefix("#") })
-
-        blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users.blockedUsers.map { it.nick.removePrefix("@") })
+        if (blacklist.tags?.blockedTags != null) {
+            blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags!!.blockedTags!!.map { it.tag.removePrefix("#") })
+        }
+        if (blacklist.users?.blockedUsers != null) {
+            blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users!!.blockedUsers!!.map { it.nick.removePrefix("@") })
+        }
         progressDialog.hide()
         finishActivity()
     }
@@ -71,7 +74,7 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
             progressDialog.isIndeterminate = true
             progressDialog.setTitle("Importowanie czarnej listy...")
             progressDialog.show()
-            presenter.importBlacklist(session)
+            presenter.importBlacklist()
         })
         builder.setNegativeButton(android.R.string.cancel, {_,_ -> finishActivity() })
         builder.setCancelable(false)

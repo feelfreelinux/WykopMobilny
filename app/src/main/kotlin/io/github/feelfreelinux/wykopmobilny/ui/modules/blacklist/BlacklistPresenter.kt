@@ -7,9 +7,9 @@ import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 
 class BlacklistPresenter(val schedulers : Schedulers, val scraperApi: ScraperApi, val tagApi: TagApi, val profileApi: ProfileApi) : BasePresenter<BlacklistView>() {
-    fun importBlacklist(sessionCookies : String) {
+    fun importBlacklist() {
         compositeObservable.add(
-                scraperApi.getBlacklist(sessionCookies)
+                scraperApi.getBlacklist()
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })

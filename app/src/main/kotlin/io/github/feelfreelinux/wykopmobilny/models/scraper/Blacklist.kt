@@ -5,8 +5,8 @@ import pl.droidsonroids.jspoon.annotation.Selector
 
 class Blacklist {
     @Selector(value = "div.space[data-type=users]")
-    lateinit var users : BlockedUsers
+    var users : BlockedUsers? = null
 
     @Selector(value = "div.space[data-type=hashtags]")
-    lateinit var tags : BlockedTags
+    var tags : BlockedTags? = null
 }

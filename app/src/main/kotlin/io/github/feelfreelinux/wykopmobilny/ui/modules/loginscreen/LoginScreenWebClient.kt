@@ -2,9 +2,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
 import android.os.Build
 import android.support.annotation.RequiresApi
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
+import android.widget.Toast
 
 typealias TokenUrlCallback = (url : String) -> Unit
 
@@ -21,5 +20,14 @@ class LoginActivityWebClient(private val tokenUrlCallback: TokenUrlCallback) : W
             tokenUrlCallback.invoke(it.url.toString())
         }
         return super.shouldOverrideUrlLoading(view, request)
+    }
+
+    override fun onPageFinished(view: WebView, url: String?) {
+        val cookieManager = CookieManager.getInstance()
+        CookieSyncManager.getInstance().sync()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.flush()
+        } else {
+        }
     }
 }

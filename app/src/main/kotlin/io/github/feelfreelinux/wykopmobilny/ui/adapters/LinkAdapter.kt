@@ -36,7 +36,7 @@ class LinkAdapter @Inject constructor(val settingsPreferencesApi : SettingsPrefe
         else (holder as? LinkViewHolder)?.bindView(item)
     }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()
         super.onViewRecycled(holder)
     }

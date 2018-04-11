@@ -13,7 +13,7 @@ import javax.inject.Inject
 class RelatedListAdapter @Inject constructor(val userManagerApi: UserManagerApi, val relatedWidgetPresenterFactory: RelatedWidgetPresenterFactory) : RecyclerView.Adapter<RelatedViewHolder>() {
     val dataset = ArrayList<Related>()
 
-    override fun onBindViewHolder(holder: RelatedViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RelatedViewHolder, position: Int) {
         holder?.bindView(dataset[position])
     }
 

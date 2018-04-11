@@ -13,7 +13,7 @@ import javax.inject.Inject
 class DownvoterListAdapter @Inject constructor() : RecyclerView.Adapter<DownvoterViewHolder>() {
     val dataset = ArrayList<Downvoter>()
 
-    override fun onBindViewHolder(holder: DownvoterViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: DownvoterViewHolder, position: Int) {
         holder?.bindView(dataset[position])
     }
 

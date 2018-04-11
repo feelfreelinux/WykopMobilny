@@ -57,9 +57,9 @@ class LoginScreenPresenter(
         return null
     }
 
-    fun importBlacklist(session : String) {
+    fun importBlacklist() {
         compositeObservable.add(
-                scraperApi.getBlacklist(session)
+                scraperApi.getBlacklist()
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })

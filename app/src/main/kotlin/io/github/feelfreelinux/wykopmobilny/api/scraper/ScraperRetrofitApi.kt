@@ -12,5 +12,5 @@ import retrofit2.http.Path
 
 interface ScraperRetrofitApi {
     @GET("https://www.wykop.pl/ustawienia/czarne-listy/")
-    fun getBlacklist(@Header("Cookie") session : String) : Single<Blacklist>
+    fun getBlacklist() : Single<Blacklist>
 }

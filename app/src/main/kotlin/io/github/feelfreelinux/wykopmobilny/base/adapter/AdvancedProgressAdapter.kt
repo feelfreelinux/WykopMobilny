@@ -52,7 +52,7 @@ abstract class AdvancedProgressAdapter<A : Any> : RecyclerView.Adapter<RecyclerV
     class ProgressViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     @Suppress("UNCHECKED_CAST")
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (dataset[position] != null) bindHolder(holder!!, position)
     }
 

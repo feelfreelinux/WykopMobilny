@@ -10,7 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.AuthorViewHo
 class ProfilesAdapter : RecyclerView.Adapter<AuthorViewHolder>() {
     val dataset = ArrayList<Author>()
 
-    override fun onBindViewHolder(holder: AuthorViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: AuthorViewHolder, position: Int) {
         holder?.bindView(dataset[position])
     }
 

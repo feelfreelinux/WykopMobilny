@@ -31,7 +31,7 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
     var entry: Entry? = null
     var commentId : Int? = null
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder?.itemViewType == ENTRY_HOLDER) {
             (holder as EntryViewHolder).bindView(entry!!, false)
         } else {
@@ -61,7 +61,7 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
         }
     }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()
         super.onViewRecycled(holder)
     }

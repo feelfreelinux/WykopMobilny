@@ -110,8 +110,10 @@ class ProfileActivity : BaseActivity(), ProfileView {
         }
 
         profileResponse.ban?.apply {
-            banTextView.isVisible = true
-            banTextView.text = "Użytkownik zbanowany do $date za $reason"
+            if (profileResponse.ban?.reason != null && profileResponse.ban?.date != null) {
+                banTextView.isVisible = true
+                banTextView.text = "Użytkownik zbanowany do $date za $reason"
+            }
         }
         backgroundImg.isVisible = true
         profileResponse.background?.let {

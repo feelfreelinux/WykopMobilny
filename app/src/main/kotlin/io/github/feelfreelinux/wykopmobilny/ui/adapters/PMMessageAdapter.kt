@@ -24,7 +24,7 @@ class PMMessageAdapter @Inject constructor(val settingsPreferencesApi: SettingsP
     override fun onBindViewHolder(holder: PMMessageViewHolder, position: Int) =
         holder.bindView(messages[position])
 
-    override fun onViewRecycled(holder: PMMessageViewHolder?) {
+    override fun onViewRecycled(holder: PMMessageViewHolder) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()
         super.onViewRecycled(holder)
     }

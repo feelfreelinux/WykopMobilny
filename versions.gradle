@@ -3,7 +3,7 @@ ext {
             buildTools        : '27.0.2',
             androidPlugin     : '2.3.3',
             kotlin            : '1.2.10',
-            supportLibrary    : '27.0.2',
+            supportLibrary    : '27.1.0',
             constraintLayout  : '1.0.2',
             glide             : '4.1.1',
             prettytime        : '4.0.1.Final',

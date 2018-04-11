@@ -4,5 +4,5 @@ import pl.droidsonroids.jspoon.annotation.Selector
 
 class BlockedUsers {
     @Selector("div.usercard")
-    lateinit var blockedUsers : List<BlockedUser>
+    var blockedUsers : List<BlockedUser>?= null
 }

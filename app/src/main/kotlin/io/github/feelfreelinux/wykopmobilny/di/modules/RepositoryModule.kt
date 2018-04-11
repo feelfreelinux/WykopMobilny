@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.di.modules
 
 import dagger.Module
 import dagger.Provides
+import io.github.feelfreelinux.wykopmobilny.api.ScraperInterceptor
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalRepository
@@ -35,6 +36,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import okhttp3.OkHttpClient
 import pl.droidsonroids.retrofit2.JspoonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -85,8 +87,10 @@ class RepositoryModule {
     fun provideScraperApi() : ScraperApi = ScraperRepository(createScraperRetrofit())
 
     fun createScraperRetrofit() : Retrofit {
+        val client = OkHttpClient.Builder().addInterceptor(ScraperInterceptor()).build()
         return Retrofit.Builder()
                 .baseUrl("https://wykop.pl")
+                .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(JspoonConverterFactory.create())
                 .build()

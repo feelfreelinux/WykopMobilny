@@ -4,5 +4,5 @@ import pl.droidsonroids.jspoon.annotation.Selector
 
 class BlockedTags {
     @Selector("div.tagcard")
-    lateinit var blockedTags : List<BlockedTag>
+    var blockedTags : List<BlockedTag>? = null
 }

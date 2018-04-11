@@ -22,7 +22,7 @@ class FeedAdapter @Inject constructor(val userManagerApi: UserManagerApi, val se
     override fun createViewHolder(parent: ViewGroup): EntryViewHolder =
             EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false), userManagerApi, null, settingsPreferencesApi, entryPresenterFactory.create())
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()
         super.onViewRecycled(holder)
     }

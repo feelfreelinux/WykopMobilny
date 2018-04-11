@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class BanResponse(
         @JsonProperty("reason")
-        val reason : String,
+        val reason : String?,
 
         @JsonProperty("date")
-        val date : String
+        val date : String?
 )

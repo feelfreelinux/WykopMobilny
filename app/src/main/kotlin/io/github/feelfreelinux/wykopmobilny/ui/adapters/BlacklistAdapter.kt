@@ -21,7 +21,7 @@ class BlacklistAdapter @Inject constructor(val suggestionApi : SuggestApi) : Rec
     val VIEW_TYPE_HEADER = 0
     val VIEW_TYPE_ITEMS = 1
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is BlacklistViewholder) {
             holder.bind(dataset[position - 1], unblockListener)
         } else if (holder is BlacklistBlockViewholder) {

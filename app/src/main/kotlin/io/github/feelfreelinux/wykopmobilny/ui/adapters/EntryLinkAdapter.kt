@@ -48,7 +48,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
         }
     }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()
         super.onViewRecycled(holder)
     }

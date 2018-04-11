@@ -7,6 +7,7 @@ import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.CookieManager
+import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
@@ -31,16 +32,16 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
     @Inject lateinit var blacklistPreferences : BlacklistPreferences
 
     override fun importBlacklist(blacklist: Blacklist) {
-        blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags.blockedTags.map { it.tag.removePrefix("#") })
-
-        blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users.blockedUsers.map { it.nick.removePrefix("@") })
-
+        if (blacklist.tags?.blockedTags != null) {
+            blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags!!.blockedTags!!.map { it.tag.removePrefix("#") })
+        }
+        if (blacklist.users?.blockedUsers != null) {
+            blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users!!.blockedUsers!!.map { it.nick.removePrefix("@") })
+        }
         updateDataSubject.onNext(true)
     }
 
     @Inject lateinit var presenter : BlacklistPresenter
-
-    val session by lazy { CookieManager.getInstance().getCookie("https://wykop.pl") }
     val pagerAdapter by lazy { BlacklistPagerAdapter(supportFragmentManager) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +82,9 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.sync -> presenter.importBlacklist(session)
+            R.id.sync -> {
+                presenter.importBlacklist()
+            }
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)

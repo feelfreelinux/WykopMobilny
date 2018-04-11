@@ -23,7 +23,7 @@ class EntryCommentAdapter @Inject constructor(val presenterFactory: CommentPrese
     override fun createViewHolder(parent: ViewGroup): CommentViewHolder =
             CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false), {}, {}, settingsPreferencesApi, userManagerApi, presenterFactory.create())
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()
         super.onViewRecycled(holder)
     }

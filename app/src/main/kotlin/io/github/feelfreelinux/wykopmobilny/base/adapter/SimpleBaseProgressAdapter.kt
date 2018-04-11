@@ -58,7 +58,7 @@ abstract class SimpleBaseProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
             else ITEM_TYPE
 
     @Suppress("UNCHECKED_CAST")
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (dataset[position] != null) bindHolder(holder as T, position)
     }
 

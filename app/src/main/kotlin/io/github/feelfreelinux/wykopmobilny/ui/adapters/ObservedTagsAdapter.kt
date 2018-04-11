@@ -12,7 +12,7 @@ import javax.inject.Inject
 class ObservedTagsAdapter @Inject constructor(val navigatorApi: NewNavigatorApi) : RecyclerView.Adapter<ObservedTagViewHolder>() {
     val dataset = ArrayList<ObservedTagResponse>()
 
-    override fun onBindViewHolder(holder: ObservedTagViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: ObservedTagViewHolder, position: Int) {
         holder?.bindView(dataset[position])
     }
 
