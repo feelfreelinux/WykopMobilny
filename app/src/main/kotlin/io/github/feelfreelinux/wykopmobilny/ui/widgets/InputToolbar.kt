@@ -35,9 +35,16 @@ interface InputToolbarListener {
 }
 
 class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
-    override var selectionPosition: Int
+    override var selectionStart: Int
         get() = body.selectionStart
         set(value) { body.setSelection(value) }
+    override var selectionEnd: Int
+        get() = body.selectionEnd
+        set(value) { body.setSelection(value) }
+
+    override fun setSelection(start : Int, end : Int) {
+        body.setSelection(start, end)
+    }
 
     override var textBody: String
         get() = body.text.toString()
@@ -155,7 +162,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         }
 
         textBody = ""
-        selectionPosition = textBody.length
+        selectionStart = textBody.length
         markdownToolbar.apply {
             photo = null
             photoUrl = null
@@ -181,7 +188,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         body.requestFocus()
         textBody += "@$user: "
         if (textBody.length > 2) enableSendButton()
-        selectionPosition = textBody.length
+        selectionStart = textBody.length
     }
 
     fun addQuoteText(quote : String, quoteAuthor : String) {
@@ -189,7 +196,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         body.requestFocus()
         if(textBody.length > 0) textBody += "\n\n"
         textBody += "> ${quote.removeHtml().replace("\n", "\n> ")}\n@$quoteAuthor: "
-        selectionPosition = textBody.length
+        selectionStart = textBody.length
         if (textBody.length > 2) enableSendButton()
     }
 

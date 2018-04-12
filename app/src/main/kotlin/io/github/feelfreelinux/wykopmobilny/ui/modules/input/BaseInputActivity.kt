@@ -60,14 +60,14 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         intent.apply {
             getStringExtra(EXTRA_RECEIVER)?.apply {
                 textBody += "$this: "
-                selectionPosition = this.length + 2
+                selectionStart = this.length + 2
             }
 
             getStringExtra(EXTRA_BODY)?.apply { // @TODO Replace it with some regex or parser, its way too hacky now
                 if (contains("<a href=\"spoiler:")) {
                     textBody += removeSpoilerHtml().removeHtml()
                 } else textBody += removeHtml()
-                selectionPosition = if (!startsWith("#")) textBody.length else {
+                selectionStart = if (!startsWith("#")) textBody.length else {
                     textBody = "\n$textBody"
                     0
                 }
@@ -79,9 +79,16 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     }
 
 
-    override var selectionPosition : Int
+    override var selectionStart: Int
         get() = body.selectionStart
-        set(pos) { body.setSelection(pos) }
+        set(value) { body.setSelection(value) }
+    override var selectionEnd: Int
+        get() = body.selectionEnd
+        set(value) { body.setSelection(value) }
+
+    override fun setSelection(start : Int, end : Int) {
+        body.setSelection(start, end)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_add_comment, menu)

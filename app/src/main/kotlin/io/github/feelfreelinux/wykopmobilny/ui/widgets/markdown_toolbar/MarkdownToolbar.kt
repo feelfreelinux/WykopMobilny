@@ -19,8 +19,10 @@ import kotlinx.android.synthetic.main.imagechooser_bottomsheet.view.*
 import kotlinx.android.synthetic.main.markdown_toolbar.view.*
 
 interface MarkdownToolbarListener {
-    var selectionPosition : Int
+    var selectionStart : Int
+    var selectionEnd : Int
     var textBody : String
+    fun setSelection(start : Int, end : Int)
     fun openGalleryImageChooser()
 }
 
@@ -37,9 +39,26 @@ class MarkdownToolbar : LinearLayout {
 
     private var formatText: formatDialogCallback = {
         markdownListener?.apply {
-            val prefix = textBody.substring(0, selectionPosition)
-            textBody = prefix + it + textBody.substring(selectionPosition, textBody.length)
-            selectionPosition = prefix.length + it.length
+            val prefix = textBody.substring(0, selectionStart)
+            textBody = prefix + it + textBody.substring(selectionStart, textBody.length)
+            selectionStart = prefix.length + it.length
+        }
+    }
+
+    fun insertFormat(prefix : String, suffix : String) {
+        markdownListener?.apply {
+            if (selectionEnd > selectionStart) {
+                val bodyPrefix = textBody.substring (0, selectionStart)
+                val bodySuffix = textBody.substring(selectionEnd, textBody.length)
+                val selectedText = textBody.substring(selectionStart, selectionEnd)
+                textBody = bodyPrefix + prefix + selectedText + suffix + bodySuffix
+                setSelection(bodyPrefix.length + prefix.length, bodyPrefix.length + prefix.length + selectedText.length)
+            } else {
+                val bodyPrefix = textBody.substring (0, selectionStart)
+                val bodySuffix = textBody.substring(selectionStart, textBody.length)
+                val selectedText = "tekst"
+                textBody = bodyPrefix + prefix + selectedText + suffix + bodySuffix
+                setSelection(bodyPrefix.length + prefix.length, bodyPrefix.length + prefix.length + selectedText.length)}
         }
     }
 
@@ -62,12 +81,12 @@ class MarkdownToolbar : LinearLayout {
 
         // Create callbacks
         markdownDialogs.apply {
-            format_bold.setOnClickListener { showMarkdownBoldDialog(formatText) }
-            format_quote.setOnClickListener { showMarkdownQuoteDialog(formatText) }
-            format_italic.setOnClickListener { showMarkdownItalicDialog(formatText) }
-            insert_link.setOnClickListener { showMarkdownLinkDialog(formatText) }
-            insert_code.setOnClickListener { showMarkdownSourceCodeDialog(formatText) }
-            insert_spoiler.setOnClickListener { showMarkdownSpoilerDialog(formatText) }
+            format_bold.setOnClickListener { insertFormat("**", "**") }
+            format_quote.setOnClickListener { insertFormat("\n>", "") }
+            format_italic.setOnClickListener { insertFormat("__", "__") }
+            insert_link.setOnClickListener { insertFormat("[", "](www.wykop.pl)") }
+            insert_code.setOnClickListener { insertFormat("`", "`") }
+            insert_spoiler.setOnClickListener { insertFormat("\n!", "") }
             insert_emoticon.setOnClickListener { showLennyfaceDialog(formatText) }
             insert_photo.setOnClickListener { showUploadPhotoBottomsheet() }
 
