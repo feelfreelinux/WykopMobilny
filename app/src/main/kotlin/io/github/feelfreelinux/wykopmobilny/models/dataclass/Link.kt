@@ -29,72 +29,67 @@ class Link(
         var gotSelected : Boolean,
         var isBlocked : Boolean = false
 ) : Parcelable {
-    constructor(source: Parcel) : this(
-            source.readInt(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readInt(),
-            source.readInt(),
-            ArrayList<LinkComment>().apply { source.readList(this, LinkComment::class.java.classLoader) },
-            source.readInt(),
-            source.readInt(),
-            source.readParcelable<Author>(Author::class.java.classLoader),
-            source.readString(),
-            source.readString(),
-            1 == source.readInt(),
-            1 == source.readInt(),
-            1 == source.readInt(),
-            source.readString(),
-            source.readString(),
-            1 == source.readInt(),
-            source.readString(),
-            1 == source.readInt(),
-            1 == source.readInt()
-    )
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeInt(id)
-        writeString(title)
-        writeString(description)
-        writeString(tags)
-        writeString(sourceUrl)
-        writeInt(voteCount)
-        writeInt(buryCount)
-        writeList(comments)
-        writeInt(commentsCount)
-        writeInt(relatedCount)
-        writeParcelable(author, 0)
-        writeString(date)
-        writeString(preview)
-        writeInt((if (plus18) 1 else 0))
-        writeInt((if (canVote) 1 else 0))
-        writeInt((if (isHot) 1 else 0))
-        writeString(status)
-        writeString(userVote)
-        writeInt((if (userFavorite) 1 else 0))
-        writeString(app)
-        writeInt((if (gotSelected) 1 else 0))
-        writeInt((if (isBlocked) 1 else 0))
+    constructor(parcel: Parcel) : this(
+            parcel.readInt(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.createTypedArrayList(LinkComment.CREATOR),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readParcelable(Author::class.java.classLoader),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readByte() != 0.toByte()) {
     }
 
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<Link> = object : Parcelable.Creator<Link> {
-            override fun createFromParcel(source: Parcel): Link = Link(source)
-            override fun newArray(size: Int): Array<Link?> = arrayOfNulls(size)
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeString(title)
+        parcel.writeString(description)
+        parcel.writeString(tags)
+        parcel.writeString(sourceUrl)
+        parcel.writeInt(voteCount)
+        parcel.writeInt(buryCount)
+        parcel.writeTypedList(comments)
+        parcel.writeInt(commentsCount)
+        parcel.writeInt(relatedCount)
+        parcel.writeParcelable(author, flags)
+        parcel.writeString(date)
+        parcel.writeString(preview)
+        parcel.writeByte(if (plus18) 1 else 0)
+        parcel.writeByte(if (canVote) 1 else 0)
+        parcel.writeByte(if (isHot) 1 else 0)
+        parcel.writeString(status)
+        parcel.writeString(userVote)
+        parcel.writeByte(if (userFavorite) 1 else 0)
+        parcel.writeString(app)
+        parcel.writeByte(if (gotSelected) 1 else 0)
+        parcel.writeByte(if (isBlocked) 1 else 0)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Link> {
+        override fun createFromParcel(parcel: Parcel): Link {
+            return Link(parcel)
         }
-    }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other !is Link) false
-        else (other.id == id)
-    }
-
-    override fun hashCode(): Int {
-        return id
+        override fun newArray(size: Int): Array<Link?> {
+            return arrayOfNulls(size)
+        }
     }
 }

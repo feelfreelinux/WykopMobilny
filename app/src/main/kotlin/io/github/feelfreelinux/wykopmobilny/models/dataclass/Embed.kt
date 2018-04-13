@@ -12,35 +12,41 @@ class Embed(val type: String,
             val size: String,
             var isResize: Boolean = false,
             var isRevealed: Boolean = false) : Parcelable {
-    constructor(source: Parcel) : this(
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            1 == source.readInt(),
-            source.readString(),
-            1 == source.readInt(),
-            source.readString(),
-            1 == source.readInt()
-    )
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(type)
-        writeString(preview)
-        writeString(url)
-        writeInt((if (plus18) 1 else 0))
-        writeString(source)
-        writeInt((if (isAnimated) 1 else 0))
-        writeString(size)
-        writeInt((if (isResize) 1 else 0))
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readByte() != 0.toByte()) {
     }
 
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<Embed> = object : Parcelable.Creator<Embed> {
-            override fun createFromParcel(source: Parcel): Embed = Embed(source)
-            override fun newArray(size: Int): Array<Embed?> = arrayOfNulls(size)
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(type)
+        parcel.writeString(preview)
+        parcel.writeString(url)
+        parcel.writeByte(if (plus18) 1 else 0)
+        parcel.writeString(source)
+        parcel.writeByte(if (isAnimated) 1 else 0)
+        parcel.writeString(size)
+        parcel.writeByte(if (isResize) 1 else 0)
+        parcel.writeByte(if (isRevealed) 1 else 0)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Embed> {
+        override fun createFromParcel(parcel: Parcel): Embed {
+            return Embed(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Embed?> {
+            return arrayOfNulls(size)
         }
     }
 }

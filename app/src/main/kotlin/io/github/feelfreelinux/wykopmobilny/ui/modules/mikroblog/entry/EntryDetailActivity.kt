@@ -80,7 +80,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         recyclerView?.apply {
             prepare()
             // Set margin, adapter
-            //addItemDecoration(EntryCommentItemDecoration(resources.getDimensionPixelOffset(R.dimen.comment_section_left_margin)))
             this.adapter = this@EntryActivity.adapter
         }
 

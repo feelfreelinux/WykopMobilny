@@ -27,70 +27,65 @@ class LinkComment(
         var isNsfw : Boolean = false,
         var isBlocked : Boolean = false
 ) : Parcelable {
-    constructor(source: Parcel) : this(
-            source.readInt(),
-            source.readParcelable<Author>(Author::class.java.classLoader),
-            source.readString(),
-            source.readString(),
-            1 == source.readInt(),
-            1 == source.readInt(),
-            source.readInt(),
-            source.readInt(),
-            source.readInt(),
-            source.readInt(),
-            source.readInt(),
-            1 == source.readInt(),
-            source.readInt(),
-            source.readParcelable<Embed>(Embed::class.java.classLoader),
-            source.readString(),
-            1 == source.readInt(),
-            1 == source.readInt(),
-            source.readInt(),
-            source.readString(),
-            1 == source.readInt(),
-            1 == source.readInt()
-            )
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeInt(id)
-        writeParcelable(author, 0)
-        writeString(date)
-        writeString(body)
-        writeInt((if (blocked) 1 else 0))
-        writeInt((if (favorite) 1 else 0))
-        writeInt(voteCount)
-        writeInt(voteCountPlus)
-        writeInt(voteCountMinus)
-        writeInt(userVote)
-        writeInt(parentId)
-        writeInt((if (canVote) 1 else 0))
-        writeInt(linkId)
-        writeParcelable(embed, 0)
-        writeString(app)
-        writeInt((if (isCollapsed) 1 else 0))
-        writeInt((if (isParentCollapsed) 1 else 0))
-        writeInt(childCommentCount)
-        writeString(violationUrl)
-        writeInt((if (isNsfw) 1 else 0))
-        writeInt((if (isBlocked) 1 else 0))
+    constructor(parcel: Parcel) : this(
+            parcel.readInt(),
+            parcel.readParcelable(Author::class.java.classLoader),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readInt(),
+            parcel.readParcelable(Embed::class.java.classLoader),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readInt(),
+            parcel.readString(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readByte() != 0.toByte()) {
     }
 
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<LinkComment> = object : Parcelable.Creator<LinkComment> {
-            override fun createFromParcel(source: Parcel): LinkComment = LinkComment(source)
-            override fun newArray(size: Int): Array<LinkComment?> = arrayOfNulls(size)
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeParcelable(author, flags)
+        parcel.writeString(date)
+        parcel.writeString(body)
+        parcel.writeByte(if (blocked) 1 else 0)
+        parcel.writeByte(if (favorite) 1 else 0)
+        parcel.writeInt(voteCount)
+        parcel.writeInt(voteCountPlus)
+        parcel.writeInt(voteCountMinus)
+        parcel.writeInt(userVote)
+        parcel.writeInt(parentId)
+        parcel.writeByte(if (canVote) 1 else 0)
+        parcel.writeInt(linkId)
+        parcel.writeParcelable(embed, flags)
+        parcel.writeString(app)
+        parcel.writeByte(if (isCollapsed) 1 else 0)
+        parcel.writeByte(if (isParentCollapsed) 1 else 0)
+        parcel.writeInt(childCommentCount)
+        parcel.writeString(violationUrl)
+        parcel.writeByte(if (isNsfw) 1 else 0)
+        parcel.writeByte(if (isBlocked) 1 else 0)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<LinkComment> {
+        override fun createFromParcel(parcel: Parcel): LinkComment {
+            return LinkComment(parcel)
         }
-    }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other !is LinkComment) false
-        else (other.id == id)
-    }
-
-    override fun hashCode(): Int {
-        return id
+        override fun newArray(size: Int): Array<LinkComment?> {
+            return arrayOfNulls(size)
+        }
     }
 }
