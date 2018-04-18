@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.ScraperInterceptor
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
+import io.github.feelfreelinux.wykopmobilny.api.addlink.AddlinkApi
+import io.github.feelfreelinux.wykopmobilny.api.addlink.AddlinkRepository
 import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalRepository
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
@@ -82,6 +84,9 @@ class RepositoryModule {
 
     @Provides
     fun provideEmbedApi(retrofit: Retrofit) : ExternalApi = ExternalRepository(retrofit)
+
+    @Provides
+    fun provideAddlinkApi(retrofit: Retrofit, settingsPreferencesApi: SettingsPreferencesApi, blacklistPreferencesApi: BlacklistPreferencesApi, linksPreferencesApi: LinksPreferencesApi) : AddlinkApi = AddlinkRepository(retrofit, blacklistPreferencesApi, linksPreferencesApi, settingsPreferencesApi)
 
     @Provides
     fun provideScraperApi() : ScraperApi = ScraperRepository(createScraperRetrofit())

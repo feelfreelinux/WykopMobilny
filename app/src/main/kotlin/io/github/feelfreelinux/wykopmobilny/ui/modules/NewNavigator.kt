@@ -5,6 +5,7 @@ import android.content.Intent
 import io.github.feelfreelinux.wykopmobilny.api.ENTRYCOMMENT_REPORT_URL
 import io.github.feelfreelinux.wykopmobilny.api.ENTRY_REPORT_URL
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.AddlinkActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.YoutubeViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
@@ -50,6 +51,7 @@ interface NewNavigatorApi {
     fun openNotificationsListActivity(preselectIndex : Int = NotificationsListActivity.PRESELECT_NOTIFICATIONS)
     fun openEmbedActivity(url : String)
     fun openYoutubeActivity(url : String)
+    fun openAddLinkActivity()
 }
 
 class NewNavigator(val context : Activity) : NewNavigatorApi {
@@ -139,5 +141,9 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
 
     override fun openYoutubeActivity(url: String) {
         context.startActivity(YoutubeViewActivity.createIntent(context, url))
+    }
+
+    override fun openAddLinkActivity() {
+        context.startActivity(AddlinkActivity.createIntent(context))
     }
 }

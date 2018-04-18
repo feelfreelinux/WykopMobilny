@@ -5,18 +5,24 @@ import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
+import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import javax.inject.Inject
 
-class PromotedFragment : BaseFeedFragment<Link>(), PromotedView {
+class PromotedFragment : BaseFeedFragment<Link>(), PromotedView, BaseNavigationView {
     @Inject override lateinit var feedAdapter : LinkAdapter
     @Inject lateinit var presenter : PromotedPresenter
     lateinit var dataFragment : DataFragment<PagedDataModel<List<Link>>>
+    @Inject lateinit var navigator : NewNavigatorApi
+    val navigation by lazy { activity as MainNavigationInterface }
+    val fab by lazy { navigation.floatingButton }
 
     companion object {
         val DATA_FRAGMENT_TAG = "PROMOTED_FRAGMENT_TAG"
@@ -48,6 +54,9 @@ class PromotedFragment : BaseFeedFragment<Link>(), PromotedView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        fab.setOnClickListener {
+            navigator.openAddLinkActivity()
+        }
         presenter.subscribe(this)
         dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         dataFragment.data?.apply {

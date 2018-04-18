@@ -102,6 +102,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TransparentActivityTheme"/>
         <activity android:name=".ui.modules.blacklist.BlacklistActivity" />
+        <activity android:name=".ui.modules.addlink.AddlinkActivity" />
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>

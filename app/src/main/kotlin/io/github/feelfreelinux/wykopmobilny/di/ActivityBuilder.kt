@@ -2,6 +2,9 @@ package io.github.feelfreelinux.wykopmobilny.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.AddlinkActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.AddlinkFragmentProvider
+import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.AddlinkModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistFragmentProvider
 import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistModule
@@ -113,4 +116,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [BlacklistModule::class, BlacklistFragmentProvider::class])
     abstract fun bindBlacklistACtivity() : BlacklistActivity
+
+    @ContributesAndroidInjector(modules = [AddlinkModule::class, AddlinkFragmentProvider::class])
+    abstract fun bindAddLinkActivity() : AddlinkActivity
 }
