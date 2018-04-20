@@ -35,6 +35,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNaviga
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryDetailModule
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.NotificationPiggyback
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListFragmentProvider
@@ -119,4 +120,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [AddlinkModule::class, AddlinkFragmentProvider::class])
     abstract fun bindAddLinkActivity() : AddlinkActivity
+
+    @ContributesAndroidInjector()
+    abstract fun bindNotificationPiggyback() : NotificationPiggyback
 }

@@ -19,6 +19,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificatio
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
+import android.content.pm.PackageManager
+
+
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
     @Inject
@@ -41,6 +44,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             summary = entry
         }
 
+        (findPreference("showNotifications") as CheckBoxPreference).isEnabled = !(findPreference("piggyBackPushNotifications") as CheckBoxPreference).isChecked
         (findPreference("appearance") as Preference).setOnPreferenceClickListener {
             (activity as SettingsActivity).openFragment(SettingsAppearance(), "appearance")
             true
@@ -59,10 +63,40 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         val pref = findPreference(key)
         if (pref is CheckBoxPreference) {
             when (pref.key) {
-                "showNotifications" -> WykopNotificationsJob.schedule(settingsApi)
+                "showNotifications" -> {
+                    if (pref.isChecked) {
+                        WykopNotificationsJob.schedule(settingsApi)
+                    } else {
+                        WykopNotificationsJob.cancel()
+                    }
+                }
+
+                "piggyBackPushNotifications" -> {
+                    (findPreference("showNotifications") as Preference).isEnabled = !pref.isChecked
+                    if (pref.isChecked) {
+                        WykopNotificationsJob.cancel()
+                    } else {
+                        if ((findPreference("showNotifications") as CheckBoxPreference).isChecked) {
+                            WykopNotificationsJob.schedule(settingsApi)
+                        } else {
+                            WykopNotificationsJob.cancel()
+                        }
+                    }
+                }
             }
         }
     }
+
+    fun isOfficialAppInstalled(): Boolean {
+        return try {
+            activity!!.packageManager.getApplicationInfo("pl.wykop.droid", 0)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+
+    }
+
 
     override fun onResume() {
         super.onResume()

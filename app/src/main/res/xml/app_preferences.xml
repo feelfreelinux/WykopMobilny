@@ -14,6 +14,12 @@
             android:title="@string/pref_notifications_enable"
             android:defaultValue="true"/>
 
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="piggyBackPushNotifications"
+            android:title="@string/pref_notifications_piggyback"
+            android:summary="@string/pref_notifications_piggyback_summary"
+            android:defaultValue="false"/>
+
         <android.support.v7.preference.ListPreference
             android:key="notificationsSchedulerDelay"
             android:title="@string/pref_notifications_frequency"

@@ -15,8 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreference
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 import java.util.concurrent.TimeUnit
 import android.media.RingtoneManager
-
-
+import com.evernote.android.job.JobManager
 
 
 class WykopNotificationsJob(
@@ -54,10 +53,22 @@ class WykopNotificationsJob(
                 build?.cancelAndEdit()
             }
         }
+
+        fun cancel() {
+            JobManager.instance().cancelAllForTag(TAG)
+        }
+
+        fun scheduleOnce() {
+            var build: JobRequest? = null
+                build = JobRequest.Builder(TAG )
+                        .startNow()
+                        .build()
+                build.schedule()
+        }
     }
 
     override fun onRunJob(params: Params): Result {
-        if (settingsApi.showNotifications) {
+        if (settingsApi.showNotifications || settingsApi.piggyBackPushNotifications) {
             presenter.apply {
                 subscribe(this@WykopNotificationsJob)
                 checkNotifications()
@@ -67,7 +78,7 @@ class WykopNotificationsJob(
     }
 
     override fun showNotification(notification: io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification) {
-        if (settingsApi.showNotifications) {
+        if (settingsApi.showNotifications || settingsApi.piggyBackPushNotifications) {
             val intent = WykopLinkHandler.getLinkIntent(notification.url!!, context)
             intent?.action = System.currentTimeMillis().toString()
             val pendingIntent = if (intent != null) {
@@ -83,7 +94,7 @@ class WykopNotificationsJob(
         }
     }
     override fun showNotificationsCount(count: Int) {
-        if (settingsApi.showNotifications) {
+        if (settingsApi.showNotifications || settingsApi.piggyBackPushNotifications) {
             // Create intent
             val intent = NotificationsListActivity.createIntent(context)
             intent.action = System.currentTimeMillis().toString()

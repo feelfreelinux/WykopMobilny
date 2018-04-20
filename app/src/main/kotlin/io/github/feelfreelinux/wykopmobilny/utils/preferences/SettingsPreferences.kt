@@ -15,6 +15,7 @@ interface SettingsPreferencesApi {
     var useDarkTheme : Boolean
     var useAmoledTheme : Boolean
     var showNotifications : Boolean
+    var piggyBackPushNotifications : Boolean
     var showMinifiedImages : Boolean
     var cutLongEntries : Boolean
     var cutImages : Boolean
@@ -40,6 +41,7 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var useDarkTheme by booleanPref(defaultValue = false)
     override var useAmoledTheme by booleanPref(defaultValue = false)
     override var showMinifiedImages by booleanPref(defaultValue = false)
+    override var piggyBackPushNotifications by booleanPref(defaultValue = false)
     override var cutLongEntries by booleanPref(defaultValue = true)
     override var cutImages by booleanPref(defaultValue = true)
     override var cutImageProportion by intPref(defaultValue = 60)
