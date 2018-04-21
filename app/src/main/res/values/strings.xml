@@ -212,5 +212,14 @@
     <string name="addlink_url_address">Adres URL znaleziska które chcesz dodać</string>
     <string name="addlink_subtext">Upewnij się że dodawana przez ciebie  treść jest orginalna</string>
     <string name="add_new_link">Dodaj nowe znalezisko</string>
+    <string name="dialog_piggyback_market_message"><![CDATA[Aby skorzystać z tej funkcji, wymagana jest instalacja oficjalnej aplikacji Wykop.pl. Po instalacji i zalogowaniu się w aplikacji, Wykop Mobilny będzie mógł korzystać z powiadomień push serwisu. Następnie należy wrócić do ustawień i aktywować tę funkcje ponownie.]]></string>
+    <string name="dialog_piggyback_market_title">Powiadomienia push</string>
+    <string name="toast_allow_notification_access">Musisz udzielić dostępu do powiadomień</string>
+    <string name="addlink_no_description">Brak opisu</string>
+    <string name="add_link_no_title">Brak tytułu</string>
+    <string name="add_link_no_tags">Brak tagów</string>
+    <string name="add_link_no_photo">Nie wybrano zdjęcia</string>
+    <string name="invalid_url">Adres url jest nieprawidłowy</string>
+    <string name="add_new_link">Dodaj nowe znalezisko</string>
 
 </resources>

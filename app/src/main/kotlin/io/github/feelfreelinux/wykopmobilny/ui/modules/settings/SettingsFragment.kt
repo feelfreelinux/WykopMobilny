@@ -20,7 +20,14 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreference
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 import android.content.pm.PackageManager
-
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.NotificationPiggyback
+import android.app.ActivityManager
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import android.widget.Toast
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
+import kotlinx.android.synthetic.main.link_related_layout.*
 
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
@@ -74,7 +81,24 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 "piggyBackPushNotifications" -> {
                     (findPreference("showNotifications") as Preference).isEnabled = !pref.isChecked
                     if (pref.isChecked) {
-                        WykopNotificationsJob.cancel()
+                        if (isOfficialAppInstalled()) {
+                            if (isNotificationAccessEnabled()) {
+                                WykopNotificationsJob.cancel()
+                            } else {
+                                pref.isChecked = false
+                                onSharedPreferenceChanged(sharedPrefs, key)
+                                Toast.makeText(activity!!, R.string.toast_allow_notification_access, Toast.LENGTH_SHORT).show()
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                                    startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                                } else {
+                                    startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+                                }
+                            }
+                        } else {
+                            pref.isChecked = false
+                            onSharedPreferenceChanged(sharedPrefs, key)
+                            openWykopMarketPage()
+                        }
                     } else {
                         if ((findPreference("showNotifications") as CheckBoxPreference).isChecked) {
                             WykopNotificationsJob.schedule(settingsApi)
@@ -94,7 +118,28 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
+    }
 
+    fun isNotificationAccessEnabled(): Boolean {
+        val manager = activity!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+        return manager.getRunningServices(
+                Integer.MAX_VALUE).any { NotificationPiggyback::class.java.name == it.service.className }
+    }
+
+    fun openWykopMarketPage() {
+        activity!!.createAlertBuilder().apply {
+            setTitle(R.string.dialog_piggyback_market_title)
+            setMessage(R.string.dialog_piggyback_market_message)
+            setCancelable(false)
+            setPositiveButton(android.R.string.ok, { _, _ ->
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse("market://details?id=pl.wykop.droid")
+                startActivity(intent)
+            })
+            create()
+            show()
+        }
     }
 
 

@@ -2,12 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificati
 
 import android.service.notification.StatusBarNotification
 import android.os.Build
-import android.text.TextUtils
 import android.service.notification.NotificationListenerService
 import android.support.annotation.RequiresApi
+import android.text.TextUtils
 import dagger.android.AndroidInjection
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import javax.inject.Inject
 
 
@@ -15,7 +14,7 @@ import javax.inject.Inject
  * `NotificationPiggyback` captures notifications from official wykop.pl application,
  * and runs singleshot notification job instead.
  */
-@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+@RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 class NotificationPiggyback : NotificationListenerService() {
     @Inject lateinit var settingsPreferencesApi : SettingsPreferencesApi
     override fun onNotificationPosted(sbn: StatusBarNotification) {

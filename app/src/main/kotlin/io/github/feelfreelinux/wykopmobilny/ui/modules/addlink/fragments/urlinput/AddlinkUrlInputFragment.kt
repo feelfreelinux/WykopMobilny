@@ -32,7 +32,7 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
             if (linkUrl.text.isNotEmpty() && URLUtil.isValidUrl(linkUrl.text.toString())) {
                 presenter.createDraft(linkUrl.text.toString())
             } else {
-                link_url_layout.error = "Adres url jest nieprawidłowy"
+                link_url_layout.error = getString(R.string.invalid_url)
             }
         }
     }

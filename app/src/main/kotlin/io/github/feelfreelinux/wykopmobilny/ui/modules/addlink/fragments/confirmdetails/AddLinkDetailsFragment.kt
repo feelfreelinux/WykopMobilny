@@ -76,22 +76,18 @@ class AddLinkDetailsFragment : BaseFragment(), AddLinkDetailsFragmentView {
 
     fun validate() {
         if (input_description.text.isEmpty()) {
-            input_description_layout.error = "Brak opisu"
+            input_description_layout.error = getString(R.string.addlink_no_description)
             return
         }
 
         if (input_link_title.text.isEmpty()) {
-            input_link_title_layout.error = "Brak tytułu"
+            input_link_title_layout.error = getString(R.string.add_link_no_title)
             return
         }
 
         if (input_tags.text.isEmpty()) {
-            input_tags_layout.error = "Brak tagów"
+            input_tags_layout.error = getString(R.string.add_link_no_tags)
             return
-        }
-
-        if (imageKey == null) {
-            Toast.makeText(context, "Nie wybrano zdjęcia", Toast.LENGTH_SHORT).show()
         }
 
         presenter.publishLink(draftInformation!!.key, input_link_title.text.toString(), draftInformation!!.sourceUrl, input_description.text.toString(), input_tags.text.toString(), plus18_checkbox.isChecked, imageKey!!)

@@ -25,7 +25,7 @@ class AddlinkActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addlink)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = "Dodaj nowe znalezisko"
+        supportActionBar?.title = getString(R.string.add_new_link)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         openFragment(AddlinkUrlInputFragment.newInstance(), "url_input")
     }
