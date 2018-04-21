@@ -220,6 +220,5 @@
     <string name="add_link_no_tags">Brak tagów</string>
     <string name="add_link_no_photo">Nie wybrano zdjęcia</string>
     <string name="invalid_url">Adres url jest nieprawidłowy</string>
-    <string name="add_new_link">Dodaj nowe znalezisko</string>
 
 </resources>
