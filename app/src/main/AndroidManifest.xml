@@ -36,7 +36,20 @@
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity"
             android:theme="@style/TransparentActivityTheme"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity">
+            <intent-filter
+                android:label="Dodaj wpis z zdjęciem">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter
+                android:label="Dodaj wpis">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
@@ -102,8 +115,14 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TransparentActivityTheme"/>
         <activity android:name=".ui.modules.blacklist.BlacklistActivity" />
-        <activity android:name=".ui.modules.addlink.AddlinkActivity" />
-
+        <activity android:name=".ui.modules.addlink.AddlinkActivity">
+        <intent-filter
+            android:label="Udostępnij link">
+            <action android:name="android.intent.action.SEND" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="text/plain" />
+        </intent-filter>
+        </activity>
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

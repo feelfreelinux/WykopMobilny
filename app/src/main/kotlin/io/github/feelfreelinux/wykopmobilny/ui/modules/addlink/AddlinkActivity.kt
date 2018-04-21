@@ -27,7 +27,16 @@ class AddlinkActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.add_new_link)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        openFragment(AddlinkUrlInputFragment.newInstance(), "url_input")
+        var url = ""
+        if (intent.action == Intent.ACTION_SEND && intent.type != null) {
+            if (intent.type == "text/plain") {
+                val text = intent.getStringExtra(Intent.EXTRA_TEXT)
+                text?.let {
+                    url = text
+                }
+            }
+        }
+        openFragment(AddlinkUrlInputFragment.newInstance(url), "url_input")
     }
 
     fun openFragment(fragment: Fragment, tag : String) {

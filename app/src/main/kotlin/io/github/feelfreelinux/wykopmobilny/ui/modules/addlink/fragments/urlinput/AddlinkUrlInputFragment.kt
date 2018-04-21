@@ -20,8 +20,13 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
     }
 
     companion object {
-        fun newInstance() : AddlinkUrlInputFragment {
-            return AddlinkUrlInputFragment()
+        val EXTRA_URL = "ADDLINK_URL"
+        fun newInstance(url : String = "") : AddlinkUrlInputFragment {
+            val fragment = AddlinkUrlInputFragment()
+            val data = Bundle()
+            data.putString(EXTRA_URL, url)
+            fragment.arguments = data
+            return fragment
         }
     }
 
@@ -35,6 +40,7 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
                 link_url_layout.error = getString(R.string.invalid_url)
             }
         }
+        linkUrl.setText(arguments!!.getString(EXTRA_URL, ""))
     }
 
     override fun setLinkDraft(draft: NewLinkResponse) {
