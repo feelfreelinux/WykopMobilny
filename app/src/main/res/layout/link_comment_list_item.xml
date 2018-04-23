@@ -8,7 +8,10 @@
         android:id="@+id/showHiddenTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_8dp"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:paddingBottom="@dimen/padding_dp_small"
+        android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingRight="@dimen/padding_dp_large"
         android:text="Ukryty komentarz od @feelfree"
         android:textSize="?attr/textSizeLarge"
         android:visibility="gone" />

@@ -20,10 +20,9 @@ class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
             // Setup widgets
             body.setText(notification.body.removeHtml(), TextView.BufferType.SPANNABLE)
             date.text = notification.date.toPrettyDate()
+            unreadLine.isVisible = notification.new
             unreadMark.isVisible = notification.new
             unreadDotMark.isVisible = notification.new
-            if (notification.new) date.setTypeface(null, Typeface.BOLD)
-            else date.setTypeface(null, Typeface.NORMAL)
 
             if (notification.author != null) {
                 avatarView.isVisible = true
