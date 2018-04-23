@@ -62,9 +62,9 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
             setWidgetAlpha(ALPHA_NEW)
         }
 
-        if (settingsPreferencesApi.linkImagePosition == "top" || settingsPreferencesApi.linkImagePosition == "bottom") {
-            titleTextView.maxLines = 5
-            description.maxLines = 10
+        if (settingsPreferencesApi.linkImagePosition == "left" || settingsPreferencesApi.linkImagePosition == "right") {
+            titleTextView.maxLines = 2
+            description.maxLines = 3
         }
         val correctImage = getCorrectImageView()
         correctImage.isVisible = link.preview != null && settingsPreferencesApi.linkShowImage
@@ -77,8 +77,9 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
         if (settingsPreferencesApi.linkShowAuthor && link.author != null) {
             authorHeaderView.setAuthorData(link.author!!, link.date, link.app)
             authorHeaderView.isVisible = true
-            lineTop.isVisible = true
             dateTextView.isVisible = false
+            if(settingsPreferencesApi.linkImagePosition == "top")
+                image_top.setPadding(0, context.resources.getDimension(R.dimen.padding_dp_normal).toInt(), 0,0)
         }
 
         titleTextView.text = link.title
@@ -98,6 +99,7 @@ class LinkItemWidget(context: Context) : BaseLinkItemWidget(context) {
         commentsCountTextView.text = link.commentsCount.toString()
         dateTextView.text = link.date
         hotBadgeStrip.isVisible = link.isHot
+        hotIcon.isVisible = link.isHot
         commentsCountTextView.setOnClickListener {
             openLinkDetail()
         }

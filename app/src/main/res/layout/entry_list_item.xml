@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content">
+
     <TextView
-        android:visibility="gone"
         android:id="@+id/showHiddenTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:paddingBottom="@dimen/padding_dp_small"
+        android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingRight="@dimen/padding_dp_large"
         android:text="Ukryty wpis od @feelfree"
         android:textSize="?attr/textSizeLarge"
-        android:padding="@dimen/_8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:visibility="gone" />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
         android:id="@+id/entryWidget"
@@ -18,4 +23,5 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true" />
+
 </LinearLayout>

@@ -50,7 +50,6 @@
         android:layout_height="wrap_content"
         android:textColor="#00a645"
         android:textSize="?attr/textSizeTiny"
-        android:textStyle="bold"
         android:text="Nowe"
         app:layout_constraintTop_toBottomOf="@id/body"
         app:layout_constraintLeft_toLeftOf="@id/body" />
@@ -66,5 +65,14 @@
         android:textColor="?attr/textColorLight"
         app:layout_constraintTop_toBottomOf="@id/body"
         app:layout_constraintLeft_toRightOf="@id/unreadMark" />
+
+    <View
+        android:id="@+id/unreadLine"
+        android:layout_width="3dp"
+        android:layout_height="0dp"
+        android:background="#00a645"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
