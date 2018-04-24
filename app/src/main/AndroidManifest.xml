@@ -128,6 +128,11 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".ui.modules.notifications.notificationsservice.ReadNotificationsBroadcastReceiver"
+            android:exported="false" >
+        </receiver>
         <provider
             android:authorities="io.github.feelfreelinux.wykopmobilny.fileprovider"
             android:name="android.support.v4.content.FileProvider"

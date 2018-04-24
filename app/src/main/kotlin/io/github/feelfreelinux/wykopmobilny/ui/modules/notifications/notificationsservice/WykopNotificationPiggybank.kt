@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi
 import android.text.TextUtils
 import dagger.android.AndroidInjection
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import javax.inject.Inject
 
 
@@ -19,8 +20,9 @@ class NotificationPiggyback : NotificationListenerService() {
     @Inject lateinit var settingsPreferencesApi : SettingsPreferencesApi
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         if (settingsPreferencesApi.piggyBackPushNotifications) {
+            printout("Ok dostałem")
             val packageName = sbn.packageName
-            if (!TextUtils.isEmpty(packageName) && packageName == "pl.wykop.droid") {
+            if (!TextUtils.isEmpty(packageName) && packageName == "pl.wykop.droid" || packageName == "com.tylerr147.notisend") {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     cancelNotification(sbn.key)
                 } else {

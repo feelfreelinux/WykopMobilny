@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.NewLinkResponse
@@ -47,6 +48,12 @@ class AddlinkActivity : BaseActivity() {
                 .commit()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return true
+    }
     fun openDuplicatesActivity(response : NewLinkResponse) {
         draft = response
         openFragment(AddLinkDuplicatesListFragment.newInstance(), "duplicates_list")

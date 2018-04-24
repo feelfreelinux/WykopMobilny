@@ -32,6 +32,7 @@ class WykopNotificationsJob(
                 .setSound(alarmSound)
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
+                .setDeleteIntent(PendingIntent.getBroadcast(context, 0, Intent(context, ReadNotificationsBroadcastReceiver::class.java), 0))
                 .setContentText(body).build()
     }
 

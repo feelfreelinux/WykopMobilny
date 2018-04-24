@@ -82,6 +82,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         setSupportActionBar(toolbar)
         toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         supportActionBar?.title = null
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
             presenter.subscribe(this)

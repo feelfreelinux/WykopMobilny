@@ -41,7 +41,7 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(userManagerApi: UserManagerApi, cache : Cache, context: Context): OkHttpClient {
         val httpLogging = HttpLoggingInterceptor()
-        httpLogging.level = HttpLoggingInterceptor.Level.BODY
+        httpLogging.level = HttpLoggingInterceptor.Level.BASIC
         return OkHttpClient.Builder()
                 //.addNetworkInterceptor(CacheControlInterceptor(context))
                 .addInterceptor(ApiSignInterceptor(userManagerApi))

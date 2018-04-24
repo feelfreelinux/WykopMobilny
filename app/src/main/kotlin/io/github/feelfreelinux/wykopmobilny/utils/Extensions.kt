@@ -86,7 +86,6 @@ fun ImageView.loadImage(url : String, signature : Int? = null) {
         GlideApp.with(context)
                 .load(url)
                 .apply(RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .signature(ObjectKey(signature)))
                 .into(this)
     }
