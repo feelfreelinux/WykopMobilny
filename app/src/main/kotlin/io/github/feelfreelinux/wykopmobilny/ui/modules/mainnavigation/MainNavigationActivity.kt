@@ -267,7 +267,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     override fun showHashNotificationsCount(hashNotifications: Int) {
-        printout(hashNotifications.toString())
         drawer_layout.view_container?.apply {
             hashTagsNotificationsCount = hashNotifications
         }

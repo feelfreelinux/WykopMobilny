@@ -36,8 +36,8 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
             (holder as EntryViewHolder).bindView(entry!!, false)
         } else {
             val comment = entry!!.comments[position - 1]
-            val entryAuthor = entry?.author
-            val commentAuthor = comment.author
+            val entryAuthor = entry?.author?.nick
+            val commentAuthor = comment.author.nick
             (holder as CommentViewHolder).bindView(comment, entryAuthor == commentAuthor, commentId)
         }
     }
