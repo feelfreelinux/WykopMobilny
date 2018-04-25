@@ -26,9 +26,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import okhttp3.Cache
-import retrofit2.converter.gson.GsonConverterFactory
-import com.google.gson.GsonBuilder
-import com.squareup.haha.guava.collect.ImmutableList
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.*
 import okhttp3.Protocol
 import retrofit2.converter.jackson.JacksonConverterFactory
@@ -49,7 +46,7 @@ class NetworkModule {
                 .addInterceptor(ApiSignInterceptor(userManagerApi))
                 .addInterceptor(httpLogging)
                 //.cache(cache)
-                .protocols(ImmutableList.of(Protocol.HTTP_1_1))
+                .protocols(listOf(Protocol.HTTP_1_1))
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
