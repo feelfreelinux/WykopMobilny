@@ -5,11 +5,8 @@ import android.support.multidex.MultiDex
 import com.bugsnag.android.Bugsnag
 import com.devbrackets.android.exomedia.ExoMedia
 import com.evernote.android.job.JobManager
-//import com.github.piasy.biv.BigImageViewer
-//import com.github.piasy.biv.loader.glide.GlideImageLoader
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.github.feelfreelinux.wykopmobilny.di.DaggerAppComponent
@@ -35,15 +32,6 @@ class WykopApp : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-
-        if (BuildConfig.DEBUG) {
-            if (LeakCanary.isInAnalyzerProcess(this)) {
-                // This process is dedicated to LeakCanary for heap analysis.
-                // You should not init your app in this process.
-                return
-            }
-            //LeakCanary.install(this);
-        }
         ExoMedia.setDataSourceFactoryProvider({
             userAgent, listener ->
             OkHttpDataSourceFactory(OkHttpClient(), userAgent, listener)
