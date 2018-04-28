@@ -44,8 +44,14 @@
 
         <android.support.v7.preference.CheckBoxPreference
             android:key="hideLowRangeAuthors"
-            android:title="Ukrywaj wpisy zielonek"
+            android:title="Ukrywaj treści zielonek"
             android:defaultValue="false"/>
+
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="hideBlacklistedViews"
+            android:title="Nie pokazuj ukrytych treści"
+            android:defaultValue="false"/>
+
 
     </android.support.v7.preference.PreferenceCategory>
 

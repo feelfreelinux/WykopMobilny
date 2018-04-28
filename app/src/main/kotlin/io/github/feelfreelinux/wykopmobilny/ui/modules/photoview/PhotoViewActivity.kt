@@ -21,6 +21,7 @@ import javax.inject.Inject
 import com.davemorrissey.labs.subscaleview.ImageSource
 import android.os.Handler
 import com.bumptech.glide.request.RequestOptions
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
 import io.reactivex.Single
 import java.util.concurrent.ExecutionException
@@ -93,7 +94,7 @@ class PhotoViewActivity : BaseActivity() {
     fun loadImage() {
         image.isVisible = true
         gif.isVisible = false
-
+        image.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP)
         Single.create<File?> {
             val cache = GlideApp.with(this).load(url).downloadOnly(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
 

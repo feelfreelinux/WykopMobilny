@@ -25,7 +25,7 @@ class CommentViewHolder(val view: View, private val addReceiverListener : (Autho
         view.entryComment.quoteCommentListener = quoteListener
 
         view.entryComment.isVisible = !comment.isBlocked
-        view.showHiddenTextView.isVisible = comment.isBlocked
+        view.showHiddenTextView.isVisible = comment.isBlocked && !settingsPreferencesApi.hideLinkCommentsByDefault
 
         if (comment.isBlocked) {
             val text = SpannableString("Pokaż ukryty komentarz od @" + comment.author.nick)

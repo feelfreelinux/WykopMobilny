@@ -29,7 +29,7 @@ class EntryViewHolder(override val containerView: View, val userManagerApi: User
             }
 
             entryWidget.isVisible = !(entry.isBlocked && enableClickListener)
-            showHiddenTextView.isVisible = (entry.isBlocked && enableClickListener)
+            showHiddenTextView.isVisible = (entry.isBlocked && enableClickListener && !settingsPreferencesApi.hideLinkCommentsByDefault)
             if ((entry.isBlocked && enableClickListener)) {
                 val text = SpannableString("Pokaż ukryty wpis od @" + entry.author.nick)
                 text.setSpan(ForegroundColorSpan(getGroupColor(entry.author.group)), text.length-(entry.author.nick.length+1), text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)

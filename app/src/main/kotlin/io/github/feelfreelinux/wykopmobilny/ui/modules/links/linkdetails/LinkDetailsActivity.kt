@@ -24,6 +24,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_link_details.*
@@ -32,6 +33,7 @@ import javax.inject.Inject
 
 class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.OnRefreshListener, InputToolbarListener {
     override val enableSwipeBackLayout: Boolean = true
+    @Inject lateinit var settingsApi : SettingsPreferencesApi
     companion object {
         val EXTRA_LINK = "LINK_PARCEL"
         val EXTRA_FRAGMENT_KEY = "LINK_ACTIVITY_#"
@@ -214,6 +216,16 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
 
     override fun showLinkComments(comments: List<LinkComment>) {
         adapter.link?.comments = comments
+        // Auto-Collapse comments depending on settings
+        if (settingsApi.hideLinkCommentsByDefault) {
+            adapter.link?.comments?.forEach {
+                if (it.parentId == it.id) {
+                    it.isCollapsed = true
+                } else {
+                    it.isParentCollapsed = true
+                }
+            }
+        }
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
         adapter.notifyDataSetChanged()
