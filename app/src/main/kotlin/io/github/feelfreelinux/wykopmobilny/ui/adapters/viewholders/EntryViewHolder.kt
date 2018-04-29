@@ -13,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.entry_layout.*
@@ -29,7 +30,7 @@ class EntryViewHolder(override val containerView: View, val userManagerApi: User
             }
 
             entryWidget.isVisible = !(entry.isBlocked && enableClickListener)
-            showHiddenTextView.isVisible = (entry.isBlocked && enableClickListener && !settingsPreferencesApi.hideLinkCommentsByDefault)
+            showHiddenTextView.isVisible = (entry.isBlocked && enableClickListener && !settingsPreferencesApi.hideBlacklistedViews)
             if ((entry.isBlocked && enableClickListener)) {
                 val text = SpannableString("Pokaż ukryty wpis od @" + entry.author.nick)
                 text.setSpan(ForegroundColorSpan(getGroupColor(entry.author.group)), text.length-(entry.author.nick.length+1), text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)

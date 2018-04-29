@@ -156,6 +156,7 @@ dependencies {
 
     // Android-Job
     implementation "com.evernote:android-job:$versions.androidjob"
+    implementation "com.github.suckgamony.RapidDecoder:library:7cdfca47fa"
 
     // Unit tests
     testImplementation "org.mockito:mockito-core:$versions.mockito"

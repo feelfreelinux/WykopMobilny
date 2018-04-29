@@ -93,8 +93,9 @@ class PhotoViewActivity : BaseActivity() {
 
     fun loadImage() {
         image.isVisible = true
+        image.setMinimumDpi(70)
+        image.setMinimumTileDpi(240)
         gif.isVisible = false
-        image.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP)
         Single.create<File?> {
             val cache = GlideApp.with(this).load(url).downloadOnly(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
 
@@ -106,7 +107,7 @@ class PhotoViewActivity : BaseActivity() {
                 .subscribe({
                     it?.apply {
                         loadingView.isVisible = false
-                        image.setImage(ImageSource.uri(it!!.path).tilingEnabled())
+                        image.setImage(ImageSource.uri(it!!.path))
                     }
                 }, {})
 
