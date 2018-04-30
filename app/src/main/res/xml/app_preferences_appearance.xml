@@ -29,6 +29,21 @@
             android:entryValues="@array/preferences_fontsize_values"
             android:defaultValue="normal"/>
     </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="Ustawienia odtwarzacza">
+
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="useYoutubePlayer"
+            android:title="Używaj wbudowanego odtwarzacza youtube"
+            android:defaultValue="true"/>
+
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="useEmbedPlayer"
+            android:title="Używaj wbudowanego playera"
+            android:defaultValue="true"/>
+    </android.support.v7.preference.PreferenceCategory>
+
     <android.support.v7.preference.PreferenceCategory
         android:title="Mikroblog">
         <android.support.v7.preference.ListPreference

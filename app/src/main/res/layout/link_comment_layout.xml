@@ -60,7 +60,7 @@
         android:id="@+id/wykopEmbedView"
         style="@style/ImageViewComment"
         app:layout_constraintTop_toBottomOf="@id/commentContentTextView"
-        app:layout_constraintLeft_toLeftOf="@id/authorTextView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView

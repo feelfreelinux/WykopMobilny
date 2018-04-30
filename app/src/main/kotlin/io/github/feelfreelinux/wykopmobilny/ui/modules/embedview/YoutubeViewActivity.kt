@@ -47,7 +47,7 @@ class YoutubeViewActivity : BaseActivity() {
             youtubePlayerView.initialize({
                 it.addListener(object : AbstractYouTubePlayerListener() {
                     override fun onReady() {
-                        extractVideoIdFromUrl(extraUrl)?.apply {
+                        extractVideoIdFromUrl(extraUrl.replace("m.", ""))?.apply {
                             it.loadVideo(this, 0f)
                         }
                     }

@@ -15,7 +15,6 @@ import javax.inject.Inject
  * `NotificationPiggyback` captures notifications from official wykop.pl application,
  * and runs singleshot notification job instead.
  */
-@RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 class NotificationPiggyback : NotificationListenerService() {
     @Inject lateinit var settingsPreferencesApi : SettingsPreferencesApi
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -25,7 +24,7 @@ class NotificationPiggyback : NotificationListenerService() {
             if (!TextUtils.isEmpty(packageName) && packageName == "pl.wykop.droid" || packageName == "com.tylerr147.notisend") {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     cancelNotification(sbn.key)
-                } else {
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                     cancelNotification(packageName, sbn.tag, sbn.id)
                 }
                 WykopNotificationsJob.scheduleOnce()

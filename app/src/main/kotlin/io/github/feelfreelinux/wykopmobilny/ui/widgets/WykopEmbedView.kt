@@ -8,8 +8,10 @@ import android.widget.FrameLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.wykopembedview.view.*
 import java.lang.ref.WeakReference
@@ -30,6 +32,7 @@ class WykopEmbedView: FrameLayout {
     var hiddenPreview: String? = null
     lateinit var mEmbed : WeakReference<Embed>
     lateinit var navigator : NewNavigatorApi
+    lateinit var settingsPreferences : SettingsPreferencesApi
     var forceDisableMinimizedMode : Boolean
         get() = image.forceDisableMinimizedMode
         set(value) { image.forceDisableMinimizedMode = value }
@@ -53,6 +56,7 @@ class WykopEmbedView: FrameLayout {
         twitterview.isVisible = false
         image.isVisible = true
         resized = false
+        settingsPreferences = settingsPreferencesApi
         navigator = navigatorApi
         if (embed == null || !Patterns.WEB_URL.matcher(embed.url.replace("\\", "")).matches()) isVisible = false
         else {
@@ -159,7 +163,20 @@ class WykopEmbedView: FrameLayout {
                 val domain = url.host.replace("www.", "").substringBeforeLast(".")
                         .substringAfterLast(".")
                 when(domain) {
-                    "gfycat", "streamable", "youtube", "youtu", "coub" -> navigator.openEmbedActivity(image.url)
+                    "youtube", "youtu" -> {
+                        if (settingsPreferences.useYoutubePlayer) {
+                            navigator.openEmbedActivity(image.url)
+                        } else {
+                            getActivityContext()!!.openBrowser(image.url)
+                        }
+                    }
+                    "gfycat", "streamable", "coub" -> {
+                        if (settingsPreferences.useEmbedPlayer) {
+                            navigator.openEmbedActivity(image.url)
+                        } else {
+                            getActivityContext()!!.openBrowser(image.url)
+                        }
+                    }
                     else -> navigator.openBrowser(image.url)
                 }
             }
