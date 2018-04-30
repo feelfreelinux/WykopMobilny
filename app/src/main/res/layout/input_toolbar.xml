@@ -30,7 +30,7 @@
         android:maxLines="5"
         android:background="@null"
         android:dropDownWidth="wrap_content"
-        android:inputType="textMultiLine|textCapSentences"
+        android:inputType="text|textMultiLine|textCapSentences|textAutoCorrect"
         android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@id/separator"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -413,7 +413,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     fun checkBlacklist() {
-        if (!blacklistPreferencesApi.blockedImported && blacklistPreferencesApi.blockedUsers.isEmpty() && blacklistPreferencesApi.blockedTags.isEmpty()) {
+        if (userManagerApi.isUserAuthorized() && !blacklistPreferencesApi.blockedImported && blacklistPreferencesApi.blockedUsers.isEmpty() && blacklistPreferencesApi.blockedTags.isEmpty()) {
             val builder = createAlertBuilder()
             builder.setTitle(getString(R.string.blacklist_import_title))
             builder.setMessage(getString(R.string.blacklist_import_ask))
