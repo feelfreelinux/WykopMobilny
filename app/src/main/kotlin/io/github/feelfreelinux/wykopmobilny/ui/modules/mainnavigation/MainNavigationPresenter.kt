@@ -2,8 +2,10 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation
 
 import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
+import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Observable
@@ -13,7 +15,8 @@ import java.util.concurrent.TimeUnit
 class MainNavigationPresenter(private val schedulers: Schedulers,
                               private val notificationsApi: NotificationsApi,
                               private val userManagerApi: UserManagerApi,
-                              private val externalApi: ExternalApi) : BasePresenter<MainNavigationView>() {
+                              private val externalApi: ExternalApi,
+                              private val scraperApi : ScraperApi) : BasePresenter<MainNavigationView>() {
     var lastCheckMilis = 0L
 
     fun startListeningForNotifications() {
@@ -63,6 +66,15 @@ class MainNavigationPresenter(private val schedulers: Schedulers,
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({ view?.checkUpdate(it) }, {})
+        )
+    }
+
+    fun importBlacklist() {
+        compositeObservable.add(
+                scraperApi.getBlacklist()
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })
         )
     }
 }

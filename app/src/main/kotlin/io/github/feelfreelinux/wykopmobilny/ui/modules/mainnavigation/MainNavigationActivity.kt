@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -50,7 +51,9 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.net.Uri
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
+import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 
 
@@ -65,6 +68,7 @@ interface MainNavigationInterface {
 class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override val activityToolbar: Toolbar get() = toolbar
     var tapDoubleClickedMilis = 0L
+    val progressDialog by lazy { ProgressDialog(this) }
 
     @Inject lateinit var blacklistPreferencesApi : BlacklistPreferencesApi
     override val floatingButton: View
@@ -147,12 +151,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
-        if (BuildConfig.IS_WEEKLY == "true") {
-            presenter.checkWeeklyUpdates()
-        }
-        else {
-            presenter.checkUpdates()
-        }
+        presenter.checkUpdates()
+        checkBlacklist()
+
         if (settingsApi.showNotifications) {
             // Schedules notification service
             WykopNotificationsJob.schedule(settingsApi)
@@ -374,13 +375,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                     .setTitle(R.string.update_available)
                     .setMessage("Aktualizacja $owmVersion jest dostępna.")
                     .setPositiveButton("Pobierz nową wersje", { _, _ ->
-                        printout(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
-                        val intentUri = Uri.parse(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
-                        val intent = Intent()
-                        intent.action = Intent.ACTION_VIEW
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        intent.data = intentUri
-                        startActivity(intent)
+                        openBrowser(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
                     })
                     .setNegativeButton(android.R.string.cancel, null)
                     .show()
@@ -404,5 +399,33 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         // the strings are equal or one string is a substring of the other
         // e.g. "1.2.3" = "1.2.3" or "1.2.3" < "1.2.3.4"
         return Integer.signum(vals1.size - vals2.size)
+    }
+
+    override fun importBlacklist(blacklist: Blacklist) {
+        if (blacklist.tags?.blockedTags != null) {
+            blacklistPreferencesApi.blockedTags = HashSet<String>(blacklist.tags!!.blockedTags!!.map { it.tag.removePrefix("#") })
+        }
+        if (blacklist.users?.blockedUsers != null) {
+            blacklistPreferencesApi.blockedUsers = HashSet<String>(blacklist.users!!.blockedUsers!!.map { it.nick.removePrefix("@") })
+        }
+        blacklistPreferencesApi.blockedImported = true
+        progressDialog.hide()
+    }
+
+    fun checkBlacklist() {
+        if (!blacklistPreferencesApi.blockedImported && blacklistPreferencesApi.blockedUsers.isEmpty() && blacklistPreferencesApi.blockedTags.isEmpty()) {
+            val builder = createAlertBuilder()
+            builder.setTitle(getString(R.string.blacklist_import_title))
+            builder.setMessage(getString(R.string.blacklist_import_ask))
+            builder.setPositiveButton(getString(R.string.blacklist_import_action), { _, _ ->
+                progressDialog.isIndeterminate = true
+                progressDialog.setTitle(getString(R.string.blacklist_import_progress))
+                progressDialog.show()
+                presenter.importBlacklist()
+            })
+            builder.setNegativeButton(android.R.string.cancel, null)
+            builder.setCancelable(false)
+            builder.show()
+        }
     }
 }

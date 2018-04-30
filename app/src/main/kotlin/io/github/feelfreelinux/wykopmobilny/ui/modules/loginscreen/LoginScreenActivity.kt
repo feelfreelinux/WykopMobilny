@@ -47,6 +47,7 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
         if (blacklist.users?.blockedUsers != null) {
             blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users!!.blockedUsers!!.map { it.nick.removePrefix("@") })
         }
+        blacklistPreferences.blockedImported = true
         progressDialog.hide()
         finishActivity()
     }
@@ -67,12 +68,11 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
 
     override fun goBackToSplashScreen() {
         val builder = createAlertBuilder()
-        builder.setTitle("Zaimportuj czarną listę")
-        builder.setMessage("Czy chcesz zaimportować czarną listę użytkowników oraz tagów?")
-        builder.setPositiveButton("Zaimportuj", {
-            _,_ ->
+        builder.setTitle(getString(R.string.blacklist_import_title))
+        builder.setMessage(getString(R.string.blacklist_import_ask))
+        builder.setPositiveButton(getString(R.string.blacklist_import_action), { _, _ ->
             progressDialog.isIndeterminate = true
-            progressDialog.setTitle("Importowanie czarnej listy...")
+            progressDialog.setTitle(getString(R.string.blacklist_import_progress))
             progressDialog.show()
             presenter.importBlacklist()
         })

@@ -38,6 +38,7 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
         if (blacklist.users?.blockedUsers != null) {
             blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users!!.blockedUsers!!.map { it.nick.removePrefix("@") })
         }
+        blacklistPreferences.blockedImported = true
         updateDataSubject.onNext(true)
     }
 
