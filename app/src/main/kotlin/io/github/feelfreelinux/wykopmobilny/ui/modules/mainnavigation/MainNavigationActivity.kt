@@ -138,7 +138,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             finish()
             return
         }
-        presenter.subscribe(this)
+        if (!presenter.isSubscribed) {
+            presenter.subscribe(this)
+        }
         presenter.startListeningForNotifications()
 
         JobUtil.hasBootPermission(this)

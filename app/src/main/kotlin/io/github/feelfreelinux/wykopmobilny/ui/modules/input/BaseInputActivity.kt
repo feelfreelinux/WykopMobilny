@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -19,6 +20,10 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeSpoilerHtml
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
+import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
+import io.github.feelfreelinux.wykopmobilny.R.id.editText
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
 
 
 abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
@@ -76,6 +81,11 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
 
         markupToolbar.markdownListener = this
         markupToolbar.floatingImageView = floatingImageView
+
+        // show focus
+        body.requestFocus()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(body, InputMethodManager.SHOW_IMPLICIT)
     }
 
 
