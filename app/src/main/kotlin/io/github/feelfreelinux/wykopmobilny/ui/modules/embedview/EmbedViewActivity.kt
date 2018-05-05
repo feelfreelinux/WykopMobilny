@@ -38,10 +38,8 @@ import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActions
-import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
-import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.reactivex.Completable
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_embedview.*
@@ -62,6 +60,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     @Inject lateinit var presenter : EmbedLinkPresenter
     @Inject lateinit var navigatorApi : NewNavigatorApi
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
+    @Inject lateinit var settingsPreferencesApi : SettingsPreferencesApi
     val audioPlayer by lazy { ExoPlayerFactory.newSimpleInstance(applicationContext, DefaultTrackSelector(AdaptiveTrackSelection.Factory(DefaultBandwidthMeter())), DefaultLoadControl(), null, DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF) }
     var usingMuxedAudio = false
     val extraUrl by lazy { intent.getStringExtra(EXTRA_URL) }
@@ -106,6 +105,13 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             return null
         }
 
+    }
+
+    override fun checkEmbedSettings() {
+        if (settingsPreferencesApi.enableEmbedPlayer) {
+            openBrowser(extraUrl)
+            finish()
+        }
     }
 
     override fun playUrl(url: URL) {
@@ -163,7 +169,11 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     }
 
     override fun exitAndOpenYoutubeActivity() {
-        navigatorApi.openYoutubeActivity(extraUrl)
+        if (settingsPreferencesApi.enableYoutubePlayer) {
+            navigatorApi.openYoutubeActivity(extraUrl)
+        } else {
+            openBrowser(extraUrl)
+        }
         finish()
     }
 

@@ -34,13 +34,13 @@
         android:title="Ustawienia odtwarzacza">
 
         <android.support.v7.preference.CheckBoxPreference
-            android:key="useYoutubePlayer"
-            android:title="Używaj wbudowanego odtwarzacza youtube"
+            android:key="enableYoutubePlayer"
+            android:title="Użyj odtwarzacza YouTube"
             android:defaultValue="true"/>
 
         <android.support.v7.preference.CheckBoxPreference
-            android:key="useEmbedPlayer"
-            android:title="Używaj wbudowanego playera"
+            android:key="enableEmbedPlayer"
+            android:title="Użyj playera dla innych mediów"
             android:defaultValue="true"/>
     </android.support.v7.preference.PreferenceCategory>
 

@@ -16,6 +16,12 @@ import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.wykopembedview.view.*
 import java.lang.ref.WeakReference
 import java.net.URI
+import java.util.regex.Pattern
+import android.support.v4.content.ContextCompat.startActivity
+import android.provider.MediaStore.Video.Thumbnails.VIDEO_ID
+import com.google.android.youtube.player.YouTubeStandalonePlayer
+import android.content.Intent
+import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
 
 
 class WykopEmbedView: FrameLayout {
@@ -164,14 +170,14 @@ class WykopEmbedView: FrameLayout {
                         .substringAfterLast(".")
                 when(domain) {
                     "youtube", "youtu" -> {
-                        if (settingsPreferences.useYoutubePlayer) {
-                            navigator.openEmbedActivity(image.url)
+                        if (settingsPreferences.enableYoutubePlayer) {
+                            navigator.openYoutubeActivity(image.url)
                         } else {
                             getActivityContext()!!.openBrowser(image.url)
                         }
                     }
                     "gfycat", "streamable", "coub" -> {
-                        if (settingsPreferences.useEmbedPlayer) {
+                        if (settingsPreferences.enableEmbedPlayer) {
                             navigator.openEmbedActivity(image.url)
                         } else {
                             getActivityContext()!!.openBrowser(image.url)

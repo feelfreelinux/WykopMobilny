@@ -17,6 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.*
@@ -196,7 +197,9 @@ class CommentWidget : ConstraintLayout, CommentView {
             }
 
             entry_comment_menu_delete.setOnClickListener {
-                presenter.deleteComment()
+                ConfirmationDialog(getActivityContext()!!) {
+                    presenter.deleteComment()
+                }.show()
                 dialog.dismiss()
             }
 

@@ -111,9 +111,6 @@
         <activity android:name=".ui.modules.embedview.EmbedViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TransparentActivityTheme" />
-        <activity android:name=".ui.modules.embedview.YoutubeViewActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/TransparentActivityTheme"/>
         <activity android:name=".ui.modules.blacklist.BlacklistActivity" />
         <activity android:name=".ui.modules.addlink.AddlinkActivity">
         <intent-filter
@@ -123,6 +120,10 @@
             <data android:mimeType="text/plain" />
         </intent-filter>
         </activity>
+        <activity android:name=".ui.modules.embedview.YoutubeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenActivityTheme"/>
+
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

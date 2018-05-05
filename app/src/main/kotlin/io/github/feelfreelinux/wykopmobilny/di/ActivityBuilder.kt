@@ -10,7 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistFragme
 import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewModule
-import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.YoutubeViewActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.YoutubeActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivityModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
@@ -19,7 +19,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntr
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivityModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit.LinkCommentEditActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit.LinkCommentEditModule
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit.LinkCommentEditView
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters.DownvotersActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters.DownvotersModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
@@ -101,6 +100,9 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [RelatedModule::class])
     abstract fun bindRelatedActivity() : RelatedActivity
 
+    @ContributesAndroidInjector(modules = [])
+    abstract fun bindYoutubeActivity() : YoutubeActivity
+
     @ContributesAndroidInjector(modules = [ProfileModule::class, ProfileFragmentProvider::class])
     abstract fun bindProfileActivity() : ProfileActivity
 
@@ -113,8 +115,6 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [EmbedViewModule::class])
     abstract fun bindEmbedActivity() : EmbedViewActivity
 
-    @ContributesAndroidInjector(modules = [])
-    abstract fun bindYoutubeActivity() : YoutubeViewActivity
 
     @ContributesAndroidInjector(modules = [BlacklistModule::class, BlacklistFragmentProvider::class])
     abstract fun bindBlacklistACtivity() : BlacklistActivity

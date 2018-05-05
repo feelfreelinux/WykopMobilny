@@ -560,6 +560,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="FullscreenActivityTheme" parent="TransparentActivityTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="WykopBottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>

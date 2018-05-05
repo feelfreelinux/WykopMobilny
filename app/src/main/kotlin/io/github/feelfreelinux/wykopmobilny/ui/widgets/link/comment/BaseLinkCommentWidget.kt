@@ -15,6 +15,7 @@ import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
@@ -218,7 +219,9 @@ abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : Co
             }
 
             comment_menu_delete.setOnClickListener {
-                presenter.deleteComment()
+                ConfirmationDialog(getActivityContext()!!) {
+                    presenter.deleteComment()
+                }.show()
                 dialog.dismiss()
             }
 

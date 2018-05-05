@@ -32,7 +32,7 @@
     <dimen name="drawer_header_notification_tag_margin_start">6dp</dimen>
     <dimen name="drawer_header_notification_tag_margin_end">18dp</dimen>
     <dimen name="drawer_header_notification_item_drawable_padding">6dp</dimen>
-
+    <dimen name="_8dp">8dp</dimen>
     <dimen name="cardview_radius">0dp</dimen>
     <dimen name="cardview_elevation">0.5dp</dimen>
     <dimen name="cardview_margin_vertical">0dp</dimen>

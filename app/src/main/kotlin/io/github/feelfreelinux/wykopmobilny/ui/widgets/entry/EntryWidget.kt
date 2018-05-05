@@ -19,6 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.*
@@ -232,7 +233,9 @@ class EntryWidget : ConstraintLayout, EntryView, LayoutContainer {
             }
 
             entry_menu_delete.setOnClickListener {
-                presenter.deleteEntry()
+                ConfirmationDialog(getActivityContext()!!) {
+                    presenter.deleteEntry()
+                }.show()
                 dialog.dismiss()
             }
 

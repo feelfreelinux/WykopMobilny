@@ -8,4 +8,5 @@ interface EmbedView : BaseView {
     fun playUrl(url : URL)
     fun playCoub(coub: Coub)
     fun exitAndOpenYoutubeActivity()
+    fun checkEmbedSettings()
 }

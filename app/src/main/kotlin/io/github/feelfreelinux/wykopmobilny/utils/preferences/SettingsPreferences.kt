@@ -25,8 +25,8 @@ interface SettingsPreferencesApi {
     var fontSize : String?
     var hideLinkCommentsByDefault : Boolean
     var hideBlacklistedViews : Boolean
-    var useYoutubePlayer : Boolean
-    var useEmbedPlayer : Boolean
+    var enableYoutubePlayer : Boolean
+    var enableEmbedPlayer : Boolean
 }
 
 class SettingsPreferences(context : Context) : Preferences(context, true), SettingsPreferencesApi {
@@ -52,8 +52,8 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var showNotifications by booleanPref(defaultValue = true)
     override var hideLinkCommentsByDefault by booleanPref(defaultValue = false)
     override var hideBlacklistedViews: Boolean by booleanPref(defaultValue = false)
-    override var useEmbedPlayer: Boolean by booleanPref(defaultValue = true)
-    override var useYoutubePlayer: Boolean by booleanPref(defaultValue = true)
+    override var enableEmbedPlayer by booleanPref(defaultValue = true)
+    override var enableYoutubePlayer by booleanPref(defaultValue = true)
 
 
 }

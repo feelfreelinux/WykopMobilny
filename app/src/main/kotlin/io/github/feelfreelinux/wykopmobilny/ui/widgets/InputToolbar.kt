@@ -24,6 +24,9 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
 import android.os.Parcel
+import android.widget.EditText
+
+
 
 
 
@@ -189,6 +192,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         textBody += "@$user: "
         if (textBody.length > 2) enableSendButton()
         selectionStart = textBody.length
+        showKeyboard()
     }
 
     fun addQuoteText(quote : String, quoteAuthor : String) {
@@ -198,6 +202,7 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         textBody += "> ${quote.removeHtml().replace("\n", "\n> ")}\n@$quoteAuthor: "
         selectionStart = textBody.length
         if (textBody.length > 2) enableSendButton()
+        showKeyboard()
     }
 
     fun setCustomHint(hint : String) {
@@ -220,6 +225,11 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
         send.isEnabled = true
     }
 
+    fun showKeyboard() {
+        val imm = getActivityContext()!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(body, InputMethodManager.SHOW_IMPLICIT)
+    }
+
     fun show() {
         // Only show if user's logged in
         isVisible = userManager.isUserAuthorized()
@@ -227,12 +237,20 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         val savedState = state as? SavedState
+        savedState?.let {
+            textBody = savedState.text
+            if (savedState.isOpened) {
+                showMarkdownToolbar()
+            } else {
+                closeMarkdownToolbar()
+            }
+        }
         super.onRestoreInstanceState(savedState?.superState)
     }
 
     override fun onSaveInstanceState(): Parcelable {
         val superState = super.onSaveInstanceState()
-        return SavedState(superState, showToolbar)
+        return SavedState(superState, showToolbar, textBody)
     }
 
     override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>?) {
@@ -246,18 +264,22 @@ class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
     class SavedState : View.BaseSavedState {
 
         val isOpened: Boolean
+        val text : String
 
-        constructor(superState: Parcelable, opened : Boolean) : super(superState) {
+        constructor(superState: Parcelable, opened : Boolean, body : String) : super(superState) {
             isOpened = opened
+            text = body
         }
 
         constructor(`in`: Parcel) : super(`in`) {
             isOpened = `in`.readInt() == 1
+            text = `in`.readString()
         }
 
         override fun writeToParcel(destination: Parcel, flags: Int) {
             super.writeToParcel(destination, flags)
             destination.writeInt(if (isOpened) 1 else 0)
+            destination.writeString(text)
         }
 
         companion object {

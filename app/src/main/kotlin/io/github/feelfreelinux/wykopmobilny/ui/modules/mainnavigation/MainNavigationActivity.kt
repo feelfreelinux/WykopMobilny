@@ -50,8 +50,10 @@ import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.net.Uri
+import android.os.Handler
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
@@ -103,10 +105,12 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             R.id.hits -> { openFragment(HitsFragment.newInstance()) }
             R.id.about -> { openAboutSheet() }
             R.id.logout -> {
-                blacklistPreferencesApi.blockedTags = emptySet()
-                blacklistPreferencesApi.blockedUsers = emptySet()
-                userManagerApi.logoutUser()
-                restartActivity()
+                ConfirmationDialog(this) {
+                    blacklistPreferencesApi.blockedTags = emptySet()
+                    blacklistPreferencesApi.blockedUsers = emptySet()
+                    userManagerApi.logoutUser()
+                    restartActivity()
+                }.show()
             }
             else -> showNotImplementedToast()
         }
@@ -145,7 +149,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         if (!presenter.isSubscribed) {
             presenter.subscribe(this)
         }
-        presenter.startListeningForNotifications()
+
+        Handler().postDelayed({
+            presenter.startListeningForNotifications()
+        }, 333)
 
         JobUtil.hasBootPermission(this)
 
@@ -194,8 +201,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         super.onResume()
         if (!presenter.isSubscribed) {
             presenter.subscribe(this)
-            presenter.startListeningForNotifications()
-        }
+            Handler().postDelayed({
+                presenter.startListeningForNotifications()
+            }, 333)        }
     }
 
     override fun onPause() {
@@ -343,6 +351,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
                 navigator.openTagActivity("otwartywykopmobilny")
                 dialog.dismiss()
             }
+
 
             app_donate.setOnClickListener {
                 navigator.openBrowser("https://paypal.me/WykopMobilny")
