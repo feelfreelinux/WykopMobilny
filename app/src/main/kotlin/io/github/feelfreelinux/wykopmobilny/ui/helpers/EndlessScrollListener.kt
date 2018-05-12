@@ -1,13 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.ui.helpers
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 
-class EndlessScrollListener(val linearLayoutManager: androidx.recyclerview.widget.LinearLayoutManager, val listener : () -> Unit) : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+
+class EndlessScrollListener(val linearLayoutManager: LinearLayoutManager, val listener : () -> Unit) : RecyclerView.OnScrollListener() {
     private val visibleThreshold = 2
     private var lastVisibleItem = 0
     private var totalItemCount = 0
-    override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
+    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         totalItemCount = linearLayoutManager.itemCount
         lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition()

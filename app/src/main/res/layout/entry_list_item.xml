@@ -1,27 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.support.constraint.ConstraintLayout"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/showHiddenTextView"
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
+        android:id="@+id/authorHeaderView"
+        style="@style/AuthorHeaderView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
+        android:id="@+id/entryContentTextView"
+        style="@style/ContentTextView"
+        app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="Treść wpisy na mikroblogu" />
+
+    <ViewStub
+        android:id="@+id/surveyStub"
+        android:inflatedId="@id/surveyStub"
+        android:layout="@layout/stub_survey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/padding_dp_small"
-        android:paddingBottom="@dimen/padding_dp_small"
         android:paddingLeft="@dimen/padding_dp_large"
         android:paddingRight="@dimen/padding_dp_large"
-        android:text="Ukryty wpis od @feelfree"
-        android:textSize="?attr/textSizeLarge"
-        android:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@id/entryContentTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
-        android:id="@+id/entryWidget"
-        android:layout_width="match_parent"
+    <ViewStub
+        android:id="@+id/entryImageViewStub"
+        android:inflatedId="@id/entryImageViewStub"
+        android:layout="@layout/stub_embed"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true" />
+        android:layout_marginTop="@dimen/margin_dp_normal"
+        app:layout_constraintTop_toBottomOf="@id/surveyStub"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/shareTextView"
+        style="@style/ButtonTextView"
+        android:drawableStart="?attr/sharebtnDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
+        android:id="@+id/favoriteButton"
+        style="@style/ButtonTextView"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:layout_constraintLeft_toRightOf="@id/shareTextView" />
+
+    <TextView
+        android:id="@+id/replyTextView"
+        style="@style/ButtonTextView"
+        android:drawableStart="?attr/replyDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:layout_constraintLeft_toRightOf="@id/favoriteButton" />
+
+    <TextView
+        android:id="@+id/commentsCountTextView"
+        style="@style/CommentButtonTextView"
+        android:drawableStart="?attr/commentDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:layout_constraintRight_toLeftOf="@+id/voteButton"
+        tools:text="3" />
+
+    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
+        android:id="@+id/voteButton"
+        style="@style/VoteButtonTextView"
+        android:drawableStart="?attr/plusDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:layout_constraintRight_toLeftOf="@+id/moreOptionsTextView"
+        tools:text="2" />
+
+    <TextView
+        android:id="@+id/moreOptionsTextView"
+        style="@style/ButtonTextView"
+        android:drawableStart="?attr/dotsDrawable"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:layout_constraintRight_toRightOf="parent" />
+</android.support.constraint.ConstraintLayout>

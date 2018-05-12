@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
+import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -14,26 +15,24 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.android.synthetic.main.entries_fragment.*
+import kotlinx.android.synthetic.main.hot_fragment.*
 import javax.inject.Inject
 
-class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
+class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     val navigation by lazy { activity as MainNavigationInterface }
-    @Inject override lateinit var feedAdapter : FeedAdapter
     @Inject lateinit var presenter : HotPresenter
     @Inject lateinit var settingsPreferences : SettingsPreferencesApi
     @Inject lateinit var navigatorApi : NavigatorApi
     @Inject lateinit var userManagerApi : UserManagerApi
     val fab by lazy { navigation.floatingButton }
-    private lateinit var entriesDataFragment : DataFragment<Pair<PagedDataModel<List<Entry>>, String>>
-
-    override fun loadData(shouldRefresh: Boolean) {
-        presenter.loadData(shouldRefresh)
-    }
+    val entriesFragment by lazy { childFragmentManager.findFragmentById(R.id.entriesFragment) as EntriesFragment }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -41,42 +40,34 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
             navigatorApi.openAddEntryActivity(activity!!)
         }
         navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity!!, R.drawable.ic_hot)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.hot_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        entriesDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         presenter.subscribe(this)
-        presenter.period = settingsPreferences.hotEntriesScreen ?: "newest"
-        entriesDataFragment.data?.apply {
-            presenter.page = first.page
-            presenter.period = second
-        }
+        entriesFragment.loadDataListener = { presenter.loadData(it) }
+        presenter.loadData(true)
+    }
 
-        initAdapter(entriesDataFragment.data?.first?.model)
+    override fun disableLoading() {
+
     }
 
     companion object {
-        val DATA_FRAGMENT_TAG = "HOT_DATA_FRAGMENT"
         fun newInstance() : Fragment {
             return HotFragment()
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        entriesDataFragment.data = Pair(PagedDataModel(presenter.page , data), presenter.period)
-    }
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) supportFragmentManager?.removeDataFragment(entriesDataFragment)
+        presenter.unsubscribe()
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        presenter.unsubscribe()
+    override fun showHotEntries(entries: List<Entry>, isRefreshing: Boolean) {
+        entriesFragment.addItems(entries, isRefreshing)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -111,7 +102,7 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
             }
         }
 
-        isRefreshing = true
+        swipeRefresh.isRefreshing = true
         presenter.loadData(true)
         return true
     }
@@ -123,7 +114,7 @@ class HotFragment : BaseFeedFragment<Entry>(), HotView, BaseNavigationView {
                 BaseInputActivity.EDIT_ENTRY -> {
                     val entryBody = data?.getStringExtra("entryBody")
                     if (entryBody != null) {
-                        onRefresh()
+                        presenter.loadData(true)
                     }
                 }
             }

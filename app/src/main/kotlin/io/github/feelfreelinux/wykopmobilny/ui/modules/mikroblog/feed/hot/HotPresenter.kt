@@ -4,9 +4,10 @@ import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragmentPresenter
 
 
-class HotPresenter(private val schedulers: Schedulers, private val entriesApi: EntriesApi) : BasePresenter<HotView>() {
+class HotPresenter(val schedulers: Schedulers, val entriesApi: EntriesApi) : BasePresenter<HotView>() {
     var page = 1
     var period = "24"
 
@@ -15,7 +16,7 @@ class HotPresenter(private val schedulers: Schedulers, private val entriesApi: E
         val success : (List<Entry>) -> Unit  = {
             if (it.isNotEmpty()) {
                 page++
-                view?.addDataToAdapter(it, shouldRefresh)
+                view?.showHotEntries(it, shouldRefresh)
             } else view?.disableLoading()
         }
         val failure : (Throwable) -> Unit  = { view?.showErrorDialog(it) }

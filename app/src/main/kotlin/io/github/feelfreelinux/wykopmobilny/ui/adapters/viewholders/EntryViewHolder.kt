@@ -1,40 +1,17 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.content.Context
-import android.graphics.Color
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import androidx.core.app.ShareCompat
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
 import android.text.TextUtils
-import android.text.style.ForegroundColorSpan
-import android.util.AttributeSet
-import android.util.TypedValue
-import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenter
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryView
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
-import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.appendNewSpan
-import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -46,14 +23,50 @@ typealias EntryListener = (Entry) -> Unit
 
 class EntryViewHolder(override val containerView: View,
                       val userManagerApi: UserManagerApi,
-                      val settingsPreferencesApi: SettingsPreferencesApi) : RecyclableViewHolder(containerView), LayoutContainer {
-    var replyListener : EntryListener? = null
+                      val settingsPreferencesApi: SettingsPreferencesApi,
+                      val navigatorApi : NewNavigatorApi,
+                      val entryActionListener : EntryActionListener,
+                      val replyListener: EntryListener?) : RecyclableViewHolder(containerView), LayoutContainer {
+    var type : Int = TYPE_NORMAL
+    lateinit var embedView : WykopEmbedView
+    lateinit var surveyView : SurveyWidget
+
+    companion object {
+        const val TYPE_SURVEY = 4
+        const val TYPE_EMBED = 5
+        const val TYPE_NORMAL = 6
+        const val TYPE_EMBED_SURVEY = 7
+        const val TYPE_BLOCKED = 8
+
+        /**
+         * Inflates correct view (with embed, survey or both) depending on viewType
+         */
+        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, entryActionListener: EntryActionListener, replyListener: EntryListener?): EntryViewHolder {
+            val view = EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false),
+                    userManagerApi,
+                    settingsPreferencesApi,
+                    navigatorApi,
+                    entryActionListener,
+                    replyListener)
+
+            view.type = viewType
+
+            when (viewType) {
+                TYPE_SURVEY -> view.inflateSurvey()
+                TYPE_EMBED -> view.inflateEmbed()
+                TYPE_EMBED_SURVEY -> {
+                    view.inflateEmbed()
+                    view.inflateSurvey()
+                }
+            }
+            return view
+        }
+    }
 
     fun bindView(entry: Entry) {
         setupHeader(entry)
         setupButtons(entry)
         setupBody(entry)
-
     }
 
     fun setupHeader(entry: Entry) {
@@ -66,28 +79,38 @@ class EntryViewHolder(override val containerView: View,
         // Show comments count
         with(commentsCountTextView) {
             text = entry.commentsCount.toString()
-            setOnClickListener {}
+            setOnClickListener {
+                handleClick(entry)
+            }
         }
 
         // Only show reply view in entry details
-        replyTextView.isVisible = replyListener == null && userManagerApi.isUserAuthorized()
+        replyTextView.isVisible = replyListener != null && userManagerApi.isUserAuthorized()
         replyTextView.setOnClickListener({ replyListener?.invoke(entry) })
 
-        containerView.setOnClickListener {  }
+        containerView.setOnClickListener {
+            //handleClick(entry)
+        }
 
         // Setup vote button
         with(voteButton) {
+            isEnabled = true
             isButtonSelected = entry.isVoted
             voteCount = entry.voteCount
-            voteListener = {}
-            unvoteListener = {}
+            voteListener = {
+                entryActionListener.voteEntry(entry)
+            }
+            unvoteListener = {
+                entryActionListener.unvoteEntry(entry)
+            }
         }
 
+        // Setup favorite button
         with(favoriteButton) {
             isVisible = userManagerApi.isUserAuthorized()
             isFavorite = entry.isFavorite
             setOnClickListener {
-
+                entryActionListener.markFavorite(entry)
             }
         }
 
@@ -97,7 +120,7 @@ class EntryViewHolder(override val containerView: View,
 
     }
 
-    fun setupBody(entry : Entry) {
+    private fun setupBody(entry : Entry) {
         // Add URL and click handler if body is not empty
         if (entry.body.isNotEmpty()) {
             with(entryContentTextView) {
@@ -106,27 +129,44 @@ class EntryViewHolder(override val containerView: View,
                     maxLines = EllipsizingTextView.MAX_LINES
                     ellipsize = TextUtils.TruncateAt.END
                 }
-                prepareBody(entry.body, {}, {}, settingsPreferencesApi.openSpoilersDialog)
+                prepareBody(entry.body, {
+                }, { handleClick(entry) }, settingsPreferencesApi.openSpoilersDialog)
             }
         } else {
             entryContentTextView.isVisible = false
         }
 
-        // Show survey
-        if (entry.survey != null) {
-            survey.voteAnswerListener = {}
-            survey.setSurvey(entry.survey, userManagerApi)
-        } else {
-            survey.isVisible = false
+
+        if (type == TYPE_EMBED_SURVEY || type == TYPE_EMBED) {
+            embedView.setEmbed(entry.embed!!, settingsPreferencesApi, navigatorApi, entry.isNsfw)
         }
 
+        // Show survey
+        if (type == TYPE_SURVEY || type == TYPE_EMBED_SURVEY) {
+            if (entry.survey != null) {
+                surveyView.voteAnswerListener = {}
+                surveyView.setSurvey(entry.survey!!, userManagerApi)
+            } else {
+                surveyView.isVisible = false
+            }
+        }
+
+    }
+
+    private fun handleClick(entry: Entry) {
+        if (replyListener == null) {
+            navigatorApi.openEntryDetailsActivity(entry.id, if (::embedView.isInitialized) embedView.resized else false)
+        }
     }
 
     override fun cleanRecycled() {
     }
 
-    fun markEntryAsRemoved() {
-        entryContentTextView.setText(R.string.entryRemoved)
-        entryImageView.isVisible = false
+    fun inflateEmbed() {
+        embedView = entryImageViewStub.inflate() as WykopEmbedView
+    }
+
+    fun inflateSurvey() {
+        surveyView = surveyStub.inflate() as SurveyWidget
     }
 }

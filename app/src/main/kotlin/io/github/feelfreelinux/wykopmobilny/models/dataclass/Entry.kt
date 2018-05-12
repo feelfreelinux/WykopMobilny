@@ -6,8 +6,8 @@ class Entry(val id: Int,
             val date: String,
             var isVoted: Boolean,
             var isFavorite: Boolean,
-            val survey: Survey?,
-            val embed: Embed?,
+            var survey: Survey?,
+            var embed: Embed?,
             var voteCount: Int,
             val commentsCount: Int,
             val comments: List<EntryComment>,
@@ -17,10 +17,10 @@ class Entry(val id: Int,
             var isBlocked: Boolean = false) {
     override fun equals(other: Any?): Boolean {
         return if (other !is Entry) false
-        else (other.id == id)
+        else (other.hashCode() == hashCode())
     }
 
     override fun hashCode(): Int {
-        return id
+        return id + author.group
     }
 }

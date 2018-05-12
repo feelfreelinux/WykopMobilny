@@ -27,7 +27,6 @@ static def isWeeklyBuild() {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "io.github.feelfreelinux.wykopmobilny"
         minSdkVersion 17
@@ -80,6 +79,7 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+    buildToolsVersion '27.0.3'
 }
 
 repositories {
@@ -111,6 +111,7 @@ dependencies {
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'androidx.core:core-ktx:0.3'
 
     // Utils
     implementation 'com.bugsnag:bugsnag-android:4.1.3'

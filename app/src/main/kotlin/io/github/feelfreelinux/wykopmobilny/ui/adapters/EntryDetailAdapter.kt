@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedEntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.CommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
@@ -33,7 +34,7 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder?.itemViewType == ENTRY_HOLDER) {
-            (holder as EntryViewHolder).bindView(entry!!, false)
+            (holder as BlockedEntryViewHolder).bindView(entry!!)
         } else {
             val comment = entry!!.comments[position - 1]
             val entryAuthor = entry?.author?.nick
@@ -56,7 +57,7 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ENTRY_HOLDER -> EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false), userManagerApi, addReceiverListener, settingsPreferencesApi, entryPresenterFactory.create())
+            ENTRY_HOLDER -> BlockedEntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
             else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false), addReceiverListener, quoteCommentListener, settingsPreferencesApi, userManagerApi, commentPresenterFactory.create())
         }
     }

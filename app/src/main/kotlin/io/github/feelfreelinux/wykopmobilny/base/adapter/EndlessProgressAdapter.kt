@@ -1,15 +1,16 @@
 package io.github.feelfreelinux.wykopmobilny.base.adapter
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.helpers.EndlessScrollListener
 
-abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerView.ViewHolder, A : Any> : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>(), BaseProgressAdapter<A> {
+abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val dataset = arrayListOf<A?>()
+    var isLoading = false
 
     var loadNewDataListener : () -> Unit = {}
 
@@ -17,7 +18,7 @@ abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerV
         return dataset[position]?.hashCode()?.toLong() ?: position.toLong()
     }
 
-    override val data: List<A>
+    val data: List<A>
         get() = dataset.filterNotNull()
 
     companion object {
@@ -25,28 +26,29 @@ abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerV
     }
 
     // Attach EndlessScrollListener
-    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        if (recyclerView.layoutManager is androidx.recyclerview.widget.LinearLayoutManager) {
-            recyclerView.addOnScrollListener(EndlessScrollListener(recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager) {
+        if (recyclerView.layoutManager is LinearLayoutManager) {
+            recyclerView.addOnScrollListener(EndlessScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
                 if (dataset.last() == null) {
-                    loadNewDataListener()
+                    if (!isLoading) loadNewDataListener()
+                    isLoading = true
                 }
             })
         }
     }
 
-    override fun disableLoading() {
+    fun disableLoading() {
         if (dataset.isNotEmpty() && dataset.last() == null) {
             val size = dataset.size - 1
             dataset.removeAt(size)
             notifyItemRemoved(size)
-
         }
+        isLoading = false
     }
 
-    override fun addData(items: List<A>, shouldClearAdapter: Boolean) {
-        if (shouldClearAdapter) {
+    fun addData(items: List<A>, shouldClearAdapter: Boolean) {
+        if (shouldClearAdapter || dataset.isEmpty()) {
             dataset.apply {
                 clear()
                 addAll(items)
@@ -61,12 +63,13 @@ abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerV
             dataset.add(null)
             notifyItemRangeInserted(dataset.size - items.size, items.size + 1)
         }
+        isLoading = false
     }
 
 
     override fun getItemCount() = dataset.size
 
-    class ProgressViewHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
+    class ProgressViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     abstract fun getViewType(position : Int) : Int
 
@@ -75,7 +78,7 @@ abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerV
             else getViewType(position)
 
     @Suppress("UNCHECKED_CAST")
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (dataset[position] != null) bindHolder(holder as T, position)
     }
 
@@ -83,10 +86,10 @@ abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerV
 
     abstract fun bindHolder(holder: T, position: Int)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ITEM_PROGRESS -> ProgressViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.progress_item, parent, false))
-            else -> createViewHolder(parent, viewType)
+            else -> constructViewHolder(parent, viewType)
         }
     }
 }

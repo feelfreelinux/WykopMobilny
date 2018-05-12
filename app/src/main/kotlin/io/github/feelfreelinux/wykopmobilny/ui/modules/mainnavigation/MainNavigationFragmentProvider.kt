@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragmentProvider
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragmentProvider
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.hits.HitsFragment
@@ -28,7 +29,7 @@ abstract class MainNavigationFragmentProvider {
     @ContributesAndroidInjector(modules = [PromotedFragmentModule::class])
     abstract fun providePromotedFragment() : PromotedFragment
 
-    @ContributesAndroidInjector(modules = [HotFragmentModule::class])
+    @ContributesAndroidInjector(modules = [HotFragmentModule::class, EntriesFragmentProvider::class])
     abstract fun provideHotFragment() : HotFragment
 
     @ContributesAndroidInjector(modules = [HashTagsNotificationsListFragmentModule::class])
