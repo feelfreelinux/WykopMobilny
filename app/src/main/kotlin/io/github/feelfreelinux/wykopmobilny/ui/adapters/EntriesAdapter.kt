@@ -48,6 +48,7 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
 
     fun updateEntry(entry : Entry) {
         val position = data.indexOf(entry)
+        dataset[position] = entry
         notifyItemChanged(position)
     }
 }

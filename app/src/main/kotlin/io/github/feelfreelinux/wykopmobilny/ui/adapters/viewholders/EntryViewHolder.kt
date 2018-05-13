@@ -89,7 +89,7 @@ class EntryViewHolder(override val containerView: View,
         replyTextView.setOnClickListener({ replyListener?.invoke(entry) })
 
         containerView.setOnClickListener {
-            //handleClick(entry)
+            handleClick(entry)
         }
 
         // Setup vote button
@@ -103,6 +103,7 @@ class EntryViewHolder(override val containerView: View,
             unvoteListener = {
                 entryActionListener.unvoteEntry(entry)
             }
+            setup(userManagerApi)
         }
 
         // Setup favorite button

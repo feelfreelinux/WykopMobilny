@@ -8,6 +8,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
 import android.text.SpannableStringBuilder
 import android.view.View
 import android.webkit.MimeTypeMap
@@ -59,6 +60,7 @@ fun RecyclerView.prepare() {
     drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     isDrawingCacheEnabled = true
     layoutManager = LinearLayoutManager(context)
+    (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     addItemDecoration(ViewHolderDependentItemDecorator(context))
 
 }

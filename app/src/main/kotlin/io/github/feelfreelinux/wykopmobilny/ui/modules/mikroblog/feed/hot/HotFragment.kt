@@ -46,12 +46,13 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
+        presenter.period = settingsPreferences.hotEntriesScreen ?: "24"
         entriesFragment.loadDataListener = { presenter.loadData(it) }
         presenter.loadData(true)
     }
 
     override fun disableLoading() {
-
+        entriesFragment.disableLoading()
     }
 
     companion object {
@@ -64,6 +65,16 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     override fun onPause() {
         super.onPause()
         presenter.unsubscribe()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.subscribe(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
     }
 
     override fun showHotEntries(entries: List<Entry>, isRefreshing: Boolean) {

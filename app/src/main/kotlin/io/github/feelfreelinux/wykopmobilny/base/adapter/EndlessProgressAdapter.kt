@@ -9,7 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.helpers.EndlessScrollListener
 
 abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val dataset = arrayListOf<A?>()
+    internal val dataset = arrayListOf<A?>()
     var isLoading = false
 
     var loadNewDataListener : () -> Unit = {}
@@ -44,7 +44,7 @@ abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Re
             dataset.removeAt(size)
             notifyItemRemoved(size)
         }
-        isLoading = false
+        isLoading = true
     }
 
     fun addData(items: List<A>, shouldClearAdapter: Boolean) {
