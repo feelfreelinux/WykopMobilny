@@ -70,4 +70,18 @@ open class EntriesFragmentPresenter(val schedulers : Schedulers, val entriesApi:
         )
     }
 
+    override fun voteSurvey(entry: Entry, index : Int) {
+        compositeObservable.add(
+                entriesApi.voteSurvey(entry.id, index)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({
+                            entry.survey = it
+                            view?.updateEntry(entry)
+                        }, {
+                            view?.showErrorDialog(it)
+                            view?.updateEntry(entry)
+                        })
+        )
+    }
 }

@@ -8,4 +8,5 @@ interface EntryActionListener {
     fun unvoteEntry(entry : Entry)
     fun markFavorite(entry : Entry)
     fun deleteEntry(entry : Entry)
+    fun voteSurvey(entry : Entry, index : Int)
 }

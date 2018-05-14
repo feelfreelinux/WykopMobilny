@@ -137,6 +137,7 @@ class EntryViewHolder(override val containerView: View,
             entryContentTextView.isVisible = false
         }
 
+        containerView.setOnClickListener { handleClick(entry) }
 
         if (type == TYPE_EMBED_SURVEY || type == TYPE_EMBED) {
             embedView.setEmbed(entry.embed!!, settingsPreferencesApi, navigatorApi, entry.isNsfw)
@@ -145,10 +146,10 @@ class EntryViewHolder(override val containerView: View,
         // Show survey
         if (type == TYPE_SURVEY || type == TYPE_EMBED_SURVEY) {
             if (entry.survey != null) {
-                surveyView.voteAnswerListener = {}
+                surveyView.voteAnswerListener = {
+                    entryActionListener.voteSurvey(entry, it)
+                }
                 surveyView.setSurvey(entry.survey!!, userManagerApi)
-            } else {
-                surveyView.isVisible = false
             }
         }
 
