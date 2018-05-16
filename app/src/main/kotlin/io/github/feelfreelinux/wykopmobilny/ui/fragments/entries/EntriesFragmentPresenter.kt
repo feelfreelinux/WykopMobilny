@@ -84,4 +84,18 @@ open class EntriesFragmentPresenter(val schedulers : Schedulers, val entriesApi:
                         })
         )
     }
+
+    override fun getVoters(entry: Entry) {
+        view?.openVotersMenu()
+        compositeObservable.add(
+                entriesApi.getEntryVoters(entry.id)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({
+                            view?.showVoters(it)
+                        }, {
+                            view?.showErrorDialog(it)
+                        })
+        )
+    }
 }

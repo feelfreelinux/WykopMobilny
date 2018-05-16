@@ -1,22 +1,30 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
+import android.graphics.Color
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.BottomSheetDialog
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.entry_list_item.*
+import kotlinx.android.synthetic.main.entry_menu_bottomsheet.*
+import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 
 
 typealias EntryListener = (Entry) -> Unit
@@ -25,11 +33,18 @@ class EntryViewHolder(override val containerView: View,
                       val userManagerApi: UserManagerApi,
                       val settingsPreferencesApi: SettingsPreferencesApi,
                       val navigatorApi : NewNavigatorApi,
+                      val linkHandlerApi: WykopLinkHandlerApi,
                       val entryActionListener : EntryActionListener,
                       val replyListener: EntryListener?) : RecyclableViewHolder(containerView), LayoutContainer {
     var type : Int = TYPE_NORMAL
     lateinit var embedView : WykopEmbedView
+
+    val isEmbedViewResized : Boolean
+        get() = ::embedView.isInitialized && embedView.resized
+
     lateinit var surveyView : SurveyWidget
+    val enableClickListener : Boolean
+        get() = replyListener == null
 
     companion object {
         const val TYPE_SURVEY = 4
@@ -41,11 +56,12 @@ class EntryViewHolder(override val containerView: View,
         /**
          * Inflates correct view (with embed, survey or both) depending on viewType
          */
-        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, entryActionListener: EntryActionListener, replyListener: EntryListener?): EntryViewHolder {
+        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, entryActionListener: EntryActionListener, replyListener: EntryListener?): EntryViewHolder {
             val view = EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false),
                     userManagerApi,
                     settingsPreferencesApi,
                     navigatorApi,
+                    linkHandlerApi,
                     entryActionListener,
                     replyListener)
 
@@ -74,7 +90,9 @@ class EntryViewHolder(override val containerView: View,
     }
 
     fun setupButtons(entry : Entry) {
-        moreOptionsTextView.setOnClickListener {  }
+        moreOptionsTextView.setOnClickListener {
+            openOptionsMenu(entry)
+        }
 
         // Show comments count
         with(commentsCountTextView) {
@@ -130,8 +148,14 @@ class EntryViewHolder(override val containerView: View,
                     maxLines = EllipsizingTextView.MAX_LINES
                     ellipsize = TextUtils.TruncateAt.END
                 }
-                prepareBody(entry.body, {
-                }, { handleClick(entry) }, settingsPreferencesApi.openSpoilersDialog)
+                prepareBody(entry.body, { linkHandlerApi.handleUrl(it) }, {
+                    if (enableClickListener && !isEllipsized) {
+                        handleClick(entry)
+                    } else if (enableClickListener) {
+                        maxLines = Int.MAX_VALUE
+                        ellipsize = null
+                    }
+                }, settingsPreferencesApi.openSpoilersDialog)
             }
         } else {
             entryContentTextView.isVisible = false
@@ -155,9 +179,68 @@ class EntryViewHolder(override val containerView: View,
 
     }
 
+    fun openOptionsMenu(entry : Entry) {
+        val activityContext = containerView.getActivityContext()!!
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_menu_bottomsheet, null)
+        dialog.setContentView(bottomSheetView)
+        (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
+        bottomSheetView.apply {
+            author.text = entry.author.nick
+            date.text = entry.date
+            entry.app?.let {
+                date.text = context.getString(R.string.date_with_user_app, entry.date, entry.app)
+            }
+
+            entry_menu_copy.setOnClickListener {
+                //copyContent(entry)
+                dialog.dismiss()
+            }
+
+            entry_menu_copy_entry_url.setOnClickListener {
+                //presenter.copyUrl(url)
+                dialog.dismiss()
+            }
+
+            entry_menu_edit.setOnClickListener {
+                navigatorApi.openEditEntryActivity(entry.body, entry.id)
+                dialog.dismiss()
+            }
+
+            entry_menu_delete.setOnClickListener {
+                ConfirmationDialog(getActivityContext()!!) {
+                    entryActionListener.deleteEntry(entry)
+                }.show()
+                dialog.dismiss()
+            }
+
+            entry_menu_report.setOnClickListener {
+                navigatorApi.openReportScreen(entry.violationUrl)
+                dialog.dismiss()
+            }
+
+            entry_menu_voters.setOnClickListener {
+                entryActionListener.getVoters(entry)
+                dialog.dismiss()
+            }
+
+            entry_menu_report.isVisible = userManagerApi.isUserAuthorized()
+
+            val canUserEdit = userManagerApi.isUserAuthorized() && entry.author.nick == userManagerApi.getUserCredentials()!!.login
+            entry_menu_delete.isVisible = canUserEdit
+            entry_menu_edit.isVisible = canUserEdit
+        }
+
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        dialog.setOnShowListener {
+            mBehavior.peekHeight = bottomSheetView.height
+        }
+        dialog.show()
+    }
+
     private fun handleClick(entry: Entry) {
-        if (replyListener == null) {
-            navigatorApi.openEntryDetailsActivity(entry.id, if (::embedView.isInitialized) embedView.resized else false)
+        if (enableClickListener) {
+            navigatorApi.openEntryDetailsActivity(entry.id, isEmbedViewResized)
         }
     }
 

@@ -13,9 +13,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionList
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import javax.inject.Inject
 
-class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi, val navigatorApi: NewNavigatorApi) : EndlessProgressAdapter<RecyclerView.ViewHolder, Entry>() {
+class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi, val navigatorApi: NewNavigatorApi, val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<RecyclerView.ViewHolder, Entry>() {
     // Required field, interacts with presenter. Otherwise will throw exception
     lateinit var entryActionListener : EntryActionListener
 
@@ -34,7 +35,7 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
         return if (viewType == EntryViewHolder.TYPE_BLOCKED) {
             BlockedEntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
         } else {
-            EntryViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, entryActionListener, replyListener)
+            EntryViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, entryActionListener, replyListener)
         }
     }
 
