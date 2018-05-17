@@ -9,6 +9,10 @@ import android.support.customtabs.CustomTabsIntent
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import io.github.feelfreelinux.wykopmobilny.R
+import android.R.attr.label
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.widget.Toast
 
 
 fun Context.openBrowser(url : String) {
@@ -30,10 +34,20 @@ fun Activity.hideKeyboard() {
 }
 
 fun Context.isConnectedToInternet(): Boolean {
-
     val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     val activeNetwork = cm.activeNetworkInfo
 
     return activeNetwork != null && activeNetwork.isConnected
+}
+
+fun Context.copyText(text : String, label : String = "wykopmobilny") {
+    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clip = ClipData.newPlainText(label, text)
+    clipboard.primaryClip = clip
+    showToast(getString(R.string.text_copied))
+}
+
+fun Context.showToast(text : String, long : Boolean = false) {
+    Toast.makeText(this, text, if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
 }

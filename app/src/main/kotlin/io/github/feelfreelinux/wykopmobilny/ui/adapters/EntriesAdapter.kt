@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.EndlessProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedEntryViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryListener
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
@@ -33,7 +33,7 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
 
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == EntryViewHolder.TYPE_BLOCKED) {
-            BlockedEntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+            BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
         } else {
             EntryViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, entryActionListener, replyListener)
         }
@@ -42,7 +42,7 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is EntryViewHolder) {
             holder.bindView(data[position])
-        } else if (holder is BlockedEntryViewHolder) {
+        } else if (holder is BlockedViewHolder) {
             holder.bindView(data[position])
         }
     }

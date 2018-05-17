@@ -2,8 +2,10 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules
 
 import android.app.Activity
 import android.content.Intent
+import android.support.v4.app.ShareCompat
 import com.google.android.youtube.player.YouTubeStandalonePlayer
 import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
+import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.ENTRYCOMMENT_REPORT_URL
 import io.github.feelfreelinux.wykopmobilny.api.ENTRY_REPORT_URL
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
@@ -28,6 +30,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.Conversat
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import java.util.regex.Pattern
 
@@ -55,6 +58,7 @@ interface NewNavigatorApi {
     fun openEmbedActivity(url : String)
     fun openYoutubeActivity(url : String)
     fun openAddLinkActivity()
+    fun shareUrl(url : String)
 }
 
 class NewNavigator(val context : Activity) : NewNavigatorApi {
@@ -150,5 +154,12 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
         context.startActivity(AddlinkActivity.createIntent(context))
     }
 
-
+    override fun shareUrl(url: String) {
+        ShareCompat.IntentBuilder
+                .from(context)
+                .setType("text/plain")
+                .setChooserTitle(R.string.share)
+                .setText(url)
+                .startChooser()
+    }
 }

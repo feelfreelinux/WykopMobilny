@@ -8,7 +8,6 @@ import io.github.feelfreelinux.wykopmobilny.base.adapter.AdvancedProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.LinkItemPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.LinkItemWidget
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.SimpleItemWidget
@@ -33,7 +32,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
             when (viewType) {
-                ENTRY_VIEWTYPE -> BlockedEntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false))
+                ENTRY_VIEWTYPE -> BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false))
                 LINK_VIEWTYPE -> LinkViewHolder(LinkItemWidget.createView(parent.context), settingsPreferencesApi, linkItemPresenterFactory.create())
                 else -> SimpleLinkViewHolder(SimpleItemWidget.createView(parent.context), settingsPreferencesApi, linkItemPresenterFactory.create())
             }
@@ -41,7 +40,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!
         if (item.entry != null) {
-            (holder as BlockedEntryViewHolder).bindView(item.entry)
+            (holder as BlockedViewHolder).bindView(item.entry)
         } else if (item.link != null) {
             if (holder is SimpleLinkViewHolder) holder.bindView(item.link)
             else (holder as? LinkViewHolder)?.bindView(item.link)

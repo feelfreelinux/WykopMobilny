@@ -7,12 +7,10 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedEntryViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.CommentViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryWidget
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -34,7 +32,7 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder?.itemViewType == ENTRY_HOLDER) {
-            (holder as BlockedEntryViewHolder).bindView(entry!!)
+            (holder as BlockedViewHolder).bindView(entry!!)
         } else {
             val comment = entry!!.comments[position - 1]
             val entryAuthor = entry?.author?.nick
@@ -57,7 +55,7 @@ class EntryDetailAdapter @Inject constructor(val userManagerApi: UserManagerApi,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ENTRY_HOLDER -> BlockedEntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+            ENTRY_HOLDER -> BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
             else -> CommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false), addReceiverListener, quoteCommentListener, settingsPreferencesApi, userManagerApi, commentPresenterFactory.create())
         }
     }

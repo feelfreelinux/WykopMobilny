@@ -20,4 +20,7 @@ class EntryComment(val id : Int,
     override fun hashCode(): Int {
         return id
     }
+
+    val url : String
+        get() = "https://www.wykop.pl/wpis/$entryId/#comment-$id"
 }

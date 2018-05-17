@@ -4,85 +4,30 @@ import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.reactivex.Single
 
-open class EntriesFragmentPresenter(val schedulers : Schedulers, val entriesApi: EntriesApi) : BasePresenter<EntriesFragmentView>(), EntryActionListener {
+open class EntriesFragmentPresenter(val schedulers : Schedulers, val entriesApi: EntriesApi, val entriesInteractor: EntriesInteractor) : BasePresenter<EntriesFragmentView>(), EntryActionListener {
     override fun voteEntry(entry: Entry) {
-        compositeObservable.add(
-                entriesApi.voteEntry(entry.id, true)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({
-                            entry.voteCount = it.voteCount
-                            entry.isVoted = true
-                            view?.updateEntry(entry)
-                        }, {
-                            view?.showErrorDialog(it)
-                            view?.updateEntry(entry)
-                        })
-        )
+        entriesInteractor.voteEntry(entry).processEntrySingle(entry)
     }
 
     override fun unvoteEntry(entry: Entry) {
-        compositeObservable.add(
-                entriesApi.unvoteEntry(entry.id, true)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({
-                            entry.voteCount = it.voteCount
-                            entry.isVoted = false
-                            view?.updateEntry(entry)
-                        }, {
-                            view?.showErrorDialog(it)
-                            view?.updateEntry(entry)
-                        })
-        )
+        entriesInteractor.unvoteEntry(entry).processEntrySingle(entry)
+
     }
 
     override fun markFavorite(entry: Entry) {
-        compositeObservable.add(
-                entriesApi.markFavorite(entry.id)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({
-                            entry.isFavorite = it.userFavorite
-                            view?.updateEntry(entry)
-                        }, {
-                            view?.showErrorDialog(it)
-                            view?.updateEntry(entry)
-                        })
-        )
+        entriesInteractor.markFavorite(entry).processEntrySingle(entry)
+
     }
 
     override fun deleteEntry(entry: Entry) {
-        compositeObservable.add(
-                entriesApi.deleteEntry(entry.id)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({
-                            entry.embed = null
-                            entry.survey = null
-                            entry.body = "[Wpis usunięty]"
-                            view?.updateEntry(entry)
-                        }, {
-                            view?.showErrorDialog(it)
-                            view?.updateEntry(entry)
-                        })
-        )
+        entriesInteractor.deleteEntry(entry).processEntrySingle(entry)
+
     }
 
     override fun voteSurvey(entry: Entry, index : Int) {
-        compositeObservable.add(
-                entriesApi.voteSurvey(entry.id, index)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({
-                            entry.survey = it
-                            view?.updateEntry(entry)
-                        }, {
-                            view?.showErrorDialog(it)
-                            view?.updateEntry(entry)
-                        })
-        )
+        entriesInteractor.voteSurvey(entry, index).processEntrySingle(entry)
     }
 
     override fun getVoters(entry: Entry) {
@@ -96,6 +41,19 @@ open class EntriesFragmentPresenter(val schedulers : Schedulers, val entriesApi:
                         }, {
                             view?.showErrorDialog(it)
                         })
+        )
+    }
+
+    fun Single<Entry>.processEntrySingle(entry : Entry) {
+        compositeObservable.add(
+                this
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.updateEntry(it) },
+                                {
+                                    view?.showErrorDialog(it)
+                                    view?.updateEntry(entry)
+                                })
         )
     }
 }

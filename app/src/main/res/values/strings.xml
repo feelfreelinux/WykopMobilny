@@ -224,5 +224,6 @@
     <string name="blacklist_import_title">Zaimportuj czarną listę</string>
     <string name="blacklist_import_progress">Importowanie czarnej listy...</string>
     <string name="blacklist_import_action">Zaimportuj</string>
+    <string name="text_copied">Skopiowano do schowka</string>
 
 </resources>

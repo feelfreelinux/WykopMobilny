@@ -23,4 +23,7 @@ class Entry(val id: Int,
     override fun hashCode(): Int {
         return id + author.group
     }
+
+    val url: String
+        get() = "https://www.wykop.pl/wpis/$id"
 }

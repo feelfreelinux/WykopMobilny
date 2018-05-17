@@ -14,6 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionList
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
+import io.github.feelfreelinux.wykopmobilny.utils.copyText
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
@@ -23,19 +24,18 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.entry_list_item.*
-import kotlinx.android.synthetic.main.entry_menu_bottomsheet.*
 import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 
 
 typealias EntryListener = (Entry) -> Unit
 
 class EntryViewHolder(override val containerView: View,
-                      val userManagerApi: UserManagerApi,
-                      val settingsPreferencesApi: SettingsPreferencesApi,
-                      val navigatorApi : NewNavigatorApi,
-                      val linkHandlerApi: WykopLinkHandlerApi,
-                      val entryActionListener : EntryActionListener,
-                      val replyListener: EntryListener?) : RecyclableViewHolder(containerView), LayoutContainer {
+                      private val userManagerApi: UserManagerApi,
+                      private val settingsPreferencesApi: SettingsPreferencesApi,
+                      private val navigatorApi : NewNavigatorApi,
+                      private val linkHandlerApi: WykopLinkHandlerApi,
+                      private val entryActionListener : EntryActionListener,
+                      private val replyListener: EntryListener?) : RecyclableViewHolder(containerView), LayoutContainer {
     var type : Int = TYPE_NORMAL
     lateinit var embedView : WykopEmbedView
 
@@ -133,8 +133,9 @@ class EntryViewHolder(override val containerView: View,
             }
         }
 
+        // Setup share button
         shareTextView.setOnClickListener {
-
+            navigatorApi.shareUrl(entry.url)
         }
 
     }
@@ -148,6 +149,8 @@ class EntryViewHolder(override val containerView: View,
                     maxLines = EllipsizingTextView.MAX_LINES
                     ellipsize = TextUtils.TruncateAt.END
                 }
+
+                // Setup unellipsize listener, handle clicks
                 prepareBody(entry.body, { linkHandlerApi.handleUrl(it) }, {
                     if (enableClickListener && !isEllipsized) {
                         handleClick(entry)
@@ -193,12 +196,12 @@ class EntryViewHolder(override val containerView: View,
             }
 
             entry_menu_copy.setOnClickListener {
-                //copyContent(entry)
+                context.copyText(entry.body, "entry-body")
                 dialog.dismiss()
             }
 
             entry_menu_copy_entry_url.setOnClickListener {
-                //presenter.copyUrl(url)
+                context.copyText(entry.url, "entry-url")
                 dialog.dismiss()
             }
 
