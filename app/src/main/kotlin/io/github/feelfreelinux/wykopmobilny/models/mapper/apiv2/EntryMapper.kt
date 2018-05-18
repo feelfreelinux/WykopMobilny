@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2
 
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.mapper.Mapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
@@ -18,7 +19,7 @@ class EntryMapper {
                     if (value.embed != null) EmbedMapper.map(value.embed) else null,
                     value.voteCount,
                     value.commentsCount,
-                    if (value.comments != null) value.comments.map { EntryCommentMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) } else emptyList(),
+                    if (value.comments != null) value.comments.map { EntryCommentMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi)}.toMutableList()  else mutableListOf<EntryComment>(),
                     value.app,
                     value.violationUrl ?: "",
                     value.body?.toLowerCase()?.contains("#nsfw") ?: false,

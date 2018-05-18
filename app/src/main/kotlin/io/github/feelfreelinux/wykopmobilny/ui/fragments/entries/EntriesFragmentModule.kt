@@ -8,5 +8,5 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 @Module
 class EntriesFragmentModule {
     @Provides
-    fun provideEntriesFragmentPresenter(schedulers: Schedulers, entriesApi: EntriesApi) = EntriesFragmentPresenter(schedulers, entriesApi)
+    fun provideEntriesFragmentPresenter(schedulers: Schedulers, entriesApi: EntriesApi, entryInteractor: EntriesInteractor) = EntriesFragmentPresenter(schedulers, entriesApi, entryInteractor)
 }

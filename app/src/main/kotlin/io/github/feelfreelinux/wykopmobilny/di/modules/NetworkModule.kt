@@ -2,7 +2,6 @@ package io.github.feelfreelinux.wykopmobilny.di.modules
 
 import android.app.NotificationManager
 import android.content.Context
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.WykopApp
@@ -55,11 +54,6 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMoshi() =
-            Moshi.Builder().build()
-
-    @Provides
-    @Singleton
     fun provideHttpCache(application: WykopApp): Cache {
         val cacheSize = 10 * 1024 * 1024
         return Cache(application.cacheDir, cacheSize.toLong())
@@ -86,7 +80,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient, moshi: Moshi) : Retrofit {
+    fun provideRetrofit(client: OkHttpClient) : Retrofit {
         return Retrofit.Builder()
                 .client(client)
                 .baseUrl(WykopApp.WYKOP_API_URL)

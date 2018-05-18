@@ -8,15 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.copyText
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
@@ -26,9 +24,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.badge_list_item.*
 import kotlinx.android.synthetic.main.comment_list_item.*
-import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
+import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 
 
 typealias EntryCommentListener = (EntryComment) -> Unit
@@ -39,7 +36,8 @@ class EntryCommentViewHolder(override val containerView: View,
                              private val navigatorApi : NewNavigatorApi,
                              private val linkHandlerApi: WykopLinkHandlerApi,
                              private val commentActionListener : EntryCommentActionListener,
-                             private val commentViewListener: EntryCommentViewListener) : RecyclableViewHolder(containerView), LayoutContainer {
+                             private val commentViewListener: EntryCommentViewListener,
+                             private val enableClickListener : Boolean) : RecyclableViewHolder(containerView), LayoutContainer {
     var type : Int = TYPE_NORMAL
     lateinit var embedView : WykopEmbedView
 
@@ -54,14 +52,15 @@ class EntryCommentViewHolder(override val containerView: View,
         /**
          * Inflates correct view (with embed, survey or both) depending on viewType
          */
-        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, commentActionListener: EntryCommentActionListener, commentViewListener: EntryCommentViewListener): EntryCommentViewHolder {
+        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, commentActionListener: EntryCommentActionListener, commentViewListener: EntryCommentViewListener, enableClickListener: Boolean): EntryCommentViewHolder {
             val view = EntryCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false),
                     userManagerApi,
                     settingsPreferencesApi,
                     navigatorApi,
                     linkHandlerApi,
                     commentActionListener,
-                    commentViewListener)
+                    commentViewListener,
+                    enableClickListener)
 
             view.type = viewType
 
@@ -70,12 +69,22 @@ class EntryCommentViewHolder(override val containerView: View,
             }
             return view
         }
+
+        fun getViewTypeForEntryComment(comment : EntryComment) : Int {
+            return when {
+                comment.isBlocked -> TYPE_BLOCKED
+                comment.embed == null -> TYPE_NORMAL
+                else -> TYPE_EMBED
+            }
+        }
     }
 
-    fun bindView(comment: EntryComment) {
+    fun bindView(comment: EntryComment, entryAuthor : Author? = null, highlightCommentId : Int = 0) {
         setupHeader(comment)
         setupButtons(comment)
         setupBody(comment)
+
+        setStyleForComment(entryAuthor?.nick == comment.author.nick, comment, highlightCommentId)
     }
 
     private fun setupHeader(comment : EntryComment) {
@@ -120,7 +129,7 @@ class EntryCommentViewHolder(override val containerView: View,
 
         // Setup share button
         shareTextView.setOnClickListener {
-            //navigatorApi.shareUrl(comment.url)
+            navigatorApi.shareUrl(comment.url)
         }
 
     }
@@ -133,7 +142,7 @@ class EntryCommentViewHolder(override val containerView: View,
         quoteTextView.setOnClickListener { commentViewListener.quoteComment(comment) }
         if (comment.body.isNotEmpty()) {
             entryContentTextView.isVisible = true
-            entryContentTextView.prepareBody(comment.body, { linkHandlerApi.handleUrl(it) }, null, settingsPreferencesApi.openSpoilersDialog)
+            entryContentTextView.prepareBody(comment.body, { linkHandlerApi.handleUrl(it) }, { handleClick(comment) }, settingsPreferencesApi.openSpoilersDialog)
         } else entryContentTextView.isVisible = false
 
 
@@ -141,12 +150,17 @@ class EntryCommentViewHolder(override val containerView: View,
             embedView.setEmbed(comment.embed!!, settingsPreferencesApi, navigatorApi, comment.isNsfw)
         }
 
+        if (enableClickListener) {
+            containerView.setOnClickListener {
+                handleClick(comment)
+            }
+        }
     }
 
     fun openOptionsMenu(comment : EntryComment) {
         val activityContext = containerView.getActivityContext()!!
         val dialog = BottomSheetDialog(activityContext)
-        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_menu_bottomsheet, null)
+        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_comment_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
         (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
         bottomSheetView.apply {
@@ -156,43 +170,38 @@ class EntryCommentViewHolder(override val containerView: View,
                 date.text = context.getString(R.string.date_with_user_app, comment.date, comment.app)
             }
 
-            entry_menu_copy.setOnClickListener {
-                context.copyText(comment.body, "entry-body")
+            entry_comment_menu_copy.setOnClickListener {
+                context.copyText(comment.body, "entry-comment-body")
                 dialog.dismiss()
             }
 
-            entry_menu_copy_entry_url.setOnClickListener {
-                context.copyText(comment.url, "entry-url")
+            entry_comment_menu_edit.setOnClickListener {
+                navigatorApi.openEditEntryCommentActivity(comment.body, comment.entryId, comment.id)
                 dialog.dismiss()
             }
 
-            entry_menu_edit.setOnClickListener {
-                navigatorApi.openEditEntryActivity(comment.body, comment.id)
-                dialog.dismiss()
-            }
-
-            entry_menu_delete.setOnClickListener {
+            entry_comment_menu_delete.setOnClickListener {
                 ConfirmationDialog(getActivityContext()!!) {
                     commentActionListener.deleteComment(comment)
                 }.show()
                 dialog.dismiss()
             }
 
-            entry_menu_report.setOnClickListener {
+            entry_comment_menu_voters.setOnClickListener {
+                commentActionListener.getVoters(comment)
+                dialog.dismiss()
+            }
+
+            entry_comment_menu_report.setOnClickListener {
                 navigatorApi.openReportScreen(comment.violationUrl)
                 dialog.dismiss()
             }
 
-            entry_menu_voters.setOnClickListener {
-                //entryActionListener.getVoters(entry)
-                dialog.dismiss()
-            }
-
-            entry_menu_report.isVisible = userManagerApi.isUserAuthorized()
+            entry_comment_menu_report.isVisible = userManagerApi.isUserAuthorized()
 
             val canUserEdit = userManagerApi.isUserAuthorized() && comment.author.nick == userManagerApi.getUserCredentials()!!.login
-            entry_menu_delete.isVisible = canUserEdit
-            entry_menu_edit.isVisible = canUserEdit
+            entry_comment_menu_delete.isVisible = canUserEdit
+            entry_comment_menu_edit.isVisible = canUserEdit
         }
 
         val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
@@ -205,11 +214,17 @@ class EntryCommentViewHolder(override val containerView: View,
     override fun cleanRecycled() {
     }
 
+    fun handleClick(comment : EntryComment) {
+        if (enableClickListener) {
+            navigatorApi.openEntryDetailsActivity(comment.entryId, isEmbedViewResized)
+        }
+    }
+
     fun inflateEmbed() {
         embedView = entryImageViewStub.inflate() as WykopEmbedView
     }
 
-    fun setStyleForComment(isAuthorComment: Boolean, comment : EntryComment, commentId : Int = -1){
+    private fun setStyleForComment(isAuthorComment: Boolean, comment : EntryComment, commentId : Int = -1){
         val credentials = userManagerApi.getUserCredentials()
         if (credentials != null && credentials.login == comment.author.nick) {
             authorBadgeStrip.isVisible = true

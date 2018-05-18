@@ -3,21 +3,16 @@ package io.github.feelfreelinux.wykopmobilny.ui.fragments.entries
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.LinearLayoutManager
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntriesAdapter
-import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.appendNewSpan
-import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CreateVotersDialogListener
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.dialog_voters.view.*
@@ -27,7 +22,7 @@ import javax.inject.Inject
 // This fragment shows list of provided entries
 class EntriesFragment : BaseFragment(), EntriesFragmentView {
     var loadDataListener : (Boolean) -> Unit = {}
-    var votersDialogListener : (List<Voter>) -> Unit = {}
+    lateinit var votersDialogListener : VotersDialogListener
 
     @Inject
     lateinit var presenter : EntriesFragmentPresenter
@@ -107,25 +102,7 @@ class EntriesFragment : BaseFragment(), EntriesFragmentView {
         val votersDialogView = activity!!.layoutInflater.inflate(R.layout.dialog_voters, null)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView)
-        votersDialogListener = {
-            if (dialog.isShowing) {
-                votersDialogView.progressView.isVisible = false
-                votersDialogView.votersTextView.isVisible = true
-                val spannableStringBuilder = SpannableStringBuilder()
-                it
-                        .map { it.author }
-                        .forEachIndexed { index, author ->
-                            val span = ForegroundColorSpan(getGroupColor(author.group))
-                            spannableStringBuilder.appendNewSpan(author.nick, span, 0)
-                            if (index < it.size - 1) spannableStringBuilder.append(", ")
-                        }
-                if (spannableStringBuilder.isEmpty()) {
-                    votersDialogView.votersTextView.gravity = Gravity.CENTER
-                    spannableStringBuilder.append(context?.getString(R.string.dialogNoVotes))
-                }
-                votersDialogView.votersTextView.text = spannableStringBuilder
-            }
-        }
+        votersDialogListener = CreateVotersDialogListener(dialog, votersDialogView)
         dialog.show()
     }
 }

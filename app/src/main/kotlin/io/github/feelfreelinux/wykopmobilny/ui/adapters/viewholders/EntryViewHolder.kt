@@ -77,6 +77,14 @@ class EntryViewHolder(override val containerView: View,
             }
             return view
         }
+
+        fun getViewTypeForEntry(entry : Entry) : Int {
+            return if (entry.isBlocked) EntryViewHolder.TYPE_BLOCKED
+            else if (entry.embed != null && entry.survey == null) EntryViewHolder.TYPE_EMBED_SURVEY
+            else if (entry.embed == null && entry.survey != null) EntryViewHolder.TYPE_SURVEY
+            else if (entry.embed != null && entry.survey == null) EntryViewHolder.TYPE_EMBED
+            else EntryViewHolder.TYPE_NORMAL
+        }
     }
 
     fun bindView(entry: Entry) {

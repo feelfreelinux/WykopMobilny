@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteractor
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentInteractor
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
@@ -12,8 +14,8 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 @Module
 class EntryDetailModule {
     @Provides
-    fun providesEntryDetailPresenter(schedulers: Schedulers, entriesApi: EntriesApi) =
-            EntryDetailPresenter(schedulers, entriesApi)
+    fun providesEntryDetailPresenter(schedulers: Schedulers, entriesApi: EntriesApi, entriesInteractor: EntriesInteractor, commentInteractor: EntryCommentInteractor) =
+            EntryDetailPresenter(schedulers, entriesApi, entriesInteractor, commentInteractor)
 
     @Provides
     fun provideNavigator(activity : EntryActivity) : NewNavigatorApi = NewNavigator(activity)

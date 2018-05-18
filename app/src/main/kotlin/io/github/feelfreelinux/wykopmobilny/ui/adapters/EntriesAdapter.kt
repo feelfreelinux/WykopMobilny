@@ -24,11 +24,7 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
 
     override fun getViewType(position: Int): Int {
         val entry = data[position]
-        return if (entry.isBlocked) EntryViewHolder.TYPE_BLOCKED
-        else if (entry.embed != null && entry.survey == null) EntryViewHolder.TYPE_EMBED_SURVEY
-        else if (entry.embed == null && entry.survey != null) EntryViewHolder.TYPE_SURVEY
-        else if (entry.embed != null && entry.survey == null) EntryViewHolder.TYPE_EMBED
-        else EntryViewHolder.TYPE_NORMAL
+        return EntryViewHolder.getViewTypeForEntry(entry)
     }
 
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

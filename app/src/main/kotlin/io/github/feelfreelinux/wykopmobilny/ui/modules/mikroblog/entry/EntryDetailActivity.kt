@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.ShareCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Menu
@@ -12,26 +13,61 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryDetailAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.decorators.EntryCommentItemDecoration
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CreateVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
-import io.github.feelfreelinux.wykopmobilny.utils.api.convertMarkdownToHtml
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_entry.*
+import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener {
+class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener, EntryCommentViewListener {
+    lateinit var votersDialogListener : VotersDialogListener
+
+    override fun openVotersMenu() {
+        val dialog = BottomSheetDialog(this)
+        val votersDialogView = layoutInflater.inflate(R.layout.dialog_voters, null)
+        votersDialogView.votersTextView.isVisible = false
+        dialog.setContentView(votersDialogView)
+        votersDialogListener = CreateVotersDialogListener(dialog, votersDialogView)
+        dialog.show()
+    }
+
+    override fun showVoters(voters: List<Voter>) {
+        votersDialogListener(voters)
+    }
+
+    override fun updateEntry(entry: Entry) {
+        adapter.updateEntry(entry)
+    }
+
+    override fun updateComment(comment: EntryComment) {
+        adapter.updateComment(comment)
+    }
+
+    override fun addReply(author: Author) {
+        inputToolbar.addAddressant(author.nick)
+    }
+
+    override fun quoteComment(comment: EntryComment) {
+        inputToolbar.addQuoteText(comment.body, comment.author.nick)
+    }
+
     override val enableSwipeBackLayout: Boolean = true
     val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
     val isRevealed by lazy { intent.getBooleanExtra(EXTRA_IS_REVEALED, false) }
@@ -53,23 +89,22 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         }
     }
 
-    @Inject lateinit var clipboardHelper : ClipboardHelperApi
     @Inject lateinit var presenter: EntryDetailPresenter
     @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var suggestionApi : SuggestApi
     private lateinit var entryFragmentData: DataFragment<Entry>
-    @Inject lateinit var adapter : EntryDetailAdapter
+    @Inject lateinit var adapter : EntryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
         setSupportActionBar(toolbar)
         adapter.commentId = intent.getIntExtra(EXTRA_COMMENT_ID, -1)
-        adapter.addReceiverListener = { inputToolbar.addAddressant(it.nick) }
-        adapter.quoteCommentListener = {
-            inputToolbar.addQuoteText(it.body, it.author.nick)
-        }
+        adapter.commentViewListener = this
+        adapter.commentActionListener = presenter
+        adapter.entryActionListener = presenter
 
+        presenter.entryId = entryId
         supportActionBar?.apply {
             title = null
             setDisplayHomeAsUpEnabled(true)
@@ -86,27 +121,16 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         // Prepare InputToolbar
         inputToolbar.setup(userManager, suggestionApi)
         inputToolbar.inputToolbarListener = this
-
         swiperefresh.setOnRefreshListener(this)
-        entryFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + entryId)
 
-    }
-
-    private fun loadData() {
-        if (entryFragmentData.data != null)
-            adapter.entry = entryFragmentData.data
-        else {
-            // Trigger data loading
-            loadingView?.isVisible = true
-            presenter.loadData()
-        }
+        // Trigger data loading
+        loadingView?.isVisible = true
+        presenter.loadData()
     }
 
     override fun onResume() {
         super.onResume()
-        if (!presenter.isSubscribed) presenter.subscribe(this)
-        presenter.entryId = entryId
-        if (adapter.entry == null) loadData()
+        presenter.subscribe(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -114,33 +138,27 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         return true
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        entryFragmentData.data = adapter.entry
-    }
-
     override fun onPause() {
         super.onPause()
-        if (isFinishing) supportFragmentManager.removeDataFragment(entryFragmentData)
         presenter.unsubscribe()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> onBackPressed()
-            R.id.copyUrl -> clipboardHelper.copyTextToClipboard(url, "entryUrl")
-            R.id.refresh -> {
-                swiperefresh?.isRefreshing = true
-                onRefresh()
-            }
-            R.id.share -> shareUrl()
+            R.id.refresh -> onRefresh()
         }
         return true
     }
 
     override fun onRefresh() {
+        swiperefresh.isRefreshing = true
         presenter.loadData()
-        adapter.notifyDataSetChanged()
     }
 
     override fun showEntry(entry: Entry) {
@@ -219,16 +237,4 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             }
         }
     }
-
-    fun shareUrl() {
-        ShareCompat.IntentBuilder
-                .from(this)
-                .setType("text/plain")
-                .setChooserTitle(R.string.share)
-                .setText(url)
-                .startChooser()
-    }
-
-    val url : String
-        get() = "https://wykop.pl/wpis/$entryId"
 }
