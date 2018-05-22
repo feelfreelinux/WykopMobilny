@@ -92,7 +92,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
     @Inject lateinit var presenter: EntryDetailPresenter
     @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var suggestionApi : SuggestApi
-    private lateinit var entryFragmentData: DataFragment<Entry>
     @Inject lateinit var adapter : EntryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,7 +108,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
             title = null
             setDisplayHomeAsUpEnabled(true)
         }
-        supportActionBar?.title = "Wpis"
+        supportActionBar?.title = getString(R.string.entry)
 
         // Prepare RecyclerView
         recyclerView?.apply {
@@ -170,7 +169,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         swiperefresh?.isRefreshing = false
         entry.embed?.isRevealed = isRevealed
         adapter.notifyDataSetChanged()
-        if (intent.hasExtra(EXTRA_COMMENT_ID) && entryFragmentData.data == null) {
+        if (intent.hasExtra(EXTRA_COMMENT_ID)) {
             entry.comments.forEachIndexed({ index, comment ->
                 if (comment.id == intent.getIntExtra(EXTRA_COMMENT_ID, -1)) {
                     recyclerView?.scrollToPosition(index + 1)

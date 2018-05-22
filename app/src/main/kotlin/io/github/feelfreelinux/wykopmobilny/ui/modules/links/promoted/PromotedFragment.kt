@@ -5,6 +5,7 @@ import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
+import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -14,19 +15,20 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
+import kotlinx.android.synthetic.main.entries_fragment.*
 import javax.inject.Inject
 
-class PromotedFragment : BaseFeedFragment<Link>(), PromotedView, BaseNavigationView {
-    @Inject override lateinit var feedAdapter : LinkAdapter
+class PromotedFragment : BaseLinksFragment(), PromotedView, BaseNavigationView {
     @Inject lateinit var presenter : PromotedPresenter
-    lateinit var dataFragment : DataFragment<PagedDataModel<List<Link>>>
     @Inject lateinit var navigator : NewNavigatorApi
     val navigation by lazy { activity as MainNavigationInterface }
     val fab by lazy { navigation.floatingButton }
 
-    companion object {
-        val DATA_FRAGMENT_TAG = "PROMOTED_FRAGMENT_TAG"
+    override var loadDataListener: (Boolean) -> Unit = {
+        presenter.getPromotedLinks(it)
+    }
 
+    companion object {
         fun newInstance() : PromotedFragment {
             return PromotedFragment()
         }
@@ -45,8 +47,8 @@ class PromotedFragment : BaseFeedFragment<Link>(), PromotedView, BaseNavigationV
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.refresh -> {
-                isRefreshing = true
-                onRefresh()
+                swipeRefresh.isRefreshing = true
+                presenter.getPromotedLinks(true)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -58,22 +60,26 @@ class PromotedFragment : BaseFeedFragment<Link>(), PromotedView, BaseNavigationV
             navigator.openAddLinkActivity()
         }
         presenter.subscribe(this)
-        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        dataFragment.data?.apply {
-            presenter.page = page
-        }
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.main_page)
+
+        linksAdapter.linksActionListener = presenter
+        linksAdapter.loadNewDataListener = { loadDataListener(false) }
+        presenter.getPromotedLinks(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
         presenter.subscribe(this)
-        initAdapter(dataFragment.data?.model)
     }
 
-    override fun loadData(shouldRefresh: Boolean) {
-        presenter.getPromotedLinks(shouldRefresh)
+    override fun onPause() {
+        super.onPause()
+        presenter.unsubscribe()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        dataFragment.data = PagedDataModel(presenter.page , data)
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
     }
 
     override fun onDetach() {
@@ -81,8 +87,4 @@ class PromotedFragment : BaseFeedFragment<Link>(), PromotedView, BaseNavigationV
         presenter.unsubscribe()
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving) supportFragmentManager.removeDataFragment(dataFragment)
-    }
 }

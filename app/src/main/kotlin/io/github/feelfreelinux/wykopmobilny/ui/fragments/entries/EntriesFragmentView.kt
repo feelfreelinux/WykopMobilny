@@ -8,4 +8,6 @@ interface EntriesFragmentView : BaseView {
     fun updateEntry(entry : Entry)
     fun showVoters(voters : List<Voter>)
     fun openVotersMenu()
+    fun disableLoading()
+    fun addItems(items : List<Entry>, shouldRefresh : Boolean = false)
 }

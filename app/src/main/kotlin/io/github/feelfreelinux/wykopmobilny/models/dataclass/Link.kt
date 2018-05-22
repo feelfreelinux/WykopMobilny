@@ -92,4 +92,6 @@ class Link(
             return arrayOfNulls(size)
         }
     }
+
+    val url = "https://www.wykop.pl/link/$id"
 }

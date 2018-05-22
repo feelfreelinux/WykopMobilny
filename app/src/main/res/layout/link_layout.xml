@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,53 +23,40 @@
             app:layout_constraintRight_toRightOf="parent"
             android:visibility="gone" />
 
-        <ImageView
+        <ViewStub
             android:id="@+id/image_left"
+            android:inflatedId="@+id/image_left"
+            android:layout="@layout/link_image_left"
             android:layout_width="@dimen/link_layout_image_width"
             android:layout_height="90dp"
-            android:layout_marginTop="@dimen/margin_dp_normal"
-            android:layout_marginLeft="@dimen/margin_dp_large"
-            android:clickable="false"
-            android:focusable="false"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/image_top"
             app:layout_constraintLeft_toLeftOf="parent" />
 
-        <ImageView
+        <ViewStub
             android:id="@+id/image_right"
+            android:inflatedId="@+id/image_right"
+            android:layout="@layout/link_image_right"
             android:layout_width="@dimen/link_layout_image_width"
             android:layout_height="90dp"
-            android:layout_marginTop="@dimen/margin_dp_normal"
-            android:layout_marginRight="@dimen/margin_dp_large"
-            android:clickable="false"
-            android:focusable="false"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/image_top"
             app:layout_constraintRight_toRightOf="parent" />
 
-        <ImageView
+        <ViewStub
             android:id="@+id/image_top"
+            android:inflatedId="@+id/image_top"
             android:layout_width="@dimen/link_layout_image_full_width"
             android:layout_height="@dimen/link_layout_image_full_height"
-            android:clickable="false"
-            android:focusable="false"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
+            android:layout="@layout/link_vertial_image"
             app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
-        <ImageView
+        <ViewStub
             android:id="@+id/image_bottom"
+            android:inflatedId="@+id/image_bottom"
             android:layout_width="@dimen/link_layout_image_full_width"
             android:layout_height="@dimen/link_layout_image_full_height"
-            android:layout_marginTop="@dimen/margin_dp_normal"
-            android:clickable="false"
-            android:focusable="false"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
+            android:layout="@layout/link_vertial_image"
             app:layout_constraintTop_toBottomOf="@id/description"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
@@ -170,4 +157,4 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
-</merge>
+</android.support.constraint.ConstraintLayout>

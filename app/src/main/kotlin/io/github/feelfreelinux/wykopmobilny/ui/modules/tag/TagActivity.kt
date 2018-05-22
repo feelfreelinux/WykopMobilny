@@ -113,10 +113,5 @@ class TagActivity : BaseActivity(), TagActivityView {
 
     override fun onPause() {
         super.onPause()
-        if (isFinishing)
-            for (i in 0 until tagPagerAdapter.registeredFragments.size()) {
-                (tagPagerAdapter.registeredFragments.valueAt(i) as TagFragmentNotifier)
-                        .removeDataFragment()
-            }
     }
 }
