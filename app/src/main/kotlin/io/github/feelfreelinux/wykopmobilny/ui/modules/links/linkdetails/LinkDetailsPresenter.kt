@@ -4,10 +4,47 @@ import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
-import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.link.LinkHeaderActionListener
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.link.LinkInteractor
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentInteractor
+import io.reactivex.Single
 
-class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi) : BasePresenter<LinkDetailsView>() {
+class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi, val linkCommentInteractor: LinkCommentInteractor, val linkHeaderInteractor: LinkInteractor) : BasePresenter<LinkDetailsView>(), LinkCommentActionListener, LinkHeaderActionListener {
+    override fun digLink(link: Link) {
+        linkHeaderInteractor.digLink(link).processLinkSingle(link)
+    }
+
+    override fun buryLink(link: Link, reason: Int) {
+        linkHeaderInteractor.buryLink(link, reason).processLinkSingle(link)
+    }
+
+    override fun removeVote(link: Link) {
+        linkHeaderInteractor.removeVote(link).processLinkSingle(link)
+    }
+
+    override fun markFavorite(link: Link) {
+        linkHeaderInteractor.markFavorite(link).processLinkSingle(link)
+    }
+
+    override fun digComment(comment: LinkComment) {
+        linkCommentInteractor.commentVoteUp(comment).processLinkCommentSingle(comment)
+    }
+
+    override fun buryComment(comment: LinkComment) {
+        linkCommentInteractor.commentVoteDown(comment).processLinkCommentSingle(comment)
+    }
+
+    override fun removeVote(comment: LinkComment) {
+        linkCommentInteractor.commentVoteCancel(comment).processLinkCommentSingle(comment)
+    }
+
+    override fun deleteComment(comment: LinkComment) {
+        linkCommentInteractor.removeComment(comment).processLinkCommentSingle(comment)
+    }
+
     var sortBy = "best"
     var linkId = -1
     fun loadComments(scrollCommentId : Int? = null) {
@@ -108,5 +145,31 @@ class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi) :
                             })
             )
         }
+    }
+
+    fun Single<LinkComment>.processLinkCommentSingle(link : LinkComment) {
+        compositeObservable.add(
+                this
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.updateLinkComment(it) },
+                                {
+                                    view?.showErrorDialog(it)
+                                    view?.updateLinkComment(link)
+                                })
+        )
+    }
+
+    fun Single<Link>.processLinkSingle(link : Link) {
+        compositeObservable.add(
+                this
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.updateLink(it) },
+                                {
+                                    view?.showErrorDialog(it)
+                                    view?.updateLink(link)
+                                })
+        )
     }
 }

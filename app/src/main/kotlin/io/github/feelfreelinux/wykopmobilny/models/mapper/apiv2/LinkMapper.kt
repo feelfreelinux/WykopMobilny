@@ -16,7 +16,7 @@ class LinkMapper {
             return Link(value.id,
                     value.title?.removeHtml() ?: "",
                     value.description?.removeHtml() ?: "", value.tags, value.sourceUrl,
-                    value.voteCount, value.buryCount, emptyList(),
+                    value.voteCount, value.buryCount, mutableListOf(),
                     value.commentsCount, value.relatedCount,
                     if (value.author != null) AuthorMapper.map(value.author) else null, value.date.toPrettyDate(), value.preview?.stripImageCompression(),
                     value.plus18, value.canVote, value.isHot,

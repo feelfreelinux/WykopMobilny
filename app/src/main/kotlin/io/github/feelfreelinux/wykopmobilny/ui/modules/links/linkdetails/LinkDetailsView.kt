@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 interface LinkDetailsView : BaseView {
     fun showLinkComments(comments: List<LinkComment>)
     fun updateLink(link : Link)
+    fun updateLinkComment(comment : LinkComment)
     fun hideInputbarProgress()
     fun resetInputbarState()
     fun hideInputToolbar()

@@ -1,60 +1,90 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
+import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenter
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentViewListener
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.link_comment_layout.view.*
-import kotlinx.android.synthetic.main.link_comment_list_item.view.*
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.link_comment_layout.*
 
-class LinkCommentViewHolder(val view: View, val linkCommentReplyListener : (LinkComment) -> Unit, val linkCommentPresenter: LinkCommentPresenter, val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi) : RecyclableViewHolder(view) {
-    fun bindView(comment : LinkComment, isUserAuthor: Boolean, highlightCommentId: Int) {
-        view.replyTextView.setOnClickListener { linkCommentReplyListener.invoke(comment) }
-        view.linkComment.setLinkCommentData(comment, linkCommentPresenter, userManagerApi, settingsPreferencesApi)
-        view.linkComment.setStyleForComment(isUserAuthor, highlightCommentId)
-        view.linkComment.isVisible = !comment.isBlocked
-        view.showHiddenTextView.isVisible = comment.isBlocked
+class LinkCommentViewHolder(override val containerView: View,
+                               userManagerApi: UserManagerApi,
+                               settingsPreferencesApi: SettingsPreferencesApi,
+                               navigatorApi : NewNavigatorApi,
+                               linkHandlerApi: WykopLinkHandlerApi,
+                               commentActionListener : LinkCommentActionListener,
+                               commentViewListener: LinkCommentViewListener) : BaseLinkCommentViewHolder(containerView, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, commentActionListener, commentViewListener), LayoutContainer {
+    override lateinit var embedView: WykopEmbedView
 
-        if (comment.isBlocked) {
-            val text = SpannableString("Pokaż ukryty komentarz od @" + comment.author.nick)
-            text.setSpan(ForegroundColorSpan(getGroupColor(comment.author.group)), text.length-(comment.author.nick.length+1), text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            view.showHiddenTextView.setText(text, TextView.BufferType.SPANNABLE)
-        }
+    // Bind correct views
+    override var commentContent: TextView = commentContentTextView
+    override var replyButton: TextView = replyTextView
+    override var collapseButton: ImageView = collapseButtonImageView
+    override var authorBadgeStrip: View = authorBadgeStripView
+    override var plusButton: PlusVoteButton = plusVoteButton
+    override var minusButton: MinusVoteButton = minusVoteButton
+    override var moreOptionsButton: TextView = moreOptionsTextView
+    override var shareButton: TextView = shareTextView
 
-        view.showHiddenTextView.setOnClickListener {
-            comment.isBlocked = false
-            view.linkComment.isVisible = true
-            view.showHiddenTextView.isVisible = false
-        }
+    companion object {
+        const val TYPE_EMBED = 17
+        const val TYPE_NORMAL = 18
+        const val TYPE_BLOCKED = 19
 
-        view.linkComment.isVisible = !comment.isBlocked
-        view.showHiddenTextView.isVisible = comment.isBlocked && !settingsPreferencesApi.hideBlacklistedViews
+        /**
+         * Inflates correct view (with embed, survey or both) depending on viewType
+         */
+        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, commentActionListener: LinkCommentActionListener, commentViewListener: LinkCommentViewListener): LinkCommentViewHolder {
+            val view = LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_layout, parent, false),
+                    userManagerApi,
+                    settingsPreferencesApi,
+                    navigatorApi,
+                    linkHandlerApi,
+                    commentActionListener,
+                    commentViewListener)
 
-        if (comment.isBlocked) {
-            val text = SpannableString("Pokaż ukryty komentarz od @" + comment.author.nick)
-            text.setSpan(ForegroundColorSpan(getGroupColor(comment.author.group)), text.length-(comment.author.nick.length+1), text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            view.showHiddenTextView.setText(text, TextView.BufferType.SPANNABLE)
-        }
+            view.type = viewType
 
-        view.showHiddenTextView.setOnClickListener {
-            comment.isBlocked = false
-            view.linkComment.isVisible = true
-            view.showHiddenTextView.isVisible = false
+            when (viewType) {
+                TYPE_EMBED -> view.inflateEmbed()
+            }
+            return view
         }
     }
 
-    override fun cleanRecycled() {
-        view.apply {
-            GlideApp.with(this).clear(view.linkComment.wykopEmbedView)
-            view.replyTextView.setOnClickListener(null)
+    override fun bindView(linkComment: LinkComment, isAuthorComment: Boolean, commentId: Int) {
+        super.bindView(linkComment, isAuthorComment, commentId)
+
+        // setup header
+        linkComment.author.apply {
+            avatarView.setAuthor(this)
+            avatarView.setOnClickListener { navigatorApi.openProfileActivity(nick) }
+            authorTextView.apply {
+                text = nick
+                setTextColor(context.getGroupColor(group))
+                setOnClickListener {  }
+            }
+            dateTextView.text = linkComment.date.replace(" temu", "")
+            linkComment.app?.let {
+                dateTextView.text = containerView.context.getString(R.string.date_with_user_app, linkComment.date.replace(" temu", ""), linkComment.app)
+            }
         }
+    }
+
+    fun inflateEmbed() {
+        embedView = wykopEmbedView.inflate() as WykopEmbedView
     }
 }

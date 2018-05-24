@@ -18,7 +18,7 @@ class LinkComment(
         var parentId: Int,
         val canVote: Boolean,
         val linkId: Int,
-        val embed: Embed?,
+        var embed: Embed?,
         val app: String?,
         var isCollapsed : Boolean,
         var isParentCollapsed : Boolean,

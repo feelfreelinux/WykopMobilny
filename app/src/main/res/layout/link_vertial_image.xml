@@ -4,5 +4,4 @@
     android:layout_height="@dimen/link_layout_image_full_height"
     android:clickable="false"
     android:focusable="false"
-    android:scaleType="centerCrop"
-    android:visibility="gone" />
+    android:scaleType="centerCrop" />

@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.top_link_comment_layout.view.*
 class TopLinkCommentWidget(context: Context, attrs: AttributeSet) : BaseLinkCommentWidget(context, attrs), LinkCommentView {
     override fun bindViews() {
         commentContent = commentContentTextView
-        commentImageView = wykopEmbedView
         replyButton = replyTextView
         authorBadgeStrip = authorBadgeStripView
         collapseButton = collapseButtonImageView

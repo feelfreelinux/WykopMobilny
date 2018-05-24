@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<android.support.constraint.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -56,9 +56,11 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:text="Wesoły komentarz do znaleziska" />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
+    <ViewStub
         android:id="@+id/wykopEmbedView"
         style="@style/ImageViewComment"
+        android:inflatedId="@id/wykopEmbedView"
+        android:layout="@layout/stub_embed"
         app:layout_constraintTop_toBottomOf="@id/commentContentTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -107,4 +109,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-</merge>
+</android.support.constraint.ConstraintLayout>

@@ -19,6 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkDetailsAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
@@ -31,7 +32,18 @@ import kotlinx.android.synthetic.main.activity_link_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.OnRefreshListener, InputToolbarListener {
+class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.OnRefreshListener, InputToolbarListener, LinkCommentViewListener {
+    override fun updateLinkComment(comment: LinkComment) {
+        adapter.updateLinkComment(comment)
+    }
+
+    override fun replyComment(comment: LinkComment) {
+
+    }
+
+    override fun collapseComment(comment: LinkComment) {
+    }
+
     override val enableSwipeBackLayout: Boolean = true
     @Inject lateinit var settingsApi : SettingsPreferencesApi
     companion object {
@@ -84,6 +96,9 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         setContentView(R.layout.activity_link_details)
         setSupportActionBar(toolbar)
         presenter.subscribe(this)
+        adapter.linkCommentViewListener = this
+        adapter.linkHeaderActionListener = presenter
+        adapter.linkCommentActionListener = presenter
         adapter.collapseListener = {
             isCollapsed, id -> adapter.link?.comments?.forEach {
                 when (id) {
@@ -215,7 +230,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     }
 
     override fun showLinkComments(comments: List<LinkComment>) {
-        adapter.link?.comments = comments
+        adapter.link?.comments = comments.toMutableList()
         // Auto-Collapse comments depending on settings
         if (settingsApi.hideLinkCommentsByDefault) {
             adapter.link?.comments?.forEach {
@@ -244,9 +259,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     }
 
     override fun updateLink(link: Link) {
-        link.comments = adapter.link?.comments ?: emptyList()
-        adapter.link = link
-        adapter.notifyDataSetChanged()
+        link.comments = adapter.link?.comments ?: mutableListOf()
+        adapter.updateLinkHeader(link)
         inputToolbar.show()
     }
 

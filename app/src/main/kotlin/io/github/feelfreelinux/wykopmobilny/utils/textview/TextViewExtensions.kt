@@ -13,7 +13,7 @@ import java.net.URLDecoder
 import java.sql.Struct
 
 
-fun TextView.prepareBody(html: String, listener : URLClickedListener) {
+fun TextView.prepareBody(html: String, listener : (String) -> Unit) {
     text = SpannableStringBuilder(html.toSpannable())
     val method = BetterLinkMovementMethod.linkifyHtml(this)
     method.setOnLinkClickListener({
@@ -21,7 +21,7 @@ fun TextView.prepareBody(html: String, listener : URLClickedListener) {
         if (url.text().startsWith("spoiler:")) {
             val text = url.text().substringAfter("spoiler:")
 
-        } else listener.handleUrl(url.text())
+        } else listener.invoke(url.text())
         true
     })
 }

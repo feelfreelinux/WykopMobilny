@@ -28,8 +28,6 @@ import kotlinx.android.synthetic.main.comment_list_item.*
 import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 
 
-typealias EntryCommentListener = (EntryComment) -> Unit
-
 class EntryCommentViewHolder(override val containerView: View,
                              private val userManagerApi: UserManagerApi,
                              private val settingsPreferencesApi: SettingsPreferencesApi,

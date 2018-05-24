@@ -75,7 +75,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         }
 
         urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
-        blockedTextView.prepareBody(link.tags.convertToTagsHtml(), this)
+        //blockedTextView.prepareBody(link.tags.convertToTagsHtml(), this)
     }
 
     private fun setupButtons() {

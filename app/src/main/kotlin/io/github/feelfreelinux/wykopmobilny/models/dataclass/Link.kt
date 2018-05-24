@@ -13,7 +13,7 @@ class Link(
         val sourceUrl: String,
         var voteCount: Int,
         var buryCount: Int,
-        var comments: List<LinkComment>,
+        var comments: MutableList<LinkComment>,
         val commentsCount: Int,
         val relatedCount: Int,
         val author: Author?,
