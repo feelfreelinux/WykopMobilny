@@ -18,9 +18,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import javax.inject.Inject
 
-class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPresenterFactory,
-                                             val linkPresenterFactory: LinkPresenterFactory,
-                                             val userManagerApi: UserManagerApi,
+class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
                                              val navigatorApi: NewNavigatorApi,
                                              val linkHandlerApi: WykopLinkHandlerApi,
                                              val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -58,7 +56,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) LinkHeaderViewHolder.TYPE_HEADER
-        else BaseLinkCommentViewHolder.getViewTypeForComment(link!!.comments[position-1])
+        else BaseLinkCommentViewHolder.getViewTypeForComment(commentsList!![position-1])
     }
 
     override fun getItemCount(): Int {
@@ -85,7 +83,7 @@ class LinkDetailsAdapter @Inject constructor(val presenterFactory: LinkCommentPr
     fun updateLinkComment(comment : LinkComment) {
         val position = link!!.comments.indexOf(comment)
         link!!.comments[position] = comment
-        notifyItemChanged(position + 1)
+        notifyItemChanged(commentsList!!.indexOf(comment) + 1)
     }
 
     fun updateLinkHeader(link : Link) {

@@ -1,22 +1,138 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
+import android.support.v4.content.ContextCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.BaseLinkItemWidget
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.LinkItemPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.SimpleItemWidget
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.loadImage
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.simple_link_layout.*
 
-class SimpleLinkViewHolder(val view: SimpleItemWidget, val settingsApi: SettingsPreferencesApi, val linkItemPresenter: LinkItemPresenter) : RecyclableViewHolder(view) {
+class SimpleLinkViewHolder(override val containerView: View,
+                     val settingsApi: SettingsPreferencesApi,
+                     val navigatorApi: NewNavigatorApi,
+                     val userManagerApi: UserManagerApi,
+                     val linkActionListener: LinkActionListener) : RecyclableViewHolder(containerView), LayoutContainer {
+    val linkPreferences by lazy { LinksPreferences(containerView.context) }
+
+    val diggCountDrawable by lazy {
+        val typedArray = containerView.context.obtainStyledAttributes(arrayOf(
+                R.attr.digCountDrawable).toIntArray())
+        val selectedDrawable = typedArray.getDrawable(0)
+        typedArray.recycle()
+        selectedDrawable
+    }
+    companion object {
+        val ALPHA_NEW = 1f
+        val ALPHA_VISITED = 0.6f
+        const val TYPE_SIMPLE_LINK = 77
+        const val TYPE_BLOCKED = 78
+
+        /**
+         * Inflates correct view (with embed, survey or both) depending on viewType
+         */
+        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkActionListener: LinkActionListener): SimpleLinkViewHolder {
+            val view = SimpleLinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.simple_link_layout, parent, false), settingsPreferencesApi, navigatorApi, userManagerApi, linkActionListener)
+            return view
+        }
+
+        fun getViewTypeForLink(link: Link): Int {
+            return if (link.isBlocked) TYPE_BLOCKED
+            else TYPE_SIMPLE_LINK
+        }
+    }
+
     fun bindView(link: Link) {
-        view.setLinkData(link, linkItemPresenter, settingsApi)
+        setupBody(link)
+    }
+
+    fun setupBody(link : Link) {
+        if (link.gotSelected) {
+            setWidgetAlpha(ALPHA_VISITED)
+        } else {
+            setWidgetAlpha(ALPHA_NEW)
+        }
+
+        when (link.userVote) {
+            "dig" -> showDigged(link)
+            "bury" -> showBurried(link)
+            else -> showUnvoted(link)
+        }
+        simple_digg_count.text = link.voteCount.toString()
+        simple_title.text = link.title
+        hotBadgeStripSimple.isVisible = link.isHot
+        simple_digg_hot.isVisible = link.isHot
+
+        simple_image.isVisible = link.preview != null && settingsApi.linkShowImage
+        if (settingsApi.linkShowImage) {
+            link.preview?.let { simple_image.loadImage(link.preview) }
+        }
+
+        containerView.setOnClickListener {
+            navigatorApi.openLinkDetailsActivity(link)
+            if (!link.gotSelected) {
+                setWidgetAlpha(ALPHA_VISITED)
+                link.gotSelected = true
+                linkPreferences.readLinksIds = linkPreferences.readLinksIds.plusElement("link_${link.id}")
+            }
+        }
+    }
+
+    fun showBurried(link : Link) {
+        link.userVote = "bury"
+        simple_digg.isEnabled = true
+        simple_digg.background = ContextCompat.getDrawable(containerView.context, R.drawable.ic_frame_votes_buried)
+        simple_digg.setOnClickListener {
+            userManagerApi.runIfLoggedIn(containerView.context) {
+                simple_digg.isEnabled = false
+                linkActionListener.removeVote(link)
+            }
+        }
+    }
+
+    fun showDigged(link : Link) {
+        link.userVote = "dig"
+        simple_digg.isEnabled = true
+        simple_digg.background = ContextCompat.getDrawable(containerView.context, R.drawable.ic_frame_votes_digged)
+        simple_digg.setOnClickListener {
+            userManagerApi.runIfLoggedIn(containerView.context) {
+                simple_digg.isEnabled = false
+                linkActionListener.removeVote(link)
+            }
+        }
+    }
+
+    fun showUnvoted(link : Link) {
+        link.userVote = null
+        simple_digg.isEnabled = true
+        simple_digg.background = diggCountDrawable
+        simple_digg.setOnClickListener {
+            userManagerApi.runIfLoggedIn(containerView.context) {
+                simple_digg.isEnabled = false
+                linkActionListener.dig(link)
+            }
+        }
+    }
+
+    fun setWidgetAlpha(alpha: Float) {
+        simple_image.alpha = alpha
+        simple_title.alpha = alpha
     }
 
     override fun cleanRecycled() {
-        view.apply {
-            GlideApp.with(containerView).clear(simple_image)
-            simple_title.text = null
-            containerView?.setOnClickListener(null)
-        }
     }
 }

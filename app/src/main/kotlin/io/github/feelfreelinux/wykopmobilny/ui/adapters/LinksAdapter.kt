@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.SimpleLinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
@@ -21,22 +22,28 @@ class LinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
     lateinit var linksActionListener: LinkActionListener
 
     override fun getViewType(position: Int): Int {
-        return LinkViewHolder.getViewTypeForLink(data[position], settingsPreferencesApi)
+        return if (settingsPreferencesApi.linkSimpleList) {
+            SimpleLinkViewHolder.getViewTypeForLink(data[position])
+        } else {
+            LinkViewHolder.getViewTypeForLink(data[position], settingsPreferencesApi)
+        }
     }
 
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == EntryViewHolder.TYPE_BLOCKED) {
-            BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
-        } else {
-            LinkViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linksActionListener)
+        return when (viewType) {
+            SimpleLinkViewHolder.TYPE_SIMPLE_LINK ->
+                SimpleLinkViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linksActionListener)
+            SimpleLinkViewHolder.TYPE_BLOCKED, LinkViewHolder.TYPE_BLOCKED ->
+                BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+            else -> LinkViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linksActionListener)
         }
     }
 
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is LinkViewHolder) {
-            holder.bindView(data[position])
-        } else if (holder is BlockedViewHolder) {
-            //holder.bindView(data[position])
+        when (holder) {
+            is LinkViewHolder -> holder.bindView(data[position])
+            is SimpleLinkViewHolder -> holder.bindView(data[position])
+            is BlockedViewHolder -> {}
         }
     }
 

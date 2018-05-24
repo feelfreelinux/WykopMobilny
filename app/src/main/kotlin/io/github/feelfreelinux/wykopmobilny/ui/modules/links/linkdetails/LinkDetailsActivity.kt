@@ -38,28 +38,39 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     }
 
     override fun replyComment(comment: LinkComment) {
-
+        replyLinkId = comment.id
+        inputToolbar.addAddressant(comment.author.nick)
     }
 
-    override fun collapseComment(comment: LinkComment) {
+    override fun setCollapsed(comment: LinkComment, isCollapsed: Boolean) {
+        adapter.link?.comments?.forEach {
+            when (comment.id) {
+                it.id -> {
+                    it.isCollapsed = isCollapsed
+                    it.isParentCollapsed = false
+                }
+                it.parentId -> it.isParentCollapsed = isCollapsed
+            }
+        }
+        adapter.notifyDataSetChanged()
     }
 
     override val enableSwipeBackLayout: Boolean = true
-    @Inject lateinit var settingsApi : SettingsPreferencesApi
+    @Inject
+    lateinit var settingsApi: SettingsPreferencesApi
+
     companion object {
         val EXTRA_LINK = "LINK_PARCEL"
-        val EXTRA_FRAGMENT_KEY = "LINK_ACTIVITY_#"
         val EXTRA_LINK_ID = "EXTRA_LINKID"
         val EXTRA_COMMENT_ID = "EXTRA_COMMENT_ID"
-        val EXTRA_SORTBY = "EXTRA_SORTBY"
 
-        fun createIntent(context: Context, link : Link): Intent {
+        fun createIntent(context: Context, link: Link): Intent {
             val intent = Intent(context, LinkDetailsActivity::class.java)
             intent.putExtra(EXTRA_LINK, link)
             return intent
         }
 
-        fun createIntent(context: Context, linkId : Int, commentId : Int? = null): Intent {
+        fun createIntent(context: Context, linkId: Int, commentId: Int? = null): Intent {
             val intent = Intent(context, LinkDetailsActivity::class.java)
             intent.putExtra(EXTRA_LINK_ID, linkId)
             intent.putExtra(EXTRA_COMMENT_ID, commentId)
@@ -67,12 +78,12 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         }
     }
 
-    var replyLinkId : Int = 0
+    var replyLinkId: Int = 0
 
     val link by lazy { intent.getParcelableExtra<Link>(EXTRA_LINK) }
     val linkId by lazy {
         if (intent.hasExtra(EXTRA_LINK)) link.id else
-        intent.getIntExtra(EXTRA_LINK_ID, -1)
+            intent.getIntExtra(EXTRA_LINK_ID, -1)
     }
 
     val linkCommentId by lazy {
@@ -84,13 +95,19 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         else -1
     }
 
-    @Inject lateinit var userManagerApi : UserManagerApi
-    @Inject lateinit var suggestionsApi : SuggestApi
-    @Inject lateinit var clipboardHelper : ClipboardHelperApi
-    @Inject lateinit var presenter: LinkDetailsPresenter
-    private lateinit var linkFragmentData: DataFragment<Pair<Link, String>> // link, sortby
-    @Inject lateinit var linkPreferences : LinksPreferencesApi
-    @Inject lateinit var adapter : LinkDetailsAdapter
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
+    @Inject
+    lateinit var suggestionsApi: SuggestApi
+
+    @Inject
+    lateinit var presenter: LinkDetailsPresenter
+
+    @Inject
+    lateinit var linkPreferences: LinksPreferencesApi
+    @Inject
+    lateinit var adapter: LinkDetailsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_link_details)
@@ -99,28 +116,11 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         adapter.linkCommentViewListener = this
         adapter.linkHeaderActionListener = presenter
         adapter.linkCommentActionListener = presenter
-        adapter.collapseListener = {
-            isCollapsed, id -> adapter.link?.comments?.forEach {
-                when (id) {
-                    it.id -> {
-                        it.isCollapsed = isCollapsed
-                        it.isParentCollapsed = false
-                    }
-                    it.parentId -> it.isParentCollapsed = isCollapsed
-                }
-            }
-            adapter.notifyDataSetChanged()
-        }
         supportActionBar?.apply {
             title = null
             setDisplayHomeAsUpEnabled(true)
         }
         toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_sort)
-
-        adapter.onReplyClickedListener = {
-            replyLinkId = it.id
-            inputToolbar.addAddressant(it.author.nick)
-        }
 
         // Prepare RecyclerView
         recyclerView?.apply {
@@ -141,24 +141,18 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         inputToolbar.inputToolbarListener = this
 
         swiperefresh.setOnRefreshListener(this)
-        linkFragmentData = supportFragmentManager.getDataFragmentInstance(EXTRA_FRAGMENT_KEY + linkId)
-        if (linkFragmentData.data != null) {
-            adapter.link = linkFragmentData.data?.first
-            presenter.sortBy = linkFragmentData.data?.second ?: linkPreferences.linkCommentsDefaultSort!!
-            adapter.notifyDataSetChanged()
-            loadingView?.isVisible = false
+
+        presenter.sortBy = linkPreferences.linkCommentsDefaultSort ?: "best"
+        adapter.notifyDataSetChanged()
+        loadingView?.isVisible = true
+        hideInputToolbar()
+        if (adapter.link != null) {
+            presenter.loadComments()
+            presenter.updateLink()
         } else {
-            presenter.sortBy = linkPreferences.linkCommentsDefaultSort ?: "best"
-            adapter.notifyDataSetChanged()
-            loadingView?.isVisible = true
-            hideInputToolbar()
-            if (adapter.link != null) {
-                presenter.loadComments()
-                presenter.updateLink()
-            } else {
-                presenter.loadLinkAndComments()
-            }
+            presenter.loadLinkAndComments()
         }
+
 
         setSubtitle()
     }
@@ -169,7 +163,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
     }
 
     fun setSubtitle() {
-        supportActionBar?.setSubtitle(when(presenter.sortBy) {
+        supportActionBar?.setSubtitle(when (presenter.sortBy) {
             "new" -> R.string.sortby_newest
             "old" -> R.string.sortby_oldest
             else -> R.string.sortby_best
@@ -202,26 +196,10 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
                 swiperefresh?.isRefreshing = true
             }
 
-            R.id.copyUrl -> copyUrl()
-
-            R.id.share -> shareUrl()
-
             android.R.id.home -> finish()
         }
         return true
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(EXTRA_SORTBY, presenter.sortBy)
-        super.onSaveInstanceState(outState)
-        adapter.link?.let { linkFragmentData.data = Pair(adapter.link!!, presenter.sortBy) }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (isFinishing) supportFragmentManager.removeDataFragment(linkFragmentData)
-    }
-
 
     override fun onRefresh() {
         presenter.loadComments()
@@ -245,12 +223,12 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
         swiperefresh?.isRefreshing = false
         adapter.notifyDataSetChanged()
         inputToolbar.show()
-        if (linkCommentId != -1 && linkFragmentData.data == null) {
+        if (linkCommentId != -1 && adapter.link == null) {
             scrollToComment(linkCommentId)
         }
     }
 
-    override fun scrollToComment(id : Int) {
+    override fun scrollToComment(id: Int) {
         adapter.link!!.comments.forEachIndexed({ index, comment ->
             if (comment.id == id) {
                 recyclerView?.scrollToPosition(index + 1)
@@ -272,7 +250,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
                 getString(R.string.insert_photo_galery)), BaseInputActivity.USER_ACTION_INSERT_PHOTO)
     }
 
-    override fun sendPhoto(photo: String?, body: String, containsAdultContent : Boolean) {
+    override fun sendPhoto(photo: String?, body: String, containsAdultContent: Boolean) {
         presenter.sendReply(body, photo, containsAdultContent)
     }
 
@@ -307,31 +285,12 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.
 
                 BaseInputActivity.EDIT_LINK_COMMENT -> {
                     val commentId = data?.getIntExtra("commentId", -1)
-                    val commentBody = data?.getStringExtra("commentBody")
-                    if (commentId != -1 && commentBody != null) {
-                        linkFragmentData.data?.first?.comments?.filter { it.id == commentId }?.get(0)?.body = commentBody
-                        onRefresh()
-                    }
+                    onRefresh()
+                    scrollToComment(commentId ?: -1)
                 }
             }
         }
     }
-
-    fun shareUrl() {
-        ShareCompat.IntentBuilder
-                .from(this)
-                .setType("text/plain")
-                .setChooserTitle(R.string.share)
-                .setText(url)
-                .startChooser()
-    }
-
-    fun copyUrl() {
-        clipboardHelper.copyTextToClipboard(url, "linkUrl")
-    }
-
-    val url : String
-        get() = "https://www.wykop.pl/link/$linkId"
 
     override fun onDestroy() {
         super.onDestroy()

@@ -1,9 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.base.adapter.AdvancedProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.SimpleLinkViewHolder
@@ -25,10 +27,7 @@ class LinkAdapter @Inject constructor(val settingsPreferencesApi : SettingsPrefe
     }
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
-            when (viewType) {
-                LINK_VIEWTYPE -> SimpleLinkViewHolder(SimpleItemWidget.createView(parent.context), settingsPreferencesApi, linkItemPresenterFactory.create())
-                else -> SimpleLinkViewHolder(SimpleItemWidget.createView(parent.context), settingsPreferencesApi, linkItemPresenterFactory.create())
-            }
+            BlockedViewHolder(View(parent.context))
 
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!

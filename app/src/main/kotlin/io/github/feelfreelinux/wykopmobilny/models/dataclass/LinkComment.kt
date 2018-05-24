@@ -88,4 +88,6 @@ class LinkComment(
             return arrayOfNulls(size)
         }
     }
+
+    val url = "https://www.wykop.pl/link/$linkId/#comment-$id"
 }
