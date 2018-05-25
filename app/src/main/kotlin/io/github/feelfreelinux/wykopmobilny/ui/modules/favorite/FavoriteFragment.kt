@@ -7,7 +7,6 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopNotifier
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentNotifier
 import kotlinx.android.synthetic.main.activity_mywykop.*
 
 class FavoriteFragment  : BaseFragment() {

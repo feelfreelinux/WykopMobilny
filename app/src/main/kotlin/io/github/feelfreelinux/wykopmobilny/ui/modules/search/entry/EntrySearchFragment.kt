@@ -1,69 +1,67 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry
 
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
-import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
-import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
-import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.FeedAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentNotifier
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentQuery
+import io.github.feelfreelinux.wykopmobilny.base.BaseEntriesFragment
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragmentView
+import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityView
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.entries_fragment.*
 import javax.inject.Inject
 
-class EntrySearchFragment : BaseFeedFragment<Entry>(), EntrySearchView, SearchFragmentNotifier {
-    @Inject override lateinit var feedAdapter : FeedAdapter
-    lateinit var dataFragment : DataFragment<PagedDataModel<List<Entry>>>
-    @Inject lateinit var presenter : EntrySearchPresenter
-    var queryString = ""
-    companion object {
-        val DATA_FRAGMENT_TAG = "EXTRA_SEARCH_FRAGMENT"
-        fun newInstance(): Fragment {
-            return EntrySearchFragment()
-        }
+class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
+    var query = ""
+
+
+    lateinit var querySubscribe : Disposable
+
+    @Inject
+    lateinit var presenter: EntrySearchPresenter
+    override var loadDataListener: (Boolean) -> Unit = {
+        presenter.searchEntries(query, it)
     }
 
-    override fun notifyQueryChanged() {
-        val parent = (parentFragment as SearchFragmentQuery)
-        if (queryString != parent.searchQuery) {
-            queryString = parent.searchQuery
-            if (::presenter.isInitialized) {
-                loadData(true)
-            }
+    @Inject
+    lateinit var userManager: UserManagerApi
+
+    companion object {
+        fun newInstance(): Fragment {
+            return  EntrySearchFragment()
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
-        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        dataFragment.data?.apply {
-            presenter.page = page
-        }
-        notifyQueryChanged()
-        initAdapter(dataFragment.data?.model)
+        entriesAdapter.entryActionListener = presenter
+        entriesAdapter.loadNewDataListener = { loadDataListener(false) }
+        loadingView.isVisible = false
+
     }
 
-    override fun loadData(shouldRefresh: Boolean) {
-        if (queryString.length > 2) presenter.searchEntries(queryString, shouldRefresh)
-        else {
-            isLoading = false
-            isRefreshing = false
+    override fun onResume() {
+        super.onResume()
+        presenter.subscribe(this)
+        querySubscribe = (parentFragment as SearchFragment).querySubject.subscribe {
+            swipeRefresh.isRefreshing = true
+            query = it
+            presenter.searchEntries(query, true)
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        dataFragment.data = PagedDataModel(presenter.page , data)
-    }
-    override fun onDetach() {
-        super.onDetach()
+    override fun onPause() {
+        super.onPause()
         presenter.unsubscribe()
+        querySubscribe.dispose()
     }
 
-    override fun removeDataFragment() {
-        supportFragmentManager.removeDataFragment(dataFragment)
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
     }
 }

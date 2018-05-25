@@ -27,4 +27,8 @@
             android:layout_height="match_parent"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include
+        layout="@layout/search_empty_view"
+        android:visibility="gone"/>
 </FrameLayout>

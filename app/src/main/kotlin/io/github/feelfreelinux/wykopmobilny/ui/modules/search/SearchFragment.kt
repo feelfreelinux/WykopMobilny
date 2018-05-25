@@ -8,20 +8,12 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.utils.hideKeyboard
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_search.*
 
 
-interface SearchFragmentQuery {
-    var searchQuery : String
-}
-
-interface SearchFragmentNotifier {
-    fun notifyQueryChanged()
-    fun removeDataFragment()
-}
-
-class SearchFragment : BaseFragment(), SearchFragmentQuery {
-    override var searchQuery = ""
+class SearchFragment : BaseFragment() {
+    val querySubject by lazy { PublishSubject.create<String>() }
 
     private lateinit var viewPagerAdapter : SearchPagerAdapter
 
@@ -49,11 +41,6 @@ class SearchFragment : BaseFragment(), SearchFragmentQuery {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.search)
-        savedInstanceState?.apply{
-            if (containsKey(EXTRA_QUERY)) {
-                searchQuery = getString(EXTRA_QUERY)
-            }
-        }
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -62,16 +49,11 @@ class SearchFragment : BaseFragment(), SearchFragmentQuery {
         val item = menu.findItem(R.id.action_search)
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM or MenuItem.SHOW_AS_ACTION_WITH_TEXT)
         val searchView = item.actionView as SearchView
-        searchView.setQuery(searchQuery, false)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     if (query.length > 2) {
-                        searchQuery = query
-                        for (i in 0 until viewPagerAdapter.registeredFragments.size()) {
-                            (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
-                                    .notifyQueryChanged()
-                        }
+                        querySubject.onNext(query)
                         activity?.hideKeyboard()
                         searchView.clearFocus()
                     }
@@ -84,20 +66,5 @@ class SearchFragment : BaseFragment(), SearchFragmentQuery {
         })
         searchView.setIconifiedByDefault(false)
         searchView.isIconified = false
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving) {
-            for (i in 0 until viewPagerAdapter.registeredFragments.size()) {
-                (viewPagerAdapter.registeredFragments.valueAt(i) as SearchFragmentNotifier)
-                        .removeDataFragment()
-            }
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(EXTRA_QUERY, searchQuery)
     }
 }

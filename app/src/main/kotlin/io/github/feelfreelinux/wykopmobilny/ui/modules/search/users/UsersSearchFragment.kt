@@ -13,15 +13,13 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ProfilesAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentNotifier
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentQuery
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.feed_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.OnRefreshListener, SearchFragmentNotifier {
+class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.OnRefreshListener {
     override fun showUsers(entryList: List<Author>) {
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
@@ -44,15 +42,6 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
         }
     }
 
-    override fun notifyQueryChanged() {
-        val parent = (parentFragment as SearchFragmentQuery)
-        if (queryString != parent.searchQuery) {
-            queryString = parent.searchQuery
-            if (::presenter.isInitialized) {
-                onRefresh()
-            } else { loadingView?.isVisible = false }
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.feed_fragment, container, false)
@@ -73,7 +62,6 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
 
         if (dataFragment.data == null) {
             loadingView?.isVisible = false
-            notifyQueryChanged()
         } else {
             profilesAdapter.dataset.addAll(dataFragment.data!!)
             profilesAdapter.notifyDataSetChanged()
@@ -101,7 +89,4 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
         presenter.unsubscribe()
     }
 
-    override fun removeDataFragment() {
-        supportFragmentManager.removeDataFragment(dataFragment)
-    }
 }

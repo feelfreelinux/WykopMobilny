@@ -46,7 +46,7 @@ class LinkInteractor @Inject constructor(val linksApi: LinksApi) {
     fun markFavorite(link : Link): Single<Link> {
         return linksApi.markFavorite(link.id)
                 .map {
-                    link.userFavorite = it
+                    link.userFavorite = !link.userFavorite
                     link
                 }
     }

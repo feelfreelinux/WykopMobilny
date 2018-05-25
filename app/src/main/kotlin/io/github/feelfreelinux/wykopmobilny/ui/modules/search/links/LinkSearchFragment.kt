@@ -9,11 +9,9 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentNotifier
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentQuery
 import javax.inject.Inject
 
-class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragmentNotifier {
+class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView {
     @Inject override lateinit var feedAdapter : LinkAdapter
     lateinit var dataFragment : DataFragment<PagedDataModel<List<Link>>>
     @Inject lateinit var presenter : LinkSearchPresenter
@@ -25,15 +23,6 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragm
         }
     }
 
-    override fun notifyQueryChanged() {
-        val parent = (parentFragment as SearchFragmentQuery)
-        if (queryString != parent.searchQuery) {
-            queryString = parent.searchQuery
-            if (::presenter.isInitialized) {
-                loadData(true)
-            }
-        }
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -42,7 +31,6 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragm
         dataFragment.data?.apply {
             presenter.page = page
         }
-        notifyQueryChanged()
         initAdapter(dataFragment.data?.model)
     }
 
@@ -63,7 +51,4 @@ class LinkSearchFragment : BaseFeedFragment<Link>(), LinkSearchView, SearchFragm
         presenter.unsubscribe()
     }
 
-    override fun removeDataFragment() {
-        supportFragmentManager.removeDataFragment(dataFragment)
-    }
 }
