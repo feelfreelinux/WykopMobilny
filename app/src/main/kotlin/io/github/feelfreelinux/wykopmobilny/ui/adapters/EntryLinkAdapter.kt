@@ -37,10 +37,10 @@ BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_lis
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!
         if (item.entry != null) {
-            (holder as BlockedViewHolder).bindView(item.entry)
+            (holder as BlockedViewHolder).bindView(item.entry!!)
         } else if (item.link != null) {
-            if (holder is SimpleLinkViewHolder) holder.bindView(item.link)
-            else (holder as? LinkViewHolder)?.bindView(item.link)
+            if (holder is SimpleLinkViewHolder) holder.bindView(item.link!!)
+            else (holder as? LinkViewHolder)?.bindView(item.link!!)
         }
     }
 

@@ -43,9 +43,13 @@ class LinkViewHolder(override val containerView: View,
         }
 
         fun getViewTypeForLink(link: Link, settingsPreferencesApi: SettingsPreferencesApi): Int {
-            return if (link.isBlocked) TYPE_BLOCKED
-            else if (link.preview == null || !settingsPreferencesApi.linkShowImage) TYPE_NOIMAGE
-            else TYPE_IMAGE
+            return if (settingsPreferencesApi.linkSimpleList) {
+                SimpleLinkViewHolder.getViewTypeForLink(link)
+            } else {
+                if (link.isBlocked) TYPE_BLOCKED
+                else if (link.preview == null || !settingsPreferencesApi.linkShowImage) TYPE_NOIMAGE
+                else TYPE_IMAGE
+            }
         }
     }
 

@@ -1,61 +1,49 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index
 
 import android.os.Bundle
-import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
-import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
-import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
-import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
-import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinkAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopNotifier
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopView
+import android.support.v4.app.Fragment
+import io.github.feelfreelinux.wykopmobilny.base.BaseEntryLinkFragment
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class MyWykopIndexFragment : BaseFeedFragment<EntryLink>(), MyWykopView, MyWykopNotifier {
-    @Inject override lateinit var feedAdapter : EntryLinkAdapter
-    @Inject lateinit var presenter : MyWykopIndexPresenter
-    lateinit var dataFragment : DataFragment<PagedDataModel<List<EntryLink>>>
+class MyWykopIndexFragment : BaseEntryLinkFragment() {
+    @Inject
+    lateinit var presenter: MyWykopIndexPresenter
+    override var loadDataListener: (Boolean) -> Unit = {
+        presenter.loadData(it)
+    }
+
+    @Inject
+    lateinit var userManager: UserManagerApi
 
     companion object {
-        val DATA_FRAGMENT_TAG = "MYWYKOP_FRAGMENT_TAG"
-
-        fun newInstance() : MyWykopIndexFragment {
-            return MyWykopIndexFragment()
+        fun newInstance(): Fragment {
+            val fragment = MyWykopIndexFragment()
+            return fragment
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
-        dataFragment = childFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        dataFragment.data?.apply {
-            presenter.page = page
-        }
+        entriesAdapter.entryActionListener = presenter
+        entriesAdapter.linkActionListener = presenter
+        entriesAdapter.loadNewDataListener = { loadDataListener(false) }
+        presenter.loadData(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
         presenter.subscribe(this)
-        initAdapter(dataFragment.data?.model)
-    }
-
-    override fun loadData(shouldRefresh: Boolean) {
-        presenter.loadData(shouldRefresh)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        dataFragment.data = PagedDataModel(presenter.page , data)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        presenter.unsubscribe()
     }
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) childFragmentManager.removeDataFragment(dataFragment)
+        presenter.unsubscribe()
     }
 
-    override fun removeDataFragment() {
-        childFragmentManager.removeDataFragment(dataFragment)
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
     }
 }
