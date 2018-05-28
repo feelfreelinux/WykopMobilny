@@ -4,10 +4,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntriesFragment
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
-import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragmentView
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.disposables.Disposable
@@ -16,7 +13,6 @@ import javax.inject.Inject
 
 class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
     var query = ""
-
 
     lateinit var querySubscribe : Disposable
 

@@ -55,13 +55,4 @@ class MyWykopFragment : BaseFragment() {
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.mywykop)
 
     }
-
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving)
-            for (i in 0 until pagerAdapter.registeredFragments.size()) {
-                (pagerAdapter.registeredFragments.valueAt(i) as MyWykopNotifier)
-                        .removeDataFragment()
-            }
-    }
 }

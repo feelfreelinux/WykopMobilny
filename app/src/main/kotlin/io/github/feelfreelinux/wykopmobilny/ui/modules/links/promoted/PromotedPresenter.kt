@@ -10,14 +10,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 import io.reactivex.Single
 
 class PromotedPresenter(val schedulers: Schedulers, private val linksApi: LinksApi, val linksInteractor: LinksInteractor) : BasePresenter<PromotedView>(), LinkActionListener {
-    override fun dig(link: Link) {
-        linksInteractor.dig(link).processLinkSingle(link)
-    }
-
-    override fun removeVote(link: Link) {
-        linksInteractor.voteRemove(link).processLinkSingle(link)
-    }
-
     var page = 1
     fun getPromotedLinks(shouldRefresh : Boolean) {
         if (shouldRefresh) page = 1
@@ -35,6 +27,14 @@ class PromotedPresenter(val schedulers: Schedulers, private val linksApi: LinksA
                                 { view?.showErrorDialog(it) }
                         )
         )
+    }
+
+    override fun dig(link: Link) {
+        linksInteractor.dig(link).processLinkSingle(link)
+    }
+
+    override fun removeVote(link: Link) {
+        linksInteractor.voteRemove(link).processLinkSingle(link)
     }
 
     fun Single<Link>.processLinkSingle(link : Link) {

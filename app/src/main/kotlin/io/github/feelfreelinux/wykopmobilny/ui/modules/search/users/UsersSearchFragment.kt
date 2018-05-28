@@ -13,8 +13,10 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ProfilesAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.feed_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
@@ -31,12 +33,11 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
         }
     }
     var queryString = ""
-    private lateinit var dataFragment: DataFragment<List<Author>>
+    lateinit var querySubscribe : Disposable
     @Inject lateinit var presenter : UsersSearchPresenter
     private val profilesAdapter by lazy { ProfilesAdapter() }
 
     companion object {
-        val DATA_FRAGMENT_TAG = "PROFILES_SEARCH_VIEW"
         fun newInstance(): Fragment {
             return UsersSearchFragment()
         }
@@ -49,7 +50,6 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
 
         presenter.subscribe(this)
         swiperefresh.setOnRefreshListener(this)
@@ -59,14 +59,8 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
             adapter = profilesAdapter
         }
         swiperefresh?.isRefreshing = false
+        loadingView?.isVisible = false
 
-        if (dataFragment.data == null) {
-            loadingView?.isVisible = false
-        } else {
-            profilesAdapter.dataset.addAll(dataFragment.data!!)
-            profilesAdapter.notifyDataSetChanged()
-            loadingView?.isVisible = false
-        }
     }
 
     override fun onRefresh() {
@@ -79,14 +73,25 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        dataFragment.data = profilesAdapter.dataset
+    override fun onResume() {
+        super.onResume()
+        presenter.subscribe(this)
+        querySubscribe = (parentFragment as SearchFragment).querySubject.subscribe {
+            swiperefresh.isRefreshing = true
+            queryString = it
+            presenter.searchProfiles(queryString)
+        }
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onPause() {
+        super.onPause()
         presenter.unsubscribe()
+        querySubscribe.dispose()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
     }
 
 }

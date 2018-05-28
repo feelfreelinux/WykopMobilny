@@ -21,7 +21,6 @@ class TagEntriesFragment : BaseEntriesFragment(), TagEntriesView {
     lateinit var userManager: UserManagerApi
 
     companion object {
-        val DATA_FRAGMENT_TAG = "TAG_DATA_FRAGMENT"
         val EXTRA_TAG = "EXTRA_TAG"
 
         fun newInstance(tag: String): Fragment {

@@ -4,9 +4,10 @@ import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 
 @Module
 class UpcomingModule {
     @Provides
-    fun provideUpcomingPresenter(schedulers: Schedulers, linksApi: LinksApi) = UpcomingPresenter(schedulers, linksApi)
+    fun provideUpcomingPresenter(schedulers: Schedulers, linksApi: LinksApi, linksInteractor: LinksInteractor) = UpcomingPresenter(schedulers, linksApi, linksInteractor)
 }

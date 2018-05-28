@@ -3,8 +3,12 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.links.upcoming
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
+import io.reactivex.Single
 
-class UpcomingPresenter(val schedulers: Schedulers, private val linksApi: LinksApi) : BasePresenter<UpcomingView>() {
+class UpcomingPresenter(val schedulers: Schedulers, private val linksApi: LinksApi, val linksInteractor: LinksInteractor) : BasePresenter<UpcomingView>(), LinkActionListener {
     companion object {
         val SORTBY_COMMENTS = "comments"
         val SORTBY_VOTES = "votes"
@@ -23,11 +27,32 @@ class UpcomingPresenter(val schedulers: Schedulers, private val linksApi: LinksA
                                 {
                                     if (it.isNotEmpty()) {
                                         page++
-                                        view?.addDataToAdapter(it, shouldRefresh)
+                                        view?.addItems(it, shouldRefresh)
                                     } else view?.disableLoading()
                                 },
                                 { view?.showErrorDialog(it) }
                         )
+        )
+    }
+
+    override fun dig(link: Link) {
+        linksInteractor.dig(link).processLinkSingle(link)
+    }
+
+    override fun removeVote(link: Link) {
+        linksInteractor.voteRemove(link).processLinkSingle(link)
+    }
+
+    fun Single<Link>.processLinkSingle(link : Link) {
+        compositeObservable.add(
+                this
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ view?.updateLink(it) },
+                                {
+                                    view?.showErrorDialog(it)
+                                    view?.updateLink(link)
+                                })
         )
     }
 }

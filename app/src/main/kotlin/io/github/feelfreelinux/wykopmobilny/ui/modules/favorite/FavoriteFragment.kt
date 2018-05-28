@@ -52,13 +52,4 @@ class FavoriteFragment  : BaseFragment() {
         }
         return true
     }
-
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving)
-        for (i in 0 until pagerAdapter.registeredFragments.size()) {
-            (pagerAdapter.registeredFragments.valueAt(i) as FavoriteFragmentNotifier)
-                    .removeDataFragment()
-        }
-    }
 }
