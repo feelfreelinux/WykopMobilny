@@ -81,6 +81,4 @@ class TagEntriesPresenter(val schedulers: Schedulers, val tagApi : TagApi, val e
                                 })
         )
     }
-
-
 }

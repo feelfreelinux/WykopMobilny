@@ -2,34 +2,22 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.links.hits
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
-import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
-import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
-import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
-import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
-import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
+import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.MonthYearPickerDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.YearPickerDialog
-import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedPresenter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.links.promoted.PromotedView
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.feed_fragment.*
 import javax.inject.Inject
 
-data class HitsDataModel(val hits : List<Link>, val currentScreen : String, val yearSelection : Int, val monthSelection : Int)
 
-class HitsFragment : BaseFragment(), HitsView {
-    @Inject lateinit var feedAdapter : LinkAdapter
+class HitsFragment : BaseLinksFragment(), HitsView {
     @Inject lateinit var presenter : HitsPresenter
-    lateinit var dataFragment : DataFragment<HitsDataModel>
+
+    override var loadDataListener: (Boolean) -> Unit = {
+        presenter.loadData()
+    }
 
     companion object {
         val DATA_FRAGMENT_TAG = "HITS_FRAGMENT_TAG"
@@ -42,7 +30,7 @@ class HitsFragment : BaseFragment(), HitsView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.feed_fragment, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -54,7 +42,7 @@ class HitsFragment : BaseFragment(), HitsView {
         when (item.itemId) {
             R.id.refresh -> {
                 swiperefresh?.isRefreshing = true
-                loadData()
+                loadDataListener(true)
                 setTitle()
             }
 
@@ -100,53 +88,26 @@ class HitsFragment : BaseFragment(), HitsView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
-        dataFragment = childFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.hits)
-        presenter.subscribe(this)
-        recyclerView?.prepare()
-        recyclerView?.adapter = feedAdapter
-        swiperefresh.setOnRefreshListener { loadData() }
-        if (dataFragment.data != null) {
-            feedAdapter.addData(dataFragment.data!!.hits, true)
-            presenter.apply {
-                currentScreen = dataFragment.data!!.currentScreen
-                yearSelection = dataFragment.data!!.yearSelection
-                monthSelection = dataFragment.data!!.monthSelection
-            }
-            loadingView?.isVisible = false
-            feedAdapter.disableLoading()
-        } else {
-            loadData()
-            loadingView?.isVisible = true
-        }
+        linksAdapter.linksActionListener = presenter
+        linksAdapter.loadNewDataListener = { loadDataListener(false) }
         setTitle()
+        loadDataListener(true)
     }
 
-    fun loadData() {
-        presenter.loadData()
-    }
-
-    override fun showHits(links: List<Link>) {
-        loadingView?.isVisible = false
-        swiperefresh?.isRefreshing = false
-        feedAdapter.addData(links, true)
-        feedAdapter.disableLoading()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        dataFragment.data = HitsDataModel(feedAdapter.data, presenter.currentScreen, presenter.yearSelection, presenter.monthSelection)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        presenter.unsubscribe()
+    override fun onResume() {
+        super.onResume()
+        presenter.subscribe(this)
     }
 
     override fun onPause() {
         super.onPause()
-        if (isRemoving) childFragmentManager.removeDataFragment(dataFragment)
+        presenter.unsubscribe()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
     }
 
     fun setTitle() {
