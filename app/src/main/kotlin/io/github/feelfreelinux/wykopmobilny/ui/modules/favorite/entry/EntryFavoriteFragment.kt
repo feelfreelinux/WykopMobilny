@@ -13,8 +13,6 @@ class EntryFavoriteFragment : BaseEntriesFragment(), EntryFavoriteView {
     }
 
     companion object {
-        val DATA_FRAGMENT_TAG = "TAG_DATA_FRAGMENT"
-
         fun newInstance(): Fragment {
             return EntryFavoriteFragment()
         }

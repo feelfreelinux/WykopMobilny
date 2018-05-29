@@ -2,8 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.entrie
 
 import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragmentView
 
-interface MicroblogEntriesView : BaseView {
-    fun addDataToAdapter(entryList : List<Entry>, shouldClearAdapter : Boolean)
-    fun disableLoading()
+interface MicroblogEntriesView : EntriesFragmentView {
 }

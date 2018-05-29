@@ -2,12 +2,10 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragmentNotifier
 import kotlinx.android.synthetic.main.activity_mywykop.*
 
 class MyWykopFragment : BaseFragment() {
@@ -53,6 +51,5 @@ class MyWykopFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.mywykop)
-
     }
 }

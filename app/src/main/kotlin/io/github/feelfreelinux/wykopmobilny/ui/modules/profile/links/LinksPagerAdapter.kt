@@ -7,23 +7,20 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.util.SparseArray
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.added.AddedLinksFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.burried.BurriedLinksFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.added.ProfileLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.comments.ProfileLinkCommentsFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.digged.DiggedLinksFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.published.PublishedLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.related.ProfileRelatedFragment
 
 class LinksPagerAdapter(val resources : Resources, fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
     val registeredFragments = SparseArray<Fragment>()
 
     override fun getItem(position: Int): Fragment = when(position) {
-        0 -> AddedLinksFragment.newInstance()
-        1 -> PublishedLinksFragment.newInstance()
+        0 -> ProfileLinksFragment.newInstance(ProfileLinksFragment.TYPE_ADDED)
+        1 -> ProfileLinksFragment.newInstance(ProfileLinksFragment.TYPE_PUBLISHED)
         2 -> ProfileLinkCommentsFragment.newInstance()
         3 -> ProfileRelatedFragment.newInstance()
-        4 -> DiggedLinksFragment.newInstance()
-        else -> BurriedLinksFragment.newInstance()
+        4 -> ProfileLinksFragment.newInstance(ProfileLinksFragment.TYPE_DIGGED)
+        else -> ProfileLinksFragment.newInstance(ProfileLinksFragment.TYPE_BURRIED)
     }
 
     override fun getCount() = 6

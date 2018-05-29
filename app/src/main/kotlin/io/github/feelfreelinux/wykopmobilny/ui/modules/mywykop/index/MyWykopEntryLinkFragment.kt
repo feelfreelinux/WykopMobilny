@@ -6,19 +6,37 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseEntryLinkFragment
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class MyWykopIndexFragment : BaseEntryLinkFragment() {
+class MyWykopEntryLinkFragment : BaseEntryLinkFragment() {
+    val extraType by lazy { arguments?.getString(EXTRA_TYPE) }
+
     @Inject
-    lateinit var presenter: MyWykopIndexPresenter
+    lateinit var presenter: MyWykopEntryLinkPresenter
     override var loadDataListener: (Boolean) -> Unit = {
-        presenter.loadData(it)
+        when (extraType) {
+            TYPE_INDEX -> presenter.loadIndex(it)
+            TYPE_TAGS -> presenter.loadTags(it)
+            TYPE_USERS -> presenter.loadUsers(it)
+        }
     }
 
     @Inject
     lateinit var userManager: UserManagerApi
 
     companion object {
-        fun newInstance(): Fragment {
-            val fragment = MyWykopIndexFragment()
+        val TYPE_INDEX = "TYPE_INDEX"
+        val TYPE_TAGS = "TYPE_TAGS"
+        val TYPE_USERS = "TYPE_USERS"
+        val EXTRA_TYPE = "TYPE"
+
+        /**
+         * Type determines data coming to this fragment.
+         * @param type Type string TYPE_INDEX / TYPE_TAGS / TYPE_USERS
+         */
+        fun newInstance(type : String): Fragment {
+            val fragment = MyWykopEntryLinkFragment()
+            val bundle = Bundle()
+            bundle.putString(EXTRA_TYPE, type)
+            fragment.arguments = bundle
             return fragment
         }
     }
@@ -29,7 +47,7 @@ class MyWykopIndexFragment : BaseEntryLinkFragment() {
         entriesAdapter.entryActionListener = presenter
         entriesAdapter.linkActionListener = presenter
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
-        presenter.loadData(true)
+        loadDataListener(true)
     }
 
     override fun onResume() {

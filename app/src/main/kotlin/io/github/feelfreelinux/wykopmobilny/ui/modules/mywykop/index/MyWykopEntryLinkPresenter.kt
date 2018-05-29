@@ -14,12 +14,12 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListene
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 import io.reactivex.Single
 
-class MyWykopIndexPresenter(val schedulers: Schedulers, val myWykopApi: MyWykopApi, val entriesApi : EntriesApi,
-                            val entriesInteractor: EntriesInteractor,
-                            val linksInteractor: LinksInteractor,
-                            val linksApi: LinksApi) : BasePresenter<EntryLinkFragmentView>(), EntryActionListener, LinkActionListener {
+class MyWykopEntryLinkPresenter(val schedulers: Schedulers, val myWykopApi: MyWykopApi, val entriesApi : EntriesApi,
+                                val entriesInteractor: EntriesInteractor,
+                                val linksInteractor: LinksInteractor,
+                                val linksApi: LinksApi) : BasePresenter<EntryLinkFragmentView>(), EntryActionListener, LinkActionListener {
     var page = 1
-    fun loadData(shouldRefresh : Boolean) {
+    fun loadIndex(shouldRefresh : Boolean) {
         if (shouldRefresh) page = 1
         compositeObservable.add(
                 myWykopApi.getIndex(page)
@@ -36,6 +36,43 @@ class MyWykopIndexPresenter(val schedulers: Schedulers, val myWykopApi: MyWykopA
                         )
         )
     }
+
+    fun loadTags(shouldRefresh : Boolean) {
+        if (shouldRefresh) page = 1
+        compositeObservable.add(
+                myWykopApi.byTags(page)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe(
+                                {
+                                    if (it.isNotEmpty()) {
+                                        page++
+                                        view?.addItems(it, shouldRefresh)
+                                    } else view?.disableLoading()
+                                },
+                                { view?.showErrorDialog(it) }
+                        )
+        )
+    }
+
+    fun loadUsers(shouldRefresh : Boolean) {
+        if (shouldRefresh) page = 1
+        compositeObservable.add(
+                myWykopApi.byUsers(page)
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe(
+                                {
+                                    if (it.isNotEmpty()) {
+                                        page++
+                                        view?.addItems(it, shouldRefresh)
+                                    } else view?.disableLoading()
+                                },
+                                { view?.showErrorDialog(it) }
+                        )
+        )
+    }
+
 
     override fun voteEntry(entry: Entry) {
         entriesInteractor.voteEntry(entry).processEntrySingle(entry)

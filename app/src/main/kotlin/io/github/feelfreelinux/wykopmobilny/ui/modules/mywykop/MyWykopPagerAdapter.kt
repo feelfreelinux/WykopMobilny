@@ -7,18 +7,16 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.util.SparseArray
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopIndexFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopEntryLinkFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.observedtags.MyWykopObservedTagsFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.tags.MyWykopTagsFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.users.MyWykopUsersFragment
 
 class MyWykopPagerAdapter(val resources : Resources, fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
     val registeredFragments = SparseArray<Fragment>()
 
     override fun getItem(position: Int): Fragment = when(position) {
-        0 -> MyWykopIndexFragment.newInstance()
-        1 -> MyWykopTagsFragment.newInstance()
-        2 -> MyWykopUsersFragment.newInstance()
+        0 -> MyWykopEntryLinkFragment.newInstance(MyWykopEntryLinkFragment.TYPE_INDEX)
+        1 -> MyWykopEntryLinkFragment.newInstance(MyWykopEntryLinkFragment.TYPE_TAGS)
+        2 -> MyWykopEntryLinkFragment.newInstance(MyWykopEntryLinkFragment.TYPE_USERS)
         else -> MyWykopObservedTagsFragment.newInstance()
     }
 
