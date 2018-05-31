@@ -106,8 +106,6 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
 
         commentContent.isVisible = !comment.body.isNullOrEmpty()
         collapseButton.isVisible = !((comment.id != comment.parentId) || comment.childCommentCount == 0) && commentViewListener != null
-
-
     }
 
     fun handleClick(comment : LinkComment) {

@@ -13,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
@@ -67,6 +68,15 @@ class TopLinkCommentViewHolder(override val containerView: View,
     override fun bindView(linkComment: LinkComment, isAuthorComment: Boolean, commentId: Int) {
         super.bindView(linkComment, isAuthorComment, commentId)
         authorHeaderView.setAuthorData(linkComment.author, linkComment.date, linkComment.app)
+        if (linkComment.isCollapsed) {
+            messageTextView.isVisible = true
+            messageTextView.text = "${linkComment.childCommentCount} ukrytych komentarzy"
+            messageTextView.setOnClickListener {
+                commentViewListener?.setCollapsed(linkComment, false)
+            }
+        } else {
+            messageTextView.isVisible = false
+        }
     }
 
     fun inflateEmbed() {

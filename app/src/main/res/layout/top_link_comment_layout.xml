@@ -91,7 +91,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/collapsedCommentsTextView"
+        android:id="@+id/messageTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/voteButtonStatelist"
@@ -101,7 +101,6 @@
         android:paddingTop="@dimen/padding_dp_small"
         android:textColor="?attr/textColorGrey"
         android:textSize="?attr/textSizeNormal"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/moreOptionsTextView" />
 
 </android.support.constraint.ConstraintLayout>
