@@ -67,8 +67,8 @@ class LinkHeaderViewHolder(override val containerView : View,
         if (author != null) {
             avatarView.isVisible = true
             userTextView.isVisible = true
-            userTextView.setOnClickListener {  }
-            avatarView.setOnClickListener {  }
+            userTextView.setOnClickListener { navigatorApi.openProfileActivity(link.author.nick) }
+            avatarView.setOnClickListener { navigatorApi.openProfileActivity(link.author.nick) }
             avatarView.setAuthor(link.author)
             userTextView.text = link.author.nick
             userTextView.setTextColor(containerView.context.getGroupColor(link.author.group))

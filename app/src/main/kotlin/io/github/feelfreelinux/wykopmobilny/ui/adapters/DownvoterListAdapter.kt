@@ -14,7 +14,7 @@ class DownvoterListAdapter @Inject constructor() : RecyclerView.Adapter<Downvote
     val dataset = ArrayList<Downvoter>()
 
     override fun onBindViewHolder(holder: DownvoterViewHolder, position: Int) {
-        holder?.bindView(dataset[position])
+        holder.bindView(dataset[position])
     }
 
     override fun getItemCount(): Int = dataset.size

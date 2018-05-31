@@ -50,6 +50,7 @@ interface NewNavigatorApi {
     fun openBrowser(url: String)
     fun openReportScreen(violationUrl: String)
     fun openLinkDetailsActivity(link: Link)
+    fun openLinkDetailsActivity(linkId : Int, commentId : Int = -1)
     fun openLinkUpvotersActivity(linkId : Int)
     fun openLinkDownvotersActivity(linkId : Int)
     fun openLinkRelatedActivity(linkId : Int)
@@ -124,6 +125,10 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
 
     override fun openLinkUpvotersActivity(linkId : Int) {
         context.startActivity(UpvotersActivity.createIntent(linkId, context))
+    }
+
+    override fun openLinkDetailsActivity(linkId: Int, commentId: Int) {
+        context.startActivity(LinkDetailsActivity.createIntent(context, linkId, commentId))
     }
 
     override fun openLinkDownvotersActivity(linkId : Int) {

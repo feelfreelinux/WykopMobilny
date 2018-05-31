@@ -26,7 +26,6 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.entry_list_item.*
 import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 
-
 typealias EntryListener = (Entry) -> Unit
 
 class EntryViewHolder(override val containerView: View,
@@ -80,7 +79,7 @@ class EntryViewHolder(override val containerView: View,
 
         fun getViewTypeForEntry(entry : Entry) : Int {
             return if (entry.isBlocked) EntryViewHolder.TYPE_BLOCKED
-            else if (entry.embed != null && entry.survey == null) EntryViewHolder.TYPE_EMBED_SURVEY
+            else if (entry.embed != null && entry.survey != null) EntryViewHolder.TYPE_EMBED_SURVEY
             else if (entry.embed == null && entry.survey != null) EntryViewHolder.TYPE_SURVEY
             else if (entry.embed != null && entry.survey == null) EntryViewHolder.TYPE_EMBED
             else EntryViewHolder.TYPE_NORMAL

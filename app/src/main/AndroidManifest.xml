@@ -16,9 +16,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/WykopAppTheme">
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity" />
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
         <activity
             android:launchMode="singleTop"
@@ -32,11 +34,14 @@
 
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
             android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity"
             android:theme="@style/TransparentActivityTheme"
-            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
-        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity">
+            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter
                 android:label="Dodaj wpis z zdjęciem">
                 <action android:name="android.intent.action.SEND" />
@@ -51,21 +56,30 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.modules.input.entry.edit.EditEntryActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
-        <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".ui.modules.pm.conversation.ConversationActivity"
-            android:theme="@style/TransparentActivityTheme"/>
+            android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".ui.modules.settings.SettingsActivity"
-            android:theme="@style/TransparentActivityTheme"/>
+            android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity"
             android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"/>
         <activity android:name=".ui.modules.links.upvoters.UpvotersActivity"
-            android:theme="@style/TransparentActivityTheme"/>
+            android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".ui.modules.links.downvoters.DownvotersActivity"
-            android:theme="@style/TransparentActivityTheme"/>
-        <activity android:name=".ui.modules.input.link.edit.LinkCommentEditActivity"/>
+            android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".ui.modules.input.link.edit.LinkCommentEditActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".ui.modules.DeepLinkActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateUnchanged|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -101,18 +115,23 @@
         </activity>
         <activity android:name=".ui.modules.links.related.RelatedActivity"
             android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity android:name=".ui.modules.profile.ProfileActivity"
             android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity android:name=".ui.modules.notificationslist.NotificationsListActivity"
             android:theme="@style/TransparentActivityTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity android:name=".ui.modules.embedview.EmbedViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TransparentActivityTheme" />
-        <activity android:name=".ui.modules.blacklist.BlacklistActivity" />
-        <activity android:name=".ui.modules.addlink.AddlinkActivity">
+        <activity android:name=".ui.modules.blacklist.BlacklistActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".ui.modules.addlink.AddlinkActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         <intent-filter
             android:label="Udostępnij link">
             <action android:name="android.intent.action.SEND" />

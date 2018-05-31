@@ -99,11 +99,22 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
         }
 
         comment.body?.let {
-            commentContent.prepareBody(comment.body!!, { linkHandlerApi.handleUrl(it) }, {}, settingsPreferencesApi.openSpoilersDialog)
+            commentContent.prepareBody(comment.body!!, { linkHandlerApi.handleUrl(it) }, { handleClick(comment) }, settingsPreferencesApi.openSpoilersDialog)
         }
+
+        containerView.setOnClickListener { handleClick(comment) }
 
         commentContent.isVisible = !comment.body.isNullOrEmpty()
         collapseButton.isVisible = !((comment.id != comment.parentId) || comment.childCommentCount == 0) && commentViewListener != null
+
+
+    }
+
+    fun handleClick(comment : LinkComment) {
+        // Register click listener for comments list
+        commentViewListener?.let {
+            navigatorApi.openLinkDetailsActivity(comment.linkId, comment.id)
+        }
     }
 
     fun setStyleForComment(comment: LinkComment, isAuthorComment: Boolean, commentId: Int = -1) {
