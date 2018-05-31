@@ -3,9 +3,12 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.entrie
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntriesFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import javax.inject.Inject
 
 class MicroblogEntriesFragment : BaseEntriesFragment(), MicroblogEntriesView {
+    val username by lazy { (activity as ProfileActivity).username }
+
     @Inject
     lateinit var presenter: MicroblogEntriesPresenter
     override var loadDataListener: (Boolean) -> Unit = {
@@ -21,6 +24,7 @@ class MicroblogEntriesFragment : BaseEntriesFragment(), MicroblogEntriesView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
+        presenter.username = username
         entriesAdapter.entryActionListener = presenter
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
         presenter.loadData(true)

@@ -3,11 +3,13 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.added
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
+import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
 class ProfileLinksFragment : BaseLinksFragment(), ProfileLinksView {
     val extraType by lazy { arguments?.getString(EXTRA_TYPE) }
+    val username by lazy { (activity as ProfileActivity).username }
 
     @Inject
     lateinit var presenter: ProfileLinksPresenter
@@ -46,6 +48,7 @@ class ProfileLinksFragment : BaseLinksFragment(), ProfileLinksView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
+        presenter.username = username
         linksAdapter.linksActionListener = presenter
         linksAdapter.loadNewDataListener = { loadDataListener(false) }
         loadDataListener(true)

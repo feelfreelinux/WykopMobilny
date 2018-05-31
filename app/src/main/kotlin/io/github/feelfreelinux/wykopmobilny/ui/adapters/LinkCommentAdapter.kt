@@ -4,27 +4,47 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.adapter.SimpleBaseProgressAdapter
+import io.github.feelfreelinux.wykopmobilny.base.adapter.EndlessProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.ProfileLinkCommentViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenterFactory
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import javax.inject.Inject
 
-class LinkCommentAdapter @Inject constructor(val presenterFactory: LinkCommentPresenterFactory,
-                                             val userManagerApi: UserManagerApi,
-                                             val settingsPreferencesApi: SettingsPreferencesApi) : SimpleBaseProgressAdapter<ProfileLinkCommentViewHolder, LinkComment>() {
-    override fun bindHolder(holder: ProfileLinkCommentViewHolder, position: Int) {
-        holder.bindView(data[position])
+class LinkCommentAdapter @Inject constructor(
+        val userManagerApi: UserManagerApi,
+        val settingsPreferencesApi: SettingsPreferencesApi,
+        val navigatorApi: NewNavigatorApi,
+        val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<RecyclerView.ViewHolder, LinkComment>() {
+    // Required field, interacts with presenter. Otherwise will throw exception
+    lateinit var linkCommentActionListener : LinkCommentActionListener
+
+    override fun getViewType(position: Int): Int {
+        return BaseLinkCommentViewHolder.getViewTypeForComment(data[position], true)
     }
 
-    override fun createViewHolder(parent: ViewGroup): ProfileLinkCommentViewHolder =
-            ProfileLinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_top_comment_list_item, parent, false), presenterFactory.create(), userManagerApi, settingsPreferencesApi)
+    override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            TopLinkCommentViewHolder.TYPE_TOP_EMBED, TopLinkCommentViewHolder.TYPE_TOP_NORMAL ->
+                TopLinkCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, linkCommentActionListener, null)
+            else ->
+                BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+        }
+    }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
-        (holder as? RecyclableViewHolder)?.cleanRecycled()
-        super.onViewRecycled(holder)
+    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is TopLinkCommentViewHolder -> holder.bindView(data[position], false)
+            is BlockedViewHolder -> {}
+        }
+    }
+
+    fun updateComment(comment : LinkComment) {
+        val position = data.indexOf(comment)
+        dataset[position] = comment
+        notifyItemChanged(position)
     }
 }

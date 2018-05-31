@@ -33,7 +33,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
                                          internal val navigatorApi: NewNavigatorApi,
                                          internal val linkHandlerApi: WykopLinkHandlerApi,
                                          internal val commentActionListener: LinkCommentActionListener,
-                                         internal val commentViewListener: LinkCommentViewListener) : RecyclableViewHolder(containerView), LayoutContainer {
+                                         internal val commentViewListener: LinkCommentViewListener?) : RecyclableViewHolder(containerView), LayoutContainer {
     val collapseDrawable by lazy {
         val typedArray = containerView.context.obtainStyledAttributes(arrayOf(
                 R.attr.collapseDrawable).toIntArray())
@@ -51,8 +51,8 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
     }
 
     companion object {
-        fun getViewTypeForComment(comment: LinkComment): Int {
-            return if (comment.parentId != comment.id) {
+        fun getViewTypeForComment(comment: LinkComment, forceTop : Boolean = false): Int {
+            return if (comment.parentId != comment.id && !forceTop) {
                 when {
                     comment.isBlocked -> LinkCommentViewHolder.TYPE_BLOCKED
                     comment.embed == null -> LinkCommentViewHolder.TYPE_NORMAL
@@ -93,7 +93,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
 
 
     private fun setupBody(comment: LinkComment) {
-        replyButton.isVisible = userManagerApi.isUserAuthorized()
+        replyButton.isVisible = userManagerApi.isUserAuthorized() && commentViewListener != null
         if (type == LinkCommentViewHolder.TYPE_EMBED || type == TopLinkCommentViewHolder.TYPE_TOP_EMBED) {
             embedView.setEmbed(comment.embed, settingsPreferencesApi, navigatorApi, comment.isNsfw)
         }
@@ -103,7 +103,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
         }
 
         commentContent.isVisible = !comment.body.isNullOrEmpty()
-        collapseButton.isVisible = !((comment.id != comment.parentId) || comment.childCommentCount == 0)
+        collapseButton.isVisible = !((comment.id != comment.parentId) || comment.childCommentCount == 0) && commentViewListener != null
     }
 
     fun setStyleForComment(comment: LinkComment, isAuthorComment: Boolean, commentId: Int = -1) {
@@ -140,7 +140,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
         if (comment.isCollapsed) {
             collapseButton.setImageDrawable(expandDrawable)
             collapseButton.setOnClickListener {
-                commentViewListener.setCollapsed(comment, false)
+                commentViewListener?.setCollapsed(comment, false)
                 collapsedCommentsTextView?.isVisible = true
                 collapsedCommentsTextView?.text = "${comment.childCommentCount} ukrytych komentarzy"
             }
@@ -148,7 +148,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
             collapseButton.setImageDrawable(collapseDrawable)
             collapseButton.setOnClickListener {
                 collapsedCommentsTextView?.isVisible = false
-                commentViewListener.setCollapsed(comment, true)
+                commentViewListener?.setCollapsed(comment, true)
             }
         }
 
@@ -190,7 +190,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
         }
 
         replyButton.setOnClickListener {
-            commentViewListener.replyComment(comment)
+            commentViewListener?.replyComment(comment)
         }
     }
 

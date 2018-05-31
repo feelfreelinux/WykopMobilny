@@ -25,7 +25,7 @@ class TopLinkCommentViewHolder(override val containerView: View,
                              navigatorApi : NewNavigatorApi,
                              linkHandlerApi: WykopLinkHandlerApi,
                              commentActionListener : LinkCommentActionListener,
-                             commentViewListener: LinkCommentViewListener) : BaseLinkCommentViewHolder(containerView, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, commentActionListener, commentViewListener), LayoutContainer {
+                             commentViewListener: LinkCommentViewListener?) : BaseLinkCommentViewHolder(containerView, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, commentActionListener, commentViewListener), LayoutContainer {
     override lateinit var embedView: WykopEmbedView
 
     // Bind correct views
@@ -46,7 +46,7 @@ class TopLinkCommentViewHolder(override val containerView: View,
         /**
          * Inflates correct view (with embed, survey or both) depending on viewType
          */
-        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, commentActionListener: LinkCommentActionListener, commentViewListener: LinkCommentViewListener): TopLinkCommentViewHolder {
+        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, commentActionListener: LinkCommentActionListener, commentViewListener: LinkCommentViewListener?): TopLinkCommentViewHolder {
             val view = TopLinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.top_link_comment_layout, parent, false),
                     userManagerApi,
                     settingsPreferencesApi,

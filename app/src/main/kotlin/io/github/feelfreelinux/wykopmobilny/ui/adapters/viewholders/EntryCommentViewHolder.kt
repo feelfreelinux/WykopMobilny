@@ -34,7 +34,7 @@ class EntryCommentViewHolder(override val containerView: View,
                              private val navigatorApi : NewNavigatorApi,
                              private val linkHandlerApi: WykopLinkHandlerApi,
                              private val commentActionListener : EntryCommentActionListener,
-                             private val commentViewListener: EntryCommentViewListener,
+                             private val commentViewListener: EntryCommentViewListener?,
                              private val enableClickListener : Boolean) : RecyclableViewHolder(containerView), LayoutContainer {
     var type : Int = TYPE_NORMAL
     lateinit var embedView : WykopEmbedView
@@ -50,7 +50,7 @@ class EntryCommentViewHolder(override val containerView: View,
         /**
          * Inflates correct view (with embed, survey or both) depending on viewType
          */
-        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, commentActionListener: EntryCommentActionListener, commentViewListener: EntryCommentViewListener, enableClickListener: Boolean): EntryCommentViewHolder {
+        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, commentActionListener: EntryCommentActionListener, commentViewListener: EntryCommentViewListener?, enableClickListener: Boolean): EntryCommentViewHolder {
             val view = EntryCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false),
                     userManagerApi,
                     settingsPreferencesApi,
@@ -107,8 +107,8 @@ class EntryCommentViewHolder(override val containerView: View,
         }
 
         // Only show reply view in entry details
-        replyTextView.isVisible = userManagerApi.isUserAuthorized()
-        replyTextView.setOnClickListener({ commentViewListener.addReply(comment.author) })
+        replyTextView.isVisible = userManagerApi.isUserAuthorized() && commentViewListener != null
+        replyTextView.setOnClickListener({ commentViewListener?.addReply(comment.author) })
 
 
         // Setup vote button
@@ -135,9 +135,9 @@ class EntryCommentViewHolder(override val containerView: View,
     private fun setupBody(comment : EntryComment) {
         // Add URL and click handler if body is not empty
         replyTextView.isVisible = userManagerApi.isUserAuthorized()
-        replyTextView.setOnClickListener { commentViewListener.addReply(comment.author) }
+        replyTextView.setOnClickListener { commentViewListener?.addReply(comment.author) }
         quoteTextView.isVisible = userManagerApi.isUserAuthorized()
-        quoteTextView.setOnClickListener { commentViewListener.quoteComment(comment) }
+        quoteTextView.setOnClickListener { commentViewListener?.quoteComment(comment) }
         if (comment.body.isNotEmpty()) {
             entryContentTextView.isVisible = true
             entryContentTextView.prepareBody(comment.body, { linkHandlerApi.handleUrl(it) }, { handleClick(comment) }, settingsPreferencesApi.openSpoilersDialog)
