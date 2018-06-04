@@ -64,7 +64,11 @@ class EntryViewHolder(override val containerView: View,
                     entryActionListener,
                     replyListener)
 
-            view.containerView.tag = RecyclableViewHolder.SEPARATOR_SMALL
+            view.containerView.tag = if (replyListener == null) {
+                RecyclableViewHolder.SEPARATOR_SMALL
+            } else {
+                RecyclableViewHolder.SEPARATOR_NORMAL
+            }
 
             view.type = viewType
 

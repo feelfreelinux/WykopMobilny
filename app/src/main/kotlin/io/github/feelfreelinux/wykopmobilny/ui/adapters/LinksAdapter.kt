@@ -34,7 +34,7 @@ class LinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
             SimpleLinkViewHolder.TYPE_SIMPLE_LINK ->
                 SimpleLinkViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linksActionListener)
             SimpleLinkViewHolder.TYPE_BLOCKED, LinkViewHolder.TYPE_BLOCKED ->
-                BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+                BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
             else -> LinkViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linksActionListener)
         }
     }

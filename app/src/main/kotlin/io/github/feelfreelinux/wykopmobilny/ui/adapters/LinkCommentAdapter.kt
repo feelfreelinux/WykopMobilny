@@ -31,7 +31,7 @@ class LinkCommentAdapter @Inject constructor(
             TopLinkCommentViewHolder.TYPE_TOP_EMBED, TopLinkCommentViewHolder.TYPE_TOP_NORMAL ->
                 TopLinkCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, linkCommentActionListener, null)
             else ->
-                BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+                BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
         }
     }
 

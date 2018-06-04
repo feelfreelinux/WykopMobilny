@@ -17,7 +17,7 @@ class FeedAdapter @Inject constructor(val userManagerApi: UserManagerApi, val se
     }
 
     override fun createViewHolder(parent: ViewGroup): BlockedViewHolder =
-            BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+            BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
 
     override val ITEM_TYPE = 0
 }

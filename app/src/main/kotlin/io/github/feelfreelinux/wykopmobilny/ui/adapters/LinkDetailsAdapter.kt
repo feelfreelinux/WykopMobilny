@@ -22,22 +22,13 @@ class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
                                              val navigatorApi: NewNavigatorApi,
                                              val linkHandlerApi: WykopLinkHandlerApi,
                                              val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    companion object {
-        val HEADER_HOLDER = 4
-        val TOP_COMMENT_HOLDER = 5
-        val COMMENT_HOLDER = 6
-        val COMMENT_TYPE_LARGE = "LARGE_TYPE"
-        val COMMENT_TYPE_NORMAL = "NORMAL_TYPE"
-    }
 
     var highlightCommentId = -1
-    lateinit var collapseListener : (Boolean, Int) -> Unit
     lateinit var linkCommentViewListener: LinkCommentViewListener
     lateinit var linkCommentActionListener: LinkCommentActionListener
     lateinit var linkHeaderActionListener: LinkHeaderActionListener
     var link: Link? = null
     val commentsList : List<LinkComment>? get() = link?.comments?.filterNot { it.isParentCollapsed }
-    var onReplyClickedListener : (LinkComment) -> Unit = {}
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder.itemViewType == LinkHeaderViewHolder.TYPE_HEADER) {
@@ -48,8 +39,12 @@ class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
             val comment = commentsList!![position - 1]
             if (holder is TopLinkCommentViewHolder) {
                 holder.bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
-            } else {
-                (holder as LinkCommentViewHolder).bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
+                holder.containerView.tag = if (comment.childCommentCount > 0 && !comment.isCollapsed) RecyclableViewHolder.SEPARATOR_SMALL else RecyclableViewHolder.SEPARATOR_NORMAL
+            } else if (holder is LinkCommentViewHolder) {
+                val parent = commentsList!!.first { it.id == comment.parentId }
+                val index = commentsList!!.subList(commentsList!!.indexOf(parent), position-1).size
+                holder.bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
+                holder.itemView.tag = if (parent.childCommentCount == index) RecyclableViewHolder.SEPARATOR_NORMAL else RecyclableViewHolder.SEPARATOR_SMALL
             }
         }
     }
@@ -71,7 +66,7 @@ class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
             LinkHeaderViewHolder.TYPE_HEADER -> LinkHeaderViewHolder.inflateView(parent, userManagerApi, navigatorApi, linkHandlerApi, linkHeaderActionListener)
             TopLinkCommentViewHolder.TYPE_TOP_EMBED, TopLinkCommentViewHolder.TYPE_TOP_NORMAL -> TopLinkCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, linkCommentActionListener, linkCommentViewListener)
             LinkCommentViewHolder.TYPE_EMBED, LinkCommentViewHolder.TYPE_NORMAL -> LinkCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, linkCommentActionListener, linkCommentViewListener)
-            else -> BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+            else -> BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
         }
     }
 

@@ -63,7 +63,8 @@ class EntryAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            EntryCommentViewHolder.TYPE_NORMAL, EntryCommentViewHolder.TYPE_BLOCKED, EntryCommentViewHolder.TYPE_EMBED -> EntryCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, commentActionListener, commentViewListener, false)
+            EntryCommentViewHolder.TYPE_BLOCKED, EntryViewHolder.TYPE_BLOCKED -> BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
+            EntryCommentViewHolder.TYPE_NORMAL, EntryCommentViewHolder.TYPE_EMBED -> EntryCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, commentActionListener, commentViewListener, false)
             else -> EntryViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, entryActionListener, replyListener)
         }
     }

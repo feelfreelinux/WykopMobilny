@@ -18,13 +18,13 @@ import kotlinx.android.synthetic.main.activity_notifications_list.*
 
 abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView, SwipeRefreshLayout.OnRefreshListener {
     val notificationAdapter by lazy { NotificationsListAdapter({ onNotificationClicked(it) }) }
-    abstract var linkHandler : WykopLinkHandlerApi
+    abstract var linkHandler: WykopLinkHandlerApi
 
     abstract fun markAsRead()
 
     abstract fun loadMore()
 
-    private fun onNotificationClicked(position : Int) {
+    private fun onNotificationClicked(position: Int) {
         val notification = notificationAdapter.data[position]
         notification.new = false
         notificationAdapter.notifyDataSetChanged()
@@ -58,13 +58,11 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
         }
     }
 
-    override fun addNotifications(notifications: List<Notification>, shouldClearAdapter : Boolean) {
+    override fun addNotifications(notifications: List<Notification>, shouldClearAdapter: Boolean) {
         if (shouldClearAdapter) setInfiniteScrollListener()
-        if (notifications.isNotEmpty()) {
-            loadingView?.isVisible = false
-            swiperefresh?.isRefreshing = false
-            notificationAdapter.addData(if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications, shouldClearAdapter)
-        } else notificationAdapter.disableLoading()
+        loadingView?.isVisible = false
+        swiperefresh?.isRefreshing = false
+        notificationAdapter.addData(if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications, shouldClearAdapter)
     }
 
     override fun showReadToast() {
@@ -73,7 +71,6 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     }
 
     override fun disableLoading() {
-        recyclerView?.clearOnScrollListeners()
         notificationAdapter.disableLoading()
     }
 

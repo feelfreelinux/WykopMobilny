@@ -31,8 +31,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
     }
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
-BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false))
-
+            BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
 
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!

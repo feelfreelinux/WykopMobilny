@@ -110,7 +110,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
 
     fun handleClick(comment : LinkComment) {
         // Register click listener for comments list
-        commentViewListener?.let {
+        if (commentViewListener == null) {
             navigatorApi.openLinkDetailsActivity(comment.linkId, comment.id)
         }
     }

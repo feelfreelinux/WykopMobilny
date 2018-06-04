@@ -27,7 +27,7 @@ class LinkAdapter @Inject constructor(val settingsPreferencesApi : SettingsPrefe
     }
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
-            BlockedViewHolder(View(parent.context))
+            BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
 
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!

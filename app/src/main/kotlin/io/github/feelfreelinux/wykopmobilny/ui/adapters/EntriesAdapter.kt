@@ -29,7 +29,7 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
 
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == EntryViewHolder.TYPE_BLOCKED) {
-            BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+            BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
         } else {
             EntryViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, entryActionListener, replyListener)
         }

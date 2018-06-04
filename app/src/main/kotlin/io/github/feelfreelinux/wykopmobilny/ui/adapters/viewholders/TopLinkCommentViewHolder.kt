@@ -67,6 +67,7 @@ class TopLinkCommentViewHolder(override val containerView: View,
 
     override fun bindView(linkComment: LinkComment, isAuthorComment: Boolean, commentId: Int) {
         super.bindView(linkComment, isAuthorComment, commentId)
+
         authorHeaderView.setAuthorData(linkComment.author, linkComment.date, linkComment.app)
         if (linkComment.isCollapsed) {
             messageTextView.isVisible = true

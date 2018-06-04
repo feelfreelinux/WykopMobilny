@@ -31,7 +31,7 @@ class EntryCommentAdapter @Inject constructor(
             EntryCommentViewHolder.TYPE_EMBED, EntryCommentViewHolder.TYPE_NORMAL ->
                 EntryCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, entryCommentActionListener, null, true)
             else ->
-                BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false))
+                BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
         }
     }
 
