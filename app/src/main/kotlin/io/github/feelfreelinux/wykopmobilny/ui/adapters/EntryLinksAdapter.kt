@@ -45,6 +45,16 @@ class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, 
         when (holder) {
             is EntryViewHolder -> holder.bindView(data[position].entry!!)
             is LinkViewHolder -> holder.bindView(data[position].link!!)
+            is BlockedViewHolder -> {
+                val data = data[position]
+                data.link?.let {
+                    holder.bindView(data.link!!)
+                }
+
+                data.entry?.let {
+                    holder.bindView(data.entry!!)
+                }
+            }
             is SimpleLinkViewHolder -> holder.bindView(data[position].link!!)
         }
     }

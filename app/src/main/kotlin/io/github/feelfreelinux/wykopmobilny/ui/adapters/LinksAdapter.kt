@@ -43,7 +43,7 @@ class LinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
         when (holder) {
             is LinkViewHolder -> holder.bindView(data[position])
             is SimpleLinkViewHolder -> holder.bindView(data[position])
-            is BlockedViewHolder -> {}
+            is BlockedViewHolder -> holder.bindView(data[position])
         }
     }
 

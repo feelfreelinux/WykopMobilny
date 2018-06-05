@@ -1,9 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.EndlessProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
@@ -38,7 +36,7 @@ class EntryCommentAdapter @Inject constructor(
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EntryCommentViewHolder -> holder.bindView(data[position], null)
-            is BlockedViewHolder -> {}
+            is BlockedViewHolder -> { holder?.bindView(data[position]) }
         }
     }
 

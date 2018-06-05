@@ -34,7 +34,7 @@ class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
         if (holder.itemViewType == LinkHeaderViewHolder.TYPE_HEADER) {
             link?.let { (holder as LinkHeaderViewHolder).bindView(link!!) }
         } else if (holder is BlockedViewHolder) {
-
+            holder.bindView(commentsList!![position - 1])
         } else {
             val comment = commentsList!![position - 1]
             if (holder is TopLinkCommentViewHolder) {

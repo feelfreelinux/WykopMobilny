@@ -17,7 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 
 abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView, SwipeRefreshLayout.OnRefreshListener {
-    val notificationAdapter by lazy { NotificationsListAdapter({ onNotificationClicked(it) }) }
+    lateinit var notificationAdapter : NotificationsListAdapter
     abstract var linkHandler: WykopLinkHandlerApi
 
     abstract fun markAsRead()
@@ -40,26 +40,20 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         swiperefresh.setOnRefreshListener(this)
 
+        notificationAdapter.loadNewDataListener = {
+            loadMore()
+        }
+
+        notificationAdapter.itemClickListener = { onNotificationClicked(it) }
         recyclerView?.apply {
             prepare()
             adapter = notificationAdapter
-            clearOnScrollListeners()
-            setInfiniteScrollListener()
         }
         swiperefresh?.isRefreshing = false
         super.onActivityCreated(savedInstanceState)
     }
 
-    private fun setInfiniteScrollListener() {
-        recyclerView?.apply {
-            clearOnScrollListeners()
-            addOnScrollListener(InfiniteScrollListener(
-                    { loadMore() }, layoutManager as LinearLayoutManager))
-        }
-    }
-
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter: Boolean) {
-        if (shouldClearAdapter) setInfiniteScrollListener()
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
         notificationAdapter.addData(if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications, shouldClearAdapter)

@@ -38,7 +38,7 @@ class LinkCommentAdapter @Inject constructor(
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is TopLinkCommentViewHolder -> holder.bindView(data[position], false)
-            is BlockedViewHolder -> {}
+            is BlockedViewHolder -> { holder.bindView(data[position]) }
         }
     }
 

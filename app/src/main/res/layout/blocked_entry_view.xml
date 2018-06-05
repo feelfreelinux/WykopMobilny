@@ -8,6 +8,5 @@
     android:paddingRight="@dimen/padding_dp_large"
     tools:text="Ukryty wpis od @feelfree"
     android:textSize="?attr/textSizeLarge"
-    android:visibility="gone"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" />
