@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.BaseNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
@@ -17,7 +18,10 @@ import javax.inject.Inject
 
 class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
     @Inject lateinit var presenter : HashTagsNotificationsListPresenter
-    override @Inject lateinit var linkHandler : WykopLinkHandlerApi
+    @Inject
+    override lateinit var linkHandler : WykopLinkHandlerApi
+    @Inject
+    override lateinit var notificationAdapter : NotificationsListAdapter
 
     private lateinit var entryFragmentData : DataFragment<PagedDataModel<List<Notification>>>
 

@@ -15,7 +15,7 @@ class NotificationsListAdapter @Inject constructor() : EndlessProgressAdapter<Re
         2121
 
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return   NotificationViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, null, false))
+        return   NotificationViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, parent, false))
     }
 
     override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {

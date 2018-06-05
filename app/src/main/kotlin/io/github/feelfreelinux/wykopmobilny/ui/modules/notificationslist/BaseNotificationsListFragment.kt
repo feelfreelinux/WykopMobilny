@@ -17,7 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 
 abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView, SwipeRefreshLayout.OnRefreshListener {
-    lateinit var notificationAdapter : NotificationsListAdapter
+    abstract var notificationAdapter : NotificationsListAdapter
     abstract var linkHandler: WykopLinkHandlerApi
 
     abstract fun markAsRead()
