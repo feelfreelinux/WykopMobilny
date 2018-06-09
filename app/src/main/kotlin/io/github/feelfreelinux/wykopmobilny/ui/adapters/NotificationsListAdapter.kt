@@ -11,8 +11,7 @@ import javax.inject.Inject
 
 class NotificationsListAdapter @Inject constructor() : EndlessProgressAdapter<RecyclerView.ViewHolder, Notification>() {
     var itemClickListener : (Int) -> Unit = {}
-    override fun getViewType(position: Int): Int =
-        2121
+    override fun getViewType(position: Int): Int = 2121
 
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return   NotificationViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, parent, false))

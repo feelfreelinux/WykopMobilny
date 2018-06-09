@@ -124,6 +124,7 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
     implementation 'com.pavelsikun:material-seekbar-preference:2.3.0'
     implementation 'com.github.feelfreelinux:Slidr:v2.2'
+    implementation 'br.com.mauker.materialsearchview:materialsearchview:1.2.3'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"

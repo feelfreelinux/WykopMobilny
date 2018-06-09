@@ -22,6 +22,8 @@
     <attr name="lineColor" format="reference"/>
     <attr name="separatorColor" format="reference"/>
     <attr name="expandImageGradient" format="reference"/>
+    <attr name="materialSearchStyle" format="reference"/>
+
     <attr name="shadowUpGradient" format="reference"/>
     <attr name="linkViewClicked" format="color"/>
 

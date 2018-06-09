@@ -43,6 +43,11 @@
             app:layout_anchorGravity="bottom|right"
             app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior" />
 
+        <br.com.mauker.materialsearchview.MaterialSearchView
+            android:id="@+id/searchView"
+            style="?attr/materialSearchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

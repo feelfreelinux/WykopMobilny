@@ -3,6 +3,7 @@
 
     <style name="WykopAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
+        <item name="materialSearchStyle">@style/MaterialSearchViewStyle</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="textColorGrey">@color/textColorGrey</item>
         <item name="textColorLight">@color/textColorLight</item>
@@ -95,6 +96,7 @@
     </style>
 
     <style name="WykopAppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="materialSearchStyle">@style/MaterialSearchViewStyle.Dark</item>
         <item name="bottomSheetStyle">@style/WykopBottomSheet</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
         <item name="preferenceTheme">@style/DarkPreferencesTheme</item>
@@ -566,5 +568,22 @@
 
     <style name="WykopBottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="MaterialSearchViewStyle">
+        <item name="searchBackground">@android:color/white</item>
+        <item name="searchSuggestionBackground">@color/itemBackground</item>
+        <item name="listTextColor">@color/textColor</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColorHint">@color/textColor</item>
+        <item name="android:inputType">textCapWords</item>
+    </style>
+
+    <style name="MaterialSearchViewStyle.Dark">
+        <item name="searchBackground">@color/itemBackground.Dark</item>
+        <item name="searchSuggestionBackground">@color/itemBackground.Dark</item>
+        <item name="listTextColor">@color/textColor.Dark</item>
+        <item name="android:textColor">@color/textColor.Dark</item>
+        <item name="android:textColorHint">@color/textColor.Dark</item>
     </style>
 </resources>

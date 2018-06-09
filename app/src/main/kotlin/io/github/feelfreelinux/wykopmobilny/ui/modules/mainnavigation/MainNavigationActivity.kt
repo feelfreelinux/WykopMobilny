@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.internal.NavigationMenuView
 import android.support.design.widget.BottomSheetBehavior
@@ -146,6 +147,14 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             finish()
             return
         }
+
+        searchView.setTintAlpha(200)
+        searchView.setBackgroundColor(Color.BLACK)
+        searchView.setOnItemClickListener { _, _, position, _ ->
+            val suggestion = searchView.getSuggestionAtPosition(position)
+            searchView.setQuery(suggestion, true)
+        }
+
         if (!presenter.isSubscribed) {
             presenter.subscribe(this)
         }
@@ -285,7 +294,8 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
+        if (searchView.isOpen) searchView.closeSearch()
+        else if (drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
         else {
             if (tapDoubleClickedMilis + 2000L > System.currentTimeMillis()) {
                 super.onBackPressed()
