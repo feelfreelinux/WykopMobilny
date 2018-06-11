@@ -148,13 +148,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             return
         }
 
-        searchView.setTintAlpha(200)
-        searchView.setBackgroundColor(Color.BLACK)
-        searchView.setOnItemClickListener { _, _, position, _ ->
-            val suggestion = searchView.getSuggestionAtPosition(position)
-            searchView.setQuery(suggestion, true)
-        }
-
         if (!presenter.isSubscribed) {
             presenter.subscribe(this)
         }
@@ -294,8 +287,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     override fun onBackPressed() {
-        if (searchView.isOpen) searchView.closeSearch()
-        else if (drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
         else {
             if (tapDoubleClickedMilis + 2000L > System.currentTimeMillis()) {
                 super.onBackPressed()
