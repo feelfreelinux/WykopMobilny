@@ -28,7 +28,6 @@ class EmbedLinkPresenter (val embedApi: ExternalApi, val schedulers: Schedulers)
         }
         when (linkDomain) {
             GFYCAT_MATCHER -> {
-                view?.checkEmbedSettings()
                 val id = url.formatGfycat()
                 embedApi.getGfycat(id)
                         .subscribeOn(schedulers.backgroundThread())
@@ -39,7 +38,6 @@ class EmbedLinkPresenter (val embedApi: ExternalApi, val schedulers: Schedulers)
             }
 
             COUB_MATCHER -> {
-                view?.checkEmbedSettings()
                 val id = url.removeSuffix("/").substringAfterLast("/view/")
                 embedApi.getCoub(id)
                         .subscribeOn(schedulers.backgroundThread())
@@ -48,7 +46,6 @@ class EmbedLinkPresenter (val embedApi: ExternalApi, val schedulers: Schedulers)
             }
 
             STREAMABLE_MATCHER -> {
-                view?.checkEmbedSettings()
                 val id = url.removeSuffix("/").substringAfterLast("/")
                 embedApi.getStreamableUrl(id)
                         .subscribeOn(schedulers.backgroundThread())
@@ -61,7 +58,6 @@ class EmbedLinkPresenter (val embedApi: ExternalApi, val schedulers: Schedulers)
 
             SIMPLE_YOUTUBE_MATCHER, YOUTUBE_MATCHER -> view?.exitAndOpenYoutubeActivity()
             else -> {
-                view?.checkEmbedSettings()
                 Single.just(url)
             }
         }

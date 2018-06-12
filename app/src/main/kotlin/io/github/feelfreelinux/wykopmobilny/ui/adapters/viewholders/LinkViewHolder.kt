@@ -104,7 +104,7 @@ class LinkViewHolder(override val containerView: View,
             authorHeaderView.isVisible = true
             dateTextView.isVisible = false
             if (settingsApi.linkImagePosition == "top")
-                image_top.setPadding(0, containerView.context.resources.getDimension(R.dimen.padding_dp_normal).toInt(), 0, 0)
+                previewImageView.setPadding(0, containerView.context.resources.getDimension(R.dimen.padding_dp_normal).toInt(), 0, 0)
         }
 
         titleTextView.text = link.title
