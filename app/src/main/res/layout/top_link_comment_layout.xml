@@ -37,7 +37,7 @@
 
     <ViewStub
         android:id="@+id/wykopEmbedView"
-        style="@style/ImageViewComment"
+        style="@style/WykopImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inflatedId="@+id/wykopEmbedView"

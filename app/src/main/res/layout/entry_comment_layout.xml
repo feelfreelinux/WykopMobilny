@@ -47,7 +47,10 @@
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
         android:id="@+id/entryImageView"
-        style="@style/ImageViewComment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_dp_normal"
+        android:layout_marginRight="@dimen/margin_dp_large"
         app:layout_constraintTop_toBottomOf="@id/entryContentTextView"
         app:layout_constraintLeft_toLeftOf="@id/authorTextView"
         app:layout_constraintRight_toRightOf="parent" />

@@ -58,14 +58,15 @@
 
     <ViewStub
         android:id="@+id/wykopEmbedView"
-        style="@style/ImageViewComment"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_dp_normal"
+        android:layout_marginRight="@dimen/margin_dp_large"
         android:inflatedId="@id/wykopEmbedView"
         android:layout="@layout/stub_embed"
         app:layout_constraintTop_toBottomOf="@id/commentContentTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@id/authorTextView"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/shareTextView"
