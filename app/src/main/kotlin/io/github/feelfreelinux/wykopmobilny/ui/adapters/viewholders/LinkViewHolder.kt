@@ -55,7 +55,11 @@ class LinkViewHolder(override val containerView: View,
 
     fun inflateCorrectImageView() {
         previewImageView = when (settingsApi.linkImagePosition) {
-            "top" -> image_top.inflate() as ImageView
+            "top" -> {
+                val img = image_top.inflate() as ImageView
+                img.setPadding(0, containerView.context.resources.getDimension(R.dimen.padding_dp_normal).toInt(), 0, 0)
+                img
+            }
             "right" -> image_right.inflate() as ImageView
             "bottom" -> image_bottom.inflate() as ImageView
             else -> image_left.inflate() as ImageView
@@ -103,8 +107,6 @@ class LinkViewHolder(override val containerView: View,
             authorHeaderView.setAuthorData(link.author, link.date, link.app)
             authorHeaderView.isVisible = true
             dateTextView.isVisible = false
-            if (settingsApi.linkImagePosition == "top")
-                previewImageView.setPadding(0, containerView.context.resources.getDimension(R.dimen.padding_dp_normal).toInt(), 0, 0)
         }
 
         titleTextView.text = link.title

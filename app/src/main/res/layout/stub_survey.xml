@@ -2,6 +2,6 @@
 <io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/_8dp"
+    android:padding="@dimen/_8dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 </io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget>

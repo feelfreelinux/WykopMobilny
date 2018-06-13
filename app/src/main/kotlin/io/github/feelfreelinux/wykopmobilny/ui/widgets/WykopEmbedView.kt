@@ -86,7 +86,6 @@ class WykopEmbedView: FrameLayout {
     fun setEmbedIcon(embed : Embed) {
         imageIconGifSize.isVisible = false
         imageIcon.isVisible = true
-        printout(embed.url)
         val url = URI(embed.url.replace("\\", ""))
         val domain = url.host.replace("www.", "").substringBeforeLast(".")
                 .substringAfterLast(".")
