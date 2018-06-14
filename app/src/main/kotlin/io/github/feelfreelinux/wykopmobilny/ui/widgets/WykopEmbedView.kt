@@ -59,6 +59,7 @@ class WykopEmbedView: FrameLayout {
     }
 
     fun setEmbed(embed: Embed?, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, isNsfw: Boolean = false) {
+        hiddenPreview = null
         twitterview.isVisible = false
         image.isVisible = true
         resized = false

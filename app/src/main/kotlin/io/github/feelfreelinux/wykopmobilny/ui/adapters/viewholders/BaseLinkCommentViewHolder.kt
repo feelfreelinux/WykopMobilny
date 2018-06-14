@@ -150,7 +150,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
             collapseButton.setImageDrawable(expandDrawable)
             collapseButton.setOnClickListener {
                 commentViewListener?.setCollapsed(comment, false)
-                collapsedCommentsTextView?.isVisible = true
+                collapsedCommentsTextView?.isVisible = comment.childCommentCount > 0
                 collapsedCommentsTextView?.text = "${comment.childCommentCount} ukrytych komentarzy"
             }
         } else {

@@ -70,7 +70,7 @@ class TopLinkCommentViewHolder(override val containerView: View,
 
         authorHeaderView.setAuthorData(linkComment.author, linkComment.date, linkComment.app)
         if (linkComment.isCollapsed) {
-            messageTextView.isVisible = true
+            messageTextView.isVisible = linkComment.childCommentCount > 0
             messageTextView.text = "${linkComment.childCommentCount} ukrytych komentarzy"
             messageTextView.setOnClickListener {
                 commentViewListener?.setCollapsed(linkComment, false)
