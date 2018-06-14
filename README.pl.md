@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/feelfreelinux/WykopMobilny.svg?branch=master)](https://travis-ci.org/feelfreelinux/WykopMobilny)
-![Discord](https://img.shields.io/discord/455024671440633857.svg)
+[![Discord](https://img.shields.io/discord/455024671440633857.svg)](https://discord.gg/WgQZJD3)
 # Wykop Mobilny
 Nieoficjalny klient [wykop.pl](https://wykop.pl) na Android, napisany w Kotlin.
 
