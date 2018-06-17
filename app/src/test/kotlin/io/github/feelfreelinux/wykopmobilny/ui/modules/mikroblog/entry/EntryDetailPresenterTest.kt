@@ -7,6 +7,8 @@ import com.nhaarman.mockito_kotlin.whenever
 import io.github.feelfreelinux.wykopmobilny.TestSchedulers
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteractor
+import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentInteractor
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -16,11 +18,14 @@ class EntryDetailPresenterTest {
     lateinit var systemUnderTest: EntryDetailPresenter
     val mockOfView = mock<EntryDetailView>()
     val mockOfEntriesApi = mock<EntriesApi>()
+    val entriesInteractor = EntriesInteractor(mockOfEntriesApi)
+    val commentsInteractor = EntryCommentInteractor(mockOfEntriesApi)
+
     val schedulers = TestSchedulers()
 
     @Before
     fun setup() {
-        systemUnderTest = EntryDetailPresenter(schedulers, mockOfEntriesApi)
+        systemUnderTest = EntryDetailPresenter(schedulers, mockOfEntriesApi, entriesInteractor, commentsInteractor)
         systemUnderTest.subscribe(mockOfView)
     }
 
