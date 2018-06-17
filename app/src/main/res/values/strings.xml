@@ -222,7 +222,7 @@
     <string name="invalid_url">Adres url jest nieprawidłowy</string>
     <string name="blacklist_import_ask">Czy chcesz zaimportować czarną listę użytkowników oraz tagów?</string>
     <string name="blacklist_import_title">Zaimportuj czarną listę</string>
-    <string name="blacklist_import_progress">Importowanie czarnej listy...</string>
+    <string name="blacklist_import_progress">Importowanie czarnej listy…</string>
     <string name="blacklist_import_action">Zaimportuj</string>
     <string name="text_copied">Skopiowano do schowka</string>
     <string name="entry">Wpis</string>

@@ -7,7 +7,6 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteractor
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.reactivex.Single
 
 class EntrySearchPresenter(val schedulers: Schedulers, val searchApi: SearchApi, val entriesApi: EntriesApi, val entriesInteractor: EntriesInteractor) : BasePresenter<EntrySearchView>(), EntryActionListener {

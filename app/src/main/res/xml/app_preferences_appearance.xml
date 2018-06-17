@@ -92,7 +92,7 @@
 
         <android.support.v7.preference.CheckBoxPreference
             android:key="hideLinkCommentsByDefault"
-            android:title="Zwijaj wszyskie komentarze"
+            android:title="Zwijaj wszystkie komentarze"
             android:defaultValue="false"/>
 
     </android.support.v7.preference.PreferenceCategory>
