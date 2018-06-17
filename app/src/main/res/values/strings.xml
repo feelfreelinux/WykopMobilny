@@ -69,7 +69,7 @@
     <string name="date_with_user_app">%1$s via %2$s</string>
     <string name="votePercentageCount">%1$d%% (%2$d głosów)</string>
 
-    <string name="searchNoResults">¯\\_(ツ)_/¯\nBrak wyników</string>
+    <string name="searchNoResults">Ehh, pusto tu…</string>
     <string name="dialogNoVotes">¯\\_(ツ)_/¯\nBrak plusów</string>
 
     <string name="refresh">Odśwież</string>

@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.entries_fragment.*
+import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
 class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
@@ -37,6 +38,7 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
         entriesAdapter.entryActionListener = presenter
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
         loadingView.isVisible = false
+        showSearchEmptyView = true
 
     }
 

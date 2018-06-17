@@ -44,7 +44,7 @@ class NetworkModule {
         return OkHttpClient.Builder()
                 //.addNetworkInterceptor(CacheControlInterceptor(context))
                 .addInterceptor(ApiSignInterceptor(userManagerApi))
-          //      .addNetworkInterceptor(httpLogging)
+                .addNetworkInterceptor(httpLogging)
                 //.cache(cache)
                 .protocols(listOf(Protocol.HTTP_1_1))
                 .connectTimeout(30, TimeUnit.SECONDS)

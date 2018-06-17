@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteractor
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.reactivex.Single
 
 class EntrySearchPresenter(val schedulers: Schedulers, val searchApi: SearchApi, val entriesApi: EntriesApi, val entriesInteractor: EntriesInteractor) : BasePresenter<EntrySearchView>(), EntryActionListener {
@@ -18,17 +19,15 @@ class EntrySearchPresenter(val schedulers: Schedulers, val searchApi: SearchApi,
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({
-                            view?.showSearchEmptyView = page == 1 && it.isEmpty()
-                            when {
-                                it.isNotEmpty() -> {
-                                    page++
-                                    view?.addItems(it, shouldRefresh)
-                                }
-                                page == 1 -> view?.addItems(it, true)
-                                else -> view?.disableLoading()
+                            view?.showSearchEmptyView = (page == 1 && it.isEmpty())
+                            if (it.isNotEmpty()) {
+                                page++
+                                view?.addItems(it, shouldRefresh)
+                            } else {
+                                view?.addItems(it, (page == 1))
+                                view?.disableLoading()
                             }
-                        },
-                                { view?.showErrorDialog(it) })
+                        }, { view?.showErrorDialog(it) })
         )
     }
 

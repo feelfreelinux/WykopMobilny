@@ -17,17 +17,15 @@ class LinkSearchPresenter(val schedulers: Schedulers, val searchApi: SearchApi, 
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({
-                            view?.showSearchEmptyView = page == 1 && it.isEmpty()
-                            when {
-                                it.isNotEmpty() -> {
-                                    page++
-                                    view?.addItems(it, shouldRefresh)
-                                }
-                                page == 1 -> view?.addItems(it, true)
-                                else -> view?.disableLoading()
+                            view?.showSearchEmptyView = (page == 1 && it.isEmpty())
+                            if (it.isNotEmpty()) {
+                                page++
+                                view?.addItems(it, shouldRefresh)
+                            } else {
+                                view?.addItems(it, (page == 1))
+                                view?.disableLoading()
                             }
-                        },
-                                { view?.showErrorDialog(it) })
+                        }, { view?.showErrorDialog(it) })
         )
     }
 

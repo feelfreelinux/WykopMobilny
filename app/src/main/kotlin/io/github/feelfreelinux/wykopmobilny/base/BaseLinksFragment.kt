@@ -18,7 +18,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragment
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
@@ -28,10 +27,6 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView {
         get() = searchEmptyView.isVisible
         set(value) {
             searchEmptyView.isVisible = value
-            if (value) {
-                linksAdapter.addData(emptyList(), true)
-                linksAdapter.disableLoading()
-            }
         }
 
     open var loadDataListener : (Boolean) -> Unit = {}

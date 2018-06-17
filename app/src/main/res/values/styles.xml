@@ -38,6 +38,7 @@
         <item name="voteMinusButtonStatelist">@drawable/button_minus_vote_background_state_list</item>
         <item name="buttonStatelist">@drawable/button_background_state_list</item>
 
+        <item name="drawable404">@drawable/kosmonauta</item>
         <item name="wypokDrawable">@drawable/ic_buttontoolbar_wykop</item>
         <item name="commentDrawable">@drawable/ic_buttontoolbar_comment</item>
         <item name="plusDrawable">@drawable/ic_buttontoolbar_plus</item>
@@ -135,6 +136,7 @@
         <item name="voteMinusButtonStatelist">@drawable/button_minus_vote_background_state_list_dark</item>
         <item name="buttonStatelist">@drawable/button_background_state_list_dark</item>
 
+        <item name="drawable404">@drawable/kosmonauta_dark</item>
         <item name="wypokDrawable">@drawable/ic_buttontoolbar_wykop_dark</item>
         <item name="commentDrawable">@drawable/ic_buttontoolbar_comment_dark</item>
         <item name="plusDrawable">@drawable/ic_buttontoolbar_plus_dark</item>

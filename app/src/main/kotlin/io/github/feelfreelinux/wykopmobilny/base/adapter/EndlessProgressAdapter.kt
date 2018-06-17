@@ -30,7 +30,7 @@ abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Re
         super.onAttachedToRecyclerView(recyclerView)
         if (recyclerView.layoutManager is LinearLayoutManager) {
             recyclerView.addOnScrollListener(EndlessScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
-                if (dataset.last() == null) {
+                if (dataset.isNotEmpty() && dataset.last() == null) {
                     if (!isLoading) loadNewDataListener()
                     isLoading = true
                 }

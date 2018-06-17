@@ -32,6 +32,7 @@
     <attr name="collapseDrawable" format="reference"/>
     <attr name="closeDrawable" format="reference"/>
 
+    <attr name="drawable404" format="reference"/>
     <attr name="digCountDrawable" format="reference"/>
     <attr name="wypokDrawable" format="reference"/>
     <attr name="commentDrawable" format="reference"/>

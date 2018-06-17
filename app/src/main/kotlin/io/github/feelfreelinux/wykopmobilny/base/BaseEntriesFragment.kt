@@ -25,10 +25,6 @@ open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView {
         get() = searchEmptyView.isVisible
         set(value) {
             searchEmptyView.isVisible = value
-            if (value) {
-                entriesAdapter.addData(emptyList(), true)
-                entriesAdapter.disableLoading()
-            }
         }
 
     open var loadDataListener : (Boolean) -> Unit = {}
