@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.api.entries
 
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
+import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.api.getRequestBody
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryVotePublishModel
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapper
@@ -22,7 +23,7 @@ import java.net.URLEncoder
 
 data class TypedInputStream(val fileName : String, val mimeType : String, val inputStream: InputStream)
 
-class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val blacklistPreferencesApi: BlacklistPreferencesApi, val settingsPreferencesApi: SettingsPreferencesApi) : EntriesApi {
+class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val owmContentFilter: OWMContentFilter) : EntriesApi {
     private val entriesApi by lazy { retrofit.create(EntriesRetrofitApi::class.java) }
 
     override val entryVoteSubject = PublishSubject.create<EntryVotePublishModel>()
@@ -33,7 +34,6 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .compose<VoteResponse>(ErrorHandlerTransformer())
             .doOnSuccess {
                 if (notifySubject) {
-                    printout("WYSYŁAMY")
                     entryVoteSubject.onNext(EntryVotePublishModel(entryId, it))
                 }
             }
@@ -110,22 +110,22 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
     override fun getHot(page : Int, period : String) = entriesApi.getHot(page, period)
             .retryWhen(userTokenRefresher)
             .compose<List<EntryResponse>>(ErrorHandlerTransformer())
-            .map { it.map { EntryMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) } }
+            .map { it.map { EntryMapper.map(it, owmContentFilter) } }
 
     override fun getStream(page : Int) = entriesApi.getStream(page)
             .retryWhen(userTokenRefresher)
             .compose<List<EntryResponse>>(ErrorHandlerTransformer())
-            .map { it.map { EntryMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) } }
+            .map { it.map { EntryMapper.map(it, owmContentFilter) } }
 
     override fun getObserved(page : Int) = entriesApi.getObserved(page)
             .retryWhen(userTokenRefresher)
             .compose<List<EntryResponse>>(ErrorHandlerTransformer())
-            .map { it.map { EntryMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) } }
+            .map { it.map { EntryMapper.map(it, owmContentFilter) } }
 
     override fun getEntry(id : Int) = entriesApi.getEntry(id)
             .retryWhen(userTokenRefresher)
             .compose<EntryResponse>(ErrorHandlerTransformer())
-            .map { EntryMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) }
+            .map { EntryMapper.map(it, owmContentFilter) }
 
     override fun getEntryVoters(id: Int) = entriesApi.getEntryVoters(id)
             .retryWhen(userTokenRefresher)

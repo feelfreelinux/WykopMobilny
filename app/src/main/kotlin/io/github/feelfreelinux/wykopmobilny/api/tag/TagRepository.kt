@@ -3,31 +3,29 @@ package io.github.feelfreelinux.wykopmobilny.api.tag
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandler
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
+import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagEntriesMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagLinksMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTagResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagEntriesResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.TagLinksResponse
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.reactivex.Single
 import retrofit2.Retrofit
 
-class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi, val blacklistPreferencesApi: BlacklistPreferencesApi, val settingsPreferencesApi: SettingsPreferencesApi) : TagApi {
+class TagRepository(retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val blacklistPreferencesApi: BlacklistPreferencesApi, val owmContentFilter: OWMContentFilter) : TagApi {
     private val tagApi by lazy { retrofit.create(TagRetrofitApi::class.java) }
 
     override fun getTagEntries(tag : String, page : Int) = tagApi.getTagEntries(tag, page)
             .retryWhen(userTokenRefresher)
             .flatMap(ErrorHandler<TagEntriesResponse>())
-            .map { TagEntriesMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi)}
+            .map { TagEntriesMapper.map(it, owmContentFilter)}
 
     override fun getTagLinks(tag : String, page : Int) = tagApi.getTagLinks(tag, page)
             .retryWhen(userTokenRefresher)
             .flatMap(ErrorHandler<TagLinksResponse>())
-            .map { TagLinksMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi)}
+            .map { TagLinksMapper.map(it, owmContentFilter)}
 
     override fun getObservedTags() : Single<List<ObservedTagResponse>> =
             tagApi.getObservedTags()

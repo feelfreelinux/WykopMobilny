@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api.links
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
+import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.api.getRequestBody
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.*
@@ -16,7 +17,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 
-class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val linksPreferencesApi: LinksPreferencesApi, val blacklistPreferencesApi: BlacklistPreferencesApi, val settingsPreferencesApi: SettingsPreferencesApi) : LinksApi {
+class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val owmContentFilter: OWMContentFilter) : LinksApi {
     private val linksApi by lazy { retrofit.create(LinksRetrofitApi::class.java) }
     override val voteRemoveSubject = PublishSubject.create<LinkVoteResponsePublishModel>()
     override val digSubject = PublishSubject.create<LinkVoteResponsePublishModel>()
@@ -26,25 +27,25 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
             linksApi.getPromoted(page)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) } }
+                    .map { it.map { LinkMapper.map(it, owmContentFilter) } }
 
     override fun getUpcoming(page : Int, sortBy: String): Single<List<Link>> =
             linksApi.getUpcoming(page, sortBy)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) } }
+                    .map { it.map { LinkMapper.map(it, owmContentFilter) } }
 
     override fun getObserved(page : Int): Single<List<Link>> =
             linksApi.getObserved(page)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) } }
+                    .map { it.map { LinkMapper.map(it, owmContentFilter) } }
 
     override fun getLinkComments(linkId: Int, sortBy: String) =
             linksApi.getLinkComments(linkId, sortBy)
                     .retryWhen(userTokenRefresher)
                     .compose<List<LinkCommentResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { LinkCommentMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) } }
+                    .map { it.map { LinkCommentMapper.map(it,owmContentFilter) } }
                     .map {
                         val list = it
                         it.forEach {
@@ -59,7 +60,7 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
             linksApi.getLink(linkId)
                     .retryWhen(userTokenRefresher)
                     .compose<LinkResponse>(ErrorHandlerTransformer())
-                    .map { LinkMapper.map(it, linksPreferencesApi, blacklistPreferencesApi, settingsPreferencesApi) }
+                    .map { LinkMapper.map(it, owmContentFilter) }
 
     override fun commentVoteUp(linkId: Int): Single<LinkVoteResponse> =
             linksApi.commentVoteUp(linkId)
@@ -122,36 +123,36 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
             linksApi.addComment(body, linkId, embed, plus18)
                     .retryWhen(userTokenRefresher)
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
-                    .map { LinkCommentMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) }
+                    .map { LinkCommentMapper.map(it,owmContentFilter) }
 
     override fun commentAdd(body: String, plus18 : Boolean, inputStream: TypedInputStream, linkId: Int): Single<LinkComment> =
             linksApi.addComment(body.toRequestBody(), plus18.toRequestBody(), linkId, inputStream.getFileMultipart())
                     .retryWhen(userTokenRefresher)
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
-                    .map { LinkCommentMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) }
+                    .map { LinkCommentMapper.map(it,owmContentFilter) }
 
     override fun commentAdd(body: String, embed: String?, plus18 : Boolean, linkId: Int, linkComment: Int): Single<LinkComment> =
         linksApi.addComment(body, linkId, linkComment, embed, plus18)
                         .retryWhen(userTokenRefresher)
                         .compose<LinkCommentResponse>(ErrorHandlerTransformer())
-                        .map { LinkCommentMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) }
+                        .map { LinkCommentMapper.map(it,owmContentFilter) }
 
     override fun commentAdd(body: String, plus18 : Boolean, inputStream: TypedInputStream, linkId: Int, linkComment: Int): Single<LinkComment> =
             linksApi.addComment(body.toRequestBody(), plus18.toRequestBody(), linkId, linkComment, inputStream.getFileMultipart())
                     .retryWhen(userTokenRefresher)
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
-                    .map { LinkCommentMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) }
+                    .map { LinkCommentMapper.map(it,owmContentFilter) }
     override fun commentEdit(body: String, linkId: Int): Single<LinkComment> =
             linksApi.editComment(body, linkId)
                     .retryWhen(userTokenRefresher)
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
-                    .map { LinkCommentMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) }
+                    .map { LinkCommentMapper.map(it,owmContentFilter) }
 
     override fun commentDelete(commentId: Int): Single<LinkComment> =
             linksApi.deleteComment(commentId)
                     .retryWhen(userTokenRefresher)
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
-                    .map { LinkCommentMapper.map(it, blacklistPreferencesApi, settingsPreferencesApi) }
+                    .map { LinkCommentMapper.map(it,owmContentFilter) }
 
     override fun getDownvoters(linkId: Int): Single<List<Downvoter>> =
             linksApi.getDownvoters(linkId)
