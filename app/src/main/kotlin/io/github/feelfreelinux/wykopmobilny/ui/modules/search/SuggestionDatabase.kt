@@ -7,6 +7,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.util.Log
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 
 
 class SuggestionDatabase(context: Context) {
@@ -20,8 +21,9 @@ class SuggestionDatabase(context: Context) {
     }
 
     fun getSuggestions(text: String): Cursor {
+        printout(text)
         return db.query(TABLE_SUGGESTION, arrayOf(FIELD_ID, FIELD_SUGGESTION),
-                "$FIELD_SUGGESTION LIKE '$text%'", null, null, null, null, "10")
+                "$FIELD_SUGGESTION LIKE '$text%'", null, null, null, null, "6")
     }
 
 
@@ -30,7 +32,7 @@ class SuggestionDatabase(context: Context) {
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL("CREATE TABLE " + TABLE_SUGGESTION + " (" +
-                    FIELD_ID + " integer primary key autoincrement, " + FIELD_SUGGESTION + " text);")
+                    FIELD_ID + " integer primary key autoincrement, " + FIELD_SUGGESTION + " text unique);")
             Log.d("SUGGESTION", "DB CREATED")
         }
 

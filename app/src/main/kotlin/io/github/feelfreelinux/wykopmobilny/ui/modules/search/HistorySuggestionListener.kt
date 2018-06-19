@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionDatabase
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionsSimpleCursorAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.hideKeyboard
+import rx.subjects.PublishSubject
 
 
 class HistorySuggestionListener(val context : Context, val searchView : SearchView, val queryListener : (String) -> Unit) : SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
@@ -40,18 +41,14 @@ class HistorySuggestionListener(val context : Context, val searchView : SearchVi
     override fun onQueryTextChange(newText: String): Boolean {
 
         val cursor = database.getSuggestions(newText)
-        return if (cursor.count != 0) {
+
             val columns = arrayOf<String>(SuggestionDatabase.FIELD_SUGGESTION)
             val columnTextId = intArrayOf(android.R.id.text1)
 
             val simple = SuggestionsSimpleCursorAdapter(context,
                     R.layout.history_suggestion_item, cursor,
                     columns, columnTextId, 0)
-
             searchView.suggestionsAdapter = simple
-            true
-        } else {
-            false
-        }
+            return true
     }
 }
