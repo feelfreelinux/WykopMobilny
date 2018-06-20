@@ -21,6 +21,8 @@ import javax.inject.Inject
 import com.davemorrissey.labs.subscaleview.ImageSource
 import android.os.Handler
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
 import io.reactivex.Single
@@ -96,20 +98,15 @@ class PhotoViewActivity : BaseActivity() {
         image.setMinimumDpi(70)
         image.setMinimumTileDpi(240)
         gif.isVisible = false
-        Single.create<File?> {
-            val cache = GlideApp.with(this).load(url).downloadOnly(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
-
-            val file: File?
-            file = cache.get()
-            it.onSuccess(file)
-        }.subscribeOn(WykopSchedulers().backgroundThread())
-                .observeOn(WykopSchedulers().mainThread())
-                .subscribe({
-                    it?.apply {
+        GlideApp.with(this).downloadOnly().load(url)
+                .into(object : SimpleTarget<File>() {
+                    override fun onResourceReady(resource: File?, transition: Transition<in File>?) {
                         loadingView.isVisible = false
-                        image.setImage(ImageSource.uri(it!!.path))
+                        resource?.let {
+                            image.setImage(io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.ImageSource.uri(resource.absolutePath))
+                        }
                     }
-                }, {})
+                })
 
     }
 

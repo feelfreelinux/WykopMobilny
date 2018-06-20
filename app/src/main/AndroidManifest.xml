@@ -153,6 +153,10 @@
             android:name=".ui.modules.notifications.notificationsservice.ReadNotificationsBroadcastReceiver"
             android:exported="false" >
         </receiver>
+
+        <provider android:name=".ui.modules.search.SearchSuggestionAdapter"
+            android:authorities="io.github.feelfreelinux.SearchSuggestionAdapter" />
+
         <provider
             android:authorities="io.github.feelfreelinux.wykopmobilny.fileprovider"
             android:name="android.support.v4.content.FileProvider"

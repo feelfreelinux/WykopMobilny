@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@color/windowBackgroundTransparent"
     android:layout_height="match_parent">
-    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+    <io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.SubsamplingScaleImageView
         android:id="@+id/image"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
