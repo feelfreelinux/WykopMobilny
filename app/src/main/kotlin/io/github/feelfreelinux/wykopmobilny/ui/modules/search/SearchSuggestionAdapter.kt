@@ -1,8 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search
 
-import android.content.SearchRecentSuggestionsProvider.DATABASE_MODE_QUERIES
 import android.content.SearchRecentSuggestionsProvider
-
 
 class SearchSuggestionAdapter : SearchRecentSuggestionsProvider() {
     init {
