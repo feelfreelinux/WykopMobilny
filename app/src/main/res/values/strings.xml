@@ -144,6 +144,7 @@
     <string name="period24">Gorące wpisy 24h</string>
     <string name="period12">Gorące wpisy 12h</string>
     <string name="period6">Gorące wpisy 6h</string>
+    <string name="active_entries">Aktywne wpisy</string>
 
     <string name="sortby_newest">Najnowsze komentarze</string>
     <string name="sortby_best">Najlepsze komentarze</string>

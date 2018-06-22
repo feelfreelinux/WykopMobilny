@@ -28,6 +28,11 @@ class HotPresenter(val schedulers: Schedulers, val entriesApi: EntriesApi) : Bas
                         .observeOn(schedulers.mainThread())
                         .subscribe(success, failure)
             }
+            "active" ->
+                    entriesApi.getActive(page).subscribeOn(schedulers.backgroundThread())
+                            .observeOn(schedulers.mainThread())
+                            .subscribe(success, failure)
+
             else -> // Newest
                 entriesApi.getStream(page).subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())

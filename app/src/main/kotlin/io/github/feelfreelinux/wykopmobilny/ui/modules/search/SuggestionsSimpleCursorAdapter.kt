@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import kotlinx.android.synthetic.main.history_suggestion_item.view.*
+import java.net.URLDecoder
 
 class SuggestionsSimpleCursorAdapter(val context: Context, layout: Int, c: Cursor, from: Array<String>, to: IntArray, flags: Int) : SimpleCursorAdapter(context, layout, c, from, to, flags) {
     val inflater by lazy {
@@ -17,7 +18,7 @@ class SuggestionsSimpleCursorAdapter(val context: Context, layout: Int, c: Curso
     override fun convertToString(cursor: Cursor): CharSequence {
         val indexColumnSuggestion = cursor.getColumnIndex(SuggestionDatabase.FIELD_SUGGESTION)
 
-        return cursor.getString(indexColumnSuggestion)
+        return URLDecoder.decode(cursor.getString(indexColumnSuggestion), "UTF-8")
     }
 
     override fun bindView(view: View, context: Context, cursor: Cursor) {

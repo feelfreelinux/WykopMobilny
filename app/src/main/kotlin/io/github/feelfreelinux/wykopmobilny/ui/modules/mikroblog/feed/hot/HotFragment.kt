@@ -88,6 +88,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
                     "24" -> R.string.period24
                     "12" -> R.string.period12
                     "6" -> R.string.period6
+                    "active" -> R.string.active_entries
                     else -> R.string.newest_entries
                 }
         )
@@ -106,6 +107,10 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
             R.id.period24 -> {
                 presenter.period = "24"
                 navigation.activityToolbar.setTitle(R.string.period24)
+            }
+            R.id.active -> {
+                presenter.period = "active"
+                navigation.activityToolbar.setTitle(R.string.active_entries)
             }
             R.id.newest   -> {
                 presenter.period = "newest"

@@ -10,6 +10,11 @@
         app:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/active"
+        android:title="@string/active_entries"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/newest"
         android:title="@string/newest_entries"
         app:showAsAction="never"/>

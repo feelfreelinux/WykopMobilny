@@ -117,6 +117,11 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .compose<List<EntryResponse>>(ErrorHandlerTransformer())
             .map { it.map { EntryMapper.map(it, owmContentFilter) } }
 
+    override fun getActive(page : Int) = entriesApi.getActive(page)
+            .retryWhen(userTokenRefresher)
+            .compose<List<EntryResponse>>(ErrorHandlerTransformer())
+            .map { it.map { EntryMapper.map(it, owmContentFilter) } }
+
     override fun getObserved(page : Int) = entriesApi.getObserved(page)
             .retryWhen(userTokenRefresher)
             .compose<List<EntryResponse>>(ErrorHandlerTransformer())
