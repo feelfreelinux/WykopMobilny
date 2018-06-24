@@ -25,9 +25,9 @@ allprojects {
 
     project.ext {
         versionMajor = 0
-        versionMinor = 8
-        versionPatch = 1
-        versionBuild = 5
+        versionMinor = 9
+        versionPatch = 0
+        versionBuild = 0
     }
 }
 

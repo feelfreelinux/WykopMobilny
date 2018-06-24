@@ -30,7 +30,6 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView {
     @Inject lateinit var linksApi: LinksApi
     val subjectDisposable by lazy { CompositeDisposable() }
 
-
     @Inject
     lateinit var linksAdapter : LinksAdapter
 

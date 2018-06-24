@@ -55,11 +55,7 @@ class LinkViewHolder(override val containerView: View,
 
     fun inflateCorrectImageView() {
         previewImageView = when (settingsApi.linkImagePosition) {
-            "top" -> {
-                val img = image_top.inflate() as ImageView
-                img.setPadding(0, containerView.context.resources.getDimension(R.dimen.padding_dp_normal).toInt(), 0, 0)
-                img
-            }
+            "top" -> image_top.inflate() as ImageView
             "right" -> image_right.inflate() as ImageView
             "bottom" -> image_bottom.inflate() as ImageView
             else -> image_left.inflate() as ImageView

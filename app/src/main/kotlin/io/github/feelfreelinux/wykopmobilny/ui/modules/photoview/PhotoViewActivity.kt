@@ -32,7 +32,6 @@ import io.reactivex.Single
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
 
-
 class PhotoViewActivity : BaseActivity() {
     companion object {
         val URL_EXTRA = "URL"
@@ -47,6 +46,7 @@ class PhotoViewActivity : BaseActivity() {
 
     override val enableSwipeBackLayout: Boolean = false // We manually attach it here
     override val isActivityTransfluent: Boolean = true
+
     val url: String by lazy { intent.getStringExtra(URL_EXTRA) }
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     private val photoViewActions by lazy { PhotoViewActions(this, clipboardHelper) as PhotoViewCallbacks }

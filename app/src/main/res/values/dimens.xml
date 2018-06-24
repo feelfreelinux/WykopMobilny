@@ -116,7 +116,7 @@
     <dimen name="survey_votes_radio_button_margin_start">2dp</dimen>
 
     <dimen name="link_layout_image_width">110dp</dimen>
-    <dimen name="link_layout_image_height">0dp</dimen>
+    <dimen name="link_layout_image_height">90dp</dimen>
     <dimen name="link_layout_image_full_width">0dp</dimen>
     <dimen name="link_layout_image_full_height">200dp</dimen>
     <dimen name="link_layout_title_padding_horizontal">12dp</dimen>

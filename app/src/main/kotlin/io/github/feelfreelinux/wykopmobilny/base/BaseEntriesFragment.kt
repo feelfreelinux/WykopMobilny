@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntriesAdapter
@@ -15,6 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
@@ -29,7 +31,8 @@ open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView {
 
     open var loadDataListener : (Boolean) -> Unit = {}
     lateinit var votersDialogListener : VotersDialogListener
-
+    @Inject lateinit var entriesApi : EntriesApi
+    val subjectDisposable by lazy { CompositeDisposable() }
 
     @Inject
     lateinit var entriesAdapter : EntriesAdapter
@@ -51,6 +54,26 @@ open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView {
         }
 
         loadingView.isVisible = true
+
+        val schedulers = WykopSchedulers()
+        subjectDisposable.addAll(
+                entriesApi.entryVoteSubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ updateEntryVoteState(it.entryId, it.voteResponse.voteCount, true) }),
+                entriesApi.entryUnVoteSubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ updateEntryVoteState(it.entryId, it.voteResponse.voteCount, false) })
+        )
+    }
+
+    private fun updateEntryVoteState(entryId : Int, voteCount : Int, isVoted : Boolean) {
+        entriesAdapter.data.firstOrNull { it.id == entryId }?.apply {
+            this.voteCount = voteCount
+            this.isVoted = isVoted
+            entriesAdapter.updateEntry(this)
+        }
     }
 
     /**
@@ -82,6 +105,11 @@ open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView {
 
     override fun showVoters(voters : List<Voter>) {
         votersDialogListener(voters)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        subjectDisposable.dispose()
     }
 
     override fun openVotersMenu() {
