@@ -62,7 +62,7 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .retryWhen(userTokenRefresher)
             .compose<EntryResponse>(ErrorHandlerTransformer())
 
-    override fun addEntry(body : String, embed: String?, plus18 : Boolean) = entriesApi.addEntry(body.encodeBody(), embed, plus18)
+    override fun addEntry(body : String, embed: String?, plus18 : Boolean) = entriesApi.addEntry(body, embed, plus18)
             .retryWhen(userTokenRefresher)
             .compose<EntryResponse>(ErrorHandlerTransformer())
 
@@ -72,7 +72,7 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
                     .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
     override fun addEntryComment(body : String, entryId: Int, embed: String?, plus18: Boolean) =
-            entriesApi.addEntryComment(body.encodeBody(), embed, plus18, entryId)
+            entriesApi.addEntryComment(body, embed, plus18, entryId)
             .retryWhen(userTokenRefresher)
             .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
@@ -100,12 +100,6 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .retryWhen(userTokenRefresher)
             .compose<SurveyResponse>(ErrorHandlerTransformer())
             .map { SurveyMapper.map(it) }
-
-    private fun TypedInputStream.getFileMultipart() =
-            MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
-
-    private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this.encodeBody())!!
-    private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
 
     override fun getHot(page : Int, period : String) = entriesApi.getHot(page, period)
             .retryWhen(userTokenRefresher)
@@ -142,7 +136,8 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .compose<List<VoterResponse>>(ErrorHandlerTransformer())
             .map { it.map { VoterMapper.map(it) } }
 
-    fun String.encodeBody() : String {
-        return this
-    }
+    private fun TypedInputStream.getFileMultipart() =
+            MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
+    private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
+    private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
 }

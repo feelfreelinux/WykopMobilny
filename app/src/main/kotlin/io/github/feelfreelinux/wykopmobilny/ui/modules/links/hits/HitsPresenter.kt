@@ -31,7 +31,10 @@ class HitsPresenter(val schedulers: Schedulers, val hitsApi: HitsApi, val linksI
                 }
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
-                        .subscribe({ view?.addItems(it, true) }, { view?.showErrorDialog(it) })
+                        .subscribe({
+                            view?.addItems(it, true)
+                            view?.disableLoading()
+                        }, { view?.showErrorDialog(it) })
         )
     }
 
