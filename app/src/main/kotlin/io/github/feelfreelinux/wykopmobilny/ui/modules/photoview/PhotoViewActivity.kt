@@ -24,6 +24,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+import com.r0adkll.slidr.Slidr
+import com.r0adkll.slidr.model.SlidrConfig
+import com.r0adkll.slidr.model.SlidrPosition
 import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
 import io.reactivex.Single
 import java.util.concurrent.ExecutionException
@@ -42,13 +45,17 @@ class PhotoViewActivity : BaseActivity() {
         }
     }
 
-    override val enableSwipeBackLayout: Boolean = true
+    override val enableSwipeBackLayout: Boolean = false // We manually attach it here
     override val isActivityTransfluent: Boolean = true
     val url: String by lazy { intent.getStringExtra(URL_EXTRA) }
     @Inject lateinit var clipboardHelper : ClipboardHelperApi
     private val photoViewActions by lazy { PhotoViewActions(this, clipboardHelper) as PhotoViewCallbacks }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Slidr.attach(this,
+                SlidrConfig.Builder()
+                        .position(SlidrPosition.VERTICAL)
+                        .edge(false).build())
         setContentView(R.layout.activity_photoview)
         setSupportActionBar(toolbar)
         toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
@@ -59,6 +66,7 @@ class PhotoViewActivity : BaseActivity() {
         } else {
             loadImage()
         }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

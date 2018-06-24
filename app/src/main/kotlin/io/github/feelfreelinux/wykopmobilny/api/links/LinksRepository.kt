@@ -142,7 +142,6 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .retryWhen(userTokenRefresher)
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
                     .map { LinkCommentMapper.map(it,owmContentFilter) }
-
     override fun commentEdit(body: String, linkId: Int): Single<LinkComment> =
             linksApi.editComment(body, linkId)
                     .retryWhen(userTokenRefresher)
@@ -181,9 +180,8 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
 
     private fun TypedInputStream.getFileMultipart() =
             MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
-
     private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
-
     private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
+
 }
 

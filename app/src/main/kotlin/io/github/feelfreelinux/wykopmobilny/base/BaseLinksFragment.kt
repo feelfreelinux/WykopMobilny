@@ -1,23 +1,19 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntriesAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinksAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CreateVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
-import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragmentView
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
@@ -30,7 +26,9 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView {
         }
 
     open var loadDataListener : (Boolean) -> Unit = {}
-    lateinit var votersDialogListener : VotersDialogListener
+
+    @Inject lateinit var linksApi: LinksApi
+    val subjectDisposable by lazy { CompositeDisposable() }
 
 
     @Inject
@@ -53,6 +51,31 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView {
         }
 
         loadingView.isVisible = true
+
+        val schedulers = WykopSchedulers()
+        subjectDisposable.addAll(
+                linksApi.digSubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ updateLinkVoteState(it.linkId, it.voteResponse.buries, it.voteResponse.diggs, "dig") }),
+                linksApi.burySubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ updateLinkVoteState(it.linkId, it.voteResponse.buries, it.voteResponse.diggs, "bury") }),
+                linksApi.voteRemoveSubject
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({ updateLinkVoteState(it.linkId, it.voteResponse.buries, it.voteResponse.diggs, null) })
+        )
+    }
+
+    private fun updateLinkVoteState(linkId : Int, buryCount : Int, voteCount : Int, userVote : String?) {
+        linksAdapter.data.firstOrNull { it.id == linkId }?.apply {
+            this.buryCount = buryCount
+            this.voteCount = voteCount
+            this.userVote = userVote
+            linksAdapter.updateLink(this)
+        }
     }
 
     /**
@@ -82,4 +105,8 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView {
         linksAdapter.updateLink(link)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        subjectDisposable.dispose()
+    }
 }

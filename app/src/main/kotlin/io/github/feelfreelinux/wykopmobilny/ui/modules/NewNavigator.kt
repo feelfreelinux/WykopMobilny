@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.ShareCompat
 import com.google.android.youtube.player.YouTubeStandalonePlayer
 import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
@@ -32,7 +33,11 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
 import java.util.regex.Pattern
+import android.support.v4.content.ContextCompat.startActivity
+
+
 
 
 interface NewNavigatorApi {
@@ -63,6 +68,7 @@ interface NewNavigatorApi {
 }
 
 class NewNavigator(val context : Activity) : NewNavigatorApi {
+    val settingsPreferencesApi = SettingsPreferences(context)
     companion object {
         val STARTED_FROM_NOTIFICATIONS_CODE = 228
     }
@@ -112,7 +118,13 @@ class NewNavigator(val context : Activity) : NewNavigatorApi {
         context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.EDIT_ENTRY_COMMENT)
     }
     override fun openBrowser(url: String) {
-        context.openBrowser(url)
+        if (settingsPreferencesApi.useBuiltInBrowser) {
+            context.openBrowser(url)
+        } else {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            context.startActivity(i)
+        }
     }
 
     override fun openReportScreen(violationUrl : String) {

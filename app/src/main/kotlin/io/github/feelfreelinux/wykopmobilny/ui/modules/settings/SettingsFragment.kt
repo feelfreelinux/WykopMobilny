@@ -27,6 +27,7 @@ import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
+import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionDatabase
 import kotlinx.android.synthetic.main.link_related_layout.*
 
 
@@ -64,6 +65,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             true
         }
 
+        (findPreference("clearhistory") as Preference).setOnPreferenceClickListener {
+            SuggestionDatabase(context!!).clearDb()
+            Toast.makeText(context!!, "Wyczyszczono historię wyszukiwarki",Toast.LENGTH_LONG).show()
+            true
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {

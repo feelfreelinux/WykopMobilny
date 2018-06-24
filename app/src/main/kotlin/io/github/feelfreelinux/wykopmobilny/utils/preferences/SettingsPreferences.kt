@@ -27,6 +27,7 @@ interface SettingsPreferencesApi {
     var hideBlacklistedViews : Boolean
     var enableYoutubePlayer : Boolean
     var enableEmbedPlayer : Boolean
+    var useBuiltInBrowser : Boolean
 }
 
 class SettingsPreferences(context : Context) : Preferences(context, true), SettingsPreferencesApi {
@@ -54,6 +55,6 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var hideBlacklistedViews: Boolean by booleanPref(defaultValue = false)
     override var enableEmbedPlayer by booleanPref(defaultValue = true)
     override var enableYoutubePlayer by booleanPref(defaultValue = true)
-
+    override var useBuiltInBrowser by booleanPref(defaultValue = true)
 
 }

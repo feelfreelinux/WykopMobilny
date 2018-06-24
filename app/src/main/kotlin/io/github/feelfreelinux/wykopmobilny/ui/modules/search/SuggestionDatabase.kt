@@ -38,6 +38,10 @@ class SuggestionDatabase(context: Context) {
         }
     }
 
+    fun clearDb() {
+        db.delete(TABLE_SUGGESTION, null, null)
+    }
+
     companion object {
         val DB_SUGGESTION = "SUGGESTION_DB"
         val TABLE_SUGGESTION = "SUGGESTION_TB"
