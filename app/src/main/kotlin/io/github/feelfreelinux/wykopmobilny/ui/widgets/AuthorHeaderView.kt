@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
@@ -12,7 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.author_header_layout.view.*
 
-class AuthorHeaderView : ConstraintLayout {
+class AuthorHeaderView : androidx.constraintlayout.widget.ConstraintLayout {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

@@ -1,12 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.base.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 
-abstract class AdvancedProgressAdapter<A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), BaseProgressAdapter<A> {
+abstract class AdvancedProgressAdapter<A : Any> : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>(), BaseProgressAdapter<A> {
     companion object {
         val VIEWTYPE_PROGRESS = 0 // For any other viewtype use value greater than 0
     }
@@ -49,18 +49,18 @@ abstract class AdvancedProgressAdapter<A : Any> : RecyclerView.Adapter<RecyclerV
 
     override fun getItemCount() = dataset.size
 
-    class ProgressViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class ProgressViewHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 
     @Suppress("UNCHECKED_CAST")
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         if (dataset[position] != null) bindHolder(holder!!, position)
     }
 
-    abstract fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder
+    abstract fun createViewHolder(viewType: Int, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-    abstract fun bindHolder(holder: RecyclerView.ViewHolder, position: Int)
+    abstract fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             VIEWTYPE_PROGRESS -> ProgressViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.progress_item, parent, false))
             else -> createViewHolder(viewType, parent)

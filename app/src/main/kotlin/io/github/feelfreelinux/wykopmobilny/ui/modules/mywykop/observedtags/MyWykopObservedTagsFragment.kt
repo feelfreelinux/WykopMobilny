@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.observedtags
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
 
 
-class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, SwipeRefreshLayout.OnRefreshListener, MyWykopNotifier {
+class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, MyWykopNotifier {
     @Inject lateinit var adapter : ObservedTagsAdapter
     @Inject lateinit var presenter : MyWykopObservedTagsPresenter
     lateinit var dataFragment : DataFragment<List<ObservedTagResponse>>

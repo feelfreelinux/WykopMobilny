@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
@@ -11,7 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapt
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
 import kotlinx.android.synthetic.main.blacklist_block_form_item.view.*
 
-class BlacklistBlockViewholder(val view : View) : RecyclerView.ViewHolder(view) {
+class BlacklistBlockViewholder(val view : View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
     fun bind(isUserView : Boolean, blockListener : (String) -> Unit, suggestApi: SuggestApi) {
         view.apply {
             val usersSuggestionAdapter = UsersSuggestionsAdapter(context, suggestApi)

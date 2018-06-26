@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.favorite
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -13,7 +13,7 @@ class FavoriteFragment  : BaseFragment() {
     lateinit var pagerAdapter : FavoritePagerAdapter
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(): androidx.fragment.app.Fragment {
             return FavoriteFragment()
         }
     }

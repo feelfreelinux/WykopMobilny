@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.actions
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntryLinkFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -20,7 +20,7 @@ class ActionsFragment : BaseEntryLinkFragment(), ActionsView {
     lateinit var userManager: UserManagerApi
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(): androidx.fragment.app.Fragment {
             val fragment = ActionsFragment()
             return fragment
         }

@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.appcompat.widget.SearchView
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -19,7 +19,7 @@ class SearchFragment : BaseFragment() {
     companion object {
         val EXTRA_QUERY = "EXTRA_QUERY"
 
-        fun newInstance() : Fragment {
+        fun newInstance() : androidx.fragment.app.Fragment {
             return SearchFragment()
         }
     }

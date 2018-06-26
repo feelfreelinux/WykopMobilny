@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.base.adapter.EndlessProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
@@ -16,7 +16,7 @@ class EntryCommentAdapter @Inject constructor(
         val userManagerApi: UserManagerApi,
         val settingsPreferencesApi: SettingsPreferencesApi,
         val navigatorApi: NewNavigatorApi,
-        val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<RecyclerView.ViewHolder, EntryComment>() {
+        val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, EntryComment>() {
     // Required field, interacts with presenter. Otherwise will throw exception
     lateinit var entryCommentActionListener : EntryCommentActionListener
 
@@ -24,7 +24,7 @@ class EntryCommentAdapter @Inject constructor(
         return EntryCommentViewHolder.getViewTypeForEntryComment(data[position])
     }
 
-    override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             EntryCommentViewHolder.TYPE_EMBED, EntryCommentViewHolder.TYPE_NORMAL ->
                 EntryCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, entryCommentActionListener, null, true)
@@ -33,7 +33,7 @@ class EntryCommentAdapter @Inject constructor(
         }
     }
 
-    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EntryCommentViewHolder -> holder.bindView(data[position], null)
             is BlockedViewHolder -> { holder?.bindView(data[position]) }

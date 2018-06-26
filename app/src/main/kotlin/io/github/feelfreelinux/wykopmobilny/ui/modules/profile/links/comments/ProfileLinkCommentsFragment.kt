@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.comments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinkCommentFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class ProfileLinkCommentsFragment : BaseLinkCommentFragment(), ProfileLinkCommen
     }
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(): androidx.fragment.app.Fragment {
             return ProfileLinkCommentsFragment()
         }
     }

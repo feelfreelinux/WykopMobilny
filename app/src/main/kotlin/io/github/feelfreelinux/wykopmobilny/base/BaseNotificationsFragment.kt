@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialog
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +71,7 @@ open class BaseNotificationsFragment : BaseFragment(), NotificationsView {
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+            (recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager).scrollToPositionWithOffset(0, 0)
         }
     }
 

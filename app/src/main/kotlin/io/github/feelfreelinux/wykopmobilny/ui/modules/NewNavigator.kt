@@ -3,7 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.app.ShareCompat
+import androidx.core.app.ShareCompat
 import com.google.android.youtube.player.YouTubeStandalonePlayer
 import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
 import io.github.feelfreelinux.wykopmobilny.R
@@ -35,7 +35,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
 import java.util.regex.Pattern
-import android.support.v4.content.ContextCompat.startActivity
+import androidx.core.content.ContextCompat.startActivity
 
 
 

@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.wykopembedview.view.*
 import java.lang.ref.WeakReference
 import java.net.URI
 import java.util.regex.Pattern
-import android.support.v4.content.ContextCompat.startActivity
+import androidx.core.content.ContextCompat.startActivity
 import android.provider.MediaStore.Video.Thumbnails.VIDEO_ID
 import com.google.android.youtube.player.YouTubeStandalonePlayer
 import android.content.Intent

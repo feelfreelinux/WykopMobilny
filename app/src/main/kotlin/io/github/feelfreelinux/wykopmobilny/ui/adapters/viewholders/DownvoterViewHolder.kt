@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Downvoter
@@ -9,7 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.LinkPresenter
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.downvoters_list_item.view.*
 
-class DownvoterViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class DownvoterViewHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
     fun bindView(downvoter: Downvoter) {
         view.authorHeaderView.setAuthorData(downvoter.author, downvoter.date.toPrettyDate())
         view.reason_textview.text = when(downvoter.reason) {

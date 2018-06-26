@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search.users
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.feed_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.OnRefreshListener {
+class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     override fun showUsers(entryList: List<Author>) {
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
@@ -38,7 +38,7 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, SwipeRefreshLayout.
     private val profilesAdapter by lazy { ProfilesAdapter() }
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(): androidx.fragment.app.Fragment {
             return UsersSearchFragment()
         }
     }

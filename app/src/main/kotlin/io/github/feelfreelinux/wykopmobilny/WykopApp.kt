@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny
 
 import android.content.Context
-import android.support.multidex.MultiDex
+import androidx.multidex.MultiDex
 import com.bugsnag.android.Bugsnag
 import com.devbrackets.android.exomedia.ExoMedia
 import com.evernote.android.job.JobManager

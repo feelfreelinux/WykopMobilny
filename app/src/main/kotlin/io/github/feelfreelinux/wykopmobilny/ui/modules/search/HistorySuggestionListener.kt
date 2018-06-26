@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.search
 
 import android.content.Context
 import android.database.sqlite.SQLiteCursor
-import android.support.v7.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionDatabase
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionsSimpleCursorAdapter

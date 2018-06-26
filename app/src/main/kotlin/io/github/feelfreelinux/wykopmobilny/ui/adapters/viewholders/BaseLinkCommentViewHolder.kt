@@ -2,9 +2,9 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.view.View
 import android.graphics.Color
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.v4.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.core.content.ContextCompat
 import android.widget.ImageView
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
@@ -205,7 +205,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
 
     fun openLinkCommentMenu(comment: LinkComment) {
         val activityContext = containerView.getActivityContext()!!
-        val dialog = BottomSheetDialog(activityContext)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_comment_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
         (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
@@ -245,7 +245,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
             comment_menu_edit.isVisible = canUserEdit
         }
 
-        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
         dialog.setOnShowListener {
             mBehavior.peekHeight = bottomSheetView.height
         }

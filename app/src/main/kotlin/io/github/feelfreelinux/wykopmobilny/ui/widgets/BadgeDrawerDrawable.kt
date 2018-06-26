@@ -6,7 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
-import android.support.v7.graphics.drawable.DrawerArrowDrawable
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 
 class BadgeDrawerDrawable(context: Context) : DrawerArrowDrawable(context) {
 

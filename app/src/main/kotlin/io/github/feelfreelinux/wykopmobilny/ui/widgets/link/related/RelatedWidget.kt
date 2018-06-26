@@ -1,11 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.related
 
 import android.content.Context
-import android.support.v7.widget.CardView
+import androidx.cardview.widget.CardView
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
-import android.support.v4.app.ShareCompat
+import androidx.core.app.ShareCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
@@ -17,7 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.link_related_layout.view.*
 
-class RelatedWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), RelatedWidgetView {
+class RelatedWidget(context: Context, attrs: AttributeSet) : androidx.cardview.widget.CardView(context, attrs), RelatedWidgetView {
     init {
         View.inflate(context, R.layout.link_related_layout, this)
         isClickable = true

@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,14 +19,14 @@ import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
 
-class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRefreshLayout.OnRefreshListener {
+class ConversationsListFragment : BaseFragment(), ConversationsListView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     private lateinit var conversationsDataFragment : DataFragment<List<Conversation>>
     @Inject lateinit var presenter : ConversationsListPresenter
     private val conversationsAdapter by lazy { ConversationsListAdapter() }
 
     companion object {
         val DATA_FRAGMENT_TAG = "CONVERSATIONS_LIST"
-        fun newInstance(): Fragment {
+        fun newInstance(): androidx.fragment.app.Fragment {
             return ConversationsListFragment()
         }
     }

@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
 import android.os.Build
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import android.webkit.*
 import android.widget.Toast
 

@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_conversations_list.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class UpvotersActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, UpvotersView {
+class UpvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, UpvotersView {
 
     private lateinit var upvotersDataFragment: DataFragment<List<Upvoter>>
     @Inject lateinit var presenter: UpvotersPresenter

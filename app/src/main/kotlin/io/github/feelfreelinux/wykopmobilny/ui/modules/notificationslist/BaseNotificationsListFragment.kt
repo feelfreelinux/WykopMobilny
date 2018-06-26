@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.R
@@ -16,7 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollLis
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 
-abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView, SwipeRefreshLayout.OnRefreshListener {
+abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     abstract var notificationAdapter : NotificationsListAdapter
     abstract var linkHandler: WykopLinkHandlerApi
 

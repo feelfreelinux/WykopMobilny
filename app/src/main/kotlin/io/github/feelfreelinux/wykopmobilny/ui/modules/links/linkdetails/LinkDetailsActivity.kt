@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ShareCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.activity_link_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class LinkDetailsActivity : BaseActivity(), LinkDetailsView, SwipeRefreshLayout.OnRefreshListener, InputToolbarListener, LinkCommentViewListener {
+class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, InputToolbarListener, LinkCommentViewListener {
     override fun updateLinkComment(comment: LinkComment) {
         adapter.updateLinkComment(comment)
     }

@@ -1,12 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.utils.recyclerview
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 
 class InfiniteScrollListener(
         val func: () -> Unit,
-        val layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
+        val layoutManager: androidx.recyclerview.widget.LinearLayoutManager) : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
 
     private var previousTotal = 0
     private var loading = true
@@ -15,7 +15,7 @@ class InfiniteScrollListener(
     private var visibleItemCount = 0
     private var totalItemCount = 0
 
-    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+    override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 
         if (dy > 0) {

@@ -3,7 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.profile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
@@ -159,7 +159,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
     }
 
     fun showBadgesDialog() {
-        val dialog = BottomSheetDialog(this)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
         val badgesDialogView = layoutInflater.inflate(R.layout.badges_bottomsheet, null)
         badgesDialogView.badgesList
         dialog.setContentView(badgesDialogView)

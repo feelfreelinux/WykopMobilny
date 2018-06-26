@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -15,7 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.blocked_entry_view.*
 
-class BlockedViewHolder(override val containerView: View, val blockListener : (Int) -> Unit) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+class BlockedViewHolder(override val containerView: View, val blockListener : (Int) -> Unit) : androidx.recyclerview.widget.RecyclerView.ViewHolder(containerView), LayoutContainer {
     companion object {
         fun inflateView(parent: ViewGroup, blockListener: (Int) -> Unit): BlockedViewHolder {
             return BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false), blockListener)

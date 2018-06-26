@@ -15,7 +15,8 @@ import java.util.concurrent.TimeUnit
 
 @GlideModule
 class GlideModule : AppGlideModule() {
-    override fun registerComponents(context: Context?, glide: Glide?, registry: Registry?) {
+    override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
+        super.registerComponents(context, glide, registry)
         val builder = OkHttpClient.Builder()
         builder.readTimeout(30, TimeUnit.SECONDS)
         builder.writeTimeout(30, TimeUnit.SECONDS)

@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -30,10 +30,10 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
         else -> if (settingsPreferencesApi.linkSimpleList) SIMPLE_LINK_VIEWTYPE else LINK_VIEWTYPE
     }
 
-    override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
+    override fun createViewHolder(viewType: Int, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder =
             BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
 
-    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!
         if (item.entry != null) {
             (holder as BlockedViewHolder).bindView(item.entry!!)
@@ -43,7 +43,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
         }
     }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+    override fun onViewRecycled(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
         super.onViewRecycled(holder)
     }
 

@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Uri
-import android.support.annotation.ColorInt
-import android.support.customtabs.CustomTabsIntent
+import androidx.annotation.ColorInt
+import androidx.browser.customtabs.CustomTabsIntent
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import io.github.feelfreelinux.wykopmobilny.R

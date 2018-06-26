@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.survey
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -13,7 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.survey_answer_item.view.*
 import kotlinx.android.synthetic.main.survey_listview.view.*
 
-class SurveyWidget : ConstraintLayout {
+class SurveyWidget : androidx.constraintlayout.widget.ConstraintLayout {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

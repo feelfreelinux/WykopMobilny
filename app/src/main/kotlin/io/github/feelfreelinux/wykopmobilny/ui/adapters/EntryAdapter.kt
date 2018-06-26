@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -19,7 +19,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import javax.inject.Inject
 
-class EntryAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi, val navigatorApi: NewNavigatorApi, val linkHandlerApi: WykopLinkHandlerApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EntryAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi, val navigatorApi: NewNavigatorApi, val linkHandlerApi: WykopLinkHandlerApi) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     lateinit var entryActionListener : EntryActionListener
     lateinit var commentActionListener : EntryCommentActionListener
     lateinit var commentViewListener: EntryCommentViewListener
@@ -30,7 +30,7 @@ class EntryAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
     var entry: Entry? = null
     var commentId : Int? = null
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EntryViewHolder -> {
                 holder.bindView(entry!!)
@@ -61,7 +61,7 @@ class EntryAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
         return 0
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             EntryCommentViewHolder.TYPE_BLOCKED, EntryViewHolder.TYPE_BLOCKED -> BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
             EntryCommentViewHolder.TYPE_NORMAL, EntryCommentViewHolder.TYPE_EMBED -> EntryCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, commentActionListener, commentViewListener, false)
@@ -69,7 +69,7 @@ class EntryAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
         }
     }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+    override fun onViewRecycled(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()
         super.onViewRecycled(holder)
     }

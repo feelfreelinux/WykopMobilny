@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -18,7 +18,7 @@ class LinkCommentAdapter @Inject constructor(
         val userManagerApi: UserManagerApi,
         val settingsPreferencesApi: SettingsPreferencesApi,
         val navigatorApi: NewNavigatorApi,
-        val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<RecyclerView.ViewHolder, LinkComment>() {
+        val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, LinkComment>() {
     // Required field, interacts with presenter. Otherwise will throw exception
     lateinit var linkCommentActionListener : LinkCommentActionListener
 
@@ -26,7 +26,7 @@ class LinkCommentAdapter @Inject constructor(
         return BaseLinkCommentViewHolder.getViewTypeForComment(data[position], true)
     }
 
-    override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             TopLinkCommentViewHolder.TYPE_TOP_EMBED, TopLinkCommentViewHolder.TYPE_TOP_NORMAL ->
                 TopLinkCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, linkCommentActionListener, null)
@@ -35,7 +35,7 @@ class LinkCommentAdapter @Inject constructor(
         }
     }
 
-    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is TopLinkCommentViewHolder -> holder.bindView(data[position], false)
             is BlockedViewHolder -> { holder.bindView(data[position]) }

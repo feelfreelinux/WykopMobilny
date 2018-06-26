@@ -1,9 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.entry_list_item.*
 import kotlinx.android.synthetic.main.feed_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 
-abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+abstract class BaseFeedFragment<T : Any> : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.feed_fragment, container, false)
@@ -48,13 +48,13 @@ abstract class BaseFeedFragment<T : Any> : BaseFragment(), SwipeRefreshLayout.On
             clearOnScrollListeners()
             addOnScrollListener(InfiniteScrollListener({
                 loadData(false)
-            }, layoutManager as LinearLayoutManager))
+            }, layoutManager as androidx.recyclerview.widget.LinearLayoutManager))
         }
     }
 
     fun initAdapter(feedList: List<T>? = emptyList()) {
-        if (!(feedAdapter as RecyclerView.Adapter<*>).hasObservers()) feedAdapter.setHasStableIds(true)
-        recyclerView?.adapter = feedAdapter as RecyclerView.Adapter<*>
+        if (!(feedAdapter as androidx.recyclerview.widget.RecyclerView.Adapter<*>).hasObservers()) feedAdapter.setHasStableIds(true)
+        recyclerView?.adapter = feedAdapter as androidx.recyclerview.widget.RecyclerView.Adapter<*>
 
         setupInfiniteScrollListeners()
 

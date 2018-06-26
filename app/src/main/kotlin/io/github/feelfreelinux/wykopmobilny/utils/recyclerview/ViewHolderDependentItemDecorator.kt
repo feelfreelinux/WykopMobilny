@@ -4,14 +4,14 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.TypedValue
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 
 
-class ViewHolderDependentItemDecorator(val context: Context) : RecyclerView.ItemDecoration() {
+class ViewHolderDependentItemDecorator(val context: Context) : androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
     val paint by lazy { Paint() }
     val largeHeight by lazy {
         context.resources.getDimension(R.dimen.separator_large).toInt()
@@ -30,7 +30,7 @@ class ViewHolderDependentItemDecorator(val context: Context) : RecyclerView.Item
 
     }
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         try {
             when (view.tag) {
                 RecyclableViewHolder.SEPARATOR_NORMAL -> outRect.set(0, 0, 0, largeHeight)
@@ -40,13 +40,13 @@ class ViewHolderDependentItemDecorator(val context: Context) : RecyclerView.Item
         }
     }
 
-    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
+    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         try {
             super.onDraw(c, parent, state)
             for (i in 0 until parent.childCount) {
                 val view = parent.getChildAt(i)
                 val position = parent.getChildAdapterPosition(view)
-                if (position > -1 && parent.adapter.itemCount >= position) {
+                if (position > -1 && parent.adapter != null && parent.adapter!!.itemCount >= position) {
                     when (view.tag) {
                         RecyclableViewHolder.SEPARATOR_NORMAL -> c.drawRect(view.left.toFloat(), view.bottom.toFloat(), view.right.toFloat(), (view.bottom + largeHeight).toFloat(), paint)
                         else -> c.drawRect(view.left.toFloat(), view.bottom.toFloat(), view.right.toFloat(), (view.bottom + normalHeight).toFloat(), paint)

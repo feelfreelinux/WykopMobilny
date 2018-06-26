@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.comments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntryCommentFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class MicroblogCommentsFragment : BaseEntryCommentFragment(), MicroblogCommentsV
     }
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(): androidx.fragment.app.Fragment {
             return MicroblogCommentsFragment()
         }
     }

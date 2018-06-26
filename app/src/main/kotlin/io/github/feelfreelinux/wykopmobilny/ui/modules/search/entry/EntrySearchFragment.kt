@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntriesFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -27,7 +27,7 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
     lateinit var userManager: UserManagerApi
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(): androidx.fragment.app.Fragment {
             return  EntrySearchFragment()
         }
     }

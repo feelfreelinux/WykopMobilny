@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
@@ -27,7 +27,7 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
 
     companion object {
         val DATA_FRAGMENT_TAG = "NOTIFICATIONS_HASH_TAG_LIST_ACTIVITY"
-        fun newInstance() : Fragment {
+        fun newInstance() : androidx.fragment.app.Fragment {
             return HashTagsNotificationsListFragment()
         }
     }

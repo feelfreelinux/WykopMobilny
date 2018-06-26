@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntryLinkFragment
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class MyWykopEntryLinkFragment : BaseEntryLinkFragment() {
          * Type determines data coming to this fragment.
          * @param type Type string TYPE_INDEX / TYPE_TAGS / TYPE_USERS
          */
-        fun newInstance(type : String): Fragment {
+        fun newInstance(type : String): androidx.fragment.app.Fragment {
             val fragment = MyWykopEntryLinkFragment()
             val bundle = Bundle()
             bundle.putString(EXTRA_TYPE, type)

@@ -1,7 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-open class BaseLinksFragment : BaseFragment(), LinksFragmentView {
+open class BaseLinksFragment : BaseFragment(), LinksFragmentView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     var showSearchEmptyView: Boolean
         get() = searchEmptyView.isVisible
         set(value) {
@@ -33,6 +34,10 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView {
     @Inject
     lateinit var linksAdapter : LinksAdapter
 
+    override fun onRefresh() {
+        loadDataListener(false)
+    }
+
     // Inflate view
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.entries_fragment, container, false)
@@ -43,7 +48,7 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView {
         linksAdapter.loadNewDataListener = { loadDataListener(false) }
 
         // Setup views
-        swipeRefresh.setOnRefreshListener({ loadDataListener(false) })
+        swipeRefresh.setOnRefreshListener(this)
         recyclerView.run {
             prepare()
             adapter = linksAdapter
@@ -96,7 +101,7 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView {
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+            (recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager).scrollToPositionWithOffset(0, 0)
         }
     }
 

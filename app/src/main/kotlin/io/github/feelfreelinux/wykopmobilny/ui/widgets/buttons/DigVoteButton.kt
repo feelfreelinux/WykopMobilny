@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import io.github.feelfreelinux.wykopmobilny.R

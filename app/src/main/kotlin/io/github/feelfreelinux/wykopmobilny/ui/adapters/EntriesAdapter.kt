@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -16,7 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import javax.inject.Inject
 
-class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi, val navigatorApi: NewNavigatorApi, val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<RecyclerView.ViewHolder, Entry>() {
+class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi, val navigatorApi: NewNavigatorApi, val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, Entry>() {
     // Required field, interacts with presenter. Otherwise will throw exception
     lateinit var entryActionListener : EntryActionListener
 
@@ -27,7 +27,7 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
         return EntryViewHolder.getViewTypeForEntry(entry)
     }
 
-    override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return if (viewType == EntryViewHolder.TYPE_BLOCKED) {
             BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
         } else {
@@ -35,7 +35,7 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
         }
     }
 
-    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         if (holder is EntryViewHolder) {
             holder.bindView(data[position])
         } else if (holder is BlockedViewHolder) {

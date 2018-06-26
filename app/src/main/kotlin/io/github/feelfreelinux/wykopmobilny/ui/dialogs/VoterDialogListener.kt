@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.dialogs
 
-import android.support.design.widget.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
@@ -13,7 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.dialog_voters.view.*
 
 typealias VotersDialogListener = (List<Voter>) -> Unit
-fun CreateVotersDialogListener(dialog : BottomSheetDialog, votersDialogView : View) : (List<Voter>) -> Unit = {
+fun CreateVotersDialogListener(dialog : com.google.android.material.bottomsheet.BottomSheetDialog, votersDialogView : View) : (List<Voter>) -> Unit = {
     if (dialog.isShowing) {
         votersDialogView.progressView.isVisible = false
         votersDialogView.votersTextView.isVisible = true

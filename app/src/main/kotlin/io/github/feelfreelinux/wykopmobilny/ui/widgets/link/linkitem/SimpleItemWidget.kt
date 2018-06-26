@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup

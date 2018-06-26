@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.models.fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
-fun <T : Any> FragmentManager.getDataFragmentInstance(tag : String): DataFragment<T> {
+fun <T : Any> androidx.fragment.app.FragmentManager.getDataFragmentInstance(tag : String): DataFragment<T> {
     var retainedFragment = findFragmentByTag(tag)
     if (retainedFragment == null) {
         retainedFragment = DataFragment<T>()
@@ -13,10 +13,10 @@ fun <T : Any> FragmentManager.getDataFragmentInstance(tag : String): DataFragmen
     return retainedFragment as DataFragment<T>
 }
 
-fun FragmentManager.removeDataFragment(fragment : Fragment) {
+fun androidx.fragment.app.FragmentManager.removeDataFragment(fragment : androidx.fragment.app.Fragment) {
     beginTransaction().remove(fragment).commit()
 }
-class DataFragment<T : Any> : Fragment() {
+class DataFragment<T : Any> : androidx.fragment.app.Fragment() {
     var data : T? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

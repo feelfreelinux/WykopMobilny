@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class PMMessageAdapter @Inject constructor(val settingsPreferencesApi: SettingsPreferencesApi,
                                            val navigatorApi: NewNavigatorApi,
-                                           val linkHandlerApi: WykopLinkHandlerApi) : RecyclerView.Adapter<PMMessageViewHolder>() {
+                                           val linkHandlerApi: WykopLinkHandlerApi) : androidx.recyclerview.widget.RecyclerView.Adapter<PMMessageViewHolder>() {
     val messages : ArrayList<PMMessage> = arrayListOf()
 
     override fun getItemCount(): Int = messages.size

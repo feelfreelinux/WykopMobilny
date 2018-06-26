@@ -2,10 +2,10 @@ ext {
     versions = [
             buildTools        : '27.0.2',
             androidPlugin     : '2.3.3',
-            kotlin            : '1.2.10',
+            kotlin            : '1.2.41',
             supportLibrary    : '27.1.0',
             constraintLayout  : '1.0.2',
-            glide             : '4.1.1',
+            glide             : '4.8.0-SNAPSHOT',
             prettytime        : '4.0.1.Final',
             photoview         : '2.1.2',
             mockito           : '2.9.0',

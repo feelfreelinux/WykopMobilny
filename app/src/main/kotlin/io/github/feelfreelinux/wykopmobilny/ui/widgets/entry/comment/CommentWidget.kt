@@ -2,11 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment
 
 import android.content.Context
 import android.graphics.Color
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.v4.app.ShareCompat
-import android.support.v4.content.ContextCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entry_comment_layout.view.*
 import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 
-class CommentWidget : ConstraintLayout, CommentView {
+class CommentWidget : androidx.constraintlayout.widget.ConstraintLayout, CommentView {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -175,7 +175,7 @@ class CommentWidget : ConstraintLayout, CommentView {
 
     fun openOptionsMenu() {
         val activityContext = getActivityContext()!!
-        val dialog = BottomSheetDialog(activityContext)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_comment_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
         (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
@@ -220,7 +220,7 @@ class CommentWidget : ConstraintLayout, CommentView {
             entry_comment_menu_edit.isVisible = canUserEdit
         }
 
-        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
         dialog.setOnShowListener {
             mBehavior.peekHeight = bottomSheetView.height
         }
@@ -229,7 +229,7 @@ class CommentWidget : ConstraintLayout, CommentView {
 
     fun openVotersMenu() {
         val activityContext = getActivityContext()!!
-        val dialog = BottomSheetDialog(activityContext)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val votersDialogView = activityContext.layoutInflater.inflate(R.layout.dialog_voters, null)
 
         votersDialogView.votersTextView.isVisible = false

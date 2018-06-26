@@ -6,9 +6,9 @@ import android.content.ContextWrapper
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.OpenableColumns
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SimpleItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import android.text.SpannableStringBuilder
 import android.view.View
 import android.webkit.MimeTypeMap
@@ -55,21 +55,21 @@ fun View.getActivityContext() : Activity? {
     return null
 }
 
-fun RecyclerView.prepare() {
+fun androidx.recyclerview.widget.RecyclerView.prepare() {
     setItemViewCacheSize(20)
     drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     isDrawingCacheEnabled = true
-    layoutManager = LinearLayoutManager(context)
-    (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+    layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+    (itemAnimator as androidx.recyclerview.widget.SimpleItemAnimator).supportsChangeAnimations = false
     addItemDecoration(ViewHolderDependentItemDecorator(context))
 
 }
 
-fun RecyclerView.prepareNoDivider() {
+fun androidx.recyclerview.widget.RecyclerView.prepareNoDivider() {
     setItemViewCacheSize(20)
     drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     isDrawingCacheEnabled = true
-    layoutManager = LinearLayoutManager(context)
+    layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
 }
 
 fun View.disableFor(millis: Long){

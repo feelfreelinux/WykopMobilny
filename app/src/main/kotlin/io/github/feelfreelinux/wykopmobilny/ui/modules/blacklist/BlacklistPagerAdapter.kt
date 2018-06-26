@@ -1,11 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 
-class BlacklistPagerAdapter(fragmentManager : FragmentManager) : FragmentPagerAdapter(fragmentManager) {
-    override fun getItem(position: Int): Fragment {
+class BlacklistPagerAdapter(fragmentManager : androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment {
         return when (position) {
             0 -> BlacklistTagsFragment.createFragment()
             else -> BlacklistUsersFragment.createFragment()

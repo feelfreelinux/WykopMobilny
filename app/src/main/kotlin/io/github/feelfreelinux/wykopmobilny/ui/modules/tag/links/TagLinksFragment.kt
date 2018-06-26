@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.tag.links
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityView
@@ -24,7 +24,7 @@ class TagLinksFragment : BaseLinksFragment(), TagLinksView {
         val DATA_FRAGMENT_TAG = "TAG_DATA_FRAGMENT"
         val EXTRA_TAG = "EXTRA_TAG"
 
-        fun newInstance(tag: String): Fragment {
+        fun newInstance(tag: String): androidx.fragment.app.Fragment {
             val fragment = TagLinksFragment()
             val data = Bundle()
             data.putString(EXTRA_TAG, tag)

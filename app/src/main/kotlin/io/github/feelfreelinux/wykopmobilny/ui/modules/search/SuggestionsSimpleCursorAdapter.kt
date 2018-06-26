@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.search
 
 import android.content.Context
 import android.database.Cursor
-import android.support.v4.widget.SimpleCursorAdapter
+import androidx.cursoradapter.widget.SimpleCursorAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import kotlinx.android.synthetic.main.history_suggestion_item.view.*
 import java.net.URLDecoder
 
-class SuggestionsSimpleCursorAdapter(val context: Context, layout: Int, c: Cursor, from: Array<String>, to: IntArray, flags: Int) : SimpleCursorAdapter(context, layout, c, from, to, flags) {
+class SuggestionsSimpleCursorAdapter(val context: Context, layout: Int, c: Cursor, from: Array<String>, to: IntArray, flags: Int) : androidx.cursoradapter.widget.SimpleCursorAdapter(context, layout, c, from, to, flags) {
     val inflater by lazy {
         context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater }

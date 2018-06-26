@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 
 class DeepLinkActivity : AppCompatActivity() {

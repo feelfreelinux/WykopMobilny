@@ -2,8 +2,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar
 
 import android.content.Context
 import android.net.Uri
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -95,7 +95,7 @@ class MarkdownToolbar : LinearLayout {
 
     fun showUploadPhotoBottomsheet() {
         val activityContext = getActivityContext()!!
-        val dialog = BottomSheetDialog(activityContext)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.imagechooser_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
 
@@ -120,7 +120,7 @@ class MarkdownToolbar : LinearLayout {
             }
         }
 
-        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
         dialog.setOnShowListener {
             mBehavior.peekHeight = bottomSheetView.height
         }

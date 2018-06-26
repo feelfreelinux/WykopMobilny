@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -10,7 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.DownvoterVie
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.UpvoterViewHolder
 import javax.inject.Inject
 
-class DownvoterListAdapter @Inject constructor() : RecyclerView.Adapter<DownvoterViewHolder>() {
+class DownvoterListAdapter @Inject constructor() : androidx.recyclerview.widget.RecyclerView.Adapter<DownvoterViewHolder>() {
     val dataset = ArrayList<Downvoter>()
 
     override fun onBindViewHolder(holder: DownvoterViewHolder, position: Int) {

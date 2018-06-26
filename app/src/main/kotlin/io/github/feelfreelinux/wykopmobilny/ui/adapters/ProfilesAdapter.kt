@@ -1,13 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.AuthorViewHolder
 
-class ProfilesAdapter : RecyclerView.Adapter<AuthorViewHolder>() {
+class ProfilesAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<AuthorViewHolder>() {
     val dataset = ArrayList<Author>()
 
     override fun onBindViewHolder(holder: AuthorViewHolder, position: Int) {

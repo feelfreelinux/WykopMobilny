@@ -1,19 +1,19 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog
 
 import android.content.res.Resources
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import android.util.SparseArray
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.comments.MicroblogCommentsFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.entries.MicroblogEntriesFragment
 
-class MicroblogPagerAdapter(val resources : Resources, fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
-    val registeredFragments = SparseArray<Fragment>()
+class MicroblogPagerAdapter(val resources : Resources, fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+    val registeredFragments = SparseArray<androidx.fragment.app.Fragment>()
 
-    override fun getItem(position: Int): Fragment = when(position) {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment = when(position) {
         0 -> MicroblogEntriesFragment.newInstance()
         else -> MicroblogCommentsFragment.newInstance()
     }
@@ -21,7 +21,7 @@ class MicroblogPagerAdapter(val resources : Resources, fragmentManager: Fragment
     override fun getCount() = 2
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val fragment = super.instantiateItem(container, position) as Fragment
+        val fragment = super.instantiateItem(container, position) as androidx.fragment.app.Fragment
         registeredFragments.put(position, fragment)
         return fragment
     }

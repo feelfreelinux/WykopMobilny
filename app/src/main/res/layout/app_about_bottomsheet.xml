@@ -25,18 +25,6 @@
         android:background="?attr/lineColor"/>
 
     <LinearLayout
-        android:id="@+id/app_donate"
-        style="@style/BottomSheetMenuItem">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Przekaż darowizne poprzez PayPal"/>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/app_version"
         style="@style/BottomSheetMenuItem">
 

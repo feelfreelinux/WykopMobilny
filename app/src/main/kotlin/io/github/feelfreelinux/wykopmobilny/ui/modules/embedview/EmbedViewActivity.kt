@@ -9,9 +9,9 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ShareCompat
-import android.support.v4.content.ContextCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
 import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem

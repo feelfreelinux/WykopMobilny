@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.link
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.v4.app.ShareCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.core.app.ShareCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.link_details_header_layout.view.*
 import kotlinx.android.synthetic.main.link_menu_bottomsheet.view.*
 import java.net.URL
 
-class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs), LinkView, URLClickedListener {
+class LinkWidget(context: Context, attrs: AttributeSet) : androidx.constraintlayout.widget.ConstraintLayout(context, attrs), LinkView, URLClickedListener {
 
     lateinit var link : Link
     lateinit var presenter : LinkPresenter
@@ -153,7 +153,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     fun openOptionsMenu() {
         val activityContext = getActivityContext()!!
-        val dialog = BottomSheetDialog(activityContext)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
 
@@ -183,7 +183,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
             link_bury.isVisible = userManager.isUserAuthorized()
         }
 
-        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
         dialog.setOnShowListener {
             mBehavior.peekHeight = bottomSheetView.height
         }
@@ -192,7 +192,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     fun openBuryReasonMenu() {
         val activityContext = getActivityContext()!!
-        val dialog = BottomSheetDialog(activityContext)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_bury_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
 
@@ -223,7 +223,7 @@ class LinkWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
             }
         }
 
-        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
         dialog.setOnShowListener {
             mBehavior.peekHeight = bottomSheetView.height
         }

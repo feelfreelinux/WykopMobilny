@@ -2,11 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment
 
 import android.content.Context
 import android.graphics.Color
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.v4.app.ShareCompat
-import android.support.v4.content.ContextCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -29,7 +29,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.link_comment_menu_bottomsheet.view.*
 import kotlin.math.absoluteValue
 
-abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs), LinkCommentView {
+abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : androidx.constraintlayout.widget.ConstraintLayout(context, attrs), LinkCommentView {
     lateinit var comment : LinkComment
     lateinit var presenter : LinkCommentPresenter
     lateinit var settingsApi : SettingsPreferencesApi
@@ -202,7 +202,7 @@ abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : Co
 
     fun openLinkCommentMenu() {
         val activityContext = getActivityContext()!!
-        val dialog = BottomSheetDialog(activityContext)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_comment_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
         (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
@@ -242,7 +242,7 @@ abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : Co
             comment_menu_edit.isVisible = canUserEdit
         }
 
-        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
         dialog.setOnShowListener {
             mBehavior.peekHeight = bottomSheetView.height
         }

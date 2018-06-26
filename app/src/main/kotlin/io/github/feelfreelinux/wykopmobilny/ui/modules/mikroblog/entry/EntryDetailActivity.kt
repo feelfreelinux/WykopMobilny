@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialog
-import android.support.v4.app.ShareCompat
-import android.support.v4.widget.SwipeRefreshLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.core.app.ShareCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
@@ -36,11 +36,11 @@ import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener, EntryCommentViewListener {
+class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, EntryCommentViewListener {
     lateinit var votersDialogListener : VotersDialogListener
 
     override fun openVotersMenu() {
-        val dialog = BottomSheetDialog(this)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
         val votersDialogView = layoutInflater.inflate(R.layout.dialog_voters, null)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView)
@@ -98,6 +98,8 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
         setSupportActionBar(toolbar)
+
+        presenter.subscribe(this)
         adapter.commentId = intent.getIntExtra(EXTRA_COMMENT_ID, -1)
         adapter.commentViewListener = this
         adapter.commentActionListener = presenter

@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
                                              val navigatorApi: NewNavigatorApi,
                                              val linkHandlerApi: WykopLinkHandlerApi,
-                                             val settingsPreferencesApi: SettingsPreferencesApi) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                                             val settingsPreferencesApi: SettingsPreferencesApi) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var highlightCommentId = -1
     lateinit var linkCommentViewListener: LinkCommentViewListener
@@ -30,7 +30,7 @@ class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
     var link: Link? = null
     val commentsList : List<LinkComment>? get() = link?.comments?.filterNot { it.isParentCollapsed }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         if (holder.itemViewType == LinkHeaderViewHolder.TYPE_HEADER) {
             link?.let { (holder as LinkHeaderViewHolder).bindView(link!!) }
         } else if (holder is BlockedViewHolder) {
@@ -61,7 +61,7 @@ class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
         return 1
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             LinkHeaderViewHolder.TYPE_HEADER -> LinkHeaderViewHolder.inflateView(parent, userManagerApi, navigatorApi, linkHandlerApi, linkHeaderActionListener)
             TopLinkCommentViewHolder.TYPE_TOP_EMBED, TopLinkCommentViewHolder.TYPE_TOP_NORMAL -> TopLinkCommentViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, linkCommentActionListener, linkCommentViewListener)
@@ -70,7 +70,7 @@ class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
         }
     }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+    override fun onViewRecycled(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
         (holder as? RecyclableViewHolder)?.cleanRecycled()
         super.onViewRecycled(holder)
     }

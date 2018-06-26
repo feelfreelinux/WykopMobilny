@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
@@ -12,7 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserCredentials
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 
-class DrawerHeaderWidget : ConstraintLayout {
+class DrawerHeaderWidget : androidx.constraintlayout.widget.ConstraintLayout {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

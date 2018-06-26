@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.tag
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
@@ -87,8 +88,7 @@ class TagActivity : BaseActivity(), TagActivityView {
             android.R.id.home -> finish()
             R.id.refresh -> {
                 for (i in 0 until tagPagerAdapter.registeredFragments.size()) {
-                    (tagPagerAdapter.registeredFragments.valueAt(i) as TagFragmentNotifier)
-                            .onRefresh()
+                    (tagPagerAdapter.registeredFragments.valueAt(i) as? androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener)?.onRefresh()
                 }
             }
         }
@@ -99,7 +99,7 @@ class TagActivity : BaseActivity(), TagActivityView {
         this.tagMeta = tagMeta
         backgroundImg.isVisible = tagMeta.background != null
         tagMeta.background?.let {
-            backgroundImg.loadImage(tagMeta.background!!)
+            backgroundImg.loadImage(tagMeta.background)
             toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         }
         invalidateOptionsMenu()

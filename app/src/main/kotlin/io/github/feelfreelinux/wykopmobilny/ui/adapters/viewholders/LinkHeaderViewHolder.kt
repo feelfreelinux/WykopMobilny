@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -151,7 +151,7 @@ class LinkHeaderViewHolder(override val containerView : View,
 
     fun openOptionsMenu(link : Link) {
         val activityContext = containerView.getActivityContext()!!
-        val dialog = BottomSheetDialog(activityContext)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
 
@@ -183,7 +183,7 @@ class LinkHeaderViewHolder(override val containerView : View,
             link_bury.isVisible = userManagerApi.isUserAuthorized()
         }
 
-        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
         dialog.setOnShowListener {
             mBehavior.peekHeight = bottomSheetView.height
         }
@@ -192,7 +192,7 @@ class LinkHeaderViewHolder(override val containerView : View,
 
     fun openBuryReasonMenu(link : Link) {
         val activityContext = containerView.getActivityContext()!!
-        val dialog = BottomSheetDialog(activityContext)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_bury_menu_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
 

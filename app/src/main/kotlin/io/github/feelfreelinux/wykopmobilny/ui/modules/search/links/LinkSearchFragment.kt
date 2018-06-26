@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.search.links
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -26,7 +26,7 @@ class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
     lateinit var userManager: UserManagerApi
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(): androidx.fragment.app.Fragment {
             return  LinkSearchFragment()
         }
     }

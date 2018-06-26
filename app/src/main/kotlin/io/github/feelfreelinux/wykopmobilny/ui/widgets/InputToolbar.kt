@@ -3,7 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets
 import android.content.Context
 import android.net.Uri
 import android.os.Parcelable
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -37,7 +37,7 @@ interface InputToolbarListener {
     fun openGalleryImageChooser()
 }
 
-class InputToolbar : ConstraintLayout, MarkdownToolbarListener {
+class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, MarkdownToolbarListener {
     override var selectionStart: Int
         get() = body.selectionStart
         set(value) { body.setSelection(value) }

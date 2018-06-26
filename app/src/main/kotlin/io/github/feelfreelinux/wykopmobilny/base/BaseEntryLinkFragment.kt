@@ -1,8 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialog
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,11 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView {
+open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+    override fun onRefresh() {
+        loadDataListener(false)
+    }
+
     var showSearchEmptyView: Boolean
         get() = searchEmptyView.isVisible
         set(value) {
@@ -50,7 +55,7 @@ open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView {
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
 
         // Setup views
-        swipeRefresh.setOnRefreshListener({ loadDataListener(false) })
+        swipeRefresh.setOnRefreshListener(this)
         recyclerView.run {
             prepare()
             adapter = entriesAdapter
@@ -78,7 +83,7 @@ open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView {
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+            (recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager).scrollToPositionWithOffset(0, 0)
         }
     }
 
@@ -95,7 +100,7 @@ open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView {
     }
 
     override fun openVotersMenu() {
-        val dialog = BottomSheetDialog(activity!!)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activity!!)
         val votersDialogView = activity!!.layoutInflater.inflate(R.layout.dialog_voters, null)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView)

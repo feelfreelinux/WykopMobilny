@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.View
@@ -12,7 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import kotlinx.android.synthetic.main.notifications_list_item.view.*
 
-class NotificationViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
+class NotificationViewHolder(val view : View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
     fun bindNotification(notification: Notification, itemClickListener: (Int) -> Unit) {
         view.apply {

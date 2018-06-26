@@ -1,6 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -9,7 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.ObservedTagV
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import javax.inject.Inject
 
-class ObservedTagsAdapter @Inject constructor(val navigatorApi: NewNavigatorApi) : RecyclerView.Adapter<ObservedTagViewHolder>() {
+class ObservedTagsAdapter @Inject constructor(val navigatorApi: NewNavigatorApi) : androidx.recyclerview.widget.RecyclerView.Adapter<ObservedTagViewHolder>() {
     val dataset = ArrayList<ObservedTagResponse>()
 
     override fun onBindViewHolder(holder: ObservedTagViewHolder, position: Int) {

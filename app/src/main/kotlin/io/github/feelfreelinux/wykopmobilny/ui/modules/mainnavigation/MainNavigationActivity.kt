@@ -4,16 +4,10 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
-import android.support.design.internal.NavigationMenuView
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -52,6 +46,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.net.Uri
 import android.os.Handler
+import com.google.android.material.internal.NavigationMenuView
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
@@ -62,13 +57,13 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferenc
 
 interface MainNavigationInterface {
     val activityToolbar : Toolbar
-    fun openFragment(fragment: Fragment)
+    fun openFragment(fragment: androidx.fragment.app.Fragment)
     fun showErrorDialog(e: Throwable)
     val floatingButton : View
     fun forceRefreshNotifications()
 }
 
-class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
+class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
     override val activityToolbar: Toolbar get() = toolbar
     var tapDoubleClickedMilis = 0L
     val progressDialog by lazy { ProgressDialog(this) }
@@ -160,7 +155,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
 
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
-        presenter.checkUpdates()
+        //presenter.checkUpdates()
         checkBlacklist()
 
         if (settingsApi.showNotifications) {
@@ -249,7 +244,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
         }
     }
 
-    override fun openFragment(fragment: Fragment) {
+    override fun openFragment(fragment: androidx.fragment.app.Fragment) {
         supportActionBar?.subtitle = null
         fab.isVisible = false
         fab.setOnClickListener(null)
@@ -332,7 +327,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
     }
 
     fun openAboutSheet() {
-        val dialog = BottomSheetDialog(this)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
         val bottomSheetView = layoutInflater.inflate(R.layout.app_about_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
 
@@ -355,10 +350,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             }
 
 
-            app_donate.setOnClickListener {
-                navigator.openBrowser("https://paypal.me/WykopMobilny")
-                dialog.dismiss()
-            }
 
             license.setOnClickListener {
                 openBrowser("https://github.com/feelfreelinux/WykopMobilny/blob/master/LICENSE")
@@ -366,7 +357,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, NavigationVie
             }
         }
 
-        val mBehavior = BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
         dialog.setOnShowListener {
             mBehavior.peekHeight = bottomSheetView.height
         }

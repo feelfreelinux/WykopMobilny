@@ -1,13 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.ConversationViewHolder
 
-class ConversationsListAdapter : RecyclerView.Adapter<ConversationViewHolder>() {
+class ConversationsListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ConversationViewHolder>() {
     val dataset = ArrayList<Conversation>()
 
     override fun onBindViewHolder(holder: ConversationViewHolder, position: Int) {

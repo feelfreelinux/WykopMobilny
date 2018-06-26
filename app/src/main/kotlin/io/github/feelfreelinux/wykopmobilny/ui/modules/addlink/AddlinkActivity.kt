@@ -3,7 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.addlink
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -40,7 +40,7 @@ class AddlinkActivity : BaseActivity() {
         openFragment(AddlinkUrlInputFragment.newInstance(url), "url_input")
     }
 
-    fun openFragment(fragment: Fragment, tag : String) {
+    fun openFragment(fragment: androidx.fragment.app.Fragment, tag : String) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentView, fragment, tag)
                 // Add this transaction to the back stack

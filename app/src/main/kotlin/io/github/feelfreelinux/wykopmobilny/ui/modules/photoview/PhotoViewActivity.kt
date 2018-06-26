@@ -108,9 +108,9 @@ class PhotoViewActivity : BaseActivity() {
         gif.isVisible = false
         GlideApp.with(this).downloadOnly().load(url)
                 .into(object : SimpleTarget<File>() {
-                    override fun onResourceReady(resource: File?, transition: Transition<in File>?) {
+                    override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                         loadingView.isVisible = false
-                        resource?.let {
+                        resource.let {
                             image.setImage(io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.ImageSource.uri(resource.absolutePath))
                         }
                     }

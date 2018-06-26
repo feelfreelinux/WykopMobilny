@@ -1,5 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.badge
 
-import android.support.design.widget.BottomSheetDialogFragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class BadgeFragment : BottomSheetDialogFragment()
+class BadgeFragment : com.google.android.material.bottomsheet.BottomSheetDialogFragment()

@@ -3,7 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificati
 import android.service.notification.StatusBarNotification
 import android.os.Build
 import android.service.notification.NotificationListenerService
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import android.text.TextUtils
 import dagger.android.AndroidInjection
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi

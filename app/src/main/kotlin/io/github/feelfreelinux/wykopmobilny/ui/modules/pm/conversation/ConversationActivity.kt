@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
@@ -62,7 +62,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         recyclerView?.apply {
             prepareNoDivider()
             adapter = conversationAdapter
-            (layoutManager as LinearLayoutManager).reverseLayout = true
+            (layoutManager as androidx.recyclerview.widget.LinearLayoutManager).reverseLayout = true
             setHasFixedSize(false)
         }
 

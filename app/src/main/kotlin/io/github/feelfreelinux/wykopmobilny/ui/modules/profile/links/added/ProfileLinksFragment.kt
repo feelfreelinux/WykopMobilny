@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.added
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -36,7 +36,7 @@ class ProfileLinksFragment : BaseLinksFragment(), ProfileLinksView {
          * Type determines data coming to this fragment.
          * @param type Type string TYPE_PUBLISHED / TYPE_DIGGED / TYPE_BURRIED / TYPE_ADDED
          */
-        fun newInstance(type : String): Fragment {
+        fun newInstance(type : String): androidx.fragment.app.Fragment {
             val fragment = ProfileLinksFragment()
             val bundle = Bundle()
             bundle.putString(EXTRA_TYPE, type)

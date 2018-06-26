@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +20,7 @@ class BlacklistTagsFragment : BaseFragment() {
     @Inject lateinit var blacklistPreferences : BlacklistPreferences
     val disposable = CompositeDisposable()
     companion object {
-        fun createFragment() : Fragment {
+        fun createFragment() : androidx.fragment.app.Fragment {
             return BlacklistTagsFragment()
         }
     }

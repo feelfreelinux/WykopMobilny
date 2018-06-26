@@ -2,8 +2,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
@@ -56,7 +56,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     }
 
     companion object {
-        fun newInstance() : Fragment {
+        fun newInstance() : androidx.fragment.app.Fragment {
             return HotFragment()
         }
     }
