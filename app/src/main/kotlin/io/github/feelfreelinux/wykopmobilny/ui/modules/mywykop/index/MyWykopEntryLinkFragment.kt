@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntryLinkFragment
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject

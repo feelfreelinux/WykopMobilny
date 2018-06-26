@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.*
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
@@ -25,8 +26,7 @@ class MyWykopFragment : BaseFragment() {
 
     fun onRefresh() {
         for (i in 0 until pagerAdapter.registeredFragments.size()) {
-            (pagerAdapter.registeredFragments.valueAt(i) as MyWykopNotifier)
-                    .onRefresh()
+            (pagerAdapter.registeredFragments.valueAt(i) as? SwipeRefreshLayout.OnRefreshListener)?.onRefresh()
         }
     }
 

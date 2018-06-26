@@ -1,23 +1,17 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.observedtags
 
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
-import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTagResponse
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ObservedTagsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopNotifier
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_conversations_list.*

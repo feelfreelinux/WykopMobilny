@@ -29,8 +29,6 @@ class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListen
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.requestFeature(Window.FEATURE_ACTION_BAR)
-        actionBar.hide()
         super.onCreate(savedInstanceState)
         Slidr.attach(this, SlidrConfig.Builder().edge(true).build())
         setContentView(R.layout.activity_youtubeplayer)
