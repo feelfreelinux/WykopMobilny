@@ -24,7 +24,7 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, android
     private val conversationsAdapter by lazy { ConversationsListAdapter() }
 
     companion object {
-        val DATA_FRAGMENT_TAG = "CONVERSATIONS_LIST"
+        val DATA_FRAGMENT_TAG = "CONVERSATIONS_LIST" // lol
         fun newInstance(): Fragment {
             return ConversationsListFragment()
         }
