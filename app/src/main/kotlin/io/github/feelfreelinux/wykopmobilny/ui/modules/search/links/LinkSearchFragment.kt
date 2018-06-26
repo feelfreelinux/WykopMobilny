@@ -50,8 +50,8 @@ class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
         querySubscribe.dispose()
     }

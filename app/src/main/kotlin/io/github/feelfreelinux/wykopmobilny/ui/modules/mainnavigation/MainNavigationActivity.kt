@@ -203,8 +203,8 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
             }, 333)        }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
     }
 

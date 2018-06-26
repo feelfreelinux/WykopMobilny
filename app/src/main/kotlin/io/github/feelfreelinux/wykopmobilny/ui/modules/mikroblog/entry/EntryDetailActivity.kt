@@ -139,8 +139,8 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, and
         return true
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
     }
 

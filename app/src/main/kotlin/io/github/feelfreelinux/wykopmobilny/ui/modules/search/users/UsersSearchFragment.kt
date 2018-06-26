@@ -83,8 +83,8 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefre
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
         querySubscribe.dispose()
     }

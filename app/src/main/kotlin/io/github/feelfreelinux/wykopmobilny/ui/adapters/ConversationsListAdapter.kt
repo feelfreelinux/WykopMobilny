@@ -7,11 +7,11 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.ConversationViewHolder
 
-class ConversationsListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ConversationViewHolder>() {
+class ConversationsListAdapter : RecyclerView.Adapter<ConversationViewHolder>() {
     val dataset = ArrayList<Conversation>()
 
     override fun onBindViewHolder(holder: ConversationViewHolder, position: Int) {
-        holder?.bindView(dataset[position])
+        holder.bindView(dataset[position])
     }
 
     override fun getItemCount(): Int = dataset.size

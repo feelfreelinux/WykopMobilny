@@ -62,8 +62,8 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     }
 
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
     }
 

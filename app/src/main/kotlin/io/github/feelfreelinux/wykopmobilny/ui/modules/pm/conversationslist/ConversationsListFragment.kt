@@ -20,13 +20,12 @@ import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
 
 class ConversationsListFragment : BaseFragment(), ConversationsListView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
-    private lateinit var conversationsDataFragment : DataFragment<List<Conversation>>
     @Inject lateinit var presenter : ConversationsListPresenter
     private val conversationsAdapter by lazy { ConversationsListAdapter() }
 
     companion object {
         val DATA_FRAGMENT_TAG = "CONVERSATIONS_LIST"
-        fun newInstance(): androidx.fragment.app.Fragment {
+        fun newInstance(): Fragment {
             return ConversationsListFragment()
         }
     }
@@ -37,7 +36,6 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, android
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        conversationsDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.messages)
         swiperefresh.setOnRefreshListener(this)
 
@@ -48,13 +46,8 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, android
         swiperefresh?.isRefreshing = false
         presenter.subscribe(this)
 
-        if (conversationsDataFragment.data == null) {
-            loadingView?.isVisible = true
-            onRefresh()
-        } else {
-            conversationsAdapter.dataset.addAll(conversationsDataFragment.data!!)
-            loadingView?.isVisible = false
-        }
+        loadingView?.isVisible = true
+        onRefresh()
     }
 
     override fun showConversations(items : List<Conversation>) {
@@ -71,18 +64,9 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, android
         presenter.loadConversations()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        conversationsDataFragment.data = conversationsAdapter.dataset
-    }
 
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (isRemoving) supportFragmentManager.removeDataFragment(conversationsDataFragment)
     }
 }

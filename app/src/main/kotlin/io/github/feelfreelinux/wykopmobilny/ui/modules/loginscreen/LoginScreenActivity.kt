@@ -107,8 +107,8 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
     }
 }

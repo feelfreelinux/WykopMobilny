@@ -52,8 +52,8 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
         querySubscribe.dispose()
     }

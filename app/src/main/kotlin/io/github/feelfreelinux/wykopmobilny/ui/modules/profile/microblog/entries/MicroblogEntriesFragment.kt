@@ -35,8 +35,8 @@ class MicroblogEntriesFragment : BaseEntriesFragment(), MicroblogEntriesView {
         presenter.subscribe(this)
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
     }
 

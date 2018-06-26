@@ -72,8 +72,8 @@ class PromotedFragment : BaseLinksFragment(), PromotedView, BaseNavigationView {
         presenter.subscribe(this)
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.unsubscribe()
     }
 
