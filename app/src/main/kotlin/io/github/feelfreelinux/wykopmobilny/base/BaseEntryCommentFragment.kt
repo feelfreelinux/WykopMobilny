@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryCommentAdapter
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-open class BaseEntryCommentFragment : BaseFragment(), EntryCommentsFragmentView {
+open class BaseEntryCommentFragment : BaseFragment(), EntryCommentsFragmentView, SwipeRefreshLayout.OnRefreshListener {
     var showSearchEmptyView: Boolean
         get() = searchEmptyView.isVisible
         set(value) {
@@ -29,6 +30,10 @@ open class BaseEntryCommentFragment : BaseFragment(), EntryCommentsFragmentView 
                 entryCommentsAdapter.disableLoading()
             }
         }
+
+    override fun onRefresh() {
+        loadDataListener(true)
+    }
 
     open var loadDataListener : (Boolean) -> Unit = {}
 
@@ -59,7 +64,7 @@ open class BaseEntryCommentFragment : BaseFragment(), EntryCommentsFragmentView 
         entryCommentsAdapter.loadNewDataListener = { loadDataListener(false) }
 
         // Setup views
-        swipeRefresh.setOnRefreshListener({ loadDataListener(false) })
+        swipeRefresh.setOnRefreshListener(this)
         recyclerView.run {
             prepare()
             adapter = entryCommentsAdapter

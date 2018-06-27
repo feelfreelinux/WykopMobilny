@@ -9,18 +9,18 @@
     <androidx.preference.PreferenceCategory
         android:title="@string/pref_notifications">
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="showNotifications"
             android:title="@string/pref_notifications_enable"
             android:defaultValue="true"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="piggyBackPushNotifications"
             android:title="@string/pref_notifications_piggyback"
             android:summary="@string/pref_notifications_piggyback_summary"
             android:defaultValue="false"/>
 
-        <android.support.v7.preference.ListPreference
+        <androidx.preference.ListPreference
             android:key="notificationsSchedulerDelay"
             android:title="@string/pref_notifications_frequency"
             android:entries="@array/preferences_notifications_frequency"
@@ -32,22 +32,22 @@
     <androidx.preference.PreferenceCategory
         android:title="@string/pref_content_filter">
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="showAdultContent"
             android:title="@string/pref_content_plus18"
             android:defaultValue="false"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="hideNsfw"
             android:title="@string/pref_content_filternsfw"
             android:defaultValue="true"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="hideLowRangeAuthors"
             android:title="Ukrywaj treści zielonek"
             android:defaultValue="false"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="hideBlacklistedViews"
             android:title="Nie pokazuj ukrytych treści"
             android:defaultValue="false"/>

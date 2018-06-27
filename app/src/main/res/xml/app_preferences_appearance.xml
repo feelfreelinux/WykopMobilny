@@ -5,24 +5,24 @@
     <androidx.preference.PreferenceCategory
         android:title="@string/pref_appearance">
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="useDarkTheme"
             android:title="@string/pref_dark_style"
             android:defaultValue="false"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="useAmoledTheme"
             android:title="@string/useAmoledTheme"
             android:defaultValue="false"/>
 
-        <android.support.v7.preference.ListPreference
+        <androidx.preference.ListPreference
             android:key="defaultScreen"
             android:title="@string/defaultScreen"
             android:entries="@array/preferences_default_screen"
             android:entryValues="@array/preferences_default_screen_values"
             android:defaultValue="mainpage"/>
 
-        <android.support.v7.preference.ListPreference
+        <androidx.preference.ListPreference
             android:key="fontSize"
             android:title="@string/pref_fontsize"
             android:entries="@array/preferences_fontsize"
@@ -33,12 +33,12 @@
     <androidx.preference.PreferenceCategory
         android:title="Ustawienia odtwarzacza">
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="enableYoutubePlayer"
             android:title="Użyj odtwarzacza YouTube"
             android:defaultValue="true"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="enableEmbedPlayer"
             android:title="Użyj playera dla innych mediów"
             android:defaultValue="true"/>
@@ -46,19 +46,19 @@
 
     <androidx.preference.PreferenceCategory
         android:title="Mikroblog">
-        <android.support.v7.preference.ListPreference
+        <androidx.preference.ListPreference
             android:key="hotEntriesScreen"
             android:title="@string/defaultHotScreen"
             android:entries="@array/preferences_hot_screen"
             android:entryValues="@array/preferences_hot_screen_values"
             android:defaultValue="newest"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="cutLongEntries"
             android:title="Przycinaj długie wpisy"
             android:defaultValue="true"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="openSpoilersDialog"
             android:title="@string/open_spoilers_in_dialog"
             android:defaultValue="true"/>
@@ -68,29 +68,29 @@
     <androidx.preference.PreferenceCategory
         android:title="Znaleziska">
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="linkSimpleList"
             android:title="@string/link_simple_list"
             android:defaultValue="false"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="linkShowImage"
             android:title="@string/link_show_image"
             android:defaultValue="true"/>
 
-        <android.support.v7.preference.ListPreference
+        <androidx.preference.ListPreference
             android:key="linkImagePosition"
             android:title="@string/linkImagePosition"
             android:entries="@array/preferences_link_image_position"
             android:entryValues="@array/preferences_link_image_position_values"
             android:defaultValue="left"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="linkShowAuthor"
             android:title="@string/link_show_author"
             android:defaultValue="false"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="hideLinkCommentsByDefault"
             android:title="Zwijaj wszystkie komentarze"
             android:defaultValue="false"/>
@@ -100,12 +100,12 @@
     <androidx.preference.PreferenceCategory
         android:title="@string/app_config_images">
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="showMinifiedImages"
             android:title="@string/app_config_images_minified"
             android:defaultValue="false"/>
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="cutImages"
             android:title="@string/app_config_images_cut"
             android:defaultValue="true"/>

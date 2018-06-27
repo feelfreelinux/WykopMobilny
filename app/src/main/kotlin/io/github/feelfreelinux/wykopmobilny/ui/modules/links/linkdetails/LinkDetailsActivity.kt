@@ -223,7 +223,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         swiperefresh?.isRefreshing = false
         adapter.notifyDataSetChanged()
         inputToolbar.show()
-        if (linkCommentId != -1 && adapter.link == null) {
+        if (linkCommentId != -1 && adapter.link != null) {
             scrollToComment(linkCommentId)
         }
     }

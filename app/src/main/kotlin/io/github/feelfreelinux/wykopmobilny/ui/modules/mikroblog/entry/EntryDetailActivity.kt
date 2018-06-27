@@ -89,6 +89,8 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, and
         }
     }
 
+    val highLightCommentId by lazy { intent.getIntExtra(EXTRA_COMMENT_ID, -1) }
+
     @Inject lateinit var presenter: EntryDetailPresenter
     @Inject lateinit var userManager : UserManagerApi
     @Inject lateinit var suggestionApi : SuggestApi
@@ -100,7 +102,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, and
         setSupportActionBar(toolbar)
 
         presenter.subscribe(this)
-        adapter.commentId = intent.getIntExtra(EXTRA_COMMENT_ID, -1)
+        adapter.commentId = highLightCommentId
         adapter.commentViewListener = this
         adapter.commentActionListener = presenter
         adapter.entryActionListener = presenter
@@ -171,14 +173,15 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, and
         swiperefresh?.isRefreshing = false
         entry.embed?.isRevealed = isRevealed
         adapter.notifyDataSetChanged()
-        if (intent.hasExtra(EXTRA_COMMENT_ID)) {
+        if (highLightCommentId != -1) {
             entry.comments.forEachIndexed({ index, comment ->
-                if (comment.id == intent.getIntExtra(EXTRA_COMMENT_ID, -1)) {
+                if (comment.id == highLightCommentId) {
                     recyclerView?.scrollToPosition(index + 1)
                 }
                 recyclerView?.refreshDrawableState()
             })
         }
+
     }
 
     override fun hideInputToolbar() {

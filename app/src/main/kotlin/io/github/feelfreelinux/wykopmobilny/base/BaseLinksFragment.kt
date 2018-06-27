@@ -35,7 +35,7 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView, androidx.swipe
     lateinit var linksAdapter : LinksAdapter
 
     override fun onRefresh() {
-        loadDataListener(false)
+        loadDataListener(true)
     }
 
     // Inflate view

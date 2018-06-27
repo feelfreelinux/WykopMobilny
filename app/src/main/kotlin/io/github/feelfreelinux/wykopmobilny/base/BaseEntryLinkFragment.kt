@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     override fun onRefresh() {
-        loadDataListener(false)
+        loadDataListener(true)
     }
 
     var showSearchEmptyView: Boolean

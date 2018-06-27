@@ -31,7 +31,7 @@ open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView, androidx.s
         }
 
     override fun onRefresh() {
-        loadDataListener(false)
+        loadDataListener(true)
     }
 
     open var loadDataListener : (Boolean) -> Unit = {}

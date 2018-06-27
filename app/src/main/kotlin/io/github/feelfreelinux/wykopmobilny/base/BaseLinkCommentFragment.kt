@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkCommentAdapter
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView {
+open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView, SwipeRefreshLayout.OnRefreshListener {
     var showSearchEmptyView: Boolean
         get() = searchEmptyView.isVisible
         set(value) {
@@ -26,6 +27,10 @@ open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView {
                 linkCommentsAdapter.disableLoading()
             }
         }
+
+    override fun onRefresh() {
+        loadDataListener(true)
+    }
 
     open var loadDataListener : (Boolean) -> Unit = {}
 
@@ -39,10 +44,10 @@ open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        linkCommentsAdapter.loadNewDataListener = { loadDataListener(false) }
+        linkCommentsAdapter.loadNewDataListener = { loadDataListener(true) }
 
         // Setup views
-        swipeRefresh.setOnRefreshListener({ loadDataListener(false) })
+        swipeRefresh.setOnRefreshListener(this)
         recyclerView.run {
             prepare()
             adapter = linkCommentsAdapter
