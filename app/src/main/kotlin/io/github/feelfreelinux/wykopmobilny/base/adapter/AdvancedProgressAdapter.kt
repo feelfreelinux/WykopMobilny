@@ -37,12 +37,13 @@ abstract class AdvancedProgressAdapter<A : Any> : androidx.recyclerview.widget.R
             }
             notifyDataSetChanged()
         } else {
+            val filteredItems = items.filter { !dataset.contains(it) }
             if (dataset.last() == null) {
                 dataset.removeAt(dataset.size - 1)
             }
-            dataset.addAll(items)
+            dataset.addAll(filteredItems)
             dataset.add(null)
-            notifyItemRangeInserted(dataset.size - items.size, items.size + 1)
+            notifyItemRangeInserted(dataset.size - filteredItems.size, filteredItems.size + 1)
         }
     }
 
