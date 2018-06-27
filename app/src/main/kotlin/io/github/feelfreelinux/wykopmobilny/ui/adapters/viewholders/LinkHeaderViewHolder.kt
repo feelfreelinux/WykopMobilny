@@ -170,13 +170,12 @@ class LinkHeaderViewHolder(override val containerView : View,
 
             link_bury.setOnClickListener {
                 dialog.dismiss()
-                //openBuryReasonMenu()
+                openBuryReasonMenu(link)
             }
 
             link_related.setOnClickListener {
                 if (link.relatedCount > 0) {
                     navigatorApi.openLinkRelatedActivity(link.id)
-
                 }
                 dialog.dismiss()
             }
@@ -222,6 +221,12 @@ class LinkHeaderViewHolder(override val containerView : View,
                 dialog.dismiss()
             }
         }
+
+        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
+        dialog.setOnShowListener {
+            mBehavior.peekHeight = bottomSheetView.height
+        }
+        dialog.show()
     }
 
 
