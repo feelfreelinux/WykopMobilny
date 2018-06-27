@@ -16,7 +16,6 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.apache.commons.lang3.StringEscapeUtils
 import retrofit2.Retrofit
 import java.io.InputStream
 import java.net.URLEncoder
