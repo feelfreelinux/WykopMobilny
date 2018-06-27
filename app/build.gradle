@@ -138,6 +138,7 @@ dependencies {
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
     implementation 'org.jetbrains:markdown:0.1.28'
 
+
     // AppUpdater
     implementation "com.github.javiersantos:AppUpdater:$versions.appUpdater"
 
