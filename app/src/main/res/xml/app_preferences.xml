@@ -61,7 +61,7 @@
 
     <androidx.preference.CheckBoxPreference
         android:key="useBuiltInBrowser"
-        android:title="Użyj wbudowanej wyszukiwarki"
+        android:title="Użyj wbudowanej przeglądarki"
         android:defaultValue="true"/>
 
     <androidx.preference.Preference
