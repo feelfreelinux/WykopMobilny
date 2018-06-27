@@ -94,5 +94,6 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+        presenter.dispose()
     }
 }

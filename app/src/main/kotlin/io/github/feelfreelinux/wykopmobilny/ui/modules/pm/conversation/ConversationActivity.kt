@@ -107,6 +107,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+        presenter.dispose()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

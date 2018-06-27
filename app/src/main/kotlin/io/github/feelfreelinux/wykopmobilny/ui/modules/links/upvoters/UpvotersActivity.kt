@@ -91,6 +91,7 @@ class UpvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swip
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+        presenter.dispose()
     }
 
     override fun onPause() {

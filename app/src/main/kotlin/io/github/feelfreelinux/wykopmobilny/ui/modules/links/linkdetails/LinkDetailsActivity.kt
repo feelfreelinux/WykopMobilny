@@ -295,5 +295,6 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+        presenter.dispose()
     }
 }

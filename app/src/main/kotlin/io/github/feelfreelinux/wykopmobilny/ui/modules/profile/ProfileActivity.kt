@@ -185,11 +185,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (isFinishing) {
-            for (i in 0 .. pagerAdapter.registeredFragments.size()) {
-                (pagerAdapter.registeredFragments.get(i) as? ProfileFragmentNotifier)?.removeDataFragment()
-            }
-        }
         presenter.unsubscribe()
+        presenter.dispose()
     }
 }

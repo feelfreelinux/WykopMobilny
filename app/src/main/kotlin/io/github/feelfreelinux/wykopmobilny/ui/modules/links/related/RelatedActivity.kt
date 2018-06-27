@@ -93,6 +93,7 @@ class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swipe
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+        presenter.dispose()
     }
 
     override fun onPause() {

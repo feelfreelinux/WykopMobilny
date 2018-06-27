@@ -91,6 +91,7 @@ class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Sw
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+        presenter.dispose()
     }
 
     override fun onPause() {

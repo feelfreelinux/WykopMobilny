@@ -63,6 +63,7 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+        presenter.dispose()
     }
 
     override fun onPause() {
