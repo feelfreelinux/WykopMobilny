@@ -566,10 +566,7 @@
 
     <style name="FullscreenActivityTheme" parent="WykopAppTheme">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:backgroundDimEnabled">false</item>`
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <style name="WykopBottomSheet" parent="Widget.Design.BottomSheet.Modal">

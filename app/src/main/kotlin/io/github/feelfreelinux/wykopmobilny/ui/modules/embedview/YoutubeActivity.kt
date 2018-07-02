@@ -30,7 +30,6 @@ class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Slidr.attach(this, SlidrConfig.Builder().edge(true).build())
         setContentView(R.layout.activity_youtubeplayer)
         youtubePlayer.initialize(GOOGLE_KEY, this)
     }
