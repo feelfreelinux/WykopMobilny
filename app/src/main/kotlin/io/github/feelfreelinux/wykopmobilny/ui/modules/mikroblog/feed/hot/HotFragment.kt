@@ -62,19 +62,9 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     }
 
 
-    override fun onStop() {
-        super.onStop()
-        presenter.unsubscribe()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe(this)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        presenter.dispose()
+        presenter.unsubscribe()
     }
 
     override fun showHotEntries(entries: List<Entry>, isRefreshing: Boolean) {

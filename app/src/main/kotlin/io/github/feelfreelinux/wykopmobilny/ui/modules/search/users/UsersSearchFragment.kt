@@ -52,6 +52,11 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefre
         super.onActivityCreated(savedInstanceState)
 
         presenter.subscribe(this)
+        querySubscribe = (parentFragment as SearchFragment).querySubject.subscribe {
+            swiperefresh.isRefreshing = true
+            queryString = it
+            presenter.searchProfiles(queryString)
+        }
         swiperefresh.setOnRefreshListener(this)
 
         recyclerView?.apply {
@@ -73,25 +78,10 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefre
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe(this)
-        querySubscribe = (parentFragment as SearchFragment).querySubject.subscribe {
-            swiperefresh.isRefreshing = true
-            queryString = it
-            presenter.searchProfiles(queryString)
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter.unsubscribe()
-        querySubscribe.dispose()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        presenter.dispose()
+        presenter.unsubscribe()
+        querySubscribe.dispose()
     }
 
 }

@@ -131,24 +131,14 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, and
         presenter.loadData()
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe(this)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater?.inflate(R.menu.entry_fragment_menu, menu)
         return true
     }
 
-    override fun onStop() {
-        super.onStop()
-        presenter.unsubscribe()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        presenter.dispose()
+        presenter.unsubscribe()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

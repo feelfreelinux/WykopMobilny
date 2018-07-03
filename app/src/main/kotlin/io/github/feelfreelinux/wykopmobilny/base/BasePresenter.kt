@@ -14,9 +14,6 @@ open class BasePresenter<T : BaseView> {
 
     open fun unsubscribe() {
         view = null
-    }
-
-    open fun dispose() {
         compositeObservable.dispose()
     }
 }

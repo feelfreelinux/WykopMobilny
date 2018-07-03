@@ -4,7 +4,7 @@
     android:id="@+id/mainView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/windowBackgroundTransparent"
+    android:background="#000000"
     android:focusableInTouchMode="true"
     android:focusable="true">
 

@@ -72,7 +72,6 @@ class AddLinkDetailsFragment : BaseFragment(), AddLinkDetailsFragmentView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
-        presenter.dispose()
     }
 
     fun validate() {

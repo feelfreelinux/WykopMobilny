@@ -5,8 +5,6 @@ import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable

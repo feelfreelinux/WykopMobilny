@@ -11,6 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import okhttp3.MultipartBody
@@ -142,11 +143,12 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .retryWhen(userTokenRefresher)
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
                     .map { LinkCommentMapper.map(it,owmContentFilter) }
-    override fun commentEdit(body: String, linkId: Int): Single<LinkComment> =
-            linksApi.editComment(body, linkId)
-                    .retryWhen(userTokenRefresher)
-                    .compose<LinkCommentResponse>(ErrorHandlerTransformer())
-                    .map { LinkCommentMapper.map(it,owmContentFilter) }
+    override fun commentEdit(body: String, linkId: Int): Single<LinkComment> {
+        return linksApi.editComment(body, linkId)
+                .retryWhen(userTokenRefresher)
+                .compose<LinkCommentResponse>(ErrorHandlerTransformer())
+                .map { LinkCommentMapper.map(it, owmContentFilter) }
+    }
 
     override fun commentDelete(commentId: Int): Single<LinkComment> =
             linksApi.deleteComment(commentId)

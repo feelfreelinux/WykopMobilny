@@ -110,8 +110,4 @@ class TagActivity : BaseActivity(), TagActivityView {
         tagMeta?.isObserved = tagState.isObserved
         invalidateOptionsMenu()
     }
-
-    override fun onStop() {
-        super.onStop()
-    }
 }

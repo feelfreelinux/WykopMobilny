@@ -40,7 +40,6 @@ class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(),
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
-        presenter.dispose()
     }
 
     override fun exitActivity() {

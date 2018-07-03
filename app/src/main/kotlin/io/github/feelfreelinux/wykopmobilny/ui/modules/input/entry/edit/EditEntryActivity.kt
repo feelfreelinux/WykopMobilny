@@ -35,7 +35,6 @@ class EditEntryActivity : BaseInputActivity<EditEntryPresenter>(), EditEntryView
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
-        presenter.dispose()
     }
 
     override fun exitActivity() {

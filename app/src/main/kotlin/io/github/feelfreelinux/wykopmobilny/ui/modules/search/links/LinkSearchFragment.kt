@@ -34,30 +34,20 @@ class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
+        querySubscribe = (parentFragment as SearchFragment).querySubject.subscribe {
+            swipeRefresh.isRefreshing = true
+            query = it
+            presenter.searchLinks(query, true)
+        }
         linksAdapter.linksActionListener = presenter
         linksAdapter.loadNewDataListener = { loadDataListener(false) }
         loadingView.isVisible = false
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe(this)
-        querySubscribe = (parentFragment as SearchFragment).querySubject.subscribe {
-            swipeRefresh.isRefreshing = true
-            query = it
-            presenter.searchLinks(query, true)
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter.unsubscribe()
-        querySubscribe.dispose()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        presenter.dispose()
+        presenter.unsubscribe()
+        querySubscribe.dispose()
     }
 }

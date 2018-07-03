@@ -36,18 +36,8 @@ class LinksFavoriteFragment : BaseLinksFragment(), LinksFavoriteView {
         presenter.loadData(true)
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter.unsubscribe()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        presenter.dispose()
+        presenter.unsubscribe()
     }
 }

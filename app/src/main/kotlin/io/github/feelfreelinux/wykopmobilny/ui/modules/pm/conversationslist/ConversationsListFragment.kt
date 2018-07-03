@@ -68,6 +68,5 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, android
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
-        presenter.dispose()
     }
 }

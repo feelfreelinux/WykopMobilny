@@ -60,6 +60,5 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
-        presenter.dispose()
     }
 }

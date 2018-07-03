@@ -186,6 +186,5 @@ class ProfileActivity : BaseActivity(), ProfileView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
-        presenter.dispose()
     }
 }

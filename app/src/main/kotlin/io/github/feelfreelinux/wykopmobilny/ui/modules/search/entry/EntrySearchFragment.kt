@@ -35,6 +35,11 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
+        querySubscribe = (parentFragment as SearchFragment).querySubject.subscribe {
+            swipeRefresh.isRefreshing = true
+            query = it
+            presenter.searchEntries(query, true)
+        }
         entriesAdapter.entryActionListener = presenter
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
         loadingView.isVisible = false
@@ -42,24 +47,9 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.subscribe(this)
-        querySubscribe = (parentFragment as SearchFragment).querySubject.subscribe {
-            swipeRefresh.isRefreshing = true
-            query = it
-            presenter.searchEntries(query, true)
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter.unsubscribe()
-        querySubscribe.dispose()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        presenter.dispose()
+        presenter.unsubscribe()
+        querySubscribe.dispose()
     }
 }

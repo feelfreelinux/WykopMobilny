@@ -203,9 +203,14 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
             }, 333)        }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         presenter.unsubscribe()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (presenter.isSubscribed) presenter.unsubscribe()
     }
 
     private fun setupNavigation() {
@@ -419,12 +424,12 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
             val builder = createAlertBuilder()
             builder.setTitle(getString(R.string.blacklist_import_title))
             builder.setMessage(getString(R.string.blacklist_import_ask))
-            builder.setPositiveButton(getString(R.string.blacklist_import_action), { _, _ ->
+            builder.setPositiveButton(getString(R.string.blacklist_import_action)) { _, _ ->
                 progressDialog.isIndeterminate = true
                 progressDialog.setTitle(getString(R.string.blacklist_import_progress))
                 progressDialog.show()
                 presenter.importBlacklist()
-            })
+            }
             builder.setNegativeButton(android.R.string.cancel, null)
             builder.setCancelable(false)
             builder.show()
