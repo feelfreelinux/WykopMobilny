@@ -14,7 +14,8 @@ class Entry(val id: Int,
             val app: String?,
             val violationUrl: String,
             var isNsfw: Boolean = false,
-            var isBlocked: Boolean = false) {
+            var isBlocked: Boolean = false,
+            var collapsed: Boolean = true) {
     override fun equals(other: Any?): Boolean {
         return if (other !is Entry) false
         else (other.hashCode() == hashCode())

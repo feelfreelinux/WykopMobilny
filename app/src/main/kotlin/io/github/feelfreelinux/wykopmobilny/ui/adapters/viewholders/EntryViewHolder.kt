@@ -158,7 +158,7 @@ class EntryViewHolder(override val containerView: View,
         if (entry.body.isNotEmpty()) {
             with(entryContentTextView) {
                 isVisible = true
-                if (replyListener == null && settingsPreferencesApi.cutLongEntries) {
+                if (replyListener == null && settingsPreferencesApi.cutLongEntries && entry.collapsed) {
                     maxLines = EllipsizingTextView.MAX_LINES
                     ellipsize = TextUtils.TruncateAt.END
                 }
@@ -168,6 +168,7 @@ class EntryViewHolder(override val containerView: View,
                     if (enableClickListener && !isEllipsized) {
                         handleClick(entry)
                     } else if (enableClickListener) {
+                        entry.collapsed = false
                         maxLines = Int.MAX_VALUE
                         ellipsize = null
                     }
