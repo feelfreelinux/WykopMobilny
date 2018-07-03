@@ -49,23 +49,28 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     }
 
 
+    /**
+     * This function initializes activity theme based on settings
+     */
     private fun initTheme() {
         if (themeSettingsPreferences.useDarkTheme) {
             if (themeSettingsPreferences.useAmoledTheme) {
                 setTheme(R.style.WykopAppTheme_Amoled)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark_Amoled)
             } else {
                 setTheme(R.style.WykopAppTheme_Dark)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark_Dark))
+                    window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark_Dark)
             }
         } else {
             setTheme(R.style.WykopAppTheme)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         }
         if (isActivityTransfluent || enableSwipeBackLayout) {
             theme.applyStyle(R.style.TransparentActivityTheme, true)
-            getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
 
         when (themeSettingsPreferences.fontSize) {

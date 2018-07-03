@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
+import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.AddlinkActivity
@@ -17,7 +18,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.addlink_duplicates_fragment.*
 import javax.inject.Inject
 
-class AddLinkDuplicatesListFragment : BaseFragment() {
+class AddLinkDuplicatesListFragment : BaseLinksFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.addlink_duplicates_fragment, container, false)
     }
@@ -31,16 +32,12 @@ class AddLinkDuplicatesListFragment : BaseFragment() {
     @Inject lateinit var owmContentFilter: OWMContentFilter
     @Inject lateinit var settingsPreferencesApi : SettingsPreferencesApi
 
-    @Inject lateinit var linksAdapter : LinkAdapter
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        duplicates_list.apply {
-            prepare()
-            adapter = linksAdapter
-        }
+
         val duplicates = (activity as AddlinkActivity).draft.duplicates?.map { LinkMapper.map(it, owmContentFilter) }
-        linksAdapter.addData(duplicates!!, true)
-        linksAdapter.disableLoading()
+        addItems(duplicates!!, true)
+        disableLoading()
 
         confirm_duplicates.setOnClickListener {
             (activity as AddlinkActivity).openDetailsScreen()

@@ -7,7 +7,6 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkRespons
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.NewLinkResponse
 import io.reactivex.Single
 
-
 interface AddlinkApi {
     fun getDraft(url : String) : Single<NewLinkResponse>
     fun getImages(key : String) : Single<List<AddLinkPreviewImage>>
