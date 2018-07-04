@@ -234,7 +234,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
             }
 
             comment_menu_edit.setOnClickListener {
-                navigatorApi.openEditLinkCommentActivity(comment.id, comment.body!!, comment.linkId)
+                navigatorApi.openEditLinkCommentActivity(comment.linkId, comment.body!!, comment.id)
                 dialog.dismiss()
             }
 
