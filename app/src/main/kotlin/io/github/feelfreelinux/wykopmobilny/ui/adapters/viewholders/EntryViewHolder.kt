@@ -163,7 +163,7 @@ class EntryViewHolder(override val containerView: View,
                     ellipsize = TextUtils.TruncateAt.END
                 }
 
-                // Setup unellipsize listener, handle clicks
+                // Setup unEllipsize listener, handle clicks
                 prepareBody(entry.body, { linkHandlerApi.handleUrl(it) }, {
                     if (enableClickListener && !isEllipsized) {
                         handleClick(entry)

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
+import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import kotlinx.android.synthetic.main.activity_write_comment.*
@@ -14,8 +15,8 @@ import javax.inject.Inject
 class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivityView {
     @Inject override lateinit var suggestionApi: SuggestApi
     @Inject override lateinit var presenter: AddEntryPresenter
-    @Inject lateinit var navigator : NewNavigatorApi
 
+    val navigator by lazy { NewNavigator(this) as NewNavigatorApi }
     override fun openEntryActivity(id: Int) {
         navigator.openEntryDetailsActivity(id, false)
         finish()
