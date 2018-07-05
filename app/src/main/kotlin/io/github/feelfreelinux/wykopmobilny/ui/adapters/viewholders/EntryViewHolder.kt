@@ -38,9 +38,6 @@ class EntryViewHolder(override val containerView: View,
     var type : Int = TYPE_NORMAL
     lateinit var embedView : WykopEmbedView
 
-    val isEmbedViewResized : Boolean
-        get() = ::embedView.isInitialized && embedView.resized
-
     lateinit var surveyView : SurveyWidget
     val enableClickListener : Boolean
         get() = replyListener == null
@@ -257,7 +254,7 @@ class EntryViewHolder(override val containerView: View,
 
     private fun handleClick(entry: Entry) {
         if (enableClickListener) {
-            navigatorApi.openEntryDetailsActivity(entry.id, isEmbedViewResized)
+            navigatorApi.openEntryDetailsActivity(entry.id, entry.embed?.isRevealed ?: false)
         }
     }
 

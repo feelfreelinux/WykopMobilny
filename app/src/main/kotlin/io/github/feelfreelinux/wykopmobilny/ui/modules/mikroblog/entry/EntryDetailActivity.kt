@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, EntryCommentViewListener {
+class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener, EntryCommentViewListener {
     lateinit var votersDialogListener : VotersDialogListener
 
     override fun openVotersMenu() {

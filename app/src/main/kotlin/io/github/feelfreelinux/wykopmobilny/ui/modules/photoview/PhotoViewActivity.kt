@@ -44,7 +44,7 @@ class PhotoViewActivity : BaseActivity() {
         }
     }
 
-    override val enableSwipeBackLayout: Boolean = false // We manually attach it here
+    override val enableSwipeBackLayout: Boolean = true // We manually attach it here
     override val isActivityTransfluent: Boolean = true
 
     val url: String by lazy { intent.getStringExtra(URL_EXTRA) }
@@ -52,10 +52,10 @@ class PhotoViewActivity : BaseActivity() {
     private val photoViewActions by lazy { PhotoViewActions(this, clipboardHelper) as PhotoViewCallbacks }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Slidr.attach(this,
+        /*Slidr.attach(this,
                 SlidrConfig.Builder()
                         .position(SlidrPosition.VERTICAL)
-                        .edge(false).build())
+                        .edge(false).build())*/
         setContentView(R.layout.activity_photoview)
         setSupportActionBar(toolbar)
         toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
