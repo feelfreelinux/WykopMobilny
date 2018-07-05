@@ -7,7 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.SurveyRespo
 class SurveyMapper {
     companion object : Mapper<SurveyResponse, Survey> {
         override fun map(value: SurveyResponse): Survey {
-            return Survey(value.question,
+            return Survey(value.question ?: "",
                     value.answers.map { AnswerMapper.map(it) },
                     value.userAnswer)
         }

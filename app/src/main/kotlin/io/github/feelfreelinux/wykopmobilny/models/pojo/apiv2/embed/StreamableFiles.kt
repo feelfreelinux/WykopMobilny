@@ -6,5 +6,5 @@ data class StreamableFiles(
         @JsonProperty("mp4")
         val mp4 : StreamableFile,
         @JsonProperty("mp4-mobile")
-        val mp4Mobile : StreamableFile
+        val mp4Mobile : StreamableFile?
 )

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackso
 
 data class SurveyResponse(
         @JsonProperty("question")
-        val question : String,
+        val question : String?,
 
         @JsonProperty("answers")
         val answers : List<AnswerResponse>,

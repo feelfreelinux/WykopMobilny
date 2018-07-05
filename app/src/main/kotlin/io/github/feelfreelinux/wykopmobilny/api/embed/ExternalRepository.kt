@@ -16,7 +16,6 @@ class ExternalRepository(val retrofit: Retrofit) : ExternalApi {
     override fun getGfycatWebmUrl(gfycatId: String): Single<URL> =
             embedApi.getGfycat(gfycatId)
                     .map {
-                        printout(it.gfyItem.webmUrl)
                         URL(it.gfyItem.webmUrl) }
 
     override fun getGifUrl(gfycatId: String): Single<URL> =
@@ -25,7 +24,7 @@ class ExternalRepository(val retrofit: Retrofit) : ExternalApi {
 
     override fun getStreamableUrl(streamableId: String): Single<URL> =
             embedApi.getStreamableFile(streamableId)
-                    .map { URL("https:${it.files.mp4Mobile.url}") }
+                    .map { URL("https:${it.files.mp4Mobile?.url ?: it.files.mp4.url}") }
 
     override fun getCoub(coubId: String): Single<Coub> =
             embedApi.getCoub(coubId)
