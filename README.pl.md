@@ -1,6 +1,9 @@
-[![Build Status](https://travis-ci.org/feelfreelinux/WykopMobilny.svg?branch=master)](https://travis-ci.org/feelfreelinux/WykopMobilny)
-[![Discord](https://img.shields.io/discord/455024671440633857.svg)](https://discord.gg/WgQZJD3)
-# Wykop Mobilny
+<p align="center">
+<img height="130px" src="https://cdn.rawgit.com/takidelfin/wykopmobilny-resources/master/Optimized%20SVG/wykopmobilny-orangebg.svg">
+</p>
+
+# Wykop Mobilny [![Build Status](https://travis-ci.org/feelfreelinux/WykopMobilny.svg?branch=master)](https://travis-ci.org/feelfreelinux/WykopMobilny) [![Discord](https://img.shields.io/discord/455024671440633857.svg)](https://discord.gg/WgQZJD3)
+
 Nieoficjalny klient [wykop.pl](https://wykop.pl) na Android, napisany w Kotlin.
 
 <img src="screenshots/link_details_light.png" height="33%" width="33%"><img src="screenshots/mainpage_dark.png" height="33%" width="33%"><img src="screenshots/tag_light.png" height="33%" width="33%">
