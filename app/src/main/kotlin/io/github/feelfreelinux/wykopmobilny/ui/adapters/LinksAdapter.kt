@@ -39,6 +39,10 @@ class LinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
         }
     }
 
+    override fun addData(items: List<Link>, shouldClearAdapter: Boolean) {
+        super.addData(items.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }, shouldClearAdapter)
+    }
+
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is LinkViewHolder -> holder.bindView(data[position])

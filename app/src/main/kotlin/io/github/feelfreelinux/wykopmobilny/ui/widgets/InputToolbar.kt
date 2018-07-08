@@ -26,11 +26,6 @@ import kotlinx.android.synthetic.main.input_toolbar.view.*
 import android.os.Parcel
 import android.widget.EditText
 
-
-
-
-
-
 interface InputToolbarListener {
     fun sendPhoto(photo : TypedInputStream, body : String, containsAdultContent: Boolean)
     fun sendPhoto(photo : String?, body : String, containsAdultContent : Boolean)

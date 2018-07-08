@@ -31,6 +31,10 @@ class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, 
         }
     }
 
+    override fun addData(items: List<EntryLink>, shouldClearAdapter: Boolean) {
+        super.addData(items.filterNot { settingsPreferencesApi.hideBlacklistedViews && if (it.entry != null) it.entry!!.isBlocked else it.link!!.isBlocked }, shouldClearAdapter)
+    }
+
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             LinkViewHolder.TYPE_IMAGE, LinkViewHolder.TYPE_NOIMAGE ->

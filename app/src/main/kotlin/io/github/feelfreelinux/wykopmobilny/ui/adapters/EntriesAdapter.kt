@@ -35,6 +35,10 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
         }
     }
 
+    override fun addData(items: List<Entry>, shouldClearAdapter: Boolean) {
+        super.addData(items.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }, shouldClearAdapter)
+    }
+
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         if (holder is EntryViewHolder) {
             holder.bindView(data[position])

@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
@@ -36,7 +37,7 @@ class EntryAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
                 holder.bindView(entry!!)
             }
             is EntryCommentViewHolder -> {
-                val comment = entry!!.comments[position - 1]
+                val comment = entry!!.comments.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }[position - 1]
                 holder.bindView(comment, entry?.author, commentId ?: 0)
             }
             is BlockedViewHolder -> {
@@ -55,7 +56,7 @@ class EntryAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
     }
 
     override fun getItemCount(): Int {
-        entry?.comments?.let {
+        entry?.comments?.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }?.let {
             return it.size + 1
         }
         return 0

@@ -35,6 +35,10 @@ class LinkCommentAdapter @Inject constructor(
         }
     }
 
+    override fun addData(items: List<LinkComment>, shouldClearAdapter: Boolean) {
+        super.addData(items.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }, shouldClearAdapter)
+    }
+
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is TopLinkCommentViewHolder -> holder.bindView(data[position], false)

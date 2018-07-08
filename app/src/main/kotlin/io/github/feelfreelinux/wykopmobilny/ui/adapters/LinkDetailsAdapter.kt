@@ -28,7 +28,7 @@ class LinkDetailsAdapter @Inject constructor(val userManagerApi: UserManagerApi,
     lateinit var linkCommentActionListener: LinkCommentActionListener
     lateinit var linkHeaderActionListener: LinkHeaderActionListener
     var link: Link? = null
-    val commentsList : List<LinkComment>? get() = link?.comments?.filterNot { it.isParentCollapsed }
+    val commentsList : List<LinkComment>? get() = link?.comments?.filterNot { it.isParentCollapsed || (it.isBlocked && settingsPreferencesApi.hideBlacklistedViews) }
 
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         if (holder.itemViewType == LinkHeaderViewHolder.TYPE_HEADER) {

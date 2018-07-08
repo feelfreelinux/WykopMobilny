@@ -1,8 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import io.github.feelfreelinux.wykopmobilny.base.adapter.EndlessProgressAdapter
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
@@ -16,12 +17,16 @@ class EntryCommentAdapter @Inject constructor(
         val userManagerApi: UserManagerApi,
         val settingsPreferencesApi: SettingsPreferencesApi,
         val navigatorApi: NewNavigatorApi,
-        val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, EntryComment>() {
+        val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<RecyclerView.ViewHolder, EntryComment>() {
     // Required field, interacts with presenter. Otherwise will throw exception
     lateinit var entryCommentActionListener : EntryCommentActionListener
 
     override fun getViewType(position: Int): Int {
         return EntryCommentViewHolder.getViewTypeForEntryComment(data[position])
+    }
+
+    override fun addData(items: List<EntryComment>, shouldClearAdapter: Boolean) {
+        super.addData(items.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }, shouldClearAdapter)
     }
 
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {

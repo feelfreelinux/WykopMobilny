@@ -46,6 +46,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.net.Uri
 import android.os.Handler
+import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.internal.NavigationMenuView
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
@@ -155,6 +157,15 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
 
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
+        AppUpdater(this)
+                .setUpdateFrom(UpdateFrom.GITHUB)
+                .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
+                .setTitleOnUpdateAvailable(R.string.update_available)
+                .setContentOnUpdateAvailable(R.string.update_app)
+                .setButtonDismiss(R.string.cancel)
+                .setButtonDoNotShowAgain(R.string.do_not_show_again)
+                .setButtonUpdate(R.string.update)
+                .start()
         //presenter.checkUpdates()
         checkBlacklist()
 

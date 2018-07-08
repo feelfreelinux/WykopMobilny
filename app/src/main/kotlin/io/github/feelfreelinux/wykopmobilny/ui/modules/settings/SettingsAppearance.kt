@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -15,6 +16,9 @@ import dagger.android.support.HasSupportFragmentInjector
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import javax.inject.Inject
+import android.os.Build
+
+
 
 class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
     @Inject
@@ -24,6 +28,7 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
     override fun supportFragmentInjector(): AndroidInjector<androidx.fragment.app.Fragment> {
         return childFragmentInjector
     }
+
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -72,11 +77,6 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
                 "useDarkTheme", "useAmoledTheme" -> restartActivity()
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {

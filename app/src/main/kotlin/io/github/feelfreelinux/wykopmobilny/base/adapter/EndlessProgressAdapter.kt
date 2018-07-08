@@ -47,7 +47,7 @@ abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerV
         isLoading = true
     }
 
-    fun addData(items: List<A>, shouldClearAdapter: Boolean) {
+    open fun addData(items: List<A>, shouldClearAdapter: Boolean) {
         if (shouldClearAdapter || dataset.isEmpty()) {
             dataset.apply {
                 clear()

@@ -41,10 +41,8 @@ class NetworkModule {
         val httpLogging = HttpLoggingInterceptor()
         httpLogging.level = HttpLoggingInterceptor.Level.BASIC
         return OkHttpClient.Builder()
-                //.addNetworkInterceptor(CacheControlInterceptor(context))
                 .addInterceptor(ApiSignInterceptor(userManagerApi))
                 .addNetworkInterceptor(httpLogging)
-                //.cache(cache)
                 .protocols(listOf(Protocol.HTTP_1_1))
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)

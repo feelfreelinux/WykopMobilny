@@ -3,7 +3,7 @@
 
     <style name="WykopAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="preferenceTheme">@style/WykopPreferencesTheme</item>
         <item name="textColorGrey">@color/textColorGrey</item>
         <item name="textColorLight">@color/textColorLight</item>
         <item name="textColorButtonToolbar">@color/textColorButtonToolbar</item>
@@ -550,6 +550,14 @@
         <item name="textSizeHuge">@dimen/text_huge_size_huge</item>m>
     </style>
 
+    <style name="WykopPreferencesTheme" parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceFragmentListStyle">@style/NoMarginPreferences</item>
+    </style>
+
+    <style name="NoMarginPreferences">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+    </style>
     <!-- SwipeBackLayout -->
     <style name="SwipeBackLayout">
         <item name="edge_size">50dip</item>
