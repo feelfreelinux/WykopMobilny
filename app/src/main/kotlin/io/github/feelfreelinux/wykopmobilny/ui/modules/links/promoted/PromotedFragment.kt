@@ -15,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.entries_fragment.*
 import javax.inject.Inject
 
@@ -69,6 +70,7 @@ class PromotedFragment : BaseLinksFragment(), PromotedView, BaseNavigationView {
 
     override fun onDestroy() {
         super.onDestroy()
+        printout("destroyen")
         presenter.unsubscribe()
     }
 }

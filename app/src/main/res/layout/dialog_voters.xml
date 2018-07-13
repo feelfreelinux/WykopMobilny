@@ -37,6 +37,8 @@
             android:id="@+id/votersTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
             android:textSize="@dimen/dialog_voters_text_size"
             android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
             android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"

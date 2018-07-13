@@ -75,7 +75,7 @@ open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView, S
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
+            (recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
         }
     }
 

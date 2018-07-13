@@ -100,7 +100,7 @@ open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView, androidx.s
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
+            (recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
         }
     }
 
