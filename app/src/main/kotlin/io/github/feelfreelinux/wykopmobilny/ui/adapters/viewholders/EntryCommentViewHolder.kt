@@ -144,8 +144,8 @@ class EntryCommentViewHolder(override val containerView: View,
         } else entryContentTextView.isVisible = false
 
 
-        if ( type == TYPE_EMBED) {
-            embedView.setEmbed(comment.embed!!, settingsPreferencesApi, navigatorApi, comment.isNsfw)
+        if (comment.embed != null && type == TYPE_EMBED) {
+            embedView.setEmbed(comment.embed, settingsPreferencesApi, navigatorApi, comment.isNsfw)
         }
 
         if (enableClickListener) {

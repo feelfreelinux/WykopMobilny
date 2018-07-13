@@ -41,7 +41,7 @@ class EntryCommentAdapter @Inject constructor(
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EntryCommentViewHolder -> holder.bindView(data[position], null)
-            is BlockedViewHolder -> { holder?.bindView(data[position]) }
+            is BlockedViewHolder -> { holder.bindView(data[position]) }
         }
     }
 

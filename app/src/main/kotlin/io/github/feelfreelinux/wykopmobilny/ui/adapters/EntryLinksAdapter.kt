@@ -1,9 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.adapter.EndlessProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
@@ -47,19 +44,21 @@ class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, 
 
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is EntryViewHolder -> holder.bindView(data[position].entry!!)
-            is LinkViewHolder -> holder.bindView(data[position].link!!)
+            is EntryViewHolder -> {
+                data[position].entry?.let { holder.bindView(it) }
+            }
+            is LinkViewHolder -> data[position].link?.let { holder.bindView(it) }
             is BlockedViewHolder -> {
                 val data = data[position]
                 data.link?.let {
-                    holder.bindView(data.link!!)
+                    holder.bindView(it)
                 }
 
                 data.entry?.let {
-                    holder.bindView(data.entry!!)
+                    holder.bindView(it)
                 }
             }
-            is SimpleLinkViewHolder -> holder.bindView(data[position].link!!)
+            is SimpleLinkViewHolder -> data[position].link?.let { holder.bindView(it) }
         }
     }
 

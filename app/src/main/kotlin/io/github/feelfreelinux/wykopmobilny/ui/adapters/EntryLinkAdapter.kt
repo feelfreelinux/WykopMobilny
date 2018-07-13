@@ -15,9 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreference
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi : SettingsPreferencesApi,
-                                           val entryPresenterFactory: EntryPresenterFactory,
-                                           val linkItemPresenterFactory: LinkItemPresenterFactory) : AdvancedProgressAdapter<EntryLink>() {
+class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi : SettingsPreferencesApi) : AdvancedProgressAdapter<EntryLink>() {
     companion object {
         val ENTRY_VIEWTYPE = 1
         val LINK_VIEWTYPE = 2
@@ -42,9 +40,4 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
             else (holder as? LinkViewHolder)?.bindView(item.link!!)
         }
     }
-
-    override fun onViewRecycled(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
-        super.onViewRecycled(holder)
-    }
-
 }

@@ -96,12 +96,12 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView, androidx.swipe
      */
     override fun addItems(items : List<Link>, shouldRefresh : Boolean) {
         linksAdapter.addData(items, shouldRefresh)
-        swipeRefresh.isRefreshing = false
-        loadingView.isVisible = false
+        swipeRefresh?.isRefreshing = false
+        loadingView?.isVisible = false
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+            (recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
         }
     }
 

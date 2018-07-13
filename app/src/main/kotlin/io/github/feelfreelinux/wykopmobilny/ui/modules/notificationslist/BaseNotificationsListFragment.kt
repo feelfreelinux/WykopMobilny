@@ -12,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
@@ -29,6 +30,7 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
         notification.new = false
         notificationAdapter.notifyDataSetChanged()
         notification.url?.let {
+            printout(notification.url)
             linkHandler.handleUrl(notification.url, true)
         }
     }

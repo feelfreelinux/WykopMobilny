@@ -70,12 +70,12 @@ open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView, S
      */
     override fun addItems(items : List<LinkComment>, shouldRefresh : Boolean) {
         linkCommentsAdapter.addData(items, shouldRefresh)
-        swipeRefresh.isRefreshing = false
-        loadingView.isVisible = false
+        swipeRefresh?.isRefreshing = false
+        loadingView?.isVisible = false
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+            (recyclerView.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
         }
     }
 
