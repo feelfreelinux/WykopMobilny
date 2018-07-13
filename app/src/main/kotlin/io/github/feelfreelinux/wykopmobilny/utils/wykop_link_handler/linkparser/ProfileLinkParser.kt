@@ -8,7 +8,7 @@ class ProfileLinkParser {
             val possibleMatchers = arrayOf(
                     "wpisy", "komentarze", "plusowane-wpisy",
                     "dodane", "opublikowane", "komentarze", "powiązane", "wykopane",
-                    "obserwujący", "obserwowani")
+                    "obserwujący", "obserwowani", "osiagniecia")
             return if (possibleMatchers.contains(possibleNickMatch)) {
                 data.substringAfter(possibleNickMatch + "/").substringBefore("/")
             } else possibleNickMatch

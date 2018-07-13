@@ -38,21 +38,21 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
                     "wykop" -> {
                         val resource = url.substringAfter("wykop.pl/")
                         when (resource.substringBefore(Companion.DELIMITER)) {
-                            Companion.ENTRY_MATCHER -> {
+                            ENTRY_MATCHER -> {
                                 val entryId = EntryLinkParser.getEntryId(url)
                                 if (entryId != null) EntryActivity.createIntent(context, entryId, EntryLinkParser.getEntryCommentId(url), false)
                                 else null
                             }
-                            Companion.TAG_MATCHER -> {
+                            TAG_MATCHER -> {
                                 TagActivity.createIntent(context, TagLinkParser.getTag(url))
                             }
-                            Companion.PM_MATCHER -> {
+                            PM_MATCHER -> {
                                 ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
                             }
-                            Companion.PROFILE_MATCHER -> {
+                            PROFILE_MATCHER -> {
                                 ProfileActivity.createIntent(context, ProfileLinkParser.getProfile(url))
                             }
-                            Companion.LINK_MATCHER -> {
+                            LINK_MATCHER -> {
                                 val linkId = LinkParser.getLinkId(url)
                                 if (linkId != null) LinkDetailsActivity.createIntent(context, linkId, LinkParser.getLinkCommentId(url))
                                 else null
