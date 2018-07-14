@@ -66,6 +66,7 @@
     <attr name="markdownInsertSpoiler" format="reference"/>
     <attr name="markdownSend" format="reference"/>
     <!-- DRAWABLES - BOTTOMSHEET MENU -->
+    <attr name="bottomSheetCamera" format="reference"/>
     <attr name="bottomSheetLink" format="reference"/>
     <attr name="bottomSheetObserve" format="reference"/>
     <attr name="bottomSheetUnobserve" format="reference"/>

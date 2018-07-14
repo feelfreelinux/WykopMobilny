@@ -3,7 +3,10 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import androidx.core.app.ShareCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -35,9 +38,18 @@ import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
+import android.os.Environment.DIRECTORY_PICTURES
+import androidx.core.content.FileProvider
+import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity.Companion.USER_ACTION_INSERT_PHOTO_CAMERA
+import kotlinx.android.synthetic.main.abc_popup_menu_item_layout.*
+import java.io.File
+import java.io.IOException
+import java.util.*
+
 
 class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener, EntryCommentViewListener {
     lateinit var votersDialogListener : VotersDialogListener
+    lateinit var contentUri: Uri
 
     override fun openVotersMenu() {
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
@@ -219,6 +231,11 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                     inputToolbar.setPhoto(data?.data)
                 }
 
+                USER_ACTION_INSERT_PHOTO_CAMERA -> {
+                    inputToolbar.setPhoto(contentUri)
+
+                }
+
                 BaseInputActivity.EDIT_ENTRY_COMMENT -> {
                     swiperefresh.isRefreshing = true
                     onRefresh()
@@ -230,5 +247,12 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
                 }
             }
         }
+    }
+
+    override fun openCamera(uri : Uri) {
+        contentUri = uri
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+        startActivityForResult(intent, BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA)
     }
 }

@@ -23,6 +23,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
 import io.github.feelfreelinux.wykopmobilny.R.id.editText
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.inputmethod.InputMethodManager
 
 
@@ -31,6 +33,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(this, suggestionApi) }
     val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(this, suggestionApi) }
 
+    lateinit var contentUri : Uri
     companion object {
         const val EXTRA_RECEIVER = "EXTRA_RECEIVER"
         const val EXTRA_BODY = "EXTRA_BODY"
@@ -39,6 +42,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         const val EDIT_ENTRY = 108
         const val EDIT_LINK_COMMENT = 109
         const val USER_ACTION_INSERT_PHOTO = 142
+        const val USER_ACTION_INSERT_PHOTO_CAMERA = 143
     }
 
     abstract var presenter : T
@@ -127,6 +131,10 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
                 USER_ACTION_INSERT_PHOTO -> {
                     markupToolbar.photo = data?.data
                 }
+
+                USER_ACTION_INSERT_PHOTO_CAMERA -> {
+                    markupToolbar.photo = contentUri
+                }
             }
         }
     }
@@ -159,5 +167,12 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent,
                 getString(R.string.insert_photo_galery)), USER_ACTION_INSERT_PHOTO)
+    }
+
+    override fun openCamera(uri : Uri) {
+        contentUri = uri
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+        startActivityForResult(intent, BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA)
     }
 }

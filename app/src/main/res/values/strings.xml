@@ -227,5 +227,6 @@
     <string name="blacklist_import_action">Zaimportuj</string>
     <string name="text_copied">Skopiowano do schowka</string>
     <string name="entry">Wpis</string>
+    <string name="insert_photo_camera">Zrób zdjęcie aparatem</string>
 
 </resources>

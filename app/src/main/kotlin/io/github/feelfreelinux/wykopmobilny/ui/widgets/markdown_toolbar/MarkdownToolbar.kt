@@ -12,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EditTextFormatDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.formatDialogCallback
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
+import io.github.feelfreelinux.wykopmobilny.utils.CameraUtils
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.getMimeType
 import io.github.feelfreelinux.wykopmobilny.utils.queryFileName
@@ -24,6 +25,7 @@ interface MarkdownToolbarListener {
     var textBody : String
     fun setSelection(start : Int, end : Int)
     fun openGalleryImageChooser()
+    fun openCamera(uri : Uri)
 }
 
 class MarkdownToolbar : LinearLayout {
@@ -34,7 +36,6 @@ class MarkdownToolbar : LinearLayout {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     var markdownListener : MarkdownToolbarListener? = null
-
     private val markdownDialogs by lazy { MarkdownDialogs(context) }
 
     private var formatText: formatDialogCallback = {
@@ -102,6 +103,12 @@ class MarkdownToolbar : LinearLayout {
         bottomSheetView.apply {
             insert_gallery.setOnClickListener {
                 markdownListener?.openGalleryImageChooser()
+                dialog.dismiss()
+            }
+
+            insert_camera.setOnClickListener {
+                val cameraUri = CameraUtils.createPictureUri(context)
+                markdownListener?.openCamera(cameraUri!!)
                 dialog.dismiss()
             }
 

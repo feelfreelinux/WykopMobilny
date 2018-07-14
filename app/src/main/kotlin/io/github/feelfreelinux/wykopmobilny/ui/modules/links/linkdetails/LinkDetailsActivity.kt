@@ -3,7 +3,9 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -55,6 +57,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         adapter.notifyDataSetChanged()
     }
 
+    lateinit var contentUri : Uri
     override val enableSwipeBackLayout: Boolean = true
     @Inject
     lateinit var settingsApi: SettingsPreferencesApi
@@ -283,6 +286,10 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
                     onRefresh()
                 }
 
+                BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA -> {
+                    inputToolbar.setPhoto(contentUri)
+                }
+
                 BaseInputActivity.EDIT_LINK_COMMENT -> {
                     val commentId = data?.getIntExtra("commentId", -1)
                     onRefresh()
@@ -290,6 +297,13 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
                 }
             }
         }
+    }
+
+    override fun openCamera(uri : Uri) {
+        contentUri = uri
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+        startActivityForResult(intent, BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA)
     }
 
     override fun onDestroy() {

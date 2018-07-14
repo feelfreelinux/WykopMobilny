@@ -30,6 +30,7 @@ interface InputToolbarListener {
     fun sendPhoto(photo : TypedInputStream, body : String, containsAdultContent: Boolean)
     fun sendPhoto(photo : String?, body : String, containsAdultContent : Boolean)
     fun openGalleryImageChooser()
+    fun openCamera(uri : Uri)
 }
 
 class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, MarkdownToolbarListener {
@@ -42,6 +43,10 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
 
     override fun setSelection(start : Int, end : Int) {
         body.setSelection(start, end)
+    }
+
+    override fun openCamera(uri : Uri) {
+        inputToolbarListener?.openCamera(uri)
     }
 
     override var textBody: String

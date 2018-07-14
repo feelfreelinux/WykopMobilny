@@ -8,6 +8,22 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="?attr/backgroundColor">
+    <LinearLayout
+        android:id="@+id/insert_camera"
+        style="@style/BottomSheetMenuItem">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="?attr/bottomSheetCamera"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
+            android:text="@string/insert_photo_camera"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/insert_gallery"

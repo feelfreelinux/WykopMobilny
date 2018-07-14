@@ -3,7 +3,9 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
@@ -34,6 +36,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
     @Inject lateinit var presenter: ConversationPresenter
     @Inject lateinit var userManagerApi : UserManagerApi
     @Inject lateinit var suggestionApi : SuggestApi
+    lateinit var contentUri : Uri
     lateinit var conversationDataFragment: DataFragment<FullConversation>
 
     companion object {
@@ -154,6 +157,10 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
                 BaseInputActivity.USER_ACTION_INSERT_PHOTO -> {
                     inputToolbar.setPhoto(data?.data)
                 }
+
+                BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA -> {
+                    inputToolbar.setPhoto(contentUri)
+                }
             }
         }
     }
@@ -168,5 +175,12 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
     override fun resetInputbarState() {
         inputToolbar.resetState()
+    }
+
+    override fun openCamera(uri : Uri) {
+        contentUri = uri
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+        startActivityForResult(intent, BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA)
     }
 }

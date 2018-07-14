@@ -73,6 +73,7 @@
         <item name="markdownInsertSpoiler">@drawable/ic_markdowntoolbar_spoiler</item>
         <item name="markdownSend">@drawable/ic_send</item>
 
+        <item name="bottomSheetCamera">@drawable/ic_camera</item>
         <item name="bottomSheetLink">@drawable/ic_link</item>
         <item name="bottomSheetObserve">@drawable/ic_observe</item>
         <item name="bottomSheetUnobserve">@drawable/ic_unobserve</item>
@@ -170,6 +171,7 @@
         <item name="markdownInsertPhoto">@drawable/ic_markdowntoolbar_photo_dark</item>
         <item name="markdownSend">@drawable/ic_send_dark</item>
 
+        <item name="bottomSheetCamera">@drawable/ic_camera_dark</item>
         <item name="bottomSheetLink">@drawable/ic_link_dark</item>
         <item name="bottomSheetObserve">@drawable/ic_observe_dark</item>
         <item name="bottomSheetUnobserve">@drawable/ic_unobserve_dark</item>
