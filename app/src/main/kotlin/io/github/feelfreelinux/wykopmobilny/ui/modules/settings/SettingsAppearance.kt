@@ -8,7 +8,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
-import androidx.preference.PreferenceFragmentCompat
+import com.takisoft.preferencex.PreferenceFragmentCompat
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
@@ -35,7 +35,7 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
         super.onAttach(context)
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences_appearance)
         findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
         findPreference("cutImageProportion").isEnabled = settingsApi.cutImages

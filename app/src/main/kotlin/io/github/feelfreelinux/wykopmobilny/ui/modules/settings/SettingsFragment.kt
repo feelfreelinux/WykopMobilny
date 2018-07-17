@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
+import com.takisoft.preferencex.PreferenceFragmentCompat
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
@@ -28,7 +28,6 @@ import android.provider.Settings
 import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionDatabase
-import kotlinx.android.synthetic.main.link_related_layout.*
 
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
@@ -46,7 +45,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         super.onAttach(context)
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences)
         (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
             summary = entry

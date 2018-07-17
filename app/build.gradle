@@ -106,6 +106,8 @@ dependencies {
     implementation 'androidx.preference:preference:1.0.0-beta01'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0-beta01'
     implementation 'com.google.android.material:material:1.0.0-beta01'
+    implementation "androidx.preference:preference:1.0.0-beta01"
+    implementation 'com.takisoft.preferencex:preferencex:1.0.0-alpha1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     implementation 'androidx.browser:browser:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'

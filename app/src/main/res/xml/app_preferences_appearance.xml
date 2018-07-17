@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sample="http://schemas.android.com/apk/res-auto">
 
-    <androidx.preference.PreferenceCategory
+    <com.takisoft.preferencex.PreferenceCategory
         android:title="@string/pref_appearance">
 
         <androidx.preference.CheckBoxPreference
@@ -28,9 +28,9 @@
             android:entries="@array/preferences_fontsize"
             android:entryValues="@array/preferences_fontsize_values"
             android:defaultValue="normal"/>
-    </androidx.preference.PreferenceCategory>
+    </com.takisoft.preferencex.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory
+    <com.takisoft.preferencex.PreferenceCategory
         android:title="Ustawienia odtwarzacza">
 
         <androidx.preference.CheckBoxPreference
@@ -42,9 +42,9 @@
             android:key="enableEmbedPlayer"
             android:title="Użyj playera dla innych mediów"
             android:defaultValue="true"/>
-    </androidx.preference.PreferenceCategory>
+    </com.takisoft.preferencex.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory
+    <com.takisoft.preferencex.PreferenceCategory
         android:title="Mikroblog">
         <androidx.preference.ListPreference
             android:key="hotEntriesScreen"
@@ -63,9 +63,9 @@
             android:title="@string/open_spoilers_in_dialog"
             android:defaultValue="true"/>
 
-    </androidx.preference.PreferenceCategory>
+    </com.takisoft.preferencex.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory
+    <com.takisoft.preferencex.PreferenceCategory
         android:title="Znaleziska">
 
         <androidx.preference.CheckBoxPreference
@@ -95,9 +95,9 @@
             android:title="Zwijaj wszystkie komentarze"
             android:defaultValue="false"/>
 
-    </androidx.preference.PreferenceCategory>
+    </com.takisoft.preferencex.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory
+    <com.takisoft.preferencex.PreferenceCategory
         android:title="@string/app_config_images">
 
         <androidx.preference.CheckBoxPreference
@@ -110,7 +110,7 @@
             android:title="@string/app_config_images_cut"
             android:defaultValue="true"/>
 
-        <com.pavelsikun.seekbarpreference.SeekBarPreferenceCompat
+        <androidx.preference.SeekBarPreference
             android:key="cutImageProportion"
             android:title="@string/app_config_images_cut_image_proportion"
             android:defaultValue="60"
@@ -120,6 +120,6 @@
             sample:msbp_measurementUnit="%"
             sample:msbp_dialogEnabled="false"/>
 
-    </androidx.preference.PreferenceCategory>
+    </com.takisoft.preferencex.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

@@ -6,7 +6,7 @@
         android:key="appearance"
         android:title="Ustawienia wyglądu aplikacji"/>
 
-    <androidx.preference.PreferenceCategory
+    <com.takisoft.preferencex.PreferenceCategory
         android:title="@string/pref_notifications">
 
         <androidx.preference.CheckBoxPreference
@@ -27,9 +27,9 @@
             android:entryValues="@array/preferences_notifications_frequency_values"
             android:defaultValue="15"/>
 
-    </androidx.preference.PreferenceCategory>
+    </com.takisoft.preferencex.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory
+    <com.takisoft.preferencex.PreferenceCategory
         android:title="@string/pref_content_filter">
 
         <androidx.preference.CheckBoxPreference
@@ -53,7 +53,7 @@
             android:defaultValue="false"/>
 
 
-    </androidx.preference.PreferenceCategory>
+    </com.takisoft.preferencex.PreferenceCategory>
 
     <androidx.preference.Preference
         android:key="blacklist"
