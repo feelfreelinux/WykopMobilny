@@ -5,9 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.preference.CheckBoxPreference
-import androidx.preference.ListPreference
-import androidx.preference.Preference
+
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -26,6 +24,9 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
+import androidx.preference.CheckBoxPreference
+import androidx.preference.ListPreference
+import androidx.preference.Preference
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionDatabase
 
@@ -76,6 +77,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         if (pref is CheckBoxPreference) {
             when (pref.key) {
                 "showNotifications" -> {
+                    findPreference("notificationsSchedulerDelay").isEnabled = pref.isChecked
+                    findPreference("piggyBackPushNotifications").isEnabled = pref.isChecked
                     if (pref.isChecked) {
                         WykopNotificationsJob.schedule(settingsApi)
                     } else {
@@ -84,6 +87,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 }
 
                 "piggyBackPushNotifications" -> {
+                    findPreference("notificationsSchedulerDelay").isEnabled = !pref.isChecked
                     (findPreference("showNotifications") as Preference).isEnabled = !pref.isChecked
                     if (pref.isChecked) {
                         if (isOfficialAppInstalled()) {
@@ -110,6 +114,15 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                         } else {
                             WykopNotificationsJob.cancel()
                         }
+                    }
+                }
+            }
+        } else if (pref is ListPreference) {
+            when (pref.key) {
+                "notificationsSchedulerDelay" -> {
+                    (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
+                        summary = entry
+                        WykopNotificationsJob.schedule(settingsApi)
                     }
                 }
             }

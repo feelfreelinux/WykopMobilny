@@ -3,7 +3,6 @@
 
     <style name="WykopAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_gradient</item>
-        <item name="preferenceTheme">@style/WykopPreferencesTheme</item>
         <item name="textColorGrey">@color/textColorGrey</item>
         <item name="textColorLight">@color/textColorLight</item>
         <item name="textColorButtonToolbar">@color/textColorButtonToolbar</item>

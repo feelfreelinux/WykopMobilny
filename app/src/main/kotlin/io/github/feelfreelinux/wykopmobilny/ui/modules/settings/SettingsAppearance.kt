@@ -79,6 +79,11 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    }
+
     override fun onPause() {
         super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)

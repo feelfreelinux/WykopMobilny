@@ -29,7 +29,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "io.github.feelfreelinux.wykopmobilny"
-        minSdkVersion 17
+        minSdkVersion 15
         targetSdkVersion 28
         versionCode project.ext.versionMajor * 10000 + project.ext.versionMinor * 1000 + project.ext.versionPatch * 100 + project.ext.versionBuild
         versionName "${project.ext.versionMajor}.${project.ext.versionMinor}.${project.ext.versionPatch}.${project.ext.versionBuild}"
@@ -122,10 +122,9 @@ dependencies {
     // Utils
     implementation 'com.bugsnag:bugsnag-android:4.5.0'
     implementation "org.ocpsoft.prettytime:prettytime:$versions.prettytime"
-    implementation 'com.jsibbold:zoomage:1.1.0'
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
     implementation 'com.pavelsikun:material-seekbar-preference:2.3.0'
-    implementation 'com.github.feelfreelinux:Slidr:v2.2'
+    implementation 'com.github.feelfreelinux:Slidr:2.2.1'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
