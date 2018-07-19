@@ -123,8 +123,5 @@ abstract class ActivityBuilder {
     abstract fun bindAddLinkActivity() : AddlinkActivity
 
     @ContributesAndroidInjector()
-    abstract fun bindNotificationPiggyback() : NotificationPiggyback
-
-    @ContributesAndroidInjector()
     abstract fun bindReadNotificationsReceiver() : ReadNotificationsBroadcastReceiver
 }

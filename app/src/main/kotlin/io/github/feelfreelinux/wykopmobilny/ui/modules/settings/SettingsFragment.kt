@@ -48,6 +48,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences)
+        (findPreference("piggyBackPushNotifications") as CheckBoxPreference).isEnabled = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
         (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
             summary = entry
         }
