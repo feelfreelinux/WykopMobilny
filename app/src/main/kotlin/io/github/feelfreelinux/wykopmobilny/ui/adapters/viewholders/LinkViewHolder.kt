@@ -1,9 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginTop
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
@@ -55,7 +58,14 @@ class LinkViewHolder(override val containerView: View,
 
     fun inflateCorrectImageView() {
         previewImageView = when (settingsApi.linkImagePosition) {
-            "top" -> image_top.inflate() as ImageView
+            "top" -> {
+                val img = image_top.inflate() as ImageView
+                if (settingsApi.linkShowAuthor) {
+                    val params = img.layoutParams as ViewGroup.MarginLayoutParams
+                    params.topMargin = (img.context.resources.displayMetrics.density * 8).toInt()
+                }
+                img
+            }
             "right" -> image_right.inflate() as ImageView
             "bottom" -> image_bottom.inflate() as ImageView
             else -> image_left.inflate() as ImageView
