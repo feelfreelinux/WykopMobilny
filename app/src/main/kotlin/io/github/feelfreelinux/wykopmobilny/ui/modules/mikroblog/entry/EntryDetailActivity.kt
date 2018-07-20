@@ -40,6 +40,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import android.os.Environment.DIRECTORY_PICTURES
 import androidx.core.content.FileProvider
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity.Companion.USER_ACTION_INSERT_PHOTO_CAMERA
 import kotlinx.android.synthetic.main.abc_popup_menu_item_layout.*
 import java.io.File
@@ -218,7 +219,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         presenter.addComment(body, photo, containsAdultContent)
     }
 
-    override fun sendPhoto(photo: TypedInputStream, body: String, containsAdultContent: Boolean) {
+    override fun sendPhoto(photo: WykopImageFile, body: String, containsAdultContent: Boolean) {
         presenter.addComment(body, photo, containsAdultContent)
     }
 

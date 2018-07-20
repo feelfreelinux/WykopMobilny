@@ -2,20 +2,16 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar
 
 import android.content.Context
 import android.net.Uri
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EditTextFormatDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.formatDialogCallback
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
 import io.github.feelfreelinux.wykopmobilny.utils.CameraUtils
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.getMimeType
-import io.github.feelfreelinux.wykopmobilny.utils.queryFileName
 import kotlinx.android.synthetic.main.imagechooser_bottomsheet.view.*
 import kotlinx.android.synthetic.main.markdown_toolbar.view.*
 
@@ -138,15 +134,9 @@ class MarkdownToolbar : LinearLayout {
         floatingImageView?.loadPhotoUrl(url)
     }
 
-    fun getPhotoTypedInputStream(): TypedInputStream? {
+    fun getWykopImageFile(): WykopImageFile? {
         photo?.apply {
-            val contentResolver = getActivityContext()!!.contentResolver
-            photo?.queryFileName(contentResolver)?.apply {
-                return TypedInputStream(
-                        this,
-                        getMimeType(contentResolver),
-                        contentResolver.openInputStream(photo))
-            }
+            return WykopImageFile(photo!!, context)
         }
         return null
     }

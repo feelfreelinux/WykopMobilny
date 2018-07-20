@@ -25,9 +25,10 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
 import android.os.Parcel
 import android.widget.EditText
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 
 interface InputToolbarListener {
-    fun sendPhoto(photo : TypedInputStream, body : String, containsAdultContent: Boolean)
+    fun sendPhoto(photo : WykopImageFile, body : String, containsAdultContent: Boolean)
     fun sendPhoto(photo : String?, body : String, containsAdultContent : Boolean)
     fun openGalleryImageChooser()
     fun openCamera(uri : Uri)
@@ -119,9 +120,9 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
         })
         send.setOnClickListener {
             showProgress(true)
-            val typedInputStream = markdownToolbar.getPhotoTypedInputStream()
-            if (typedInputStream != null) {
-                inputToolbarListener?.sendPhoto(typedInputStream, body.text.toString(), markdownToolbar.containsAdultContent)
+            val wykopImageFile = markdownToolbar.getWykopImageFile()
+            if (wykopImageFile != null) {
+                inputToolbarListener?.sendPhoto(wykopImageFile, body.text.toString(), markdownToolbar.containsAdultContent)
             } else {
                 inputToolbarListener?.sendPhoto(markdownToolbar.photoUrl, body.text.toString(), markdownToolbar.containsAdultContent)
             }

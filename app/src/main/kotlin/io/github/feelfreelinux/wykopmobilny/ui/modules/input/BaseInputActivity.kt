@@ -112,7 +112,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.send -> {
-                val typedInputStream = markupToolbar.getPhotoTypedInputStream()
+                val typedInputStream = markupToolbar.getWykopImageFile()
                 if (typedInputStream != null) {
                     presenter.sendWithPhoto(typedInputStream, markupToolbar.containsAdultContent)
                 } else {

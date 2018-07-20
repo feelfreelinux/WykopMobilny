@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment
 
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
@@ -21,7 +22,7 @@ class EditEntryCommentPresenter(private val schedulers: Schedulers, private val 
         )
     }
 
-    override fun sendWithPhoto(photo: TypedInputStream, containsAdultContent : Boolean) { editComment() }
+    override fun sendWithPhoto(photo: WykopImageFile, containsAdultContent : Boolean) { editComment() }
 
     override fun sendWithPhotoUrl(photo: String?, containsAdultContent: Boolean) { editComment() }
 }

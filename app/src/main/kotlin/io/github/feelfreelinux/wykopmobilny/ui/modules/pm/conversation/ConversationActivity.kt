@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -147,7 +148,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         presenter.sendMessage(body, photo, containsAdultContent)
     }
 
-    override fun sendPhoto(photo: TypedInputStream, body: String, containsAdultContent: Boolean) {
+    override fun sendPhoto(photo: WykopImageFile, body: String, containsAdultContent: Boolean) {
         presenter.sendMessage(body, photo, containsAdultContent)
     }
 

@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.entries
 
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.api.getRequestBody
@@ -17,10 +18,11 @@ import io.reactivex.subjects.ReplaySubject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
+import java.io.File
 import java.io.InputStream
 import java.net.URLEncoder
 
-data class TypedInputStream(val fileName : String, val mimeType : String, val inputStream: InputStream)
+data class TypedInputStream(val fileName : String, val mimeType : String, val file: File)
 
 class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val owmContentFilter: OWMContentFilter) : EntriesApi {
     private val entriesApi by lazy { retrofit.create(EntriesRetrofitApi::class.java) }
@@ -56,8 +58,8 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .compose<VoteResponse>(ErrorHandlerTransformer())
 
 
-    override fun addEntry(body : String, inputStream: TypedInputStream, plus18: Boolean) =
-            entriesApi.addEntry(body.toRequestBody(), plus18.toRequestBody(), inputStream.getFileMultipart())
+    override fun addEntry(body : String, wykopImageFile: WykopImageFile, plus18: Boolean) =
+            entriesApi.addEntry(body.toRequestBody(), plus18.toRequestBody(), wykopImageFile.getFileMultipart())
             .retryWhen(userTokenRefresher)
             .compose<EntryResponse>(ErrorHandlerTransformer())
 
@@ -65,8 +67,8 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .retryWhen(userTokenRefresher)
             .compose<EntryResponse>(ErrorHandlerTransformer())
 
-    override fun addEntryComment(body : String, entryId: Int, inputStream: TypedInputStream, plus18: Boolean) =
-            entriesApi.addEntryComment(body.toRequestBody(), plus18.toRequestBody(), entryId, inputStream.getFileMultipart())
+    override fun addEntryComment(body : String, entryId: Int, wykopImageFile: WykopImageFile, plus18: Boolean) =
+            entriesApi.addEntryComment(body.toRequestBody(), plus18.toRequestBody(), entryId, wykopImageFile.getFileMultipart())
                     .retryWhen(userTokenRefresher)
                     .compose<EntryCommentResponse>(ErrorHandlerTransformer())
 
@@ -135,8 +137,6 @@ class EntriesRepository(val retrofit: Retrofit, val userTokenRefresher: UserToke
             .compose<List<VoterResponse>>(ErrorHandlerTransformer())
             .map { it.map { VoterMapper.map(it) } }
 
-    private fun TypedInputStream.getFileMultipart() =
-            MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
     private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
     private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
 }

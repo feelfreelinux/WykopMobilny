@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.links
 
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
@@ -126,7 +127,7 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
                     .map { LinkCommentMapper.map(it,owmContentFilter) }
 
-    override fun commentAdd(body: String, plus18 : Boolean, inputStream: TypedInputStream, linkId: Int): Single<LinkComment> =
+    override fun commentAdd(body: String, plus18 : Boolean, inputStream: WykopImageFile, linkId: Int): Single<LinkComment> =
             linksApi.addComment(body.toRequestBody(), plus18.toRequestBody(), linkId, inputStream.getFileMultipart())
                     .retryWhen(userTokenRefresher)
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
@@ -138,7 +139,7 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                         .compose<LinkCommentResponse>(ErrorHandlerTransformer())
                         .map { LinkCommentMapper.map(it,owmContentFilter) }
 
-    override fun commentAdd(body: String, plus18 : Boolean, inputStream: TypedInputStream, linkId: Int, linkComment: Int): Single<LinkComment> =
+    override fun commentAdd(body: String, plus18 : Boolean, inputStream: WykopImageFile, linkId: Int, linkComment: Int): Single<LinkComment> =
             linksApi.addComment(body.toRequestBody(), plus18.toRequestBody(), linkId, linkComment, inputStream.getFileMultipart())
                     .retryWhen(userTokenRefresher)
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
@@ -180,8 +181,6 @@ class LinksRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenR
                     .compose<List<Boolean>>(ErrorHandlerTransformer())
                     .map { it.first() }
 
-    private fun TypedInputStream.getFileMultipart() =
-            MultipartBody.Part.createFormData("embed", fileName, inputStream.getRequestBody(mimeType))!!
     private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
     private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
 

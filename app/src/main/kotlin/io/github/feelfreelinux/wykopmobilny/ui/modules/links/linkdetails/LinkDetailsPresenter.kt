@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails
 
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
@@ -81,7 +82,7 @@ class LinkDetailsPresenter(val schedulers: Schedulers, val linksApi: LinksApi, v
         )
     }
 
-    fun sendReply(body : String, typedInputStream: TypedInputStream, containsAdultContent : Boolean) {
+    fun sendReply(body : String, typedInputStream: WykopImageFile, containsAdultContent : Boolean) {
         val replyCommentId = view!!.getReplyCommentId()
         if (replyCommentId != -1) {
             compositeObservable.add(

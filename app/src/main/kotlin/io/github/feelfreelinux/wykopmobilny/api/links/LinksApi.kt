@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.api.links
 
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
@@ -29,14 +30,14 @@ interface LinksApi {
     fun commentDelete(commentId: Int) : Single<LinkComment>
     fun commentAdd(body : String,
                    plus18 : Boolean,
-                   inputStream: TypedInputStream,
+                   inputStream: WykopImageFile,
                    linkId: Int, linkComment: Int) : Single<LinkComment>
     fun commentAdd(body : String, embed: String?,
                    plus18 : Boolean,
                    linkId: Int, linkComment: Int) : Single<LinkComment>
     fun commentAdd(body : String,
                    plus18 : Boolean,
-                   inputStream: TypedInputStream,
+                   inputStream: WykopImageFile,
                    linkId: Int) : Single<LinkComment>
     fun commentAdd(body : String, embed: String?,
                    plus18 : Boolean,

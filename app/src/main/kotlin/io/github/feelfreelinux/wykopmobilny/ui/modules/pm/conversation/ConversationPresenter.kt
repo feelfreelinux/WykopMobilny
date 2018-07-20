@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation
 
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
@@ -37,7 +38,7 @@ class ConversationPresenter(val schedulers: Schedulers, val pmApi: PMApi) : Base
         )
     }
 
-    fun sendMessage(body: String, photo: TypedInputStream, containsAdultContent : Boolean) {
+    fun sendMessage(body: String, photo: WykopImageFile, containsAdultContent : Boolean) {
         compositeObservable.add(
                 pmApi.sendMessage(body, user, containsAdultContent, photo)
                         .subscribeOn(schedulers.backgroundThread())

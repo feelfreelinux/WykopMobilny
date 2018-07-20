@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit
 
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
@@ -24,7 +25,7 @@ class LinkCommentEditPresenter(val schedulers: Schedulers, val linksApi: LinksAp
         )
     }
 
-    override fun sendWithPhoto(photo: TypedInputStream, containsAdultContent : Boolean) {
+    override fun sendWithPhoto(photo: WykopImageFile, containsAdultContent : Boolean) {
         editLinkComment()
     }
 

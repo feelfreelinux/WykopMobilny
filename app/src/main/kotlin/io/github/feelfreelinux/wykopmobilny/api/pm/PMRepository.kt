@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.api.pm
 
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandler
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
@@ -12,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.Conversatio
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.PMMessageResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConversationResponse
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -40,14 +42,11 @@ class PMRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefr
                     .compose<PMMessageResponse>(ErrorHandlerTransformer())
                     .map { PMMessageMapper.map(it) }
 
-    override fun sendMessage(body : String, user : String, plus18 : Boolean, embed: TypedInputStream) =
+    override fun sendMessage(body : String, user : String, plus18 : Boolean, embed: WykopImageFile) =
             pmretrofitApi.sendMessage(body.toRequestBody(),
                     plus18.toRequestBody(),
                     user,
-                    MultipartBody.Part.createFormData(
-                            "embed",
-                            embed.fileName,
-                            embed.inputStream.getRequestBody(embed.mimeType))!!)
+                    embed.getFileMultipart())
                     .retryWhen(userTokenRefresher)
                     .compose<PMMessageResponse>(ErrorHandlerTransformer())
                     .map { PMMessageMapper.map(it) }

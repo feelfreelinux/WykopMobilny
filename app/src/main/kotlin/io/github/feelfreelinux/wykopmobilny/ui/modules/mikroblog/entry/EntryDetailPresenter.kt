@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry
 
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
@@ -118,7 +119,7 @@ class EntryDetailPresenter(val schedulers: Schedulers, private val entriesApi: E
 
     }
 
-    fun addComment(body : String, photo: TypedInputStream, containsAdultContent : Boolean) {
+    fun addComment(body : String, photo: WykopImageFile, containsAdultContent : Boolean) {
         compositeObservable.add(
                 entriesApi.addEntryComment(body, entryId, photo, containsAdultContent)
                         .subscribeOn(schedulers.backgroundThread())

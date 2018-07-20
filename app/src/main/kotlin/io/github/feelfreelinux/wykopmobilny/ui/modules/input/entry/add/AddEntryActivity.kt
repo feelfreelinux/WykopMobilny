@@ -9,6 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
+import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import javax.inject.Inject
 
@@ -48,6 +49,7 @@ class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivit
                 val imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM) as Uri?
                 imageUri?.let {
                     markupToolbar.photo = imageUri
+                    printout(imageUri.toString())
                 }
             }
         }
