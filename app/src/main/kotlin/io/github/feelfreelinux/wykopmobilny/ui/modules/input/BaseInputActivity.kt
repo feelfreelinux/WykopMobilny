@@ -26,6 +26,8 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.inputmethod.InputMethodManager
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.ZERO_WIDTH_SPACE
 
 
 abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
@@ -47,7 +49,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
 
     abstract var presenter : T
     override var textBody: String
-        get() = body.text.toString()
+        get() = if ((markupToolbar.photoUrl != null || markupToolbar.photo != null) && body.text.isEmpty()) ZERO_WIDTH_SPACE else body.text.toString()
         set(value) { body.setText(value, TextView.BufferType.EDITABLE) }
 
     fun setupSuggestions() {

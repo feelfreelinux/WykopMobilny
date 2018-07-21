@@ -10,6 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EditTextFormatDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.formatDialogCallback
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
 import io.github.feelfreelinux.wykopmobilny.utils.CameraUtils
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import kotlinx.android.synthetic.main.imagechooser_bottomsheet.view.*
@@ -65,7 +66,12 @@ class MarkdownToolbar : LinearLayout {
 
     var photoUrl : String?
         get() = floatingImageView?.photoUrl
-        set(value) { if(value != null) { floatingImageView?.loadPhotoUrl(value) } else floatingImageView?.removeImage() }
+        set(value) { if(value != null) {
+            if (markdownListener is InputToolbar) {
+                (markdownListener as InputToolbar).enableSendButton()
+            }
+            floatingImageView?.loadPhotoUrl(value)
+        } else floatingImageView?.removeImage() }
 
     var photo : Uri?
         get() = floatingImageView?.photo

@@ -27,6 +27,8 @@ import android.os.Parcel
 import android.widget.EditText
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 
+const val ZERO_WIDTH_SPACE = "\u200B\u200B\u200B\u200B\u200B"
+
 interface InputToolbarListener {
     fun sendPhoto(photo : WykopImageFile, body : String, containsAdultContent: Boolean)
     fun sendPhoto(photo : String?, body : String, containsAdultContent : Boolean)
@@ -67,6 +69,7 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
     }
 
     fun setPhoto(photo : Uri?) {
+        enableSendButton()
         markdownToolbar.photo = photo
     }
 
@@ -113,7 +116,7 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (textBody.length > 2 && send.isEnabled == false) {
+                if ((textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null) && !send.isEnabled) {
                     enableSendButton()
                 } else if (textBody.length < 3) disableSendButton()
             }
@@ -122,9 +125,9 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
             showProgress(true)
             val wykopImageFile = markdownToolbar.getWykopImageFile()
             if (wykopImageFile != null) {
-                inputToolbarListener?.sendPhoto(wykopImageFile, body.text.toString(), markdownToolbar.containsAdultContent)
+                inputToolbarListener?.sendPhoto(wykopImageFile, if (body.text.toString().isNotEmpty()) body.text.toString() else ZERO_WIDTH_SPACE, markdownToolbar.containsAdultContent)
             } else {
-                inputToolbarListener?.sendPhoto(markdownToolbar.photoUrl, body.text.toString(), markdownToolbar.containsAdultContent)
+                inputToolbarListener?.sendPhoto(markdownToolbar.photoUrl, if (body.text.toString().isNotEmpty()) body.text.toString() else ZERO_WIDTH_SPACE, markdownToolbar.containsAdultContent)
             }
         }
 
