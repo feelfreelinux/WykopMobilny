@@ -34,6 +34,7 @@ class MarkdownToolbar : LinearLayout {
 
     var markdownListener : MarkdownToolbarListener? = null
     private val markdownDialogs by lazy { MarkdownDialogs(context) }
+    var remoteImageInserted : () -> Unit = {}
 
     private var formatText: formatDialogCallback = {
         markdownListener?.apply {
@@ -67,9 +68,7 @@ class MarkdownToolbar : LinearLayout {
     var photoUrl : String?
         get() = floatingImageView?.photoUrl
         set(value) { if(value != null) {
-            if (markdownListener is InputToolbar) {
-                (markdownListener as InputToolbar).enableSendButton()
-            }
+            remoteImageInserted()
             floatingImageView?.loadPhotoUrl(value)
         } else floatingImageView?.removeImage() }
 

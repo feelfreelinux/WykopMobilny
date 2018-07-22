@@ -20,14 +20,14 @@ class WykopImageFile(val uri: Uri, val context: Context) {
         var mimetype = contentResolver.getType(uri)
         if (file == null) {
             file = saveUri(uri, filename)
-            file?.let {
-                val opt = BitmapFactory.Options()
-                opt.inJustDecodeBounds = true
-                BitmapFactory.decodeFile(it.absolutePath, opt)
-                printout(opt.outMimeType)
-                mimetype = opt.outMimeType
+        }
 
-            }
+        file?.let {
+            val opt = BitmapFactory.Options()
+            opt.inJustDecodeBounds = true
+            BitmapFactory.decodeFile(it.absolutePath, opt)
+            printout(opt.outMimeType)
+            mimetype = opt.outMimeType
 
         }
 
