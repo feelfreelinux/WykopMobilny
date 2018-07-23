@@ -92,6 +92,9 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
 
         markdownToolbar.markdownListener = this
         markdownToolbar.floatingImageView = floatingImageView
+        markdownToolbar.remoteImageInserted = {
+            enableSendButton()
+        }
 
         // Setup listeners
         body.setOnFocusChangeListener {
@@ -116,9 +119,13 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if ((textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null) && !send.isEnabled) {
-                    enableSendButton()
-                } else if (textBody.length < 3) disableSendButton()
+                if ((textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null)) {
+                    if (!send.isEnabled) {
+                        enableSendButton()
+                    }
+                } else if (textBody.length < 3) {
+                    disableSendButton()
+                }
             }
         })
         send.setOnClickListener {
@@ -176,7 +183,7 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
             containsAdultContent = false
         }
 
-        if (textBody.length < 3) disableSendButton()
+        if (textBody.length < 3 && !(markdownToolbar.photo != null || markdownToolbar.photoUrl != null)) disableSendButton()
         closeMarkdownToolbar()
         body.isFocusableInTouchMode = false
         body.isFocusable = false
@@ -194,7 +201,7 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
         defaultText = ""
         body.requestFocus()
         textBody += "@$user: "
-        if (textBody.length > 2) enableSendButton()
+        if (textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null) enableSendButton()
         selectionStart = textBody.length
         showKeyboard()
     }
@@ -205,7 +212,7 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
         if(textBody.length > 0) textBody += "\n\n"
         textBody += "> ${quote.removeHtml().replace("\n", "\n> ")}\n@$quoteAuthor: "
         selectionStart = textBody.length
-        if (textBody.length > 2) enableSendButton()
+        if (textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null) enableSendButton()
         showKeyboard()
     }
 

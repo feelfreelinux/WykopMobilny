@@ -114,7 +114,7 @@ class MarkdownToolbar : LinearLayout {
             }
 
             insert_url.setOnClickListener {
-                EditTextFormatDialog(R.string.insert_photo_url, context, { insertImageFromUrl(it) }).show()
+                EditTextFormatDialog(R.string.insert_photo_url, context) { insertImageFromUrl(it) }.show()
                 dialog.dismiss()
             }
 
@@ -136,6 +136,7 @@ class MarkdownToolbar : LinearLayout {
     }
 
     fun insertImageFromUrl(url : String) {
+        remoteImageInserted()
         floatingImageView?.loadPhotoUrl(url)
     }
 
