@@ -1,9 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrConfig
@@ -11,6 +14,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.swipeback.app.SwipeBackActivityHelper
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbar
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 
@@ -81,5 +85,17 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
             "huge" -> theme.applyStyle(R.style.TextSizeHuge, true)
 
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == MarkdownToolbar.REQUEST_EXTERNAL_STORAGE) {
+            if (permissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    Toast.makeText(this, "Aplikacja wymaga uprawnień zapisu do pamięci aby wysyłać zdjęcia.", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
     }
 }

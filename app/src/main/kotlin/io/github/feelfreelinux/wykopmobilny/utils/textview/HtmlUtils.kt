@@ -27,13 +27,25 @@ fun String.removeSpoilerHtml() : String {
     val regexBegin = "<a href=\"spoiler:"
     val m = Pattern.compile("($regexBegin).*?\">\\[pokaż spoiler]</a>")
             .matcher(this)
-    val sb = StringBuffer()
+    val matches = ArrayList<String>()
+    var fullstring = this
     while (m.find()) {
-        val spoilerHtml = m.group(0)
-        val text = "! " + URLDecoder.decode(
-                spoilerHtml.replace(regexBegin, "").replace("\">[pokaż spoiler]</a>", ""),
-                "UTF-8")
-        m.appendReplacement(sb, text)
+        matches.add(m.group())
     }
-    return sb.toString()
+
+    matches.forEach {
+        val text = "! " + URLDecoder.decode(
+                it.replace(regexBegin, "").replace("\">[pokaż spoiler]</a>", ""),
+                "UTF-8")
+        fullstring = fullstring.replaceFirst(it, text)
+    }
+
+    return fullstring
+}
+
+
+fun String.stripWykopFormatting(): String {
+    return if (contains("<a href=\"spoiler:")) {
+        removeSpoilerHtml().removeHtml()
+    } else removeHtml()
 }

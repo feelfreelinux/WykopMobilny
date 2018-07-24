@@ -28,6 +28,7 @@ import android.provider.MediaStore
 import android.view.inputmethod.InputMethodManager
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.ZERO_WIDTH_SPACE
+import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 
 
 abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
@@ -75,9 +76,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
             }
 
             getStringExtra(EXTRA_BODY)?.apply { // @TODO Replace it with some regex or parser, its way too hacky now
-                if (contains("<a href=\"spoiler:")) {
-                    textBody += removeSpoilerHtml().removeHtml()
-                } else textBody += removeHtml()
+                textBody += stripWykopFormatting()
                 selectionStart = if (!startsWith("#")) textBody.length else {
                     textBody = "\n$textBody"
                     0

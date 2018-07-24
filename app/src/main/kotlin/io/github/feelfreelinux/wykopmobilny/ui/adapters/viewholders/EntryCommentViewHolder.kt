@@ -21,6 +21,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
+import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
@@ -169,7 +170,7 @@ class EntryCommentViewHolder(override val containerView: View,
             }
 
             entry_comment_menu_copy.setOnClickListener {
-                context.copyText(comment.body, "entry-comment-body")
+                context.copyText(comment.body.stripWykopFormatting(), "entry-comment-body")
                 dialog.dismiss()
             }
 

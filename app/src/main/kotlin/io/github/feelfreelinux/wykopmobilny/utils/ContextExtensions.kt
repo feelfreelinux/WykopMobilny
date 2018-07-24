@@ -13,7 +13,8 @@ import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.widget.Toast
-
+import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
+import io.github.feelfreelinux.wykopmobilny.utils.textview.removeSpoilerHtml
 
 fun Context.openBrowser(url : String) {
     // Start in-app browser, handled by Chrome Customs Tabs

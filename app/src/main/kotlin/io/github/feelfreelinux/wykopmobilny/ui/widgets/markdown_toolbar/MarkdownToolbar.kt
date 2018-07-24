@@ -1,10 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.app.ActivityCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EditTextFormatDialog
@@ -26,6 +29,9 @@ interface MarkdownToolbarListener {
 }
 
 class MarkdownToolbar : LinearLayout {
+    companion object {
+        val REQUEST_EXTERNAL_STORAGE = 183
+    }
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -81,6 +87,16 @@ class MarkdownToolbar : LinearLayout {
     init {
         View.inflate(context, R.layout.markdown_toolbar, this)
 
+        val activity = getActivityContext()
+        activity?.let {
+            if (ActivityCompat.checkSelfPermission(activity,
+                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_EXTERNAL_STORAGE)
+
+            }
+        }
+
         // Create callbacks
         markdownDialogs.apply {
             format_bold.setOnClickListener { insertFormat("**", "**") }
@@ -91,7 +107,6 @@ class MarkdownToolbar : LinearLayout {
             insert_spoiler.setOnClickListener { insertFormat("\n!", "") }
             insert_emoticon.setOnClickListener { showLennyfaceDialog(formatText) }
             insert_photo.setOnClickListener { showUploadPhotoBottomsheet() }
-
         }
     }
 
