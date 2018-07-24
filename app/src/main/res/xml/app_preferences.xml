@@ -1,26 +1,31 @@
-<androidx.preference.PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sample="http://schemas.android.com/apk/res-auto">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sample="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.preference.Preference
+        app:iconSpaceReserved="false"
         android:key="appearance"
         android:title="Ustawienia wyglądu aplikacji"/>
 
     <com.takisoft.preferencex.PreferenceCategory
+        app:iconSpaceReserved="false"
         android:title="@string/pref_notifications">
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="showNotifications"
             android:title="@string/pref_notifications_enable"
             android:defaultValue="true"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="piggyBackPushNotifications"
             android:title="@string/pref_notifications_piggyback"
             android:summary="@string/pref_notifications_piggyback_summary"
             android:defaultValue="false"/>
 
         <androidx.preference.ListPreference
+            app:iconSpaceReserved="false"
             android:key="notificationsSchedulerDelay"
             android:title="@string/pref_notifications_frequency"
             android:entries="@array/preferences_notifications_frequency"
@@ -30,24 +35,29 @@
     </com.takisoft.preferencex.PreferenceCategory>
 
     <com.takisoft.preferencex.PreferenceCategory
+        app:iconSpaceReserved="false"
         android:title="@string/pref_content_filter">
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="showAdultContent"
             android:title="@string/pref_content_plus18"
             android:defaultValue="false"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="hideNsfw"
             android:title="@string/pref_content_filternsfw"
             android:defaultValue="true"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="hideLowRangeAuthors"
             android:title="Ukrywaj treści zielonek"
             android:defaultValue="false"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="hideBlacklistedViews"
             android:title="Nie pokazuj ukrytych treści"
             android:defaultValue="false"/>
@@ -56,15 +66,18 @@
     </com.takisoft.preferencex.PreferenceCategory>
 
     <androidx.preference.Preference
+        app:iconSpaceReserved="false"
         android:key="blacklist"
         android:title="Zarządzaj czarną listą"/>
 
     <androidx.preference.CheckBoxPreference
+        app:iconSpaceReserved="false"
         android:key="useBuiltInBrowser"
         android:title="Użyj wbudowanej przeglądarki"
         android:defaultValue="true"/>
 
     <androidx.preference.Preference
+        app:iconSpaceReserved="false"
         android:key="clearhistory"
         android:title="Wyczyść historie wyszukiwarki"/>
 </androidx.preference.PreferenceScreen>

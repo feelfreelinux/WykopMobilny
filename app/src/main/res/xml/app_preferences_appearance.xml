@@ -1,21 +1,25 @@
 <androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sample="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.takisoft.preferencex.PreferenceCategory
+        app:iconSpaceReserved="false"
         android:title="@string/pref_appearance">
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="useDarkTheme"
             android:title="@string/pref_dark_style"
             android:defaultValue="false"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="useAmoledTheme"
             android:title="@string/useAmoledTheme"
             android:defaultValue="false"/>
 
         <androidx.preference.ListPreference
+            app:iconSpaceReserved="false"
             android:key="defaultScreen"
             android:title="@string/defaultScreen"
             android:entries="@array/preferences_default_screen"
@@ -23,6 +27,7 @@
             android:defaultValue="mainpage"/>
 
         <androidx.preference.ListPreference
+            app:iconSpaceReserved="false"
             android:key="fontSize"
             android:title="@string/pref_fontsize"
             android:entries="@array/preferences_fontsize"
@@ -31,22 +36,27 @@
     </com.takisoft.preferencex.PreferenceCategory>
 
     <com.takisoft.preferencex.PreferenceCategory
+        app:iconSpaceReserved="false"
         android:title="Ustawienia odtwarzacza">
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="enableYoutubePlayer"
             android:title="Użyj odtwarzacza YouTube"
             android:defaultValue="true"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="enableEmbedPlayer"
             android:title="Użyj playera dla innych mediów"
             android:defaultValue="true"/>
     </com.takisoft.preferencex.PreferenceCategory>
 
     <com.takisoft.preferencex.PreferenceCategory
+        app:iconSpaceReserved="false"
         android:title="Mikroblog">
         <androidx.preference.ListPreference
+            app:iconSpaceReserved="false"
             android:key="hotEntriesScreen"
             android:title="@string/defaultHotScreen"
             android:entries="@array/preferences_hot_screen"
@@ -54,11 +64,13 @@
             android:defaultValue="newest"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="cutLongEntries"
             android:title="Przycinaj długie wpisy"
             android:defaultValue="true"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="openSpoilersDialog"
             android:title="@string/open_spoilers_in_dialog"
             android:defaultValue="true"/>
@@ -66,19 +78,23 @@
     </com.takisoft.preferencex.PreferenceCategory>
 
     <com.takisoft.preferencex.PreferenceCategory
+        app:iconSpaceReserved="false"
         android:title="Znaleziska">
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="linkSimpleList"
             android:title="@string/link_simple_list"
             android:defaultValue="false"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="linkShowImage"
             android:title="@string/link_show_image"
             android:defaultValue="true"/>
 
         <androidx.preference.ListPreference
+            app:iconSpaceReserved="false"
             android:key="linkImagePosition"
             android:title="@string/linkImagePosition"
             android:entries="@array/preferences_link_image_position"
@@ -86,11 +102,13 @@
             android:defaultValue="left"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="linkShowAuthor"
             android:title="@string/link_show_author"
             android:defaultValue="false"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="hideLinkCommentsByDefault"
             android:title="Zwijaj wszystkie komentarze"
             android:defaultValue="false"/>
@@ -98,27 +116,31 @@
     </com.takisoft.preferencex.PreferenceCategory>
 
     <com.takisoft.preferencex.PreferenceCategory
+        app:iconSpaceReserved="false"
         android:title="@string/app_config_images">
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="showMinifiedImages"
             android:title="@string/app_config_images_minified"
             android:defaultValue="false"/>
 
         <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:key="cutImages"
             android:title="@string/app_config_images_cut"
             android:defaultValue="true"/>
 
         <androidx.preference.SeekBarPreference
+            app:iconSpaceReserved="false"
             android:key="cutImageProportion"
             android:title="@string/app_config_images_cut_image_proportion"
             android:defaultValue="60"
-            sample:msbp_minValue="20"
-            sample:msbp_maxValue="150"
-            sample:msbp_interval="10"
-            sample:msbp_measurementUnit="%"
-            sample:msbp_dialogEnabled="false"/>
+            app:msbp_minValue="20"
+            app:msbp_maxValue="150"
+            app:msbp_interval="10"
+            app:msbp_measurementUnit="%"
+            app:msbp_dialogEnabled="false"/>
 
     </com.takisoft.preferencex.PreferenceCategory>
 
