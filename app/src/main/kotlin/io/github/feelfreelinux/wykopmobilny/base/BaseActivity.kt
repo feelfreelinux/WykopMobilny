@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrConfig
+import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
@@ -22,6 +23,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreference
 // This class should be extended in all activities in this app. Place global-activity settings here
 abstract class BaseActivity : DaggerAppCompatActivity() {
     lateinit var swipeBackHandler : SwipeBackActivityHelper
+    lateinit var rxPermissions: RxPermissions
     open val enableSwipeBackLayout : Boolean = false
     open val isActivityTransfluent : Boolean = false
     public var isRunning = false
@@ -45,6 +47,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         initTheme()
         super.onCreate(savedInstanceState)
+        rxPermissions = RxPermissions(this)
         if (enableSwipeBackLayout) {
             Slidr.attach(this,
                     SlidrConfig.Builder().edge(true).build())
@@ -85,17 +88,5 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
             "huge" -> theme.applyStyle(R.style.TextSizeHuge, true)
 
         }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == MarkdownToolbar.REQUEST_EXTERNAL_STORAGE) {
-            if (permissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                    Toast.makeText(this, "Aplikacja wymaga uprawnień zapisu do pamięci aby wysyłać zdjęcia.", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-
     }
 }

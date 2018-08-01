@@ -150,6 +150,7 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:2.16"
     implementation 'com.google.dagger:dagger-android:2.16'
     implementation 'com.google.dagger:dagger-android-support:2.16'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
     // Glide
