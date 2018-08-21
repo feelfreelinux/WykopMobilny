@@ -33,6 +33,7 @@ fun getGroupColor(role : Int, isUsingDarkTheme : Boolean = true) : Int = when(ro
     5 ->
         if (isUsingDarkTheme) Color.parseColor("#ffffff")
         else Color.parseColor("#000000")
+    999 -> Color.parseColor("#BF9B30")
     1001 -> Color.parseColor("#999999")
     1002 -> Color.parseColor("#999999")
     2001 -> Color.parseColor("#3F6FA0")
@@ -49,6 +50,7 @@ fun Context.getGroupColor(role : Int) : Int = when(role) {
         tv.data
 
     }
+    999 -> Color.parseColor("#BF9B30")
     1001 -> Color.parseColor("#999999")
     1002 -> Color.parseColor("#999999")
     2001 -> Color.parseColor("#3F6FA0")
