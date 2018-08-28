@@ -51,14 +51,16 @@
         style="@style/ButtonTextView"
         android:drawableStart="?attr/sharebtnDrawable"
         app:layout_constraintLeft_toRightOf="@id/avatarView"
-        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView" />
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
+        android:drawableLeft="?attr/sharebtnDrawable" />
 
     <TextView
         android:id="@+id/replyTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/replyDrawable"
         app:layout_constraintLeft_toRightOf="@id/shareTextView"
-        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView" />
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
+        android:drawableLeft="?attr/replyDrawable" />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
         android:id="@+id/plusVoteButton"
@@ -66,7 +68,8 @@
         android:drawableStart="?attr/plusDrawable"
         app:layout_constraintRight_toLeftOf="@id/minusVoteButton"
         app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
-        tools:text="7" />
+        tools:text="7"
+        android:drawableLeft="?attr/plusDrawable" />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
         android:id="@+id/minusVoteButton"
@@ -74,14 +77,16 @@
         android:drawableStart="?attr/minusDrawable"
         app:layout_constraintRight_toLeftOf="@+id/moreOptionsTextView"
         app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
-        tools:text="1" />
+        tools:text="1"
+        android:drawableLeft="?attr/minusDrawable" />
 
     <TextView
         android:id="@+id/moreOptionsTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/dotsDrawable"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView" />
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
+        android:drawableLeft="?attr/dotsDrawable" />
 
     <View
         android:id="@+id/authorBadgeStripView"

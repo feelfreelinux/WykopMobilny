@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/itemBackgroundColorStatelist"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/notificationTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="?attr/textSizeHuge"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:paddingBottom="@dimen/padding_dp_small"
+        android:paddingLeft="@dimen/padding_dp_huge"
+        android:paddingRight="@dimen/padding_dp_small"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:text="#otwartywykopmobilny" />
+
+    <TextView
+        android:id="@+id/notificationCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:paddingBottom="@dimen/padding_dp_small"
+        android:textSize="?attr/textSizeHuge"
+        android:textColor="#00a645"
+        app:layout_constraintLeft_toRightOf="@id/notificationTag"
+        tools:text="213" />
+
+    <ImageView
+        android:id="@+id/collapseButtonImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_dp_tiny"
+        android:paddingLeft="@dimen/margin_dp_small"
+        android:paddingRight="@dimen/margin_dp_small"
+        android:paddingTop="@dimen/margin_dp_tiny"
+        android:src="?attr/collapseDrawable"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

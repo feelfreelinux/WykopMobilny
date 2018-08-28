@@ -1,7 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.utils.recyclerview
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 
 class InfiniteScrollListener(

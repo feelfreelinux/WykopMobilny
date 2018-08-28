@@ -45,7 +45,7 @@ class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, 
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EntryViewHolder -> {
-                data[position].entry?.let { holder.bindView(it) }
+                dataset[position]?.entry?.let { holder.bindView(it) }
             }
             is LinkViewHolder -> data[position].link?.let { holder.bindView(it) }
             is BlockedViewHolder -> {
@@ -58,19 +58,19 @@ class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, 
                     holder.bindView(it)
                 }
             }
-            is SimpleLinkViewHolder -> data[position].link?.let { holder.bindView(it) }
+            is SimpleLinkViewHolder -> dataset[position]!!.link?.let { holder.bindView(it) }
         }
     }
 
     fun updateEntry(entry : Entry) {
-        val position = data.indexOfFirst { it.entry?.id == entry.id }
-        data[position].entry = entry
+        val position = dataset.indexOfFirst { it!!.entry?.id == entry.id }
+        dataset[position]!!.entry = entry
         notifyItemChanged(position)
     }
 
     fun updateLink(link : Link) {
-        val position = data.indexOfFirst { it.link?.id == link.id }
-        data[position].link = link
+        val position = dataset.indexOfFirst { it!!.link?.id == link.id }
+        dataset[position]!!.link = link
         notifyItemChanged(position)
     }
 }

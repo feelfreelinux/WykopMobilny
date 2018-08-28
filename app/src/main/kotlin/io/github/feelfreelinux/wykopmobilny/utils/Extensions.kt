@@ -98,7 +98,7 @@ fun String.toPrettyDate() : String {
 }
 fun String.toDurationPrettyDate() : String {
     val period = Period.between(parseDateJavaTime(this), LocalDate.now())
-    printout(period.years.toString() + ' ' + period.months.toString() + ' ' + period.days.toString())
+
     if (period.years > 1 && period.months > 0) {
         return "${period.years} lata ${period.months} mies."
     } else if (period.years > 1 && period.months == 0) {

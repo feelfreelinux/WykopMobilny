@@ -18,7 +18,7 @@ abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerV
         return dataset[position]?.hashCode()?.toLong() ?: position.toLong()
     }
 
-    val data: List<A>
+    open val data: List<A>
         get() = dataset.filterNotNull()
 
     companion object {
