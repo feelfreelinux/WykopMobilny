@@ -14,7 +14,7 @@ class HashTagsNotificationsListPresenter(val schedulers: Schedulers, val notific
     var page = 1
 
     fun loadData(shouldRefresh: Boolean) {
-        /*if (shouldRefresh) page = 1
+        if (shouldRefresh) page = 1
         compositeObservable.add(
                 notificationsApi.getHashTagNotifications(page)
                         .subscribeOn(schedulers.backgroundThread())
@@ -25,8 +25,7 @@ class HashTagsNotificationsListPresenter(val schedulers: Schedulers, val notific
                                 view?.addNotifications(it, shouldRefresh)
                             } else view?.disableLoading()
                         }, { view?.showErrorDialog(it) })
-        )*/
-        loadAllNotifications(shouldRefresh)
+        )
     }
 
     fun readNotifications() {
@@ -48,22 +47,20 @@ class HashTagsNotificationsListPresenter(val schedulers: Schedulers, val notific
                         .repeatUntil { dataEmpty }
                         .subscribe({
                             val data = it.filter { it.new }.toMutableList()
-                            data.addAll(data.map { it.tag }.toHashSet().map { NotificationHeader(it, data.count { item -> item.tag == it }) })
-                            data.sortWith(
-                                    Comparator {
-                                        a, b ->
-                                        if (a.tag != b.tag)
-                                            a.tag.compareTo(b.tag)
-                                        else {
-                                            if ((a is NotificationHeader)) -1 else 1
-                                        } })
+
                             if (data.isNotEmpty()) {
                                 allData.addAll(data)
                                 page++
                             } else {
                                 dataEmpty = true
 
-                                view?.addNotifications(allData, true)
+                                val sortedData = arrayListOf<Notification>()
+
+                                for (notification in allData.map { it.tag }.toHashSet().toList()) {
+                                    sortedData.add(NotificationHeader(notification, allData.count { item -> item.tag == notification }))
+                                    sortedData.addAll(allData.filter { it.tag == notification })
+                                }
+                                view?.addNotifications(sortedData, true)
                                 view?.disableLoading()
                             }
                         }, { view?.showErrorDialog(it) }))

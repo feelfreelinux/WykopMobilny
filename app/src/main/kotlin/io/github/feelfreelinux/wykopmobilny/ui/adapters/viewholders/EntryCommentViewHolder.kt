@@ -38,6 +38,8 @@ class EntryCommentViewHolder(override val containerView: View,
                              private val commentViewListener: EntryCommentViewListener?,
                              private val enableClickListener : Boolean) : RecyclableViewHolder(containerView), LayoutContainer {
     var type : Int = TYPE_NORMAL
+    var isAuthorComment: Boolean = false
+    var isOwnEntry: Boolean = false
     lateinit var embedView : WykopEmbedView
 
     val isEmbedViewResized : Boolean
@@ -82,8 +84,9 @@ class EntryCommentViewHolder(override val containerView: View,
         setupHeader(comment)
         setupButtons(comment)
         setupBody(comment)
-
-        setStyleForComment(entryAuthor?.nick == comment.author.nick, comment, highlightCommentId)
+        isOwnEntry = entryAuthor?.nick == userManagerApi.getUserCredentials()!!.login
+        isAuthorComment = entryAuthor?.nick == comment.author.nick
+        setStyleForComment(comment, highlightCommentId)
     }
 
     private fun setupHeader(comment : EntryComment) {
@@ -199,7 +202,7 @@ class EntryCommentViewHolder(override val containerView: View,
             entry_comment_menu_report.isVisible = userManagerApi.isUserAuthorized()
 
             val canUserEdit = userManagerApi.isUserAuthorized() && comment.author.nick == userManagerApi.getUserCredentials()!!.login
-            entry_comment_menu_delete.isVisible = canUserEdit
+            entry_comment_menu_delete.isVisible = canUserEdit || isOwnEntry
             entry_comment_menu_edit.isVisible = canUserEdit
         }
 
@@ -223,7 +226,7 @@ class EntryCommentViewHolder(override val containerView: View,
         embedView = entryImageViewStub.inflate() as WykopEmbedView
     }
 
-    private fun setStyleForComment(isAuthorComment: Boolean, comment : EntryComment, commentId : Int = -1){
+    private fun setStyleForComment(comment : EntryComment, commentId : Int = -1){
         val credentials = userManagerApi.getUserCredentials()
         if (credentials != null && credentials.login == comment.author.nick) {
             authorBadgeStrip.isVisible = true

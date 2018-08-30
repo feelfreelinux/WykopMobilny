@@ -28,6 +28,7 @@ interface SettingsPreferencesApi {
     var enableYoutubePlayer : Boolean
     var enableEmbedPlayer : Boolean
     var useBuiltInBrowser : Boolean
+    var groupNotifications : Boolean
 }
 
 class SettingsPreferences(context : Context) : Preferences(context, true), SettingsPreferencesApi {
@@ -56,5 +57,6 @@ class SettingsPreferences(context : Context) : Preferences(context, true), Setti
     override var enableEmbedPlayer by booleanPref(defaultValue = true)
     override var enableYoutubePlayer by booleanPref(defaultValue = true)
     override var useBuiltInBrowser by booleanPref(defaultValue = true)
+    override var groupNotifications by booleanPref(defaultValue = true)
 
 }

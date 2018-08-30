@@ -14,8 +14,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.notifications_list_item.view.*
 
-class NotificationViewHolder(val view : View, val linkHandlerApi: WykopLinkHandlerApi) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
-
+class NotificationViewHolder(val view : View, val linkHandlerApi: WykopLinkHandlerApi, val updateHeader : (String) -> Unit) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
     fun bindNotification(notification: Notification) {
         view.apply {
             // Setup widgets
@@ -40,6 +39,9 @@ class NotificationViewHolder(val view : View, val linkHandlerApi: WykopLinkHandl
             }
 
             notificationItem.setOnClickListener {
+                if (notification.new) {
+                    updateHeader(notification.tag)
+                }
                 notification.new = false
                 unreadLine.isVisible = false
                 unreadMark.isVisible = false

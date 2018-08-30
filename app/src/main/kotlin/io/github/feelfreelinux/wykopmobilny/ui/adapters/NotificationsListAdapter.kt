@@ -44,10 +44,23 @@ class NotificationsListAdapter @Inject constructor(val navigatorApi: NewNavigato
         notifyDataSetChanged()
     }
 
+    fun collapseAll() {
+        dataset.forEach { it?.visible = false }
+        notifyDataSetChanged()
+    }
+
+    val updateHeader : (String) -> Unit = {
+        tag ->
+        (dataset.find { it is NotificationHeader && it.tag == tag } as? NotificationHeader)?.apply {
+            notificationsCount -= 1
+            notifyItemChanged(dataset.indexOf(this))
+        }
+    }
+
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_HEADER -> NotificationHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.hashtag_notification_header_list_item, parent , false), navigatorApi, collapseListener)
-            else -> NotificationViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, parent, false), linkHandlerApi)
+            else -> NotificationViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, parent, false), linkHandlerApi, updateHeader)
         }
     }
 
@@ -59,6 +72,7 @@ class NotificationsListAdapter @Inject constructor(val navigatorApi: NewNavigato
     }
 
     override fun getItemCount(): Int = newData.size
+
     fun updateNotification(notification : Notification) {
         val position = dataset.indexOf(notification)
         dataset[position] = notification

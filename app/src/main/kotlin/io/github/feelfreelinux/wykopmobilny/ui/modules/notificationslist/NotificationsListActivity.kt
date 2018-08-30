@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -39,16 +40,20 @@ class NotificationsListActivity : BaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.notification_list_menu, menu)
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            android.R.id.home -> { finish() }
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
             R.id.markAsRead -> {
                 (pagerAdapter.registeredFragments.get(pager.currentItem) as? BaseNotificationsListFragment)?.markAsRead()
+                return true
             }
         }
-        return true
+        return super.onOptionsItemSelected(item)
     }
 }
