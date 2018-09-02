@@ -23,12 +23,16 @@ import javax.inject.Inject
 
 class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
     @Inject lateinit var presenter : HashTagsNotificationsListPresenter
+
     @Inject
     override lateinit var linkHandler : WykopLinkHandlerApi
+
     @Inject
     override lateinit var notificationAdapter : NotificationsListAdapter
 
     private lateinit var entryFragmentData : DataFragment<PagedDataModel<List<Notification>>>
+
+    var expanded = true
 
     @Inject
     lateinit var settingsApi: SettingsPreferencesApi
@@ -58,6 +62,12 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
+        menu?.findItem(R.id.collapseAll)?.isVisible = expanded && settingsApi.groupNotifications
+        menu?.findItem(R.id.expandAll)?.isVisible = !expanded && settingsApi.groupNotifications
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.hashtag_notification_menu, menu)
         menu.findItem(R.id.groupNotifications).isChecked = settingsApi.groupNotifications
@@ -69,12 +79,23 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
                 item.isChecked = !item.isChecked
                 settingsApi.groupNotifications = item.isChecked
                 onRefresh()
+                activity?.invalidateOptionsMenu()
                 return true
             }
 
             R.id.collapseAll -> {
                 notificationAdapter.collapseAll()
+                expanded = false
                 Toast.makeText(context, "Schowano wszystkie powiadomienia", Toast.LENGTH_SHORT).show()
+                activity?.invalidateOptionsMenu()
+                return true
+            }
+
+            R.id.expandAll -> {
+                notificationAdapter.expandAll()
+                expanded = true
+                Toast.makeText(context, "Rozwinięto wszystkie powiadomienia", Toast.LENGTH_SHORT).show()
+                activity?.invalidateOptionsMenu()
                 return true
             }
         }

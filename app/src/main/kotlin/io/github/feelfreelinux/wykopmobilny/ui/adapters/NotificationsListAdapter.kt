@@ -49,11 +49,16 @@ class NotificationsListAdapter @Inject constructor(val navigatorApi: NewNavigato
         notifyDataSetChanged()
     }
 
+    fun expandAll() {
+        dataset.forEach { it?.visible = true }
+        notifyDataSetChanged()
+    }
+
     val updateHeader : (String) -> Unit = {
         tag ->
         (dataset.find { it is NotificationHeader && it.tag == tag } as? NotificationHeader)?.apply {
             notificationsCount -= 1
-            notifyItemChanged(dataset.indexOf(this))
+            notifyItemChanged(newData.indexOf(this))
         }
     }
 
