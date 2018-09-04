@@ -20,11 +20,11 @@ class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, 
     lateinit var linkActionListener : LinkActionListener
 
     override fun getViewType(position: Int): Int {
-        val entryLink = data[position]
-        return if (entryLink.DATA_TYPE == EntryLink.TYPE_ENTRY) {
+        val entryLink = dataset[position]
+        return if (entryLink?.DATA_TYPE == EntryLink.TYPE_ENTRY) {
             EntryViewHolder.getViewTypeForEntry(entryLink.entry!!)
         } else {
-            LinkViewHolder.getViewTypeForLink(entryLink.link!!, settingsPreferencesApi)
+            LinkViewHolder.getViewTypeForLink(entryLink!!.link!!, settingsPreferencesApi)
         }
     }
 
@@ -47,14 +47,14 @@ class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, 
             is EntryViewHolder -> {
                 dataset[position]?.entry?.let { holder.bindView(it) }
             }
-            is LinkViewHolder -> data[position].link?.let { holder.bindView(it) }
+            is LinkViewHolder -> dataset[position]?.link?.let { holder.bindView(it) }
             is BlockedViewHolder -> {
-                val data = data[position]
-                data.link?.let {
+                val data = dataset[position]
+                data?.link?.let {
                     holder.bindView(it)
                 }
 
-                data.entry?.let {
+                data?.entry?.let {
                     holder.bindView(it)
                 }
             }

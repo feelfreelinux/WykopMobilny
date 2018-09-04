@@ -37,6 +37,22 @@ class HashTagsNotificationsListPresenter(val schedulers: Schedulers, val notific
     }
 
     fun loadAllNotifications(shouldRefresh: Boolean) {
+        compositeObservable.add(
+                notificationsApi.getHashTagNotificationCount()
+                        .subscribeOn(schedulers.backgroundThread())
+                        .observeOn(schedulers.mainThread())
+                        .subscribe({
+                            if (it.count > 325) {
+                                view?.showTooManyNotifications()
+                            } else {
+                                fetchAllPages(shouldRefresh)
+                            }
+                        }, { view?.showErrorDialog(it) })
+        )
+
+    }
+
+    fun fetchAllPages(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
         val allData = arrayListOf<Notification>()
         var dataEmpty = false
@@ -64,6 +80,5 @@ class HashTagsNotificationsListPresenter(val schedulers: Schedulers, val notific
                                 view?.disableLoading()
                             }
                         }, { view?.showErrorDialog(it) }))
-
     }
 }

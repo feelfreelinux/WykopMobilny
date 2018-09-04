@@ -16,11 +16,18 @@ class WykopImageFile(val uri: Uri, val context: Context) {
     fun getFileMultipart(): MultipartBody.Part {
         val contentResolver = context.contentResolver
         val filename = uri.queryFileName(contentResolver)
-        var file: File? = FileUtils.getFile(context, uri)
-        var mimetype = contentResolver.getType(uri)
-        if (file == null) {
+        var file: File? = null
+        try {
+            file = FileUtils.getFile(context, uri)
+            if (file == null) {
+                file = saveUri(uri, filename)
+            }
+        } catch (e: Throwable) {
             file = saveUri(uri, filename)
         }
+
+        var mimetype = contentResolver.getType(uri)
+
 
         file?.let {
             val opt = BitmapFactory.Options()

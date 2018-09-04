@@ -74,4 +74,7 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
         super.onSaveInstanceState(outState)
         entryFragmentData.data = PagedDataModel(presenter.page, notificationAdapter.data)
     }
+
+    override fun showTooManyNotifications() {
+    }
 }

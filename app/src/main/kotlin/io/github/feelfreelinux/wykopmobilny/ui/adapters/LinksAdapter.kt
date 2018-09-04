@@ -23,9 +23,9 @@ class LinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
 
     override fun getViewType(position: Int): Int {
         return if (settingsPreferencesApi.linkSimpleList) {
-            SimpleLinkViewHolder.getViewTypeForLink(data[position])
+            SimpleLinkViewHolder.getViewTypeForLink(dataset[position]!!)
         } else {
-            LinkViewHolder.getViewTypeForLink(data[position], settingsPreferencesApi)
+            LinkViewHolder.getViewTypeForLink(dataset[position]!!, settingsPreferencesApi)
         }
     }
 
@@ -45,14 +45,14 @@ class LinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
 
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is LinkViewHolder -> holder.bindView(data[position])
-            is SimpleLinkViewHolder -> holder.bindView(data[position])
-            is BlockedViewHolder -> holder.bindView(data[position])
+            is LinkViewHolder -> holder.bindView(dataset[position]!!)
+            is SimpleLinkViewHolder -> holder.bindView(dataset[position]!!)
+            is BlockedViewHolder -> holder.bindView(dataset[position]!!)
         }
     }
 
     fun updateLink(link : Link) {
-        val position = data.indexOf(link)
+        val position = dataset.indexOf(link)
         dataset[position] = link
         notifyItemChanged(position)
     }

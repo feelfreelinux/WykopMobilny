@@ -23,7 +23,7 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
     var replyListener : EntryListener? = null
 
     override fun getViewType(position: Int): Int {
-        val entry = data[position]
+        val entry = dataset[position]!!
         return EntryViewHolder.getViewTypeForEntry(entry)
     }
 
@@ -41,14 +41,14 @@ class EntriesAdapter @Inject constructor(val userManagerApi: UserManagerApi, val
 
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         if (holder is EntryViewHolder) {
-            holder.bindView(data[position])
+            holder.bindView(dataset[position]!!)
         } else if (holder is BlockedViewHolder) {
-            holder.bindView(data[position])
+            holder.bindView(dataset[position]!!)
         }
     }
 
     fun updateEntry(entry : Entry) {
-        val position = data.indexOf(entry)
+        val position = dataset.indexOf(entry)
         dataset[position] = entry
         notifyItemChanged(position)
     }

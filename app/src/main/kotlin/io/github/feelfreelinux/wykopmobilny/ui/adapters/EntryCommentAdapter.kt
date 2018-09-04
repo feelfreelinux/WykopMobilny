@@ -22,7 +22,7 @@ class EntryCommentAdapter @Inject constructor(
     lateinit var entryCommentActionListener : EntryCommentActionListener
 
     override fun getViewType(position: Int): Int {
-        return EntryCommentViewHolder.getViewTypeForEntryComment(data[position])
+        return EntryCommentViewHolder.getViewTypeForEntryComment(dataset[position]!!)
     }
 
     override fun addData(items: List<EntryComment>, shouldClearAdapter: Boolean) {
@@ -40,13 +40,13 @@ class EntryCommentAdapter @Inject constructor(
 
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is EntryCommentViewHolder -> holder.bindView(data[position], null)
-            is BlockedViewHolder -> { holder.bindView(data[position]) }
+            is EntryCommentViewHolder -> holder.bindView(dataset[position]!!, null)
+            is BlockedViewHolder -> { holder.bindView(dataset[position]!!) }
         }
     }
 
     fun updateComment(comment : EntryComment) {
-        val position = data.indexOf(comment)
+        val position = dataset.indexOf(comment)
         dataset[position] = comment
         notifyItemChanged(position)
     }

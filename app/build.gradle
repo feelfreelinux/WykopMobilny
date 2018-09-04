@@ -31,6 +31,7 @@ android {
         applicationId "io.github.feelfreelinux.wykopmobilny"
         minSdkVersion 15
         targetSdkVersion 28
+        vectorDrawables.useSupportLibrary = true
         versionCode project.ext.versionMajor * 10000 + project.ext.versionMinor * 1000 + project.ext.versionPatch * 100 + project.ext.versionBuild
         versionName "${project.ext.versionMajor}.${project.ext.versionMinor}.${project.ext.versionPatch}.${project.ext.versionBuild}"
         multiDexEnabled true

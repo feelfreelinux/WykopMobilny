@@ -7,4 +7,5 @@ interface NotificationsListView : BaseView {
     fun addNotifications(notifications : List<Notification>, shouldClearAdapter : Boolean)
     fun disableLoading()
     fun showReadToast()
+    fun showTooManyNotifications()
 }

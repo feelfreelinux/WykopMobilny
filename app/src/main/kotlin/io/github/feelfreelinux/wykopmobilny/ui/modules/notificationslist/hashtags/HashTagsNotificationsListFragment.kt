@@ -133,4 +133,8 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
                 PagedDataModel(presenter.page, notificationAdapter.data)
     }
 
+    override fun showTooManyNotifications() {
+        Toast.makeText(context, "Zbyt wiele powiadomień, funkcja grupowania wyłączona", Toast.LENGTH_LONG).show()
+    }
+
 }
