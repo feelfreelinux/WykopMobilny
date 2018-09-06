@@ -84,7 +84,7 @@ class EntryCommentViewHolder(override val containerView: View,
         setupHeader(comment)
         setupButtons(comment)
         setupBody(comment)
-        isOwnEntry = entryAuthor?.nick == userManagerApi.getUserCredentials()!!.login
+        isOwnEntry = entryAuthor?.nick == userManagerApi.getUserCredentials()?.login
         isAuthorComment = entryAuthor?.nick == comment.author.nick
         setStyleForComment(comment, highlightCommentId)
     }
@@ -201,7 +201,7 @@ class EntryCommentViewHolder(override val containerView: View,
 
             entry_comment_menu_report.isVisible = userManagerApi.isUserAuthorized()
 
-            val canUserEdit = userManagerApi.isUserAuthorized() && comment.author.nick == userManagerApi.getUserCredentials()!!.login
+            val canUserEdit = userManagerApi.isUserAuthorized() && comment.author.nick == userManagerApi.getUserCredentials()?.login
             entry_comment_menu_delete.isVisible = canUserEdit || isOwnEntry
             entry_comment_menu_edit.isVisible = canUserEdit
         }
