@@ -89,21 +89,8 @@
         <item>480</item>
     </string-array>
 
-    <string-array name="entry_menu_canedit">
-        <item>@string/copy_content</item>
-        <item>@string/edit</item>
-        <item>@string/report</item>
-        <item>@string/delete</item>
-    </string-array>
-
     <string-array name="entry_menu_notlogged">
         <item>@string/copy_content</item>
-    </string-array>
-
-    <string-array name="entry_comment_menu">
-        <item>@string/copy_content</item>
-        <item>@string/add_receiver</item>
-        <item>@string/report</item>
     </string-array>
 
     <string-array name="lenny_face_array">

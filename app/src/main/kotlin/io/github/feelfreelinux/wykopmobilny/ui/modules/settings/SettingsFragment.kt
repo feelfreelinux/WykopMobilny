@@ -171,11 +171,4 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
-
-    private fun restartActivity() {
-        val intent = Intent(context, SettingsActivity::class.java)
-        intent.putExtra(SettingsActivity.THEME_CHANGED_EXTRA, true)
-        startActivity(intent)
-        activity?.finish()
-    }
 }

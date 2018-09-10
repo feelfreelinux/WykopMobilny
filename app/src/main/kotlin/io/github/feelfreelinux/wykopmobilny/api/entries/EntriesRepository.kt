@@ -4,23 +4,16 @@ import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
-import io.github.feelfreelinux.wykopmobilny.api.getRequestBody
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryVotePublishModel
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.SurveyMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.VoterMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.ReplaySubject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 import java.io.File
-import java.io.InputStream
-import java.net.URLEncoder
 
 data class TypedInputStream(val fileName : String, val mimeType : String, val file: File)
 

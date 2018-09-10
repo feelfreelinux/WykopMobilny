@@ -6,7 +6,6 @@ import dagger.android.support.AndroidSupportInjectionModule
 import io.github.feelfreelinux.wykopmobilny.WykopApp
 import io.github.feelfreelinux.wykopmobilny.di.modules.NetworkModule
 import io.github.feelfreelinux.wykopmobilny.di.modules.RepositoryModule
-import io.github.feelfreelinux.wykopmobilny.di.modules.ViewPresenterFactoryModule
 import javax.inject.Singleton
 
 

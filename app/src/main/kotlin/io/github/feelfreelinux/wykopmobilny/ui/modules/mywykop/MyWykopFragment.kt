@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
@@ -20,8 +19,7 @@ class MyWykopFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        val view = inflater.inflate(R.layout.activity_mywykop, container, false)
-        return view
+        return inflater.inflate(R.layout.activity_mywykop, container, false)
     }
 
     fun onRefresh() {

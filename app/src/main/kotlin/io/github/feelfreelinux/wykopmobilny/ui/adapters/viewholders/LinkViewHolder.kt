@@ -29,7 +29,6 @@ class LinkViewHolder(override val containerView: View,
     lateinit var previewImageView : ImageView
 
     companion object {
-        val ALPHA_NEW = 1f
         val ALPHA_VISITED = 0.6f
         const val TYPE_IMAGE = 14
         const val TYPE_NOIMAGE = 15

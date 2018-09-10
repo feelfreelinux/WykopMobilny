@@ -18,7 +18,6 @@ abstract class BaseLinkItemWidget(context: Context) : androidx.constraintlayout.
         context.showExceptionDialog(e)
     }
 
-    private val linksPreferences by lazy { LinksPreferences(containerView!!.context) }
     lateinit var link: Link
 
     companion object {
@@ -33,17 +32,6 @@ abstract class BaseLinkItemWidget(context: Context) : androidx.constraintlayout.
         getActivityContext()!!.theme?.resolveAttribute(R.attr.itemBackgroundColorStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
     }
-    abstract fun setWidgetAlpha(alpha : Float)
-
-    fun openLinkDetail() {
-        containerView?.getActivityContext()!!.startActivity(LinkDetailsActivity.createIntent(containerView!!.getActivityContext()!!, link))
-        if (!link.gotSelected) {
-            setWidgetAlpha(ALPHA_VISITED)
-            link.gotSelected = true
-            linksPreferences.readLinksIds = linksPreferences.readLinksIds.plusElement("link_${link.id}")
-        }
-    }
-
 
     fun shareUrl() {
         ShareCompat.IntentBuilder

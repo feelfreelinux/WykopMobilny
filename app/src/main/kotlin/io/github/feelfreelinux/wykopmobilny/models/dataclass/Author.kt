@@ -11,10 +11,9 @@ class Author(val nick : String,
             parcel.readString(),
             parcel.readString(),
             parcel.readInt(),
-            parcel.readString()) {
-    }
+            parcel.readString())
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+  override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(nick)
         parcel.writeString(avatarUrl)
         parcel.writeInt(group)

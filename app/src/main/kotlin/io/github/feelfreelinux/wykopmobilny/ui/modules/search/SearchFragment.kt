@@ -17,11 +17,7 @@ class SearchFragment : BaseFragment() {
     private lateinit var viewPagerAdapter : SearchPagerAdapter
 
     companion object {
-        val EXTRA_QUERY = "EXTRA_QUERY"
-
-        fun newInstance() : androidx.fragment.app.Fragment {
-            return SearchFragment()
-        }
+        fun newInstance() = SearchFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

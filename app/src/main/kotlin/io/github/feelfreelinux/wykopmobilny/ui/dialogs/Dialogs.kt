@@ -4,13 +4,11 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.utils.markdownLink
 import kotlinx.android.synthetic.main.dialog_edittext.view.*
 import kotlinx.android.synthetic.main.dialog_insert_link.view.*
 
 typealias formatDialogCallback = (String) -> Unit
-
 
 fun EditTextFormatDialog(titleId : Int, context : Context, callback: formatDialogCallback): AlertDialog {
     val alertBuilder = context.createAlertBuilder()
@@ -19,23 +17,7 @@ fun EditTextFormatDialog(titleId : Int, context : Context, callback: formatDialo
     alertBuilder.run {
         setTitle(titleId)
         setView(editTextLayout)
-        setPositiveButton(android.R.string.ok, { _, _ -> callback.invoke(editTextLayout.editText.text.toString())})
-        return create()
-    }
-}
-
-fun UploadPhotoDialog(context : Context, galleryUploadCallback: () -> Unit, urlUploadCallback: formatDialogCallback): AlertDialog {
-    val alertBuilder = context.createAlertBuilder()
-
-    alertBuilder.run {
-        setTitle(R.string.insert_photo)
-        setItems(R.array.upload_image_dialog, {
-            _, pos ->
-            when(pos) {
-                0 -> galleryUploadCallback.invoke()
-                1 -> EditTextFormatDialog(R.string.insert_photo_url, context, urlUploadCallback).show()
-            }
-        })
+        setPositiveButton(android.R.string.ok) { _, _ -> callback.invoke(editTextLayout.editText.text.toString())}
         return create()
     }
 }
@@ -46,20 +28,7 @@ fun LennyfaceDialog(context : Context, callback: formatDialogCallback): AlertDia
     alertBuilder.run {
         setTitle(R.string.insert_emoticon)
         val lennyArray = context.resources.getStringArray(R.array.lenny_face_array)
-        setItems(lennyArray, {
-            _, pos -> callback.invoke(lennyArray[pos])
-        })
-        return create()
-    }
-}
-
-fun VotersDialog(context : Context, voters : List<Author>): AlertDialog {
-    val alertBuilder = context.createAlertBuilder()
-
-    alertBuilder.run {
-        setTitle(R.string.voters)
-        val usersArray = voters.map { it.nick }
-        setItems(usersArray.toTypedArray(), null)
+        setItems(lennyArray) { _, pos -> callback.invoke(lennyArray[pos]) }
         return create()
     }
 }
@@ -75,24 +44,11 @@ fun MarkDownLinkDialog(context : Context, callback: formatDialogCallback): Alert
     alertBuilder.run {
         setTitle(R.string.insert_link)
         setView(view)
-        setPositiveButton(android.R.string.ok, {_, _ ->
+        setPositiveButton(android.R.string.ok) { _, _ ->
             val link = view.link.text.toString()
             val description = view.description.text.toString()
             callback.invoke(link.markdownLink(description))
-        })
-        return create()
-    }
-}
-
-fun AppExitConfirmationDialog(context: Context, callback: () -> Unit) : AlertDialog {
-    val alertBuilder = context.createAlertBuilder()
-
-    alertBuilder.run {
-        setMessage(R.string.confirm_app_exit)
-        setPositiveButton(android.R.string.yes) { _, _ -> callback.invoke() }
-        setNegativeButton(android.R.string.no, null)
-        setCancelable(true)
-
+        }
         return create()
     }
 }

@@ -226,11 +226,6 @@
         <item name="markdownInsertSpoiler">@drawable/ic_markdowntoolbar_spoiler_amoled</item>
     </style>
 
-    <style name="AppTheme.Dark.NavigationView" parent="">
-        <item name="android:listDivider">@color/navigationSeparator</item>
-        <item name="android:textColorSecondary">@color/textColor.Dark</item>
-    </style>
-
     <style name="NavigationDrawerStyle" parent="">
         <item name="android:fontFamily">sans-serif-normal</item>
         <item name="android:textSize">?attr/textSizeLarge</item>
@@ -254,16 +249,6 @@
         <item name="android:layout_marginLeft">@dimen/cardview_margin_vertical</item>
         <item name="android:layout_marginBottom">@dimen/cardview_margin_horizontal</item>
         <item name="android:layout_marginTop">@dimen/cardview_margin_horizontal</item>
-    </style>
-
-    <style name="EntryContentTextView" parent="">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingBottom">@dimen/padding_dp_small</item>
-        <item name="android:paddingLeft">@dimen/padding_dp_large</item>
-        <item name="android:paddingRight">@dimen/padding_dp_large</item>
-        <item name="android:textSize">?attr/textSizeNormal</item>
-        <item name="android:textIsSelectable">true</item>
     </style>
 
     <style name="ContentTextView" parent="">
@@ -359,13 +344,6 @@
         <item name="layout_constraintWidth_default">wrap</item>
     </style>
 
-    <style name="ImageViewComment" parent="">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/margin_dp_normal</item>
-        <item name="android:layout_marginRight">@dimen/margin_dp_large</item>
-    </style>
-
     <style name="AuthorBadgeStrip" parent="">
         <item name="android:layout_width">3dp</item>
         <item name="android:layout_height">0dp</item>
@@ -404,15 +382,6 @@
     <style name="MarkdownButton" parent="">
         <item name="android:layout_height">28dp</item>
         <item name="android:layout_width">28dp</item>
-    </style>
-
-    <style name="MonthYearPickerMonth" parent="">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:gravity">center</item>
     </style>
 
     <style name="BottomSheetMenuItem" parent="">
@@ -551,14 +520,6 @@
         <item name="textSizeHuge">@dimen/text_huge_size_huge</item>m>
     </style>
 
-    <style name="WykopPreferencesTheme" parent="@style/PreferenceThemeOverlay.v14.Material">
-        <item name="preferenceFragmentListStyle">@style/NoMarginPreferences</item>
-    </style>
-
-    <style name="NoMarginPreferences">
-        <item name="android:paddingLeft">0dp</item>
-        <item name="android:paddingRight">0dp</item>
-    </style>
     <!-- SwipeBackLayout -->
     <style name="SwipeBackLayout">
         <item name="edge_size">50dip</item>

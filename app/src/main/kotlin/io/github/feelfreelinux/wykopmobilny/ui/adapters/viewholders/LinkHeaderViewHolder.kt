@@ -1,7 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,11 +23,14 @@ import kotlinx.android.synthetic.main.link_details_header_layout.*
 import kotlinx.android.synthetic.main.link_menu_bottomsheet.view.*
 import java.net.URL
 
-class LinkHeaderViewHolder(override val containerView : View,
-                           val linkActionListener: LinkHeaderActionListener,
-                           val navigatorApi: NewNavigatorApi,
-                           val linkHandlerApi: WykopLinkHandlerApi,
-                           val userManagerApi: UserManagerApi) : RecyclableViewHolder(containerView), LayoutContainer {
+class LinkHeaderViewHolder(
+    override val containerView : View,
+    private val linkActionListener: LinkHeaderActionListener,
+    val navigatorApi: NewNavigatorApi,
+    val linkHandlerApi: WykopLinkHandlerApi,
+    val userManagerApi: UserManagerApi
+) : RecyclableViewHolder(containerView), LayoutContainer {
+
     companion object {
         const val TYPE_HEADER = 64
 
@@ -37,12 +38,11 @@ class LinkHeaderViewHolder(override val containerView : View,
          * Inflates correct view (with embed, survey or both) depending on viewType
          */
         fun inflateView(parent: ViewGroup, userManagerApi: UserManagerApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, linkHeaderActionListener: LinkHeaderActionListener): LinkHeaderViewHolder {
-            val view = LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_layout, parent, false),
-                    linkHeaderActionListener,
-                    navigatorApi,
-                    linkHandlerApi,
-                    userManagerApi)
-            return view
+          return LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_layout, parent, false),
+                  linkHeaderActionListener,
+                  navigatorApi,
+                  linkHandlerApi,
+                  userManagerApi)
         }
     }
 
@@ -78,7 +78,7 @@ class LinkHeaderViewHolder(override val containerView : View,
         }
 
         urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
-        blockedTextView.prepareBody(link.tags.convertToTagsHtml(), { linkHandlerApi.handleUrl(it) })
+        blockedTextView.prepareBody(link.tags.convertToTagsHtml()) { linkHandlerApi.handleUrl(it) }
     }
 
     private fun setupButtons(link : Link) {
@@ -116,7 +116,7 @@ class LinkHeaderViewHolder(override val containerView : View,
         }
     }
 
-    fun showBurried(link : Link) {
+    private fun showBurried(link : Link) {
         link.userVote = "bury"
         diggCountTextView.isButtonSelected = true
         diggCountTextView.setVoteState("bury")
@@ -127,7 +127,7 @@ class LinkHeaderViewHolder(override val containerView : View,
         diggCountTextView.isEnabled = true
     }
 
-    fun showDigged(link : Link) {
+    private fun showDigged(link : Link) {
         link.userVote = "dig"
         diggCountTextView.isButtonSelected = true
         diggCountTextView.setVoteState("dig")
@@ -149,7 +149,7 @@ class LinkHeaderViewHolder(override val containerView : View,
         diggCountTextView.isEnabled = true
     }
 
-    fun openOptionsMenu(link : Link) {
+    private fun openOptionsMenu(link : Link) {
         val activityContext = containerView.getActivityContext()!!
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_menu_bottomsheet, null)
@@ -189,7 +189,7 @@ class LinkHeaderViewHolder(override val containerView : View,
         dialog.show()
     }
 
-    fun openBuryReasonMenu(link : Link) {
+    private fun openBuryReasonMenu(link : Link) {
         val activityContext = containerView.getActivityContext()!!
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_bury_menu_bottomsheet, null)
@@ -230,7 +230,7 @@ class LinkHeaderViewHolder(override val containerView : View,
     }
 
 
-    fun String.convertToTagsHtml() : String {
+    private fun String.convertToTagsHtml() : String {
         val html = StringBuilder()
         split(" ").forEach {
             html.append("<a href=\"$it\">$it<\\a> ")

@@ -4,15 +4,8 @@ import android.os.Bundle
 import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.base.BaseFeedFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
-import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
-import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
-import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
-import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.printout

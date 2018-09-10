@@ -5,10 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty import com.fasterxml.jackso
 class WykopErrorResponse(
         @JsonProperty("code")
         val code : Int,
-
-        @JsonProperty("message_en")
-        val messageEn : String,
-
         @JsonProperty("message_pl")
         val messagePl : String
 )

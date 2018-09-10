@@ -17,11 +17,3 @@ class BlacklistPreferences @Inject constructor (context : Context) : Preferences
     override var blockedImported: Boolean by booleanPref(defaultValue = false)
 }
 
-fun Set<String>.containsTagInBody(body : String) : Boolean {
-    forEach {
-        if (body.toLowerCase().contains("#" + it.removePrefix("#"))) {
-            return true
-        }
-    }
-    return false
-}

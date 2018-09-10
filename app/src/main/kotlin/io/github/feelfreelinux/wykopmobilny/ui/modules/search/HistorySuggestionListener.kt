@@ -43,7 +43,7 @@ class HistorySuggestionListener(val context : Context, val searchView : SearchVi
 
         val cursor = database.getSuggestions(URLEncoder.encode(newText, "UTF-8"))
 
-            val columns = arrayOf<String>(SuggestionDatabase.FIELD_SUGGESTION)
+            val columns = arrayOf(SuggestionDatabase.FIELD_SUGGESTION)
             val columnTextId = intArrayOf(android.R.id.text1)
 
             val simple = SuggestionsSimpleCursorAdapter(context,

@@ -31,9 +31,6 @@ interface MarkdownToolbarListener {
 }
 
 class MarkdownToolbar : LinearLayout {
-    companion object {
-        val REQUEST_EXTERNAL_STORAGE = 183
-    }
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -52,7 +49,7 @@ class MarkdownToolbar : LinearLayout {
         }
     }
 
-    fun insertFormat(prefix : String, suffix : String) {
+    private fun insertFormat(prefix : String, suffix : String) {
         markdownListener?.apply {
             if (selectionEnd > selectionStart) {
                 val bodyPrefix = textBody.substring (0, selectionStart)
@@ -117,7 +114,7 @@ class MarkdownToolbar : LinearLayout {
         }
     }
 
-    fun showUploadPhotoBottomsheet() {
+    private fun showUploadPhotoBottomsheet() {
         val activityContext = getActivityContext()!!
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.imagechooser_bottomsheet, null)
@@ -157,7 +154,7 @@ class MarkdownToolbar : LinearLayout {
         dialog.show()
     }
 
-    fun insertImageFromUrl(url : String) {
+    private fun insertImageFromUrl(url : String) {
         remoteImageInserted()
         floatingImageView?.loadPhotoUrl(url)
     }

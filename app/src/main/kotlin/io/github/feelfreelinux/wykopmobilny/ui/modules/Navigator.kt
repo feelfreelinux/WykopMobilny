@@ -38,9 +38,6 @@ interface NavigatorApi {
 }
 
 class Navigator : NavigatorApi {
-    companion object {
-        val STARTED_FROM_NOTIFICATIONS_CODE = 228
-    }
 
     override fun openMainActivity(context: Activity, targetFragment: String?) {
         context.startActivity(MainNavigationActivity.getIntent(context, targetFragment)
@@ -96,9 +93,5 @@ class Navigator : NavigatorApi {
 
     override fun openLinkDetailsActivity(context: Activity, link : Link) {
         context.startActivity(LinkDetailsActivity.createIntent(context, link))
-    }
-
-    fun openNotificationsListActivity(context : Activity) {
-        context.startActivity(NotificationsListActivity.createIntent(context))
     }
 }

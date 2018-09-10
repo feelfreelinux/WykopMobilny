@@ -21,14 +21,14 @@ interface WykopLinkHandlerApi {
 
 class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavigatorApi) : WykopLinkHandlerApi {
     companion object {
-        const val PROFILE_PREFIX = '@'
-        const val TAG_PREFIX = '#'
-        const val ENTRY_MATCHER = "wpis"
-        const val LINK_MATCHER = "link"
-        const val PROFILE_MATCHER = "ludzie"
-        const val TAG_MATCHER = "tag"
-        const val PM_MATCHER = "wiadomosc-prywatna"
-        const val DELIMITER = "/"
+        private const val PROFILE_PREFIX = '@'
+        private const val TAG_PREFIX = '#'
+        private const val ENTRY_MATCHER = "wpis"
+        private const val LINK_MATCHER = "link"
+        private const val PROFILE_MATCHER = "ludzie"
+        private const val TAG_MATCHER = "tag"
+        private const val PM_MATCHER = "wiadomosc-prywatna"
+        private const val DELIMITER = "/"
 
         fun getLinkIntent(url: String, context : Context): Intent? {
             val parsedUrl = URI(url.replace("\\", ""))
@@ -37,7 +37,7 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
             return when (domain) {
                     "wykop" -> {
                         val resource = url.substringAfter("wykop.pl/")
-                        when (resource.substringBefore(Companion.DELIMITER)) {
+                        when (resource.substringBefore(DELIMITER)) {
                             ENTRY_MATCHER -> {
                                 val entryId = EntryLinkParser.getEntryId(url)
                                 if (entryId != null) EntryActivity.createIntent(context, entryId, EntryLinkParser.getEntryCommentId(url), false)

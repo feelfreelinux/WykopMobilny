@@ -1,13 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.favorite
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopNotifier
 import kotlinx.android.synthetic.main.activity_mywykop.*
 
 class FavoriteFragment  : BaseFragment() {
@@ -21,8 +19,7 @@ class FavoriteFragment  : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        val view = inflater.inflate(R.layout.activity_mywykop, container, false)
-        return view
+        return inflater.inflate(R.layout.activity_mywykop, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

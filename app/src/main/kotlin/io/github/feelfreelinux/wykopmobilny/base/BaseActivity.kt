@@ -1,12 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrConfig
@@ -14,19 +11,15 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.feelfreelinux.wykopmobilny.ui.swipeback.app.SwipeBackActivityHelper
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbar
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 
-
 // This class should be extended in all activities in this app. Place global-activity settings here
 abstract class BaseActivity : DaggerAppCompatActivity() {
-    lateinit var swipeBackHandler : SwipeBackActivityHelper
     lateinit var rxPermissions: RxPermissions
     open val enableSwipeBackLayout : Boolean = false
     open val isActivityTransfluent : Boolean = false
-    public var isRunning = false
+    var isRunning = false
     fun showErrorDialog(e : Throwable) {
         if (isRunning) {
             showExceptionDialog(e)
@@ -86,7 +79,6 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
             "normal" -> theme.applyStyle(R.style.TextSizeNormal, true)
             "large" -> theme.applyStyle(R.style.TextSizeLarge, true)
             "huge" -> theme.applyStyle(R.style.TextSizeHuge, true)
-
         }
     }
 }
