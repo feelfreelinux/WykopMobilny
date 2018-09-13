@@ -86,10 +86,9 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
     val isRevealed by lazy { intent.getBooleanExtra(EXTRA_IS_REVEALED, false) }
 
     companion object {
-        val EXTRA_ENTRY_ID = "ENTRY_ID"
-        val EXTRA_COMMENT_ID = "COMMENT_ID"
-        val EXTRA_FRAGMENT_KEY = "ENTRY_ACTIVITY_#"
-        val EXTRA_IS_REVEALED = "IS_REVEALED"
+        const val EXTRA_ENTRY_ID = "ENTRY_ID"
+        const val EXTRA_COMMENT_ID = "COMMENT_ID"
+        const val EXTRA_IS_REVEALED = "IS_REVEALED"
 
         fun createIntent(context: Context, entryId: Int, commentId: Int?, isRevealed: Boolean): Intent {
             val intent = Intent(context, EntryActivity::class.java)
@@ -145,7 +144,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater?.inflate(R.menu.entry_fragment_menu, menu)
+        menuInflater.inflate(R.menu.entry_fragment_menu, menu)
         return true
     }
 
@@ -177,12 +176,12 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         entry.embed?.isRevealed = isRevealed
         adapter.notifyDataSetChanged()
         if (highLightCommentId != -1) {
-            entry.comments.forEachIndexed({ index, comment ->
+            entry.comments.forEachIndexed { index, comment ->
                 if (comment.id == highLightCommentId) {
                     recyclerView?.scrollToPosition(index + 1)
                 }
                 recyclerView?.refreshDrawableState()
-            })
+            }
         }
 
     }
@@ -209,9 +208,9 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     override fun onBackPressed() {
         if (inputToolbar.hasUserEditedContent()) {
-            ExitConfirmationDialog(this, {
+            ExitConfirmationDialog(this) {
                 finish()
-            })?.show()
+            }?.show()
         } else finish()
     }
 

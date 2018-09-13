@@ -70,17 +70,11 @@
     <color name="usersMessageColor.Amoled">#0e1116</color>
     <color name="usersMessageDirected.Dark">#d6d6d6</color>
 
-    <color name="navigationSeparator">#667f7f7f</color>
     <color name="drawablesColor.Dark">#e6e6e6</color>
-    <color name="mikroblogControlsColor.Dark">#424242</color>
     <color name="plusPressedColor">#27ae60</color>
     <color name="minusPressedColor">#c0392b</color>
     <color name="authorHeader_date.Dark">#757575</color>
     <color name="hintColor.Dark">#9e9e9e</color>
     <color name="digCountColor">#ef5213</color>
-
-    <color name="tabBarTextColor">#d7ffffff</color>
-    <color name="tabBarTextColorSelected">#ffffff</color>
-    <color name="tabBarIndicatorColor">#ffffff</color>
 
 </resources>

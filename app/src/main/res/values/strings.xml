@@ -16,9 +16,7 @@
     <string name="login">Zaloguj się</string>
     <string name="logout">Wyloguj się</string>
 
-    <string name="application">Aplikacja</string>
     <string name="profiles">Użytkownicy</string>
-    <string name="user">Użytkownik</string>
     <string name="actions">Akcje</string>
     <string name="links">Znaleziska</string>
     <string name="link_added">Dodane</string>
@@ -28,7 +26,6 @@
     <string name="digged">Wykopywane</string>
     <string name="entries">Wpisy</string>
 
-    <string name="options">Ustawienia</string>
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_dark_style">Styl nocny</string>
     <string name="useAmoledTheme">Tryb AMOLED dla stylu nocnego</string>
@@ -56,7 +53,6 @@
     <string name="badges">Osiągnięcia</string>
 
     <string name="error_occured">Błąd</string>
-    <string name="not_implemented">Nie zaimplementowano</string>
     <string name="doubleback_to_exit">Naciśnij wstecz aby wyjść z aplikacji</string>
     <string name="expand_image">rozwiń obrazek</string>
 
@@ -94,7 +90,6 @@
 
     <string name="send">Wyślij</string>
     <string name="observed_tags">Obserwowane tagi</string>
-    <string name="add_comment">Dodaj komentarz</string>
     <string name="add_new_entry">Dodaj nowy wpis</string>
     <string name="edit_entry">Edytuj wpis</string>
     <string name="edit_comment">Edytuj komentarz</string>
@@ -114,14 +109,12 @@
     <string name="bury">Zakop</string>
     <string name="bury_list">Lista zakopujących (%1$d)</string>
     <string name="dig_list">Lista wykopujących (%1$d)</string>
-    <string name="edit">Edytuj</string>
     <string name="copy_content">Kopiuj treść</string>
     <string name="delete">Usuń</string>
     <string name="report">Zgłoś</string>
     <string name="mywykop_all">Wszystko</string>
     <string name="tags">Tagi</string>
     <string name="users">Użytkownicy</string>
-    <string name="add_receiver">Dodaj do odbiorców</string>
     <string name="entryRemoved">[Wpis usunięty]</string>
     <string name="commentRemoved">[Komentarz usunięty]</string>
     <string name="notificationsCountMessage">Posiadasz %1$d nowych powiadomień.</string>
@@ -168,7 +161,6 @@
     <string name="reason_fake_info">Informacja nieprawdziwa</string>
     <string name="reason_wrong_content">Treść nieodpowiednia</string>
     <string name="reason_unsuitable_content">Nie nadaje się</string>
-    <string name="hidden_replies">%1$d ukrytych odpowiedzi</string>
 
     <string name="january">Styczeń</string>
     <string name="february">Luty</string>
@@ -182,7 +174,6 @@
     <string name="october">Październik</string>
     <string name="novermber">Listopad</string>
     <string name="december">Grudzień</string>
-    <string name="whole_year">Cały rok</string>
 
     <string name="hits_popular">Ostatnio popularne</string>
     <string name="hits_day">Hity dnia</string>
@@ -211,7 +202,6 @@
     <string name="open_in">Otwórz w ...</string>
     <string name="save_as_mp4">Zapisz do mp4</string>
     <string name="addlink_url_address">Adres URL znaleziska które chcesz dodać</string>
-    <string name="addlink_subtext">Upewnij się że dodawana przez ciebie  treść jest orginalna</string>
     <string name="add_new_link">Dodaj nowe znalezisko</string>
     <string name="dialog_piggyback_market_message"><![CDATA[Aby skorzystać z tej funkcji, wymagana jest instalacja oficjalnej aplikacji Wykop.pl. Po instalacji i zalogowaniu się w aplikacji, Wykop Mobilny będzie mógł korzystać z powiadomień push serwisu. Następnie należy wrócić do ustawień i aktywować tę funkcje ponownie.]]></string>
     <string name="dialog_piggyback_market_title">Powiadomienia push</string>
@@ -219,7 +209,6 @@
     <string name="addlink_no_description">Brak opisu</string>
     <string name="add_link_no_title">Brak tytułu</string>
     <string name="add_link_no_tags">Brak tagów</string>
-    <string name="add_link_no_photo">Nie wybrano zdjęcia</string>
     <string name="invalid_url">Adres url jest nieprawidłowy</string>
     <string name="blacklist_import_ask">Czy chcesz zaimportować czarną listę użytkowników oraz tagów?</string>
     <string name="blacklist_import_title">Zaimportuj czarną listę</string>

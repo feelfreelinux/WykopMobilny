@@ -6,24 +6,17 @@ import android.content.ContextWrapper
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.OpenableColumns
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import android.text.SpannableStringBuilder
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
-import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
-import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.PreCachingLayoutManager
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDateJavaTime
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ViewHolderDependentItemDecorator
@@ -70,13 +63,6 @@ fun androidx.recyclerview.widget.RecyclerView.prepareNoDivider() {
     drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     isDrawingCacheEnabled = true
     layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
-}
-
-fun View.disableFor(millis: Long){
-    isEnabled = false
-    postDelayed({
-        isEnabled = true
-    }, millis)
 }
 
 fun ImageView.loadImage(url : String, signature : Int? = null) {
@@ -140,17 +126,6 @@ fun Uri.queryFileName(contentResolver: ContentResolver) : String {
         }
     }
     return result
-}
-
-fun Uri.getMimeType(contentResolver: ContentResolver): String {
-    return if (scheme == ContentResolver.SCHEME_CONTENT) {
-        contentResolver.getType(this)
-    } else {
-        val fileExtension = MimeTypeMap.getFileExtensionFromUrl(this
-                .toString())
-        MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                fileExtension.toLowerCase())
-    }
 }
 
 class KotlinGlideRequestListener(val failedListener : (GlideException?) -> Unit, val successListener : () -> Unit) : RequestListener<Drawable> {

@@ -101,25 +101,6 @@ abstract class BaseLinkCommentWidget(context: Context, attrs: AttributeSet) : an
         } else collapseButton.isVisible = true
     }
 
-    fun setStyleForComment(isAuthorComment: Boolean, commentId : Int = -1) {
-        val credentials = userManagerApi.getUserCredentials()
-        if (credentials != null && credentials.login == comment.author.nick) {
-            authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBadgeOwn))
-        } else if (isAuthorComment) {
-            authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBadgeAuthors))
-        } else {
-            authorBadgeStrip.isVisible = false
-        }
-
-        if (commentId == comment.id) {
-            authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(context, R.color.plusPressedColor))
-        }
-
-    }
-
     private fun setupButtons() {
         plusButton.setup(userManagerApi)
         plusButton.text = comment.voteCountPlus.toString()

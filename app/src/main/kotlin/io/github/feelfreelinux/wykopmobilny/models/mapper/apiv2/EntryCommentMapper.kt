@@ -2,11 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2
 
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
-import io.github.feelfreelinux.wykopmobilny.models.mapper.Mapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryCommentResponse
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.containsTagInBody
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
 class EntryCommentMapper {

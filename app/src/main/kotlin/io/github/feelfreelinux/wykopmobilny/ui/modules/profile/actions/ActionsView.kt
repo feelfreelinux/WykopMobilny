@@ -5,5 +5,4 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrylink.EntryLinkFragmentView
 
-interface ActionsView : EntryLinkFragmentView {
-}
+interface ActionsView : EntryLinkFragmentView

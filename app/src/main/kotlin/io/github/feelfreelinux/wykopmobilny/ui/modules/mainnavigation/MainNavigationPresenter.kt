@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation
 
-import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
@@ -10,12 +9,13 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
-class MainNavigationPresenter(private val schedulers: Schedulers,
-                              private val notificationsApi: NotificationsApi,
-                              private val userManagerApi: UserManagerApi,
-                              private val externalApi: ExternalApi,
-                              private val scraperApi : ScraperApi) : BasePresenter<MainNavigationView>() {
-    var lastCheckMilis = 0L
+class MainNavigationPresenter(
+  private val schedulers: Schedulers,
+  private val notificationsApi: NotificationsApi,
+  private val userManagerApi: UserManagerApi,
+  private val scraperApi: ScraperApi) : BasePresenter<MainNavigationView>() {
+
+    private var lastCheckMillis = 0L
 
     fun startListeningForNotifications() {
         compositeObservable.clear()
@@ -35,8 +35,8 @@ class MainNavigationPresenter(private val schedulers: Schedulers,
     }
 
     fun checkNotifications(shouldForce: Boolean) {
-        if (lastCheckMilis.plus(300000L) < (System.currentTimeMillis()) || lastCheckMilis == 0L || shouldForce) {
-            lastCheckMilis = System.currentTimeMillis()
+        if (lastCheckMillis.plus(300000L) < (System.currentTimeMillis()) || lastCheckMillis == 0L || shouldForce) {
+            lastCheckMillis = System.currentTimeMillis()
             compositeObservable.add(notificationsApi.getNotificationCount().
                     subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
@@ -46,25 +46,6 @@ class MainNavigationPresenter(private val schedulers: Schedulers,
                     .observeOn(schedulers.mainThread())
                     .subscribe({ view?.showHashNotificationsCount(it.count) }, {  }) )
         }
-    }
-
-    fun checkUpdates() {
-        compositeObservable.add(
-                externalApi.checkUpdates()
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({ view?.checkUpdate(it) }, {})
-        )
-
-    }
-
-    fun checkWeeklyUpdates() {
-        compositeObservable.add(
-                externalApi.checkWeeklyUpdates()
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({ view?.checkUpdate(it) }, {})
-        )
     }
 
     fun importBlacklist() {

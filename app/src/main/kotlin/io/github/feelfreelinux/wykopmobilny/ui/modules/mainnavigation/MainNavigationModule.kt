@@ -15,7 +15,11 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 @Module
 class MainNavigationModule {
     @Provides
-    fun provideMainNavigationPresenter(schedulers: Schedulers, notificationsApi: NotificationsApi, userManagerApi: UserManagerApi, externalApi: ExternalApi, scraperApi : ScraperApi) = MainNavigationPresenter(schedulers, notificationsApi, userManagerApi, externalApi, scraperApi)
+    fun provideMainNavigationPresenter(schedulers: Schedulers, notificationsApi: NotificationsApi, userManagerApi: UserManagerApi, externalApi: ExternalApi, scraperApi : ScraperApi) = MainNavigationPresenter(
+      schedulers,
+      notificationsApi,
+      userManagerApi,
+      scraperApi)
 
     @Provides
     fun provideNavigator(activity : MainNavigationActivity) : NewNavigatorApi = NewNavigator(activity)

@@ -14,6 +14,6 @@ class CommentPresenterFactory @Inject constructor(
         val navigatorApi: NewNavigatorApi,
         val linkHandler: WykopLinkHandlerApi) {
     fun create() : CommentPresenter {
-        return CommentPresenter(schedulers, entriesApi, clipboardHelperApi, navigatorApi, linkHandler)
+        return CommentPresenter(schedulers, entriesApi, navigatorApi, linkHandler)
     }
 }

@@ -90,10 +90,3 @@ fun String.encryptMD5() : String{
     for (byte in digest) result += "%02x".format(byte)
     return result
 }
-
-fun Uri.getTag(): String {
-    var subUrl = toString().substringAfter("/tag/")
-    if (subUrl.last() == '/') subUrl = subUrl.substring(0, subUrl.length - 1)
-    printout(subUrl)
-    return subUrl.substringAfterLast("/")
-}

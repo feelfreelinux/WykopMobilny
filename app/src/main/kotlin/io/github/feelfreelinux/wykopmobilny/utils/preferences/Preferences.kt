@@ -1,12 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.utils.preferences
 
-
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import io.github.feelfreelinux.wykopmobilny.APP_SECRET
 import kotlin.reflect.KProperty
-
 
 abstract class Preferences(var context: Context? = null, useDefaultFile : Boolean = false) {
 
@@ -30,16 +27,6 @@ abstract class Preferences(var context: Context? = null, useDefaultFile : Boolea
         fun onSharedPrefChanged(property: KProperty<*>)
     }
 
-    fun addListener(sharedPrefsListener: SharedPrefsListener) {
-        listeners.add(sharedPrefsListener)
-    }
-
-    fun removeListener(sharedPrefsListener: SharedPrefsListener) {
-        listeners.remove(sharedPrefsListener)
-    }
-
-    fun clearListeners() = listeners.clear()
-
     fun stringPref(prefKey: String? = null, defaultValue: String? = null) = StringPrefDelegate(prefKey, defaultValue)
 
     inner class StringPrefDelegate(prefKey: String? = null, val defaultValue: String?) : PrefDelegate<String?>(prefKey) {
@@ -60,18 +47,6 @@ abstract class Preferences(var context: Context? = null, useDefaultFile : Boolea
         }
     }
 
-
-    fun floatPref(prefKey: String? = null, defaultValue: Float = 0f) = FloatPrefDelegate(prefKey, defaultValue)
-
-    inner class FloatPrefDelegate(prefKey: String? = null, val defaultValue: Float) : PrefDelegate<Float>(prefKey) {
-        override fun getValue(thisRef: Any?, property: KProperty<*>) = prefs.getFloat(prefKey ?: property.name, defaultValue)
-        override fun setValue(thisRef: Any?, property: KProperty<*>, value: Float) {
-            prefs.edit().putFloat(prefKey ?: property.name, value).apply()
-            onPrefChanged(property)
-        }
-    }
-
-
     fun booleanPref(prefKey: String? = null, defaultValue: Boolean = false) = BooleanPrefDelegate(prefKey, defaultValue)
 
     inner class BooleanPrefDelegate(prefKey: String? = null, val defaultValue: Boolean) : PrefDelegate<Boolean>(prefKey) {
@@ -82,19 +57,7 @@ abstract class Preferences(var context: Context? = null, useDefaultFile : Boolea
         }
     }
 
-
-    fun longPref(prefKey: String? = null, defaultValue: Long = 0L) = LongPrefDelegate(prefKey, defaultValue)
-
-    inner class LongPrefDelegate(prefKey: String? = null, val defaultValue: Long) : PrefDelegate<Long>(prefKey) {
-        override fun getValue(thisRef: Any?, property: KProperty<*>) = prefs.getLong(prefKey ?: property.name, defaultValue)
-        override fun setValue(thisRef: Any?, property: KProperty<*>, value: Long) {
-            prefs.edit().putLong(prefKey ?: property.name, value).apply()
-            onPrefChanged(property)
-        }
-    }
-
-
-    fun stringSetPref(prefKey: String? = null, defaultValue: Set<String> = HashSet<String>()) = StringSetPrefDelegate(prefKey, defaultValue)
+    fun stringSetPref(prefKey: String? = null, defaultValue: Set<String> = HashSet()) = StringSetPrefDelegate(prefKey, defaultValue)
 
     inner class StringSetPrefDelegate(prefKey: String? = null, val defaultValue: Set<String>) : PrefDelegate<Set<String>>(prefKey) {
         override fun getValue(thisRef: Any?, property: KProperty<*>): Set<String> = prefs.getStringSet(prefKey ?: property.name, defaultValue)

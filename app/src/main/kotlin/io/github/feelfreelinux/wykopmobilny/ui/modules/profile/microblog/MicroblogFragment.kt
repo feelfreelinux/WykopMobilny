@@ -7,20 +7,17 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileFragmentNotifier
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.synthetic.main.profile_subtab_layout.*
 
 class MicroblogFragment : BaseFragment() {
-    val username by lazy { (activity as ProfileActivity).username }
+
     companion object {
-        val DATA_FRAGMENT_TAG = "USER_MICROBLOG"
-        fun newInstance() : MicroblogFragment {
-            val fragment = MicroblogFragment()
-            return fragment
-        }
+        const val DATA_FRAGMENT_TAG = "USER_MICROBLOG"
+        fun newInstance() = MicroblogFragment()
     }
+
     val pagerAdapter by lazy { MicroblogPagerAdapter(resources, childFragmentManager) }
+    val username by lazy { (activity as ProfileActivity).username }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.profile_subtab_layout, container, false)

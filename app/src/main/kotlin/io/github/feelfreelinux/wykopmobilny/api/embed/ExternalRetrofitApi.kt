@@ -11,7 +11,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 
 interface ExternalRetrofitApi {
-    @Headers("@: ${REMOVE_USERKEY_HEADER}")
+    @Headers("@: $REMOVE_USERKEY_HEADER")
     @GET("https://api.gfycat.com/v1/gfycats/{gfycatId}")
     fun getGfycat(@Path("gfycatId") gfycatItem : String) : Single<Gfycat>
 

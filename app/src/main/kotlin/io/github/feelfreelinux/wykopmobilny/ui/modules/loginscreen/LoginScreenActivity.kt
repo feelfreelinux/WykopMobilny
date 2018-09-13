@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -29,15 +30,11 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
             return Intent(context, LoginScreenActivity::class.java)
         }
     }
-    val session by lazy {
-        val cookieManager = CookieManager.getInstance()
-        cookieManager.getCookie("https://wykop.pl")
-    }
-    val progressDialog by lazy { ProgressDialog(this) }
-    @Inject
-    lateinit var navigatorApi: NewNavigatorApi
-    @Inject
-    lateinit var presenter: LoginScreenPresenter
+
+    private val progressDialog by lazy { ProgressDialog(this) }
+
+    @Inject lateinit var navigatorApi: NewNavigatorApi
+    @Inject lateinit var presenter: LoginScreenPresenter
     @Inject lateinit var blacklistPreferences : BlacklistPreferences
 
     override fun importBlacklist(blacklist: Blacklist) {
@@ -61,32 +58,28 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
         setupWebView()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     override fun goBackToSplashScreen() {
         val builder = createAlertBuilder()
         builder.setTitle(getString(R.string.blacklist_import_title))
         builder.setMessage(getString(R.string.blacklist_import_ask))
-        builder.setPositiveButton(getString(R.string.blacklist_import_action), { _, _ ->
+        builder.setPositiveButton(getString(R.string.blacklist_import_action)) { _, _ ->
             progressDialog.isIndeterminate = true
             progressDialog.setTitle(getString(R.string.blacklist_import_progress))
             progressDialog.show()
             presenter.importBlacklist()
-        })
-        builder.setNegativeButton(android.R.string.cancel, {_,_ -> finishActivity() })
+        }
+        builder.setNegativeButton(android.R.string.cancel) { _, _ -> finishActivity() }
         builder.setCancelable(false)
         builder.show()
     }
 
-    fun finishActivity() {
+    private fun finishActivity() {
         navigatorApi.openMainActivity()
         setResult(USER_LOGGED_IN)
         finish()
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView() {
         webView.apply {
             CookieSyncManager.createInstance(this@LoginScreenActivity)
@@ -102,14 +95,14 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
             }
             settings.javaScriptEnabled = true
 
-            webViewClient = LoginActivityWebClient({ presenter.handleUrl(it) })
+            webViewClient = LoginActivityWebClient { presenter.handleUrl(it) }
             loadUrl(CONNECT_URL)
         }
     }
 
     override fun onStop() {
-        super.onStop()
         presenter.unsubscribe()
+        super.onStop()
     }
 }
 

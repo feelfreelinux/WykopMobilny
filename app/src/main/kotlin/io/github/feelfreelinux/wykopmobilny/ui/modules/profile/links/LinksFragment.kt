@@ -9,14 +9,12 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import kotlinx.android.synthetic.main.profile_subtab_layout.*
 
 class LinksFragment : BaseFragment() {
+
     companion object {
-        fun newInstance() : LinksFragment {
-            val fragment = LinksFragment()
-            return fragment
-        }
+        fun newInstance() = LinksFragment()
     }
 
-    val pagerAdapter by lazy { LinksPagerAdapter(resources, childFragmentManager) }
+    private val pagerAdapter by lazy { LinksPagerAdapter(resources, childFragmentManager) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.profile_subtab_layout, container, false)

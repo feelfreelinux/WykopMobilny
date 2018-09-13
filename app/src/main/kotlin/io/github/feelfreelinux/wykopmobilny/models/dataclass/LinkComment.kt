@@ -48,10 +48,9 @@ class LinkComment(
             parcel.readInt(),
             parcel.readString(),
             parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte()) {
-    }
+            parcel.readByte() != 0.toByte())
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+  override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeParcelable(author, flags)
         parcel.writeString(date)
