@@ -13,41 +13,47 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.Navigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelper
+import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManager
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import okhttp3.Cache
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.*
-import okhttp3.Protocol
-import retrofit2.converter.jackson.JacksonConverterFactory
-
 
 @Module
 class NetworkModule {
+
     @Provides
-    fun provideWykopSchedulers() : io.github.feelfreelinux.wykopmobilny.base.Schedulers = WykopSchedulers()
+    fun provideWykopSchedulers(): io.github.feelfreelinux.wykopmobilny.base.Schedulers = WykopSchedulers()
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(userManagerApi: UserManagerApi, cache : Cache, context: Context): OkHttpClient {
+    fun provideOkHttpClient(userManagerApi: UserManagerApi): OkHttpClient {
         val httpLogging = HttpLoggingInterceptor()
         httpLogging.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
-                .addInterceptor(ApiSignInterceptor(userManagerApi))
-                .addNetworkInterceptor(httpLogging)
-                .protocols(listOf(Protocol.HTTP_1_1))
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .build()
+            .addInterceptor(ApiSignInterceptor(userManagerApi))
+            .addNetworkInterceptor(httpLogging)
+            .protocols(listOf(Protocol.HTTP_1_1))
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
     }
 
     @Provides
@@ -58,45 +64,51 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideCredentialsPreferences(context: Context) : CredentialsPreferencesApi = CredentialsPreferences(context)
+    fun provideCredentialsPreferences(context: Context): CredentialsPreferencesApi =
+        CredentialsPreferences(context)
 
     @Provides
-    fun provideSettingsPreferences(context: Context) : SettingsPreferencesApi = SettingsPreferences(context)
+    fun provideSettingsPreferences(context: Context): SettingsPreferencesApi =
+        SettingsPreferences(context)
 
     @Provides
-    fun provideLinksPreferencesApi(context: Context) : LinksPreferencesApi = LinksPreferences(context)
+    fun provideLinksPreferencesApi(context: Context): LinksPreferencesApi =
+        LinksPreferences(context)
 
     @Provides
-    fun provideUserManagerApi(credentialsPreferencesApi: CredentialsPreferencesApi) : UserManagerApi = UserManager(credentialsPreferencesApi)
+    fun provideUserManagerApi(credentialsPreferencesApi: CredentialsPreferencesApi): UserManagerApi =
+        UserManager(credentialsPreferencesApi)
 
     @Provides
-    fun provideNotificationManager(context: Context) : NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    fun provideNotificationManager(context: Context): NotificationManager =
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     @Provides
     @Singleton
-    fun provideWykopNotificationManager(mgr: NotificationManager) : WykopNotificationManagerApi = WykopNotificationManager(mgr)
+    fun provideWykopNotificationManager(mgr: NotificationManager): WykopNotificationManagerApi =
+        WykopNotificationManager(mgr)
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient) : Retrofit {
-        return Retrofit.Builder()
-                .client(client)
-                .baseUrl(WykopApp.WYKOP_API_URL)
-                .addConverterFactory(JacksonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-    }
+    fun provideRetrofit(client: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .client(client)
+            .baseUrl(WykopApp.WYKOP_API_URL)
+            .addConverterFactory(JacksonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
 
     @Provides
-    fun provideUserTokenRefresher(userApi : LoginApi, userManagerApi: UserManagerApi) = UserTokenRefresher(userApi, userManagerApi)
+    fun provideUserTokenRefresher(userApi: LoginApi, userManagerApi: UserManagerApi) =
+        UserTokenRefresher(userApi, userManagerApi)
 
     @Provides
-    fun provideNavigatorApi() : NavigatorApi = Navigator()
+    fun provideNavigatorApi(): NavigatorApi = Navigator()
 
     @Provides
-    fun provideBlacklistApi(context : Context) : BlacklistPreferencesApi = BlacklistPreferences(context)
+    fun provideBlacklistApi(context: Context): BlacklistPreferencesApi = BlacklistPreferences(context)
 
     @Provides
-    fun provideClipboardHelper(context: Context) : ClipboardHelperApi = ClipboardHelper(context)
+    fun provideClipboardHelper(context: Context): ClipboardHelperApi = ClipboardHelper(context)
 
 }

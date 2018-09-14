@@ -8,5 +8,5 @@ import io.github.feelfreelinux.wykopmobilny.WykopApp
 @Module
 abstract class AppModule {
     @Binds
-    abstract fun provideContext(application: WykopApp) : Context
+    abstract fun provideContext(application: WykopApp): Context
 }

@@ -17,7 +17,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreference
 import io.reactivex.Single
 import retrofit2.Retrofit
 
-class AddlinkRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val owmContentFilter: OWMContentFilter) : AddlinkApi {
+class AddLinkRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher, val owmContentFilter: OWMContentFilter) : AddlinkApi {
     private val addlinkApi by lazy { retrofit.create(AddlinkRetrofitApi::class.java) }
 
     override fun getDraft(url: String): Single<NewLinkResponse> =
