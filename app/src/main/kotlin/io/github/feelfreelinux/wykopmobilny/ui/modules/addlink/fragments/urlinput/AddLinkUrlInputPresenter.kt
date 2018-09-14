@@ -1,14 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.urlinput
 
-import io.github.feelfreelinux.wykopmobilny.api.addlink.AddlinkApi
+import io.github.feelfreelinux.wykopmobilny.api.addlink.AddLinkApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 
-class AddLinkUrlInputPresenter(val schedulers: Schedulers, val addlinkApi: AddlinkApi) : BasePresenter<AddLinkUrlInputFragmentView>() {
+class AddLinkUrlInputPresenter(val schedulers: Schedulers, val addLinkApi: AddLinkApi) : BasePresenter<AddLinkUrlInputFragmentView>() {
     fun createDraft(url: String) {
         view?.showDuplicatesLoading(true)
         compositeObservable.add(
-                addlinkApi.getDraft(url)
+                addLinkApi.getDraft(url)
                         .subscribeOn(schedulers.backgroundThread())
                         .observeOn(schedulers.mainThread())
                         .subscribe({
