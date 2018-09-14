@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules
 
 import android.app.Activity
 import android.content.Intent
-import io.github.feelfreelinux.wykopmobilny.api.ENTRYCOMMENT_REPORT_URL
+import io.github.feelfreelinux.wykopmobilny.api.ENTRY_COMMENT_REPORT_URL
 import io.github.feelfreelinux.wykopmobilny.api.ENTRY_REPORT_URL
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
@@ -13,7 +13,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDet
 import io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
@@ -88,7 +87,7 @@ class Navigator : NavigatorApi {
     }
 
     override fun openReportEntryCommentScreen(context: Activity, entryCommentId: Int) {
-        context.openBrowser(ENTRYCOMMENT_REPORT_URL+entryCommentId)
+        context.openBrowser(ENTRY_COMMENT_REPORT_URL+entryCommentId)
     }
 
     override fun openLinkDetailsActivity(context: Activity, link : Link) {

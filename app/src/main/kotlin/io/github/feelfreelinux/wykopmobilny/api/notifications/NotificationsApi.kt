@@ -7,8 +7,8 @@ import io.reactivex.Single
 interface NotificationsApi {
     fun getNotificationCount(): Single<NotificationsCountResponse>
     fun getHashTagNotificationCount(): Single<NotificationsCountResponse>
-    fun getHashTagNotifications(page : Int): Single<List<Notification>>
-    fun getNotifications(page : Int): Single<List<Notification>>
+    fun getHashTagNotifications(page: Int): Single<List<Notification>>
+    fun getNotifications(page: Int): Single<List<Notification>>
     fun readNotifications(): Single<List<Notification>>
     fun readHashTagNotifications(): Single<List<Notification>>
 }

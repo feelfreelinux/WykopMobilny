@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input
 
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 
 interface BaseInputPresenter {

@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.ScraperInterceptor
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
-import io.github.feelfreelinux.wykopmobilny.api.addlink.AddlinkApi
-import io.github.feelfreelinux.wykopmobilny.api.addlink.AddlinkRepository
+import io.github.feelfreelinux.wykopmobilny.api.addlink.AddLinkApi
+import io.github.feelfreelinux.wykopmobilny.api.addlink.AddLinkRepository
 import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalRepository
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
@@ -23,7 +23,6 @@ import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMRepository
 import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileApi
 import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileRepository
-import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
 import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperRepository
 import io.github.feelfreelinux.wykopmobilny.api.search.SearchApi
@@ -34,11 +33,8 @@ import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagRepository
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginRepository
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import okhttp3.OkHttpClient
 import pl.droidsonroids.retrofit2.JspoonConverterFactory
 import retrofit2.Retrofit
@@ -62,7 +58,12 @@ class RepositoryModule {
     fun provideLinksApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : LinksApi = LinksRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
-    fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter, blacklistPreferences: BlacklistPreferencesApi) : TagApi = TagRepository(retrofit, userTokenRefresher, blacklistPreferences, owmContentFilter)
+    fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter, blacklistPreferences: BlacklistPreferencesApi) : TagApi = TagRepository(
+        retrofit,
+        userTokenRefresher,
+        owmContentFilter,
+        blacklistPreferences
+    )
 
     @Provides
     fun provideUserApi(retrofit: Retrofit, credentialsPreferencesApi : CredentialsPreferencesApi) : LoginApi
@@ -87,7 +88,7 @@ class RepositoryModule {
     fun provideEmbedApi(retrofit: Retrofit) : ExternalApi = ExternalRepository(retrofit)
 
     @Provides
-    fun provideAddlinkApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : AddlinkApi = AddlinkRepository(retrofit, userTokenRefresher, owmContentFilter)
+    fun provideAddlinkApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : AddLinkApi = AddLinkRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
     fun provideScraperApi() : ScraperApi = ScraperRepository(createScraperRetrofit())

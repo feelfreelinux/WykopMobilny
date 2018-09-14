@@ -1,9 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.input.link.edit
 
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
-import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputView
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.InputPresenter
