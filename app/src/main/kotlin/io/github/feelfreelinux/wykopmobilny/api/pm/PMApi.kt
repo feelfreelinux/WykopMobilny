@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.api.pm
 
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.FullConversation
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.PMMessage

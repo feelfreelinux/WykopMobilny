@@ -1,10 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.api.links
 
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.DigResponse
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.FavoriteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkVoteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
 import io.reactivex.Single

@@ -2,7 +2,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry
 
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
@@ -11,9 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteract
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentInteractor
-import io.reactivex.Completable
 import io.reactivex.Single
-import rx.subjects.PublishSubject
 
 class EntryDetailPresenter(val schedulers: Schedulers, private val entriesApi: EntriesApi, private val entriesInteractor : EntriesInteractor, private val entryCommentInteractor: EntryCommentInteractor) : BasePresenter<EntryDetailView>(), EntryActionListener, EntryCommentActionListener {
     override fun voteEntry(entry: Entry) {

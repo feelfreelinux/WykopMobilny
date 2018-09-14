@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets
 import android.content.Context
 import android.net.Uri
 import android.os.Parcelable
-import androidx.constraintlayout.widget.ConstraintLayout
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -12,7 +11,6 @@ import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
@@ -24,7 +22,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
 import android.os.Parcel
-import android.widget.EditText
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 
 const val ZERO_WIDTH_SPACE = "\u200B\u200B\u200B\u200B\u200B"

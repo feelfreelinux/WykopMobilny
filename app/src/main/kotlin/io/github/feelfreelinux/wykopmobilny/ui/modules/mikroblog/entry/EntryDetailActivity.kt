@@ -5,32 +5,26 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import androidx.core.app.ShareCompat
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.MenuItem
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
-import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
-import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
-import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CreateVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity.Companion.USER_ACTION_INSERT_PHOTO_CAMERA
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
-import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -38,14 +32,6 @@ import kotlinx.android.synthetic.main.activity_entry.*
 import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
-import android.os.Environment.DIRECTORY_PICTURES
-import androidx.core.content.FileProvider
-import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity.Companion.USER_ACTION_INSERT_PHOTO_CAMERA
-import kotlinx.android.synthetic.main.abc_popup_menu_item_layout.*
-import java.io.File
-import java.io.IOException
-import java.util.*
 
 
 class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener, EntryCommentViewListener {

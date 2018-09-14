@@ -2,9 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add
 
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
-import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputView
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.InputPresenter
 
 class AddEntryPresenter(private val schedulers: Schedulers, private val entriesApi: EntriesApi) : InputPresenter<AddEntryActivityView>() {
