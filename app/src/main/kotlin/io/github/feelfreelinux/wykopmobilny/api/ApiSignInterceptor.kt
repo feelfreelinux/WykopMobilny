@@ -11,15 +11,18 @@ import okhttp3.MultipartBody
 import okhttp3.Response
 import okio.Okio
 import java.io.ByteArrayOutputStream
-import java.util.*
+import java.util.ArrayList
 
 const val REMOVE_USERKEY_HEADER = "REMOVE_USERKEY"
+
 class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
+
     companion object {
-        val MAX_RETRY_COUNT = 3
+        const val MAX_RETRY_COUNT = 3
+        const val API_SIGN_HEADER = "apisign"
     }
+
     override fun intercept(chain: Interceptor.Chain?): Response? {
-        val API_SIGN_HEADER = "apisign"
         val request = chain!!.request()
         val builder = request.newBuilder()
         var url = request.url().toString()
@@ -28,16 +31,14 @@ class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
         if (userManagerApi.isUserAuthorized() && !customHeaders.contains(REMOVE_USERKEY_HEADER))
             url += "/userkey/${userManagerApi.getUserCredentials()!!.userKey}"
 
-        val encodeUrl : String = when(request.body()) {
+        val encodeUrl: String = when (request.body()) {
             is FormBody -> {
                 val formBody = request.body() as FormBody
                 val paramList = (0 until formBody.size())
-                        .filter { !formBody.value(it).isNullOrEmpty() }
-                        .mapTo(ArrayList<String>()) { formBody.value(it) }
-                        .toList()
-                //if (customHeaders.contains(REMOVE_USERKEY_HEADER)) paramList = paramList.reversed()
-
-                APP_SECRET + url+ paramList.joinToString(",")
+                    .filter { !formBody.value(it).isNullOrEmpty() }
+                    .mapTo(ArrayList<String>()) { formBody.value(it) }
+                    .toList()
+                APP_SECRET + url + paramList.joinToString(",")
             }
             is MultipartBody -> {
                 val multipart = request.body() as MultipartBody

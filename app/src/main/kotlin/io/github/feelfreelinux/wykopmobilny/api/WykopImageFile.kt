@@ -13,10 +13,11 @@ import java.io.File
 import java.io.FileOutputStream
 
 class WykopImageFile(val uri: Uri, val context: Context) {
+
     fun getFileMultipart(): MultipartBody.Part {
         val contentResolver = context.contentResolver
         val filename = uri.queryFileName(contentResolver)
-        var file: File? = null
+        var file: File?
         try {
             file = FileUtils.getFile(context, uri)
             if (file == null) {
@@ -27,7 +28,6 @@ class WykopImageFile(val uri: Uri, val context: Context) {
         }
 
         var mimetype = contentResolver.getType(uri)
-
 
         file?.let {
             val opt = BitmapFactory.Options()
@@ -41,10 +41,9 @@ class WykopImageFile(val uri: Uri, val context: Context) {
         return MultipartBody.Part.createFormData("embed", filename, RequestBody.create(MediaType.parse(mimetype), file))
     }
 
-    fun saveUri(uri: Uri, filename: String) : File? {
+    private fun saveUri(uri: Uri, filename: String): File? {
         val inputStream = context.contentResolver.openInputStream(uri)
         inputStream.use { input ->
-
             val file = File.createTempFile(filename, "0", context.cacheDir)
             val output = FileOutputStream(file)
             try {
