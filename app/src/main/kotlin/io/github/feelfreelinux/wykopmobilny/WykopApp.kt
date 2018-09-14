@@ -14,15 +14,16 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificatio
 import okhttp3.OkHttpClient
 import javax.inject.Inject
 
-
 class WykopApp : DaggerApplication() {
-    @Inject lateinit var jobCreator : WykopNotificationJobCreator
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.builder().create(this)
-    }
 
     companion object {
-        val WYKOP_API_URL = "https://a2.wykop.pl"
+        const val WYKOP_API_URL = "https://a2.wykop.pl"
+    }
+
+    @Inject lateinit var jobCreator: WykopNotificationJobCreator
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.builder().create(this)
     }
 
     override fun attachBaseContext(base: Context?) {
@@ -32,13 +33,11 @@ class WykopApp : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        ExoMedia.setDataSourceFactoryProvider({
-            userAgent, listener ->
+        ExoMedia.setDataSourceFactoryProvider { userAgent, listener ->
             OkHttpDataSourceFactory(OkHttpClient(), userAgent, listener)
-        })
+        }
         AndroidThreeTen.init(this)
         JobManager.create(this).addJobCreator(jobCreator)
-        //BigImageViewer.initialize(GlideImageLoader.with(applicationContext))
         if (!BuildConfig.DEBUG) {
             Bugsnag.init(this, "3b54bcbf963f13ae9aa8f8376ea7c1cc")
             Bugsnag.setReleaseStage(BuildConfig.BUILD_TYPE)
