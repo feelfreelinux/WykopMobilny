@@ -25,9 +25,8 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.UpvoterResp
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Retrofit
+import toRequestBody
 
 class LinksRepository(
     val retrofit: Retrofit,
@@ -222,10 +221,5 @@ class LinksRepository(
             .retryWhen(userTokenRefresher)
             .compose<List<Boolean>>(ErrorHandlerTransformer())
             .map { it.first() }
-
-    private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
-
-    private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
-
 }
 

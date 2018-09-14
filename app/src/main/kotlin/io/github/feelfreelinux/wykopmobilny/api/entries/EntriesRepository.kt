@@ -15,9 +15,8 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.SurveyRespo
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoteResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoterResponse
 import io.reactivex.subjects.PublishSubject
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Retrofit
+import toRequestBody
 
 class EntriesRepository(
     val retrofit: Retrofit,
@@ -137,8 +136,4 @@ class EntriesRepository(
         .retryWhen(userTokenRefresher)
         .compose<List<VoterResponse>>(ErrorHandlerTransformer())
         .map { it.map { response -> VoterMapper.map(response) } }
-
-    private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
-
-    private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
 }

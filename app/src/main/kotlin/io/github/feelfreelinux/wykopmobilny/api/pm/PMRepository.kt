@@ -11,9 +11,8 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.Conversatio
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.PMMessageResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConversationResponse
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Retrofit
+import toRequestBody
 
 class PMRepository(
     val retrofit: Retrofit,
@@ -52,8 +51,4 @@ class PMRepository(
             .retryWhen(userTokenRefresher)
             .compose<PMMessageResponse>(ErrorHandlerTransformer())
             .map { PMMessageMapper.map(it) }
-
-    private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
-
-    private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
 }
