@@ -6,11 +6,10 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConv
 
 class FullConversationMapper {
     companion object : Mapper<FullConversationResponse, FullConversation> {
-        override fun map(value: FullConversationResponse): FullConversation {
-            return FullConversation(
-                    value.data!!.map { PMMessageMapper.map(it) },
-                    AuthorMapper.map(value.receiver)
+        override fun map(value: FullConversationResponse) =
+            FullConversation(
+                value.data!!.map { PMMessageMapper.map(it) },
+                AuthorMapper.map(value.receiver)
             )
-        }
     }
 }

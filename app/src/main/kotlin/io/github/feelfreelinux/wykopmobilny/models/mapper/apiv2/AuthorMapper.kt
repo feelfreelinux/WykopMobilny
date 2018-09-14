@@ -6,9 +6,8 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorRespo
 
 class AuthorMapper {
     companion object : Mapper<AuthorResponse, Author> {
-        override fun map(value: AuthorResponse): Author {
-            return Author(value.login, value.avatar, value.color, value.sex ?: "")
-        }
+        override fun map(value: AuthorResponse) =
+            Author(value.login, value.avatar, value.color, value.sex ?: "")
 
     }
 }

@@ -5,52 +5,56 @@ import android.os.Parcelable
 
 
 class LinkComment(
-        val id: Int,
-        val author: Author,
-        val date: String,
-        var body: String?,
-        val blocked: Boolean,
-        val favorite: Boolean,
-        var voteCount: Int,
-        var voteCountPlus: Int,
-        var voteCountMinus: Int,
-        var userVote: Int,
-        var parentId: Int,
-        val canVote: Boolean,
-        val linkId: Int,
-        var embed: Embed?,
-        val app: String?,
-        var isCollapsed : Boolean,
-        var isParentCollapsed : Boolean,
-        var childCommentCount : Int,
-        val violationUrl : String,
-        var isNsfw : Boolean = false,
-        var isBlocked : Boolean = false
+    val id: Int,
+    val author: Author,
+    val date: String,
+    var body: String?,
+    val blocked: Boolean,
+    val favorite: Boolean,
+    var voteCount: Int,
+    var voteCountPlus: Int,
+    var voteCountMinus: Int,
+    var userVote: Int,
+    var parentId: Int,
+    val canVote: Boolean,
+    val linkId: Int,
+    var embed: Embed?,
+    val app: String?,
+    var isCollapsed: Boolean,
+    var isParentCollapsed: Boolean,
+    var childCommentCount: Int,
+    val violationUrl: String,
+    var isNsfw: Boolean = false,
+    var isBlocked: Boolean = false
 ) : Parcelable {
-    constructor(parcel: Parcel) : this(
-            parcel.readInt(),
-            parcel.readParcelable(Author::class.java.classLoader),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readInt(),
-            parcel.readParcelable(Embed::class.java.classLoader),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readInt(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte())
 
-  override fun writeToParcel(parcel: Parcel, flags: Int) {
+    val url = "https://www.wykop.pl/link/$linkId/#comment-$id"
+
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readParcelable(Author::class.java.classLoader),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readInt(),
+        parcel.readParcelable(Embed::class.java.classLoader),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte()
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeParcelable(author, flags)
         parcel.writeString(date)
@@ -87,6 +91,4 @@ class LinkComment(
             return arrayOfNulls(size)
         }
     }
-
-    val url = "https://www.wykop.pl/link/$linkId/#comment-$id"
 }

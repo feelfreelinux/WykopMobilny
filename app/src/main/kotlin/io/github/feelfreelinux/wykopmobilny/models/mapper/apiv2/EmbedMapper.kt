@@ -6,8 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EmbedRespon
 
 class EmbedMapper {
     companion object : Mapper<EmbedResponse, Embed> {
-        override fun map(value: EmbedResponse): Embed {
-            return Embed(value.type, value.preview, value.url, value.plus18, value.source, value.animated, value.size ?: "")
-        }
+        override fun map(value: EmbedResponse) =
+            Embed(value.type, value.preview, value.url, value.plus18, value.source, value.animated, value.size ?: "")
     }
 }

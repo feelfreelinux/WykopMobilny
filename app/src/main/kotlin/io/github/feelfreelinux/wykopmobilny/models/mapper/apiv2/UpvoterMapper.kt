@@ -6,8 +6,6 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.UpvoterResp
 
 class UpvoterMapper {
     companion object : Mapper<UpvoterResponse, Upvoter> {
-        override fun map(value: UpvoterResponse): Upvoter {
-            return Upvoter(AuthorMapper.map(value.author), value.date)
-        }
+        override fun map(value: UpvoterResponse) = Upvoter(AuthorMapper.map(value.author), value.date)
     }
 }

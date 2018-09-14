@@ -5,6 +5,5 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class CoubFileVersions(
-        @JsonProperty("mobile")
-        val mobile : CoubMobileVersions
+    @JsonProperty("mobile") val mobile: CoubMobileVersions
 )

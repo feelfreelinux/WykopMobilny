@@ -6,12 +6,11 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.VoterRespon
 
 class VoterMapper {
     companion object : Mapper<VoterResponse, Voter> {
-        override fun map(value: VoterResponse): Voter {
-            return Voter(
-                    AuthorMapper.map(value.author),
-                    value.date,
-                    value.voteType
+        override fun map(value: VoterResponse) =
+            Voter(
+                AuthorMapper.map(value.author),
+                value.date,
+                value.voteType
             )
-        }
     }
 }

@@ -7,11 +7,12 @@ import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
 class PMMessageMapper {
     companion object : Mapper<PMMessageResponse, PMMessage> {
-        override fun map(value: PMMessageResponse): PMMessage {
-            return PMMessage(value.date.toPrettyDate(), value.body ?: "",
-                    if (value.embed != null) EmbedMapper.map(value.embed!!) else null,
-                    value.direction != "received",
-                    value.app)
-        }
+        override fun map(value: PMMessageResponse) =
+            PMMessage(
+                value.date.toPrettyDate(), value.body ?: "",
+                if (value.embed != null) EmbedMapper.map(value.embed!!) else null,
+                value.direction != "received",
+                value.app
+            )
     }
 }

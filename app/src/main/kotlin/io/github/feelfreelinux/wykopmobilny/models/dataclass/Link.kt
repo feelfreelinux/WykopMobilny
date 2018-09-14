@@ -2,58 +2,60 @@ package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
 import android.os.Parcel
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
 
 class Link(
-        val id: Int,
-        val title: String,
-        val description: String,
-        val tags: String,
-        val sourceUrl: String,
-        var voteCount: Int,
-        var buryCount: Int,
-        var comments: MutableList<LinkComment>,
-        val commentsCount: Int,
-        val relatedCount: Int,
-        val author: Author?,
-        val date: String,
-        val preview: String?,
-        val plus18: Boolean,
-        val canVote: Boolean,
-        val isHot: Boolean,
-        val status: String,
-        var userVote: String?,
-        var userFavorite: Boolean,
-        val app: String?,
-        var gotSelected : Boolean,
-        var isBlocked : Boolean = false
+    val id: Int,
+    val title: String,
+    val description: String,
+    val tags: String,
+    val sourceUrl: String,
+    var voteCount: Int,
+    var buryCount: Int,
+    var comments: MutableList<LinkComment>,
+    val commentsCount: Int,
+    val relatedCount: Int,
+    val author: Author?,
+    val date: String,
+    val preview: String?,
+    val plus18: Boolean,
+    val canVote: Boolean,
+    val isHot: Boolean,
+    val status: String,
+    var userVote: String?,
+    var userFavorite: Boolean,
+    val app: String?,
+    var gotSelected: Boolean,
+    var isBlocked: Boolean = false
 ) : Parcelable {
-    constructor(parcel: Parcel) : this(
-            parcel.readInt(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.createTypedArrayList(LinkComment.CREATOR),
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readParcelable(Author::class.java.classLoader),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte())
 
-  override fun writeToParcel(parcel: Parcel, flags: Int) {
+    val url = "https://www.wykop.pl/link/$id"
+
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.createTypedArrayList(LinkComment.CREATOR),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readParcelable(Author::class.java.classLoader),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte()
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(title)
         parcel.writeString(description)
@@ -91,6 +93,4 @@ class Link(
             return arrayOfNulls(size)
         }
     }
-
-    val url = "https://www.wykop.pl/link/$id"
 }
