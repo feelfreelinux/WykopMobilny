@@ -11,12 +11,15 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
-import io.github.feelfreelinux.wykopmobilny.utils.printout
-import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.*
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.ConversationLinkParser
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.EntryLinkParser
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.LinkParser
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.ProfileLinkParser
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser.TagLinkParser
 import java.net.URI
 
 interface WykopLinkHandlerApi {
-    fun handleUrl(url: String, refreshNotifications : Boolean = false)
+    fun handleUrl(url: String, refreshNotifications: Boolean = false)
 }
 
 class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavigatorApi) : WykopLinkHandlerApi {
@@ -30,36 +33,38 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
         private const val PM_MATCHER = "wiadomosc-prywatna"
         private const val DELIMITER = "/"
 
-        fun getLinkIntent(url: String, context : Context): Intent? {
+        fun getLinkIntent(url: String, context: Context): Intent? {
             val parsedUrl = URI(url.replace("\\", ""))
-            val domain = parsedUrl.host.replace("www.", "").substringBeforeLast(".")
-                    .substringAfterLast(".")
+            val domain = parsedUrl.host
+                .replace("www.", "")
+                .substringBeforeLast(".")
+                .substringAfterLast(".")
             return when (domain) {
-                    "wykop" -> {
-                        val resource = url.substringAfter("wykop.pl/")
-                        when (resource.substringBefore(DELIMITER)) {
-                            ENTRY_MATCHER -> {
-                                val entryId = EntryLinkParser.getEntryId(url)
-                                if (entryId != null) EntryActivity.createIntent(context, entryId, EntryLinkParser.getEntryCommentId(url), false)
-                                else null
-                            }
-                            TAG_MATCHER -> {
-                                TagActivity.createIntent(context, TagLinkParser.getTag(url))
-                            }
-                            PM_MATCHER -> {
-                                ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
-                            }
-                            PROFILE_MATCHER -> {
-                                ProfileActivity.createIntent(context, ProfileLinkParser.getProfile(url))
-                            }
-                            LINK_MATCHER -> {
-                                val linkId = LinkParser.getLinkId(url)
-                                if (linkId != null) LinkDetailsActivity.createIntent(context, linkId, LinkParser.getLinkCommentId(url))
-                                else null
-                            }
-                            else -> null
+                "wykop" -> {
+                    val resource = url.substringAfter("wykop.pl/")
+                    when (resource.substringBefore(DELIMITER)) {
+                        ENTRY_MATCHER -> {
+                            val entryId = EntryLinkParser.getEntryId(url)
+                            if (entryId != null) EntryActivity.createIntent(context, entryId, EntryLinkParser.getEntryCommentId(url), false)
+                            else null
                         }
+                        TAG_MATCHER -> {
+                            TagActivity.createIntent(context, TagLinkParser.getTag(url))
+                        }
+                        PM_MATCHER -> {
+                            ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
+                        }
+                        PROFILE_MATCHER -> {
+                            ProfileActivity.createIntent(context, ProfileLinkParser.getProfile(url))
+                        }
+                        LINK_MATCHER -> {
+                            val linkId = LinkParser.getLinkId(url)
+                            if (linkId != null) LinkDetailsActivity.createIntent(context, linkId, LinkParser.getLinkCommentId(url))
+                            else null
+                        }
+                        else -> null
                     }
+                }
                 "youtu", "youtube", "gfycat", "streamable", "coub" -> EmbedViewActivity.createIntent(context, url)
                 else -> null
             }
@@ -74,16 +79,11 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
         }
     }
 
-    private fun handleProfile(login: String) {
-        navigatorApi.openProfileActivity(login.removePrefix("@"))
-    }
+    private fun handleProfile(login: String) = navigatorApi.openProfileActivity(login.removePrefix("@"))
 
-    private fun handleTag(tag: String) {
-        navigatorApi.openTagActivity(tag.removePrefix(TAG_PREFIX.toString()))
-    }
+    private fun handleTag(tag: String) = navigatorApi.openTagActivity(tag.removePrefix(TAG_PREFIX.toString()))
 
-    private fun handleLink(url: String, refreshNotifications : Boolean) {
-
+    private fun handleLink(url: String, refreshNotifications: Boolean) {
         val intent = getLinkIntent(url, context)
         if (intent != null) {
             if (refreshNotifications) context.startActivityForResult(intent, NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE)

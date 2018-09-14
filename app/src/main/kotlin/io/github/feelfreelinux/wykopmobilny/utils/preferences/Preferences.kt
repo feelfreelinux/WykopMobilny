@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import kotlin.reflect.KProperty
 
-abstract class Preferences(var context: Context? = null, useDefaultFile : Boolean = false) {
+abstract class Preferences(var context: Context? = null, useDefaultFile: Boolean = false) {
 
     private val prefs: SharedPreferences by lazy {
         if (context != null && useDefaultFile)

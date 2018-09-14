@@ -7,14 +7,16 @@ import androidx.core.content.FileProvider
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActions
 import java.io.File
 import java.io.IOException
-import java.util.*
+import java.util.Date
 
 class CameraUtils {
     companion object {
-        fun createPictureUri(context : Context): Uri? {
-            val filename = String.format("owmcamera%d.jpg", Date().getTime())
-            val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "${PhotoViewActions.SAVED_FOLDER}/${PhotoViewActions.SHARED_FOLDER}/" + filename)
+        fun createPictureUri(context: Context): Uri? {
+            val filename = String.format("owmcamera%d.jpg", Date().time)
+            val file = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                "${PhotoViewActions.SAVED_FOLDER}/${PhotoViewActions.SHARED_FOLDER}/" + filename
+            )
 
             try {
                 file.createNewFile()

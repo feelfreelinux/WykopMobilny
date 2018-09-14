@@ -4,22 +4,17 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import androidx.recyclerview.widget.RecyclerView
 import android.util.TypedValue
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 
-
 class ViewHolderDependentItemDecorator(val context: Context) : androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
-    val paint by lazy { Paint() }
-    val largeHeight by lazy {
-        context.resources.getDimension(R.dimen.separator_large).toInt()
-    }
 
-    val normalHeight by lazy {
-        context.resources.getDimension(R.dimen.separator_normal).toInt()
-    }
+    val paint by lazy { Paint() }
+    private val largeHeight by lazy { context.resources.getDimension(R.dimen.separator_large).toInt() }
+    private val normalHeight by lazy { context.resources.getDimension(R.dimen.separator_normal).toInt() }
 
     init {
         val typedValue = TypedValue()
@@ -48,12 +43,25 @@ class ViewHolderDependentItemDecorator(val context: Context) : androidx.recycler
                 val position = parent.getChildAdapterPosition(view)
                 if (position > -1 && parent.adapter != null && parent.adapter!!.itemCount >= position) {
                     when (view.tag) {
-                        RecyclableViewHolder.SEPARATOR_NORMAL -> c.drawRect(view.left.toFloat(), view.bottom.toFloat(), view.right.toFloat(), (view.bottom + largeHeight).toFloat(), paint)
-                        else -> c.drawRect(view.left.toFloat(), view.bottom.toFloat(), view.right.toFloat(), (view.bottom + normalHeight).toFloat(), paint)
+                        RecyclableViewHolder.SEPARATOR_NORMAL -> c.drawRect(
+                            view.left.toFloat(),
+                            view.bottom.toFloat(),
+                            view.right.toFloat(),
+                            (view.bottom + largeHeight).toFloat(),
+                            paint
+                        )
+                        else -> c.drawRect(
+                            view.left.toFloat(),
+                            view.bottom.toFloat(),
+                            view.right.toFloat(),
+                            (view.bottom + normalHeight).toFloat(),
+                            paint
+                        )
                     }
                 }
             }
         } catch (e: Exception) {
+            // Do nothing
         }
     }
 

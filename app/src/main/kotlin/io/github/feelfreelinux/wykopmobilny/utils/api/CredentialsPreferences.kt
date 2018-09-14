@@ -8,7 +8,7 @@ interface CredentialsPreferencesApi {
     var userKey: String?
     var userToken: String?
     var avatarUrl: String?
-    var backgroundUrl : String?
+    var backgroundUrl: String?
     var timeStamp: String?
 }
 
