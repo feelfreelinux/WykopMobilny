@@ -8,7 +8,6 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import android.text.SpannableStringBuilder
 import android.view.View
-import android.webkit.MimeTypeMap
 import android.widget.ImageView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -21,14 +20,18 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDateJavaTime
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ViewHolderDependentItemDecorator
 import org.ocpsoft.prettytime.PrettyTime
-import org.threeten.bp.*
+import org.threeten.bp.Duration
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
+import org.threeten.bp.Period
 import org.threeten.bp.format.DateTimeFormatter
-import java.util.*
+import java.util.Locale
 
-
-var View.isVisible : Boolean
+var View.isVisible: Boolean
     get() = visibility == View.VISIBLE
-    set(value) { visibility = if (value) View.VISIBLE else View.GONE }
+    set(value) {
+        visibility = if (value) View.VISIBLE else View.GONE
+    }
 
 fun SpannableStringBuilder.appendNewSpan(text: CharSequence, what: Any, flags: Int): SpannableStringBuilder {
     val start = length
@@ -37,7 +40,7 @@ fun SpannableStringBuilder.appendNewSpan(text: CharSequence, what: Any, flags: I
     return this
 }
 
-fun View.getActivityContext() : Activity? {
+fun View.getActivityContext(): Activity? {
     var context = context
     while (context is ContextWrapper) {
         if (context is Activity) {
@@ -65,24 +68,27 @@ fun androidx.recyclerview.widget.RecyclerView.prepareNoDivider() {
     layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
 }
 
-fun ImageView.loadImage(url : String, signature : Int? = null) {
+fun ImageView.loadImage(url: String, signature: Int? = null) {
     if (signature == null) {
         GlideApp.with(context)
-                .load(url)
-                .into(this)
+            .load(url)
+            .into(this)
     } else {
         GlideApp.with(context)
-                .load(url)
-                .apply(RequestOptions()
-                        .signature(ObjectKey(signature)))
-                .into(this)
+            .load(url)
+            .apply(
+                RequestOptions()
+                    .signature(ObjectKey(signature))
+            )
+            .into(this)
     }
 }
 
-fun String.toPrettyDate() : String {
+fun String.toPrettyDate(): String {
     return PrettyTime(Locale("pl")).format(parseDate(this))
 }
-fun String.toDurationPrettyDate() : String {
+
+fun String.toDurationPrettyDate(): String {
     val period = Period.between(parseDateJavaTime(this), LocalDate.now())
 
     if (period.years > 1 && period.months > 0) {
@@ -106,7 +112,8 @@ fun String.toDurationPrettyDate() : String {
     }
     return PrettyTime(Locale("pl")).formatDurationUnrounded(parseDate(this))
 }
-fun Uri.queryFileName(contentResolver: ContentResolver) : String {
+
+fun Uri.queryFileName(contentResolver: ContentResolver): String {
     var result: String? = null
     if (scheme == "content") {
         val cursor = contentResolver.query(this, null, null, null, null)
@@ -128,13 +135,19 @@ fun Uri.queryFileName(contentResolver: ContentResolver) : String {
     return result
 }
 
-class KotlinGlideRequestListener(val failedListener : (GlideException?) -> Unit, val successListener : () -> Unit) : RequestListener<Drawable> {
+class KotlinGlideRequestListener(val failedListener: (GlideException?) -> Unit, val successListener: () -> Unit) : RequestListener<Drawable> {
     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
         failedListener(e)
         return false
     }
 
-    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+    override fun onResourceReady(
+        resource: Drawable?,
+        model: Any?,
+        target: Target<Drawable>?,
+        dataSource: DataSource?,
+        isFirstResource: Boolean
+    ): Boolean {
         successListener()
         return false
     }

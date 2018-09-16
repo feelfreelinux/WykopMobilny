@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.utils.textview;
 
-import android.app.Activity;
 import android.graphics.RectF;
 import android.text.Layout;
 import android.text.Selection;
@@ -13,13 +12,8 @@ import android.text.style.URLSpan;
 import android.text.util.Linkify;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
-
-import static io.github.feelfreelinux.wykopmobilny.utils.LogHelperKt.printout;
 
 /**
  * Handles URL clicks on TextViews. Unlike the default implementation, this:
@@ -100,53 +94,6 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
     }
 
     /**
-     * Recursively register a {@link BetterLinkMovementMethod} on every TextView inside a layout.
-     *
-     * @param linkifyMask One of {@link Linkify#ALL}, {@link Linkify#PHONE_NUMBERS}, {@link Linkify#MAP_ADDRESSES},
-     *                    {@link Linkify#WEB_URLS} and {@link Linkify#EMAIL_ADDRESSES}.
-     * @return The registered {@link BetterLinkMovementMethod} on the TextViews.
-     */
-    public static BetterLinkMovementMethod linkify(int linkifyMask, ViewGroup viewGroup) {
-        BetterLinkMovementMethod movementMethod = newInstance();
-        rAddLinks(linkifyMask, viewGroup, movementMethod);
-        return movementMethod;
-    }
-
-    /**
-     * Like {@link #linkify(int, TextView...)}, but can be used for TextViews with HTML links.
-     *
-     * @return The registered {@link BetterLinkMovementMethod} on the TextViews.
-     */
-    public static BetterLinkMovementMethod linkifyHtml(ViewGroup viewGroup) {
-        return linkify(LINKIFY_NONE, viewGroup);
-    }
-
-    /**
-     * Recursively register a {@link BetterLinkMovementMethod} on every TextView inside a layout.
-     *
-     * @param linkifyMask One of {@link Linkify#ALL}, {@link Linkify#PHONE_NUMBERS}, {@link Linkify#MAP_ADDRESSES},
-     *                    {@link Linkify#WEB_URLS} and {@link Linkify#EMAIL_ADDRESSES}.
-     * @return The registered {@link BetterLinkMovementMethod} on the TextViews.
-     */
-    public static BetterLinkMovementMethod linkify(int linkifyMask, Activity activity) {
-        // Find the layout passed to setContentView().
-        ViewGroup activityLayout = ((ViewGroup) ((ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT)).getChildAt(0));
-
-        BetterLinkMovementMethod movementMethod = newInstance();
-        rAddLinks(linkifyMask, activityLayout, movementMethod);
-        return movementMethod;
-    }
-
-    /**
-     * Like {@link #linkify(int, TextView...)}, but can be used for TextViews with HTML links.
-     *
-     * @return The registered {@link BetterLinkMovementMethod} on the TextViews.
-     */
-    public static BetterLinkMovementMethod linkifyHtml(Activity activity) {
-        return linkify(LINKIFY_NONE, activity);
-    }
-
-    /**
      * Get a static instance of BetterLinkMovementMethod. Do note that registering a click listener on the returned
      * instance is not supported because it will potentially be shared on multiple TextViews.
      */
@@ -183,35 +130,8 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
         return this;
     }
 
-    /**
-     * Set a listener that will get called whenever any link is clicked on the TextView.
-     */
-    public BetterLinkMovementMethod setOnLinkLongClickListener(OnLinkLongClickListener longClickListener) {
-        if (this == singleInstance) {
-            throw new UnsupportedOperationException("Setting a long-click listener on the instance returned by getInstance() is not supported to avoid " +
-                    "memory leaks. Please use newInstance() or any of the linkify() methods instead.");
-        }
-
-        this.onLinkLongClickListener = longClickListener;
-        return this;
-    }
 
 // ======== PUBLIC APIs END ======== //
-
-    private static void rAddLinks(int linkifyMask, ViewGroup viewGroup, BetterLinkMovementMethod movementMethod) {
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            View child = viewGroup.getChildAt(i);
-
-            if (child instanceof ViewGroup) {
-                // Recursively find child TextViews.
-                rAddLinks(linkifyMask, ((ViewGroup) child), movementMethod);
-
-            } else if (child instanceof TextView) {
-                TextView textView = (TextView) child;
-                addLinks(linkifyMask, movementMethod, textView);
-            }
-        }
-    }
 
     private static void addLinks(int linkifyMask, BetterLinkMovementMethod movementMethod, TextView textView) {
         textView.setMovementMethod(movementMethod);

@@ -8,25 +8,18 @@ import android.text.style.ClickableSpan
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.feelfreelinux.wykopmobilny.utils.api.convertMarkdownToHtml
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import java.net.URLDecoder
-import java.sql.Struct
 
-
-fun TextView.prepareBody(html: String, listener : (String) -> Unit) {
+fun TextView.prepareBody(html: String, listener: (String) -> Unit) {
     text = SpannableStringBuilder(html.toSpannable())
     val method = BetterLinkMovementMethod.linkifyHtml(this)
-    method.setOnLinkClickListener({
-        textView, url ->
-        if (url.text().startsWith("spoiler:")) {
-            val text = url.text().substringAfter("spoiler:")
-
-        } else listener.invoke(url.text())
+    method.setOnLinkClickListener { _, url ->
+        if (!url.text().startsWith("spoiler:")) listener.invoke(url.text())
         true
-    })
+    }
 }
 
-fun TextView.prepareBody(html: String, urlClickListener : (String) -> Unit, clickListener : (() -> Unit)? = null, shouldOpenSpoilerDialog : Boolean) {
+fun TextView.prepareBody(html: String, urlClickListener: (String) -> Unit, clickListener: (() -> Unit)? = null, shouldOpenSpoilerDialog: Boolean) {
     text = SpannableStringBuilder(html.toSpannable())
     val method = BetterLinkMovementMethod.linkifyHtml(this)
     clickListener?.let {
@@ -34,8 +27,7 @@ fun TextView.prepareBody(html: String, urlClickListener : (String) -> Unit, clic
             clickListener()
         }
     }
-    method.setOnLinkClickListener({
-        _, url ->
+    method.setOnLinkClickListener { _, url ->
         if (url.text().startsWith("spoiler:")) {
             if (!shouldOpenSpoilerDialog) {
                 openSpoilers(url.span(), url.text())
@@ -49,10 +41,10 @@ fun TextView.prepareBody(html: String, urlClickListener : (String) -> Unit, clic
             }
         } else urlClickListener(url.text())
         true
-    })
+    }
 }
 
-fun TextView.openSpoilers(span : ClickableSpan, rawText : String) {
+fun TextView.openSpoilers(span: ClickableSpan, rawText: String) {
     val spoilerText = URLDecoder.decode(rawText.substringAfter("spoiler:"), "UTF-8").convertMarkdownToHtml().toSpannable()
     val textBuilder = (text as SpannableString)
     val start = textBuilder.getSpanStart(span)
@@ -61,7 +53,7 @@ fun TextView.openSpoilers(span : ClickableSpan, rawText : String) {
     textBuilder.getSpans(0, textBuilder.length, ParcelableSpan::class.java).forEach {
         val spanStart = textBuilder.getSpanStart(it)
         val spanEnd = textBuilder.getSpanEnd(it)
-        val totalStart = if (spanStart < start) spanStart else spanStart - 15 +spoilerText.length
+        val totalStart = if (spanStart < start) spanStart else spanStart - 15 + spoilerText.length
         val totalEnd = if (spanEnd < start) spanEnd else spanEnd - 15 + spoilerText.length
         if (span != it && spanStart != start && spanEnd != end) ssb.setSpan(it, totalStart, totalEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
     }

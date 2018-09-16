@@ -34,8 +34,8 @@ class CodeTagHandler : Html.TagHandler {
             null
         } else {
             (objs.size downTo 1)
-                    .firstOrNull { text.getSpanFlags(objs[it - 1]) == Spannable.SPAN_MARK_MARK }
-                    ?.let { objs[it - 1] }
+                .firstOrNull { text.getSpanFlags(objs[it - 1]) == Spannable.SPAN_MARK_MARK }
+                ?.let { objs[it - 1] }
         }
     }
 }

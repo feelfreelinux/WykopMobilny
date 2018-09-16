@@ -1,19 +1,15 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist
 
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.printout
-import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.InfiniteScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 
