@@ -13,11 +13,15 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.autosuggest_item.view.*
 
-class UsersSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi) : ArrayAdapter<Author>(context, R.layout.autosuggest_item), Filterable {
-    val mData = arrayListOf<Author>()
-    val mFilter = object : Filter() {
+class UsersSuggestionsAdapter(
+    context: Context,
+    val suggestionApi: SuggestApi
+) : ArrayAdapter<Author>(context, R.layout.autosuggest_item), Filterable {
+
+    val items = arrayListOf<Author>()
+    private val itemsFilter = object : Filter() {
         override fun convertResultToString(resultValue: Any): CharSequence =
-                (resultValue as Author).nick
+            (resultValue as Author).nick
 
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val filterResults = FilterResults()
@@ -31,29 +35,27 @@ class UsersSuggestionsAdapter(context: Context, val suggestionApi: SuggestApi) :
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            mData.clear()
+            items.clear()
             if (results != null && results.count > 0) {
-                mData.addAll(results.values as List<Author>)
+                items.addAll(results.values as List<Author>)
                 notifyDataSetChanged()
             } else notifyDataSetInvalidated()
         }
     }
 
-    override fun getCount() = mData.size
+    override fun getCount() = items.size
 
-    override fun getItem(index: Int) = mData[index]
+    override fun getItem(index: Int) = items[index]
+
+    override fun getFilter() = itemsFilter
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: View.inflate(context, R.layout.autosuggest_item, null)
-        val item = mData[position]
+        val item = items[position]
         view.textView.setTextColor(getGroupColor(item.group, false))
         view.textView.text = item.nick
         view.avatarView.isVisible = true
         view.avatarView.setAuthor(item)
         return view
-    }
-
-    override fun getFilter(): Filter {
-        return mFilter
     }
 }

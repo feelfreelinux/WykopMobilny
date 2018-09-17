@@ -5,7 +5,10 @@ import android.text.Spanned
 import android.text.TextUtils
 import android.widget.MultiAutoCompleteTextView
 
-class WykopSuggestionsTokenizer(val setUsersAdapter : () -> Unit, val setHashTagsAdapter : () -> Unit) : MultiAutoCompleteTextView.Tokenizer {
+class WykopSuggestionsTokenizer(
+    val setUsersAdapter: () -> Unit,
+    val setHashTagsAdapter: () -> Unit
+) : MultiAutoCompleteTextView.Tokenizer {
     override fun terminateToken(text: CharSequence): CharSequence {
         var i = text.length
 
