@@ -1,8 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.graphics.Color
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +8,7 @@ import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
@@ -26,7 +24,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.comment_list_item.*
-import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.*
 import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 
 
@@ -184,7 +181,7 @@ class EntryCommentViewHolder(override val containerView: View,
             }
 
             entry_comment_menu_delete.setOnClickListener {
-                ConfirmationDialog(getActivityContext()!!) {
+                confirmationDialog(getActivityContext()!!) {
                     commentActionListener.deleteComment(comment)
                 }.show()
                 dialog.dismiss()

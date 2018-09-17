@@ -16,7 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.FullConversation
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.PMMessageAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.exitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
@@ -138,7 +138,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
     override fun onBackPressed() {
         if (inputToolbar.hasUserEditedContent()) {
-            ExitConfirmationDialog(this, {
+            exitConfirmationDialog(this, {
                 finish()
             })?.show()
         } else finish()

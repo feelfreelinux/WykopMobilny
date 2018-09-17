@@ -44,16 +44,13 @@ import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
-import android.net.Uri
 import android.os.Handler
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.internal.NavigationMenuView
-import io.github.feelfreelinux.wykopmobilny.BuildConfig
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 
 
@@ -103,7 +100,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
             R.id.hits -> { openFragment(HitsFragment.newInstance()) }
             R.id.about -> { openAboutSheet() }
             R.id.logout -> {
-                ConfirmationDialog(this) {
+                confirmationDialog(this) {
                     blacklistPreferencesApi.blockedTags = emptySet()
                     blacklistPreferencesApi.blockedUsers = emptySet()
                     userManagerApi.logoutUser()

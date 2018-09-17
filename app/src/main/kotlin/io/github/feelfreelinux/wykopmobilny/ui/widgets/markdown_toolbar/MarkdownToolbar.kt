@@ -2,20 +2,17 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar
 
 import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.EditTextFormatDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.editTextFormatDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.formatDialogCallback
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
 import io.github.feelfreelinux.wykopmobilny.utils.CameraUtils
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import kotlinx.android.synthetic.main.imagechooser_bottomsheet.view.*
@@ -133,7 +130,7 @@ class MarkdownToolbar : LinearLayout {
             }
 
             insert_url.setOnClickListener {
-                EditTextFormatDialog(R.string.insert_photo_url, context) { insertImageFromUrl(it) }.show()
+                editTextFormatDialog(R.string.insert_photo_url, context) { insertImageFromUrl(it) }.show()
                 dialog.dismiss()
             }
 

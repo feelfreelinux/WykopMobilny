@@ -2,14 +2,12 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.view.View
 import android.graphics.Color
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import androidx.core.content.ContextCompat
 import android.widget.ImageView
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
@@ -226,7 +224,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
             }
 
             comment_menu_delete.setOnClickListener {
-                ConfirmationDialog(getActivityContext()!!) {
+                confirmationDialog(getActivityContext()!!) {
                     commentActionListener.deleteComment(comment)
                 }.show()
                 dialog.dismiss()

@@ -10,23 +10,17 @@ import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.exitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
-import io.github.feelfreelinux.wykopmobilny.utils.textview.removeSpoilerHtml
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
-import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
-import io.github.feelfreelinux.wykopmobilny.R.id.editText
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.inputmethod.InputMethodManager
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.ZERO_WIDTH_SPACE
 import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 
@@ -157,7 +151,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     override fun onBackPressed() {
         if (!markupToolbar.hasUserEditedContent()) exitActivity()
         else
-            ExitConfirmationDialog(this) {
+            exitConfirmationDialog(this) {
                 exitActivity()
             }?.show()
     }

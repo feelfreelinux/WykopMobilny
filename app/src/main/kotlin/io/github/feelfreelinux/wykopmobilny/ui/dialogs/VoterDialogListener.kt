@@ -18,18 +18,22 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.dialog_voters.view.*
 
 typealias VotersDialogListener = (List<Voter>) -> Unit
-fun CreateVotersDialogListener(dialog : com.google.android.material.bottomsheet.BottomSheetDialog, votersDialogView : View) : (List<Voter>) -> Unit = {
+
+fun createVotersDialogListener(
+    dialog: com.google.android.material.bottomsheet.BottomSheetDialog,
+    votersDialogView: View
+): (List<Voter>) -> Unit = {
     if (dialog.isShowing) {
         votersDialogView.progressView.isVisible = false
         votersDialogView.votersTextView.isVisible = true
         val spannableStringBuilder = SpannableStringBuilder()
         it
-                .map { it.author }
-                .forEachIndexed { index, author ->
-                    val span = ClickableUserSpan(author)
-                    spannableStringBuilder.appendNewSpan(author.nick, span, SPAN_EXCLUSIVE_EXCLUSIVE)
-                    if (index < it.size - 1) spannableStringBuilder.append(", ")
-                }
+            .map { voter -> voter.author }
+            .forEachIndexed { index, author ->
+                val span = ClickableUserSpan(author)
+                spannableStringBuilder.appendNewSpan(author.nick, span, SPAN_EXCLUSIVE_EXCLUSIVE)
+                if (index < it.size - 1) spannableStringBuilder.append(", ")
+            }
         if (spannableStringBuilder.isEmpty()) {
             votersDialogView.votersTextView.gravity = Gravity.CENTER
             spannableStringBuilder.append(votersDialogView.context.getString(R.string.dialogNoVotes))
@@ -39,15 +43,15 @@ fun CreateVotersDialogListener(dialog : com.google.android.material.bottomsheet.
     }
 }
 
-class ClickableUserSpan(val author : Author) : ClickableSpan() {
+class ClickableUserSpan(val author: Author) : ClickableSpan() {
     override fun onClick(authorView: View?) {
         val activity = authorView?.getActivityContext()
         activity?.startActivity(ProfileActivity.createIntent(activity, author.nick))
     }
 
-    override fun updateDrawState(ds: TextPaint?) {
+    override fun updateDrawState(ds: TextPaint) {
         super.updateDrawState(ds)
-        ds?.color = getGroupColor(author.group)
-        ds?.isUnderlineText = false
+        ds.color = getGroupColor(author.group)
+        ds.isUnderlineText = false
     }
 }

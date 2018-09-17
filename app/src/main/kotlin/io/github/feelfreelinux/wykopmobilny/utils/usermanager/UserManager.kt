@@ -2,7 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.utils.usermanager
 
 import android.content.Context
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LoginResponse
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.UserNotLoggedInDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.userNotLoggedInDialog
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 
 data class LoginCredentials(val login: String, val token: String)
@@ -59,6 +59,6 @@ class UserManager(private val credentialsPreferencesApi: CredentialsPreferencesA
     override fun runIfLoggedIn(context: Context, callback: () -> Unit) {
         if (isUserAuthorized()) {
             callback.invoke()
-        } else UserNotLoggedInDialog(context)?.show()
+        } else userNotLoggedInDialog(context)?.show()
     }
 }

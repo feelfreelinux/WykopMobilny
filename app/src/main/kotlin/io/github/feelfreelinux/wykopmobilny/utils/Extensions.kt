@@ -2,9 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.app.Activity
 import android.content.ContentResolver
+import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.provider.OpenableColumns
 import android.text.SpannableStringBuilder
 import android.view.View

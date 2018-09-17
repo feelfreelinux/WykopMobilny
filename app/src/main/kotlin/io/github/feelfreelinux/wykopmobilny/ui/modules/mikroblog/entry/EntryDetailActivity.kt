@@ -18,8 +18,8 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CreateVotersDialogListener
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.exitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
@@ -43,7 +43,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         val votersDialogView = layoutInflater.inflate(R.layout.dialog_voters, null)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView)
-        votersDialogListener = CreateVotersDialogListener(dialog, votersDialogView)
+        votersDialogListener = createVotersDialogListener(dialog, votersDialogView)
         dialog.show()
     }
 
@@ -194,7 +194,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
 
     override fun onBackPressed() {
         if (inputToolbar.hasUserEditedContent()) {
-            ExitConfirmationDialog(this) {
+            exitConfirmationDialog(this) {
                 finish()
             }?.show()
         } else finish()

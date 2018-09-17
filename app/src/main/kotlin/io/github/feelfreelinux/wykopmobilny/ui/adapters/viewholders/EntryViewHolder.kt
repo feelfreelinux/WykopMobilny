@@ -1,15 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.graphics.Color
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
@@ -223,7 +221,7 @@ class EntryViewHolder(override val containerView: View,
             }
 
             entry_menu_delete.setOnClickListener {
-                ConfirmationDialog(getActivityContext()!!) {
+                confirmationDialog(getActivityContext()!!) {
                     entryActionListener.deleteEntry(entry)
                 }.show()
                 dialog.dismiss()
