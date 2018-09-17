@@ -27,19 +27,15 @@ import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 
 typealias EntryListener = (Entry) -> Unit
 
-class EntryViewHolder(override val containerView: View,
-                      private val userManagerApi: UserManagerApi,
-                      private val settingsPreferencesApi: SettingsPreferencesApi,
-                      private val navigatorApi : NewNavigatorApi,
-                      private val linkHandlerApi: WykopLinkHandlerApi,
-                      private val entryActionListener : EntryActionListener,
-                      private val replyListener: EntryListener?) : RecyclableViewHolder(containerView), LayoutContainer {
-    var type : Int = TYPE_NORMAL
-    lateinit var embedView : WykopEmbedView
-
-    lateinit var surveyView : SurveyWidget
-    val enableClickListener : Boolean
-        get() = replyListener == null
+class EntryViewHolder(
+    override val containerView: View,
+    private val userManagerApi: UserManagerApi,
+    private val settingsPreferencesApi: SettingsPreferencesApi,
+    private val navigatorApi: NewNavigatorApi,
+    private val linkHandlerApi: WykopLinkHandlerApi,
+    private val entryActionListener: EntryActionListener,
+    private val replyListener: EntryListener?
+) : RecyclableViewHolder(containerView), LayoutContainer {
 
     companion object {
         const val TYPE_SURVEY = 4
@@ -51,14 +47,25 @@ class EntryViewHolder(override val containerView: View,
         /**
          * Inflates correct view (with embed, survey or both) depending on viewType
          */
-        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, entryActionListener: EntryActionListener, replyListener: EntryListener?): EntryViewHolder {
-            val view = EntryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false),
-                    userManagerApi,
-                    settingsPreferencesApi,
-                    navigatorApi,
-                    linkHandlerApi,
-                    entryActionListener,
-                    replyListener)
+        fun inflateView(
+            parent: ViewGroup,
+            viewType: Int,
+            userManagerApi: UserManagerApi,
+            settingsPreferencesApi: SettingsPreferencesApi,
+            navigatorApi: NewNavigatorApi,
+            linkHandlerApi: WykopLinkHandlerApi,
+            entryActionListener: EntryActionListener,
+            replyListener: EntryListener?
+        ): EntryViewHolder {
+            val view = EntryViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false),
+                userManagerApi,
+                settingsPreferencesApi,
+                navigatorApi,
+                linkHandlerApi,
+                entryActionListener,
+                replyListener
+            )
 
             view.containerView.tag = if (replyListener == null) {
                 RecyclableViewHolder.SEPARATOR_SMALL
@@ -79,7 +86,7 @@ class EntryViewHolder(override val containerView: View,
             return view
         }
 
-        fun getViewTypeForEntry(entry : Entry) : Int {
+        fun getViewTypeForEntry(entry: Entry): Int {
             return if (entry.isBlocked) EntryViewHolder.TYPE_BLOCKED
             else if (entry.embed != null && entry.survey != null) EntryViewHolder.TYPE_EMBED_SURVEY
             else if (entry.embed == null && entry.survey != null) EntryViewHolder.TYPE_SURVEY
@@ -88,17 +95,23 @@ class EntryViewHolder(override val containerView: View,
         }
     }
 
+    var type: Int = TYPE_NORMAL
+    lateinit var embedView: WykopEmbedView
+    lateinit var surveyView: SurveyWidget
+    private val enableClickListener: Boolean
+        get() = replyListener == null
+
     fun bindView(entry: Entry) {
         setupHeader(entry)
         setupButtons(entry)
         setupBody(entry)
     }
 
-    fun setupHeader(entry: Entry) {
+    private fun setupHeader(entry: Entry) {
         authorHeaderView.setAuthorData(entry.author, entry.date, entry.app)
     }
 
-    fun setupButtons(entry : Entry) {
+    private fun setupButtons(entry: Entry) {
         moreOptionsTextView.setOnClickListener {
             openOptionsMenu(entry)
         }
@@ -113,7 +126,7 @@ class EntryViewHolder(override val containerView: View,
 
         // Only show reply view in entry details
         replyTextView.isVisible = replyListener != null && userManagerApi.isUserAuthorized()
-        replyTextView.setOnClickListener({ replyListener?.invoke(entry) })
+        replyTextView.setOnClickListener { replyListener?.invoke(entry) }
 
         containerView.setOnClickListener {
             handleClick(entry)
@@ -149,7 +162,7 @@ class EntryViewHolder(override val containerView: View,
 
     }
 
-    private fun setupBody(entry : Entry) {
+    private fun setupBody(entry: Entry) {
         // Add URL and click handler if body is not empty
         if (entry.body.isNotEmpty()) {
             with(entryContentTextView) {
@@ -192,7 +205,7 @@ class EntryViewHolder(override val containerView: View,
 
     }
 
-    fun openOptionsMenu(entry : Entry) {
+    private fun openOptionsMenu(entry: Entry) {
         val activityContext = containerView.getActivityContext()!!
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_menu_bottomsheet, null)

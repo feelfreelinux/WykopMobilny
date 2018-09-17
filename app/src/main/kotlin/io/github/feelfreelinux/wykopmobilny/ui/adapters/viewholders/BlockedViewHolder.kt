@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import androidx.recyclerview.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -9,21 +8,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.blocked_entry_view.*
 
-class BlockedViewHolder(override val containerView: View, val blockListener : (Int) -> Unit) : androidx.recyclerview.widget.RecyclerView.ViewHolder(containerView), LayoutContainer {
+class BlockedViewHolder(
+    override val containerView: View,
+    val blockListener: (Int) -> Unit
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(containerView), LayoutContainer {
+
     companion object {
-        fun inflateView(parent: ViewGroup, blockListener: (Int) -> Unit): BlockedViewHolder {
-            return BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false), blockListener)
-        }
+        fun inflateView(parent: ViewGroup, blockListener: (Int) -> Unit) =
+            BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false), blockListener)
     }
 
-
-    fun bindView(entry : Entry) {
+    fun bindView(entry: Entry) {
         showText("wpis", entry.author)
 
         containerView.setOnClickListener {
@@ -33,7 +37,7 @@ class BlockedViewHolder(override val containerView: View, val blockListener : (I
 
     }
 
-    fun bindView(comment : EntryComment) {
+    fun bindView(comment: EntryComment) {
         showText("komentarz", comment.author)
 
         containerView.setOnClickListener {
@@ -42,7 +46,7 @@ class BlockedViewHolder(override val containerView: View, val blockListener : (I
         }
     }
 
-    fun bindView(link : Link) {
+    fun bindView(link: Link) {
         showText("link", link.author)
 
         containerView.setOnClickListener {
@@ -51,7 +55,7 @@ class BlockedViewHolder(override val containerView: View, val blockListener : (I
         }
     }
 
-    fun bindView(linkComment : LinkComment) {
+    fun bindView(linkComment: LinkComment) {
         showText("komentarz", linkComment.author)
 
         containerView.setOnClickListener {
@@ -60,9 +64,14 @@ class BlockedViewHolder(override val containerView: View, val blockListener : (I
         }
     }
 
-    fun showText(type : String, author : Author?) {
+    fun showText(type: String, author: Author?) {
         val text = SpannableString("Pokaż ukryty $type od @" + author?.nick)
-        text.setSpan(ForegroundColorSpan(getGroupColor(author?.group ?: 1)), text.length-((author?.nick?.length ?: 0 )+1), text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        text.setSpan(
+            ForegroundColorSpan(getGroupColor(author?.group ?: 1)),
+            text.length - ((author?.nick?.length ?: 0) + 1),
+            text.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         showHiddenTextView.setText(text, TextView.BufferType.SPANNABLE)
     }
 }

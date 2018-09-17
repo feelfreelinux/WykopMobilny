@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.link_menu_bottomsheet.view.*
 import java.net.URL
 
 class LinkHeaderViewHolder(
-    override val containerView : View,
+    override val containerView: View,
     private val linkActionListener: LinkHeaderActionListener,
     val navigatorApi: NewNavigatorApi,
     val linkHandlerApi: WykopLinkHandlerApi,
@@ -37,12 +37,20 @@ class LinkHeaderViewHolder(
         /**
          * Inflates correct view (with embed, survey or both) depending on viewType
          */
-        fun inflateView(parent: ViewGroup, userManagerApi: UserManagerApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, linkHeaderActionListener: LinkHeaderActionListener): LinkHeaderViewHolder {
-          return LinkHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_layout, parent, false),
-                  linkHeaderActionListener,
-                  navigatorApi,
-                  linkHandlerApi,
-                  userManagerApi)
+        fun inflateView(
+            parent: ViewGroup,
+            userManagerApi: UserManagerApi,
+            navigatorApi: NewNavigatorApi,
+            linkHandlerApi: WykopLinkHandlerApi,
+            linkHeaderActionListener: LinkHeaderActionListener
+        ): LinkHeaderViewHolder {
+            return LinkHeaderViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_layout, parent, false),
+                linkHeaderActionListener,
+                navigatorApi,
+                linkHandlerApi,
+                userManagerApi
+            )
         }
     }
 
@@ -51,7 +59,7 @@ class LinkHeaderViewHolder(
 
     fun bindView(link: Link) {
         when (link.userVote) {
-            "dig" ->  showDigged(link)
+            "dig" -> showDigged(link)
             "bury" -> showBurried(link)
             null -> showUnvoted(link)
         }
@@ -60,7 +68,7 @@ class LinkHeaderViewHolder(
         setupBody(link)
     }
 
-    private fun setupHeader(link : Link) {
+    private fun setupHeader(link: Link) {
         dateTextView.text = link.date
         hotBadgeStrip.isVisible = link.isHot
         val author = link.author
@@ -81,7 +89,7 @@ class LinkHeaderViewHolder(
         blockedTextView.prepareBody(link.tags.convertToTagsHtml()) { linkHandlerApi.handleUrl(it) }
     }
 
-    private fun setupButtons(link : Link) {
+    private fun setupButtons(link: Link) {
         diggCountTextView.text = link.voteCount.toString()
         diggCountTextView.setup(userManagerApi)
         commentsCountTextView.text = link.commentsCount.toString()
@@ -100,7 +108,7 @@ class LinkHeaderViewHolder(
         }
     }
 
-    private fun setupBody(link : Link) {
+    private fun setupBody(link: Link) {
         titleTextView.text = link.title.removeHtml()
         image.isVisible = link.preview != null
         link.preview?.let { image.loadImage(link.preview!!.stripImageCompression()) }
@@ -116,29 +124,29 @@ class LinkHeaderViewHolder(
         }
     }
 
-    private fun showBurried(link : Link) {
+    private fun showBurried(link: Link) {
         link.userVote = "bury"
         diggCountTextView.isButtonSelected = true
         diggCountTextView.setVoteState("bury")
-        diggCountTextView.unvoteListener =  {
+        diggCountTextView.unvoteListener = {
             linkActionListener.removeVote(link)
             diggCountTextView.isEnabled = false
         }
         diggCountTextView.isEnabled = true
     }
 
-    private fun showDigged(link : Link) {
+    private fun showDigged(link: Link) {
         link.userVote = "dig"
         diggCountTextView.isButtonSelected = true
         diggCountTextView.setVoteState("dig")
-        diggCountTextView.unvoteListener =  {
+        diggCountTextView.unvoteListener = {
             linkActionListener.removeVote(link)
             diggCountTextView.isEnabled = false
         }
         diggCountTextView.isEnabled = true
     }
 
-    fun showUnvoted(link : Link) {
+    private fun showUnvoted(link: Link) {
         diggCountTextView.isButtonSelected = false
         diggCountTextView.setVoteState(null)
         diggCountTextView.voteListener = {
@@ -149,7 +157,7 @@ class LinkHeaderViewHolder(
         diggCountTextView.isEnabled = true
     }
 
-    private fun openOptionsMenu(link : Link) {
+    private fun openOptionsMenu(link: Link) {
         val activityContext = containerView.getActivityContext()!!
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_menu_bottomsheet, null)
@@ -189,7 +197,7 @@ class LinkHeaderViewHolder(
         dialog.show()
     }
 
-    private fun openBuryReasonMenu(link : Link) {
+    private fun openBuryReasonMenu(link: Link) {
         val activityContext = containerView.getActivityContext()!!
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_bury_menu_bottomsheet, null)
@@ -229,8 +237,7 @@ class LinkHeaderViewHolder(
         dialog.show()
     }
 
-
-    private fun String.convertToTagsHtml() : String {
+    private fun String.convertToTagsHtml(): String {
         val html = StringBuilder()
         split(" ").forEach {
             html.append("<a href=\"$it\">$it<\\a> ")

@@ -21,10 +21,8 @@ class LinkViewHolder(
     val settingsApi: SettingsPreferencesApi,
     val navigatorApi: NewNavigatorApi,
     val userManagerApi: UserManagerApi,
-    val linkActionListener: LinkActionListener
+    private val linkActionListener: LinkActionListener
 ) : RecyclableViewHolder(containerView), LayoutContainer {
-    var type: Int = TYPE_IMAGE
-    lateinit var previewImageView: ImageView
 
     companion object {
         const val ALPHA_VISITED = 0.6f
@@ -67,6 +65,10 @@ class LinkViewHolder(
         }
     }
 
+    var type: Int = TYPE_IMAGE
+    lateinit var previewImageView: ImageView
+    private val linksPreferences by lazy { LinksPreferences(containerView.context) }
+
     fun inflateCorrectImageView() {
         previewImageView = when (settingsApi.linkImagePosition) {
             "top" -> {
@@ -87,9 +89,12 @@ class LinkViewHolder(
 
     }
 
-    private val linksPreferences by lazy { LinksPreferences(containerView.context) }
+    fun bindView(link: Link) {
+        setupBody(link)
+        setupButtons(link)
+    }
 
-    fun openLinkDetail(link: Link) {
+    private fun openLinkDetail(link: Link) {
         navigatorApi.openLinkDetailsActivity(link)
         if (!link.gotSelected) {
             setWidgetAlpha(ALPHA_VISITED)
@@ -98,12 +103,7 @@ class LinkViewHolder(
         }
     }
 
-    fun bindView(link: Link) {
-        setupBody(link)
-        setupButtons(link)
-    }
-
-    fun setupBody(link: Link) {
+    private fun setupBody(link: Link) {
         if (link.gotSelected) {
             setWidgetAlpha(ALPHA_VISITED)
         } else {
@@ -129,7 +129,7 @@ class LinkViewHolder(
         description.text = link.description
     }
 
-    fun setupButtons(link: Link) {
+    private fun setupButtons(link: Link) {
         diggCountTextView.voteCount = link.voteCount
         diggCountTextView.setup(userManagerApi)
         diggCountTextView.setVoteState(link.userVote)
@@ -153,7 +153,7 @@ class LinkViewHolder(
         }
     }
 
-    fun showBurried(link: Link) {
+    private fun showBurried(link: Link) {
         link.userVote = "bury"
         diggCountTextView.isButtonSelected = true
         diggCountTextView.setVoteState("bury")
@@ -164,7 +164,7 @@ class LinkViewHolder(
         diggCountTextView.isEnabled = true
     }
 
-    fun showDigged(link: Link) {
+    private fun showDigged(link: Link) {
         link.userVote = "dig"
         diggCountTextView.isButtonSelected = true
         diggCountTextView.setVoteState("dig")
@@ -175,7 +175,7 @@ class LinkViewHolder(
         diggCountTextView.isEnabled = true
     }
 
-    fun showUnvoted(link: Link) {
+    private fun showUnvoted(link: Link) {
         diggCountTextView.isButtonSelected = false
         diggCountTextView.setVoteState(null)
         diggCountTextView.voteListener = {
@@ -186,7 +186,7 @@ class LinkViewHolder(
         diggCountTextView.isEnabled = true
     }
 
-    fun setWidgetAlpha(alpha: Float) {
+    private fun setWidgetAlpha(alpha: Float) {
         if (type == TYPE_IMAGE) previewImageView.alpha = alpha
         titleTextView.alpha = alpha
         description.alpha = alpha

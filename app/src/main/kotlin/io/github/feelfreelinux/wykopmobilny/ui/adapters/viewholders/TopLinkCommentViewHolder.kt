@@ -20,13 +20,24 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.top_link_comment_layout.*
 
-class TopLinkCommentViewHolder(override val containerView: View,
-                             userManagerApi: UserManagerApi,
-                             settingsPreferencesApi: SettingsPreferencesApi,
-                             navigatorApi : NewNavigatorApi,
-                             linkHandlerApi: WykopLinkHandlerApi,
-                             commentActionListener : LinkCommentActionListener,
-                             commentViewListener: LinkCommentViewListener?) : BaseLinkCommentViewHolder(containerView, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, commentActionListener, commentViewListener), LayoutContainer {
+class TopLinkCommentViewHolder(
+    override val containerView: View,
+    userManagerApi: UserManagerApi,
+    settingsPreferencesApi: SettingsPreferencesApi,
+    navigatorApi: NewNavigatorApi,
+    linkHandlerApi: WykopLinkHandlerApi,
+    commentActionListener: LinkCommentActionListener,
+    commentViewListener: LinkCommentViewListener?
+) : BaseLinkCommentViewHolder(
+    containerView,
+    userManagerApi,
+    settingsPreferencesApi,
+    navigatorApi,
+    linkHandlerApi,
+    commentViewListener,
+    commentActionListener
+), LayoutContainer {
+
     override lateinit var embedView: WykopEmbedView
 
     // Bind correct views
@@ -47,14 +58,25 @@ class TopLinkCommentViewHolder(override val containerView: View,
         /**
          * Inflates correct view (with embed, survey or both) depending on viewType
          */
-        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, commentActionListener: LinkCommentActionListener, commentViewListener: LinkCommentViewListener?): TopLinkCommentViewHolder {
-            val view = TopLinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.top_link_comment_layout, parent, false),
-                    userManagerApi,
-                    settingsPreferencesApi,
-                    navigatorApi,
-                    linkHandlerApi,
-                    commentActionListener,
-                    commentViewListener)
+        fun inflateView(
+            parent: ViewGroup,
+            viewType: Int,
+            userManagerApi: UserManagerApi,
+            settingsPreferencesApi: SettingsPreferencesApi,
+            navigatorApi: NewNavigatorApi,
+            linkHandlerApi: WykopLinkHandlerApi,
+            commentActionListener: LinkCommentActionListener,
+            commentViewListener: LinkCommentViewListener?
+        ): TopLinkCommentViewHolder {
+            val view = TopLinkCommentViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.top_link_comment_layout, parent, false),
+                userManagerApi,
+                settingsPreferencesApi,
+                navigatorApi,
+                linkHandlerApi,
+                commentActionListener,
+                commentViewListener
+            )
 
             view.type = viewType
 

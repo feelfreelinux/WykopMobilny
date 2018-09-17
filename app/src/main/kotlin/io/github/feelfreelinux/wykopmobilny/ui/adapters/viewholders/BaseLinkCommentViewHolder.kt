@@ -1,10 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.View
 import android.graphics.Color
-import androidx.core.content.ContextCompat
+import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
@@ -26,32 +27,18 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.link_comment_menu_bottomsheet.view.*
 import kotlin.math.absoluteValue
 
-
-abstract class BaseLinkCommentViewHolder(override val containerView: View,
-                                         internal val userManagerApi: UserManagerApi,
-                                         internal val settingsPreferencesApi: SettingsPreferencesApi,
-                                         internal val navigatorApi: NewNavigatorApi,
-                                         internal val linkHandlerApi: WykopLinkHandlerApi,
-                                         internal val commentActionListener: LinkCommentActionListener,
-                                         internal val commentViewListener: LinkCommentViewListener?) : RecyclableViewHolder(containerView), LayoutContainer {
-    val collapseDrawable by lazy {
-        val typedArray = containerView.context.obtainStyledAttributes(arrayOf(
-                R.attr.collapseDrawable).toIntArray())
-        val drawable = typedArray.getDrawable(0)
-        typedArray.recycle()
-        drawable
-    }
-
-    val expandDrawable by lazy {
-        val typedArray = containerView.context.obtainStyledAttributes(arrayOf(
-                R.attr.expandDrawable).toIntArray())
-        val drawable = typedArray.getDrawable(0)
-        typedArray.recycle()
-        drawable
-    }
+abstract class BaseLinkCommentViewHolder(
+    override val containerView: View,
+    internal val userManagerApi: UserManagerApi,
+    internal val settingsPreferencesApi: SettingsPreferencesApi,
+    internal val navigatorApi: NewNavigatorApi,
+    internal val linkHandlerApi: WykopLinkHandlerApi,
+    internal val commentViewListener: LinkCommentViewListener?,
+    private val commentActionListener: LinkCommentActionListener
+) : RecyclableViewHolder(containerView), LayoutContainer {
 
     companion object {
-        fun getViewTypeForComment(comment: LinkComment, forceTop : Boolean = false): Int {
+        fun getViewTypeForComment(comment: LinkComment, forceTop: Boolean = false): Int {
             return if (comment.parentId != comment.id && !forceTop) {
                 when {
                     comment.isBlocked -> LinkCommentViewHolder.TYPE_BLOCKED
@@ -69,12 +56,30 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
         }
     }
 
-    override fun cleanRecycled() {
+    val collapseDrawable: Drawable by lazy {
+        val typedArray = containerView.context.obtainStyledAttributes(
+            arrayOf(
+                R.attr.collapseDrawable
+            ).toIntArray()
+        )
+        val drawable = typedArray.getDrawable(0)
+        typedArray.recycle()
+        drawable
+    }
+
+    val expandDrawable: Drawable by lazy {
+        val typedArray = containerView.context.obtainStyledAttributes(
+            arrayOf(
+                R.attr.expandDrawable
+            ).toIntArray()
+        )
+        val drawable = typedArray.getDrawable(0)
+        typedArray.recycle()
+        drawable
     }
 
     var type: Int = 0
     abstract var embedView: WykopEmbedView
-
     abstract var commentContent: TextView
     abstract var replyButton: TextView
     abstract var collapseButton: ImageView
@@ -83,14 +88,16 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
     abstract var minusButton: MinusVoteButton
     abstract var moreOptionsButton: TextView
     abstract var shareButton: TextView
-    open var collapsedCommentsTextView : TextView? = null
+    open var collapsedCommentsTextView: TextView? = null
+
+    override fun cleanRecycled() {
+    }
 
     open fun bindView(linkComment: LinkComment, isAuthorComment: Boolean, commentId: Int = -1) {
         setupBody(linkComment)
         setupButtons(linkComment)
         setStyleForComment(linkComment, isAuthorComment, commentId)
     }
-
 
     private fun setupBody(comment: LinkComment) {
         replyButton.isVisible = userManagerApi.isUserAuthorized() && commentViewListener != null
@@ -99,7 +106,12 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
         }
 
         comment.body?.let {
-            commentContent.prepareBody(comment.body!!, { linkHandlerApi.handleUrl(it) }, { handleClick(comment) }, settingsPreferencesApi.openSpoilersDialog)
+            commentContent.prepareBody(
+                comment.body!!,
+                { linkHandlerApi.handleUrl(it) },
+                { handleClick(comment) },
+                settingsPreferencesApi.openSpoilersDialog
+            )
         }
 
         containerView.setOnClickListener { handleClick(comment) }
@@ -108,14 +120,14 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
         collapseButton.isVisible = !((comment.id != comment.parentId) || comment.childCommentCount == 0) && commentViewListener != null
     }
 
-    fun handleClick(comment : LinkComment) {
+    private fun handleClick(comment: LinkComment) {
         // Register click listener for comments list
         if (commentViewListener == null) {
             navigatorApi.openLinkDetailsActivity(comment.linkId, comment.id)
         }
     }
 
-    fun setStyleForComment(comment: LinkComment, isAuthorComment: Boolean, commentId: Int = -1) {
+    private fun setStyleForComment(comment: LinkComment, isAuthorComment: Boolean, commentId: Int = -1) {
         val credentials = userManagerApi.getUserCredentials()
         if (credentials != null && credentials.login == comment.author.nick) {
             authorBadgeStrip.isVisible = true
@@ -203,7 +215,7 @@ abstract class BaseLinkCommentViewHolder(override val containerView: View,
         }
     }
 
-    fun openLinkCommentMenu(comment: LinkComment) {
+    private fun openLinkCommentMenu(comment: LinkComment) {
         val activityContext = containerView.getActivityContext()!!
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
         val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_comment_menu_bottomsheet, null)

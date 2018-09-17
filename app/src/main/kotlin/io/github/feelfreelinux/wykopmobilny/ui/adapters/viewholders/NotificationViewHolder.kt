@@ -1,12 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import androidx.recyclerview.widget.RecyclerView
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
-import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
@@ -14,7 +12,12 @@ import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.notifications_list_item.view.*
 
-class NotificationViewHolder(val view : View, val linkHandlerApi: WykopLinkHandlerApi, val updateHeader : (String) -> Unit) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+class NotificationViewHolder(
+    val view: View,
+    val linkHandlerApi: WykopLinkHandlerApi,
+    val updateHeader: (String) -> Unit
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+
     fun bindNotification(notification: Notification) {
         view.apply {
             // Setup widgets
@@ -32,7 +35,12 @@ class NotificationViewHolder(val view : View, val linkHandlerApi: WykopLinkHandl
                     // Color nickname
                     val nickName = notification.body.substringBefore(" ") // nick
                     val spannable = body.text as Spannable
-                    spannable.setSpan(ForegroundColorSpan(getGroupColor(notification.author.group)), 0, nickName.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    spannable.setSpan(
+                        ForegroundColorSpan(getGroupColor(notification.author.group)),
+                        0,
+                        nickName.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                 }
             } else {
                 avatarView.isVisible = false
@@ -49,6 +57,5 @@ class NotificationViewHolder(val view : View, val linkHandlerApi: WykopLinkHandl
                 linkHandlerApi.handleUrl(notification.url ?: "https://www.wykop.pl/ludzie/feelfree")
             }
         }
-
     }
 }

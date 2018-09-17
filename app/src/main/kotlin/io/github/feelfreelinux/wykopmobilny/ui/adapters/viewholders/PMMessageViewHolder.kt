@@ -1,23 +1,25 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.PMMessage
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.pmmessage_sent_layout.view.*
 
-class PMMessageViewHolder(val view: View,
-                          val linkHandlerApi: WykopLinkHandlerApi,
-                          val settingsPreferencesApi: SettingsPreferencesApi,
-                          val navigatorApi: NewNavigatorApi) : RecyclableViewHolder(view) {
+class PMMessageViewHolder(
+    val view: View,
+    val linkHandlerApi: WykopLinkHandlerApi,
+    val settingsPreferencesApi: SettingsPreferencesApi,
+    val navigatorApi: NewNavigatorApi
+) : RecyclableViewHolder(view) {
 
     fun bindView(message: PMMessage) {
         flipMessage(message.isSentFromUser)
@@ -37,7 +39,7 @@ class PMMessageViewHolder(val view: View,
     /**
      * This function flips the message depending on the direction.
      */
-    fun flipMessage(isSentFromUser: Boolean) {
+    private fun flipMessage(isSentFromUser: Boolean) {
         val cardViewParams = view.notificationItem.layoutParams as RelativeLayout.LayoutParams
         // Resolve colors from attr
         val theme = view.getActivityContext()!!.theme
