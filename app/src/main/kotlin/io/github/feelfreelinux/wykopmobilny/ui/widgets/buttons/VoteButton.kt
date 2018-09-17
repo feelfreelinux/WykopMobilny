@@ -8,17 +8,28 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
 @Suppress("LeakingThis")
-abstract class VoteButton : TextView {
-    constructor(context: Context) : super(context)
+abstract class VoteButton @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.MirkoButtonStyle
+) : TextView(context, attrs, defStyleAttr) {
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs, R.attr.MirkoButtonStyle)
+    var voteCount: Int
+        get() = text.toString().toInt()
+        set(value) {
+            text = context.getString(R.string.votes_count, value)
+        }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    var isButtonSelected: Boolean
+        get() = isSelected
+        set(value) {
+            isSelected = value
+            setLightThemeDrawable()
+        }
 
-    lateinit var userManager : UserManagerApi
+    lateinit var userManager: UserManagerApi
+    lateinit var voteListener: () -> Unit
+    lateinit var unvoteListener: () -> Unit
 
-    lateinit var voteListener : () -> Unit
-    lateinit var unvoteListener : () -> Unit
+    abstract fun setLightThemeDrawable()
 
     fun setup(userManagerApi: UserManagerApi) {
         userManager = userManagerApi
@@ -32,22 +43,5 @@ abstract class VoteButton : TextView {
         }
     }
 
-    abstract fun setLightThemeDrawable()
-
-    var voteCount : Int
-        get() = text.toString().toInt()
-        set(value) {
-            text =  context.getString(R.string.votes_count, value)
-        }
-
-    var isButtonSelected: Boolean
-        get() = isSelected
-        set(value) {
-            isSelected = value
-            setLightThemeDrawable()
-        }
-
-    fun showErrorDialog(e : Throwable) {
-        context.showExceptionDialog(e)
-    }
+    fun showErrorDialog(e: Throwable) = context.showExceptionDialog(e)
 }

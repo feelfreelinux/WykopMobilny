@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.survey
 
 import android.content.Context
-import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -13,25 +12,18 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.survey_answer_item.view.*
 import kotlinx.android.synthetic.main.survey_listview.view.*
 
-class SurveyWidget : androidx.constraintlayout.widget.ConstraintLayout {
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    lateinit var userManager : UserManagerApi
-
-    lateinit var surveyData : Survey
-
-    lateinit var voteAnswerListener : (Int) -> Unit
+class SurveyWidget @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : androidx.constraintlayout.widget.ConstraintLayout(context, attrs, defStyleAttr) {
 
     init {
         View.inflate(context, R.layout.survey_listview, this)
         isVisible = false
     }
 
-
+    private lateinit var userManager: UserManagerApi
+    private lateinit var surveyData: Survey
+    lateinit var voteAnswerListener: (Int) -> Unit
 
     fun setSurvey(survey: Survey, userManagerApi: UserManagerApi) {
         isVisible = true
@@ -52,13 +44,13 @@ class SurveyWidget : androidx.constraintlayout.widget.ConstraintLayout {
             answerCheck.isChecked = true
             // Disable click
             (0 until answerItems.childCount)
-                    .map { answerItems.getChildAt(it).radioButton}
-                    .forEach { it.isClickable = false }
+                .map { answerItems.getChildAt(it).radioButton }
+                .forEach { it.isClickable = false }
         }
         setupButtons()
     }
 
-    private fun createAnswerView(answerData: Answer) : View {
+    private fun createAnswerView(answerData: Answer): View {
         val answerView = View.inflate(context, R.layout.survey_answer_item, null)
         answerView.apply {
             answer.text = answerData.answer
@@ -73,23 +65,22 @@ class SurveyWidget : androidx.constraintlayout.widget.ConstraintLayout {
 
     private fun setupButtons() {
         (0 until answerItems.childCount)
-                .map { answerItems.getChildAt(it).radioButton}
-                .forEachIndexed {
-                    index, button ->
-                    button.setOnCheckedChangeListener { _, checked ->
-                        if (checked) {
-                            deselectRadioExcept(index)
-                            voteAnswerListener(index + 1)
-                        }
+            .map { answerItems.getChildAt(it).radioButton }
+            .forEachIndexed { index, button ->
+                button.setOnCheckedChangeListener { _, checked ->
+                    if (checked) {
+                        deselectRadioExcept(index)
+                        voteAnswerListener(index + 1)
                     }
                 }
+            }
     }
 
-    private fun deselectRadioExcept(index : Int) {
+    private fun deselectRadioExcept(index: Int) {
         (0 until answerItems.childCount)
-                .filter { it != index }
-                .map { answerItems.getChildAt(it).radioButton}
-                .forEach { it.isChecked = false }
+            .filter { it != index }
+            .map { answerItems.getChildAt(it).radioButton }
+            .forEach { it.isChecked = false }
     }
 
 }

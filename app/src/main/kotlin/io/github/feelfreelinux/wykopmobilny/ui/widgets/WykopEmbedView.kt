@@ -9,65 +9,49 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
-import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import kotlinx.android.synthetic.main.wykopembedview.view.*
 import java.lang.ref.WeakReference
 import java.net.URI
-import java.util.regex.Pattern
-import androidx.core.content.ContextCompat.startActivity
-import android.provider.MediaStore.Video.Thumbnails.VIDEO_ID
-import com.google.android.youtube.player.YouTubeStandalonePlayer
-import android.content.Intent
-import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
 
+class WykopEmbedView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr) {
 
-class WykopEmbedView: FrameLayout {
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     companion object {
         const val NSFW_IMAGE_PLACEHOLDER = "https://www.wykop.pl/cdn/c2526412/nsfw.jpg"
     }
 
-    var resized = false
-    var hiddenPreview: String? = null
-    lateinit var mEmbed : WeakReference<Embed>
-    lateinit var navigator : NewNavigatorApi
-    lateinit var settingsPreferences : SettingsPreferencesApi
-    var forceDisableMinimizedMode : Boolean
-        get() = image.forceDisableMinimizedMode
-        set(value) { image.forceDisableMinimizedMode = value }
-
-
     init {
         View.inflate(context, R.layout.wykopembedview, this)
         isVisible = false
-        image.onResizedListener = {
-            mEmbed.get()?.isResize = it
-        }
-        image.showResizeView = {
-            post {
-                imageExpand.isVisible = it
-            }
-        }
+        image.onResizedListener = { mEmbed.get()?.isResize = it }
+        image.showResizeView = { post { imageExpand.isVisible = it } }
         image.openImageListener = { handleUrl() }
     }
 
+    var resized = false
+    var hiddenPreview: String? = null
+    lateinit var mEmbed: WeakReference<Embed>
+    lateinit var navigator: NewNavigatorApi
+    lateinit var settingsPreferences: SettingsPreferencesApi
+    var forceDisableMinimizedMode: Boolean
+        get() = image.forceDisableMinimizedMode
+        set(value) {
+            image.forceDisableMinimizedMode = value
+        }
+
     fun setEmbed(embed: Embed?, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, isNsfw: Boolean = false) {
         hiddenPreview = null
-        twitterview.isVisible = false
         image.isVisible = true
         resized = false
         settingsPreferences = settingsPreferencesApi
         navigator = navigatorApi
         if (embed == null || !Patterns.WEB_URL.matcher(embed.url.replace("\\", "")).matches()) isVisible = false
         else {
-            embed?.apply {
+            embed.apply {
                 image.resetImage()
                 mEmbed = WeakReference(embed)
                 image.isResized = embed.isResize
@@ -84,56 +68,26 @@ class WykopEmbedView: FrameLayout {
         }
     }
 
-    fun setEmbedIcon(embed : Embed) {
+    private fun setEmbedIcon(embed: Embed) {
         imageIconGifSize.isVisible = false
         imageIcon.isVisible = true
         val url = URI(embed.url.replace("\\", ""))
         val domain = url.host.replace("www.", "").substringBeforeLast(".")
-                .substringAfterLast(".")
-        when(domain) {
-            "youtube" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_youtube)
-            }
-            "youtu" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_youtube)
-            }
-            "gfycat" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_gfycat)
-            }
-            "vimeo" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_vimeo)
-            }
-            "streamable" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_streamable)
-            }
-            "coub" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_coub)
-            }
-            "twitch" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_twitch)
-            }
-            "twitter" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_twitter)
-            }
-            "instagram" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_instagram)
-            }
-
-            "facebook" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_facebook)
-            }
-            "soundcloud" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_soundcloud)
-            }
-
-            "hearthis" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_hearthis)
-            }
-
-            "mixcould" -> {
-                imageIcon.setBackgroundResource(R.mipmap.ic_mixcloud)
-            }
-
+            .substringAfterLast(".")
+        when (domain) {
+            "youtube" -> imageIcon.setBackgroundResource(R.mipmap.ic_youtube)
+            "youtu" -> imageIcon.setBackgroundResource(R.mipmap.ic_youtube)
+            "gfycat" -> imageIcon.setBackgroundResource(R.mipmap.ic_gfycat)
+            "vimeo" -> imageIcon.setBackgroundResource(R.mipmap.ic_vimeo)
+            "streamable" -> imageIcon.setBackgroundResource(R.mipmap.ic_streamable)
+            "coub" -> imageIcon.setBackgroundResource(R.mipmap.ic_coub)
+            "twitch" -> imageIcon.setBackgroundResource(R.mipmap.ic_twitch)
+            "twitter" -> imageIcon.setBackgroundResource(R.mipmap.ic_twitter)
+            "instagram" -> imageIcon.setBackgroundResource(R.mipmap.ic_instagram)
+            "facebook" -> imageIcon.setBackgroundResource(R.mipmap.ic_facebook)
+            "soundcloud" -> imageIcon.setBackgroundResource(R.mipmap.ic_soundcloud)
+            "hearthis" -> imageIcon.setBackgroundResource(R.mipmap.ic_hearthis)
+            "mixcould" -> imageIcon.setBackgroundResource(R.mipmap.ic_mixcloud)
             else -> {
                 if (embed.isAnimated) {
                     imageIconGifSize.isVisible = true
@@ -167,8 +121,8 @@ class WykopEmbedView: FrameLayout {
             "video" -> {
                 val url = URI(image.url.replace("\\", ""))
                 val domain = url.host.replace("www.", "").substringBeforeLast(".")
-                        .substringAfterLast(".")
-                when(domain) {
+                    .substringAfterLast(".")
+                when (domain) {
                     "youtube", "youtu" -> {
                         if (settingsPreferences.enableYoutubePlayer) {
                             navigator.openYoutubeActivity(image.url)

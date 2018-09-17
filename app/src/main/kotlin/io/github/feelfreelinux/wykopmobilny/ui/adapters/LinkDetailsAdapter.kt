@@ -1,18 +1,18 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BaseLinkCommentViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkCommentViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkHeaderViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.TopLinkCommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.link.LinkHeaderActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.LinkPresenterFactory
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.comment.LinkCommentPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi

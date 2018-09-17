@@ -1,35 +1,37 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
+import androidx.core.content.ContextCompat
 import io.github.feelfreelinux.wykopmobilny.R
 
+class DigVoteButton @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.MirkoButtonStyle
+) : VoteButton(context, attrs, defStyleAttr) {
 
-class DigVoteButton : VoteButton {
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs, R.attr.MirkoButtonStyle)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    override fun setLightThemeDrawable() {
-
-    }
-
-    fun setVoteState(voteState : String?) {
+    fun setVoteState(voteState: String?) {
         when (voteState) {
             "dig" -> {
                 val color = ContextCompat.getColor(context, R.color.plusPressedColor)
                 setTextColor(color)
-                setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_buttontoolbar_wykop_digged), null, null, null)
+                setCompoundDrawablesWithIntrinsicBounds(
+                    ContextCompat.getDrawable(context, R.drawable.ic_buttontoolbar_wykop_digged),
+                    null,
+                    null,
+                    null
+                )
             }
             "bury" -> {
                 isButtonSelected = true
                 val color = ContextCompat.getColor(context, R.color.minusPressedColor)
                 setTextColor(color)
-                setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_buttontoolbar_wykop_buried), null, null, null)
+                setCompoundDrawablesWithIntrinsicBounds(
+                    ContextCompat.getDrawable(context, R.drawable.ic_buttontoolbar_wykop_buried),
+                    null,
+                    null,
+                    null
+                )
             }
             else -> {
                 val typedValue = TypedValue()
@@ -42,5 +44,9 @@ class DigVoteButton : VoteButton {
                 typedArray.recycle()
             }
         }
+    }
+
+    override fun setLightThemeDrawable() {
+        // Do nothing
     }
 }

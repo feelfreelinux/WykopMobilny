@@ -18,26 +18,30 @@ import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import kotlinx.android.synthetic.main.imagechooser_bottomsheet.view.*
 import kotlinx.android.synthetic.main.markdown_toolbar.view.*
 
-interface MarkdownToolbarListener {
-    var selectionStart : Int
-    var selectionEnd : Int
-    var textBody : String
-    fun setSelection(start : Int, end : Int)
-    fun openGalleryImageChooser()
-    fun openCamera(uri : Uri)
-}
+class MarkdownToolbar @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
 
-class MarkdownToolbar : LinearLayout {
-    constructor(context: Context) : super(context)
+    var photoUrl: String?
+        get() = floatingImageView?.photoUrl
+        set(value) {
+            if (value != null) {
+                remoteImageInserted()
+                floatingImageView?.loadPhotoUrl(value)
+            } else floatingImageView?.removeImage()
+        }
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    var photo: Uri?
+        get() = floatingImageView?.photo
+        set(value) {
+            floatingImageView?.setImage(value)
+        }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    var markdownListener : MarkdownToolbarListener? = null
+    var markdownListener: MarkdownToolbarListener? = null
+    var remoteImageInserted: () -> Unit = {}
+    var containsAdultContent = false
+    var floatingImageView: FloatingImageView? = null
     private val markdownDialogs by lazy { MarkdownDialogs(context) }
-    var remoteImageInserted : () -> Unit = {}
-
     private var formatText: formatDialogCallback = {
         markdownListener?.apply {
             val prefix = textBody.substring(0, selectionStart)
@@ -45,40 +49,6 @@ class MarkdownToolbar : LinearLayout {
             selectionStart = prefix.length + it.length
         }
     }
-
-    private fun insertFormat(prefix : String, suffix : String) {
-        markdownListener?.apply {
-            if (selectionEnd > selectionStart) {
-                val bodyPrefix = textBody.substring (0, selectionStart)
-                val bodySuffix = textBody.substring(selectionEnd, textBody.length)
-                val selectedText = textBody.substring(selectionStart, selectionEnd)
-                textBody = bodyPrefix + prefix + selectedText + suffix + bodySuffix
-                setSelection(bodyPrefix.length + prefix.length, bodyPrefix.length + prefix.length + selectedText.length)
-            } else {
-                val bodyPrefix = textBody.substring (0, selectionStart)
-                val bodySuffix = textBody.substring(selectionStart, textBody.length)
-                val selectedText = "tekst"
-                textBody = bodyPrefix + prefix + selectedText + suffix + bodySuffix
-                setSelection(bodyPrefix.length + prefix.length, bodyPrefix.length + prefix.length + selectedText.length)}
-        }
-    }
-
-    var containsAdultContent = false
-
-    var floatingImageView : FloatingImageView? = null
-
-    var photoUrl : String?
-        get() = floatingImageView?.photoUrl
-        set(value) { if(value != null) {
-            remoteImageInserted()
-            floatingImageView?.loadPhotoUrl(value)
-        } else floatingImageView?.removeImage() }
-
-    var photo : Uri?
-        get() = floatingImageView?.photo
-        set(value) {
-            floatingImageView?.setImage(value)
-        }
 
     init {
         View.inflate(context, R.layout.markdown_toolbar, this)
@@ -100,13 +70,45 @@ class MarkdownToolbar : LinearLayout {
                             if (it) {
                                 showUploadPhotoBottomsheet()
                             } else {
-                                Toast.makeText(activity, "Aplikacja wymaga uprawnień zapisu do pamięci aby wysyłać zdjęcia.", Toast.LENGTH_LONG).show()
+                                Toast.makeText(activity, "Aplikacja wymaga uprawnień zapisu do pamięci aby wysyłać zdjęcia.", Toast.LENGTH_LONG)
+                                    .show()
                             }
                         }
                     } else {
                         showUploadPhotoBottomsheet()
                     }
                 }
+            }
+        }
+    }
+
+    fun getWykopImageFile(): WykopImageFile? {
+        photo?.apply {
+            return WykopImageFile(photo!!, context)
+        }
+        return null
+    }
+
+    fun hasUserEditedContent(): Boolean {
+        return (photo != null ||
+                !floatingImageView?.photoUrl.isNullOrEmpty() ||
+                (markdownListener != null && markdownListener?.textBody!!.isNotEmpty()))
+    }
+
+    private fun insertFormat(prefix: String, suffix: String) {
+        markdownListener?.apply {
+            if (selectionEnd > selectionStart) {
+                val bodyPrefix = textBody.substring(0, selectionStart)
+                val bodySuffix = textBody.substring(selectionEnd, textBody.length)
+                val selectedText = textBody.substring(selectionStart, selectionEnd)
+                textBody = bodyPrefix + prefix + selectedText + suffix + bodySuffix
+                setSelection(bodyPrefix.length + prefix.length, bodyPrefix.length + prefix.length + selectedText.length)
+            } else {
+                val bodyPrefix = textBody.substring(0, selectionStart)
+                val bodySuffix = textBody.substring(selectionStart, textBody.length)
+                val selectedText = "tekst"
+                textBody = bodyPrefix + prefix + selectedText + suffix + bodySuffix
+                setSelection(bodyPrefix.length + prefix.length, bodyPrefix.length + prefix.length + selectedText.length)
             }
         }
     }
@@ -151,22 +153,8 @@ class MarkdownToolbar : LinearLayout {
         dialog.show()
     }
 
-    private fun insertImageFromUrl(url : String) {
+    private fun insertImageFromUrl(url: String) {
         remoteImageInserted()
         floatingImageView?.loadPhotoUrl(url)
     }
-
-    fun getWykopImageFile(): WykopImageFile? {
-        photo?.apply {
-            return WykopImageFile(photo!!, context)
-        }
-        return null
-    }
-
-    fun hasUserEditedContent() : Boolean {
-        return (photo != null ||
-                !floatingImageView?.photoUrl.isNullOrEmpty() ||
-                (markdownListener != null && markdownListener?.textBody!!.isNotEmpty()))
-    }
-
 }

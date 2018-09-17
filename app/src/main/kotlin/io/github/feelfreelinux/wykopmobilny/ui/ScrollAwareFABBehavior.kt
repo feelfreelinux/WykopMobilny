@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 @Suppress("unused") // Used in XML layout files
 class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) :
     com.google.android.material.floatingactionbutton.FloatingActionButton.Behavior(context, attrs) {
+
     override fun onStartNestedScroll(
         coordinatorLayout: androidx.coordinatorlayout.widget.CoordinatorLayout,
         child: com.google.android.material.floatingactionbutton.FloatingActionButton,

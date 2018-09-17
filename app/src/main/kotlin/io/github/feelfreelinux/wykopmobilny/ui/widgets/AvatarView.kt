@@ -10,18 +10,15 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.avatar_view.view.*
 
-class AvatarView : FrameLayout {
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+class AvatarView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     init {
         View.inflate(context, R.layout.avatar_view, this)
     }
 
-    fun setAuthor(author : Author) {
+    fun setAuthor(author: Author) {
         author.apply {
             avatarImageView.loadImage(avatarUrl)
             genderStripImageView.setBackgroundResource(getGenderStripResource(sex))

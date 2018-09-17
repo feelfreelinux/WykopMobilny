@@ -1,20 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.EntryPresenterFactory
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.entry.comment.CommentPresenterFactory
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi

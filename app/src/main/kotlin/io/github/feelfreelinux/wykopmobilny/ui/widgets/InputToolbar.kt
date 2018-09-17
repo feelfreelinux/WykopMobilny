@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets
 
 import android.content.Context
 import android.net.Uri
+import android.os.Parcel
 import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
@@ -21,62 +23,41 @@ import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.input_toolbar.view.*
-import android.os.Parcel
-import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 
 const val ZERO_WIDTH_SPACE = "\u200B\u200B\u200B\u200B\u200B"
 
 interface InputToolbarListener {
-    fun sendPhoto(photo : WykopImageFile, body : String, containsAdultContent: Boolean)
-    fun sendPhoto(photo : String?, body : String, containsAdultContent : Boolean)
+    fun sendPhoto(photo: WykopImageFile, body: String, containsAdultContent: Boolean)
+    fun sendPhoto(photo: String?, body: String, containsAdultContent: Boolean)
     fun openGalleryImageChooser()
-    fun openCamera(uri : Uri)
+    fun openCamera(uri: Uri)
 }
 
-class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, MarkdownToolbarListener {
+class InputToolbar @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : androidx.constraintlayout.widget.ConstraintLayout(context, attrs, defStyleAttr), MarkdownToolbarListener {
+
     override var selectionStart: Int
         get() = body.selectionStart
-        set(value) { body.setSelection(value) }
+        set(value) = body.setSelection(value)
+
     override var selectionEnd: Int
         get() = body.selectionEnd
-        set(value) { body.setSelection(value) }
-
-    override fun setSelection(start : Int, end : Int) {
-        body.setSelection(start, end)
-    }
-
-    override fun openCamera(uri : Uri) {
-        inputToolbarListener?.openCamera(uri)
-    }
+        set(value) = body.setSelection(value)
 
     override var textBody: String
         get() = body.text.toString()
-        set(value) { body.setText(value) }
+        set(value) = body.setText(value)
 
-    lateinit var userManager : UserManagerApi
-    lateinit var suggestApi : SuggestApi
-    val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(context, suggestApi) }
-    val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(context, suggestApi) }
+    lateinit var userManager: UserManagerApi
+    lateinit var suggestApi: SuggestApi
 
     var defaultText = ""
     var showToolbar = false
+    var inputToolbarListener: InputToolbarListener? = null
 
-    override fun openGalleryImageChooser() {
-        inputToolbarListener?.openGalleryImageChooser()
-    }
-
-    fun setPhoto(photo : Uri?) {
-        enableSendButton()
-        markdownToolbar.photo = photo
-    }
-
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    var inputToolbarListener : InputToolbarListener? = null
+    private val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(context, suggestApi) }
+    private val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(context, suggestApi) }
 
     init {
         val typedValue = TypedValue()
@@ -94,8 +75,7 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
         }
 
         // Setup listeners
-        body.setOnFocusChangeListener {
-            _, focused ->
+        body.setOnFocusChangeListener { _, focused ->
             if (focused && !hasUserEditedContent()) {
                 textBody = defaultText
                 showMarkdownToolbar()
@@ -129,9 +109,17 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
             showProgress(true)
             val wykopImageFile = markdownToolbar.getWykopImageFile()
             if (wykopImageFile != null) {
-                inputToolbarListener?.sendPhoto(wykopImageFile, if (body.text.toString().isNotEmpty()) body.text.toString() else ZERO_WIDTH_SPACE, markdownToolbar.containsAdultContent)
+                inputToolbarListener?.sendPhoto(
+                    wykopImageFile,
+                    if (body.text.toString().isNotEmpty()) body.text.toString() else ZERO_WIDTH_SPACE,
+                    markdownToolbar.containsAdultContent
+                )
             } else {
-                inputToolbarListener?.sendPhoto(markdownToolbar.photoUrl, if (body.text.toString().isNotEmpty()) body.text.toString() else ZERO_WIDTH_SPACE, markdownToolbar.containsAdultContent)
+                inputToolbarListener?.sendPhoto(
+                    markdownToolbar.photoUrl,
+                    if (body.text.toString().isNotEmpty()) body.text.toString() else ZERO_WIDTH_SPACE,
+                    markdownToolbar.containsAdultContent
+                )
             }
         }
 
@@ -140,13 +128,28 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
         else closeMarkdownToolbar()
     }
 
+    override fun setSelection(start: Int, end: Int) = body.setSelection(start, end)
+
+    override fun openCamera(uri: Uri) {
+        inputToolbarListener?.openCamera(uri)
+    }
+
+    override fun openGalleryImageChooser() {
+        inputToolbarListener?.openGalleryImageChooser()
+    }
+
+    fun setPhoto(photo: Uri?) {
+        enableSendButton()
+        markdownToolbar.photo = photo
+    }
+
     fun setup(userManagerApi: UserManagerApi, suggestionApi: SuggestApi) {
         userManager = userManagerApi
         suggestApi = suggestionApi
         show()
     }
 
-    fun showMarkdownToolbar() {
+    private fun showMarkdownToolbar() {
         if (!hasUserEditedContent()) textBody = defaultText
         markdownToolbar.isVisible = true
         separatorButton.isVisible = true
@@ -154,14 +157,14 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
         showToolbar = true
     }
 
-    fun closeMarkdownToolbar() {
+    private fun closeMarkdownToolbar() {
         markdownToolbar.isVisible = false
         separatorButton.isVisible = false
         send.isVisible = false
         showToolbar = false
     }
 
-    fun showProgress(shouldShowProgress : Boolean) {
+    fun showProgress(shouldShowProgress: Boolean) {
         progressBar.isVisible = shouldShowProgress
         send.isVisible = !shouldShowProgress
     }
@@ -188,13 +191,13 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
         body.isFocusable = true
     }
 
-    fun setDefaultAddressant(user : String) {
+    fun setDefaultAddressant(user: String) {
         if (userManager.isUserAuthorized() && userManager.getUserCredentials()!!.login != user) {
             defaultText = "@$user: "
         }
     }
 
-    fun addAddressant(user : String) {
+    fun addAddressant(user: String) {
         defaultText = ""
         body.requestFocus()
         textBody += "@$user: "
@@ -203,17 +206,17 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
         showKeyboard()
     }
 
-    fun addQuoteText(quote : String, quoteAuthor : String) {
+    fun addQuoteText(quote: String, quoteAuthor: String) {
         defaultText = ""
         body.requestFocus()
-        if(textBody.length > 0) textBody += "\n\n"
+        if (textBody.length > 0) textBody += "\n\n"
         textBody += "> ${quote.removeHtml().replace("\n", "\n> ")}\n@$quoteAuthor: "
         selectionStart = textBody.length
         if (textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null) enableSendButton()
         showKeyboard()
     }
 
-    fun setCustomHint(hint : String) {
+    fun setCustomHint(hint: String) {
         body.hint = hint
     }
 
@@ -233,7 +236,7 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
         send.isEnabled = true
     }
 
-    fun showKeyboard() {
+    private fun showKeyboard() {
         val imm = getActivityContext()!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(body, InputMethodManager.SHOW_IMPLICIT)
     }
@@ -272,9 +275,9 @@ class InputToolbar : androidx.constraintlayout.widget.ConstraintLayout, Markdown
     class SavedState : View.BaseSavedState {
 
         val isOpened: Boolean
-        val text : String
+        val text: String
 
-        constructor(superState: Parcelable, opened : Boolean, body : String) : super(superState) {
+        constructor(superState: Parcelable, opened: Boolean, body: String) : super(superState) {
             isOpened = opened
             text = body
         }
