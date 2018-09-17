@@ -59,7 +59,7 @@ class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swipe
             loadingView?.isVisible = true
             onRefresh()
         } else {
-            relatedAdapter.dataset.addAll(relatedDataFragment.data!!)
+            relatedAdapter.items.addAll(relatedDataFragment.data!!)
             loadingView?.isVisible = false
         }
     }
@@ -68,8 +68,8 @@ class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swipe
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
         relatedAdapter.apply {
-            dataset.clear()
-            dataset.addAll(related)
+            items.clear()
+            items.addAll(related)
             notifyDataSetChanged()
         }
     }
@@ -80,7 +80,7 @@ class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swipe
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        relatedDataFragment.data = relatedAdapter.dataset
+        relatedDataFragment.data = relatedAdapter.items
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

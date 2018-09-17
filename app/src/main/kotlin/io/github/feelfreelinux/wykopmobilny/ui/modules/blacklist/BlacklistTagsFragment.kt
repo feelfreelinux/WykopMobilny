@@ -44,8 +44,8 @@ class BlacklistTagsFragment : BaseFragment() {
     }
 
     fun updateData() {
-        adapter.dataset.clear()
-        adapter.dataset.addAll(blacklistPreferences.blockedTags)
+        adapter.items.clear()
+        adapter.items.addAll(blacklistPreferences.blockedTags)
         adapter.notifyDataSetChanged()
     }
 

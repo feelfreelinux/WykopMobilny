@@ -57,7 +57,7 @@ class UpvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swip
             loadingView?.isVisible = true
             onRefresh()
         } else {
-            upvotersAdapter.dataset.addAll(upvotersDataFragment.data!!)
+            upvotersAdapter.items.addAll(upvotersDataFragment.data!!)
             loadingView?.isVisible = false
         }
     }
@@ -66,8 +66,8 @@ class UpvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swip
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
         upvotersAdapter.apply {
-            dataset.clear()
-            dataset.addAll(upvoter)
+            items.clear()
+            items.addAll(upvoter)
             notifyDataSetChanged()
         }
     }
@@ -85,7 +85,7 @@ class UpvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swip
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        upvotersDataFragment.data = upvotersAdapter.dataset
+        upvotersDataFragment.data = upvotersAdapter.items
     }
 
     override fun onDestroy() {

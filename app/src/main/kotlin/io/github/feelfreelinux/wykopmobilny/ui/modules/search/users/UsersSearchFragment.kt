@@ -27,8 +27,8 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefre
         swiperefresh?.isRefreshing = false
         searchEmptyView.isVisible = entryList.isEmpty()
         profilesAdapter.apply {
-            dataset.clear()
-            dataset.addAll(entryList)
+            items.clear()
+            items.addAll(entryList)
             notifyDataSetChanged()
         }
     }

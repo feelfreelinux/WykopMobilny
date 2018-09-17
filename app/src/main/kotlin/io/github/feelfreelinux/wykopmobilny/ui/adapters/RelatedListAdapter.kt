@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -10,15 +9,22 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.related.RelatedWidge
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class RelatedListAdapter @Inject constructor(val userManagerApi: UserManagerApi, val relatedWidgetPresenterFactory: RelatedWidgetPresenterFactory) : androidx.recyclerview.widget.RecyclerView.Adapter<RelatedViewHolder>() {
-    val dataset = ArrayList<Related>()
+class RelatedListAdapter @Inject constructor(
+    val userManagerApi: UserManagerApi,
+    private val relatedWidgetPresenterFactory: RelatedWidgetPresenterFactory
+) : androidx.recyclerview.widget.RecyclerView.Adapter<RelatedViewHolder>() {
 
-    override fun onBindViewHolder(holder: RelatedViewHolder, position: Int) {
-        holder?.bindView(dataset[position])
-    }
+    val items = ArrayList<Related>()
 
-    override fun getItemCount(): Int = dataset.size
+    override fun onBindViewHolder(holder: RelatedViewHolder, position: Int) =
+        holder.bindView(items[position])
+
+    override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RelatedViewHolder =
-        RelatedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_related_list_item, parent, false), userManagerApi, relatedWidgetPresenterFactory.create())
+        RelatedViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.link_related_list_item, parent, false),
+            userManagerApi,
+            relatedWidgetPresenterFactory.create()
+        )
 }

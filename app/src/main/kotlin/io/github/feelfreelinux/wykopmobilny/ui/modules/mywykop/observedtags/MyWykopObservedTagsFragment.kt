@@ -45,8 +45,8 @@ class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, and
         recyclerView?.adapter = adapter
 
         if (dataFragment.data != null) {
-            adapter.dataset.clear()
-            adapter.dataset.addAll(dataFragment.data!!)
+            adapter.items.clear()
+            adapter.items.addAll(dataFragment.data!!)
             adapter.notifyDataSetChanged()
         } else {
             loadingView?.isVisible = true
@@ -62,14 +62,14 @@ class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, and
     override fun showTags(tags: List<ObservedTagResponse>) {
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
-        adapter.dataset.clear()
-        adapter.dataset.addAll(tags)
+        adapter.items.clear()
+        adapter.items.addAll(tags)
         adapter.notifyDataSetChanged()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        dataFragment.data = adapter.dataset
+        dataFragment.data = adapter.items
     }
 
     override fun onDetach() {
