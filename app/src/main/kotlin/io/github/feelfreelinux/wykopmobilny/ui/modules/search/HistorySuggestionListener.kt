@@ -4,23 +4,20 @@ import android.content.Context
 import android.database.sqlite.SQLiteCursor
 import androidx.appcompat.widget.SearchView
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionDatabase
-import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionsSimpleCursorAdapter
-import io.github.feelfreelinux.wykopmobilny.utils.hideKeyboard
-import rx.subjects.PublishSubject
 import java.net.URLEncoder
 
 
-class HistorySuggestionListener(val context : Context, val searchView : SearchView, val queryListener : (String) -> Unit) : SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
-    val database by lazy { SuggestionDatabase(context) }
+class HistorySuggestionListener(
+    val context: Context,
+    val queryListener: (String) -> Unit,
+    private val searchView: SearchView
+) : SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
 
-    override fun onSuggestionSelect(position: Int): Boolean {
+    private val database by lazy { SuggestionDatabase(context) }
 
-        return false
-    }
+    override fun onSuggestionSelect(position: Int) = false
 
     override fun onSuggestionClick(position: Int): Boolean {
-
         val cursor = searchView.suggestionsAdapter.getItem(position) as SQLiteCursor
         val indexColumnSuggestion = cursor.getColumnIndex(SuggestionDatabase.FIELD_SUGGESTION)
 
@@ -40,16 +37,17 @@ class HistorySuggestionListener(val context : Context, val searchView : SearchVi
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-
         val cursor = database.getSuggestions(URLEncoder.encode(newText, "UTF-8"))
 
-            val columns = arrayOf(SuggestionDatabase.FIELD_SUGGESTION)
-            val columnTextId = intArrayOf(android.R.id.text1)
+        val columns = arrayOf(SuggestionDatabase.FIELD_SUGGESTION)
+        val columnTextId = intArrayOf(android.R.id.text1)
 
-            val simple = SuggestionsSimpleCursorAdapter(context,
-                    R.layout.history_suggestion_item, cursor,
-                    columns, columnTextId, 0)
-            searchView.suggestionsAdapter = simple
-            return true
+        val simple = SuggestionsSimpleCursorAdapter(
+            context,
+            R.layout.history_suggestion_item, cursor,
+            columns, columnTextId, 0
+        )
+        searchView.suggestionsAdapter = simple
+        return true
     }
 }

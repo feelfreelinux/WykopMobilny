@@ -8,5 +8,5 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 @Module
 class SettingsActivityModule {
     @Provides
-    fun provideNavigator(settingsActivity: SettingsActivity) : NewNavigatorApi = NewNavigator(settingsActivity)
+    fun provideNavigator(settingsActivity: SettingsActivity): NewNavigatorApi = NewNavigator(settingsActivity)
 }

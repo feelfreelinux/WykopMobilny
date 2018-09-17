@@ -11,11 +11,13 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 
 @Module
 class TagActivityModule {
-    @Provides
-    fun providePresenter(schedulers: Schedulers, tagApi: TagApi) = TagActivityPresenter(schedulers, tagApi)
-    @Provides
-    fun provideNavigator(activity : TagActivity) : NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity : TagActivity, navigator : NewNavigatorApi) : WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun providePresenter(schedulers: Schedulers, tagApi: TagApi) = TagActivityPresenter(schedulers, tagApi)
+
+    @Provides
+    fun provideNavigator(activity: TagActivity): NewNavigatorApi = NewNavigator(activity)
+
+    @Provides
+    fun provideLinkHandler(activity: TagActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
 }
