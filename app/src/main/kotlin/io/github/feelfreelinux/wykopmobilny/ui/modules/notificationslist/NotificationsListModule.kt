@@ -10,8 +10,9 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 @Module
 class NotificationsListModule {
     @Provides
-    fun provideNavigatorApi(activity: NotificationsListActivity) : NewNavigatorApi = NewNavigator(activity)
+    fun provideNavigatorApi(activity: NotificationsListActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandlerApi(activity: NotificationsListActivity, newNavigatorApi: NewNavigatorApi) : WykopLinkHandlerApi = WykopLinkHandler(activity, newNavigatorApi)
+    fun provideLinkHandlerApi(activity: NotificationsListActivity, newNavigatorApi: NewNavigatorApi): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, newNavigatorApi)
 }

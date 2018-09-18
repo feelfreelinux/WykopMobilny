@@ -16,7 +16,7 @@ class ActionsFragment : BaseEntryLinkFragment(), ActionsView {
     @Inject lateinit var presenter: ActionsFragmentPresenter
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.getActions() }
-    val username by lazy { (activity as ProfileActivity).username }
+    private val username by lazy { (activity as ProfileActivity).username }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -29,7 +29,7 @@ class ActionsFragment : BaseEntryLinkFragment(), ActionsView {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 }

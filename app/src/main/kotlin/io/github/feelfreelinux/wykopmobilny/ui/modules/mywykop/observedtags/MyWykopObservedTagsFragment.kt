@@ -17,23 +17,22 @@ import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
 
-
-class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, MyWykopNotifier {
-    @Inject lateinit var adapter : ObservedTagsAdapter
-    @Inject lateinit var presenter : MyWykopObservedTagsPresenter
-    lateinit var dataFragment : DataFragment<List<ObservedTagResponse>>
+class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
+    MyWykopNotifier {
 
     companion object {
-        val DATA_FRAGMENT_TAG = "MYWYKOP_OBSERVED_TAGS_FRAGMENT_TAG"
+        const val DATA_FRAGMENT_TAG = "MYWYKOP_OBSERVED_TAGS_FRAGMENT_TAG"
 
-        fun newInstance() : MyWykopObservedTagsFragment {
-            return MyWykopObservedTagsFragment()
-        }
+        fun newInstance() = MyWykopObservedTagsFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_conversations_list, container, false)
-    }
+    @Inject lateinit var adapter: ObservedTagsAdapter
+    @Inject lateinit var presenter: MyWykopObservedTagsPresenter
+
+    lateinit var dataFragment: DataFragment<List<ObservedTagResponse>>
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.activity_conversations_list, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -73,16 +72,14 @@ class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, and
     }
 
     override fun onDetach() {
-        super.onDetach()
         presenter.unsubscribe()
+        super.onDetach()
     }
 
     override fun onPause() {
-        super.onPause()
         if (isRemoving) childFragmentManager.removeDataFragment(dataFragment)
+        super.onPause()
     }
 
-    override fun removeDataFragment() {
-        childFragmentManager.removeDataFragment(dataFragment)
-    }
+    override fun removeDataFragment() = childFragmentManager.removeDataFragment(dataFragment)
 }

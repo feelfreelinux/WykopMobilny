@@ -6,11 +6,12 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopEntr
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopEntryLinkFragmentModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.observedtags.MyWykopObservedTagsFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.observedtags.MyWykopObservedTagsModule
+
 @Module
 abstract class MyWykopFragmentProvider {
     @ContributesAndroidInjector(modules = [MyWykopEntryLinkFragmentModule::class])
-    abstract fun provideIndexFragment() : MyWykopEntryLinkFragment
+    abstract fun provideIndexFragment(): MyWykopEntryLinkFragment
 
     @ContributesAndroidInjector(modules = [MyWykopObservedTagsModule::class])
-    abstract fun provideObservedTagsFragment() : MyWykopObservedTagsFragment
+    abstract fun provideObservedTagsFragment(): MyWykopObservedTagsFragment
 }

@@ -9,5 +9,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 @Module
 class HitsModule {
     @Provides
-    fun provideHitsPresenter(schedulers: Schedulers, hitsApi: HitsApi, linkInteractor: LinksInteractor) = HitsPresenter(schedulers, hitsApi, linkInteractor)
+    fun provideHitsPresenter(schedulers: Schedulers, hitsApi: HitsApi, linkInteractor: LinksInteractor) = HitsPresenter(
+        schedulers,
+        linkInteractor,
+        hitsApi
+    )
 }

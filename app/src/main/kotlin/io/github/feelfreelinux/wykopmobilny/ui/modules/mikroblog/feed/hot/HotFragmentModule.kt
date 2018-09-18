@@ -8,5 +8,6 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 @Module
 class HotFragmentModule {
     @Provides
-    fun providesHotPresenter(schedulers: Schedulers, streamApi: EntriesApi) = HotPresenter(schedulers, streamApi)
+    fun providesHotPresenter(schedulers: Schedulers, streamApi: EntriesApi) =
+        HotPresenter(schedulers, streamApi)
 }

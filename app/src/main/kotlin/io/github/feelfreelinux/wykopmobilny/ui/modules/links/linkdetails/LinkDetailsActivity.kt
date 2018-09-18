@@ -6,9 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.core.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
@@ -28,7 +28,45 @@ import kotlinx.android.synthetic.main.activity_link_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, InputToolbarListener, LinkCommentViewListener {
+class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
+    InputToolbarListener, LinkCommentViewListener {
+
+    companion object {
+        const val EXTRA_LINK = "LINK_PARCEL"
+        const val EXTRA_LINK_ID = "EXTRA_LINKID"
+        const val EXTRA_COMMENT_ID = "EXTRA_COMMENT_ID"
+
+        fun createIntent(context: Context, link: Link) =
+            Intent(context, LinkDetailsActivity::class.java).apply {
+                putExtra(EXTRA_LINK, link)
+            }
+
+        fun createIntent(context: Context, linkId: Int, commentId: Int? = null) =
+            Intent(context, LinkDetailsActivity::class.java).apply {
+                putExtra(EXTRA_LINK_ID, linkId)
+                putExtra(EXTRA_COMMENT_ID, commentId)
+            }
+    }
+
+    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject lateinit var settingsApi: SettingsPreferencesApi
+    @Inject lateinit var suggestionsApi: SuggestApi
+    @Inject lateinit var linkPreferences: LinksPreferencesApi
+    @Inject lateinit var adapter: LinkDetailsAdapter
+    @Inject lateinit var presenter: LinkDetailsPresenter
+
+    lateinit var contentUri: Uri
+    override val enableSwipeBackLayout: Boolean = true
+    val linkId by lazy {
+        if (intent.hasExtra(EXTRA_LINK)) link.id else
+            intent.getIntExtra(EXTRA_LINK_ID, -1)
+    }
+    private val link by lazy { intent.getParcelableExtra<Link>(EXTRA_LINK) }
+    private var replyLinkId: Int = 0
+    private val linkCommentId by lazy {
+        intent.getIntExtra(EXTRA_COMMENT_ID, -1)
+    }
+
     override fun updateLinkComment(comment: LinkComment) {
         adapter.updateLinkComment(comment)
     }
@@ -51,59 +89,10 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         adapter.notifyDataSetChanged()
     }
 
-    lateinit var contentUri : Uri
-    override val enableSwipeBackLayout: Boolean = true
-    @Inject
-    lateinit var settingsApi: SettingsPreferencesApi
-
-    companion object {
-        val EXTRA_LINK = "LINK_PARCEL"
-        val EXTRA_LINK_ID = "EXTRA_LINKID"
-        val EXTRA_COMMENT_ID = "EXTRA_COMMENT_ID"
-
-        fun createIntent(context: Context, link: Link): Intent {
-            val intent = Intent(context, LinkDetailsActivity::class.java)
-            intent.putExtra(EXTRA_LINK, link)
-            return intent
-        }
-
-        fun createIntent(context: Context, linkId: Int, commentId: Int? = null): Intent {
-            val intent = Intent(context, LinkDetailsActivity::class.java)
-            intent.putExtra(EXTRA_LINK_ID, linkId)
-            intent.putExtra(EXTRA_COMMENT_ID, commentId)
-            return intent
-        }
-    }
-
-    var replyLinkId: Int = 0
-
-    val link by lazy { intent.getParcelableExtra<Link>(EXTRA_LINK) }
-    val linkId by lazy {
-        if (intent.hasExtra(EXTRA_LINK)) link.id else
-            intent.getIntExtra(EXTRA_LINK_ID, -1)
-    }
-
-    val linkCommentId by lazy {
-        intent.getIntExtra(EXTRA_COMMENT_ID, -1)
-    }
-
     override fun getReplyCommentId(): Int {
         return if (replyLinkId != 0 && inputToolbar.textBody.contains("@")) replyLinkId
         else -1
     }
-
-    @Inject
-    lateinit var userManagerApi: UserManagerApi
-    @Inject
-    lateinit var suggestionsApi: SuggestApi
-
-    @Inject
-    lateinit var presenter: LinkDetailsPresenter
-
-    @Inject
-    lateinit var linkPreferences: LinksPreferencesApi
-    @Inject
-    lateinit var adapter: LinkDetailsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,12 +148,14 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         return true
     }
 
-    fun setSubtitle() {
-        supportActionBar?.setSubtitle(when (presenter.sortBy) {
-            "new" -> R.string.sortby_newest
-            "old" -> R.string.sortby_oldest
-            else -> R.string.sortby_best
-        })
+    private fun setSubtitle() {
+        supportActionBar?.setSubtitle(
+            when (presenter.sortBy) {
+                "new" -> R.string.sortby_newest
+                "old" -> R.string.sortby_oldest
+                else -> R.string.sortby_best
+            }
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -243,8 +234,12 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent,
-                getString(R.string.insert_photo_galery)), BaseInputActivity.USER_ACTION_INSERT_PHOTO)
+        startActivityForResult(
+            Intent.createChooser(
+                intent,
+                getString(R.string.insert_photo_galery)
+            ), BaseInputActivity.USER_ACTION_INSERT_PHOTO
+        )
     }
 
     override fun sendPhoto(photo: String?, body: String, containsAdultContent: Boolean) {
@@ -293,7 +288,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         }
     }
 
-    override fun openCamera(uri : Uri) {
+    override fun openCamera(uri: Uri) {
         contentUri = uri
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)

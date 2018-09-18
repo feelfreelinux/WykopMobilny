@@ -2,31 +2,29 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.annotation.TargetApi
 import android.content.Context
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.os.Build
 import android.util.AttributeSet
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.SeekBar
 import com.devbrackets.android.exomedia.ui.widget.VideoControls
 import com.devbrackets.android.exomedia.util.TimeFormatUtil
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.media_controls.view.*
-import android.widget.SeekBar
-import com.devbrackets.android.exomedia.ui.animation.TopViewHideShowAnimation
-import com.devbrackets.android.exomedia.ui.animation.BottomViewHideShowAnimation
-import android.os.Build
-import android.annotation.TargetApi
-import android.view.View
-import android.widget.LinearLayout
-import io.github.feelfreelinux.wykopmobilny.utils.printout
-import java.util.*
-
+import java.util.LinkedList
 
 class WykopMediaControls : VideoControls {
-    lateinit var seekBar: SeekBar
-    lateinit var extraViewsContainer: LinearLayout
-    lateinit var controlsView : View
 
-    class FadeInListener(val view : View) : AnimatorListenerAdapter() {
+    private lateinit var seekBar: SeekBar
+    private lateinit var extraViewsContainer: LinearLayout
+    private lateinit var controlsView: View
+
+    private var userInteracting = false
+
+    class FadeInListener(val view: View) : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator?) {
             super.onAnimationEnd(animation)
             view.isVisible = true
@@ -34,32 +32,30 @@ class WykopMediaControls : VideoControls {
         }
 
         companion object {
-            fun animateVisibility(view : View) {
+            fun animateVisibility(view: View) {
                 view.animate()
-                        .setDuration(300)
-                        .alpha(1f)
-                        .setListener(FadeInListener(view))
+                    .setDuration(300)
+                    .alpha(1f)
+                    .setListener(FadeInListener(view))
             }
         }
     }
 
-    class FadeOutListener(val view : View) : AnimatorListenerAdapter() {
+    class FadeOutListener(val view: View) : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator?) {
             super.onAnimationEnd(animation)
             view.isVisible = false
         }
 
         companion object {
-            fun animateVisibility(view : View) {
+            fun animateVisibility(view: View) {
                 view.animate()
-                        .setDuration(300)
-                        .alpha(0.0f)
-                        .setListener(FadeOutListener(view))
+                    .setDuration(300)
+                    .alpha(0.0f)
+                    .setListener(FadeOutListener(view))
             }
         }
     }
-
-    protected var userInteracting = false
 
     constructor(context: Context) : super(context)
 
@@ -224,8 +220,6 @@ class WykopMediaControls : VideoControls {
         hide()
     }
 
-
-
     override fun updatePlaybackState(isPlaying: Boolean) {
         updatePlayPauseImage(isPlaying)
         progressPollRepeater.start()
@@ -234,7 +228,7 @@ class WykopMediaControls : VideoControls {
     /**
      * Listens to the seek bar change events and correctly handles the changes
      */
-    protected inner class SeekBarChanged : SeekBar.OnSeekBarChangeListener {
+    private inner class SeekBarChanged : SeekBar.OnSeekBarChangeListener {
         private var seekToTime: Long = 0
 
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {

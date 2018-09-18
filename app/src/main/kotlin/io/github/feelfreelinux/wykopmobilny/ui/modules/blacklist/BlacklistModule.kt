@@ -10,6 +10,10 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 @Module
 class BlacklistModule {
     @Provides
-    fun provideBlacklistPresenter(schedulers: Schedulers, scraperApi: ScraperApi, tagApi: TagApi, profileApi: ProfileApi)
-            = BlacklistPresenter(schedulers, scraperApi, tagApi, profileApi)
+    fun provideBlacklistPresenter(
+        schedulers: Schedulers,
+        scraperApi: ScraperApi,
+        tagApi: TagApi,
+        profileApi: ProfileApi
+    ) = BlacklistPresenter(schedulers, scraperApi, tagApi, profileApi)
 }

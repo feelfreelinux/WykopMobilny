@@ -1,9 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links
 
 import android.content.res.Resources
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import android.util.SparseArray
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -11,10 +8,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.added.Profi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.comments.ProfileLinkCommentsFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.related.ProfileRelatedFragment
 
-class LinksPagerAdapter(val resources : Resources, fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+class LinksPagerAdapter(
+    val resources: Resources,
+    fragmentManager: androidx.fragment.app.FragmentManager
+) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+
     val registeredFragments = SparseArray<androidx.fragment.app.Fragment>()
 
-    override fun getItem(position: Int): androidx.fragment.app.Fragment = when(position) {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment = when (position) {
         0 -> ProfileLinksFragment.newInstance(ProfileLinksFragment.TYPE_ADDED)
         1 -> ProfileLinksFragment.newInstance(ProfileLinksFragment.TYPE_PUBLISHED)
         2 -> ProfileLinkCommentsFragment.newInstance()
@@ -38,7 +39,7 @@ class LinksPagerAdapter(val resources : Resources, fragmentManager: androidx.fra
 
     override fun getPageTitle(position: Int): CharSequence {
         super.getPageTitle(position)
-        return when(position) {
+        return when (position) {
             0 -> resources.getString(R.string.link_added)
             1 -> resources.getString(R.string.published)
             2 -> resources.getString(R.string.commented)

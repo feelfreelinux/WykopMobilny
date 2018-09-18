@@ -14,14 +14,11 @@ import kotlinx.android.synthetic.main.addlink_fragment.*
 import javax.inject.Inject
 
 class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
-    @Inject lateinit var presenter : AddLinkUrlInputPresenter
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.addlink_fragment, container, false)
-    }
 
     companion object {
-        val EXTRA_URL = "ADDLINK_URL"
-        fun newInstance(url : String = "") : AddlinkUrlInputFragment {
+        const val EXTRA_URL = "ADDLINK_URL"
+
+        fun newInstance(url: String = ""): AddlinkUrlInputFragment {
             val fragment = AddlinkUrlInputFragment()
             val data = Bundle()
             data.putString(EXTRA_URL, url)
@@ -29,6 +26,11 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
             return fragment
         }
     }
+
+    @Inject lateinit var presenter: AddLinkUrlInputPresenter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.addlink_fragment, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -43,11 +45,10 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
         linkUrl.setText(arguments!!.getString(EXTRA_URL, ""))
     }
 
-    override fun setLinkDraft(draft: NewLinkResponse) {
+    override fun setLinkDraft(draft: NewLinkResponse) =
         (activity as AddlinkActivity).openDuplicatesActivity(draft)
-    }
 
-    override fun showDuplicatesLoading(visibility : Boolean) {
+    override fun showDuplicatesLoading(visibility: Boolean) {
         linkIcon.isVisible = !visibility
         iconTitle.isVisible = !visibility
         description.isVisible = !visibility
@@ -58,7 +59,7 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 }

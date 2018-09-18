@@ -7,7 +7,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.comment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.entries.MicroblogEntriesFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.entries.MicroblogEntriesModule
 
-
 @Module
 abstract class MicroblogFragmentProvider {
     @ContributesAndroidInjector(modules = [MicroblogEntriesModule::class])

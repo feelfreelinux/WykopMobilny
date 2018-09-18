@@ -10,8 +10,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.links.LinksFavor
 @Module
 abstract class FavoriteFragmentProvider {
     @ContributesAndroidInjector(modules = [LinksFavoriteFragmentModule::class])
-    abstract fun provideLinksFavoriteFragment() : LinksFavoriteFragment
+    abstract fun provideLinksFavoriteFragment(): LinksFavoriteFragment
 
     @ContributesAndroidInjector(modules = [EntryFavoriteFragmentModule::class])
-    abstract fun provideEntryFavoriteFragment() : EntryFavoriteFragment
+    abstract fun provideEntryFavoriteFragment(): EntryFavoriteFragment
 }

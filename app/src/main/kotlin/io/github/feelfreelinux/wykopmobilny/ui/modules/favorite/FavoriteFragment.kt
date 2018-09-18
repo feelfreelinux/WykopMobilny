@@ -1,21 +1,25 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.favorite
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import kotlinx.android.synthetic.main.activity_mywykop.*
 
-class FavoriteFragment  : BaseFragment() {
-    lateinit var pagerAdapter : FavoritePagerAdapter
+class FavoriteFragment : BaseFragment() {
 
     companion object {
-        fun newInstance(): androidx.fragment.app.Fragment {
-            return FavoriteFragment()
-        }
+        fun newInstance() = FavoriteFragment()
     }
+
+    lateinit var pagerAdapter: FavoritePagerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -44,7 +48,7 @@ class FavoriteFragment  : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.refresh -> onRefresh()
         }
         return true

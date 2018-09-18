@@ -5,8 +5,8 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AddLinkPreviewImage
 
 interface AddLinkDetailsFragmentView : BaseView {
-    fun showImages(images : List<AddLinkPreviewImage>)
-    fun openLinkScreen(link : Link)
-    fun showImagesLoading(visibility : Boolean)
-    fun showLinkUploading(visibility : Boolean)
+    fun showImages(images: List<AddLinkPreviewImage>)
+    fun openLinkScreen(link: Link)
+    fun showImagesLoading(visibility: Boolean)
+    fun showLinkUploading(visibility: Boolean)
 }

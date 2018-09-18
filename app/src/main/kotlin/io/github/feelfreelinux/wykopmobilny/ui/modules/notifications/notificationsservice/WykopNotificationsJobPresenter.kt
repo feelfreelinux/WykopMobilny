@@ -6,11 +6,16 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class WykopNotificationsJobPresenter @Inject constructor(val schedulers: Schedulers, val notificationsApi: NotificationsApi, val userManager: UserManagerApi) : BasePresenter<WykopNotificationsJobView>() {
+class WykopNotificationsJobPresenter @Inject constructor(
+    val schedulers: Schedulers,
+    val notificationsApi: NotificationsApi,
+    val userManager: UserManagerApi
+) : BasePresenter<WykopNotificationsJobView>() {
+
     fun checkNotifications() {
         if (userManager.isUserAuthorized()) {
             val notifications = notificationsApi.getNotifications(1)
-                            .blockingGet()
+                .blockingGet()
             val unreadNotifications = notifications.filter { it.new }
 
             // In this case, we should download full notifications list
@@ -25,7 +30,8 @@ class WykopNotificationsJobPresenter @Inject constructor(val schedulers: Schedul
 
     private fun getNotificationsCount() {
         view?.showNotificationsCount(
-                notificationsApi.getNotificationCount()
-                        .blockingGet().count)
+            notificationsApi.getNotificationCount()
+                .blockingGet().count
+        )
     }
 }

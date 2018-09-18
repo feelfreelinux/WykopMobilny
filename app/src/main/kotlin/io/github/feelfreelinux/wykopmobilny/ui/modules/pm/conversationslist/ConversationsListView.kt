@@ -4,5 +4,5 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
 
 interface ConversationsListView : BaseView {
-    fun showConversations(conversations : List<Conversation>)
+    fun showConversations(conversations: List<Conversation>)
 }

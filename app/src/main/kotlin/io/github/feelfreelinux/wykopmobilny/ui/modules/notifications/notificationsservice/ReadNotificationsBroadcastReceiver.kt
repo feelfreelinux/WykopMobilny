@@ -9,11 +9,13 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class ReadNotificationsBroadcastReceiver : DaggerBroadcastReceiver() {
-    @Inject lateinit var notificationsApi : NotificationsApi
+
+    @Inject lateinit var notificationsApi: NotificationsApi
+
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         notificationsApi.readNotifications().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {})
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {})
     }
 }

@@ -19,19 +19,19 @@ import javax.inject.Inject
 
 class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, DownvotersView {
 
-    private lateinit var downvotersDataFragment: DataFragment<List<Downvoter>>
+    companion object {
+        const val DATA_FRAGMENT_TAG = "DOWNVOTERS_LIST"
+        const val EXTRA_LINKID = "LINK_ID_EXTRA"
+
+        fun createIntent(linkId: Int, activity: Activity) =
+            Intent(activity, DownvotersActivity::class.java).apply {
+                putExtra(EXTRA_LINKID, linkId)
+            }
+    }
+
     @Inject lateinit var presenter: DownvotersPresenter
     @Inject lateinit var downvotersAdapter: DownvoterListAdapter
-
-    companion object {
-        val DATA_FRAGMENT_TAG = "DOWNVOTERS_LIST"
-        val EXTRA_LINKID = "LINK_ID_EXTRA"
-        fun createIntent(linkId: Int, activity: Activity): Intent {
-            val intent = Intent(activity, DownvotersActivity::class.java)
-            intent.putExtra(EXTRA_LINKID, linkId)
-            return intent
-        }
-    }
+    private lateinit var downvotersDataFragment: DataFragment<List<Downvoter>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,9 +75,7 @@ class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Sw
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onRefresh() {
-        presenter.getDownvoters()
-    }
+    override fun onRefresh() = presenter.getDownvoters()
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -85,12 +83,12 @@ class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Sw
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 
     override fun onPause() {
-        super.onPause()
         if (isFinishing) supportFragmentManager.removeDataFragment(downvotersDataFragment)
+        super.onPause()
     }
 }

@@ -15,11 +15,11 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 class LoginScreenModule {
     @Provides
     fun providesLoginScreenPresenter(schedulers: Schedulers, userManager: UserManagerApi, loginApi: LoginApi, scraperApi: ScraperApi) =
-            LoginScreenPresenter(schedulers, userManager, scraperApi, loginApi)
+        LoginScreenPresenter(schedulers, userManager, scraperApi, loginApi)
 
     @Provides
-    fun provideNavigator(activity : LoginScreenActivity) : NewNavigatorApi = NewNavigator(activity)
+    fun provideNavigator(activity: LoginScreenActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity : LoginScreenActivity, navigator : NewNavigatorApi) : WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun provideLinkHandler(activity: LoginScreenActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
 }

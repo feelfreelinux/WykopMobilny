@@ -54,12 +54,10 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, android
         }
     }
 
-    override fun onRefresh() {
-        presenter.loadConversations()
-    }
+    override fun onRefresh() = presenter.loadConversations()
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 }

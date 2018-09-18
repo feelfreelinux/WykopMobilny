@@ -8,5 +8,6 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 @Module
 class AddLinkDetailsFragmentModule {
     @Provides
-    fun providesPresenter(schedulers: Schedulers, addLinkApi: AddLinkApi) = AddLinkDetailsFragmentPresenter(schedulers, addLinkApi)
+    fun providesPresenter(schedulers: Schedulers, addLinkApi: AddLinkApi) =
+        AddLinkDetailsFragmentPresenter(schedulers, addLinkApi)
 }

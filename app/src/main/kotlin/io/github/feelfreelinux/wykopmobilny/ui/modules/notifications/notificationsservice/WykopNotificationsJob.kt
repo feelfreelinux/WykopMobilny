@@ -3,9 +3,11 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificati
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
+import android.media.RingtoneManager
 import android.net.Uri
 import androidx.core.app.NotificationCompat
 import com.evernote.android.job.Job
+import com.evernote.android.job.JobManager
 import com.evernote.android.job.JobRequest
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.WykopNotificationManager
@@ -14,41 +16,26 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.Notific
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandler
 import java.util.concurrent.TimeUnit
-import android.media.RingtoneManager
-import com.evernote.android.job.JobManager
-
 
 class WykopNotificationsJob(
-        val presenter : WykopNotificationsJobPresenter,
-        val settingsApi: SettingsPreferencesApi,
-        val notificationManager: WykopNotificationManagerApi) : Job(), WykopNotificationsJobView {
-
-    private fun buildNotification(body: String, intent: PendingIntent): Notification {
-        val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        return NotificationCompat.Builder(context, WykopNotificationManager.NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_wykopmobilny)
-                .setContentIntent(intent)
-                .setContentTitle(context.getString(R.string.app_name))
-                .setSound(alarmSound)
-                .setAutoCancel(true)
-                .setOnlyAlertOnce(true)
-                .setDeleteIntent(PendingIntent.getBroadcast(context, 0, Intent(context, ReadNotificationsBroadcastReceiver::class.java), 0))
-                .setContentText(body).build()
-    }
+    val presenter: WykopNotificationsJobPresenter,
+    val settingsApi: SettingsPreferencesApi,
+    private val notificationManager: WykopNotificationManagerApi
+) : Job(), WykopNotificationsJobView {
 
     companion object {
-        val TAG = "wykop_notifications_job"
-        val NOTIFICATION_ID = 15
+        const val TAG = "wykop_notifications_job"
+        const val NOTIFICATION_ID = 15
 
         fun schedule(settingsPreferencesApi: SettingsPreferencesApi) {
             var build: JobRequest? = null
             if (settingsPreferencesApi.showNotifications) {
                 build = JobRequest.Builder(TAG)
-                        .setPeriodic(TimeUnit.MINUTES.toMillis(15.toLong()), TimeUnit.MINUTES.toMillis(5))
-                        .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
-                        .setRequirementsEnforced(true)
-                        .setUpdateCurrent(true)
-                        .build()
+                    .setPeriodic(TimeUnit.MINUTES.toMillis(15.toLong()), TimeUnit.MINUTES.toMillis(5))
+                    .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+                    .setRequirementsEnforced(true)
+                    .setUpdateCurrent(true)
+                    .build()
                 build.schedule()
             } else {
                 build?.cancelAndEdit()
@@ -61,11 +48,24 @@ class WykopNotificationsJob(
 
         fun scheduleOnce() {
             var build: JobRequest? = null
-                build = JobRequest.Builder(TAG )
-                        .startNow()
-                        .build()
-                build.schedule()
+            build = JobRequest.Builder(TAG)
+                .startNow()
+                .build()
+            build.schedule()
         }
+    }
+
+    private fun buildNotification(body: String, intent: PendingIntent): Notification {
+        val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        return NotificationCompat.Builder(context, WykopNotificationManager.NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_wykopmobilny)
+            .setContentIntent(intent)
+            .setContentTitle(context.getString(R.string.app_name))
+            .setSound(alarmSound)
+            .setAutoCancel(true)
+            .setOnlyAlertOnce(true)
+            .setDeleteIntent(PendingIntent.getBroadcast(context, 0, Intent(context, ReadNotificationsBroadcastReceiver::class.java), 0))
+            .setContentText(body).build()
     }
 
     override fun onRunJob(params: Params): Result {
@@ -94,6 +94,7 @@ class WykopNotificationsJob(
 
         }
     }
+
     override fun showNotificationsCount(count: Int) {
         if (settingsApi.showNotifications || settingsApi.piggyBackPushNotifications) {
             // Create intent
@@ -103,16 +104,15 @@ class WykopNotificationsJob(
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
             // Show Notification
-            notificationManager.updateNotification(NOTIFICATION_ID,
-                    buildNotification(context.getString(R.string.notificationsCountMessage, count), pendingIntent))
+            notificationManager.updateNotification(
+                NOTIFICATION_ID,
+                buildNotification(context.getString(R.string.notificationsCountMessage, count), pendingIntent)
+            )
 
         }
     }
 
-    override fun cancelNotification() {
-        notificationManager.cancelNotification(NOTIFICATION_ID)
-    }
+    override fun cancelNotification() = notificationManager.cancelNotification(NOTIFICATION_ID)
 
     override fun showErrorDialog(e: Throwable) {} // @TODO idk how to handle it
-
 }
