@@ -1,11 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen
 
 import android.os.Build
+import android.webkit.CookieManager
+import android.webkit.CookieSyncManager
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
-import android.webkit.*
-import android.widget.Toast
 
-typealias TokenUrlCallback = (url : String) -> Unit
+typealias TokenUrlCallback = (url: String) -> Unit
 
 class LoginActivityWebClient(private val tokenUrlCallback: TokenUrlCallback) : WebViewClient() {
     @Suppress("OverridingDeprecatedMember")

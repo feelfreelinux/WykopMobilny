@@ -10,10 +10,11 @@ import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
 class MainNavigationPresenter(
-  private val schedulers: Schedulers,
-  private val notificationsApi: NotificationsApi,
-  private val userManagerApi: UserManagerApi,
-  private val scraperApi: ScraperApi) : BasePresenter<MainNavigationView>() {
+    private val schedulers: Schedulers,
+    private val notificationsApi: NotificationsApi,
+    private val userManagerApi: UserManagerApi,
+    private val scraperApi: ScraperApi
+) : BasePresenter<MainNavigationView>() {
 
     private var lastCheckMillis = 0L
 
@@ -23,12 +24,11 @@ class MainNavigationPresenter(
         compositeObservable = CompositeDisposable()
         compositeObservable.apply {
             if (userManagerApi.isUserAuthorized()) {
-                add (
-
-                        Observable.interval(0, 1, TimeUnit.MINUTES)
-                                .subscribe {
-                                    checkNotifications(false)
-                                }
+                add(
+                    Observable.interval(0, 1, TimeUnit.MINUTES)
+                        .subscribe {
+                            checkNotifications(false)
+                        }
                 )
             }
         }
@@ -37,23 +37,25 @@ class MainNavigationPresenter(
     fun checkNotifications(shouldForce: Boolean) {
         if (lastCheckMillis.plus(300000L) < (System.currentTimeMillis()) || lastCheckMillis == 0L || shouldForce) {
             lastCheckMillis = System.currentTimeMillis()
-            compositeObservable.add(notificationsApi.getNotificationCount().
-                    subscribeOn(schedulers.backgroundThread())
+            compositeObservable.add(
+                notificationsApi.getNotificationCount().subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
-                    .subscribe({ view?.showNotificationsCount(it.count) }, { }) )
-            compositeObservable.add(notificationsApi.getHashTagNotificationCount().
-                    subscribeOn(schedulers.backgroundThread())
+                    .subscribe({ view?.showNotificationsCount(it.count) }, { })
+            )
+            compositeObservable.add(
+                notificationsApi.getHashTagNotificationCount().subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
-                    .subscribe({ view?.showHashNotificationsCount(it.count) }, {  }) )
+                    .subscribe({ view?.showHashNotificationsCount(it.count) }, { })
+            )
         }
     }
 
     fun importBlacklist() {
         compositeObservable.add(
-                scraperApi.getBlacklist()
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })
+            scraperApi.getBlacklist()
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })
         )
     }
 }

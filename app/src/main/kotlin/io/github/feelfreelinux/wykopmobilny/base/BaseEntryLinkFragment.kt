@@ -9,7 +9,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinksAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CreateVotersDialogListener
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrylink.EntryLinkFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -88,7 +88,7 @@ open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView, androi
         val votersDialogView = activity!!.layoutInflater.inflate(R.layout.dialog_voters, null)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView)
-        votersDialogListener = CreateVotersDialogListener(dialog, votersDialogView)
+        votersDialogListener = createVotersDialogListener(dialog, votersDialogView)
         dialog.show()
     }
 }

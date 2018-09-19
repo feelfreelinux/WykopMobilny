@@ -13,14 +13,19 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 
 @Module
 class LinkDetailsModule {
-    @Provides
-    fun provideLinkDetailsPresenter(schedulers: Schedulers, linksApi: LinksApi, linkCommentInteractor: LinkCommentInteractor, linkInteractor: LinkInteractor) =
-            LinkDetailsPresenter(schedulers, linksApi, linkCommentInteractor, linkInteractor)
 
     @Provides
-    fun provideNavigatorApi(activity: LinkDetailsActivity) : NewNavigatorApi = NewNavigator(activity)
+    fun provideLinkDetailsPresenter(
+        schedulers: Schedulers,
+        linksApi: LinksApi,
+        linkCommentInteractor: LinkCommentInteractor,
+        linkInteractor: LinkInteractor
+    ) = LinkDetailsPresenter(schedulers, linksApi, linkCommentInteractor, linkInteractor)
 
     @Provides
-    fun provideWykopLinkHandler(activity: LinkDetailsActivity, navigatorApi: NewNavigatorApi) : WykopLinkHandlerApi
-            = WykopLinkHandler(activity, navigatorApi)
+    fun provideNavigatorApi(activity: LinkDetailsActivity): NewNavigatorApi = NewNavigator(activity)
+
+    @Provides
+    fun provideWykopLinkHandler(activity: LinkDetailsActivity, navigatorApi: NewNavigatorApi): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigatorApi)
 }

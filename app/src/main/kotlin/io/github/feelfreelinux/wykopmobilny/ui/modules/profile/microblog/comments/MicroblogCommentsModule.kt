@@ -9,6 +9,12 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryComm
 
 @Module
 class MicroblogCommentsModule {
+
     @Provides
-    fun providesPresenter(schedulers: Schedulers, profileApi: ProfileApi, entriesApi: EntriesApi, entryCommentsInteractor: EntryCommentInteractor) = MicroblogCommentsPresenter(schedulers, profileApi, entriesApi, entryCommentsInteractor)
+    fun providesPresenter(
+        schedulers: Schedulers,
+        profileApi: ProfileApi,
+        entriesApi: EntriesApi,
+        entryCommentsInteractor: EntryCommentInteractor
+    ) = MicroblogCommentsPresenter(schedulers, profileApi, entriesApi, entryCommentsInteractor)
 }

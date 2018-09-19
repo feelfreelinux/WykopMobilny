@@ -20,13 +20,61 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.link_comment_layout.*
 
-class LinkCommentViewHolder(override val containerView: View,
-                               userManagerApi: UserManagerApi,
-                               settingsPreferencesApi: SettingsPreferencesApi,
-                               navigatorApi : NewNavigatorApi,
-                               linkHandlerApi: WykopLinkHandlerApi,
-                               commentActionListener : LinkCommentActionListener,
-                               commentViewListener: LinkCommentViewListener) : BaseLinkCommentViewHolder(containerView, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, commentActionListener, commentViewListener), LayoutContainer {
+class LinkCommentViewHolder(
+    override val containerView: View,
+    userManagerApi: UserManagerApi,
+    settingsPreferencesApi: SettingsPreferencesApi,
+    navigatorApi: NewNavigatorApi,
+    linkHandlerApi: WykopLinkHandlerApi,
+    commentActionListener: LinkCommentActionListener,
+    commentViewListener: LinkCommentViewListener
+) : BaseLinkCommentViewHolder(
+    containerView,
+    userManagerApi,
+    settingsPreferencesApi,
+    navigatorApi,
+    linkHandlerApi,
+    commentViewListener,
+    commentActionListener
+), LayoutContainer {
+
+    companion object {
+        const val TYPE_EMBED = 17
+        const val TYPE_NORMAL = 18
+        const val TYPE_BLOCKED = 19
+
+        /**
+         * Inflates correct view (with embed, survey or both) depending on viewType
+         */
+        fun inflateView(
+            parent: ViewGroup,
+            viewType: Int,
+            userManagerApi: UserManagerApi,
+            settingsPreferencesApi: SettingsPreferencesApi,
+            navigatorApi: NewNavigatorApi,
+            linkHandlerApi: WykopLinkHandlerApi,
+            commentActionListener: LinkCommentActionListener,
+            commentViewListener: LinkCommentViewListener
+        ): LinkCommentViewHolder {
+            val view = LinkCommentViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.link_comment_layout, parent, false),
+                userManagerApi,
+                settingsPreferencesApi,
+                navigatorApi,
+                linkHandlerApi,
+                commentActionListener,
+                commentViewListener
+            )
+
+            view.type = viewType
+
+            when (viewType) {
+                TYPE_EMBED -> view.inflateEmbed()
+            }
+            return view
+        }
+    }
+
     override lateinit var embedView: WykopEmbedView
 
     // Bind correct views
@@ -39,32 +87,6 @@ class LinkCommentViewHolder(override val containerView: View,
     override var moreOptionsButton: TextView = moreOptionsTextView
     override var shareButton: TextView = shareTextView
 
-    companion object {
-        const val TYPE_EMBED = 17
-        const val TYPE_NORMAL = 18
-        const val TYPE_BLOCKED = 19
-
-        /**
-         * Inflates correct view (with embed, survey or both) depending on viewType
-         */
-        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi : WykopLinkHandlerApi, commentActionListener: LinkCommentActionListener, commentViewListener: LinkCommentViewListener): LinkCommentViewHolder {
-            val view = LinkCommentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_comment_layout, parent, false),
-                    userManagerApi,
-                    settingsPreferencesApi,
-                    navigatorApi,
-                    linkHandlerApi,
-                    commentActionListener,
-                    commentViewListener)
-
-            view.type = viewType
-
-            when (viewType) {
-                TYPE_EMBED -> view.inflateEmbed()
-            }
-            return view
-        }
-    }
-
     override fun bindView(linkComment: LinkComment, isAuthorComment: Boolean, commentId: Int) {
         super.bindView(linkComment, isAuthorComment, commentId)
 
@@ -75,11 +97,12 @@ class LinkCommentViewHolder(override val containerView: View,
             authorTextView.apply {
                 text = nick
                 setTextColor(context.getGroupColor(group))
-                setOnClickListener {  }
+                setOnClickListener { }
             }
             dateTextView.text = linkComment.date.replace(" temu", "")
             linkComment.app?.let {
-                dateTextView.text = containerView.context.getString(R.string.date_with_user_app, linkComment.date.replace(" temu", ""), linkComment.app)
+                dateTextView.text =
+                        containerView.context.getString(R.string.date_with_user_app, linkComment.date.replace(" temu", ""), linkComment.app)
             }
         }
     }

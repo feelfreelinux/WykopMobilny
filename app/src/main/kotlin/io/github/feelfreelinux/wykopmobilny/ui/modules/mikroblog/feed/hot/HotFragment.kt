@@ -1,9 +1,15 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
@@ -18,13 +24,19 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import javax.inject.Inject
 
 class HotFragment : BaseFragment(), BaseNavigationView, HotView {
-    val navigation by lazy { activity as MainNavigationInterface }
-    @Inject lateinit var presenter : HotPresenter
-    @Inject lateinit var settingsPreferences : SettingsPreferencesApi
-    @Inject lateinit var navigatorApi : NavigatorApi
-    @Inject lateinit var userManagerApi : UserManagerApi
+
+    companion object {
+        fun newInstance() = HotFragment()
+    }
+
+    @Inject lateinit var presenter: HotPresenter
+    @Inject lateinit var settingsPreferences: SettingsPreferencesApi
+    @Inject lateinit var navigatorApi: NavigatorApi
+    @Inject lateinit var userManagerApi: UserManagerApi
+
     val fab by lazy { navigation.floatingButton }
     val entriesFragment by lazy { childFragmentManager.findFragmentById(R.id.entriesFragment) as EntriesFragment }
+    val navigation by lazy { activity as MainNavigationInterface }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -43,42 +55,32 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
         presenter.loadData(true)
     }
 
-    override fun disableLoading() {
-        entriesFragment.disableLoading()
-    }
-
-    companion object {
-        fun newInstance() : androidx.fragment.app.Fragment {
-            return HotFragment()
-        }
-    }
-
+    override fun disableLoading() = entriesFragment.disableLoading()
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 
-    override fun showHotEntries(entries: List<Entry>, isRefreshing: Boolean) {
+    override fun showHotEntries(entries: List<Entry>, isRefreshing: Boolean) =
         entriesFragment.addItems(entries, isRefreshing)
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.hot_period, menu)
         navigation.activityToolbar.setTitle(
-                when (presenter.period) {
-                    "24" -> R.string.period24
-                    "12" -> R.string.period12
-                    "6" -> R.string.period6
-                    "active" -> R.string.active_entries
-                    else -> R.string.newest_entries
-                }
+            when (presenter.period) {
+                "24" -> R.string.period24
+                "12" -> R.string.period12
+                "6" -> R.string.period6
+                "active" -> R.string.active_entries
+                else -> R.string.newest_entries
+            }
         )
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.period6  -> {
+            R.id.period6 -> {
                 presenter.period = "6"
                 navigation.activityToolbar.setTitle(R.string.period6)
             }
@@ -94,7 +96,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
                 presenter.period = "active"
                 navigation.activityToolbar.setTitle(R.string.active_entries)
             }
-            R.id.newest   -> {
+            R.id.newest -> {
                 presenter.period = "newest"
                 navigation.activityToolbar.setTitle(R.string.newest_entries)
             }

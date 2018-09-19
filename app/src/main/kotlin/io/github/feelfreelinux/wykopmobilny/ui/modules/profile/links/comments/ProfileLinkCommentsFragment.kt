@@ -1,23 +1,19 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.comments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinkCommentFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import javax.inject.Inject
 
 class ProfileLinkCommentsFragment : BaseLinkCommentFragment(), ProfileLinkCommentsView {
-    val username by lazy { (activity as ProfileActivity).username }
-    @Inject
-    lateinit var presenter: ProfileLinksFragmentPresenter
-    override var loadDataListener: (Boolean) -> Unit = {
-        presenter.loadData(it)
-    }
+
+    @Inject lateinit var presenter: ProfileLinksFragmentPresenter
+
+    override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
+    private val username by lazy { (activity as ProfileActivity).username }
 
     companion object {
-        fun newInstance(): androidx.fragment.app.Fragment {
-            return ProfileLinkCommentsFragment()
-        }
+        fun newInstance() = ProfileLinkCommentsFragment()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -30,7 +26,7 @@ class ProfileLinkCommentsFragment : BaseLinkCommentFragment(), ProfileLinkCommen
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 }

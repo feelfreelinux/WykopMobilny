@@ -5,53 +5,58 @@ import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 
-class ConversationPresenter(val schedulers: Schedulers, val pmApi: PMApi) : BasePresenter<ConversationView>() {
-    lateinit var user : String
+class ConversationPresenter(
+    val schedulers: Schedulers,
+    private val pmApi: PMApi
+) : BasePresenter<ConversationView>() {
+
+    lateinit var user: String
+
     fun loadConversation() {
         compositeObservable.add(
-                pmApi.getConversation(user)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                { view?.showConversation(it) },
-                                { view?.showErrorDialog(it) }
-                        )
+            pmApi.getConversation(user)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe(
+                    { view?.showConversation(it) },
+                    { view?.showErrorDialog(it) }
+                )
         )
     }
 
-    fun sendMessage(body: String, photo : String?, containsAdultContent: Boolean) {
+    fun sendMessage(body: String, photo: String?, containsAdultContent: Boolean) {
         compositeObservable.add(
-                pmApi.sendMessage(body, user, photo, containsAdultContent)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                {
-                                    view?.hideInputbarProgress()
-                                    view?.resetInputbarState()
-                                    loadConversation()
-                                },
-                                {
-                                    view?.hideInputbarProgress()
-                                    view?.showErrorDialog(it)
-                                })
+            pmApi.sendMessage(body, user, photo, containsAdultContent)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe(
+                    {
+                        view?.hideInputbarProgress()
+                        view?.resetInputbarState()
+                        loadConversation()
+                    },
+                    {
+                        view?.hideInputbarProgress()
+                        view?.showErrorDialog(it)
+                    })
         )
     }
 
-    fun sendMessage(body: String, photo: WykopImageFile, containsAdultContent : Boolean) {
+    fun sendMessage(body: String, photo: WykopImageFile, containsAdultContent: Boolean) {
         compositeObservable.add(
-                pmApi.sendMessage(body, user, containsAdultContent, photo)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                {
-                                    view?.hideInputbarProgress()
-                                    view?.resetInputbarState()
-                                    loadConversation()
-                                },
-                                {
-                                    view?.hideInputbarProgress()
-                                    view?.showErrorDialog(it)
-                                })
+            pmApi.sendMessage(body, user, containsAdultContent, photo)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe(
+                    {
+                        view?.hideInputbarProgress()
+                        view?.resetInputbarState()
+                        loadConversation()
+                    },
+                    {
+                        view?.hideInputbarProgress()
+                        view?.showErrorDialog(it)
+                    })
         )
     }
 }

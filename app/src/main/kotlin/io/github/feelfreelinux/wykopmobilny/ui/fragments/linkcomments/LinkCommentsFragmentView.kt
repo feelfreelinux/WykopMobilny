@@ -1,11 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments
 
 import io.github.feelfreelinux.wykopmobilny.base.BaseView
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 
 
 interface LinkCommentsFragmentView : BaseView {
-    fun updateComment(comment : LinkComment)
+    fun updateComment(comment: LinkComment)
     fun disableLoading()
-    fun addItems(items : List<LinkComment>, shouldRefresh : Boolean = false)
+    fun addItems(items: List<LinkComment>, shouldRefresh: Boolean = false)
 }

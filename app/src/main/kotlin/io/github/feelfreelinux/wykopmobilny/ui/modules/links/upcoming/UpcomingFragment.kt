@@ -1,8 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.links.upcoming
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
@@ -12,20 +17,17 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import javax.inject.Inject
 
 class UpcomingFragment : BaseLinksFragment(), UpcomingView {
-    override var loadDataListener: (Boolean) -> Unit = {
-        presenter.getUpcomingLinks(it)
-    }
-
-    @Inject lateinit var presenter : UpcomingPresenter
-
-    val navigation by lazy { activity as MainNavigationInterface }
-    @Inject lateinit var linksPreferencesApi : LinksPreferencesApi
 
     companion object {
-        fun newInstance() : UpcomingFragment {
-            return UpcomingFragment()
-        }
+        fun newInstance() = UpcomingFragment()
     }
+
+    @Inject lateinit var presenter: UpcomingPresenter
+    @Inject lateinit var linksPreferencesApi: LinksPreferencesApi
+
+    override var loadDataListener: (Boolean) -> Unit = { presenter.getUpcomingLinks(it) }
+
+    val navigation by lazy { activity as MainNavigationInterface }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -87,12 +89,14 @@ class UpcomingFragment : BaseLinksFragment(), UpcomingView {
         loadDataListener(true)
     }
 
-    fun setSubtitle() {
-        navigation.activityToolbar.setSubtitle(when (presenter.sortBy) {
-            UpcomingPresenter.SORTBY_ACTIVE -> R.string.upcoming_sortby_active
-            UpcomingPresenter.SORTBY_DATE -> R.string.upcoming_sortby_date
-            UpcomingPresenter.SORTBY_VOTES -> R.string.upcoming_sortby_votes
-            else -> R.string.upcoming_sortby_comments
-        })
+    private fun setSubtitle() {
+        navigation.activityToolbar.setSubtitle(
+            when (presenter.sortBy) {
+                UpcomingPresenter.SORTBY_ACTIVE -> R.string.upcoming_sortby_active
+                UpcomingPresenter.SORTBY_DATE -> R.string.upcoming_sortby_date
+                UpcomingPresenter.SORTBY_VOTES -> R.string.upcoming_sortby_votes
+                else -> R.string.upcoming_sortby_comments
+            }
+        )
     }
 }

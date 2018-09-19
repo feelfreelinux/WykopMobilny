@@ -9,34 +9,14 @@ import android.widget.ImageView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 
-class FavoriteButton : ImageView {
-    constructor(context: Context) : super(context, null, R.attr.MirkoButtonStyle)
+class FavoriteButton @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.MirkoButtonStyle
+) : ImageView(context, attrs, defStyleAttr) {
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs, R.attr.MirkoButtonStyle)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    var favoriteDrawable : Drawable
-    var favoriteOutlineDrawable : Drawable
-    var typedArray : TypedArray
-
-
-    init {
-        val typedValue = TypedValue()
-        getActivityContext()!!.theme?.resolveAttribute(R.attr.buttonStatelist, typedValue, true)
-        setBackgroundResource(typedValue.resourceId)
-
-        typedArray = context.obtainStyledAttributes(arrayOf(
-                R.attr.favoriteDrawable).toIntArray())
-        favoriteDrawable = typedArray.getDrawable(0)
-        typedArray.recycle()
-
-        typedArray = context.obtainStyledAttributes(arrayOf( R.attr.favoriteOutlineDrawable).toIntArray())
-        favoriteOutlineDrawable = typedArray.getDrawable(0)
-        typedArray.recycle()
-    }
-
-    var isFavorite : Boolean
+    var favoriteDrawable: Drawable
+    var favoriteOutlineDrawable: Drawable
+    var typedArray: TypedArray
+    var isFavorite: Boolean
         get() = isSelected
         set(value) {
             if (value) {
@@ -47,4 +27,22 @@ class FavoriteButton : ImageView {
                 setImageDrawable(favoriteOutlineDrawable)
             }
         }
+
+    init {
+        val typedValue = TypedValue()
+        getActivityContext()!!.theme?.resolveAttribute(R.attr.buttonStatelist, typedValue, true)
+        setBackgroundResource(typedValue.resourceId)
+
+        typedArray = context.obtainStyledAttributes(
+            arrayOf(
+                R.attr.favoriteDrawable
+            ).toIntArray()
+        )
+        favoriteDrawable = typedArray.getDrawable(0)
+        typedArray.recycle()
+
+        typedArray = context.obtainStyledAttributes(arrayOf(R.attr.favoriteOutlineDrawable).toIntArray())
+        favoriteOutlineDrawable = typedArray.getDrawable(0)
+        typedArray.recycle()
+    }
 }

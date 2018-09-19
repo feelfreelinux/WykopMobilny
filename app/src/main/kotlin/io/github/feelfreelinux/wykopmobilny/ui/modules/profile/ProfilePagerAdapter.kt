@@ -1,9 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile
 
 import android.content.res.Resources
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import android.util.SparseArray
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
@@ -12,10 +9,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.LinksFragme
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.MicroblogFragment
 
 
-class ProfilePagerAdapter(val resources : Resources, fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+class ProfilePagerAdapter(
+    val resources: Resources,
+    fragmentManager: androidx.fragment.app.FragmentManager
+) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+
     val registeredFragments = SparseArray<androidx.fragment.app.Fragment>()
 
-    override fun getItem(position: Int): androidx.fragment.app.Fragment = when(position) {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment = when (position) {
         0 -> ActionsFragment.newInstance()
         1 -> LinksFragment.newInstance()
         else -> MicroblogFragment.newInstance()
@@ -36,7 +37,7 @@ class ProfilePagerAdapter(val resources : Resources, fragmentManager: androidx.f
 
     override fun getPageTitle(position: Int): CharSequence {
         super.getPageTitle(position)
-        return when(position) {
+        return when (position) {
             0 -> resources.getString(R.string.actions)
             1 -> resources.getString(R.string.links)
             else -> resources.getString(R.string.mikroblog)

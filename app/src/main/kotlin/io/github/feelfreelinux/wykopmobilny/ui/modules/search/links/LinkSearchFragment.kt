@@ -1,8 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search.links
 
-
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -12,23 +10,18 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import javax.inject.Inject
 
 class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
-    var query = ""
-
-    lateinit var querySubscribe : Disposable
-
-    @Inject
-    lateinit var presenter: LinkSearchPresenter
-    override var loadDataListener: (Boolean) -> Unit = {
-        presenter.searchLinks(query, it)
-    }
-
-    @Inject
-    lateinit var userManager: UserManagerApi
 
     companion object {
-        fun newInstance(): androidx.fragment.app.Fragment {
-            return  LinkSearchFragment()
-        }
+        fun newInstance() = LinkSearchFragment()
+    }
+
+    @Inject lateinit var userManager: UserManagerApi
+    @Inject lateinit var presenter: LinkSearchPresenter
+
+    var query = ""
+    lateinit var querySubscribe: Disposable
+    override var loadDataListener: (Boolean) -> Unit = {
+        presenter.searchLinks(query, it)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -46,8 +39,8 @@ class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
         querySubscribe.dispose()
+        super.onDestroy()
     }
 }

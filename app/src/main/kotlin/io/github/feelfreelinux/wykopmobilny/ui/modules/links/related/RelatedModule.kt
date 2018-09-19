@@ -12,12 +12,14 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 @Module
 class RelatedModule {
     @Provides
-    fun provideRelatedPresenter(schedulers: Schedulers, linksApi: LinksApi) = RelatedPresenter(schedulers, linksApi)
+    fun provideRelatedPresenter(schedulers: Schedulers, linksApi: LinksApi) =
+        RelatedPresenter(schedulers, linksApi)
 
     @Provides
-    fun provideNavigatorApi(activity: RelatedActivity) : NewNavigatorApi = NewNavigator(activity)
+    fun provideNavigatorApi(activity: RelatedActivity): NewNavigatorApi =
+        NewNavigator(activity)
 
     @Provides
-    fun provideWykopLinkHandler(activity: RelatedActivity, navigatorApi: NewNavigatorApi) : WykopLinkHandlerApi
-            = WykopLinkHandler(activity, navigatorApi)
+    fun provideWykopLinkHandler(activity: RelatedActivity, navigatorApi: NewNavigatorApi): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigatorApi)
 }

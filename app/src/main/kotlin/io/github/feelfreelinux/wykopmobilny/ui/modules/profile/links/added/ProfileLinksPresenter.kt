@@ -8,81 +8,86 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListene
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 import io.reactivex.Single
 
-class ProfileLinksPresenter(val schedulers: Schedulers, val profileApi: ProfileApi, val linksInteractor: LinksInteractor) : BasePresenter<ProfileLinksView>(), LinkActionListener {
+class ProfileLinksPresenter(
+    val schedulers: Schedulers,
+    val profileApi: ProfileApi,
+    val linksInteractor: LinksInteractor
+) : BasePresenter<ProfileLinksView>(), LinkActionListener {
+
     var page = 1
-    lateinit var username : String
-    fun loadAdded(shouldRefresh : Boolean) {
+    lateinit var username: String
+
+    fun loadAdded(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
         compositeObservable.add(
-                profileApi.getAdded(username, page)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                {
-                                    if (it.isNotEmpty()) {
-                                        page++
-                                        view?.addItems(it, shouldRefresh)
-                                    } else view?.disableLoading()
-                                },
-                                { view?.showErrorDialog(it) }
-                        )
+            profileApi.getAdded(username, page)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it.isNotEmpty()) {
+                            page++
+                            view?.addItems(it, shouldRefresh)
+                        } else view?.disableLoading()
+                    },
+                    { view?.showErrorDialog(it) }
+                )
         )
     }
 
-    fun loadBurried(shouldRefresh : Boolean) {
+    fun loadBurried(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
         compositeObservable.add(
-                profileApi.getBuried(username, page)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                {
-                                    if (it.isNotEmpty()) {
-                                        page++
-                                        view?.addItems(it, shouldRefresh)
-                                    } else view?.disableLoading()
-                                },
-                                { view?.showErrorDialog(it) }
-                        )
+            profileApi.getBuried(username, page)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it.isNotEmpty()) {
+                            page++
+                            view?.addItems(it, shouldRefresh)
+                        } else view?.disableLoading()
+                    },
+                    { view?.showErrorDialog(it) }
+                )
         )
     }
 
-    fun loadDigged(shouldRefresh : Boolean) {
+    fun loadDigged(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
         compositeObservable.add(
-                profileApi.getDigged(username, page)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                {
-                                    if (it.isNotEmpty()) {
-                                        page++
-                                        view?.addItems(it, shouldRefresh)
-                                    } else view?.disableLoading()
-                                },
-                                { view?.showErrorDialog(it) }
-                        )
+            profileApi.getDigged(username, page)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it.isNotEmpty()) {
+                            page++
+                            view?.addItems(it, shouldRefresh)
+                        } else view?.disableLoading()
+                    },
+                    { view?.showErrorDialog(it) }
+                )
         )
     }
 
-    fun loadPublished(shouldRefresh : Boolean) {
+    fun loadPublished(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
         compositeObservable.add(
-                profileApi.getPublished(username, page)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                {
-                                    if (it.isNotEmpty()) {
-                                        page++
-                                        view?.addItems(it, shouldRefresh)
-                                    } else view?.disableLoading()
-                                },
-                                { view?.showErrorDialog(it) }
-                        )
+            profileApi.getPublished(username, page)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it.isNotEmpty()) {
+                            page++
+                            view?.addItems(it, shouldRefresh)
+                        } else view?.disableLoading()
+                    },
+                    { view?.showErrorDialog(it) }
+                )
         )
     }
-
 
     override fun dig(link: Link) {
         linksInteractor.dig(link).processLinkSingle(link)
@@ -92,16 +97,16 @@ class ProfileLinksPresenter(val schedulers: Schedulers, val profileApi: ProfileA
         linksInteractor.voteRemove(link).processLinkSingle(link)
     }
 
-    fun Single<Link>.processLinkSingle(link: Link) {
+    private fun Single<Link>.processLinkSingle(link: Link) {
         compositeObservable.add(
-                this
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({ view?.updateLink(it) },
-                                {
-                                    view?.showErrorDialog(it)
-                                    view?.updateLink(link)
-                                })
+            this
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe({ view?.updateLink(it) },
+                    {
+                        view?.showErrorDialog(it)
+                        view?.updateLink(link)
+                    })
         )
     }
 }

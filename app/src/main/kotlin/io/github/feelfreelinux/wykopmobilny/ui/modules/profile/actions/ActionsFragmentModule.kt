@@ -11,5 +11,11 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 @Module
 class ActionsFragmentModule {
     @Provides
-    fun providePresenter(schedulers: Schedulers, profileApi: ProfileApi, entriesInteractor: EntriesInteractor, entriesApi: EntriesApi, linksInteractor: LinksInteractor) = ActionsFragmentPresenter(schedulers, profileApi, entriesInteractor, linksInteractor, entriesApi)
+    fun providePresenter(
+        schedulers: Schedulers,
+        profileApi: ProfileApi,
+        entriesInteractor: EntriesInteractor,
+        entriesApi: EntriesApi,
+        linksInteractor: LinksInteractor
+    ) = ActionsFragmentPresenter(schedulers, profileApi, entriesInteractor, linksInteractor, entriesApi)
 }

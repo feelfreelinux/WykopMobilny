@@ -1,7 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
@@ -13,8 +15,10 @@ import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 
-abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
-    abstract var notificationAdapter : NotificationsListAdapter
+abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView,
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+
+    abstract var notificationAdapter: NotificationsListAdapter
     abstract var linkHandler: WykopLinkHandlerApi
 
     abstract fun markAsRead()
@@ -31,9 +35,8 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_notifications_list, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.activity_notifications_list, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         swiperefresh.setOnRefreshListener(this)
@@ -54,7 +57,8 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter: Boolean) {
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
-        notificationAdapter.addData(if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications, shouldClearAdapter)
+        notificationAdapter.addData(if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications,
+            shouldClearAdapter)
     }
 
     override fun showReadToast() {
@@ -62,8 +66,6 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
         Toast.makeText(context, R.string.read_notifications, Toast.LENGTH_SHORT).show()
     }
 
-    override fun disableLoading() {
-        notificationAdapter.disableLoading()
-    }
+    override fun disableLoading() = notificationAdapter.disableLoading()
 
 }

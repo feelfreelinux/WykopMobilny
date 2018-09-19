@@ -10,25 +10,24 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import javax.inject.Inject
 
 class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(), EditEntryCommentView {
-    override val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, 0) }
-    override val commentId by lazy { intent.getIntExtra(EXTRA_COMMENT_ID, 0) }
-    @Inject override lateinit var suggestionApi: SuggestApi
-    @Inject override lateinit var presenter : EditEntryCommentPresenter
 
     companion object {
-        val EXTRA_ENTRY_ID = "ENTRY_ID"
-        val EXTRA_COMMENT_ID = "COMMENT_ID"
+        const val EXTRA_ENTRY_ID = "ENTRY_ID"
+        const val EXTRA_COMMENT_ID = "COMMENT_ID"
 
-        fun createIntent(context : Context, body : String, entryId : Int, commentId : Int): Intent {
-            val intent = Intent(context, EditEntryCommentActivity::class.java)
-            intent.apply {
-                putExtra(EditEntryCommentActivity.EXTRA_ENTRY_ID, entryId)
-                putExtra(EditEntryCommentActivity.EXTRA_COMMENT_ID, commentId)
-                putExtra(BaseInputActivity.EXTRA_BODY, body)
+        fun createIntent(context: Context, body: String, entryId: Int, commentId: Int) =
+            Intent(context, EditEntryCommentActivity::class.java).apply {
+                putExtra(EXTRA_ENTRY_ID, entryId)
+                putExtra(EXTRA_COMMENT_ID, commentId)
+                putExtra(EXTRA_BODY, body)
             }
-            return intent
-        }
     }
+
+    @Inject override lateinit var suggestionApi: SuggestApi
+    @Inject override lateinit var presenter: EditEntryCommentPresenter
+
+    override val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, 0) }
+    override val commentId by lazy { intent.getIntExtra(EXTRA_COMMENT_ID, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +37,8 @@ class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(),
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 
     override fun exitActivity() {

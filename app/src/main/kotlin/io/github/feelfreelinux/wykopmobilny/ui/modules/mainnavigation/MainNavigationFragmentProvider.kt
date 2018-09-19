@@ -27,32 +27,32 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragmentProv
 @Module
 abstract class MainNavigationFragmentProvider {
     @ContributesAndroidInjector(modules = [PromotedFragmentModule::class])
-    abstract fun providePromotedFragment() : PromotedFragment
+    abstract fun providePromotedFragment(): PromotedFragment
 
     @ContributesAndroidInjector(modules = [HotFragmentModule::class, EntriesFragmentProvider::class])
-    abstract fun provideHotFragment() : HotFragment
+    abstract fun provideHotFragment(): HotFragment
 
     @ContributesAndroidInjector(modules = [HashTagsNotificationsListFragmentModule::class])
-    abstract fun provideHashTagsNotificationsListFragment() : HashTagsNotificationsListFragment
+    abstract fun provideHashTagsNotificationsListFragment(): HashTagsNotificationsListFragment
 
     @ContributesAndroidInjector(modules = [NotificationsListFragmentModule::class])
-    abstract fun provideNotificationsListFragment() : NotificationsListFragment
+    abstract fun provideNotificationsListFragment(): NotificationsListFragment
 
     @ContributesAndroidInjector(modules = [ConversationsListFragmentModule::class])
-    abstract fun provideConversationListFragment() : ConversationsListFragment
+    abstract fun provideConversationListFragment(): ConversationsListFragment
 
     @ContributesAndroidInjector(modules = [MyWykopFragmentProvider::class])
-    abstract fun provideMyWykopFragment() : MyWykopFragment
+    abstract fun provideMyWykopFragment(): MyWykopFragment
 
     @ContributesAndroidInjector(modules = [FavoriteFragmentProvider::class])
-    abstract fun provideFavoriteFragment() : FavoriteFragment
+    abstract fun provideFavoriteFragment(): FavoriteFragment
 
     @ContributesAndroidInjector(modules = [SearchFragmentProvider::class])
-    abstract fun provideSearchFragment() : SearchFragment
+    abstract fun provideSearchFragment(): SearchFragment
 
     @ContributesAndroidInjector(modules = [HitsModule::class])
-    abstract fun provideHitsFragment() : HitsFragment
+    abstract fun provideHitsFragment(): HitsFragment
 
     @ContributesAndroidInjector(modules = [UpcomingModule::class])
-    abstract fun provideUpcomingFragment() : UpcomingFragment
+    abstract fun provideUpcomingFragment(): UpcomingFragment
 }

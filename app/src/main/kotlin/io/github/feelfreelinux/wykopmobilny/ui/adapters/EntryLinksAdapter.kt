@@ -5,7 +5,10 @@ import io.github.feelfreelinux.wykopmobilny.base.adapter.EndlessProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.SimpleLinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
@@ -14,10 +17,15 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import javax.inject.Inject
 
-class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi, val navigatorApi: NewNavigatorApi, val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, EntryLink>() {
+class EntryLinksAdapter @Inject constructor(
+    val userManagerApi: UserManagerApi,
+    val settingsPreferencesApi: SettingsPreferencesApi,
+    val navigatorApi: NewNavigatorApi,
+    val linkHandlerApi: WykopLinkHandlerApi
+) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, EntryLink>() {
     // Required field, interacts with presenter. Otherwise will throw exception
-    lateinit var entryActionListener : EntryActionListener
-    lateinit var linkActionListener : LinkActionListener
+    lateinit var entryActionListener: EntryActionListener
+    lateinit var linkActionListener: LinkActionListener
 
     override fun getViewType(position: Int): Int {
         val entryLink = dataset[position]
@@ -29,16 +37,28 @@ class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, 
     }
 
     override fun addData(items: List<EntryLink>, shouldClearAdapter: Boolean) {
-        super.addData(items.filterNot { settingsPreferencesApi.hideBlacklistedViews && if (it.entry != null) it.entry!!.isBlocked else it.link!!.isBlocked }, shouldClearAdapter)
+        super.addData(
+            items.filterNot { settingsPreferencesApi.hideBlacklistedViews && if (it.entry != null) it.entry!!.isBlocked else it.link!!.isBlocked },
+            shouldClearAdapter
+        )
     }
 
     override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             LinkViewHolder.TYPE_IMAGE, LinkViewHolder.TYPE_NOIMAGE ->
-                    LinkViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkActionListener)
+                LinkViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkActionListener)
             EntryViewHolder.TYPE_BLOCKED, LinkViewHolder.TYPE_BLOCKED ->
                 BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
-            else -> EntryViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkHandlerApi, entryActionListener, null)
+            else -> EntryViewHolder.inflateView(
+                parent,
+                viewType,
+                userManagerApi,
+                settingsPreferencesApi,
+                navigatorApi,
+                linkHandlerApi,
+                entryActionListener,
+                null
+            )
         }
     }
 
@@ -62,13 +82,13 @@ class EntryLinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, 
         }
     }
 
-    fun updateEntry(entry : Entry) {
+    fun updateEntry(entry: Entry) {
         val position = dataset.indexOfFirst { it!!.entry?.id == entry.id }
         dataset[position]!!.entry = entry
         notifyItemChanged(position)
     }
 
-    fun updateLink(link : Link) {
+    fun updateLink(link: Link) {
         val position = dataset.indexOfFirst { it!!.link?.id == link.id }
         dataset[position]!!.link = link
         notifyItemChanged(position)

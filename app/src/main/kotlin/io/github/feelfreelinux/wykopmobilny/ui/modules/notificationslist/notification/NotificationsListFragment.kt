@@ -1,9 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
@@ -17,27 +14,21 @@ import kotlinx.android.synthetic.main.activity_notifications_list.*
 import javax.inject.Inject
 
 class NotificationsListFragment : BaseNotificationsListFragment() {
-    private lateinit var entryFragmentData : DataFragment<PagedDataModel<List<Notification>>>
-    override @Inject lateinit var linkHandler : WykopLinkHandlerApi
-    @Inject
-    override lateinit var notificationAdapter : NotificationsListAdapter
 
     companion object {
-        val DATA_FRAGMENT_TAG = "NOTIFICATIONS_LIST_ACTIVITY"
-        fun newInstance() : androidx.fragment.app.Fragment {
-            return NotificationsListFragment()
-        }
+        const val DATA_FRAGMENT_TAG = "NOTIFICATIONS_LIST_ACTIVITY"
+        fun newInstance() = NotificationsListFragment()
     }
 
-    override fun loadMore() {
-        presenter.loadData(false)
-    }
+    @Inject override lateinit var linkHandler: WykopLinkHandlerApi
+    @Inject override lateinit var notificationAdapter: NotificationsListAdapter
+    @Inject lateinit var presenter: NotificationsListPresenter
 
-    override fun onRefresh() {
-        presenter.loadData(true)
-    }
+    private lateinit var entryFragmentData: DataFragment<PagedDataModel<List<Notification>>>
 
-    @Inject lateinit var presenter : NotificationsListPresenter
+    override fun loadMore() = presenter.loadData(false)
+
+    override fun onRefresh() = presenter.loadData(true)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -56,13 +47,11 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
         }
     }
 
-    override fun markAsRead() {
-        presenter.readNotifications()
-    }
+    override fun markAsRead() = presenter.readNotifications()
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 
     override fun onPause() {
@@ -76,5 +65,6 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
     }
 
     override fun showTooManyNotifications() {
+        // Do nothing
     }
 }

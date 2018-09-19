@@ -8,52 +8,55 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommen
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentInteractor
 import io.reactivex.Single
 
-class ProfileLinksFragmentPresenter(val schedulers : Schedulers, val profileApi : ProfileApi, val linksInteractor: LinkCommentInteractor) : BasePresenter<ProfileLinkCommentsView>(), LinkCommentActionListener {
-    override fun removeVote(comment: LinkComment) {
-        linksInteractor.commentVoteCancel(comment).processLinkCommentSingle(comment)
-    }
+class ProfileLinksFragmentPresenter(
+    val schedulers: Schedulers,
+    val profileApi: ProfileApi,
+    val linksInteractor: LinkCommentInteractor
+) : BasePresenter<ProfileLinkCommentsView>(), LinkCommentActionListener {
 
     var page = 1
-    lateinit var username : String
-    fun loadData(shouldRefresh : Boolean) {
+    lateinit var username: String
+
+    fun loadData(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
         compositeObservable.add(
-                profileApi.getLinkComments(username, page)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                {
-                                    if (it.isNotEmpty()) {
-                                        page++
-                                        view?.addItems(it, shouldRefresh)
-                                    } else view?.disableLoading()
-                                },
-                                { view?.showErrorDialog(it) }
-                        )
+            profileApi.getLinkComments(username, page)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it.isNotEmpty()) {
+                            page++
+                            view?.addItems(it, shouldRefresh)
+                        } else view?.disableLoading()
+                    },
+                    { view?.showErrorDialog(it) }
+                )
         )
     }
-    override fun digComment(comment: LinkComment) {
+
+    override fun removeVote(comment: LinkComment) =
+        linksInteractor.commentVoteCancel(comment).processLinkCommentSingle(comment)
+
+    override fun digComment(comment: LinkComment) =
         linksInteractor.commentVoteUp(comment).processLinkCommentSingle(comment)
-    }
 
-    override fun buryComment(comment: LinkComment) {
+    override fun buryComment(comment: LinkComment) =
         linksInteractor.commentVoteDown(comment).processLinkCommentSingle(comment)
-    }
 
-    override fun deleteComment(comment: LinkComment) {
+    override fun deleteComment(comment: LinkComment) =
         linksInteractor.removeComment(comment).processLinkCommentSingle(comment)
-    }
 
-    fun Single<LinkComment>.processLinkCommentSingle(link : LinkComment) {
+    private fun Single<LinkComment>.processLinkCommentSingle(link: LinkComment) {
         compositeObservable.add(
-                this
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({ view?.updateComment(it) },
-                                {
-                                    view?.showErrorDialog(it)
-                                    view?.updateComment(link)
-                                })
+            this
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe({ view?.updateComment(it) },
+                    {
+                        view?.showErrorDialog(it)
+                        view?.updateComment(link)
+                    })
         )
     }
 }

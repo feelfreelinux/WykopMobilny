@@ -4,5 +4,5 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 
 interface UsersSearchView : BaseView {
-    fun showUsers(entryList : List<Author>)
+    fun showUsers(entryList: List<Author>)
 }

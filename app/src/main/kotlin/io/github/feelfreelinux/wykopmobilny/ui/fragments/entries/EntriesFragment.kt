@@ -6,8 +6,9 @@ import javax.inject.Inject
 
 // This fragment shows list of provided entries
 class EntriesFragment : BaseEntriesFragment() {
+
     @Inject
-    lateinit var presenter : EntriesFragmentPresenter
+    lateinit var presenter: EntriesFragmentPresenter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -17,7 +18,7 @@ class EntriesFragment : BaseEntriesFragment() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 }

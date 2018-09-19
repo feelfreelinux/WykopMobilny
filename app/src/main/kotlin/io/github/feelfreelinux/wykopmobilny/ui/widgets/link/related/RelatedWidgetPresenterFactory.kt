@@ -5,8 +5,10 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import javax.inject.Inject
 
-class RelatedWidgetPresenterFactory @Inject constructor(val schedulers: Schedulers, val linksApi: LinksApi, val linkHandlerApi: WykopLinkHandlerApi) {
-    fun create() : RelatedWidgetPresenter {
-        return RelatedWidgetPresenter(schedulers, linksApi, linkHandlerApi)
-    }
+class RelatedWidgetPresenterFactory @Inject constructor(
+    val schedulers: Schedulers,
+    val linksApi: LinksApi,
+    val linkHandlerApi: WykopLinkHandlerApi
+) {
+    fun create() = RelatedWidgetPresenter(schedulers, linksApi, linkHandlerApi)
 }

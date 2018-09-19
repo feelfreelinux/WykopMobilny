@@ -1,45 +1,39 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.settings
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-
-import com.takisoft.preferencex.PreferenceFragmentCompat
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
-import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistActivity
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import javax.inject.Inject
 import android.content.pm.PackageManager
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.NotificationPiggyback
-import android.app.ActivityManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import com.takisoft.preferencex.PreferenceFragmentCompat
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.HasSupportFragmentInjector
+import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
+import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.NotificationPiggyback
+import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SuggestionDatabase
-
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
-    @Inject
-    lateinit var settingsApi: SettingsPreferencesApi
-    @Inject lateinit var userManagerApi : UserManagerApi
-    @Inject lateinit var childFragmentInjector : DispatchingAndroidInjector<androidx.fragment.app.Fragment>
 
-    override fun supportFragmentInjector(): AndroidInjector<androidx.fragment.app.Fragment> {
-        return childFragmentInjector
-    }
+    @Inject lateinit var settingsApi: SettingsPreferencesApi
+    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<androidx.fragment.app.Fragment>
+
+    override fun supportFragmentInjector() = childFragmentInjector
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -48,12 +42,14 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences)
-        (findPreference("piggyBackPushNotifications") as CheckBoxPreference).isEnabled = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
+        (findPreference("piggyBackPushNotifications") as CheckBoxPreference).isEnabled =
+                (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
         (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
             summary = entry
         }
 
-        (findPreference("showNotifications") as CheckBoxPreference).isEnabled = !(findPreference("piggyBackPushNotifications") as CheckBoxPreference).isChecked
+        (findPreference("showNotifications") as CheckBoxPreference).isEnabled =
+                !(findPreference("piggyBackPushNotifications") as CheckBoxPreference).isChecked
         (findPreference("appearance") as Preference).setOnPreferenceClickListener {
             (activity as SettingsActivity).openFragment(SettingsAppearance(), "appearance")
             true
@@ -68,7 +64,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         (findPreference("clearhistory") as Preference).setOnPreferenceClickListener {
             SuggestionDatabase(context!!).clearDb()
-            Toast.makeText(context!!, "Wyczyszczono historię wyszukiwarki",Toast.LENGTH_LONG).show()
+            Toast.makeText(context!!, "Wyczyszczono historię wyszukiwarki", Toast.LENGTH_LONG).show()
             true
         }
     }
@@ -130,7 +126,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
     }
 
-    fun isOfficialAppInstalled(): Boolean {
+    private fun isOfficialAppInstalled(): Boolean {
         return try {
             activity!!.packageManager.getApplicationInfo("pl.wykop.droid", 0)
             true
@@ -139,28 +135,28 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
     }
 
-    fun isNotificationAccessEnabled(): Boolean {
+    private fun isNotificationAccessEnabled(): Boolean {
         val manager = activity!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 
         return manager.getRunningServices(
-                Integer.MAX_VALUE).any { NotificationPiggyback::class.java.name == it.service.className }
+            Integer.MAX_VALUE
+        ).any { NotificationPiggyback::class.java.name == it.service.className }
     }
 
-    fun openWykopMarketPage() {
+    private fun openWykopMarketPage() {
         activity!!.createAlertBuilder().apply {
             setTitle(R.string.dialog_piggyback_market_title)
             setMessage(R.string.dialog_piggyback_market_message)
             setCancelable(false)
-            setPositiveButton(android.R.string.ok, { _, _ ->
+            setPositiveButton(android.R.string.ok) { _, _ ->
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse("market://details?id=pl.wykop.droid")
                 startActivity(intent)
-            })
+            }
             create()
             show()
         }
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -168,7 +164,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onPause() {
-        super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        super.onPause()
     }
 }

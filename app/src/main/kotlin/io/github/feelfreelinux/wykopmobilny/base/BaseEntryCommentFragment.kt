@@ -8,7 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryCommentAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CreateVotersDialogListener
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentsFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
@@ -39,7 +39,7 @@ open class BaseEntryCommentFragment : BaseFragment(), EntryCommentsFragmentView,
         val votersDialogView = layoutInflater.inflate(R.layout.dialog_voters, null)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView)
-        votersDialogListener = CreateVotersDialogListener(dialog, votersDialogView)
+        votersDialogListener = createVotersDialogListener(dialog, votersDialogView)
         dialog.show()
     }
 

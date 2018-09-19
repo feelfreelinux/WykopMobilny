@@ -19,14 +19,13 @@ class ProfileRelatedFragment : BaseFragment(), ProfileRelatedView {
         fun newInstance() = ProfileRelatedFragment()
     }
 
-    val username by lazy { (activity as ProfileActivity).username }
+    private val username by lazy { (activity as ProfileActivity).username }
 
-    @Inject lateinit var feedAdapter : ProfileRelatedAdapter
-    @Inject lateinit var presenter : ProfileRelatedPresenter
+    @Inject lateinit var feedAdapter: ProfileRelatedAdapter
+    @Inject lateinit var presenter: ProfileRelatedPresenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.feed_fragment, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.feed_fragment, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -40,11 +39,8 @@ class ProfileRelatedFragment : BaseFragment(), ProfileRelatedView {
         presenter.loadData(true)
     }
 
-    override fun addDataToAdapter(entryList: List<Related>, shouldClearAdapter: Boolean) {
+    override fun addDataToAdapter(entryList: List<Related>, shouldClearAdapter: Boolean) =
         feedAdapter.addData(entryList, shouldClearAdapter)
-    }
 
-    override fun disableLoading() {
-        feedAdapter.disableLoading()
-    }
+    override fun disableLoading() = feedAdapter.disableLoading()
 }

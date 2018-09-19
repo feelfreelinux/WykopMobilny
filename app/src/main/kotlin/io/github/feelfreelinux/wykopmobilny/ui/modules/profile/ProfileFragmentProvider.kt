@@ -11,6 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.Microbl
 
 @Module
 abstract class ProfileFragmentProvider {
+
     @ContributesAndroidInjector(modules = [ActionsFragmentModule::class])
     abstract fun provideActionsFragment(): ActionsFragment
 

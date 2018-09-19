@@ -4,7 +4,6 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
-import rx.subjects.PublishSubject
 
 interface EntryDetailView : BaseView {
     fun showEntry(entry: Entry)
@@ -12,7 +11,7 @@ interface EntryDetailView : BaseView {
     fun resetInputbarState()
     fun hideInputToolbar()
     fun openVotersMenu()
-    fun showVoters(voters : List<Voter>)
-    fun updateEntry(entry : Entry)
-    fun updateComment(comment : EntryComment)
+    fun showVoters(voters: List<Voter>)
+    fun updateEntry(entry: Entry)
+    fun updateComment(comment: EntryComment)
 }

@@ -18,9 +18,9 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.CreateVotersDialogListener
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.exitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity.Companion.USER_ACTION_INSERT_PHOTO_CAMERA
@@ -33,17 +33,43 @@ import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-
 class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, SwipeRefreshLayout.OnRefreshListener, EntryCommentViewListener {
-    lateinit var votersDialogListener : VotersDialogListener
+
+    companion object {
+        const val EXTRA_ENTRY_ID = "ENTRY_ID"
+        const val EXTRA_COMMENT_ID = "COMMENT_ID"
+        const val EXTRA_IS_REVEALED = "IS_REVEALED"
+
+        fun createIntent(context: Context, entryId: Int, commentId: Int?, isRevealed: Boolean): Intent {
+            val intent = Intent(context, EntryActivity::class.java)
+            intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
+            intent.putExtra(EntryActivity.EXTRA_IS_REVEALED, isRevealed)
+            commentId?.let {
+                intent.putExtra(EntryActivity.EXTRA_COMMENT_ID, commentId)
+            }
+            return intent
+        }
+    }
+
+    @Inject lateinit var presenter: EntryDetailPresenter
+    @Inject lateinit var userManager: UserManagerApi
+    @Inject lateinit var suggestionApi: SuggestApi
+    @Inject lateinit var adapter: EntryAdapter
+
+    lateinit var votersDialogListener: VotersDialogListener
     lateinit var contentUri: Uri
+
+    override val enableSwipeBackLayout: Boolean = true
+    val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
+    private val isRevealed by lazy { intent.getBooleanExtra(EXTRA_IS_REVEALED, false) }
+    private val highLightCommentId by lazy { intent.getIntExtra(EXTRA_COMMENT_ID, -1) }
 
     override fun openVotersMenu() {
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
         val votersDialogView = layoutInflater.inflate(R.layout.dialog_voters, null)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView)
-        votersDialogListener = CreateVotersDialogListener(dialog, votersDialogView)
+        votersDialogListener = createVotersDialogListener(dialog, votersDialogView)
         dialog.show()
     }
 
@@ -66,33 +92,6 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
     override fun quoteComment(comment: EntryComment) {
         inputToolbar.addQuoteText(comment.body, comment.author.nick)
     }
-
-    override val enableSwipeBackLayout: Boolean = true
-    val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
-    val isRevealed by lazy { intent.getBooleanExtra(EXTRA_IS_REVEALED, false) }
-
-    companion object {
-        const val EXTRA_ENTRY_ID = "ENTRY_ID"
-        const val EXTRA_COMMENT_ID = "COMMENT_ID"
-        const val EXTRA_IS_REVEALED = "IS_REVEALED"
-
-        fun createIntent(context: Context, entryId: Int, commentId: Int?, isRevealed: Boolean): Intent {
-            val intent = Intent(context, EntryActivity::class.java)
-            intent.putExtra(EntryActivity.EXTRA_ENTRY_ID, entryId)
-            intent.putExtra(EntryActivity.EXTRA_IS_REVEALED, isRevealed)
-            commentId?.let {
-                intent.putExtra(EntryActivity.EXTRA_COMMENT_ID, commentId)
-            }
-            return intent
-        }
-    }
-
-    val highLightCommentId by lazy { intent.getIntExtra(EXTRA_COMMENT_ID, -1) }
-
-    @Inject lateinit var presenter: EntryDetailPresenter
-    @Inject lateinit var userManager : UserManagerApi
-    @Inject lateinit var suggestionApi : SuggestApi
-    @Inject lateinit var adapter : EntryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -188,13 +187,17 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent,
-                getString(R.string.insert_photo_galery)), BaseInputActivity.USER_ACTION_INSERT_PHOTO)
+        startActivityForResult(
+            Intent.createChooser(
+                intent,
+                getString(R.string.insert_photo_galery)
+            ), BaseInputActivity.USER_ACTION_INSERT_PHOTO
+        )
     }
 
     override fun onBackPressed() {
         if (inputToolbar.hasUserEditedContent()) {
-            ExitConfirmationDialog(this) {
+            exitConfirmationDialog(this) {
                 finish()
             }?.show()
         } else finish()
@@ -235,7 +238,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         }
     }
 
-    override fun openCamera(uri : Uri) {
+    override fun openCamera(uri: Uri) {
         contentUri = uri
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)

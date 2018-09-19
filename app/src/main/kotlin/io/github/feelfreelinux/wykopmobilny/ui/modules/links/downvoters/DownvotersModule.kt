@@ -15,9 +15,9 @@ class DownvotersModule {
     fun provideDownvotersPresenter(schedulers: Schedulers, linksApi: LinksApi) = DownvotersPresenter(schedulers, linksApi)
 
     @Provides
-    fun provideNavigatorApi(activity: DownvotersActivity) : NewNavigatorApi = NewNavigator(activity)
+    fun provideNavigatorApi(activity: DownvotersActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideWykopLinkHandler(activity: DownvotersActivity, navigatorApi: NewNavigatorApi) : WykopLinkHandlerApi
-            = WykopLinkHandler(activity, navigatorApi)
+    fun provideWykopLinkHandler(activity: DownvotersActivity, navigatorApi: NewNavigatorApi): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigatorApi)
 }

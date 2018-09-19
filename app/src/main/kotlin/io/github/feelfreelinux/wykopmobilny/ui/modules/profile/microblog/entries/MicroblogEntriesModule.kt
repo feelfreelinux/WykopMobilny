@@ -9,6 +9,12 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteract
 
 @Module
 class MicroblogEntriesModule {
+
     @Provides
-    fun providePresenter(schedulers: Schedulers, profileApi: ProfileApi, entriesApi: EntriesApi, entriesInteractor: EntriesInteractor) = MicroblogEntriesPresenter(schedulers, profileApi, entriesApi, entriesInteractor)
+    fun providePresenter(
+        schedulers: Schedulers,
+        profileApi: ProfileApi,
+        entriesApi: EntriesApi,
+        entriesInteractor: EntriesInteractor
+    ) = MicroblogEntriesPresenter(schedulers, profileApi, entriesApi, entriesInteractor)
 }

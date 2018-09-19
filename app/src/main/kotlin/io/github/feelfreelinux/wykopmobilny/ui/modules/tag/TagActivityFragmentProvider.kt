@@ -10,8 +10,8 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.links.TagLinksFragmen
 @Module
 abstract class TagActivityFragmentProvider {
     @ContributesAndroidInjector(modules = [TagEntriesModule::class])
-    abstract fun provideEntryFragment() : TagEntriesFragment
+    abstract fun provideEntryFragment(): TagEntriesFragment
 
     @ContributesAndroidInjector(modules = [TagLinksFragmentModule::class])
-    abstract fun provideLinksFragment() : TagLinksFragment
+    abstract fun provideLinksFragment(): TagLinksFragment
 }

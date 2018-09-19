@@ -4,6 +4,6 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
 
 interface ProfileRelatedView : BaseView {
-    fun addDataToAdapter(entryList : List<Related>, shouldClearAdapter : Boolean)
+    fun addDataToAdapter(entryList: List<Related>, shouldClearAdapter: Boolean)
     fun disableLoading()
 }

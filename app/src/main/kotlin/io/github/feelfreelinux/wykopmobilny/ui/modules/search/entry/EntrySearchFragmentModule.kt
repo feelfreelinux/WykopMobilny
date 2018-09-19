@@ -10,5 +10,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteract
 @Module
 class EntrySearchFragmentModule {
     @Provides
-    fun provideEntrySearchPresenter(schedulers: Schedulers, searchApi: SearchApi, entriesApi: EntriesApi, entriesInteractor: EntriesInteractor) = EntrySearchPresenter(schedulers, searchApi, entriesApi, entriesInteractor)
+    fun provideEntrySearchPresenter(
+        schedulers: Schedulers,
+        searchApi: SearchApi,
+        entriesApi: EntriesApi,
+        entriesInteractor: EntriesInteractor
+    ) = EntrySearchPresenter(schedulers, searchApi, entriesApi, entriesInteractor)
 }

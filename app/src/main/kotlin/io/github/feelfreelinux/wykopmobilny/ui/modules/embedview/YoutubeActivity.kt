@@ -3,30 +3,30 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Window
 import android.widget.Toast
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
-import com.r0adkll.slidr.Slidr
-import com.r0adkll.slidr.model.SlidrConfig
 import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
 import io.github.feelfreelinux.wykopmobilny.R
 import kotlinx.android.synthetic.main.activity_youtubeplayer.*
 import java.util.regex.Pattern
 
 class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
-    val extraURL by lazy { intent.getStringExtra(EXTRA_URL) }
 
     companion object {
-        val REQUEST_CODE_INITIALIZATION_ERROR = 172
-        val EXTRA_URL = "URLEXTRA"
-        fun createIntent(context: Context, url: String): Intent {
-            val intent = Intent(context, YoutubeActivity::class.java)
-            intent.putExtra(EXTRA_URL, url)
-            return intent
-        }
+        const val REQUEST_CODE_INITIALIZATION_ERROR = 172
+        const val EXTRA_URL = "URLEXTRA"
+
+        fun createIntent(context: Context, url: String) =
+            Intent(context, YoutubeActivity::class.java).apply {
+                putExtra(EXTRA_URL, url)
+            }
     }
+
+    private val youTubeUrlRegEx = "^(https?)?(://)?(www.)?(m.)?((youtube.com)|(youtu.be))/"
+    private val videoIdRegex = arrayOf("\\?vi?=([^&]*)", "watch\\?.*v=([^&]*)", "(?:embed|vi?)/([^/?]*)", "^([A-Za-z0-9_\\-]*)")
+    private val extraURL by lazy { intent.getStringExtra(EXTRA_URL) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListen
             return
         }
 
-        Toast.makeText(this, result.toString(),Toast.LENGTH_LONG).show()
+        Toast.makeText(this, result.toString(), Toast.LENGTH_LONG).show()
     }
 
     override fun onInitializationSuccess(provider: YouTubePlayer.Provider?, player: YouTubePlayer?, restored: Boolean) {
@@ -52,14 +52,12 @@ class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListen
     }
 
     fun YouTubePlayer.prepare() {
-        fullscreenControlFlags = YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION or YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE or YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI
+        fullscreenControlFlags = YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION or YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE or
+                YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI
         setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
     }
 
-    val youTubeUrlRegEx = "^(https?)?(://)?(www.)?(m.)?((youtube.com)|(youtu.be))/"
-    val videoIdRegex = arrayOf("\\?vi?=([^&]*)", "watch\\?.*v=([^&]*)", "(?:embed|vi?)/([^/?]*)", "^([A-Za-z0-9_\\-]*)")
-
-    fun extractVideoIdFromUrl(url: String): String? {
+    private fun extractVideoIdFromUrl(url: String): String? {
         val youTubeLinkWithoutProtocolAndDomain = youTubeLinkWithoutProtocolAndDomain(url)
 
         for (regex in videoIdRegex) {

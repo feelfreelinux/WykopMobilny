@@ -3,8 +3,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
 import android.view.MenuItem
+import androidx.preference.PreferenceFragmentCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
@@ -12,24 +12,22 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class SettingsActivity : BaseActivity() {
-    override val enableSwipeBackLayout: Boolean = true
-    companion object {
-        val THEME_CHANGED_EXTRA = "THEME_CHANGED"
-        val THEME_CHANGED_RESULT = 154
-        val EXTRA_SCREEN = "SCREEN"
-        val SCREEN_MAIN = "MAIN"
-        val SCREEN_APPEARANCE = "APPEREANCE"
 
-        fun createIntent(context: Context): Intent {
-            return Intent(context, SettingsActivity::class.java)
-        }
+    companion object {
+        const val THEME_CHANGED_EXTRA = "THEME_CHANGED"
+        const val THEME_CHANGED_RESULT = 154
+        const val EXTRA_SCREEN = "SCREEN"
+        const val SCREEN_MAIN = "MAIN"
+        const val SCREEN_APPEARANCE = "APPEREANCE"
+
+        fun createIntent(context: Context) = Intent(context, SettingsActivity::class.java)
     }
 
-    var shouldRestartMainscreen = false
-    override val isActivityTransfluent = true
+    @Inject lateinit var navigatorApi: NewNavigatorApi
 
-    @Inject
-    lateinit var navigatorApi: NewNavigatorApi
+    override val enableSwipeBackLayout: Boolean = true
+    var shouldRestartMainScreen = false
+    override val isActivityTransfluent = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +46,12 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
-    fun openFragment(fragment: PreferenceFragmentCompat, tag : String) {
+    fun openFragment(fragment: PreferenceFragmentCompat, tag: String) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.settings_fragment, fragment, tag)
-                // Add this transaction to the back stack
-                .addToBackStack(null)
-                .commit()
+            .replace(R.id.settings_fragment, fragment, tag)
+            // Add this transaction to the back stack
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -65,14 +63,13 @@ class SettingsActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1){
-            if (intent.hasExtra(THEME_CHANGED_EXTRA) || shouldRestartMainscreen) {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            if (intent.hasExtra(THEME_CHANGED_EXTRA) || shouldRestartMainScreen) {
                 setResult(THEME_CHANGED_RESULT)
                 navigatorApi.openMainActivity()
             }
             finish()
-        }
-        else {
+        } else {
             super.onBackPressed()
         }
     }

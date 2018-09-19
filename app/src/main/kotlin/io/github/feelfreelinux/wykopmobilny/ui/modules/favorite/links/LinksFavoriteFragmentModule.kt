@@ -9,5 +9,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 @Module
 class LinksFavoriteFragmentModule {
     @Provides
-    fun provideLinksFavoritePresenter(schedulers: Schedulers, linksApi: LinksApi, linksInteractor: LinksInteractor) = LinksFavoritePresenter(schedulers, linksApi, linksInteractor)
+    fun provideLinksFavoritePresenter(schedulers: Schedulers, linksApi: LinksApi, linksInteractor: LinksInteractor) =
+        LinksFavoritePresenter(schedulers, linksApi, linksInteractor)
 }

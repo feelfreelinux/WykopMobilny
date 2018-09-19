@@ -1,19 +1,20 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop
 
 import android.content.res.Resources
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import android.util.SparseArray
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.index.MyWykopEntryLinkFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.observedtags.MyWykopObservedTagsFragment
 
-class MyWykopPagerAdapter(val resources : Resources, fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+class MyWykopPagerAdapter(
+    val resources: Resources,
+    fragmentManager: androidx.fragment.app.FragmentManager
+) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+
     val registeredFragments = SparseArray<androidx.fragment.app.Fragment>()
 
-    override fun getItem(position: Int): androidx.fragment.app.Fragment = when(position) {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment = when (position) {
         0 -> MyWykopEntryLinkFragment.newInstance(MyWykopEntryLinkFragment.TYPE_INDEX)
         1 -> MyWykopEntryLinkFragment.newInstance(MyWykopEntryLinkFragment.TYPE_TAGS)
         2 -> MyWykopEntryLinkFragment.newInstance(MyWykopEntryLinkFragment.TYPE_USERS)
@@ -35,7 +36,7 @@ class MyWykopPagerAdapter(val resources : Resources, fragmentManager: androidx.f
 
     override fun getPageTitle(position: Int): CharSequence {
         super.getPageTitle(position)
-        return when(position) {
+        return when (position) {
             0 -> resources.getString(R.string.mywykop_all)
             1 -> resources.getString(R.string.tags)
             2 -> resources.getString(R.string.users)

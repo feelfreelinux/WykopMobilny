@@ -12,12 +12,15 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 @Module
 class EmbedViewModule {
     @Provides
-    fun providesEmbedViewPresenter(schedulers: Schedulers, embedApi: ExternalApi) = EmbedLinkPresenter(embedApi, schedulers)
+    fun providesEmbedViewPresenter(schedulers: Schedulers, embedApi: ExternalApi) =
+        EmbedLinkPresenter(schedulers, embedApi)
 
     @Provides
-    fun provideNavigator(activity : EmbedViewActivity) : NewNavigatorApi = NewNavigator(activity)
+    fun provideNavigator(activity: EmbedViewActivity): NewNavigatorApi =
+        NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity : EmbedViewActivity, navigator : NewNavigatorApi) : WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun provideLinkHandler(activity: EmbedViewActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigator)
 
 }
