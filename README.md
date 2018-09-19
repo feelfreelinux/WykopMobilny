@@ -21,6 +21,14 @@ _[Przeczytaj w języku Polskim](README.pl.md)_
 
 [Download the newest release with built-in update notifier](https://github.com/feelfreelinux/WykopMobilny/releases/latest)
 
+## Dev
+
+Application uses APIv2 which is currently in closed beta. APIv1 keys are not supported. In order to build this project, put `apiKey="APIKEY" apiSecret="APISECRET"` in `credentials.properties`
+
+## Changelogs
+
+Usually I report all progress along with changelogs [here](https://wykop.pl/tag/otwartywykopmobilny).
+
 ## Used libraries:
 
 - [RxJava2](https://github.com/ReactiveX/RxJava)
@@ -30,14 +38,6 @@ _[Przeczytaj w języku Polskim](README.pl.md)_
 - AppUpdater
 - LeakCanary
 - android-job
-
-## Dev
-
-Application uses APIv2 which is currently in closed beta. APIv1 keys are not supported. In order to build this project, put `apiKey="APIKEY" apiSecret="APISECRET"` in `credentials.properties`
-
-## Changelogs
-
-Usually I report all progress along with changelogs [here](https://wykop.pl/tag/otwartywykopmobilny).
 
 ### License
 
