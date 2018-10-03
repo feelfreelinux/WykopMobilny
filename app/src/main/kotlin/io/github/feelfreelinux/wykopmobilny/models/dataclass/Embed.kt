@@ -3,27 +3,31 @@ package io.github.feelfreelinux.wykopmobilny.models.dataclass
 import android.os.Parcel
 import android.os.Parcelable
 
-class Embed(val type: String,
-            val preview: String,
-            val url: String,
-            val plus18: Boolean,
-            val source: String?,
-            val isAnimated: Boolean,
-            val size: String,
-            var isResize: Boolean = false,
-            var isRevealed: Boolean = false) : Parcelable {
-    constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte())
+class Embed(
+    val type: String,
+    val preview: String,
+    val url: String,
+    val plus18: Boolean,
+    val source: String?,
+    val isAnimated: Boolean,
+    val size: String,
+    var isResize: Boolean = false,
+    var isRevealed: Boolean = false
+) : Parcelable {
 
-  override fun writeToParcel(parcel: Parcel, flags: Int) {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte()
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(type)
         parcel.writeString(preview)
         parcel.writeString(url)

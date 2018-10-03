@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
-class EntryLink (
-        var link: Link?,
-        var entry : Entry?
+class EntryLink(
+    var link: Link?,
+    var entry: Entry?
 ) {
     override fun equals(other: Any?): Boolean {
         return if (other !is EntryLink) false

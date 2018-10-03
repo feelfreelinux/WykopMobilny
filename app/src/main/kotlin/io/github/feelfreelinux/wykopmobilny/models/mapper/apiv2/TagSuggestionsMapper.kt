@@ -6,11 +6,10 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagSuggesti
 
 class TagSuggestionsMapper {
     companion object : Mapper<TagSuggestionResponse, TagSuggestion> {
-        override fun map(value: TagSuggestionResponse): TagSuggestion {
-            return TagSuggestion(
-                    value.tag,
-                    value.followers
+        override fun map(value: TagSuggestionResponse) =
+            TagSuggestion(
+                value.tag,
+                value.followers
             )
-        }
     }
 }

@@ -6,8 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AnswerRespo
 
 class AnswerMapper {
     companion object : Mapper<AnswerResponse, Answer> {
-        override fun map(value: AnswerResponse): Answer {
-            return Answer(value.id, value.answer, value.count, value.percentage)
-        }
+        override fun map(value: AnswerResponse) =
+            Answer(value.id, value.answer, value.count, value.percentage)
     }
 }
