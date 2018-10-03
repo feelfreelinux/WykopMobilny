@@ -43,19 +43,35 @@ import javax.inject.Singleton
 
 @Module
 class RepositoryModule {
-    @Provides
-    @Singleton
-    fun provideEntriesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : EntriesApi = EntriesRepository(retrofit, userTokenRefresher, owmContentFilter)
-
-    @Provides
-    fun provideNotificationsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : NotificationsApi = NotificationsRepository(retrofit, userTokenRefresher)
-
-    @Provides
-    fun provideMyWykopApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
     @Singleton
-    fun provideLinksApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : LinksApi = LinksRepository(retrofit, userTokenRefresher, owmContentFilter)
+    fun provideEntriesApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): EntriesApi = EntriesRepository(retrofit, userTokenRefresher, owmContentFilter)
+
+    @Provides
+    fun provideNotificationsApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher
+    ): NotificationsApi = NotificationsRepository(retrofit, userTokenRefresher)
+
+    @Provides
+    fun provideMyWykopApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, owmContentFilter)
+
+    @Provides
+    @Singleton
+    fun provideLinksApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): LinksApi = LinksRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
     fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter, blacklistPreferences: BlacklistPreferencesApi) : TagApi = TagRepository(
@@ -66,40 +82,61 @@ class RepositoryModule {
     )
 
     @Provides
-    fun provideUserApi(retrofit: Retrofit, credentialsPreferencesApi : CredentialsPreferencesApi) : LoginApi
-            = LoginRepository(retrofit, credentialsPreferencesApi)
+    fun provideUserApi(
+        retrofit: Retrofit,
+        credentialsPreferencesApi: CredentialsPreferencesApi
+    ): LoginApi = LoginRepository(retrofit, credentialsPreferencesApi)
 
     @Provides
-    fun providePMApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : PMApi = PMRepository(retrofit, userTokenRefresher)
+    fun providePMApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher
+    ): PMApi = PMRepository(retrofit, userTokenRefresher)
 
     @Provides
-    fun provideSuggestApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : SuggestApi = SuggestRepository(retrofit, userTokenRefresher)
+    fun provideSuggestApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher
+    ): SuggestApi = SuggestRepository(retrofit, userTokenRefresher)
 
     @Provides
-    fun provideSearchApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : SearchApi = SearchRepository(retrofit, userTokenRefresher, owmContentFilter)
+    fun provideSearchApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): SearchApi = SearchRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
-    fun provideHitsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : HitsApi = HitsRepository(retrofit, userTokenRefresher, owmContentFilter)
+    fun provideHitsApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): HitsApi = HitsRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
-    fun provideProfilesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, blacklistPreferences: BlacklistPreferencesApi, owmContentFilter: OWMContentFilter) : ProfileApi = ProfileRepository(retrofit, userTokenRefresher,  owmContentFilter, blacklistPreferences)
+    fun provideProfilesApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        blacklistPreferences: BlacklistPreferencesApi,
+        owmContentFilter: OWMContentFilter
+    ): ProfileApi = ProfileRepository(retrofit, userTokenRefresher, owmContentFilter, blacklistPreferences)
 
     @Provides
-    fun provideEmbedApi(retrofit: Retrofit) : ExternalApi = ExternalRepository(retrofit)
+    fun provideEmbedApi(retrofit: Retrofit): ExternalApi = ExternalRepository(retrofit)
 
     @Provides
     fun provideAddlinkApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : AddLinkApi = AddLinkRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
-    fun provideScraperApi() : ScraperApi = ScraperRepository(createScraperRetrofit())
+    fun provideScraperApi(): ScraperApi = ScraperRepository(createScraperRetrofit())
 
-    fun createScraperRetrofit() : Retrofit {
+    private fun createScraperRetrofit(): Retrofit {
         val client = OkHttpClient.Builder().addInterceptor(ScraperInterceptor()).build()
         return Retrofit.Builder()
-                .baseUrl("https://wykop.pl")
-                .client(client)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(JspoonConverterFactory.create())
-                .build()
+            .baseUrl("https://wykop.pl")
+            .client(client)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(JspoonConverterFactory.create())
+            .build()
     }
 }
