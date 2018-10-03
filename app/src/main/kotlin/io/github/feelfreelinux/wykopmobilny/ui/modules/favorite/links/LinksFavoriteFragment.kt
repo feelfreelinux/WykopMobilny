@@ -5,16 +5,15 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import javax.inject.Inject
 
 class LinksFavoriteFragment : BaseLinksFragment(), LinksFavoriteView {
-    @Inject lateinit var presenter : LinksFavoritePresenter
+
+    companion object {
+        fun newInstance() = LinksFavoriteFragment()
+    }
+
+    @Inject lateinit var presenter: LinksFavoritePresenter
 
     override var loadDataListener: (Boolean) -> Unit = {
         presenter.loadData(it)
-    }
-
-    companion object {
-        fun newInstance() : LinksFavoriteFragment {
-            return LinksFavoriteFragment()
-        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -26,7 +25,7 @@ class LinksFavoriteFragment : BaseLinksFragment(), LinksFavoriteView {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 }

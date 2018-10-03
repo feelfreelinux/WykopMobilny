@@ -6,8 +6,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class BlacklistFragmentProvider {
     @ContributesAndroidInjector(modules = [])
-    abstract fun bindTagsFragment() : BlacklistTagsFragment
+    abstract fun bindTagsFragment(): BlacklistTagsFragment
 
     @ContributesAndroidInjector(modules = [])
-    abstract fun bindUsersFragment() : BlacklistUsersFragment
+    abstract fun bindUsersFragment(): BlacklistUsersFragment
 }

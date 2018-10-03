@@ -5,6 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class ScraperInterceptor : Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         val cookies = CookieManager.getInstance().getCookie("https://wykop.pl").split(";")

@@ -14,22 +14,23 @@ import kotlinx.android.synthetic.main.activity_write_comment.*
 import javax.inject.Inject
 
 class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivityView {
+
+    companion object {
+        fun createIntent(context: Activity, receiver: String?, textBody: String? = null) =
+            Intent(context, AddEntryActivity::class.java).apply {
+                putExtra(EXTRA_BODY, textBody)
+                putExtra(EXTRA_RECEIVER, receiver)
+            }
+    }
+
     @Inject override lateinit var suggestionApi: SuggestApi
     @Inject override lateinit var presenter: AddEntryPresenter
 
     val navigator by lazy { NewNavigator(this) as NewNavigatorApi }
+
     override fun openEntryActivity(id: Int) {
         navigator.openEntryDetailsActivity(id, false)
         finish()
-    }
-
-    companion object {
-        fun createIntent(context : Activity, receiver: String?, textBody : String? = null) : Intent {
-            val intent = Intent(context, AddEntryActivity::class.java)
-            intent.putExtra(BaseInputActivity.EXTRA_BODY, textBody)
-            intent.putExtra(BaseInputActivity.EXTRA_RECEIVER, receiver)
-            return intent
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

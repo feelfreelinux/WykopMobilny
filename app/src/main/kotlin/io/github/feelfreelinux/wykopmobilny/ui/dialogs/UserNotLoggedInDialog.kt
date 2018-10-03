@@ -4,10 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import io.github.feelfreelinux.wykopmobilny.R
 
-fun UserNotLoggedInDialog(context : Context) : AlertDialog? {
-    val alertBuilder = context.createAlertBuilder()
-
-    alertBuilder.run {
+fun userNotLoggedInDialog(context: Context): AlertDialog? {
+    context.createAlertBuilder().run {
         setTitle(context.getString(R.string.error_occured))
         setMessage(context.getString(R.string.user_not_logged_in))
         setPositiveButton(android.R.string.ok, null)

@@ -26,16 +26,14 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
         const val USER_LOGGED_IN = 21
         const val CONNECT_URL: String = "https://a2.wykop.pl/login/connect/appkey/$APP_KEY"
 
-        fun createIntent(context: Context): Intent {
-            return Intent(context, LoginScreenActivity::class.java)
-        }
+        fun createIntent(context: Context) = Intent(context, LoginScreenActivity::class.java)
     }
-
-    private val progressDialog by lazy { ProgressDialog(this) }
 
     @Inject lateinit var navigatorApi: NewNavigatorApi
     @Inject lateinit var presenter: LoginScreenPresenter
-    @Inject lateinit var blacklistPreferences : BlacklistPreferences
+    @Inject lateinit var blacklistPreferences: BlacklistPreferences
+
+    private val progressDialog by lazy { ProgressDialog(this) }
 
     override fun importBlacklist(blacklist: Blacklist) {
         if (blacklist.tags?.blockedTags != null) {

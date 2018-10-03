@@ -2,39 +2,39 @@ package io.github.feelfreelinux.wykopmobilny.utils.usermanager
 
 import android.content.Context
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LoginResponse
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.UserNotLoggedInDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.userNotLoggedInDialog
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
 
-data class LoginCredentials(val login : String, val token : String)
+data class LoginCredentials(val login: String, val token: String)
 
-data class UserCredentials(val login : String, val avatarUrl : String, val backgroundUrl : String?, val userKey : String)
+data class UserCredentials(val login: String, val avatarUrl: String, val backgroundUrl: String?, val userKey: String)
 
 interface UserManagerApi {
-    fun loginUser(credentials : LoginCredentials)
+    fun loginUser(credentials: LoginCredentials)
     fun logoutUser()
-    fun saveCredentials(credentials : LoginResponse)
-    fun getUserCredentials() : UserCredentials?
-    fun isUserAuthorized() : Boolean
-    fun runIfLoggedIn(context : Context, callback : () -> Unit)
+    fun saveCredentials(credentials: LoginResponse)
+    fun getUserCredentials(): UserCredentials?
+    fun isUserAuthorized(): Boolean
+    fun runIfLoggedIn(context: Context, callback: () -> Unit)
 }
 
 class UserManager(private val credentialsPreferencesApi: CredentialsPreferencesApi) : UserManagerApi {
-    override fun loginUser(credentials : LoginCredentials) {
+    override fun loginUser(credentials: LoginCredentials) {
         credentialsPreferencesApi.apply {
-            login   = credentials.login
+            login = credentials.login
             userKey = credentials.token
         }
     }
 
     override fun logoutUser() {
         credentialsPreferencesApi.apply {
-            login     = ""
+            login = ""
             userToken = ""
-            userKey   = ""
+            userKey = ""
         }
     }
 
-    override fun saveCredentials(credentials : LoginResponse) {
+    override fun saveCredentials(credentials: LoginResponse) {
         credentialsPreferencesApi.apply {
             avatarUrl = credentials.profile.avatar
             backgroundUrl = credentials.profile.background
@@ -42,7 +42,7 @@ class UserManager(private val credentialsPreferencesApi: CredentialsPreferencesA
         }
     }
 
-    override fun isUserAuthorized() : Boolean {
+    override fun isUserAuthorized(): Boolean {
         credentialsPreferencesApi.run {
             return !login.isNullOrBlank() and !userKey.isNullOrBlank()
         }
@@ -56,9 +56,9 @@ class UserManager(private val credentialsPreferencesApi: CredentialsPreferencesA
         }
     }
 
-    override fun runIfLoggedIn(context : Context, callback : () -> Unit) {
+    override fun runIfLoggedIn(context: Context, callback: () -> Unit) {
         if (isUserAuthorized()) {
             callback.invoke()
-        } else UserNotLoggedInDialog(context)?.show()
+        } else userNotLoggedInDialog(context)?.show()
     }
 }

@@ -11,23 +11,24 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 
 interface ExternalRetrofitApi {
+
     @Headers("@: $REMOVE_USERKEY_HEADER")
     @GET("https://api.gfycat.com/v1/gfycats/{gfycatId}")
-    fun getGfycat(@Path("gfycatId") gfycatItem : String) : Single<Gfycat>
+    fun getGfycat(@Path("gfycatId") gfycatItem: String): Single<Gfycat>
 
     @Headers("@: $REMOVE_USERKEY_HEADER")
     @GET("https://api.streamable.com/videos/{streamableId}")
-    fun getStreamableFile(@Path("streamableId") streamableId : String) : Single<Streamable>
+    fun getStreamableFile(@Path("streamableId") streamableId: String): Single<Streamable>
 
     @Headers("@: $REMOVE_USERKEY_HEADER")
     @GET("https://coub.com/api/v2/coubs/{coubId}")
-    fun getCoub(@Path("coubId") coubId : String) : Single<Coub>
+    fun getCoub(@Path("coubId") coubId: String): Single<Coub>
 
     @Headers("@: $REMOVE_USERKEY_HEADER")
     @GET("https://api.github.com/repos/feelfreelinux/WykopMobilny/releases/latest")
-    fun checkUpdates() : Single<WykopMobilnyUpdate>
+    fun checkUpdates(): Single<WykopMobilnyUpdate>
 
     @Headers("@: $REMOVE_USERKEY_HEADER")
     @GET("https://api.github.com/repos/feelfreelinux/WykopMobilnyWeekly/releases/latest")
-    fun checkWeeklyUpdates() : Single<WykopMobilnyUpdate>
+    fun checkWeeklyUpdates(): Single<WykopMobilnyUpdate>
 }

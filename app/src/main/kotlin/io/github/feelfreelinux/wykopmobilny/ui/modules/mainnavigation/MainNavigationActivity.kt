@@ -5,17 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
+import android.os.Handler
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import com.evernote.android.job.util.JobUtil
+import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.enums.UpdateFrom
+import com.google.android.material.internal.NavigationMenuView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopMobilnyUpdate
+import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.FavoriteFragment
@@ -33,9 +40,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.BadgeDrawerDrawable
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
@@ -44,40 +52,22 @@ import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
-import android.net.Uri
-import android.os.Handler
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.UpdateFrom
-import com.google.android.material.internal.NavigationMenuView
-import io.github.feelfreelinux.wykopmobilny.BuildConfig
-import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ConfirmationDialog
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-
 
 interface MainNavigationInterface {
-    val activityToolbar : Toolbar
+    val activityToolbar: Toolbar
     fun openFragment(fragment: androidx.fragment.app.Fragment)
     fun showErrorDialog(e: Throwable)
-    val floatingButton : View
+    val floatingButton: View
     fun forceRefreshNotifications()
 }
 
-class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
-    override val activityToolbar: Toolbar get() = toolbar
-    var tapDoubleClickedMilis = 0L
-    val progressDialog by lazy { ProgressDialog(this) }
-
-    @Inject lateinit var blacklistPreferencesApi : BlacklistPreferencesApi
-    override val floatingButton: View
-        get() = fab
+class MainNavigationActivity : BaseActivity(), MainNavigationView,
+    com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
 
     companion object {
-        val LOGIN_REQUEST_CODE = 142
-        val TARGET_FRAGMENT_KEY = "TARGET_FRAGMENT"
-        val TARGET_NOTIFICATIONS = "TARGET_NOTIFICATIONS"
+        const val LOGIN_REQUEST_CODE = 142
+        const val TARGET_FRAGMENT_KEY = "TARGET_FRAGMENT"
+        const val TARGET_NOTIFICATIONS = "TARGET_NOTIFICATIONS"
 
         fun getIntent(context: Context, targetFragment: String? = null): Intent {
             val intent = Intent(context, MainNavigationActivity::class.java)
@@ -88,22 +78,70 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
         }
     }
 
+    @Inject lateinit var blacklistPreferencesApi: BlacklistPreferencesApi
+
+    override val activityToolbar: Toolbar get() = toolbar
+    var tapDoubleClickedMillis = 0L
+
+    private val navHeader by lazy { navigationView.getHeaderView(0) }
+    private val actionBarToggle by lazy {
+        ActionBarDrawerToggle(
+            this,
+            drawer_layout,
+            toolbar,
+            R.string.nav_drawer_open,
+            R.string.nav_drawer_closed
+        )
+    }
+    private val badgeDrawable by lazy { BadgeDrawerDrawable(supportActionBar!!.themedContext) }
+    private val progressDialog by lazy { ProgressDialog(this) }
+
+    override val floatingButton: View
+        get() = fab
+
+    @Inject lateinit var presenter: MainNavigationPresenter
+    @Inject lateinit var settingsApi: SettingsPreferencesApi
+    @Inject lateinit var navigator: NewNavigatorApi
+    @Inject lateinit var userManagerApi: UserManagerApi
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
-            R.id.login -> { navigator.openLoginScreen(LOGIN_REQUEST_CODE) }
-            R.id.messages -> { openFragment(ConversationsListFragment.newInstance()) }
-            R.id.nav_settings -> { navigator.openSettingsActivity() }
-            R.id.nav_mojwykop -> { openFragment(MyWykopFragment.newInstance()) }
-            R.id.nav_home -> { openFragment(PromotedFragment.newInstance()) }
-            R.id.search -> { openFragment(SearchFragment.newInstance()) }
-            R.id.favourite -> { openFragment(FavoriteFragment.newInstance()) }
-            R.id.your_profile -> { startActivity(ProfileActivity.createIntent(this, userManagerApi.getUserCredentials()!!.login)) }
-            R.id.nav_wykopalisko -> { openFragment(UpcomingFragment.newInstance()) }
-            R.id.hits -> { openFragment(HitsFragment.newInstance()) }
-            R.id.about -> { openAboutSheet() }
+            R.id.login -> {
+                navigator.openLoginScreen(LOGIN_REQUEST_CODE)
+            }
+            R.id.messages -> {
+                openFragment(ConversationsListFragment.newInstance())
+            }
+            R.id.nav_settings -> {
+                navigator.openSettingsActivity()
+            }
+            R.id.nav_mojwykop -> {
+                openFragment(MyWykopFragment.newInstance())
+            }
+            R.id.nav_home -> {
+                openFragment(PromotedFragment.newInstance())
+            }
+            R.id.search -> {
+                openFragment(SearchFragment.newInstance())
+            }
+            R.id.favourite -> {
+                openFragment(FavoriteFragment.newInstance())
+            }
+            R.id.your_profile -> {
+                startActivity(ProfileActivity.createIntent(this, userManagerApi.getUserCredentials()!!.login))
+            }
+            R.id.nav_wykopalisko -> {
+                openFragment(UpcomingFragment.newInstance())
+            }
+            R.id.hits -> {
+                openFragment(HitsFragment.newInstance())
+            }
+            R.id.about -> {
+                openAboutSheet()
+            }
             R.id.logout -> {
-                ConfirmationDialog(this) {
+                confirmationDialog(this) {
                     blacklistPreferencesApi.blockedTags = emptySet()
                     blacklistPreferencesApi.blockedUsers = emptySet()
                     userManagerApi.logoutUser()
@@ -118,24 +156,6 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
         return true
     }
 
-    @Inject lateinit var presenter : MainNavigationPresenter
-    @Inject lateinit var settingsApi : SettingsPreferencesApi
-    @Inject lateinit var navigator : NewNavigatorApi
-    @Inject lateinit var userManagerApi : UserManagerApi
-
-
-    private val navHeader by lazy { navigationView.getHeaderView(0) }
-    private val actionBarToggle by lazy {
-        ActionBarDrawerToggle(this,
-                drawer_layout,
-                toolbar,
-                R.string.nav_drawer_open,
-                R.string.nav_drawer_closed)
-    }
-
-    private val badgeDrawable by lazy {
-        BadgeDrawerDrawable(supportActionBar!!.themedContext)
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
@@ -158,14 +178,14 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
         AppUpdater(this)
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
-                .setTitleOnUpdateAvailable(R.string.update_available)
-                .setContentOnUpdateAvailable(R.string.update_app)
-                .setButtonDismiss(R.string.cancel)
-                .setButtonDoNotShowAgain(R.string.do_not_show_again)
-                .setButtonUpdate(R.string.update)
-                .start()
+            .setUpdateFrom(UpdateFrom.GITHUB)
+            .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
+            .setTitleOnUpdateAvailable(R.string.update_available)
+            .setContentOnUpdateAvailable(R.string.update_app)
+            .setButtonDismiss(R.string.cancel)
+            .setButtonDoNotShowAgain(R.string.do_not_show_again)
+            .setButtonUpdate(R.string.update)
+            .start()
         //presenter.checkUpdates()
         checkBlacklist()
 
@@ -211,7 +231,8 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
             presenter.subscribe(this)
             Handler().postDelayed({
                 presenter.startListeningForNotifications()
-            }, 333)        }
+            }, 333)
+        }
     }
 
     override fun onPause() {
@@ -229,7 +250,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
         navigationView.setNavigationItemSelectedListener(this)
     }
 
-    override fun showUsersMenu(value : Boolean) {
+    override fun showUsersMenu(value: Boolean) {
         navigationView.menu.apply {
             setGroupVisible(R.id.nav_user, value)
             findItem(R.id.nav_mojwykop).isVisible = value
@@ -251,7 +272,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
         }
     }
 
-    fun openMainFragment() {
+    private fun openMainFragment() {
         when (settingsApi.defaultScreen!!) {
             "mainpage" -> openFragment(PromotedFragment.newInstance())
             "mikroblog" -> openFragment(HotFragment.newInstance())
@@ -272,10 +293,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
         closeDrawer()
     }
 
-    fun closeDrawer() =
-            drawer_layout.closeDrawers()
+    private fun closeDrawer() = drawer_layout.closeDrawers()
 
-    fun deselectItems() {
+    private fun deselectItems() {
         val menu = navigationView.menu
         for (i in 0 until menu.size()) {
             menu.getItem(i).isChecked = false
@@ -300,11 +320,11 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
         else {
-            if (tapDoubleClickedMilis + 2000L > System.currentTimeMillis()) {
+            if (tapDoubleClickedMillis + 2000L > System.currentTimeMillis()) {
                 super.onBackPressed()
                 return
             } else Toast.makeText(this, R.string.doubleback_to_exit, Toast.LENGTH_SHORT).show()
-            tapDoubleClickedMilis = System.currentTimeMillis()
+            tapDoubleClickedMillis = System.currentTimeMillis()
         }
     }
 
@@ -342,7 +362,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
         }
     }
 
-    fun openAboutSheet() {
+    private fun openAboutSheet() {
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
         val bottomSheetView = layoutInflater.inflate(R.layout.app_about_bottomsheet, null)
         dialog.setContentView(bottomSheetView)
@@ -390,18 +410,18 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
         printout(pInfo.versionName)
         if (versionCompare(owmVersion, pInfo.versionName) == 1) {
             createAlertBuilder()
-                    .setTitle(R.string.update_available)
-                    .setMessage("Aktualizacja $owmVersion jest dostępna.")
-                    .setPositiveButton("Pobierz nową wersje", { _, _ ->
-                        openBrowser(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
-                    })
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .show()
+                .setTitle(R.string.update_available)
+                .setMessage("Aktualizacja $owmVersion jest dostępna.")
+                .setPositiveButton("Pobierz nową wersje") { _, _ ->
+                    openBrowser(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
         }
 
     }
 
-    fun versionCompare(str1: String, str2: String): Int {
+    private fun versionCompare(str1: String, str2: String): Int {
         val vals1 = str1.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val vals2 = str2.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         var i = 0
@@ -430,7 +450,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView, com.google.an
         progressDialog.hide()
     }
 
-    fun checkBlacklist() {
+    private fun checkBlacklist() {
         if (userManagerApi.isUserAuthorized() && !blacklistPreferencesApi.blockedImported && blacklistPreferencesApi.blockedUsers.isEmpty() && blacklistPreferencesApi.blockedTags.isEmpty()) {
             val builder = createAlertBuilder()
             builder.setTitle(getString(R.string.blacklist_import_title))

@@ -520,14 +520,6 @@
         <item name="textSizeHuge">@dimen/text_huge_size_huge</item>m>
     </style>
 
-    <!-- SwipeBackLayout -->
-    <style name="SwipeBackLayout">
-        <item name="edge_size">50dip</item>
-        <item name="shadow_left">@drawable/shadow_left</item>
-        <item name="shadow_right">@drawable/shadow_right</item>
-        <item name="shadow_bottom">@drawable/shadow_bottom</item>
-    </style>
-
     <style name="TransparentActivityTheme">
 
         <item name="android:windowIsTranslucent">true</item>

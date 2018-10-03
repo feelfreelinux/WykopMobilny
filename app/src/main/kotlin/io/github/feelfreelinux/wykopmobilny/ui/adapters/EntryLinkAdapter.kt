@@ -3,16 +3,22 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.base.adapter.AdvancedProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.*
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
+import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.SimpleLinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi : SettingsPreferencesApi) : AdvancedProgressAdapter<EntryLink>() {
+class EntryLinkAdapter @Inject constructor(
+    val userManagerApi: UserManagerApi,
+    val settingsPreferencesApi: SettingsPreferencesApi
+) : AdvancedProgressAdapter<EntryLink>() {
+
     companion object {
-        val ENTRY_VIEWTYPE = 1
-        val LINK_VIEWTYPE = 2
-        val SIMPLE_LINK_VIEWTYPE = 3
+        const val ENTRY_VIEWTYPE = 1
+        const val LINK_VIEWTYPE = 2
+        const val SIMPLE_LINK_VIEWTYPE = 3
     }
 
     override fun getItemViewType(position: Int): Int = when {
@@ -22,7 +28,7 @@ class EntryLinkAdapter @Inject constructor(val userManagerApi: UserManagerApi, v
     }
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder =
-            BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
+        BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
 
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!

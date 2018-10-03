@@ -1,22 +1,17 @@
 package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.app.Activity
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Uri
-import androidx.annotation.ColorInt
-import androidx.browser.customtabs.CustomTabsIntent
-import android.util.TypedValue
-import android.view.inputmethod.InputMethodManager
-import io.github.feelfreelinux.wykopmobilny.R
-import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
+import android.net.Uri
+import android.util.TypedValue
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
-import io.github.feelfreelinux.wykopmobilny.utils.textview.removeSpoilerHtml
+import androidx.browser.customtabs.CustomTabsIntent
+import io.github.feelfreelinux.wykopmobilny.R
 
-fun Context.openBrowser(url : String) {
+fun Context.openBrowser(url: String) {
     // Start in-app browser, handled by Chrome Customs Tabs
     val builder = CustomTabsIntent.Builder()
     val customTabsIntent = builder.build()
@@ -34,21 +29,9 @@ fun Activity.hideKeyboard() {
     }
 }
 
-fun Context.isConnectedToInternet(): Boolean {
-    val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-    val activeNetwork = cm.activeNetworkInfo
-
-    return activeNetwork != null && activeNetwork.isConnected
-}
-
-fun Context.copyText(text : String, label : String = "wykopmobilny") {
+fun Context.copyText(text: String, label: String = "wykopmobilny") {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clip = ClipData.newPlainText(label, text)
     clipboard.primaryClip = clip
-    showToast(getString(R.string.text_copied))
-}
-
-fun Context.showToast(text : String, long : Boolean = false) {
-    Toast.makeText(this, text, if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }

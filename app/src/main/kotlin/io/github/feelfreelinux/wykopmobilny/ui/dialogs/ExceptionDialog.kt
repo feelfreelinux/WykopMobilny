@@ -6,20 +6,20 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.WykopExceptionParser
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 
-fun Context.showExceptionDialog(e : Throwable) {
+fun Context.showExceptionDialog(e: Throwable) {
     if (this is BaseActivity && isRunning) {
-        ExceptionDialog(this, e)?.show()
+        exceptionDialog(this, e)?.show()
     }
 }
 
-fun ExceptionDialog(context : Context, e: Throwable) : AlertDialog? {
-    val message = when(e) {
-        is WykopExceptionParser.WykopApiException -> { "${e.message} (${e.code})" }
+private fun exceptionDialog(context: Context, e: Throwable): AlertDialog? {
+    val message = when (e) {
+        is WykopExceptionParser.WykopApiException -> {
+            "${e.message} (${e.code})"
+        }
         else -> if (e.message.isNullOrEmpty()) e.toString() else e.message
     }
-    val alertBuilder = context.createAlertBuilder()
-
-    alertBuilder.run {
+    context.createAlertBuilder().run {
         setTitle(context.getString(R.string.error_occured))
         setMessage(message)
         setPositiveButton(android.R.string.ok, null)

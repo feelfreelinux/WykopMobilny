@@ -1,17 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginTop
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.link.linkitem.BaseLinkItemWidget
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences
@@ -20,16 +16,17 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.link_layout.*
 
-class LinkViewHolder(override val containerView: View,
-                     val settingsApi: SettingsPreferencesApi,
-                     val navigatorApi: NewNavigatorApi,
-                     val userManagerApi: UserManagerApi,
-                     val linkActionListener: LinkActionListener) : RecyclableViewHolder(containerView), LayoutContainer {
-    var type : Int = TYPE_IMAGE
-    lateinit var previewImageView : ImageView
+class LinkViewHolder(
+    override val containerView: View,
+    val settingsApi: SettingsPreferencesApi,
+    val navigatorApi: NewNavigatorApi,
+    val userManagerApi: UserManagerApi,
+    private val linkActionListener: LinkActionListener
+) : RecyclableViewHolder(containerView), LayoutContainer {
 
     companion object {
-        val ALPHA_VISITED = 0.6f
+        const val ALPHA_VISITED = 0.6f
+        const val ALPHA_NEW = 1f
         const val TYPE_IMAGE = 14
         const val TYPE_NOIMAGE = 15
         const val TYPE_BLOCKED = 16
@@ -37,8 +34,21 @@ class LinkViewHolder(override val containerView: View,
         /**
          * Inflates correct view (with embed, survey or both) depending on viewType
          */
-        fun inflateView(parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkActionListener: LinkActionListener): LinkViewHolder {
-            val view = LinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false), settingsPreferencesApi, navigatorApi, userManagerApi, linkActionListener)
+        fun inflateView(
+            parent: ViewGroup,
+            viewType: Int,
+            userManagerApi: UserManagerApi,
+            settingsPreferencesApi: SettingsPreferencesApi,
+            navigatorApi: NewNavigatorApi,
+            linkActionListener: LinkActionListener
+        ): LinkViewHolder {
+            val view = LinkViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false),
+                settingsPreferencesApi,
+                navigatorApi,
+                userManagerApi,
+                linkActionListener
+            )
             if (viewType == TYPE_IMAGE) view.inflateCorrectImageView()
             view.type = viewType
             return view
@@ -54,6 +64,10 @@ class LinkViewHolder(override val containerView: View,
             }
         }
     }
+
+    var type: Int = TYPE_IMAGE
+    lateinit var previewImageView: ImageView
+    private val linksPreferences by lazy { LinksPreferences(containerView.context) }
 
     fun inflateCorrectImageView() {
         previewImageView = when (settingsApi.linkImagePosition) {
@@ -71,14 +85,16 @@ class LinkViewHolder(override val containerView: View,
         }
     }
 
-
     override fun cleanRecycled() {
 
     }
 
-    private val linksPreferences by lazy { LinksPreferences(containerView.context) }
+    fun bindView(link: Link) {
+        setupBody(link)
+        setupButtons(link)
+    }
 
-    fun openLinkDetail(link: Link) {
+    private fun openLinkDetail(link: Link) {
         navigatorApi.openLinkDetailsActivity(link)
         if (!link.gotSelected) {
             setWidgetAlpha(ALPHA_VISITED)
@@ -87,16 +103,11 @@ class LinkViewHolder(override val containerView: View,
         }
     }
 
-    fun bindView(link: Link) {
-        setupBody(link)
-        setupButtons(link)
-    }
-
-    fun setupBody(link : Link) {
+    private fun setupBody(link: Link) {
         if (link.gotSelected) {
-            setWidgetAlpha(BaseLinkItemWidget.ALPHA_VISITED)
+            setWidgetAlpha(ALPHA_VISITED)
         } else {
-            setWidgetAlpha(BaseLinkItemWidget.ALPHA_NEW)
+            setWidgetAlpha(ALPHA_NEW)
         }
 
         if (settingsApi.linkImagePosition == "left" || settingsApi.linkImagePosition == "right") {
@@ -118,7 +129,7 @@ class LinkViewHolder(override val containerView: View,
         description.text = link.description
     }
 
-    fun setupButtons(link : Link) {
+    private fun setupButtons(link: Link) {
         diggCountTextView.voteCount = link.voteCount
         diggCountTextView.setup(userManagerApi)
         diggCountTextView.setVoteState(link.userVote)
@@ -142,7 +153,7 @@ class LinkViewHolder(override val containerView: View,
         }
     }
 
-    fun showBurried(link : Link) {
+    private fun showBurried(link: Link) {
         link.userVote = "bury"
         diggCountTextView.isButtonSelected = true
         diggCountTextView.setVoteState("bury")
@@ -153,7 +164,7 @@ class LinkViewHolder(override val containerView: View,
         diggCountTextView.isEnabled = true
     }
 
-    fun showDigged(link : Link) {
+    private fun showDigged(link: Link) {
         link.userVote = "dig"
         diggCountTextView.isButtonSelected = true
         diggCountTextView.setVoteState("dig")
@@ -164,7 +175,7 @@ class LinkViewHolder(override val containerView: View,
         diggCountTextView.isEnabled = true
     }
 
-    fun showUnvoted(link : Link) {
+    private fun showUnvoted(link: Link) {
         diggCountTextView.isButtonSelected = false
         diggCountTextView.setVoteState(null)
         diggCountTextView.voteListener = {
@@ -175,7 +186,7 @@ class LinkViewHolder(override val containerView: View,
         diggCountTextView.isEnabled = true
     }
 
-    fun setWidgetAlpha(alpha: Float) {
+    private fun setWidgetAlpha(alpha: Float) {
         if (type == TYPE_IMAGE) previewImageView.alpha = alpha
         titleTextView.alpha = alpha
         description.alpha = alpha

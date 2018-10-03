@@ -6,17 +6,16 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.confirm
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.confirmdetails.AddLinkDetailsFragmentModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.duplicateslist.AddLinkDuplicatesListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.urlinput.AddLinkUrlInputModule
-import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.urlinput.AddLinkUrlInputPresenter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.urlinput.AddlinkUrlInputFragment
 
 @Module
 abstract class AddlinkFragmentProvider {
     @ContributesAndroidInjector(modules = [AddLinkUrlInputModule::class])
-    abstract fun bindAddLinkUrlInputFragment() : AddlinkUrlInputFragment
+    abstract fun bindAddLinkUrlInputFragment(): AddlinkUrlInputFragment
 
     @ContributesAndroidInjector(modules = [])
-    abstract fun bindAddLinkDuplicatesFragment() : AddLinkDuplicatesListFragment
+    abstract fun bindAddLinkDuplicatesFragment(): AddLinkDuplicatesListFragment
 
     @ContributesAndroidInjector(modules = [AddLinkDetailsFragmentModule::class])
-    abstract fun bindAddLinkDetailsFragment() : AddLinkDetailsFragment
+    abstract fun bindAddLinkDetailsFragment(): AddLinkDetailsFragment
 }

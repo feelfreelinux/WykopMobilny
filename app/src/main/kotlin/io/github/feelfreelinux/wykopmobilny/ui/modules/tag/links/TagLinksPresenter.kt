@@ -8,26 +8,31 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListene
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 import io.reactivex.Single
 
-class TagLinksPresenter(val schedulers: Schedulers, val tagApi: TagApi, val linksInteractor: LinksInteractor) : BasePresenter<TagLinksView>(), LinkActionListener {
+class TagLinksPresenter(
+    val schedulers: Schedulers,
+    val tagApi: TagApi,
+    val linksInteractor: LinksInteractor
+) : BasePresenter<TagLinksView>(), LinkActionListener {
+
     var page = 1
     var tag = ""
 
     fun loadData(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
         compositeObservable.add(
-                tagApi.getTagLinks(tag, page)
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe(
-                                {
-                                    view?.setParentMeta(it.meta)
-                                    if (it.entries.isNotEmpty()) {
-                                        page++
-                                        view?.addItems(it.entries, shouldRefresh)
-                                    } else view?.disableLoading()
-                                },
-                                { view?.showErrorDialog(it) }
-                        )
+            tagApi.getTagLinks(tag, page)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe(
+                    {
+                        view?.setParentMeta(it.meta)
+                        if (it.entries.isNotEmpty()) {
+                            page++
+                            view?.addItems(it.entries, shouldRefresh)
+                        } else view?.disableLoading()
+                    },
+                    { view?.showErrorDialog(it) }
+                )
         )
     }
 
@@ -41,14 +46,14 @@ class TagLinksPresenter(val schedulers: Schedulers, val tagApi: TagApi, val link
 
     fun Single<Link>.processLinkSingle(link: Link) {
         compositeObservable.add(
-                this
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({ view?.updateLink(it) },
-                                {
-                                    view?.showErrorDialog(it)
-                                    view?.updateLink(link)
-                                })
+            this
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe({ view?.updateLink(it) },
+                    {
+                        view?.showErrorDialog(it)
+                        view?.updateLink(link)
+                    })
         )
     }
 }

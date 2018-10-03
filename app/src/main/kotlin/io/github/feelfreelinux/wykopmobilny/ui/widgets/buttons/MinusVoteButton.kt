@@ -1,18 +1,15 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
+import androidx.core.content.ContextCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 
-class MinusVoteButton : VoteButton {
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs, R.attr.MirkoButtonStyle)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+class MinusVoteButton @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.MirkoButtonStyle
+) : VoteButton(context, attrs, defStyleAttr) {
 
     init {
         val typedValue = TypedValue()
@@ -25,8 +22,11 @@ class MinusVoteButton : VoteButton {
         if (isSelected) {
             setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_buttontoolbar_minus_activ, 0, 0, 0)
         } else {
-            val typedArray = context.obtainStyledAttributes(arrayOf(
-                    R.attr.minusDrawable).toIntArray())
+            val typedArray = context.obtainStyledAttributes(
+                arrayOf(
+                    R.attr.minusDrawable
+                ).toIntArray()
+            )
             setCompoundDrawablesWithIntrinsicBounds(typedArray.getDrawable(0), null, null, null)
             typedArray.recycle()
         }

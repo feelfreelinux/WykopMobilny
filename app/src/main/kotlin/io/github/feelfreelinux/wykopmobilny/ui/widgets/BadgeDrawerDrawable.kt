@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
@@ -10,8 +10,15 @@ import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 
 class BadgeDrawerDrawable(context: Context) : DrawerArrowDrawable(context) {
 
+    companion object {
+        // Fraction of the drawable's intrinsic size we want the badge to be.
+        private const val SIZE_FACTOR = .35f
+        private const val HALF_SIZE_FACTOR = SIZE_FACTOR / 2
+    }
+
     private val backgroundPaint: Paint = Paint()
     private val textPaint: Paint
+
     var text: String? = null
         set(text) {
             if (this.text != text) {
@@ -46,7 +53,6 @@ class BadgeDrawerDrawable(context: Context) : DrawerArrowDrawable(context) {
         }
 
     init {
-
         backgroundPaint.color = Color.RED
         backgroundPaint.isAntiAlias = true
 
@@ -61,13 +67,7 @@ class BadgeDrawerDrawable(context: Context) : DrawerArrowDrawable(context) {
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
-        if (!isEnabled) {
-            return
-        }
-
-        if (this.text.isNullOrEmpty()) {
-            return
-        }
+        if (!isEnabled || this.text.isNullOrEmpty()) return
 
         val bounds = bounds
         val x = (1 - HALF_SIZE_FACTOR) * bounds.width()
@@ -77,11 +77,5 @@ class BadgeDrawerDrawable(context: Context) : DrawerArrowDrawable(context) {
         val textBounds = Rect()
         textPaint.getTextBounds(this.text, 0, this.text!!.length, textBounds)
         canvas.drawText(this.text!!, x, y + textBounds.height() / 2, textPaint)
-    }
-
-    companion object {
-        // Fraction of the drawable's intrinsic size we want the badge to be.
-        private val SIZE_FACTOR = .35f
-        private val HALF_SIZE_FACTOR = SIZE_FACTOR / 2
     }
 }

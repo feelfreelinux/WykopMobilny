@@ -10,5 +10,5 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 class TagLinksFragmentModule {
     @Provides
     fun provideTagLinksPresenter(schedulers: Schedulers, tagApi: TagApi, linksInteractor: LinksInteractor) =
-            TagLinksPresenter(schedulers, tagApi, linksInteractor)
+        TagLinksPresenter(schedulers, tagApi, linksInteractor)
 }

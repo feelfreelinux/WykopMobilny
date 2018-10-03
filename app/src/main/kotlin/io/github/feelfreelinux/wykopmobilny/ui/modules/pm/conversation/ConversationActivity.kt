@@ -6,11 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
-import io.github.feelfreelinux.wykopmobilny.api.entries.TypedInputStream
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
@@ -18,38 +16,43 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.FullConversation
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.PMMessageAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.exitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
-import io.github.feelfreelinux.wykopmobilny.utils.*
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.prepareNoDivider
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_conversation.*
 import kotlinx.android.synthetic.main.activity_conversation.view.*
 import javax.inject.Inject
 
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
-    @Inject lateinit var conversationAdapter : PMMessageAdapter
-    override val enableSwipeBackLayout = true
-    override val isActivityTransfluent = true
-    val user by lazy { intent.getStringExtra(EXTRA_USER) }
-    var receiver : Author? = null
-    @Inject lateinit var presenter: ConversationPresenter
-    @Inject lateinit var userManagerApi : UserManagerApi
-    @Inject lateinit var suggestionApi : SuggestApi
-    lateinit var contentUri : Uri
-    lateinit var conversationDataFragment: DataFragment<FullConversation>
 
     companion object {
-        val EXTRA_USER = "USER"
-        val DATA_FRAGMENT_TAG = "CONVERSATION_TAG"
+        const val EXTRA_USER = "USER"
+        const val DATA_FRAGMENT_TAG = "CONVERSATION_TAG"
 
-        fun createIntent(context: Context, user: String): Intent {
-            val intent = Intent(context, ConversationActivity::class.java)
-            intent.putExtra(ConversationActivity.EXTRA_USER, user)
-            return intent
-        }
+        fun createIntent(context: Context, user: String) =
+            Intent(context, ConversationActivity::class.java).apply {
+                putExtra(ConversationActivity.EXTRA_USER, user)
+            }
     }
+
+    @Inject lateinit var conversationAdapter: PMMessageAdapter
+    @Inject lateinit var presenter: ConversationPresenter
+    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject lateinit var suggestionApi: SuggestApi
+
+    override val enableSwipeBackLayout = true
+    override val isActivityTransfluent = true
+
+    val user by lazy { intent.getStringExtra(EXTRA_USER) }
+    var receiver: Author? = null
+
+    lateinit var contentUri: Uri
+    lateinit var conversationDataFragment: DataFragment<FullConversation>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,25 +135,27 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent,
-                getString(R.string.insert_photo_galery)), BaseInputActivity.USER_ACTION_INSERT_PHOTO)
+        startActivityForResult(
+            Intent.createChooser(
+                intent,
+                getString(R.string.insert_photo_galery)
+            ), BaseInputActivity.USER_ACTION_INSERT_PHOTO
+        )
     }
 
     override fun onBackPressed() {
         if (inputToolbar.hasUserEditedContent()) {
-            ExitConfirmationDialog(this, {
-                finish()
-            })?.show()
-        } else finish()
+            exitConfirmationDialog(this) { finish() }?.show()
+        } else {
+            finish()
+        }
     }
 
-    override fun sendPhoto(photo: String?, body: String, containsAdultContent : Boolean) {
+    override fun sendPhoto(photo: String?, body: String, containsAdultContent: Boolean) =
         presenter.sendMessage(body, photo, containsAdultContent)
-    }
 
-    override fun sendPhoto(photo: WykopImageFile, body: String, containsAdultContent: Boolean) {
+    override fun sendPhoto(photo: WykopImageFile, body: String, containsAdultContent: Boolean) =
         presenter.sendMessage(body, photo, containsAdultContent)
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
@@ -170,15 +175,11 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         inputToolbar.isVisible = false
     }
 
-    override fun hideInputbarProgress() {
-        inputToolbar.showProgress(false)
-    }
+    override fun hideInputbarProgress() = inputToolbar.showProgress(false)
 
-    override fun resetInputbarState() {
-        inputToolbar.resetState()
-    }
+    override fun resetInputbarState() = inputToolbar.resetState()
 
-    override fun openCamera(uri : Uri) {
+    override fun openCamera(uri: Uri) {
         contentUri = uri
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)

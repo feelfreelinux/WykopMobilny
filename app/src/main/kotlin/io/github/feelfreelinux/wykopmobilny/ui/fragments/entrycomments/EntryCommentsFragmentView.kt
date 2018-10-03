@@ -6,9 +6,9 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 
 
 interface EntryCommentsFragmentView : BaseView {
-    fun updateComment(comment : EntryComment)
+    fun updateComment(comment: EntryComment)
     fun disableLoading()
-    fun showVoters(voters : List<Voter>)
+    fun showVoters(voters: List<Voter>)
     fun openVotersMenu()
-    fun addItems(items : List<EntryComment>, shouldRefresh : Boolean = false)
+    fun addItems(items: List<EntryComment>, shouldRefresh: Boolean = false)
 }

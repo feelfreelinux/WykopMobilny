@@ -2,7 +2,12 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.links.hits
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
@@ -11,21 +16,19 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.YearPickerDialog
 import kotlinx.android.synthetic.main.feed_fragment.*
 import javax.inject.Inject
 
-
 class HitsFragment : BaseLinksFragment(), HitsView {
-    @Inject lateinit var presenter : HitsPresenter
+
+    companion object {
+        const val DATA_FRAGMENT_TAG = "HITS_FRAGMENT_TAG"
+        const val PICKER_REQUEST_CODE = 126
+
+        fun newInstance() = HitsFragment()
+    }
+
+    @Inject lateinit var presenter: HitsPresenter
 
     override var loadDataListener: (Boolean) -> Unit = {
         presenter.loadData()
-    }
-
-    companion object {
-        val DATA_FRAGMENT_TAG = "HITS_FRAGMENT_TAG"
-        val PICKER_REQUEST_CODE = 126
-
-        fun newInstance() : HitsFragment {
-            return HitsFragment()
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -101,7 +104,7 @@ class HitsFragment : BaseLinksFragment(), HitsView {
     }
 
     fun setTitle() {
-        (activity as BaseActivity).supportActionBar?.title = when(presenter.currentScreen) {
+        (activity as BaseActivity).supportActionBar?.title = when (presenter.currentScreen) {
             HitsPresenter.HITS_POPULAR -> getString(R.string.hits_popular)
             HitsPresenter.HITS_MONTH -> getString(R.string.hits_month_toolbar, presenter.monthSelection, presenter.yearSelection)
             HitsPresenter.HITS_YEAR -> getString(R.string.hits_year_toolbar, presenter.yearSelection)

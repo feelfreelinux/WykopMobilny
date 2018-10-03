@@ -1,4 +1,3 @@
-
 package io.github.feelfreelinux.wykopmobilny.utils.textview
 
 import android.os.Build
@@ -11,22 +10,22 @@ fun String.toSpannable(): Spannable {
     @Suppress("DEPRECATION")
     (return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
         Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT, null, CodeTagHandler()) as Spannable
-     else
+    else
         Html.fromHtml(this, null, CodeTagHandler()) as Spannable
-    )
+            )
 }
 
 @Suppress("DEPRECATION")
-fun String.removeHtml() : String {
+fun String.removeHtml(): String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY).toString()
     } else Html.fromHtml(this).toString()
 }
 
-fun String.removeSpoilerHtml() : String {
+fun String.removeSpoilerHtml(): String {
     val regexBegin = "<a href=\"spoiler:"
     val m = Pattern.compile("($regexBegin).*?\">\\[pokaż spoiler]</a>")
-            .matcher(this)
+        .matcher(this)
     val matches = ArrayList<String>()
     var fullstring = this
     while (m.find()) {
@@ -35,8 +34,9 @@ fun String.removeSpoilerHtml() : String {
 
     matches.forEach {
         val text = "! " + URLDecoder.decode(
-                it.replace(regexBegin, "").replace("\">[pokaż spoiler]</a>", ""),
-                "UTF-8")
+            it.replace(regexBegin, "").replace("\">[pokaż spoiler]</a>", ""),
+            "UTF-8"
+        )
         fullstring = fullstring.replaceFirst(it, text)
     }
 

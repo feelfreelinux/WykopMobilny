@@ -9,5 +9,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommen
 @Module
 class ProfileLinksFragmentModule {
     @Provides
-    fun providePresenter(schedulers: Schedulers, profileApi: ProfileApi, linksInteractor : LinkCommentInteractor) = ProfileLinksFragmentPresenter(schedulers, profileApi, linksInteractor)
+    fun providePresenter(
+        schedulers: Schedulers,
+        profileApi: ProfileApi,
+        linksInteractor: LinkCommentInteractor
+    ) = ProfileLinksFragmentPresenter(schedulers, profileApi, linksInteractor)
 }

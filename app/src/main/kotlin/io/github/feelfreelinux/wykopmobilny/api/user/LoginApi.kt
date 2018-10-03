@@ -4,5 +4,5 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LoginRespon
 import io.reactivex.Single
 
 interface LoginApi {
-    fun getUserSessionToken() : Single<LoginResponse>
+    fun getUserSessionToken(): Single<LoginResponse>
 }

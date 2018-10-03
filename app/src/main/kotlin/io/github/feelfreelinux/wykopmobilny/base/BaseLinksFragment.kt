@@ -1,16 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinksAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
@@ -20,28 +16,23 @@ import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
 open class BaseLinksFragment : BaseFragment(), LinksFragmentView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+
+    @Inject lateinit var linksApi: LinksApi
+    @Inject lateinit var linksAdapter: LinksAdapter
+
     var showSearchEmptyView: Boolean
         get() = searchEmptyView.isVisible
         set(value) {
             searchEmptyView.isVisible = value
         }
 
-    open var loadDataListener : (Boolean) -> Unit = {}
+    open var loadDataListener: (Boolean) -> Unit = {}
 
-    @Inject lateinit var linksApi: LinksApi
-    val subjectDisposable by lazy { CompositeDisposable() }
-
-    @Inject
-    lateinit var linksAdapter : LinksAdapter
-
-    override fun onRefresh() {
-        loadDataListener(true)
-    }
+    private val subjectDisposable by lazy { CompositeDisposable() }
 
     // Inflate view
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.entries_fragment, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+        inflater.inflate(R.layout.entries_fragment, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -58,22 +49,22 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView, androidx.swipe
 
         val schedulers = WykopSchedulers()
         subjectDisposable.addAll(
-                linksApi.digSubject
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({ updateLinkVoteState(it.linkId, it.voteResponse.buries, it.voteResponse.diggs, "dig") }),
-                linksApi.burySubject
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({ updateLinkVoteState(it.linkId, it.voteResponse.buries, it.voteResponse.diggs, "bury") }),
-                linksApi.voteRemoveSubject
-                        .subscribeOn(schedulers.backgroundThread())
-                        .observeOn(schedulers.mainThread())
-                        .subscribe({ updateLinkVoteState(it.linkId, it.voteResponse.buries, it.voteResponse.diggs, null) })
+            linksApi.digSubject
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe { updateLinkVoteState(it.linkId, it.voteResponse.buries, it.voteResponse.diggs, "dig") },
+            linksApi.burySubject
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe { updateLinkVoteState(it.linkId, it.voteResponse.buries, it.voteResponse.diggs, "bury") },
+            linksApi.voteRemoveSubject
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe { updateLinkVoteState(it.linkId, it.voteResponse.buries, it.voteResponse.diggs, null) }
         )
     }
 
-    private fun updateLinkVoteState(linkId : Int, buryCount : Int, voteCount : Int, userVote : String?) {
+    private fun updateLinkVoteState(linkId: Int, buryCount: Int, voteCount: Int, userVote: String?) {
         linksAdapter.data.firstOrNull { it.id == linkId }?.apply {
             this.buryCount = buryCount
             this.voteCount = voteCount
@@ -85,16 +76,14 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView, androidx.swipe
     /**
      * Removes progressbar from adapter
      */
-    override fun disableLoading() {
-        linksAdapter.disableLoading()
-    }
+    override fun disableLoading() = linksAdapter.disableLoading()
 
     /**
      * Use this function to add items to EntriesFragment
      * @param items List of entries to add
      * @param shouldRefresh If true adapter will refresh its data with provided items. False by default
      */
-    override fun addItems(items : List<Link>, shouldRefresh : Boolean) {
+    override fun addItems(items: List<Link>, shouldRefresh: Boolean) {
         linksAdapter.addData(items, shouldRefresh)
         swipeRefresh?.isRefreshing = false
         loadingView?.isVisible = false
@@ -105,12 +94,12 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView, androidx.swipe
         }
     }
 
-    override fun updateLink(link: Link) {
-        linksAdapter.updateLink(link)
-    }
+    override fun updateLink(link: Link) = linksAdapter.updateLink(link)
+
+    override fun onRefresh() = loadDataListener(true)
 
     override fun onDestroy() {
-        super.onDestroy()
         subjectDisposable.dispose()
+        super.onDestroy()
     }
 }

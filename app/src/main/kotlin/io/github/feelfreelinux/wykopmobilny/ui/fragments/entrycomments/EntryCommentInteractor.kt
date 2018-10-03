@@ -5,31 +5,29 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.reactivex.Single
 import javax.inject.Inject
 
-class EntryCommentInteractor @Inject constructor(val entriesApi : EntriesApi) {
-    fun voteComment(comment: EntryComment): Single<EntryComment> {
-        return entriesApi.voteComment(comment.id)
-                .map {
-                    comment.voteCount = it.voteCount
-                    comment.isVoted = true
-                    comment
-                }
-    }
+class EntryCommentInteractor @Inject constructor(val entriesApi: EntriesApi) {
 
-    fun unvoteComment(comment: EntryComment): Single<EntryComment> {
-        return entriesApi.unvoteComment(comment.id)
-                .map {
-                    comment.voteCount = it.voteCount
-                    comment.isVoted = false
-                    comment
-                }
-    }
+    fun voteComment(comment: EntryComment): Single<EntryComment> =
+        entriesApi.voteComment(comment.id)
+            .map {
+                comment.voteCount = it.voteCount
+                comment.isVoted = true
+                comment
+            }
 
-    fun deleteComment(comment: EntryComment): Single<EntryComment> {
-        return entriesApi.deleteEntryComment(comment.id)
-                .map {
-                    comment.embed = null
-                    comment.body = "[Komentarz usunięty]"
-                    comment
-                }
-    }
+    fun unvoteComment(comment: EntryComment): Single<EntryComment> =
+        entriesApi.unvoteComment(comment.id)
+            .map {
+                comment.voteCount = it.voteCount
+                comment.isVoted = false
+                comment
+            }
+
+    fun deleteComment(comment: EntryComment): Single<EntryComment> =
+        entriesApi.deleteEntryComment(comment.id)
+            .map {
+                comment.embed = null
+                comment.body = "[Komentarz usunięty]"
+                comment
+            }
 }

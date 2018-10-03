@@ -10,14 +10,14 @@ import javax.inject.Inject
 
 class FeedAdapter @Inject constructor(
     val userManagerApi: UserManagerApi,
-    val settingsPreferencesApi: SettingsPreferencesApi) : SimpleBaseProgressAdapter<BlockedViewHolder, Entry>() {
-
-    override fun bindHolder(holder: BlockedViewHolder, position: Int) {
-        holder.bindView(data[position])
-    }
-
-    override fun createViewHolder(parent: ViewGroup): BlockedViewHolder =
-            BlockedViewHolder.inflateView(parent) { notifyItemChanged(it) }
+    val settingsPreferencesApi: SettingsPreferencesApi
+) : SimpleBaseProgressAdapter<BlockedViewHolder, Entry>() {
 
     override val ITEM_TYPE = 0
+
+    override fun bindHolder(holder: BlockedViewHolder, position: Int) =
+        holder.bindView(data[position])
+
+    override fun createViewHolder(parent: ViewGroup): BlockedViewHolder =
+        BlockedViewHolder.inflateView(parent) { notifyItemChanged(it) }
 }

@@ -3,40 +3,29 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.input
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.ExitConfirmationDialog
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.exitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.ZERO_WIDTH_SPACE
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
-import io.github.feelfreelinux.wykopmobilny.utils.textview.removeSpoilerHtml
+import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
-import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
-import io.github.feelfreelinux.wykopmobilny.R.id.editText
-import android.content.Context.INPUT_METHOD_SERVICE
-import android.net.Uri
-import android.provider.MediaStore
-import android.view.inputmethod.InputMethodManager
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
-import io.github.feelfreelinux.wykopmobilny.ui.widgets.ZERO_WIDTH_SPACE
-import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
-
 
 abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
-    abstract var suggestionApi : SuggestApi
-    val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(this, suggestionApi) }
-    val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(this, suggestionApi) }
 
-    lateinit var contentUri : Uri
     companion object {
         const val EXTRA_RECEIVER = "EXTRA_RECEIVER"
         const val EXTRA_BODY = "EXTRA_BODY"
@@ -48,10 +37,31 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         const val USER_ACTION_INSERT_PHOTO_CAMERA = 143
     }
 
-    abstract var presenter : T
+    abstract var suggestionApi: SuggestApi
+    abstract var presenter: T
+
+    private val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(this, suggestionApi) }
+    private val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(this, suggestionApi) }
+
+    lateinit var contentUri: Uri
+
     override var textBody: String
         get() = if ((markupToolbar.photoUrl != null || markupToolbar.photo != null) && body.text.isEmpty()) ZERO_WIDTH_SPACE else body.text.toString()
-        set(value) { body.setText(value, TextView.BufferType.EDITABLE) }
+        set(value) {
+            body.setText(value, TextView.BufferType.EDITABLE)
+        }
+
+    override var selectionStart: Int
+        get() = body.selectionStart
+        set(value) {
+            body.setSelection(value)
+        }
+
+    override var selectionEnd: Int
+        get() = body.selectionEnd
+        set(value) {
+            body.setSelection(value)
+        }
 
     fun setupSuggestions() {
         body.setTokenizer(WykopSuggestionsTokenizer({
@@ -75,7 +85,8 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
                 selectionStart = this.length + 2
             }
 
-            getStringExtra(EXTRA_BODY)?.apply { // @TODO Replace it with some regex or parser, its way too hacky now
+            getStringExtra(EXTRA_BODY)?.apply {
+                // @TODO Replace it with some regex or parser, its way too hacky now
                 textBody += stripWykopFormatting()
                 selectionStart = if (!startsWith("#")) textBody.length else {
                     textBody = "\n$textBody"
@@ -93,17 +104,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         imm.showSoftInput(body, InputMethodManager.SHOW_IMPLICIT)
     }
 
-
-    override var selectionStart: Int
-        get() = body.selectionStart
-        set(value) { body.setSelection(value) }
-    override var selectionEnd: Int
-        get() = body.selectionEnd
-        set(value) { body.setSelection(value) }
-
-    override fun setSelection(start : Int, end : Int) {
-        body.setSelection(start, end)
-    }
+    override fun setSelection(start: Int, end: Int) = body.setSelection(start, end)
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_add_comment, menu)
@@ -157,7 +158,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     override fun onBackPressed() {
         if (!markupToolbar.hasUserEditedContent()) exitActivity()
         else
-            ExitConfirmationDialog(this) {
+            exitConfirmationDialog(this) {
                 exitActivity()
             }?.show()
     }
@@ -166,11 +167,15 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent,
-                getString(R.string.insert_photo_galery)), USER_ACTION_INSERT_PHOTO)
+        startActivityForResult(
+            Intent.createChooser(
+                intent,
+                getString(R.string.insert_photo_galery)
+            ), USER_ACTION_INSERT_PHOTO
+        )
     }
 
-    override fun openCamera(uri : Uri) {
+    override fun openCamera(uri: Uri) {
         contentUri = uri
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)

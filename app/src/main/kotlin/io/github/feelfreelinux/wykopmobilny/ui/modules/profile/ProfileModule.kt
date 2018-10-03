@@ -11,12 +11,13 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 
 @Module
 class ProfileModule {
+
     @Provides
     fun providePresenter(schedulers: Schedulers, profilesApi: ProfileApi) = ProfilePresenter(schedulers, profilesApi)
-    @Provides
-    fun provideNavigator(activity : ProfileActivity) : NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity : ProfileActivity, navigator : NewNavigatorApi) : WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun provideNavigator(activity: ProfileActivity): NewNavigatorApi = NewNavigator(activity)
 
+    @Provides
+    fun provideLinkHandler(activity: ProfileActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
 }

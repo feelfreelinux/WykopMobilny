@@ -15,8 +15,9 @@ class ConversationActivityModule {
     fun provideConversationActivityPresenter(schedulers: Schedulers, pmApi: PMApi) = ConversationPresenter(schedulers, pmApi)
 
     @Provides
-    fun provideNavigatorApi(activity : ConversationActivity) : NewNavigatorApi = NewNavigator(activity)
+    fun provideNavigatorApi(activity: ConversationActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandlerApi(navigatorApi: NewNavigatorApi, activity: ConversationActivity) : WykopLinkHandlerApi = WykopLinkHandler(activity, navigatorApi)
+    fun provideLinkHandlerApi(navigatorApi: NewNavigatorApi, activity: ConversationActivity): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigatorApi)
 }

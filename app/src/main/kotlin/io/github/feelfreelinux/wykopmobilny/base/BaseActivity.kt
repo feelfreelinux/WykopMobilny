@@ -14,19 +14,28 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 
-// This class should be extended in all activities in this app. Place global-activity settings here
+/**
+ * This class should be extended in all activities in this app. Place global-activity settings here.
+ */
 abstract class BaseActivity : DaggerAppCompatActivity() {
-    lateinit var rxPermissions: RxPermissions
-    open val enableSwipeBackLayout : Boolean = false
-    open val isActivityTransfluent : Boolean = false
+
+    open val enableSwipeBackLayout: Boolean = false
+    open val isActivityTransfluent: Boolean = false
     var isRunning = false
-    fun showErrorDialog(e : Throwable) {
-        if (isRunning) {
-            showExceptionDialog(e)
+    lateinit var rxPermissions: RxPermissions
+    private val themeSettingsPreferences by lazy { SettingsPreferences(this) as SettingsPreferencesApi }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        initTheme()
+        super.onCreate(savedInstanceState)
+        rxPermissions = RxPermissions(this)
+        if (enableSwipeBackLayout) {
+            Slidr.attach(
+                this,
+                SlidrConfig.Builder().edge(true).build()
+            )
         }
     }
-
-    private val themeSettingsPreferences by lazy { SettingsPreferences(this) as SettingsPreferencesApi }
 
     override fun onResume() {
         isRunning = true
@@ -37,21 +46,8 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         isRunning = false
         super.onPause()
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        initTheme()
-        super.onCreate(savedInstanceState)
-        rxPermissions = RxPermissions(this)
-        if (enableSwipeBackLayout) {
-            Slidr.attach(this,
-                    SlidrConfig.Builder().edge(true).build())
-        }
 
-    }
-
-
-    /**
-     * This function initializes activity theme based on settings
-     */
+    // This function initializes activity theme based on settings
     private fun initTheme() {
         if (themeSettingsPreferences.useDarkTheme) {
             if (themeSettingsPreferences.useAmoledTheme) {
@@ -80,5 +76,9 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
             "large" -> theme.applyStyle(R.style.TextSizeLarge, true)
             "huge" -> theme.applyStyle(R.style.TextSizeHuge, true)
         }
+    }
+
+    fun showErrorDialog(e: Throwable) {
+        if (isRunning) showExceptionDialog(e)
     }
 }

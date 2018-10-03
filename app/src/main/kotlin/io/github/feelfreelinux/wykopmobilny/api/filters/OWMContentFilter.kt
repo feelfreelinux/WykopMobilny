@@ -7,45 +7,45 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
-import java.util.*
+import java.util.Collections
 import javax.inject.Inject
 
-class OWMContentFilter @Inject constructor(val blacklistPreferences: BlacklistPreferencesApi,
-                                           val linksPreferencesApi: LinksPreferencesApi,
-                                           val settingsPreferencesApi: SettingsPreferencesApi) {
-    fun filterEntry(entry : Entry) : Entry {
-        return entry.apply {
-                isBlocked =
-                        isBlocked ||
-                        body.bodyContainsBlockedTags() ||
-                        author.nick.isUserBlocked() ||
-                        (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0)
-            }
-    }
+class OWMContentFilter @Inject constructor(
+    val blacklistPreferences: BlacklistPreferencesApi,
+    val settingsPreferencesApi: SettingsPreferencesApi,
+    private val linksPreferencesApi: LinksPreferencesApi
+) {
 
-    fun filterEntryComment(comment : EntryComment) : EntryComment {
-        return comment.apply {
+    fun filterEntry(entry: Entry) =
+        entry.apply {
             isBlocked =
                     isBlocked ||
                     body.bodyContainsBlockedTags() ||
                     author.nick.isUserBlocked() ||
                     (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0)
         }
-    }
 
-    fun fiterLinkComment(comment : LinkComment) : LinkComment {
-        return comment.apply {
+    fun filterEntryComment(comment: EntryComment) =
+        comment.apply {
+            isBlocked =
+                    isBlocked ||
+                    body.bodyContainsBlockedTags() ||
+                    author.nick.isUserBlocked() ||
+                    (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0)
+        }
+
+    fun filterLinkComment(comment: LinkComment) =
+        comment.apply {
             isBlocked =
                     isBlocked ||
                     body?.bodyContainsBlockedTags() ?: false ||
                     author.nick.isUserBlocked() ||
                     (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0)
         }
-    }
 
 
-    fun filterLink(link : Link) : Link {
-        return link.apply {
+    fun filterLink(link: Link) =
+        link.apply {
             gotSelected = linksPreferencesApi.readLinksIds.contains("link_$id")
             isBlocked =
                     isBlocked ||
@@ -54,17 +54,13 @@ class OWMContentFilter @Inject constructor(val blacklistPreferences: BlacklistPr
                     (settingsPreferencesApi.hideLowRangeAuthors && author?.group == 0)
 
         }
-    }
 
-    fun String.bodyContainsBlockedTags() : Boolean {
+    private fun String.bodyContainsBlockedTags(): Boolean {
         val tagsRegex = "(^|\\s)(#[a-z\\d-]+)".toRegex()
-
         return !Collections.disjoint(
-                blacklistPreferences.blockedTags,
-                tagsRegex.matchEntire(this)?.groupValues?.map { it.removePrefix("#") } ?: emptyList<String>())
+            blacklistPreferences.blockedTags,
+            tagsRegex.matchEntire(this)?.groupValues?.map { it.removePrefix("#") } ?: emptyList<String>())
     }
 
-    fun String.isUserBlocked() : Boolean {
-        return blacklistPreferences.blockedUsers.contains(this.removePrefix("@"))
-    }
+    private fun String.isUserBlocked() = blacklistPreferences.blockedUsers.contains(this.removePrefix("@"))
 }

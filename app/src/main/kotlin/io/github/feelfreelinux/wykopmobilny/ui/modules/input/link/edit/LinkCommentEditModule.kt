@@ -8,5 +8,6 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 @Module
 class LinkCommentEditModule {
     @Provides
-    fun provideEditLinkCommentPresenter(schedulers: Schedulers, linksApi: LinksApi) = LinkCommentEditPresenter(schedulers, linksApi)
+    fun provideEditLinkCommentPresenter(schedulers: Schedulers, linksApi: LinksApi) =
+        LinkCommentEditPresenter(schedulers, linksApi)
 }

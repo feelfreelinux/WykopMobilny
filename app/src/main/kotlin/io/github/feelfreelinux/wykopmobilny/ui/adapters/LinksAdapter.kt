@@ -13,7 +13,13 @@ import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import javax.inject.Inject
 
-class LinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, val settingsPreferencesApi: SettingsPreferencesApi, val navigatorApi: NewNavigatorApi, val linkHandlerApi: WykopLinkHandlerApi) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, Link>() {
+class LinksAdapter @Inject constructor(
+    val userManagerApi: UserManagerApi,
+    val settingsPreferencesApi: SettingsPreferencesApi,
+    val navigatorApi: NewNavigatorApi,
+    val linkHandlerApi: WykopLinkHandlerApi
+) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, Link>() {
+
     // Required field, interacts with presenter. Otherwise will throw exception
     lateinit var linksActionListener: LinkActionListener
 
@@ -47,7 +53,7 @@ class LinksAdapter @Inject constructor(val userManagerApi: UserManagerApi, val s
         }
     }
 
-    fun updateLink(link : Link) {
+    fun updateLink(link: Link) {
         val position = dataset.indexOf(link)
         dataset[position] = link
         notifyItemChanged(position)

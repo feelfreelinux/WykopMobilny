@@ -1,19 +1,20 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist
 
 import android.content.res.Resources
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import android.util.SparseArray
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.hashtags.HashTagsNotificationsListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListFragment
 
-class NotificationsListViewPagerAdapter(val resources : Resources, fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+class NotificationsListViewPagerAdapter(
+    val resources: Resources,
+    fragmentManager: androidx.fragment.app.FragmentManager
+) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+
     val registeredFragments = SparseArray<androidx.fragment.app.Fragment>()
 
-    override fun getItem(position: Int): androidx.fragment.app.Fragment = when(position) {
+    override fun getItem(position: Int): androidx.fragment.app.Fragment = when (position) {
         0 -> NotificationsListFragment.newInstance()
         else -> HashTagsNotificationsListFragment.newInstance()
     }
@@ -33,7 +34,7 @@ class NotificationsListViewPagerAdapter(val resources : Resources, fragmentManag
 
     override fun getPageTitle(position: Int): CharSequence {
         super.getPageTitle(position)
-        return when(position) {
+        return when (position) {
             0 -> resources.getString(R.string.notifications_directed)
             else -> resources.getString(R.string.hashtags_notifications_title)
         }

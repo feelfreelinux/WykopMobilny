@@ -11,42 +11,44 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.Conversatio
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.PMMessageResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConversationResponse
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Retrofit
+import toRequestBody
 
-class PMRepository(val retrofit: Retrofit, val userTokenRefresher: UserTokenRefresher) : PMApi {
-    private val pmretrofitApi by lazy { retrofit.create(PMRetrofitApi::class.java) }
+class PMRepository(
+    val retrofit: Retrofit,
+    val userTokenRefresher: UserTokenRefresher
+) : PMApi {
 
-    override fun getConversations() = pmretrofitApi.getConversations()
+    private val pmRetrofitApi by lazy { retrofit.create(PMRetrofitApi::class.java) }
+
+    override fun getConversations() = pmRetrofitApi.getConversations()
+        .retryWhen(userTokenRefresher)
+        .compose<List<ConversationResponse>>(ErrorHandlerTransformer())
+        .map { it.map { response -> ConversationMapper.map(response) } }
+
+    override fun getConversation(user: String) = pmRetrofitApi.getConversation(user)
+        .retryWhen(userTokenRefresher)
+        .flatMap<FullConversationResponse>(ErrorHandler())
+        .map { FullConversationMapper.map(it) }
+
+    override fun deleteConversation(user: String) = pmRetrofitApi.deleteConversation(user)
+        .retryWhen(userTokenRefresher)
+        .compose<ConversationDeleteResponse>(ErrorHandlerTransformer())
+
+    override fun sendMessage(body: String, user: String, embed: String?, plus18: Boolean) =
+        pmRetrofitApi.sendMessage(body, user, embed, plus18)
             .retryWhen(userTokenRefresher)
-            .compose<List<ConversationResponse>>(ErrorHandlerTransformer())
-            .map { it.map { ConversationMapper.map(it) } }
+            .compose<PMMessageResponse>(ErrorHandlerTransformer())
+            .map { PMMessageMapper.map(it) }
 
-    override fun getConversation(user : String) = pmretrofitApi.getConversation(user)
+    override fun sendMessage(body: String, user: String, plus18: Boolean, embed: WykopImageFile) =
+        pmRetrofitApi.sendMessage(
+            body.toRequestBody(),
+            plus18.toRequestBody(),
+            user,
+            embed.getFileMultipart()
+        )
             .retryWhen(userTokenRefresher)
-            .flatMap<FullConversationResponse>(ErrorHandler())
-            .map { FullConversationMapper.map(it) }
-
-    override fun deleteConversation(user : String)
-    = pmretrofitApi.deleteConversation(user)
-            .retryWhen(userTokenRefresher)
-            .compose<ConversationDeleteResponse>(ErrorHandlerTransformer())
-
-    override fun sendMessage(body : String, user : String, embed: String?, plus18: Boolean) =
-            pmretrofitApi.sendMessage(body, user, embed, plus18)
-                    .retryWhen(userTokenRefresher)
-                    .compose<PMMessageResponse>(ErrorHandlerTransformer())
-                    .map { PMMessageMapper.map(it) }
-
-    override fun sendMessage(body : String, user : String, plus18 : Boolean, embed: WykopImageFile) =
-            pmretrofitApi.sendMessage(body.toRequestBody(),
-                    plus18.toRequestBody(),
-                    user,
-                    embed.getFileMultipart())
-                    .retryWhen(userTokenRefresher)
-                    .compose<PMMessageResponse>(ErrorHandlerTransformer())
-                    .map { PMMessageMapper.map(it) }
-    private fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
-    private fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
+            .compose<PMMessageResponse>(ErrorHandlerTransformer())
+            .map { PMMessageMapper.map(it) }
 }

@@ -10,20 +10,21 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import javax.inject.Inject
 
 class EditEntryActivity : BaseInputActivity<EditEntryPresenter>(), EditEntryView {
-    @Inject override lateinit var presenter: EditEntryPresenter
-    @Inject override lateinit var suggestionApi: SuggestApi
-    override val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, 0) }
 
     companion object {
-        val EXTRA_ENTRY_ID = "ENTRY_ID"
+        const val EXTRA_ENTRY_ID = "ENTRY_ID"
 
-        fun createIntent(context: Context, body : String, entryId: Int): Intent {
-            val intent = Intent(context, EditEntryActivity::class.java)
-            intent.putExtra(BaseInputActivity.EXTRA_BODY, body)
-            intent.putExtra(EditEntryActivity.EXTRA_ENTRY_ID, entryId)
-            return intent
-        }
+        fun createIntent(context: Context, body: String, entryId: Int) =
+            Intent(context, EditEntryActivity::class.java).apply {
+                putExtra(EXTRA_BODY, body)
+                putExtra(EXTRA_ENTRY_ID, entryId)
+            }
     }
+
+    @Inject override lateinit var presenter: EditEntryPresenter
+    @Inject override lateinit var suggestionApi: SuggestApi
+
+    override val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +34,8 @@ class EditEntryActivity : BaseInputActivity<EditEntryPresenter>(), EditEntryView
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 
     override fun exitActivity() {

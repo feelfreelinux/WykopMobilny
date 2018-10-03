@@ -1,9 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-import android.view.*
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
@@ -12,13 +16,14 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchFragment : BaseFragment() {
-    val querySubject by lazy { PublishSubject.create<String>() }
-
-    private lateinit var viewPagerAdapter : SearchPagerAdapter
 
     companion object {
         fun newInstance() = SearchFragment()
     }
+
+    val querySubject by lazy { PublishSubject.create<String>() }
+
+    private lateinit var viewPagerAdapter: SearchPagerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -37,6 +42,7 @@ class SearchFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.search)
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
@@ -44,10 +50,10 @@ class SearchFragment : BaseFragment() {
         val item = menu.findItem(R.id.action_search)
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM or MenuItem.SHOW_AS_ACTION_WITH_TEXT)
         val searchView = item.actionView as SearchView
-        val historyDb = HistorySuggestionListener(context!!, searchView, {
+        val historyDb = HistorySuggestionListener(context!!, {
             querySubject.onNext(it)
             activity?.hideKeyboard()
-        })
+        }, searchView)
 
         with(searchView) {
             setOnQueryTextListener(historyDb)

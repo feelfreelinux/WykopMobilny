@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import io.github.feelfreelinux.wykopmobilny.api.ScraperInterceptor
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
-import io.github.feelfreelinux.wykopmobilny.api.addlink.AddlinkApi
-import io.github.feelfreelinux.wykopmobilny.api.addlink.AddlinkRepository
+import io.github.feelfreelinux.wykopmobilny.api.addlink.AddLinkApi
+import io.github.feelfreelinux.wykopmobilny.api.addlink.AddLinkRepository
 import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalApi
 import io.github.feelfreelinux.wykopmobilny.api.embed.ExternalRepository
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
@@ -23,7 +23,6 @@ import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMRepository
 import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileApi
 import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileRepository
-import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
 import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperRepository
 import io.github.feelfreelinux.wykopmobilny.api.search.SearchApi
@@ -34,11 +33,8 @@ import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagRepository
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginRepository
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import okhttp3.OkHttpClient
 import pl.droidsonroids.retrofit2.JspoonConverterFactory
 import retrofit2.Retrofit
@@ -47,58 +43,100 @@ import javax.inject.Singleton
 
 @Module
 class RepositoryModule {
-    @Provides
-    @Singleton
-    fun provideEntriesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : EntriesApi = EntriesRepository(retrofit, userTokenRefresher, owmContentFilter)
-
-    @Provides
-    fun provideNotificationsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : NotificationsApi = NotificationsRepository(retrofit, userTokenRefresher)
-
-    @Provides
-    fun provideMyWykopApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
     @Singleton
-    fun provideLinksApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : LinksApi = LinksRepository(retrofit, userTokenRefresher, owmContentFilter)
+    fun provideEntriesApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): EntriesApi = EntriesRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
-    fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter, blacklistPreferences: BlacklistPreferencesApi) : TagApi = TagRepository(retrofit, userTokenRefresher, blacklistPreferences, owmContentFilter)
+    fun provideNotificationsApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher
+    ): NotificationsApi = NotificationsRepository(retrofit, userTokenRefresher)
 
     @Provides
-    fun provideUserApi(retrofit: Retrofit, credentialsPreferencesApi : CredentialsPreferencesApi) : LoginApi
-            = LoginRepository(retrofit, credentialsPreferencesApi)
+    fun provideMyWykopApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
-    fun providePMApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : PMApi = PMRepository(retrofit, userTokenRefresher)
+    @Singleton
+    fun provideLinksApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): LinksApi = LinksRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
-    fun provideSuggestApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher) : SuggestApi = SuggestRepository(retrofit, userTokenRefresher)
+    fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter, blacklistPreferences: BlacklistPreferencesApi) : TagApi = TagRepository(
+        retrofit,
+        userTokenRefresher,
+        owmContentFilter,
+        blacklistPreferences
+    )
 
     @Provides
-    fun provideSearchApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : SearchApi = SearchRepository(retrofit, userTokenRefresher, owmContentFilter)
+    fun provideUserApi(
+        retrofit: Retrofit,
+        credentialsPreferencesApi: CredentialsPreferencesApi
+    ): LoginApi = LoginRepository(retrofit, credentialsPreferencesApi)
 
     @Provides
-    fun provideHitsApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : HitsApi = HitsRepository(retrofit, userTokenRefresher, owmContentFilter)
+    fun providePMApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher
+    ): PMApi = PMRepository(retrofit, userTokenRefresher)
 
     @Provides
-    fun provideProfilesApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, blacklistPreferences: BlacklistPreferencesApi, owmContentFilter: OWMContentFilter) : ProfileApi = ProfileRepository(retrofit, userTokenRefresher,  owmContentFilter, blacklistPreferences)
+    fun provideSuggestApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher
+    ): SuggestApi = SuggestRepository(retrofit, userTokenRefresher)
 
     @Provides
-    fun provideEmbedApi(retrofit: Retrofit) : ExternalApi = ExternalRepository(retrofit)
+    fun provideSearchApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): SearchApi = SearchRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
-    fun provideAddlinkApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : AddlinkApi = AddlinkRepository(retrofit, userTokenRefresher, owmContentFilter)
+    fun provideHitsApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter
+    ): HitsApi = HitsRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
-    fun provideScraperApi() : ScraperApi = ScraperRepository(createScraperRetrofit())
+    fun provideProfilesApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        blacklistPreferences: BlacklistPreferencesApi,
+        owmContentFilter: OWMContentFilter
+    ): ProfileApi = ProfileRepository(retrofit, userTokenRefresher, owmContentFilter, blacklistPreferences)
 
-    fun createScraperRetrofit() : Retrofit {
+    @Provides
+    fun provideEmbedApi(retrofit: Retrofit): ExternalApi = ExternalRepository(retrofit)
+
+    @Provides
+    fun provideAddlinkApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : AddLinkApi = AddLinkRepository(retrofit, userTokenRefresher, owmContentFilter)
+
+    @Provides
+    fun provideScraperApi(): ScraperApi = ScraperRepository(createScraperRetrofit())
+
+    private fun createScraperRetrofit(): Retrofit {
         val client = OkHttpClient.Builder().addInterceptor(ScraperInterceptor()).build()
         return Retrofit.Builder()
-                .baseUrl("https://wykop.pl")
-                .client(client)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(JspoonConverterFactory.create())
-                .build()
+            .baseUrl("https://wykop.pl")
+            .client(client)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(JspoonConverterFactory.create())
+            .build()
     }
 }

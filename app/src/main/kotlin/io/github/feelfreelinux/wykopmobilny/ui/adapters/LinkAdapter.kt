@@ -11,6 +11,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreference
 import javax.inject.Inject
 
 class LinkAdapter @Inject constructor(val settingsPreferencesApi: SettingsPreferencesApi) : AdvancedProgressAdapter<Link>() {
+
     companion object {
         const val LINK_VIEWTYPE = 1
         const val SIMPLE_LINK_VIEWTYPE = 3
@@ -22,7 +23,7 @@ class LinkAdapter @Inject constructor(val settingsPreferencesApi: SettingsPrefer
     }
 
     override fun createViewHolder(viewType: Int, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder =
-            BlockedViewHolder.inflateView(parent) { notifyItemChanged(it) }
+        BlockedViewHolder.inflateView(parent) { notifyItemChanged(it) }
 
     override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!

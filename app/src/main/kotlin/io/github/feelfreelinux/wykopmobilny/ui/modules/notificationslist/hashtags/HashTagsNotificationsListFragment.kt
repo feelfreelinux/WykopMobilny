@@ -5,9 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
@@ -22,27 +20,20 @@ import kotlinx.android.synthetic.main.activity_notifications_list.*
 import javax.inject.Inject
 
 class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
-    @Inject lateinit var presenter : HashTagsNotificationsListPresenter
-
-    @Inject
-    override lateinit var linkHandler : WykopLinkHandlerApi
-
-    @Inject
-    override lateinit var notificationAdapter : NotificationsListAdapter
-
-    private lateinit var entryFragmentData : DataFragment<PagedDataModel<List<Notification>>>
-
-    var expanded = true
-
-    @Inject
-    lateinit var settingsApi: SettingsPreferencesApi
 
     companion object {
-        val DATA_FRAGMENT_TAG = "NOTIFICATIONS_HASH_TAG_LIST_ACTIVITY"
-        fun newInstance() : Fragment {
-            return HashTagsNotificationsListFragment()
-        }
+        const val DATA_FRAGMENT_TAG = "NOTIFICATIONS_HASH_TAG_LIST_ACTIVITY"
+        fun newInstance() = HashTagsNotificationsListFragment()
     }
+
+    @Inject override lateinit var linkHandler: WykopLinkHandlerApi
+    @Inject override lateinit var notificationAdapter: NotificationsListAdapter
+    @Inject lateinit var settingsApi: SettingsPreferencesApi
+    @Inject lateinit var presenter: HashTagsNotificationsListPresenter
+
+    private lateinit var entryFragmentData: DataFragment<PagedDataModel<List<Notification>>>
+
+    var expanded = true
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -118,13 +109,11 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
         }
     }
 
-    override fun markAsRead() {
-        presenter.readNotifications()
-    }
+    override fun markAsRead() = presenter.readNotifications()
 
     override fun onPause() {
-        super.onPause()
         if (isRemoving) supportFragmentManager.removeDataFragment(entryFragmentData)
+        super.onPause()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -133,8 +122,7 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
                 PagedDataModel(presenter.page, notificationAdapter.data)
     }
 
-    override fun showTooManyNotifications() {
+    override fun showTooManyNotifications() =
         Toast.makeText(context, "Zbyt wiele powiadomień, funkcja grupowania wyłączona", Toast.LENGTH_LONG).show()
-    }
 
 }

@@ -1,11 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.links.downvoters
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -14,7 +11,6 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.DownvoterListAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_conversations_list.*
@@ -23,19 +19,19 @@ import javax.inject.Inject
 
 class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, DownvotersView {
 
-    private lateinit var downvotersDataFragment: DataFragment<List<Downvoter>>
+    companion object {
+        const val DATA_FRAGMENT_TAG = "DOWNVOTERS_LIST"
+        const val EXTRA_LINKID = "LINK_ID_EXTRA"
+
+        fun createIntent(linkId: Int, activity: Activity) =
+            Intent(activity, DownvotersActivity::class.java).apply {
+                putExtra(EXTRA_LINKID, linkId)
+            }
+    }
+
     @Inject lateinit var presenter: DownvotersPresenter
     @Inject lateinit var downvotersAdapter: DownvoterListAdapter
-
-    companion object {
-        val DATA_FRAGMENT_TAG = "DOWNVOTERS_LIST"
-        val EXTRA_LINKID = "LINK_ID_EXTRA"
-        fun createIntent(linkId : Int, activity: Activity): Intent {
-            val intent = Intent(activity, DownvotersActivity::class.java)
-            intent.putExtra(EXTRA_LINKID, linkId)
-            return intent
-        }
-    }
+    private lateinit var downvotersDataFragment: DataFragment<List<Downvoter>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +53,7 @@ class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Sw
             loadingView?.isVisible = true
             onRefresh()
         } else {
-            downvotersAdapter.dataset.addAll(downvotersDataFragment.data!!)
+            downvotersAdapter.items.addAll(downvotersDataFragment.data!!)
             loadingView?.isVisible = false
         }
     }
@@ -66,35 +62,33 @@ class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Sw
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
         downvotersAdapter.apply {
-            dataset.clear()
-            dataset.addAll(downvoters)
+            items.clear()
+            items.addAll(downvoters)
             notifyDataSetChanged()
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onRefresh() {
-        presenter.getDownvoters()
-    }
+    override fun onRefresh() = presenter.getDownvoters()
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        downvotersDataFragment.data = downvotersAdapter.dataset
+        downvotersDataFragment.data = downvotersAdapter.items
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.unsubscribe()
+        super.onDestroy()
     }
 
     override fun onPause() {
-        super.onPause()
         if (isFinishing) supportFragmentManager.removeDataFragment(downvotersDataFragment)
+        super.onPause()
     }
 }

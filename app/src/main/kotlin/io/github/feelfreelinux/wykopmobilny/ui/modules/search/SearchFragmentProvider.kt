@@ -12,11 +12,11 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.users.UsersSearchM
 @Module
 abstract class SearchFragmentProvider {
     @ContributesAndroidInjector(modules = [EntrySearchFragmentModule::class])
-    abstract fun provideEntryFragment() : EntrySearchFragment
+    abstract fun provideEntryFragment(): EntrySearchFragment
 
     @ContributesAndroidInjector(modules = [LinkSearchModule::class])
-    abstract fun provideLinksFrament() : LinkSearchFragment
+    abstract fun provideLinksFrament(): LinkSearchFragment
 
     @ContributesAndroidInjector(modules = [UsersSearchModule::class])
-    abstract fun provideUsersFragment() : UsersSearchFragment
+    abstract fun provideUsersFragment(): UsersSearchFragment
 }

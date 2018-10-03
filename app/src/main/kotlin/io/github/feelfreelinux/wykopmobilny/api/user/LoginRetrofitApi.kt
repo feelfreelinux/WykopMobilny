@@ -14,5 +14,8 @@ interface LoginRetrofitApi {
     @Headers("@: $REMOVE_USERKEY_HEADER")
     @FormUrlEncoded
     @POST("/login/index/appkey/$APP_KEY")
-    fun getUserSessionToken(@Field("login") login : String, @Field("accountkey", encoded = true) accountkey : String) : Single<WykopApiResponse<LoginResponse>>
+    fun getUserSessionToken(
+        @Field("login") login: String,
+        @Field("accountkey", encoded = true) accountKey: String
+    ): Single<WykopApiResponse<LoginResponse>>
 }

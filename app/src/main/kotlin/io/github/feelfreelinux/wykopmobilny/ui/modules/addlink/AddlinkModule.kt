@@ -9,10 +9,13 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 
 @Module
 class AddlinkModule {
-    @Provides
-    fun provideNavigator(activity : AddlinkActivity) : NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity : AddlinkActivity, navigator : NewNavigatorApi) : WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun provideNavigator(activity: AddlinkActivity): NewNavigatorApi =
+        NewNavigator(activity)
+
+    @Provides
+    fun provideLinkHandler(activity: AddlinkActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigator)
 
 }

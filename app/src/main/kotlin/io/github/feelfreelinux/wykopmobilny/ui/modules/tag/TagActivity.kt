@@ -3,13 +3,12 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.tag
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
@@ -19,23 +18,25 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class TagActivity : BaseActivity(), TagActivityView {
-    val tagString by lazy { intent.getStringExtra(EXTRA_TAG) }
-    override val enableSwipeBackLayout: Boolean = true
-    @Inject lateinit var navigator : NavigatorApi
-    @Inject lateinit var presenter : TagActivityPresenter
-    @Inject lateinit var userManagerApi : UserManagerApi
-    private var tagMeta : TagMetaResponse? = null
-    val tagPagerAdapter by lazy { TagPagerAdapter(tagString, resources, supportFragmentManager) }
 
     companion object {
-        val EXTRA_TAG = "EXTRA_TAG"
+        const val EXTRA_TAG = "EXTRA_TAG"
 
-        fun createIntent(context : Context, tag : String): Intent {
+        fun createIntent(context: Context, tag: String): Intent {
             val intent = Intent(context, TagActivity::class.java)
             intent.putExtra(TagActivity.EXTRA_TAG, tag)
             return intent
         }
     }
+
+    @Inject lateinit var navigator: NavigatorApi
+    @Inject lateinit var presenter: TagActivityPresenter
+    @Inject lateinit var userManagerApi: UserManagerApi
+
+    override val enableSwipeBackLayout: Boolean = true
+    private val tagString by lazy { intent.getStringExtra(EXTRA_TAG) }
+    private var tagMeta: TagMetaResponse? = null
+    private val tagPagerAdapter by lazy { TagPagerAdapter(tagString, resources, supportFragmentManager) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +51,7 @@ class TagActivity : BaseActivity(), TagActivityView {
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "\n#" + tagString
+            title = "\n#$tagString"
         }
 
         pager.adapter = tagPagerAdapter

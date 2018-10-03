@@ -1,15 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice
 
-import android.service.notification.StatusBarNotification
 import android.os.Build
 import android.service.notification.NotificationListenerService
-import androidx.annotation.RequiresApi
+import android.service.notification.StatusBarNotification
 import android.text.TextUtils
-import dagger.android.AndroidInjection
+import androidx.annotation.RequiresApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.printout
-import javax.inject.Inject
 
 
 @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)

@@ -34,7 +34,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNaviga
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryDetailModule
-import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.NotificationPiggyback
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.ReadNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
@@ -56,7 +55,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityModule
 @Module
 abstract class ActivityBuilder {
     @ContributesAndroidInjector
-    abstract fun bindWykopStartupBroadcastReceiver() : WykopNotificationsBroadcastReceiver
+    abstract fun bindWykopStartupBroadcastReceiver(): WykopNotificationsBroadcastReceiver
 
     @ContributesAndroidInjector(modules = [LoginScreenModule::class])
     abstract fun bindLoginActivity(): LoginScreenActivity
@@ -65,63 +64,62 @@ abstract class ActivityBuilder {
     abstract fun bindEntryDetailsActivity(): EntryActivity
 
     @ContributesAndroidInjector(modules = [MainNavigationModule::class, MainNavigationFragmentProvider::class])
-    abstract fun bindMainNavigationActivity() : MainNavigationActivity
+    abstract fun bindMainNavigationActivity(): MainNavigationActivity
 
     @ContributesAndroidInjector(modules = [SettingsActivityModule::class, SettingsFragmentProvider::class])
-    abstract fun bindSettingsActivity() : SettingsActivity
+    abstract fun bindSettingsActivity(): SettingsActivity
 
     @ContributesAndroidInjector(modules = [ConversationActivityModule::class])
-    abstract fun bindConversationActivity() : ConversationActivity
+    abstract fun bindConversationActivity(): ConversationActivity
 
     @ContributesAndroidInjector()
-    abstract fun bindPhotoViewActivity() : PhotoViewActivity
+    abstract fun bindPhotoViewActivity(): PhotoViewActivity
 
     @ContributesAndroidInjector(modules = [AddEntryActivityModule::class])
-    abstract fun bindAddEntryActivity() : AddEntryActivity
+    abstract fun bindAddEntryActivity(): AddEntryActivity
 
     @ContributesAndroidInjector(modules = [EditEntryActivityModule::class])
-    abstract fun bindEditEntryActivity() : EditEntryActivity
+    abstract fun bindEditEntryActivity(): EditEntryActivity
 
     @ContributesAndroidInjector(modules = [EditEntryCommentActivityModule::class])
-    abstract fun bindEditEntryCommentActivity() : EditEntryCommentActivity
+    abstract fun bindEditEntryCommentActivity(): EditEntryCommentActivity
 
     @ContributesAndroidInjector(modules = [LinkDetailsModule::class])
-    abstract fun bindLinkDetailsActivity() : LinkDetailsActivity
+    abstract fun bindLinkDetailsActivity(): LinkDetailsActivity
 
     @ContributesAndroidInjector(modules = [TagActivityFragmentProvider::class, TagActivityModule::class])
-    abstract fun bindTagActivity() : TagActivity
+    abstract fun bindTagActivity(): TagActivity
 
     @ContributesAndroidInjector(modules = [UpvotersModule::class])
-    abstract fun bindUpvotersActivity() : UpvotersActivity
+    abstract fun bindUpvotersActivity(): UpvotersActivity
 
     @ContributesAndroidInjector(modules = [DownvotersModule::class])
-    abstract fun bindDownvotersActivity() : DownvotersActivity
+    abstract fun bindDownvotersActivity(): DownvotersActivity
 
     @ContributesAndroidInjector(modules = [RelatedModule::class])
-    abstract fun bindRelatedActivity() : RelatedActivity
+    abstract fun bindRelatedActivity(): RelatedActivity
 
     @ContributesAndroidInjector(modules = [])
-    abstract fun bindYoutubeActivity() : YoutubeActivity
+    abstract fun bindYoutubeActivity(): YoutubeActivity
 
     @ContributesAndroidInjector(modules = [ProfileModule::class, ProfileFragmentProvider::class])
-    abstract fun bindProfileActivity() : ProfileActivity
+    abstract fun bindProfileActivity(): ProfileActivity
 
     @ContributesAndroidInjector(modules = [LinkCommentEditModule::class])
-    abstract fun bindLinkEditCommentActivity() : LinkCommentEditActivity
+    abstract fun bindLinkEditCommentActivity(): LinkCommentEditActivity
 
     @ContributesAndroidInjector(modules = [NotificationsListFragmentProvider::class, NotificationsListModule::class])
-    abstract fun bindNotificationsActivity() : NotificationsListActivity
+    abstract fun bindNotificationsActivity(): NotificationsListActivity
 
     @ContributesAndroidInjector(modules = [EmbedViewModule::class])
-    abstract fun bindEmbedActivity() : EmbedViewActivity
-
+    abstract fun bindEmbedActivity(): EmbedViewActivity
 
     @ContributesAndroidInjector(modules = [BlacklistModule::class, BlacklistFragmentProvider::class])
-    abstract fun bindBlacklistACtivity() : BlacklistActivity
+    abstract fun bindBlacklistActivity(): BlacklistActivity
 
     @ContributesAndroidInjector(modules = [AddlinkModule::class, AddlinkFragmentProvider::class])
-    abstract fun bindAddLinkActivity() : AddlinkActivity
+    abstract fun bindAddLinkActivity(): AddlinkActivity
 
     @ContributesAndroidInjector()
-    abstract fun bindReadNotificationsReceiver() : ReadNotificationsBroadcastReceiver
+    abstract fun bindReadNotificationsReceiver(): ReadNotificationsBroadcastReceiver
 }
