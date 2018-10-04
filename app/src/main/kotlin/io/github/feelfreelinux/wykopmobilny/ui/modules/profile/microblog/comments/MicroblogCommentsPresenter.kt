@@ -7,6 +7,7 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentInteractor
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 import io.reactivex.Single
 
 class MicroblogCommentsPresenter(
@@ -21,20 +22,19 @@ class MicroblogCommentsPresenter(
 
     fun loadData(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
-        compositeObservable.add(
-            profileApi.getEntriesComments(username, page)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    {
-                        if (it.isNotEmpty()) {
-                            page++
-                            view?.addItems(it, shouldRefresh)
-                        } else view?.disableLoading()
-                    },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        profileApi.getEntriesComments(username, page)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                {
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addItems(it, shouldRefresh)
+                    } else view?.disableLoading()
+                },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     override fun voteComment(comment: EntryComment) =
@@ -48,28 +48,26 @@ class MicroblogCommentsPresenter(
 
     override fun getVoters(comment: EntryComment) {
         view?.openVotersMenu()
-        compositeObservable.add(
-            entriesApi.getEntryCommentVoters(comment.id)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.showVoters(it)
-                }, {
-                    view?.showErrorDialog(it)
-                })
-        )
+        entriesApi.getEntryCommentVoters(comment.id)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.showVoters(it)
+            }, {
+                view?.showErrorDialog(it)
+            })
+            .intoComposite(compositeObservable)
     }
 
     private fun Single<EntryComment>.processEntryCommentSingle(comment: EntryComment) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateComment(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateComment(comment)
-                    })
-        )
+        this
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateComment(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateComment(comment)
+                })
+            .intoComposite(compositeObservable)
     }
 }

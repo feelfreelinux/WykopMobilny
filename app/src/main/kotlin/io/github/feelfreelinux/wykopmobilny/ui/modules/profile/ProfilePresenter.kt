@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.profile
 import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 
 class ProfilePresenter(
     val schedulers: Schedulers,
@@ -12,60 +13,50 @@ class ProfilePresenter(
     var userName = "a__s"
 
     fun loadData() {
-        compositeObservable.add(
-            profileApi.getIndex(userName)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.showProfile(it) }, { view?.showErrorDialog(it) })
-        )
+        profileApi.getIndex(userName)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.showProfile(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     fun markObserved() {
-        compositeObservable.add(
-            profileApi.observe(userName)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
-
-        )
+        profileApi.observe(userName)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     fun markUnobserved() {
-        compositeObservable.add(
-            profileApi.unobserve(userName)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
-
-        )
+        profileApi.unobserve(userName)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     fun markBlocked() {
-        compositeObservable.add(
-            profileApi.block(userName)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
-
-        )
+        profileApi.block(userName)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     fun markUnblocked() {
-        compositeObservable.add(
-            profileApi.unblock(userName)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
-
-        )
+        profileApi.unblock(userName)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.showButtons(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     fun getBadges() {
-        compositeObservable.add(
-            profileApi.getBadges(userName, 0)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.showBadges(it) }, { view?.showErrorDialog(it) })
-        )
+        profileApi.getBadges(userName, 0)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.showBadges(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 }

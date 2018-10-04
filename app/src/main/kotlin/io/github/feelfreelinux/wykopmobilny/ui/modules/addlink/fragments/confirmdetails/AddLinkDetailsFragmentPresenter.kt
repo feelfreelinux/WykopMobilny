@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.confir
 import io.github.feelfreelinux.wykopmobilny.api.addlink.AddLinkApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 
 class AddLinkDetailsFragmentPresenter(
     val schedulers: Schedulers,
@@ -11,18 +12,17 @@ class AddLinkDetailsFragmentPresenter(
 
     fun getImages(key: String) {
         view?.showImagesLoading(true)
-        compositeObservable.add(
-            addLinkApi.getImages(key)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.showImages(it)
-                    view?.showImagesLoading(false)
-                }, {
-                    view?.showErrorDialog(it)
-                    view?.showImagesLoading(false)
-                })
-        )
+        addLinkApi.getImages(key)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.showImages(it)
+                view?.showImagesLoading(false)
+            }, {
+                view?.showErrorDialog(it)
+                view?.showImagesLoading(false)
+            })
+            .intoComposite(compositeObservable)
     }
 
     fun publishLink(
@@ -35,13 +35,12 @@ class AddLinkDetailsFragmentPresenter(
         imageKey: String
     ) {
         view?.showLinkUploading(true)
-        compositeObservable.add(
-            addLinkApi.publishLink(key, title, description, tags, imageKey, sourceUrl, plus18)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.openLinkScreen(it)
-                }, { view?.showErrorDialog(it) })
-        )
+        addLinkApi.publishLink(key, title, description, tags, imageKey, sourceUrl, plus18)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.openLinkScreen(it)
+            }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 }
