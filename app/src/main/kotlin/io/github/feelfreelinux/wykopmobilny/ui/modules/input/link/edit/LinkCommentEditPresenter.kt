@@ -5,6 +5,7 @@ import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputView
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.InputPresenter
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 
 class LinkCommentEditPresenter(
     val schedulers: Schedulers,
@@ -15,17 +16,16 @@ class LinkCommentEditPresenter(
 
     private fun editLinkComment() {
         view?.showProgressBar = true
-        compositeObservable.add(
-            linksApi.commentEdit(view?.textBody!!, linkCommentId)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.exitActivity() },
-                    {
-                        view?.showProgressBar = false
-                        view?.showErrorDialog(it)
-                    })
-        )
+        linksApi.commentEdit(view?.textBody!!, linkCommentId)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.exitActivity() },
+                {
+                    view?.showProgressBar = false
+                    view?.showErrorDialog(it)
+                })
+            .intoComposite(compositeObservable)
     }
 
     override fun sendWithPhoto(photo: WykopImageFile, containsAdultContent: Boolean) = editLinkComment()

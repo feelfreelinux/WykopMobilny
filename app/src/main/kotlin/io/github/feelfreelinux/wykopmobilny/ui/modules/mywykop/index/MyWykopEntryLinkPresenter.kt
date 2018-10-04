@@ -12,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionList
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrylink.EntryLinkFragmentView
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 import io.reactivex.Single
 
 class MyWykopEntryLinkPresenter(
@@ -27,56 +28,53 @@ class MyWykopEntryLinkPresenter(
 
     fun loadIndex(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
-        compositeObservable.add(
-            myWykopApi.getIndex(page)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    {
-                        if (it.isNotEmpty()) {
-                            page++
-                            view?.addItems(it, shouldRefresh)
-                        } else view?.disableLoading()
-                    },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        myWykopApi.getIndex(page)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                {
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addItems(it, shouldRefresh)
+                    } else view?.disableLoading()
+                },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     fun loadTags(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
-        compositeObservable.add(
-            myWykopApi.byTags(page)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    {
-                        if (it.isNotEmpty()) {
-                            page++
-                            view?.addItems(it, shouldRefresh)
-                        } else view?.disableLoading()
-                    },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        myWykopApi.byTags(page)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                {
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addItems(it, shouldRefresh)
+                    } else view?.disableLoading()
+                },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     fun loadUsers(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
-        compositeObservable.add(
-            myWykopApi.byUsers(page)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    {
-                        if (it.isNotEmpty()) {
-                            page++
-                            view?.addItems(it, shouldRefresh)
-                        } else view?.disableLoading()
-                    },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        myWykopApi.byUsers(page)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                {
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addItems(it, shouldRefresh)
+                    } else view?.disableLoading()
+                },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     override fun voteEntry(entry: Entry) =
@@ -96,16 +94,15 @@ class MyWykopEntryLinkPresenter(
 
     override fun getVoters(entry: Entry) {
         view?.openVotersMenu()
-        compositeObservable.add(
-            entriesApi.getEntryVoters(entry.id)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.showVoters(it)
-                }, {
-                    view?.showErrorDialog(it)
-                })
-        )
+        entriesApi.getEntryVoters(entry.id)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.showVoters(it)
+            }, {
+                view?.showErrorDialog(it)
+            })
+            .intoComposite(compositeObservable)
     }
 
     override fun dig(link: Link) =
@@ -115,28 +112,26 @@ class MyWykopEntryLinkPresenter(
         linksInteractor.voteRemove(link).processLinkSingle(link)
 
     private fun Single<Entry>.processEntrySingle(entry: Entry) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateEntry(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateEntry(entry)
-                    })
-        )
+        this
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateEntry(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateEntry(entry)
+                })
+            .intoComposite(compositeObservable)
     }
 
     private fun Single<Link>.processLinkSingle(link: Link) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateLink(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateLink(link)
-                    })
-        )
+        this
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateLink(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateLink(link)
+                })
+            .intoComposite(compositeObservable)
     }
 }

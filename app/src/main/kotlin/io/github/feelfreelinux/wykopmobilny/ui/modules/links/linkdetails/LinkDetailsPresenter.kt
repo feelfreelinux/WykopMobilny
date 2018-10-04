@@ -10,6 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.link.LinkHeaderActionLi
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.link.LinkInteractor
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentInteractor
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 import io.reactivex.Single
 
 class LinkDetailsPresenter(
@@ -47,129 +48,121 @@ class LinkDetailsPresenter(
         linkCommentInteractor.removeComment(comment).processLinkCommentSingle(comment)
 
     fun loadComments(scrollCommentId: Int? = null) {
-        compositeObservable.add(
-            linksApi.getLinkComments(linkId, sortBy)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.showLinkComments(it)
-                    scrollCommentId?.let {
-                        view?.scrollToComment(scrollCommentId)
-                    }
-                }, { view?.showErrorDialog(it) })
-        )
+        linksApi.getLinkComments(linkId, sortBy)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.showLinkComments(it)
+                scrollCommentId?.let {
+                    view?.scrollToComment(scrollCommentId)
+                }
+            }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     fun loadLinkAndComments(scrollCommentId: Int? = null) {
-        compositeObservable.add(
-            linksApi.getLink(linkId)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.updateLink(it)
-                    loadComments(scrollCommentId)
-                }, { view?.showErrorDialog(it) })
-        )
+        linksApi.getLink(linkId)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.updateLink(it)
+                loadComments(scrollCommentId)
+            }, {
+                view?.showErrorDialog(it)
+            })
+            .intoComposite(compositeObservable)
     }
 
     fun updateLink() {
-        compositeObservable.add(
-            linksApi.getLink(linkId)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateLink(it) }, { view?.showErrorDialog(it) })
-        )
+        linksApi.getLink(linkId)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateLink(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     fun sendReply(body: String, typedInputStream: WykopImageFile, containsAdultContent: Boolean) {
         val replyCommentId = view!!.getReplyCommentId()
         if (replyCommentId != -1) {
-            compositeObservable.add(
-                linksApi.commentAdd(body, containsAdultContent, typedInputStream, linkId, replyCommentId)
-                    .subscribeOn(schedulers.backgroundThread())
-                    .observeOn(schedulers.mainThread())
-                    .subscribe({
-                        view?.resetInputbarState()
-                        view?.hideInputToolbar()
-                        loadComments(it.id)
-                    }, {
-                        view?.showErrorDialog(it)
-                        view?.hideInputbarProgress()
-                    })
-            )
+            linksApi.commentAdd(body, containsAdultContent, typedInputStream, linkId, replyCommentId)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe({
+                    view?.resetInputbarState()
+                    view?.hideInputToolbar()
+                    loadComments(it.id)
+                }, {
+                    view?.showErrorDialog(it)
+                    view?.hideInputbarProgress()
+                })
+                .intoComposite(compositeObservable)
         } else {
-            compositeObservable.add(
-                linksApi.commentAdd(body, containsAdultContent, typedInputStream, linkId)
-                    .subscribeOn(schedulers.backgroundThread())
-                    .observeOn(schedulers.mainThread())
-                    .subscribe({
-                        view?.resetInputbarState()
-                        view?.hideInputToolbar()
-                        loadComments(it.id)
-                    }, {
-                        view?.showErrorDialog(it)
-                        view?.hideInputbarProgress()
-                    })
-            )
+            linksApi.commentAdd(body, containsAdultContent, typedInputStream, linkId)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe({
+                    view?.resetInputbarState()
+                    view?.hideInputToolbar()
+                    loadComments(it.id)
+                }, {
+                    view?.showErrorDialog(it)
+                    view?.hideInputbarProgress()
+                })
+                .intoComposite(compositeObservable)
         }
     }
 
     fun sendReply(body: String, embed: String?, containsAdultContent: Boolean) {
         val replyCommentId = view!!.getReplyCommentId()
         if (replyCommentId != -1) {
-            compositeObservable.add(
-                linksApi.commentAdd(body, embed, containsAdultContent, linkId, replyCommentId)
-                    .subscribeOn(schedulers.backgroundThread())
-                    .observeOn(schedulers.mainThread())
-                    .subscribe({
-                        view?.resetInputbarState()
-                        view?.hideInputToolbar()
-                        loadComments(it.id)
-                    }, {
-                        view?.showErrorDialog(it)
-                        view?.hideInputbarProgress()
-                    })
-            )
+            linksApi.commentAdd(body, embed, containsAdultContent, linkId, replyCommentId)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe({
+                    view?.resetInputbarState()
+                    view?.hideInputToolbar()
+                    loadComments(it.id)
+                }, {
+                    view?.showErrorDialog(it)
+                    view?.hideInputbarProgress()
+                })
+                .intoComposite(compositeObservable)
         } else {
-            compositeObservable.add(
-                linksApi.commentAdd(body, embed, containsAdultContent, linkId)
-                    .subscribeOn(schedulers.backgroundThread())
-                    .observeOn(schedulers.mainThread())
-                    .subscribe({
-                        view?.resetInputbarState()
-                        view?.hideInputToolbar()
-                        loadComments(it.id)
-                    }, {
-                        view?.showErrorDialog(it)
-                        view?.hideInputbarProgress()
-                    })
-            )
+            linksApi.commentAdd(body, embed, containsAdultContent, linkId)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .subscribe({
+                    view?.resetInputbarState()
+                    view?.hideInputToolbar()
+                    loadComments(it.id)
+                }, {
+                    view?.showErrorDialog(it)
+                    view?.hideInputbarProgress()
+                })
+                .intoComposite(compositeObservable)
         }
     }
 
     private fun Single<LinkComment>.processLinkCommentSingle(link: LinkComment) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateLinkComment(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateLinkComment(link)
-                    })
-        )
+        this
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateLinkComment(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateLinkComment(link)
+                })
+            .intoComposite(compositeObservable)
     }
 
     private fun Single<Link>.processLinkSingle(link: Link) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateLink(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateLink(link)
-                    })
-        )
+        this.subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateLink(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateLink(link)
+                })
+            .intoComposite(compositeObservable)
     }
 }

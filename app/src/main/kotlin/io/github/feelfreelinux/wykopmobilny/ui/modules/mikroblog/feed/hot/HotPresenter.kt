@@ -4,6 +4,7 @@ import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 
 
 class HotPresenter(
@@ -24,7 +25,6 @@ class HotPresenter(
         }
         val failure: (Throwable) -> Unit = { view?.showErrorDialog(it) }
 
-        compositeObservable.add(
             when (period) {
                 "24", "12", "6" -> {
                     entriesApi.getHot(page, period).subscribeOn(schedulers.backgroundThread())
@@ -41,6 +41,6 @@ class HotPresenter(
                         .observeOn(schedulers.mainThread())
                         .subscribe(success, failure)
             }
-        )
+                .intoComposite(compositeObservable)
     }
 }

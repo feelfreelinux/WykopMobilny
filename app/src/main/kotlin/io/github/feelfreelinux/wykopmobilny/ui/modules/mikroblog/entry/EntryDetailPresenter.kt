@@ -10,6 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteract
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentInteractor
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 import io.reactivex.Single
 
 class EntryDetailPresenter(
@@ -38,16 +39,15 @@ class EntryDetailPresenter(
 
     override fun getVoters(entry: Entry) {
         view?.openVotersMenu()
-        compositeObservable.add(
-            entriesApi.getEntryVoters(entry.id)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.showVoters(it)
-                }, {
-                    view?.showErrorDialog(it)
-                })
-        )
+        entriesApi.getEntryVoters(entry.id)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.showVoters(it)
+            }, {
+                view?.showErrorDialog(it)
+            })
+            .intoComposite(compositeObservable)
     }
 
     override fun voteComment(comment: EntryComment) =
@@ -61,90 +61,87 @@ class EntryDetailPresenter(
 
     override fun getVoters(comment: EntryComment) {
         view?.openVotersMenu()
-        compositeObservable.add(
-            entriesApi.getEntryCommentVoters(comment.id)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.showVoters(it)
-                }, {
-                    view?.showErrorDialog(it)
-                })
-        )
+        entriesApi.getEntryCommentVoters(comment.id)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.showVoters(it)
+            }, {
+                view?.showErrorDialog(it)
+            })
+            .intoComposite(compositeObservable)
     }
 
     fun loadData() {
         view?.hideInputToolbar()
-        compositeObservable.add(
-            entriesApi.getEntry(entryId)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.showEntry(it) },
-                    { view?.showErrorDialog(it) }
-                ))
-
+        entriesApi.getEntry(entryId)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.showEntry(it) },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     fun addComment(body: String, photo: WykopImageFile, containsAdultContent: Boolean) {
-        compositeObservable.add(
-            entriesApi.addEntryComment(body, entryId, photo, containsAdultContent)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    {
-                        view?.hideInputbarProgress()
-                        view?.resetInputbarState()
-                        loadData() // Refresh view
-                    },
-                    {
-                        view?.hideInputbarProgress()
-                        view?.showErrorDialog(it)
-                    }
-                ))
+        entriesApi.addEntryComment(body, entryId, photo, containsAdultContent)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                {
+                    view?.hideInputbarProgress()
+                    view?.resetInputbarState()
+                    loadData() // Refresh view
+                },
+                {
+                    view?.hideInputbarProgress()
+                    view?.showErrorDialog(it)
+                }
+            )
+            .intoComposite(compositeObservable)
     }
 
     fun addComment(body: String, photo: String?, containsAdultContent: Boolean) {
-        compositeObservable.add(
-            entriesApi.addEntryComment(body, entryId, photo, containsAdultContent)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    {
-                        view?.hideInputbarProgress()
-                        view?.resetInputbarState()
-                        loadData() // Refresh view
-                    },
-                    {
-                        view?.hideInputbarProgress()
-                        view?.showErrorDialog(it)
-                    }
-                ))
+        entriesApi.addEntryComment(body, entryId, photo, containsAdultContent)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                {
+                    view?.hideInputbarProgress()
+                    view?.resetInputbarState()
+                    loadData() // Refresh view
+                },
+                {
+                    view?.hideInputbarProgress()
+                    view?.showErrorDialog(it)
+                }
+            )
+            .intoComposite(compositeObservable)
     }
 
     private fun Single<Entry>.processEntrySingle(entry: Entry) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateEntry(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateEntry(entry)
-                    })
-        )
+        this
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateEntry(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateEntry(entry)
+                })
+            .intoComposite(compositeObservable)
+
     }
 
     private fun Single<EntryComment>.processEntryCommentSingle(comment: EntryComment) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateComment(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateComment(comment)
-                    })
-        )
+        this
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateComment(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateComment(comment)
+                })
+            .intoComposite(compositeObservable)
     }
 }
