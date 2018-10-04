@@ -230,9 +230,6 @@ class EntryCommentViewHolder(
         dialog.show()
     }
 
-    override fun cleanRecycled() {
-    }
-
     private fun handleClick(comment: EntryComment) {
         if (enableClickListener) {
             navigatorApi.openEntryDetailsActivity(comment.entryId, isEmbedViewResized)

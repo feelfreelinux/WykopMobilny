@@ -79,7 +79,7 @@ class PMMessageViewHolder(
         view.notificationItem.layoutParams = cardViewParams
     }
 
-    override fun cleanRecycled() {
+    fun cleanRecycled() {
         view.apply {
             date.text = null
             body.text = null

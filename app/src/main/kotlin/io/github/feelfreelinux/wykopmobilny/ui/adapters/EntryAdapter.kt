@@ -92,11 +92,6 @@ class EntryAdapter @Inject constructor(
         }
     }
 
-    override fun onViewRecycled(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
-        (holder as? RecyclableViewHolder)?.cleanRecycled()
-        super.onViewRecycled(holder)
-    }
-
     fun updateEntry(entry: Entry) {
         this.entry = entry
         notifyItemChanged(0)
