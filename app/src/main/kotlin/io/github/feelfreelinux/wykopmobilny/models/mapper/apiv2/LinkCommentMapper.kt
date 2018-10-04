@@ -8,7 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 class LinkCommentMapper {
     companion object {
         fun map(value: LinkCommentResponse, owmContentFilter: OWMContentFilter) =
-            owmContentFilter.fiterLinkComment(
+            owmContentFilter.filterLinkComment(
                 LinkComment(
                     value.id, AuthorMapper.map(value.author), value.date.toPrettyDate(),
                     value.body, value.blocked,
