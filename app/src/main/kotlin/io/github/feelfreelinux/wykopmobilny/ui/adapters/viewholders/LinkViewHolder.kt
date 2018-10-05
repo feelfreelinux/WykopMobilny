@@ -85,10 +85,6 @@ class LinkViewHolder(
         }
     }
 
-    override fun cleanRecycled() {
-
-    }
-
     fun bindView(link: Link) {
         setupBody(link)
         setupButtons(link)

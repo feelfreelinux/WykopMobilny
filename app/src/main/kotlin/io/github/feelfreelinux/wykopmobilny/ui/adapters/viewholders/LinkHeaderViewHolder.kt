@@ -54,9 +54,6 @@ class LinkHeaderViewHolder(
         }
     }
 
-    override fun cleanRecycled() {
-    }
-
     fun bindView(link: Link) {
         when (link.userVote) {
             "dig" -> showDigged(link)
@@ -111,7 +108,7 @@ class LinkHeaderViewHolder(
     private fun setupBody(link: Link) {
         titleTextView.text = link.title.removeHtml()
         image.isVisible = link.preview != null
-        link.preview?.let { image.loadImage(link.preview!!.stripImageCompression()) }
+        link.preview?.let { image.loadImage(link.preview.stripImageCompression()) }
         description.text = link.description.removeHtml()
         relatedCountTextView.text = link.relatedCount.toString()
         relatedCountTextView.setOnClickListener {

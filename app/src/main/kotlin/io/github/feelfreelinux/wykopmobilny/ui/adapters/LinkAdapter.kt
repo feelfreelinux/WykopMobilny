@@ -5,7 +5,6 @@ import io.github.feelfreelinux.wykopmobilny.base.adapter.AdvancedProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.SimpleLinkViewHolder
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import javax.inject.Inject
@@ -30,10 +29,4 @@ class LinkAdapter @Inject constructor(val settingsPreferencesApi: SettingsPrefer
         if (holder is SimpleLinkViewHolder) holder.bindView(item)
         else (holder as? LinkViewHolder)?.bindView(item)
     }
-
-    override fun onViewRecycled(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
-        (holder as? RecyclableViewHolder)?.cleanRecycled()
-        super.onViewRecycled(holder)
-    }
-
 }

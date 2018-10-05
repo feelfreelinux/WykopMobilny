@@ -143,8 +143,4 @@ class SimpleLinkViewHolder(
         simple_image.alpha = alpha
         simple_title.alpha = alpha
     }
-
-    override fun cleanRecycled() {
-        //Do nothing
-    }
 }

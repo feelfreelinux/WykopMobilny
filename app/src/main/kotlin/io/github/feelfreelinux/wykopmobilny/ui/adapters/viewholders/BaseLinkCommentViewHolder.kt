@@ -90,9 +90,6 @@ abstract class BaseLinkCommentViewHolder(
     abstract var shareButton: TextView
     open var collapsedCommentsTextView: TextView? = null
 
-    override fun cleanRecycled() {
-    }
-
     open fun bindView(linkComment: LinkComment, isAuthorComment: Boolean, commentId: Int = -1) {
         setupBody(linkComment)
         setupButtons(linkComment)

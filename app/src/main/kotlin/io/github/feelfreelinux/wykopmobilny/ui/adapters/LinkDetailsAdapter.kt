@@ -101,11 +101,6 @@ class LinkDetailsAdapter @Inject constructor(
         }
     }
 
-    override fun onViewRecycled(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder) {
-        (holder as? RecyclableViewHolder)?.cleanRecycled()
-        super.onViewRecycled(holder)
-    }
-
     fun updateLinkComment(comment: LinkComment) {
         val position = link!!.comments.indexOf(comment)
         link!!.comments[position] = comment
