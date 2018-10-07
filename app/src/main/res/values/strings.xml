@@ -44,6 +44,7 @@
     <string name="pref_content_filter">Filtrowanie treści</string>
     <string name="pref_content_plus18">Pokazuj treści 18+</string>
     <string name="pref_content_filternsfw">Ukryj treści z tagiem #nsfw</string>
+    <string name="pref_disable_exit_confirmation">Wyłącz potwierdzenie wyjścia z aplikacji</string>
 
     <string name="license">Publikacja aplikacji na licencji MIT</string>
     <string name="report_bug">Zgłoś błąd pod tagiem #owmbugi</string>
