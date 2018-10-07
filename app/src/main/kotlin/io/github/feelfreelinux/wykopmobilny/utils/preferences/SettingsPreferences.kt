@@ -29,6 +29,7 @@ interface SettingsPreferencesApi {
     var enableEmbedPlayer: Boolean
     var useBuiltInBrowser: Boolean
     var groupNotifications: Boolean
+    var disableExitConfirmation: Boolean
 }
 
 class SettingsPreferences(context: Context) : Preferences(context, true), SettingsPreferencesApi {
@@ -58,5 +59,6 @@ class SettingsPreferences(context: Context) : Preferences(context, true), Settin
     override var enableYoutubePlayer by booleanPref(defaultValue = true)
     override var useBuiltInBrowser by booleanPref(defaultValue = true)
     override var groupNotifications by booleanPref(defaultValue = true)
+    override var disableExitConfirmation by booleanPref(defaultValue = false)
 
 }

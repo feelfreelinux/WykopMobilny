@@ -320,7 +320,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
         else {
-            if (tapDoubleClickedMillis + 2000L > System.currentTimeMillis()) {
+            if (settingsApi.disableExitConfirmation || tapDoubleClickedMillis + 2000L > System.currentTimeMillis()) {
                 super.onBackPressed()
                 return
             } else Toast.makeText(this, R.string.doubleback_to_exit, Toast.LENGTH_SHORT).show()

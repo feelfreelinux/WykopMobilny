@@ -1,6 +1,5 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sample="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+                                      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.preference.Preference
         app:iconSpaceReserved="false"
@@ -31,6 +30,12 @@
             android:entries="@array/preferences_notifications_frequency"
             android:entryValues="@array/preferences_notifications_frequency_values"
             android:defaultValue="15"/>
+
+        <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
+            android:key="disableExitConfirmation"
+            android:title="@string/pref_disable_exit_confirmation"
+            android:defaultValue="false"/>
 
     </com.takisoft.preferencex.PreferenceCategory>
 
