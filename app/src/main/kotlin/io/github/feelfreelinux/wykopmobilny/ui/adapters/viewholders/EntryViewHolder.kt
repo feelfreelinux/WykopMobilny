@@ -270,9 +270,6 @@ class EntryViewHolder(
         }
     }
 
-    override fun cleanRecycled() {
-    }
-
     fun inflateEmbed() {
         embedView = entryImageViewStub.inflate() as WykopEmbedView
     }

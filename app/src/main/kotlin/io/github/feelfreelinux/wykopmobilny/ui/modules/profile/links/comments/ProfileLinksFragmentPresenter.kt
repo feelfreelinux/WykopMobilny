@@ -6,6 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentInteractor
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 import io.reactivex.Single
 
 class ProfileLinksFragmentPresenter(
@@ -19,20 +20,19 @@ class ProfileLinksFragmentPresenter(
 
     fun loadData(shouldRefresh: Boolean) {
         if (shouldRefresh) page = 1
-        compositeObservable.add(
-            profileApi.getLinkComments(username, page)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    {
-                        if (it.isNotEmpty()) {
-                            page++
-                            view?.addItems(it, shouldRefresh)
-                        } else view?.disableLoading()
-                    },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        profileApi.getLinkComments(username, page)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                {
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addItems(it, shouldRefresh)
+                    } else view?.disableLoading()
+                },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     override fun removeVote(comment: LinkComment) =
@@ -48,15 +48,14 @@ class ProfileLinksFragmentPresenter(
         linksInteractor.removeComment(comment).processLinkCommentSingle(comment)
 
     private fun Single<LinkComment>.processLinkCommentSingle(link: LinkComment) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateComment(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateComment(link)
-                    })
-        )
+        this
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateComment(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateComment(link)
+                })
+            .intoComposite(compositeObservable)
     }
 }

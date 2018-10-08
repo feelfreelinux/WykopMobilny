@@ -4,6 +4,7 @@ import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.InputPresenter
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 
 class AddEntryPresenter(
     private val schedulers: Schedulers,
@@ -12,31 +13,29 @@ class AddEntryPresenter(
 
     override fun sendWithPhoto(photo: WykopImageFile, containsAdultContent: Boolean) {
         view?.showProgressBar = true
-        compositeObservable.add(
-            entriesApi.addEntry(view?.textBody!!, photo, containsAdultContent)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.openEntryActivity(it.id) },
-                    {
-                        view?.showProgressBar = false
-                        view?.showErrorDialog(it)
-                    })
-        )
+        entriesApi.addEntry(view?.textBody!!, photo, containsAdultContent)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.openEntryActivity(it.id) },
+                {
+                    view?.showProgressBar = false
+                    view?.showErrorDialog(it)
+                })
+            .intoComposite(compositeObservable)
     }
 
     override fun sendWithPhotoUrl(photo: String?, containsAdultContent: Boolean) {
         view?.showProgressBar = true
-        compositeObservable.add(
-            entriesApi.addEntry(view?.textBody!!, photo, containsAdultContent)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.openEntryActivity(it.id) },
-                    {
-                        view?.showProgressBar = false
-                        view?.showErrorDialog(it)
-                    })
-        )
+        entriesApi.addEntry(view?.textBody!!, photo, containsAdultContent)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.openEntryActivity(it.id) },
+                {
+                    view?.showProgressBar = false
+                    view?.showErrorDialog(it)
+                })
+            .intoComposite(compositeObservable)
     }
 }

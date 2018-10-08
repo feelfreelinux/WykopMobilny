@@ -1,48 +1,51 @@
 # Wykop Mobilny 📱
 
-> Nieoficjalny klient [wykop.pl](https://wykop.pl) na Android, napisany w Kotlin.
-
 [![Build Status](https://travis-ci.org/feelfreelinux/WykopMobilny.svg?branch=master)](https://travis-ci.org/feelfreelinux/WykopMobilny)
 [![Discord](https://img.shields.io/discord/455024671440633857.svg)](https://discord.gg/WgQZJD3)
 [![Support via PayPal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/WykopMobilny/)
+
+> Nieoficjalny klient [wykop.pl](https://wykop.pl) na Androida, napisany w Kotlinie.
 
 <img src="screenshots/link_details_light.png" height="33%" width="33%"><img src="screenshots/mainpage_dark.png" height="33%" width="33%"><img src="screenshots/tag_light.png" height="33%" width="33%">
 
 ## Funkcje
 
-- Obsługa znalezisk
-- Strona główna
-- Wykopalisko
-- Funkcje zalogowanego użytkownika (Powiadomienia, odpisywanie na komentarze)
-- Wiadomości prywatne
+- Przeglądanie znalezisk (Strona główna, Wykopalisko, Ulubione, Tagi)
+- Przeglądanie wpisów (Mój wykop, Ulubione, Gorące, Najnowsze, Tagi)
 - Mikroblog
-- Ulubione
-- Mój Wykop
-- Wyszukiwarka 
-- Ciemny styl
+- Ciemny motyw (zarówno szary jak i dla AMOLEDów)
+- Ankiety
+- Wiadomości prywatne
+- Pełna konfigurowalność
 
-## Instalacja
+## Pobieranie
 
-[Pobierz najnowszą wersję aplikacji](https://github.com/feelfreelinux/WykopMobilny/releases/latest)
+Możesz [pobrać najnowsze wydanie wraz z wbudowanymi powiadomieniami o aktualizacji][download-link] lub pobrać aplikację ze sklepu Google Play.
 
-## Dev
+[![Pobierz na Google Play][google-play-badge]][google-play-download]
 
-Aplikacja korzysta z APIv2 które nie jest jeszcze publicznie dostępne. Klucze APIv1 nie są wspierane. Aby zbudowac ten projekt umieść klucze APIv2 w tym formacie `apiKey="APIKEY" apiSecret="APISECRET"` w pliku `credentials.properties`.
+## Development
+
+Jeżeli chcesz zbudować swoją własną wersję Wykopu Mobilnego, skopiuj `credentials.properties.example` do `credentials.properties` i wypełnij go odpowiednimi kluczami API. Pamiętaj, że obecnie aplikacja korzysta z API w wersji 2. Klucze wersji 1 nie są wspierane i nie będą działały.
+
+- `apiKey` oraz `apiSecret` są kluczami API z Wykopu, które powinny zostać uzyskane [stąd][wykop-api] (przyznając wszystkie uprawnienia).
+- `googleKey` to klucz API dla YouTube playera. Powinien zostać pozyskany według [instrukcji na developers.google.com][youtube-api].
 
 ## Lista zmian
 
-Zwykle opisuje postępy w pracach nad aplikacją wraz z listą zmian [tutaj](https://wykop.pl/tag/otwartywykopmobilny).
+Zwykle opisuje postępy w pracach nad aplikacją wraz z listą zmian [pod #otwartywykopmobilny na Wykopie][wykop-tag].
 
-## Użyte biblioteki:
-
-- [RxJava2](https://github.com/ReactiveX/RxJava)
-- [Retrofit2](https://github.com/square/retrofit)
-- [Dagger2](https://github.com/google/dagger)
-- Glide
-- AppUpdater
-- LeakCanary
-- android-job
-
-### Licencja
-
-MIT
+[build-badge]: https://travis-ci.org/feelfreelinux/WykopMobilny.svg?branch=master
+[build]: https://travis-ci.org/feelfreelinux/WykopMobilny
+[discord-badge]: https://img.shields.io/discord/455024671440633857.svg
+[discord]: https://discord.gg/WgQZJD3
+[paypal-badge]: https://img.shields.io/badge/Donate-PayPal-green.svg
+[paypal]: https://www.paypal.me/WykopMobilny/
+[wykop]: https://wykop.pl
+[readme-pl]: README.pl.md
+[download-link]: https://github.com/feelfreelinux/WykopMobilny/releases/latest
+[google-play-badge]: https://play.google.com/intl/en_us/badges/images/badge_new.png
+[google-play-download]: https://play.google.com/store/apps/details?id=io.github.feelfreelinux.wykopmobilny
+[wykop-api]: https://www.wykop.pl/dla-programistow/nowa-aplikacja/
+[youtube-api]: https://developers.google.com/youtube/android/player/register
+[wykop-tag]: https://wykop.pl/tag/otwartywykopmobilny

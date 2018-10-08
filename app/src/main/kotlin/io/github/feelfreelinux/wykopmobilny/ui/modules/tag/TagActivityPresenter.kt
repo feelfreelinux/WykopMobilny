@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.tag
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 
 class TagActivityPresenter(
     val schedulers: Schedulers,
@@ -12,50 +13,46 @@ class TagActivityPresenter(
     lateinit var tag: String
 
     fun blockTag() {
-        compositeObservable.add(
-            tagApi.block(tag)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.setObserveState(it) },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        tagApi.block(tag)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.setObserveState(it) },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     fun unblockTag() {
-        compositeObservable.add(
-            tagApi.unblock(tag)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.setObserveState(it) },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        tagApi.unblock(tag)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.setObserveState(it) },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     fun observeTag() {
-        compositeObservable.add(
-            tagApi.observe(tag)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.setObserveState(it) },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        tagApi.observe(tag)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.setObserveState(it) },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     fun unobserveTag() {
-        compositeObservable.add(
-            tagApi.unobserve(tag)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.setObserveState(it) },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        tagApi.unobserve(tag)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.setObserveState(it) },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 }

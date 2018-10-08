@@ -5,6 +5,7 @@ import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
 import io.github.feelfreelinux.wykopmobilny.api.tag.TagApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 
 class BlacklistPresenter(
     val schedulers: Schedulers,
@@ -14,55 +15,48 @@ class BlacklistPresenter(
 ) : BasePresenter<BlacklistView>() {
 
     fun importBlacklist() {
-        compositeObservable.add(
-            scraperApi.getBlacklist()
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })
-        )
+        scraperApi.getBlacklist()
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     fun blockTag(tag: String) {
-        compositeObservable.add(
-            tagApi.block(tag)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.refreshResults() },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        tagApi.block(tag)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.refreshResults() },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     fun unblockTag(tag: String) {
-        compositeObservable.add(
-            tagApi.unblock(tag)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe(
-                    { view?.refreshResults() },
-                    { view?.showErrorDialog(it) }
-                )
-        )
+        tagApi.unblock(tag)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe(
+                { view?.refreshResults() },
+                { view?.showErrorDialog(it) }
+            )
+            .intoComposite(compositeObservable)
     }
 
     fun blockUser(nick: String) {
-        compositeObservable.add(
-            profileApi.block(nick)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.refreshResults() }, { view?.showErrorDialog(it) })
-
-        )
+        profileApi.block(nick)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.refreshResults() }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     fun unblockUser(nick: String) {
-        compositeObservable.add(
-            profileApi.unblock(nick)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.refreshResults() }, { view?.showErrorDialog(it) })
-
-        )
+        profileApi.unblock(nick)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.refreshResults() }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 }

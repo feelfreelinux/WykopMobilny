@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.links.related
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 
 class RelatedPresenter(
     val schedulers: Schedulers,
@@ -12,11 +13,10 @@ class RelatedPresenter(
     var linkId = -1
 
     fun getRelated() {
-        compositeObservable.add(
-            linksApi.getRelated(linkId)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.showRelated(it) }, { view?.showErrorDialog(it) })
-        )
+        linksApi.getRelated(linkId)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.showRelated(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 }

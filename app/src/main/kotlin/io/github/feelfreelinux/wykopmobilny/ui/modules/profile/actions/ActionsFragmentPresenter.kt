@@ -10,6 +10,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteract
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 import io.reactivex.Single
 
 class ActionsFragmentPresenter(
@@ -23,15 +24,14 @@ class ActionsFragmentPresenter(
     lateinit var username: String
 
     fun getActions() {
-        compositeObservable.add(
-            profileApi.getActions(username)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.addItems(it, true)
-                    view?.disableLoading()
-                }, { view?.showErrorDialog(it) })
-        )
+        profileApi.getActions(username)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.addItems(it, true)
+                view?.disableLoading()
+            }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 
     override fun voteEntry(entry: Entry) =
@@ -51,16 +51,15 @@ class ActionsFragmentPresenter(
 
     override fun getVoters(entry: Entry) {
         view?.openVotersMenu()
-        compositeObservable.add(
-            entriesApi.getEntryVoters(entry.id)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.showVoters(it)
-                }, {
-                    view?.showErrorDialog(it)
-                })
-        )
+        entriesApi.getEntryVoters(entry.id)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({
+                view?.showVoters(it)
+            }, {
+                view?.showErrorDialog(it)
+            })
+            .intoComposite(compositeObservable)
     }
 
     override fun dig(link: Link) =
@@ -70,28 +69,26 @@ class ActionsFragmentPresenter(
         linksInteractor.voteRemove(link).processLinkSingle(link)
 
     private fun Single<Entry>.processEntrySingle(entry: Entry) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateEntry(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateEntry(entry)
-                    })
-        )
+        this
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateEntry(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateEntry(entry)
+                })
+            .intoComposite(compositeObservable)
     }
 
     private fun Single<Link>.processLinkSingle(link: Link) {
-        compositeObservable.add(
-            this
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.updateLink(it) },
-                    {
-                        view?.showErrorDialog(it)
-                        view?.updateLink(link)
-                    })
-        )
+        this
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.updateLink(it) },
+                {
+                    view?.showErrorDialog(it)
+                    view?.updateLink(link)
+                })
+            .intoComposite(compositeObservable)
     }
 }

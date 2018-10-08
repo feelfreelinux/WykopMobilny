@@ -4,6 +4,7 @@ import io.github.feelfreelinux.wykopmobilny.api.scraper.ScraperApi
 import io.github.feelfreelinux.wykopmobilny.api.user.LoginApi
 import io.github.feelfreelinux.wykopmobilny.base.BasePresenter
 import io.github.feelfreelinux.wykopmobilny.base.Schedulers
+import io.github.feelfreelinux.wykopmobilny.utils.intoComposite
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.LoginCredentials
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Single
@@ -19,16 +20,15 @@ class LoginScreenPresenter(
         extractToken(url)?.apply {
             userManager.loginUser(this)
 
-            compositeObservable.add(
-                userApi.getUserSessionToken()
-                    .subscribeOn(schedulers.backgroundThread())
-                    .observeOn(schedulers.mainThread())
-                    .flatMap { it ->
-                        userManager.saveCredentials(it)
-                        Single.just(it)
-                    }
-                    .subscribe({ view?.goBackToSplashScreen() }, { view?.showErrorDialog(it) })
-            )
+            userApi.getUserSessionToken()
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .flatMap { it ->
+                    userManager.saveCredentials(it)
+                    Single.just(it)
+                }
+                .subscribe({ view?.goBackToSplashScreen() }, { view?.showErrorDialog(it) })
+                .intoComposite(compositeObservable)
         }
     }
 
@@ -58,11 +58,10 @@ class LoginScreenPresenter(
     }
 
     fun importBlacklist() {
-        compositeObservable.add(
-            scraperApi.getBlacklist()
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })
-        )
+        scraperApi.getBlacklist()
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 }

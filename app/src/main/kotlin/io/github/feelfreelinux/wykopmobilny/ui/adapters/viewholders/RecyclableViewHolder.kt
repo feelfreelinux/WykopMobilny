@@ -8,8 +8,4 @@ abstract class RecyclableViewHolder(view: View) : androidx.recyclerview.widget.R
         const val SEPARATOR_SMALL = "SEP_SMALL"
         const val SEPARATOR_NORMAL = "SEP_NORMAL"
     }
-
-    open var separatorType = SEPARATOR_SMALL
-
-    abstract fun cleanRecycled()
 }
