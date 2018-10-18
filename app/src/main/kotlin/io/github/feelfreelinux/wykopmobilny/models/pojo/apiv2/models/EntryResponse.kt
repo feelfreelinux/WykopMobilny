@@ -19,5 +19,6 @@ class EntryResponse(
     @JsonProperty("survey") val survey: SurveyResponse?,
     @JsonProperty("user_vote") val userVote: Int,
     @JsonProperty("violation_url") val violationUrl: String?,
-    @JsonProperty("app") val app: String?
+    @JsonProperty("app") val app: String?,
+    @JsonProperty("can_comment") val isCommentingPossible: Boolean
 )

@@ -155,6 +155,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         adapter.entry = entry
         entry.comments.forEach { it.entryId = entry.id }
         inputToolbar.setDefaultAddressant(entry.author.nick)
+        inputToolbar.setIfIsCommentingPossible(entry.isCommentingPossible)
         inputToolbar.show()
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
