@@ -26,7 +26,9 @@ class EntryMapper {
                     value.app,
                     value.violationUrl ?: "",
                     value.body?.toLowerCase()?.contains("#nsfw") ?: false,
-                    value.blocked
+                    value.blocked,
+                    true,
+                    value.isCommentingPossible
                 )
             )
     }

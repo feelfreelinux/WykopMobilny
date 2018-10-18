@@ -55,6 +55,7 @@ class InputToolbar @JvmOverloads constructor(
     var defaultText = ""
     var showToolbar = false
     var inputToolbarListener: InputToolbarListener? = null
+    var isCommentingPossible = false
 
     private val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(context, suggestApi) }
     private val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(context, suggestApi) }
@@ -241,9 +242,14 @@ class InputToolbar @JvmOverloads constructor(
         imm.showSoftInput(body, InputMethodManager.SHOW_IMPLICIT)
     }
 
+    fun setIfIsCommentingPossible(value: Boolean) {
+        isCommentingPossible = value
+    }
+
     fun show() {
-        // Only show if user's logged in
-        isVisible = userManager.isUserAuthorized()
+        // Only show if user's logged in and has permissions to do it
+        // If OP blacklisted user, then user cannot respond to his entries
+        isVisible = userManager.isUserAuthorized() && isCommentingPossible
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
