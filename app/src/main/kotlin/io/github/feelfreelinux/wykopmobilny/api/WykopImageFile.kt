@@ -9,8 +9,21 @@ import io.github.feelfreelinux.wykopmobilny.utils.queryFileName
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.File
-import java.io.FileOutputStream
+import com.google.android.youtube.player.internal.y
+import com.google.android.youtube.player.internal.x
+import android.graphics.Bitmap
+import android.R.attr.orientation
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.util.Log
+import com.evernote.android.job.JobProxy.Common
+import com.google.android.youtube.player.internal.v
+import io.github.feelfreelinux.wykopmobilny.R.id.imageView
+import java.io.*
+import android.os.Environment.getExternalStorageDirectory
+
+
+
 
 class WykopImageFile(val uri: Uri, val context: Context) {
 
@@ -33,12 +46,13 @@ class WykopImageFile(val uri: Uri, val context: Context) {
             val opt = BitmapFactory.Options()
             opt.inJustDecodeBounds = true
             BitmapFactory.decodeFile(it.absolutePath, opt)
-            printout(opt.outMimeType)
             mimetype = opt.outMimeType
 
         }
 
-        return MultipartBody.Part.createFormData("embed", filename, RequestBody.create(MediaType.parse(mimetype), file))
+        val rotatedFile = ensureRotation(file)
+        printout(rotatedFile!!.name!!)
+        return MultipartBody.Part.createFormData("embed", rotatedFile!!.name, RequestBody.create(MediaType.parse(mimetype), rotatedFile))
     }
 
     private fun saveUri(uri: Uri, filename: String): File? {
@@ -62,5 +76,47 @@ class WykopImageFile(val uri: Uri, val context: Context) {
             }
         }
         return null
+    }
+
+    private fun ensureRotation(f: File?): File? {
+        try {
+            val exif = ExifInterface(f!!.getPath())
+            val orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL)
+
+            var angle = 0
+
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                angle = 90
+            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                angle = 180
+            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                angle = 270
+            }
+            if (angle == 0) return f
+
+            val mat = Matrix()
+            mat.postRotate(angle.toFloat())
+            val options = BitmapFactory.Options()
+            options.inSampleSize = 2
+
+            val bmp = BitmapFactory.decodeStream(FileInputStream(f),
+                    null, options)
+            val bitmap = Bitmap.createBitmap(bmp!!, 0, 0, bmp.width,
+                    bmp.height, mat, true)
+
+            val file = File.createTempFile("rSaved", ".0", context.cacheDir)
+            val fileOutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+            fileOutputStream.close()
+            return file
+
+        } catch (e: IOException) {
+            Log.w("TAG", "-- Error in setting image")
+        } catch (oom: OutOfMemoryError) {
+            Log.w("TAG", "-- OOM Error in setting image")
+        }
+        return f
     }
 }
