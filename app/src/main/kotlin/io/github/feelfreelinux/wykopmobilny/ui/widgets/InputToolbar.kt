@@ -55,7 +55,7 @@ class InputToolbar @JvmOverloads constructor(
     var defaultText = ""
     var showToolbar = false
     var inputToolbarListener: InputToolbarListener? = null
-    var isCommentingPossible = false
+    var isCommentingPossible = true
 
     private val usersSuggestionAdapter by lazy { UsersSuggestionsAdapter(context, suggestApi) }
     private val hashTagsSuggestionAdapter by lazy { HashTagsSuggestionsAdapter(context, suggestApi) }
