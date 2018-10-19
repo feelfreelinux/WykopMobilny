@@ -14,7 +14,7 @@ class EntryCommentMapper {
                     value.entryId ?: 0,
                     AuthorMapper.map(value.author),
                     value.body ?: "",
-                    value.date.toPrettyDate(),
+                    value.date,
                     value.userVote > 0,
                     if (value.embed != null) EmbedMapper.map(value.embed) else null,
                     value.voteCount,

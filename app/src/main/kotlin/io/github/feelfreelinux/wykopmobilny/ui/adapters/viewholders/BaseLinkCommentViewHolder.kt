@@ -221,9 +221,9 @@ abstract class BaseLinkCommentViewHolder(
 
         bottomSheetView.apply {
             author.text = comment.author.nick
-            date.text = comment.date
+            date.text = comment.fullDate
             comment.app?.let {
-                date.text = context.getString(R.string.date_with_user_app, comment.date, comment.app)
+                date.text = context.getString(R.string.date_with_user_app, comment.fullDate, comment.app)
             }
 
             comment_menu_copy.setOnClickListener {

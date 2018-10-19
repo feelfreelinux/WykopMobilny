@@ -10,7 +10,7 @@ class LinkCommentMapper {
         fun map(value: LinkCommentResponse, owmContentFilter: OWMContentFilter) =
             owmContentFilter.filterLinkComment(
                 LinkComment(
-                    value.id, AuthorMapper.map(value.author), value.date.toPrettyDate(),
+                    value.id, AuthorMapper.map(value.author), value.date,
                     value.body, value.blocked,
                     value.favorite, value.voteCount,
                     value.voteCountPlus,

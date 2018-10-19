@@ -2,12 +2,13 @@ package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
 import android.os.Parcel
 import android.os.Parcelable
+import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
 
 class LinkComment(
     val id: Int,
     val author: Author,
-    val date: String,
+    val fullDate: String,
     var body: String?,
     val blocked: Boolean,
     val favorite: Boolean,
@@ -91,4 +92,8 @@ class LinkComment(
             return arrayOfNulls(size)
         }
     }
+
+
+    val date: String
+        get() = this.fullDate.toPrettyDate()
 }

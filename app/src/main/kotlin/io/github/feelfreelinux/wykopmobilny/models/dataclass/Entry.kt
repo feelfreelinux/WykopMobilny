@@ -1,10 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
+import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
+
 class Entry(
     val id: Int,
     val author: Author,
     var body: String,
-    val date: String,
+    val fullDate: String,
     var isVoted: Boolean,
     var isFavorite: Boolean,
     var survey: Survey?,
@@ -30,4 +32,7 @@ class Entry(
 
     val url: String
         get() = "https://www.wykop.pl/wpis/$id"
+
+    val date: String
+        get() = this.fullDate.toPrettyDate()
 }

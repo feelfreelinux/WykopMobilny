@@ -11,7 +11,7 @@ class EntryMapper {
             owmContentFilter.filterEntry(
                 Entry(
                     value.id, AuthorMapper.map(value.author),
-                    value.body ?: "", value.date.toPrettyDate(),
+                    value.body ?: "", value.date,
                     value.userVote > 0, value.favorite,
                     if (value.survey != null) SurveyMapper.map(value.survey) else null,
                     if (value.embed != null) EmbedMapper.map(value.embed) else null,

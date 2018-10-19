@@ -1,11 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
+import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
+
 class EntryComment(
     val id: Int,
     var entryId: Int,
     val author: Author,
     var body: String,
-    val date: String,
+    val fullDate: String,
     var isVoted: Boolean,
     var embed: Embed?,
     var voteCount: Int,
@@ -25,4 +27,7 @@ class EntryComment(
 
     val url: String
         get() = "https://www.wykop.pl/wpis/$entryId/#comment-$id"
+
+    val date: String
+        get() = this.fullDate.toPrettyDate()
 }

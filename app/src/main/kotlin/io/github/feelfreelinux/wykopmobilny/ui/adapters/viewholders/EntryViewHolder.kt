@@ -213,9 +213,9 @@ class EntryViewHolder(
         (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
         bottomSheetView.apply {
             author.text = entry.author.nick
-            date.text = entry.date
+            date.text = entry.fullDate
             entry.app?.let {
-                date.text = context.getString(R.string.date_with_user_app, entry.date, entry.app)
+                date.text = context.getString(R.string.date_with_user_app, entry.fullDate, entry.app)
             }
 
             entry_menu_copy.setOnClickListener {
