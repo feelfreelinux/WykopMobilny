@@ -125,7 +125,7 @@ class EntryViewHolder(
         }
 
         // Only show reply view in entry details
-        replyTextView.isVisible = replyListener != null && userManagerApi.isUserAuthorized()
+        replyTextView.isVisible = replyListener != null && userManagerApi.isUserAuthorized() && entry.isCommentingPossible
         replyTextView.setOnClickListener { replyListener?.invoke(entry) }
 
         containerView.setOnClickListener {
