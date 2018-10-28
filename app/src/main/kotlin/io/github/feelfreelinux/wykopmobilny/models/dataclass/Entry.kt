@@ -27,7 +27,7 @@ class Entry(
     }
 
     override fun hashCode(): Int {
-        return id + author.group + body.length
+        return (id + author.group + body.length).hashCode()
     }
 
     val url: String

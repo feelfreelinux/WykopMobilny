@@ -85,6 +85,10 @@ class Link(
         return 0
     }
 
+    override fun hashCode(): Int {
+        return this.id.hashCode()
+    }
+
     val date: String
         get() = this.fullDate.toPrettyDate()
 
