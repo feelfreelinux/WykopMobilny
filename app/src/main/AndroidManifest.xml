@@ -80,6 +80,7 @@
         <activity android:name=".ui.modules.input.link.edit.LinkCommentEditActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".ui.modules.DeepLinkActivity"
+            android:launchMode="singleTask"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateUnchanged|adjustResize">
             <intent-filter>
@@ -142,6 +143,7 @@
         </activity>
         <activity android:name=".ui.modules.embedview.YoutubeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensor"
             android:theme="@style/FullscreenActivityTheme"/>
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">

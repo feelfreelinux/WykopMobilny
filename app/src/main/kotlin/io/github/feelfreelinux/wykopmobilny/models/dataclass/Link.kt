@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
 import android.os.Parcel
 import android.os.Parcelable
+import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
 class Link(
     val id: Int,
@@ -15,7 +16,7 @@ class Link(
     val commentsCount: Int,
     val relatedCount: Int,
     val author: Author?,
-    val date: String,
+    val fullDate: String,
     val preview: String?,
     val plus18: Boolean,
     val canVote: Boolean,
@@ -67,7 +68,7 @@ class Link(
         parcel.writeInt(commentsCount)
         parcel.writeInt(relatedCount)
         parcel.writeParcelable(author, flags)
-        parcel.writeString(date)
+        parcel.writeString(fullDate)
         parcel.writeString(preview)
         parcel.writeByte(if (plus18) 1 else 0)
         parcel.writeByte(if (canVote) 1 else 0)
@@ -83,6 +84,13 @@ class Link(
     override fun describeContents(): Int {
         return 0
     }
+
+    override fun hashCode(): Int {
+        return this.id.hashCode()
+    }
+
+    val date: String
+        get() = this.fullDate.toPrettyDate()
 
     companion object CREATOR : Parcelable.Creator<Link> {
         override fun createFromParcel(parcel: Parcel): Link {

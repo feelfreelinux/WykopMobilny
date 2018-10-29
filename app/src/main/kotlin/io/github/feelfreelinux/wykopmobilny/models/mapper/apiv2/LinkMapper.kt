@@ -23,7 +23,7 @@ class LinkMapper {
                     value.commentsCount,
                     value.relatedCount,
                     if (value.author != null) AuthorMapper.map(value.author) else null,
-                    value.date.toPrettyDate(),
+                    value.date,
                     value.preview?.stripImageCompression(),
                     value.plus18,
                     value.canVote,
