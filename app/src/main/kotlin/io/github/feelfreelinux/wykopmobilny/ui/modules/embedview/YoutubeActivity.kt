@@ -36,7 +36,7 @@ class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListen
         const val EXTRA_URL = "URLEXTRA"
 
         fun createIntent(context: Context, url: String) =
-                (createVideoIntent(context as Activity, GOOGLE_KEY, extractVideoIdFromUrl(url.replace("m.", "")), 0, true, false))
+                (createVideoIntent(context as Activity, GOOGLE_KEY, extractVideoIdFromUrl(url.replace("m.", "")), 0, true, true))
 
 
         private fun extractVideoIdFromUrl(url: String): String? {
