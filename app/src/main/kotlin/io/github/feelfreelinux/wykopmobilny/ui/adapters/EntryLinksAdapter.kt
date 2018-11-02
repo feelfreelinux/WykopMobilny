@@ -38,7 +38,7 @@ class EntryLinksAdapter @Inject constructor(
 
     override fun addData(items: List<EntryLink>, shouldClearAdapter: Boolean) {
         super.addData(
-            items.filterNot { settingsPreferencesApi.hideBlacklistedViews && if (it.entry != null) it.entry!!.isBlocked else it.link!!.isBlocked },
+                items.asSequence().filter { !dataset.contains(it) }.filterNot { settingsPreferencesApi.hideBlacklistedViews && if (it.entry != null) it.entry!!.isBlocked else it.link!!.isBlocked }.toList(),
             shouldClearAdapter
         )
     }
