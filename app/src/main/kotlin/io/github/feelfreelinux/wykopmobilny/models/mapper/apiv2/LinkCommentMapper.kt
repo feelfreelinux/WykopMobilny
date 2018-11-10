@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2
 
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkCommentResponse
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
@@ -10,7 +11,7 @@ class LinkCommentMapper {
         fun map(value: LinkCommentResponse, owmContentFilter: OWMContentFilter) =
             owmContentFilter.filterLinkComment(
                 LinkComment(
-                    value.id, AuthorMapper.map(value.author), value.date,
+                    value.id, AuthorMapper.map(value.author ?: AuthorResponse("", 9999, "", "")), value.date,
                     value.body, value.blocked,
                     value.favorite, value.voteCount,
                     value.voteCountPlus,
