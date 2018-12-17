@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api.hits
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkResponse
@@ -12,7 +13,8 @@ import retrofit2.Retrofit
 class HitsRepository(
     val retrofit: Retrofit,
     val userTokenRefresher: UserTokenRefresher,
-    val owmContentFilter: OWMContentFilter
+    val owmContentFilter: OWMContentFilter,
+    val patronsApi: PatronsApi
 ) : HitsApi {
 
     private val hitsApi by lazy { retrofit.create(HitsRetrofitApi::class.java) }

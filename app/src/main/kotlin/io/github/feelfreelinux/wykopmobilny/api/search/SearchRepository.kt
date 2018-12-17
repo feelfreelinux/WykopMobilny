@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api.search
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.AuthorMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.EntryMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.LinkMapper

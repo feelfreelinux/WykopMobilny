@@ -11,7 +11,9 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.Conversatio
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.PMMessageResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConversationResponse
+import io.reactivex.Single
 import retrofit2.Retrofit
+import rx.Completable
 import toRequestBody
 
 class PMRepository(
@@ -24,7 +26,7 @@ class PMRepository(
     override fun getConversations() = pmRetrofitApi.getConversations()
         .retryWhen(userTokenRefresher)
         .compose<List<ConversationResponse>>(ErrorHandlerTransformer())
-        .map { it.map { response -> ConversationMapper.map(response) } }
+            .map { it.map { response -> ConversationMapper.map(response) } }
 
     override fun getConversation(user: String) = pmRetrofitApi.getConversation(user)
         .retryWhen(userTokenRefresher)

@@ -19,6 +19,9 @@ import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopApi
 import io.github.feelfreelinux.wykopmobilny.api.mywykop.MyWykopRepository
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsRepository
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsRepository
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMRepository
 import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileApi
@@ -49,8 +52,9 @@ class RepositoryModule {
     fun provideEntriesApi(
         retrofit: Retrofit,
         userTokenRefresher: UserTokenRefresher,
-        owmContentFilter: OWMContentFilter
-    ): EntriesApi = EntriesRepository(retrofit, userTokenRefresher, owmContentFilter)
+        owmContentFilter: OWMContentFilter,
+        patronsApi: PatronsApi
+    ): EntriesApi = EntriesRepository(retrofit, userTokenRefresher, owmContentFilter, patronsApi)
 
     @Provides
     fun provideNotificationsApi(
@@ -62,16 +66,18 @@ class RepositoryModule {
     fun provideMyWykopApi(
         retrofit: Retrofit,
         userTokenRefresher: UserTokenRefresher,
-        owmContentFilter: OWMContentFilter
-    ): MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, owmContentFilter)
+        owmContentFilter: OWMContentFilter,
+        patronsApi: PatronsApi
+    ): MyWykopApi = MyWykopRepository(retrofit, userTokenRefresher, owmContentFilter, patronsApi)
 
     @Provides
     @Singleton
     fun provideLinksApi(
         retrofit: Retrofit,
         userTokenRefresher: UserTokenRefresher,
-        owmContentFilter: OWMContentFilter
-    ): LinksApi = LinksRepository(retrofit, userTokenRefresher, owmContentFilter)
+        owmContentFilter: OWMContentFilter,
+        patronsApi: PatronsApi
+    ): LinksApi = LinksRepository(retrofit, userTokenRefresher, owmContentFilter, patronsApi)
 
     @Provides
     fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter, blacklistPreferences: BlacklistPreferencesApi) : TagApi = TagRepository(
@@ -80,6 +86,10 @@ class RepositoryModule {
         owmContentFilter,
         blacklistPreferences
     )
+
+    @Provides
+    @Singleton
+    fun providePatronsApi(retrofit: Retrofit) : PatronsApi = PatronsRepository(retrofit)
 
     @Provides
     fun provideUserApi(
@@ -110,8 +120,9 @@ class RepositoryModule {
     fun provideHitsApi(
         retrofit: Retrofit,
         userTokenRefresher: UserTokenRefresher,
-        owmContentFilter: OWMContentFilter
-    ): HitsApi = HitsRepository(retrofit, userTokenRefresher, owmContentFilter)
+        owmContentFilter: OWMContentFilter,
+        patronsApi: PatronsApi
+    ): HitsApi = HitsRepository(retrofit, userTokenRefresher, owmContentFilter, patronsApi)
 
     @Provides
     fun provideProfilesApi(

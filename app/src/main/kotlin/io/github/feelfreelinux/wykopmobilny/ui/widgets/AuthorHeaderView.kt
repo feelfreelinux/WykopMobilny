@@ -8,6 +8,7 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.author_header_layout.view.*
 
 class AuthorHeaderView @JvmOverloads constructor(
@@ -28,6 +29,10 @@ class AuthorHeaderView @JvmOverloads constructor(
             authorAvatarView.setAuthor(this)
             authorAvatarView.setOnClickListener {
                 openProfile(author.nick)
+            }
+            patronBadgeTextView.isVisible = author.badge != null
+            author.badge?.let {
+                patronBadgeTextView.text = author.badge!!.text
             }
             userNameTextView.setOnClickListener { openProfile(author.nick) }
             entryDateTextView.text = date

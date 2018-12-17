@@ -4,6 +4,7 @@ import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Downvoter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
@@ -31,7 +32,8 @@ import toRequestBody
 class LinksRepository(
     val retrofit: Retrofit,
     val userTokenRefresher: UserTokenRefresher,
-    val owmContentFilter: OWMContentFilter
+    val owmContentFilter: OWMContentFilter,
+    val patronsApi: PatronsApi
 ) : LinksApi {
 
     private val linksApi by lazy { retrofit.create(LinksRetrofitApi::class.java) }

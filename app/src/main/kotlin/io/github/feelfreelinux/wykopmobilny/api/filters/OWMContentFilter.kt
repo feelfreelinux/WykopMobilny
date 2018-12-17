@@ -1,9 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.api.filters
 
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.patrons.PatronBadge
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
@@ -13,11 +12,17 @@ import javax.inject.Inject
 class OWMContentFilter @Inject constructor(
     val blacklistPreferences: BlacklistPreferencesApi,
     val settingsPreferencesApi: SettingsPreferencesApi,
-    private val linksPreferencesApi: LinksPreferencesApi
+    private val linksPreferencesApi: LinksPreferencesApi,
+    val patronsApi: PatronsApi
 ) {
+
+    fun getBadgeFor(author: Author): PatronBadge? {
+        return patronsApi.patrons.firstOrNull { it.username == author.nick }?.badge
+    }
 
     fun filterEntry(entry: Entry) =
         entry.apply {
+            author.badge = getBadgeFor(author)
             isBlocked =
                     isBlocked ||
                     body.bodyContainsBlockedTags() ||
@@ -27,6 +32,7 @@ class OWMContentFilter @Inject constructor(
 
     fun filterEntryComment(comment: EntryComment) =
         comment.apply {
+            author.badge = getBadgeFor(author)
             isBlocked =
                     isBlocked ||
                     body.bodyContainsBlockedTags() ||
@@ -36,6 +42,7 @@ class OWMContentFilter @Inject constructor(
 
     fun filterLinkComment(comment: LinkComment) =
         comment.apply {
+            author.badge = getBadgeFor(author)
             isBlocked =
                     isBlocked ||
                     body?.bodyContainsBlockedTags() ?: false ||

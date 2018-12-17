@@ -33,7 +33,25 @@
         app:layout_constraintLeft_toRightOf="@+id/authorAvatarView"
         app:layout_constraintRight_toRightOf="parent"
         tools:text="Kroguc" />
-
+    <TextView
+        android:id="@+id/patronBadgeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_dp_normal"
+        android:layout_marginRight="@dimen/margin_dp_normal"
+        android:textSize="?attr/textSizeTiny"
+        android:textStyle="bold"
+        android:lines="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintWidth_default="wrap"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/entryDateTextView"
+        app:layout_constraintLeft_toRightOf="@+id/userNameTextView"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="PATRON" />
     <TextView
         android:id="@+id/entryDateTextView"
         android:layout_width="0dp"
