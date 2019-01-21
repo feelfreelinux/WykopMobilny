@@ -97,7 +97,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
 
     // Support library
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'androidx.recyclerview:recyclerview:1.0.0-beta01'
     implementation "android.arch.work:work-runtime:1.0.0-alpha04"
     implementation 'androidx.exifinterface:exifinterface:1.0.0-beta01'
