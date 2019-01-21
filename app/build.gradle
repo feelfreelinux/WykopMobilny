@@ -110,7 +110,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     implementation 'androidx.browser:browser:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-    implementation 'com.google.android.gms:play-services-gcm:11.8.0' // DO NOT DOWNGRADE, GOOGLE'S FAULT GH#415
+    implementation 'com.google.android.gms:play-services-gcm:16.0.0' // DO NOT DOWNGRADE, GOOGLE'S FAULT GH#415
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'com.devbrackets.android:exomedia:4.1.0'
     implementation 'com.google.android.exoplayer:extension-okhttp:2.6.0'
