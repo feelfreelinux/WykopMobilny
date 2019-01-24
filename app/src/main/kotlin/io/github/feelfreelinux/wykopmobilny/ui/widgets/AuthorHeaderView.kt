@@ -1,6 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
@@ -10,6 +12,10 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.author_header_layout.view.*
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
+
 
 class AuthorHeaderView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -32,7 +38,9 @@ class AuthorHeaderView @JvmOverloads constructor(
             }
             patronBadgeTextView.isVisible = author.badge != null
             author.badge?.let {
-                patronBadgeTextView.text = author.badge!!.text
+                try {
+                    author.badge?.drawBadge(patronBadgeTextView)
+                } catch (e: Throwable) {}
             }
             userNameTextView.setOnClickListener { openProfile(author.nick) }
             entryDateTextView.text = date

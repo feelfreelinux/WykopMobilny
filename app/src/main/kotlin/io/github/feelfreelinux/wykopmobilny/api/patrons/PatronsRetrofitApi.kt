@@ -10,6 +10,6 @@ import retrofit2.http.Headers
 
 interface PatronsRetrofitApi {
     @Headers("@: $REMOVE_USERKEY_HEADER")
-    @GET("https://owm-patrons.now.sh/api/patrons/")
+    @GET("https://patrons.grzywok.eu/api/patrons")
     fun getPatrons(): Single<PatronsResponse>
 }

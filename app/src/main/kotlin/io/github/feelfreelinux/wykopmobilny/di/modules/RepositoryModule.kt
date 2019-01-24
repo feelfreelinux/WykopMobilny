@@ -100,8 +100,9 @@ class RepositoryModule {
     @Provides
     fun providePMApi(
         retrofit: Retrofit,
-        userTokenRefresher: UserTokenRefresher
-    ): PMApi = PMRepository(retrofit, userTokenRefresher)
+        userTokenRefresher: UserTokenRefresher,
+        patronsApi: PatronsApi
+    ): PMApi = PMRepository(retrofit, userTokenRefresher, patronsApi)
 
     @Provides
     fun provideSuggestApi(
@@ -113,8 +114,9 @@ class RepositoryModule {
     fun provideSearchApi(
         retrofit: Retrofit,
         userTokenRefresher: UserTokenRefresher,
-        owmContentFilter: OWMContentFilter
-    ): SearchApi = SearchRepository(retrofit, userTokenRefresher, owmContentFilter)
+        owmContentFilter: OWMContentFilter,
+        patronsApi: PatronsApi
+    ): SearchApi = SearchRepository(retrofit, userTokenRefresher, owmContentFilter, patronsApi)
 
     @Provides
     fun provideHitsApi(

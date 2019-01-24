@@ -65,8 +65,8 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     override fun showHotEntries(entries: List<Entry>, isRefreshing: Boolean) =
         entriesFragment.addItems(entries, isRefreshing)
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.hot_period, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.hot_period, menu)
         navigation.activityToolbar.setTitle(
             when (presenter.period) {
                 "24" -> R.string.period24
@@ -78,7 +78,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
         )
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.period6 -> {
                 presenter.period = "6"

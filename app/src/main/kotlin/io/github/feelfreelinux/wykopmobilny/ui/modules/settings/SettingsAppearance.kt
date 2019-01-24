@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
+import androidx.preference.Preference
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
@@ -29,10 +30,10 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
 
     override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences_appearance)
-        findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
-        findPreference("cutImageProportion").isEnabled = settingsApi.cutImages
-        findPreference("linkImagePosition").isEnabled = !settingsApi.linkSimpleList && settingsApi.linkShowImage
-        findPreference("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
+        findPreference<Preference>("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
+        findPreference<Preference>("cutImageProportion").isEnabled = settingsApi.cutImages
+        findPreference<Preference>("linkImagePosition").isEnabled = !settingsApi.linkSimpleList && settingsApi.linkShowImage
+        findPreference<Preference>("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
 
         (findPreference("hotEntriesScreen") as ListPreference).apply {
             summary = entry
@@ -52,11 +53,11 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
     }
 
     override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {
-        val pref = findPreference(key)
-        findPreference("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
-        findPreference("cutImageProportion").isEnabled = settingsApi.cutImages
-        findPreference("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
-        findPreference("linkImagePosition").isEnabled = !settingsApi.linkSimpleList
+        val pref = findPreference<Preference>(key)
+        findPreference<Preference>("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
+        findPreference<Preference>("cutImageProportion").isEnabled = settingsApi.cutImages
+        findPreference<Preference>("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
+        findPreference<Preference>("linkImagePosition").isEnabled = !settingsApi.linkSimpleList
 
         if (pref is ListPreference) {
             pref.setSummary(pref.entry)

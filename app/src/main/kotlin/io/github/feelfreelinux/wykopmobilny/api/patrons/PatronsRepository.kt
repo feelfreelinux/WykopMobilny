@@ -14,11 +14,14 @@ class PatronsRepository(val retrofit: Retrofit) : PatronsApi {
             emitter ->
             if (!::patrons.isInitialized) {
                 getPatrons().subscribeOn(WykopSchedulers().backgroundThread()).observeOn(WykopSchedulers().mainThread())
-                        .subscribe {
+                        .subscribe({
                             patrons ->
                             this.patrons = patrons
                             emitter.onSuccess(d)
-                        }
+                        }, { e ->
+                            this.patrons = listOf()
+                            emitter.onSuccess(d)
+                        })
 
             } else {
                 emitter.onSuccess(d)
@@ -29,6 +32,8 @@ class PatronsRepository(val retrofit: Retrofit) : PatronsApi {
             patronsApi.getPatrons().map { it.patrons }
                     .doOnSuccess {
                         this.patrons = it
+                    }.doOnError {
+                        this.patrons = listOf()
                     }
 
 }

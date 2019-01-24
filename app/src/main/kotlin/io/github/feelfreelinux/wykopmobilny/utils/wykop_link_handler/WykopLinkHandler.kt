@@ -36,9 +36,9 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
         fun getLinkIntent(url: String, context: Context): Intent? {
             val parsedUrl = URI(url.replace("\\", ""))
             val domain = parsedUrl.host
-                .replace("www.", "")
-                .substringBeforeLast(".")
-                .substringAfterLast(".")
+                    .replace("www.", "")
+                    .substringBeforeLast(".")
+                    .substringAfterLast(".")
             return when (domain) {
                 "wykop" -> {
                     val resource = url.substringAfter("wykop.pl/")
@@ -84,11 +84,16 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
     private fun handleTag(tag: String) = navigatorApi.openTagActivity(tag.removePrefix(TAG_PREFIX.toString()))
 
     private fun handleLink(url: String, refreshNotifications: Boolean) {
-        val intent = getLinkIntent(url, context)
-        if (intent != null) {
-            if (refreshNotifications) context.startActivityForResult(intent, NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE)
-            else context.startActivity(intent)
-        } else {
+        try {
+            val intent = getLinkIntent(url, context)
+            if (intent != null) {
+                if (refreshNotifications) context.startActivityForResult(intent, NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE)
+                else context.startActivity(intent)
+            } else {
+                navigatorApi.openBrowser(url)
+            }
+        } catch (e: Throwable) {
+            // Something went wrong while parsing url, fallback to browser
             navigatorApi.openBrowser(url)
         }
     }

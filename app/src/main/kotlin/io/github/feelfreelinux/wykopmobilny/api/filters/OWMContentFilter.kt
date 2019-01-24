@@ -17,7 +17,11 @@ class OWMContentFilter @Inject constructor(
 ) {
 
     fun getBadgeFor(author: Author): PatronBadge? {
-        return patronsApi.patrons.firstOrNull { it.username == author.nick }?.badge
+        return try {
+            patronsApi.patrons.firstOrNull { it.username == author.nick }?.badge
+        } catch (e: Throwable) {
+            null
+        }
     }
 
     fun filterEntry(entry: Entry) =

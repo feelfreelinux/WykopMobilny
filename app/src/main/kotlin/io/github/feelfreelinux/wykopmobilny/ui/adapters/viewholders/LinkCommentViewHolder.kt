@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
@@ -14,6 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
+import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
@@ -98,6 +100,12 @@ class LinkCommentViewHolder(
                 text = nick
                 setTextColor(context.getGroupColor(group))
                 setOnClickListener { }
+            }
+            patronBadgeTextView.isVisible = badge != null
+            badge?.let {
+                try {
+                    badge?.drawBadge(patronBadgeTextView)
+                } catch (e: Throwable) {}
             }
             dateTextView.text = linkComment.date.replace(" temu", "")
             linkComment.app?.let {

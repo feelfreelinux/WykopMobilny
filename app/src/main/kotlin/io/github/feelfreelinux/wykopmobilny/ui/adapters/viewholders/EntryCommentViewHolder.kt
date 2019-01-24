@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
@@ -23,6 +24,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.author_header_layout.view.*
 import kotlinx.android.synthetic.main.comment_list_item.*
 import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 
@@ -108,6 +110,13 @@ class EntryCommentViewHolder(
                 text = nick
                 setTextColor(context.getGroupColor(group))
                 setOnClickListener { navigatorApi.openProfileActivity(nick) }
+            }
+            patronBadgeTextView.isVisible = badge != null
+            badge?.let {
+                try {
+
+                    badge?.drawBadge(patronBadgeTextView)
+                } catch (e: Throwable) {}
             }
             dateTextView.text = comment.date.replace(" temu", "")
             comment.app?.let {
