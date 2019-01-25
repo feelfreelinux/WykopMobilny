@@ -192,7 +192,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         showFullReleaseDialog()
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
-        /*AppUpdater(this)
+        AppUpdater(this)
             .setUpdateFrom(UpdateFrom.GITHUB)
             .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
             .setTitleOnUpdateAvailable(R.string.update_available)
@@ -200,7 +200,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
             .setButtonDismiss(R.string.cancel)
             .setButtonDoNotShowAgain(R.string.do_not_show_again)
             .setButtonUpdate(R.string.update)
-            .start()*/
+            .start()
         //presenter.checkUpdates()
         checkBlacklist()
 
