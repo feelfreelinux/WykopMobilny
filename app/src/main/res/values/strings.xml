@@ -218,5 +218,7 @@
     <string name="text_copied">Skopiowano do schowka</string>
     <string name="entry">Wpis</string>
     <string name="insert_photo_camera">Zrób zdjęcie aparatem</string>
+    <string name="support_app">Wesprzyj rozwój aplikacji</string>
+    <string name="became_patron">Zostań patronem na patronite.pl</string>
 
 </resources>

@@ -309,7 +309,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/margin_dp_normal</item>
-        <item name="android:paddingTop">@dimen/padding_dp_small</item>
+        <item name="android:layout_marginTop">@dimen/padding_dp_small</item>
         <item name="android:textSize">?attr/textSizeSmall</item>
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
@@ -332,7 +332,7 @@
     <style name="DateTextViewComment" parent="">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">@dimen/padding_dp_small</item>
+        <item name="android:layout_marginTop">@dimen/padding_dp_small</item>
         <item name="android:paddingEnd">@dimen/padding_dp_normal</item>
         <item name="android:textSize">?attr/textSizeTiny</item>
         <item name="android:textColor">?attr/textColorGrey</item>

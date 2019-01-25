@@ -24,6 +24,7 @@
         android:layout_height="@dimen/separator_line_height"
         android:background="?attr/lineColor"/>
 
+
     <LinearLayout
         android:id="@+id/app_version"
         style="@style/BottomSheetMenuItem">
@@ -35,6 +36,18 @@
             android:layout_gravity="center"
             android:text="@string/app_version"/>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/app_patrons"
+        style="@style/BottomSheetMenuItem">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/app_patrons_textview"
+            android:layout_gravity="center"
+            android:text="Patroni"/>
     </LinearLayout>
 
     <LinearLayout

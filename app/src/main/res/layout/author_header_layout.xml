@@ -49,7 +49,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/userNameTextView"
         app:layout_constraintBottom_toBottomOf="@+id/userNameTextView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/userNameTextView"
         tools:background="@drawable/patron_badge"
         tools:layout_editor_absoluteX="85dp"
         tools:text="PATRON" />

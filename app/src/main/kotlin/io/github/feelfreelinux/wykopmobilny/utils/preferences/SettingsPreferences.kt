@@ -30,6 +30,7 @@ interface SettingsPreferencesApi {
     var useBuiltInBrowser: Boolean
     var groupNotifications: Boolean
     var disableExitConfirmation: Boolean
+    var dialogShown: Boolean
 }
 
 class SettingsPreferences(context: Context) : Preferences(context, true), SettingsPreferencesApi {
@@ -60,5 +61,6 @@ class SettingsPreferences(context: Context) : Preferences(context, true), Settin
     override var useBuiltInBrowser by booleanPref(defaultValue = true)
     override var groupNotifications by booleanPref(defaultValue = true)
     override var disableExitConfirmation by booleanPref(defaultValue = false)
+    override var dialogShown by booleanPref(defaultValue = false)
 
 }

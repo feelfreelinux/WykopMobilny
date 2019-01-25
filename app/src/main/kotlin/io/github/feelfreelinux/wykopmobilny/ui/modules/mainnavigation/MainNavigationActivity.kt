@@ -1,13 +1,18 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -17,6 +22,7 @@ import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.internal.NavigationMenuView
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopMobilnyUpdate
@@ -46,11 +52,15 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferenc
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.app_about_bottomsheet.view.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
+import kotlinx.android.synthetic.main.patron_list_item.view.*
+import kotlinx.android.synthetic.main.patrons_bottomsheet.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.net.URLDecoder
 import javax.inject.Inject
 
 interface MainNavigationInterface {
@@ -78,7 +88,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         }
     }
 
+    @Inject lateinit var patronsApi: PatronsApi
+
     @Inject lateinit var blacklistPreferencesApi: BlacklistPreferencesApi
+    @Inject lateinit var settingsPreferencesApi: SettingsPreferencesApi
 
     override val activityToolbar: Toolbar get() = toolbar
     var tapDoubleClickedMillis = 0L
@@ -103,6 +116,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
     @Inject lateinit var settingsApi: SettingsPreferencesApi
     @Inject lateinit var navigator: NewNavigatorApi
     @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject lateinit var linkHandler: WykopLinkHandlerApi
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -156,6 +170,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         return true
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
@@ -174,10 +189,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         }, 333)
 
         JobUtil.hasBootPermission(this)
-
+        showFullReleaseDialog()
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
-        AppUpdater(this)
+        /*AppUpdater(this)
             .setUpdateFrom(UpdateFrom.GITHUB)
             .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
             .setTitleOnUpdateAvailable(R.string.update_available)
@@ -185,7 +200,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
             .setButtonDismiss(R.string.cancel)
             .setButtonDoNotShowAgain(R.string.do_not_show_again)
             .setButtonUpdate(R.string.update)
-            .start()
+            .start()*/
         //presenter.checkUpdates()
         checkBlacklist()
 
@@ -385,7 +400,41 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
                 dialog.dismiss()
             }
 
+            app_patrons.setOnClickListener {
+                dialog.dismiss()
+                val dialog2 = com.google.android.material.bottomsheet.BottomSheetDialog(context)
+                val badgesDialogView2 = layoutInflater.inflate(R.layout.patrons_bottomsheet, null)
+                dialog2.setContentView(badgesDialogView2)
 
+                val headerItem = layoutInflater.inflate(R.layout.patron_list_item, null)
+                headerItem.setOnClickListener {
+                    _ ->
+                    dialog.dismiss()
+                    linkHandler.handleUrl("https://patronite.pl/wykop-mobilny")
+                }
+                headerItem.nickname.text = context.getString(R.string.support_app)
+                headerItem.tierTextView.text = context.getString(R.string.became_patron)
+                badgesDialogView2.patronsList.addView(headerItem)
+                for (badge in patronsApi.patrons.filter { patron -> patron.listMention }) {
+                    val item = layoutInflater.inflate(R.layout.patron_list_item, null)
+                    item.setOnClickListener {
+                        _ ->
+                        dialog.dismiss()
+                        linkHandler.handleUrl("https://wykop.pl/ludzie/" + badge.username)
+                    }
+                    item.nickname.text = badge.username
+                    item.tierTextView.text = when (badge.tier) {
+                        "patron50" -> "Patron próg \"Białkowy\""
+                        "patron25" -> "Patron próg \"Bordowy\""
+                        "patron10" -> "Patron próg \"Pomaranczowy\""
+                        "patron5" -> "Patron próg \"Zielony\""
+                        else -> "Patron"
+                    }
+                    badgesDialogView2.patronsList.addView(item)
+
+                }
+                dialog2.show()
+            }
 
             license.setOnClickListener {
                 openBrowser("https://github.com/feelfreelinux/WykopMobilny/blob/master/LICENSE")
@@ -402,6 +451,28 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
 
     override fun forceRefreshNotifications() {
         presenter.checkNotifications(true)
+    }
+
+
+    fun showFullReleaseDialog() {
+        if (!settingsPreferencesApi.dialogShown) {
+            val s = SpannableString("Po prawie dwóch latach pracy publikuję wersję 1.0 aplikacji. Jestem wdzięczny wszystkim osobom zaangażowanym w projekt. Aplikacja nadal pozostaje całkowicie darmowa i wolna od reklam. Jeżeli chcesz, możesz wesprzeć rozwój aplikacji na https://patronite.pl/wykop-mobilny \nDziękuję :)")
+            Linkify.addLinks(s, Linkify.WEB_URLS)
+            createAlertBuilder().apply {
+                setTitle("Wersja 1.0")
+                setMessage(s)
+                setPositiveButton(android.R.string.ok) { _, _ ->
+                    settingsPreferencesApi.dialogShown = true
+                }
+
+                val d = create()
+                d.setOnDismissListener {
+                    settingsPreferencesApi.dialogShown = true
+                }
+                d.show()
+                d.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+            }
+        }
     }
 
     override fun checkUpdate(wykopMobilnyUpdate: WykopMobilnyUpdate) {

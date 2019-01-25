@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -8,6 +9,8 @@ import android.os.Parcelable
 import android.view.View
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.patrons.PatronBadge
+import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 
 class Author(
     val nick: String,
@@ -51,6 +54,9 @@ fun PatronBadge.drawBadge(view: TextView) {
     val shape = GradientDrawable(
             GradientDrawable.Orientation.LEFT_RIGHT,
             intArrayOf(Color.parseColor(hexColor), Color.parseColor(hexColor)))
+    view.setOnClickListener {
+        view.getActivityContext()?.openBrowser("https://patronite.pl/wykop-mobilny")
+    }
     shape.cornerRadius = 30f
     view.text = text
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

@@ -4,7 +4,9 @@ import android.text.ParcelableSpan
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.text.util.Linkify
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.feelfreelinux.wykopmobilny.utils.api.convertMarkdownToHtml
@@ -32,11 +34,15 @@ fun TextView.prepareBody(html: String, urlClickListener: (String) -> Unit, click
             if (!shouldOpenSpoilerDialog) {
                 openSpoilers(url.span(), url.text())
             } else {
+                val s = SpannableString(URLDecoder.decode(url.text().substringAfter("spoiler:"), "UTF-8"))
+                Linkify.addLinks(s, Linkify.WEB_URLS)
                 context.createAlertBuilder().apply {
                     setTitle("Spoiler")
-                    setMessage(URLDecoder.decode(url.text().substringAfter("spoiler:"), "UTF-8"))
+                    setMessage(s)
                     setPositiveButton(android.R.string.ok, null)
-                    create().show()
+                    val d = create()
+                    d.show()
+                    d.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
                 }
             }
         } else urlClickListener(url.text())
