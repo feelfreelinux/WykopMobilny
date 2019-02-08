@@ -35,6 +35,25 @@
         tools:text="Kroguc" />
 
     <TextView
+        android:id="@+id/patronBadgeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/margin_dp_mini"
+        android:paddingRight="@dimen/margin_dp_mini"
+        android:layout_marginLeft="@dimen/margin_dp_mini"
+        android:textColor="@color/white"
+        android:textSize="?attr/textSizeTiny"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/userNameTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/userNameTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@drawable/patron_badge"
+        tools:layout_editor_absoluteX="85dp"
+        tools:text="PATRON" />
+    <TextView
         android:id="@+id/entryDateTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

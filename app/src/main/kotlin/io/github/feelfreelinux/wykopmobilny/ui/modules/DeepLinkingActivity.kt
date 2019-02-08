@@ -12,7 +12,7 @@ class DeepLinkActivity : AppCompatActivity() {
         val url = intent.dataString!!
         val activityToOpen = WykopLinkHandler.getLinkIntent(url, this)
         activityToOpen?.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(WykopLinkHandler.getLinkIntent(url, this))
+        startActivity(activityToOpen)
         finish()
     }
 }

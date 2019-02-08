@@ -6,12 +6,14 @@ class EntryLink(
 ) {
     override fun equals(other: Any?): Boolean {
         return if (other !is EntryLink) false
-        else (other.link != null && link != null && other.link!!.id == link!!.id && other.entry != null && entry != null && other.entry!!.id == entry!!.id)
+        else (other.hashCode() == hashCode())
     }
 
     override fun hashCode(): Int {
         return link?.hashCode() ?: entry!!.hashCode()
     }
+
+
 
     companion object {
         const val TYPE_LINK = "LINK"

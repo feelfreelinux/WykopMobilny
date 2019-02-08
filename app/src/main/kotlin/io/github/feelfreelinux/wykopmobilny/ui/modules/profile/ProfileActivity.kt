@@ -6,11 +6,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ProfileResponse
+import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.patrons.PatronBadge
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.BadgeResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
@@ -41,6 +45,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
     @Inject lateinit var navigator: NewNavigatorApi
     @Inject lateinit var presenter: ProfilePresenter
     @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject lateinit var patronsApi: PatronsApi
 
     val username by lazy { intent.getStringExtra(EXTRA_USERNAME) }
     override val enableSwipeBackLayout: Boolean = true
@@ -74,10 +79,21 @@ class ProfileActivity : BaseActivity(), ProfileView {
         }
     }
 
+    fun getBadgeFor(nick: String): PatronBadge? {
+        return try {
+            patronsApi.patrons.firstOrNull { it.username == nick }?.badge
+        } catch (e: Throwable) {
+            null
+        }
+    }
+
     override fun showProfile(profileResponse: ProfileResponse) {
         dataFragment.data = profileResponse
         pager.offscreenPageLimit = 2
         pager.adapter = pagerAdapter
+        getBadgeFor(profileResponse.login)?.apply {
+            drawBadge(patronBadgeTextView)
+        }
         tabLayout.setupWithViewPager(pager)
         profilePicture.loadImage(profileResponse.avatar)
         signup.text = profileResponse.signupAt.toDurationPrettyDate()

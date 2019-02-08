@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class LinkCommentResponse(
     @JsonProperty("id") val id: Int,
-    @JsonProperty("author") val author: AuthorResponse,
+    @JsonProperty("author") val author: AuthorResponse?,
     @JsonProperty("date") val date: String,
     @JsonProperty("body") val body: String?,
     @JsonProperty("blocked") val blocked: Boolean,

@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-beta04'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
     }
 }
@@ -27,7 +27,7 @@ allprojects {
         versionMajor = 0
         versionMinor = 9
         versionPatch = 7
-        versionBuild = 0
+        versionBuild = 4
     }
 }
 

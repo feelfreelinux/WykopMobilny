@@ -18,14 +18,33 @@
         style="@style/AuthorTextViewComment"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/avatarView"
-        app:layout_constraintRight_toLeftOf="@id/dotTextView"
+        app:layout_constraintRight_toLeftOf="@id/patronBadgeTextView"
         tools:text="feelfree" />
-
+    <TextView
+        android:id="@+id/patronBadgeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_dp_mini"
+        android:layout_marginRight="@dimen/margin_dp_mini"
+        android:ellipsize="end"
+        android:lines="1"
+        android:paddingLeft="@dimen/margin_dp_mini"
+        android:visibility="gone"
+        android:paddingRight="@dimen/margin_dp_mini"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="?attr/textSizeTiny"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/authorTextView"
+        app:layout_constraintRight_toLeftOf="@id/dotTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/authorTextView"
+        tools:background="@drawable/patron_badge"
+        tools:text="PATRON" />
     <TextView
         android:id="@+id/dotTextView"
         style="@style/DotTextViewComment"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/authorTextView"
+        app:layout_constraintLeft_toRightOf="@id/patronBadgeTextView"
         app:layout_constraintRight_toLeftOf="@id/dateTextView" />
 
     <TextView

@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.api.profile
 import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.*
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.*
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.*

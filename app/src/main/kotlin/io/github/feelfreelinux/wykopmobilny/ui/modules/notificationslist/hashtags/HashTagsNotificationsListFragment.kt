@@ -53,7 +53,7 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?) {
+    override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu?.findItem(R.id.collapseAll)?.isVisible = expanded && settingsApi.groupNotifications
         menu?.findItem(R.id.expandAll)?.isVisible = !expanded && settingsApi.groupNotifications
@@ -64,7 +64,7 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
         menu.findItem(R.id.groupNotifications).isChecked = settingsApi.groupNotifications
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.groupNotifications -> {
                 item.isChecked = !item.isChecked

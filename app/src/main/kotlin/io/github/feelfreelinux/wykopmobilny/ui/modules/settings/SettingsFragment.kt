@@ -70,12 +70,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {
-        val pref = findPreference(key)
+        val pref = findPreference<Preference>(key)
         if (pref is CheckBoxPreference) {
             when (pref.key) {
                 "showNotifications" -> {
-                    findPreference("notificationsSchedulerDelay").isEnabled = pref.isChecked
-                    findPreference("piggyBackPushNotifications").isEnabled = pref.isChecked
+                    findPreference<Preference>("notificationsSchedulerDelay").isEnabled = pref.isChecked
+                    findPreference<Preference>("piggyBackPushNotifications").isEnabled = pref.isChecked
                     if (pref.isChecked) {
                         WykopNotificationsJob.schedule(settingsApi)
                     } else {
@@ -84,7 +84,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 }
 
                 "piggyBackPushNotifications" -> {
-                    findPreference("notificationsSchedulerDelay").isEnabled = !pref.isChecked
+                    findPreference<Preference>("notificationsSchedulerDelay").isEnabled = !pref.isChecked
                     (findPreference("showNotifications") as Preference).isEnabled = !pref.isChecked
                     if (pref.isChecked) {
                         if (isOfficialAppInstalled()) {

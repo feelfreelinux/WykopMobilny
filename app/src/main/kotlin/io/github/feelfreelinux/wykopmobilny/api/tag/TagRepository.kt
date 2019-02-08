@@ -4,6 +4,7 @@ import io.github.feelfreelinux.wykopmobilny.api.UserTokenRefresher
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandler
 import io.github.feelfreelinux.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
+import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagEntriesMapper
 import io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2.TagLinksMapper
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
@@ -18,8 +19,7 @@ class TagRepository(
     retrofit: Retrofit,
     val userTokenRefresher: UserTokenRefresher,
     val owmContentFilter: OWMContentFilter,
-    private val blacklistPreferencesApi: BlacklistPreferencesApi
-) : TagApi {
+    private val blacklistPreferencesApi: BlacklistPreferencesApi) : TagApi {
 
     private val tagApi by lazy { retrofit.create(TagRetrofitApi::class.java) }
 
