@@ -217,11 +217,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
     }
 
     override fun scrollToComment(id: Int) {
-        adapter.link!!.comments.forEachIndexed({ index, comment ->
-            if (comment.id == id) {
-                recyclerView?.scrollToPosition(index + 1)
-            }
-        })
+        val index = adapter.link!!.comments.indexOfFirst { it.id == id }
+        recyclerView?.scrollToPosition(index + 1)
     }
 
     override fun updateLink(link: Link) {
