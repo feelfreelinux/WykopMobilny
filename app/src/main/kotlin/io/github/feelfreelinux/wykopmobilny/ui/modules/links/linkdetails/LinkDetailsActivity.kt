@@ -212,8 +212,34 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         adapter.notifyDataSetChanged()
         inputToolbar.show()
         if (linkCommentId != -1 && adapter.link != null) {
-            scrollToComment(linkCommentId)
+            if (settingsApi.hideLinkCommentsByDefault) {
+                expandAndScrollToComment(linkCommentId)
+            } else {
+                scrollToComment(linkCommentId)
+            }
         }
+    }
+
+    private fun expandAndScrollToComment(linkCommentId: Int) {
+        adapter.link?.comments?.let { allComments ->
+            val parentId = allComments.find { it.id == linkCommentId }?.parentId
+            allComments.forEach {
+                if (it.parentId == parentId) {
+                    it.isCollapsed = false
+                    it.isParentCollapsed = false
+                }
+            }
+        }
+        adapter.notifyDataSetChanged()
+
+        val comments = adapter.link!!.comments
+        var index = 0
+        for (i in 0 until comments.size) {
+            if (!comments[i].isParentCollapsed) index++
+            if (comments[i].id ==  linkCommentId) break
+        }
+
+        recyclerView?.scrollToPosition(index + 1)
     }
 
     override fun scrollToComment(id: Int) {
