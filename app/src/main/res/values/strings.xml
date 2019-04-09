@@ -26,6 +26,7 @@
     <string name="digged">Wykopywane</string>
     <string name="entries">Wpisy</string>
 
+    <string name="pref_appearance_settings">Ustawienia wyglądu aplikacji</string>
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_dark_style">Styl nocny</string>
     <string name="useAmoledTheme">Tryb AMOLED dla stylu nocnego</string>
@@ -43,7 +44,13 @@
     <string name="pref_notifications_frequency">Częstotliwość sprawdzania</string>
     <string name="pref_content_filter">Filtrowanie treści</string>
     <string name="pref_content_plus18">Pokazuj treści 18+</string>
-    <string name="pref_content_filternsfw">Ukryj treści z tagiem #nsfw</string>
+    <string name="pref_content_filter_nsfw">Ukryj treści z tagiem #nsfw</string>
+    <string name="pref_content_filter_low_range_authors">Ukrywaj treści zielonek</string>
+    <string name="pref_content_filter_without_tags">Ukrywaj treści bez tagów (tylko mirko)</string>
+    <string name="pref_content_hide_blacklisted">Nie pokazuj ukrytych treści</string>
+    <string name="pref_manage_blacklist">Zarządzaj czarną listą</string>
+    <string name="pref_use_built_in_browser">Użyj wbudowanej przeglądarki</string>
+    <string name="pref_clear_history">Wyczyść historie wyszukiwarki</string>
     <string name="pref_disable_exit_confirmation">Wyłącz potwierdzenie wyjścia z aplikacji</string>
 
     <string name="license">Publikacja aplikacji na licencji MIT</string>

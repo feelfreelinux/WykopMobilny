@@ -6,6 +6,7 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.patrons.PatronBadg
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import java.util.Collections
 import javax.inject.Inject
 
@@ -31,7 +32,8 @@ class OWMContentFilter @Inject constructor(
                     isBlocked ||
                     body.bodyContainsBlockedTags() ||
                     author.nick.isUserBlocked() ||
-                    (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0)
+                    (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0) ||
+                    (settingsPreferencesApi.hideContentWithoutTags && !body.bodyContainsTags())
         }
 
     fun filterEntryComment(comment: EntryComment) =
@@ -66,8 +68,11 @@ class OWMContentFilter @Inject constructor(
 
         }
 
+    private val tagsRegex = "(^|\\s)(#[a-z\\d-]+)".toRegex()
+
+    private fun String.bodyContainsTags() = tagsRegex.containsMatchIn(this.removeHtml())
+
     private fun String.bodyContainsBlockedTags(): Boolean {
-        val tagsRegex = "(^|\\s)(#[a-z\\d-]+)".toRegex()
         return !Collections.disjoint(
             blacklistPreferences.blockedTags,
             tagsRegex.matchEntire(this)?.groupValues?.map { it.removePrefix("#") } ?: emptyList<String>())

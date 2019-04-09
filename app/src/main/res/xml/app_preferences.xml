@@ -4,7 +4,7 @@
     <androidx.preference.Preference
         app:iconSpaceReserved="false"
         android:key="appearance"
-        android:title="Ustawienia wyglądu aplikacji"/>
+        android:title="@string/pref_appearance_settings"/>
 
     <com.takisoft.preferencex.PreferenceCategory
         app:iconSpaceReserved="false"
@@ -52,37 +52,42 @@
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="hideNsfw"
-            android:title="@string/pref_content_filternsfw"
+            android:title="@string/pref_content_filter_nsfw"
             android:defaultValue="true"/>
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="hideLowRangeAuthors"
-            android:title="Ukrywaj treści zielonek"
+            android:title="@string/pref_content_filter_low_range_authors"
+            android:defaultValue="false"/>
+
+        <androidx.preference.CheckBoxPreference
+            app:iconSpaceReserved="false"
+            android:key="hideContentWithoutTags"
+            android:title="@string/pref_content_filter_without_tags"
             android:defaultValue="false"/>
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="hideBlacklistedViews"
-            android:title="Nie pokazuj ukrytych treści"
+            android:title="@string/pref_content_hide_blacklisted"
             android:defaultValue="false"/>
-
 
     </com.takisoft.preferencex.PreferenceCategory>
 
     <androidx.preference.Preference
         app:iconSpaceReserved="false"
         android:key="blacklist"
-        android:title="Zarządzaj czarną listą"/>
+        android:title="@string/pref_manage_blacklist"/>
 
     <androidx.preference.CheckBoxPreference
         app:iconSpaceReserved="false"
         android:key="useBuiltInBrowser"
-        android:title="Użyj wbudowanej przeglądarki"
+        android:title="@string/pref_use_built_in_browser"
         android:defaultValue="true"/>
 
     <androidx.preference.Preference
         app:iconSpaceReserved="false"
         android:key="clearhistory"
-        android:title="Wyczyść historie wyszukiwarki"/>
+        android:title="@string/pref_clear_history"/>
 </androidx.preference.PreferenceScreen>
