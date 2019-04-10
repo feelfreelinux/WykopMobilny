@@ -24,7 +24,8 @@
     <TextView
         android:id="@+id/dotTextView"
         style="@style/DotTextViewComment"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dateTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/dateTextView"
         app:layout_constraintLeft_toRightOf="@id/authorTextView"
         app:layout_constraintRight_toLeftOf="@id/dateTextView" />
 

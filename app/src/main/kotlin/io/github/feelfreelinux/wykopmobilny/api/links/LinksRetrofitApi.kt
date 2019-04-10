@@ -121,6 +121,15 @@ interface LinksRetrofitApi {
     ): Single<WykopApiResponse<LinkCommentResponse>>
 
     @FormUrlEncoded
+    @POST("/links/relatedadd/{linkId}/appkey/$APP_KEY")
+    fun addRelated(
+            @Field("title") body: String,
+            @Path("linkId") linkId: Int,
+            @Field("url") url: String,
+            @Field("plus18") plus18: Boolean
+    ): Single<WykopApiResponse<RelatedResponse>>
+
+    @FormUrlEncoded
     @POST("/links/commentedit/{linkId}/appkey/$APP_KEY")
     fun editComment(
         @Field("body") body: String,

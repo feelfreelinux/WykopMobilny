@@ -322,7 +322,6 @@
     <style name="DotTextViewComment" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">@dimen/padding_dp_small</item>
         <item name="android:paddingLeft">@dimen/padding_dp_tiny</item>
         <item name="android:paddingRight">@dimen/padding_dp_tiny</item>
         <item name="android:textColor">?attr/textColorGrey</item>

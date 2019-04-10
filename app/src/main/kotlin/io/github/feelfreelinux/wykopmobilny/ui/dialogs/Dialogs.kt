@@ -5,8 +5,10 @@ import android.content.Context
 import android.view.View
 import io.github.feelfreelinux.wykopmobilny.R
 import kotlinx.android.synthetic.main.dialog_edittext.view.*
+import kotlinx.android.synthetic.main.dialog_insert_link.view.*
 
 typealias formatDialogCallback = (String) -> Unit
+typealias addRelatedDialogCallback = (String, String) -> Unit
 
 fun editTextFormatDialog(titleId: Int, context: Context, callback: formatDialogCallback): AlertDialog {
     val editTextLayout = getEditTextView(context)
@@ -33,6 +35,16 @@ fun confirmationDialog(context: Context, callback: () -> Unit): AlertDialog {
         setPositiveButton(android.R.string.yes) { _, _ -> callback.invoke() }
         setNegativeButton(android.R.string.no, null)
         setCancelable(true)
+        return create()
+    }
+}
+
+fun addRelatedDialog(context: Context, callback: addRelatedDialogCallback): AlertDialog {
+    val editTextLayout = View.inflate(context, R.layout.dialog_insert_link, null)
+    context.createAlertBuilder().run {
+        setTitle("Dodaj powiązane")
+        setView(editTextLayout)
+        setPositiveButton(android.R.string.ok) { _, _ -> callback.invoke(editTextLayout.link.text.toString(), editTextLayout.description.text.toString()) }
         return create()
     }
 }

@@ -5,4 +5,5 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
 
 interface RelatedView : BaseView {
     fun showRelated(related: List<Related>)
+    fun onRefresh()
 }

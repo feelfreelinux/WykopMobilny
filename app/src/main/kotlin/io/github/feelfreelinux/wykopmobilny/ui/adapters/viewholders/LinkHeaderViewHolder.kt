@@ -112,9 +112,7 @@ class LinkHeaderViewHolder(
         description.text = link.description.removeHtml()
         relatedCountTextView.text = link.relatedCount.toString()
         relatedCountTextView.setOnClickListener {
-            if (link.relatedCount > 0) {
-                navigatorApi.openLinkRelatedActivity(link.id)
-            }
+            navigatorApi.openLinkRelatedActivity(link.id)
         }
         containerView.setOnClickListener {
             linkHandlerApi.handleUrl(link.sourceUrl)
@@ -179,9 +177,7 @@ class LinkHeaderViewHolder(
             }
 
             link_related.setOnClickListener {
-                if (link.relatedCount > 0) {
-                    navigatorApi.openLinkRelatedActivity(link.id)
-                }
+                navigatorApi.openLinkRelatedActivity(link.id)
                 dialog.dismiss()
             }
             link_bury.isVisible = userManagerApi.isUserAuthorized()

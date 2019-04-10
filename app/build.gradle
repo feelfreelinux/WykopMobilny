@@ -43,6 +43,7 @@ android {
         buildConfigField 'String', 'APP_SECRET', credentialsProperties['apiSecret']
         buildConfigField 'String', 'APP_KEY', credentialsProperties['apiKey']
         buildConfigField 'String', 'GOOGLE_KEY', credentialsProperties['googleKey']
+        resValue 'string', 'GOOGLE_API_KEY', credentialsProperties['googleKey']
     }
     
     signingConfigs {
@@ -98,13 +99,13 @@ dependencies {
 
     // Support library
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
-    implementation "android.arch.work:work-runtime:1.0.0-beta02"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
+    implementation "android.arch.work:work-runtime:1.0.0-beta03"
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.preference:preference:1.1.0-alpha02'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'com.google.android.material:material:1.1.0-alpha03'
     implementation "androidx.preference:preference:1.1.0-alpha02"
     implementation 'com.takisoft.preferencex:preferencex:1.0.0-alpha2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -116,7 +117,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:extension-okhttp:2.6.0'
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'androidx.core:core-ktx:1.1.0-alpha03'
+    implementation 'androidx.core:core-ktx:1.1.0-alpha04'
 
     // Utils
     implementation 'com.bugsnag:bugsnag-android:4.5.0'

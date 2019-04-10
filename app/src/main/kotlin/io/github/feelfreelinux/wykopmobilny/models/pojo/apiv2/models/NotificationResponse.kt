@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class NotificationResponse(
-    @JsonProperty("id") val id: Int,
+    @JsonProperty("id") val id: Long,
     @JsonProperty("author") val author: AuthorResponse?,
     @JsonProperty("date") val date: String,
     @JsonProperty("body") val body: String,

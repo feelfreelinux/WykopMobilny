@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.links.related
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -11,8 +12,10 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.RelatedListAdapter
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.addRelatedDialog
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_conversations_list.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -31,6 +34,7 @@ class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swipe
 
     @Inject lateinit var presenter: RelatedPresenter
     @Inject lateinit var relatedAdapter: RelatedListAdapter
+    @Inject lateinit var userManager: UserManagerApi
 
     private lateinit var relatedDataFragment: DataFragment<List<Related>>
 
@@ -78,8 +82,19 @@ class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swipe
         relatedDataFragment.data = relatedAdapter.items
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.add_related_menu, menu)
+        menu?.findItem(R.id.add_related)?.isVisible = userManager.isUserAuthorized()
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.add_related -> {
+                addRelatedDialog(this) { url, description ->
+                    presenter.addRelated(description, url)
+                }.show()
+            }
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)

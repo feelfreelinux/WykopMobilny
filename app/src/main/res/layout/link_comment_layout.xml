@@ -39,12 +39,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/authorTextView"
         tools:background="@drawable/patron_badge"
         tools:text="PATRON" />
+
     <TextView
         android:id="@+id/dotTextView"
         style="@style/DotTextViewComment"
-        app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
+        app:layout_constraintBottom_toBottomOf="@+id/dateTextView"
         app:layout_constraintLeft_toRightOf="@id/patronBadgeTextView"
-        app:layout_constraintRight_toLeftOf="@id/dateTextView" />
+        app:layout_constraintRight_toLeftOf="@id/dateTextView"
+        app:layout_constraintTop_toTopOf="@id/dateTextView" />
 
     <TextView
         android:id="@+id/dateTextView"

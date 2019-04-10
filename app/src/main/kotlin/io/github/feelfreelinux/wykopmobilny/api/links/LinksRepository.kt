@@ -164,6 +164,17 @@ class LinksRepository(
                     .compose<LinkCommentResponse>(ErrorHandlerTransformer())
                     .map { LinkCommentMapper.map(it, owmContentFilter) }
 
+    override fun relatedAdd(
+            title: String,
+            url: String,
+            plus18: Boolean,
+            linkId: Int
+    ): Single<Related> =
+            linksApi.addRelated(title,  linkId, url, plus18)
+                    .retryWhen(userTokenRefresher)
+                    .compose<RelatedResponse>(ErrorHandlerTransformer())
+                    .map { RelatedMapper.map(it) }
+
     override fun commentAdd(
             body: String,
             plus18: Boolean,

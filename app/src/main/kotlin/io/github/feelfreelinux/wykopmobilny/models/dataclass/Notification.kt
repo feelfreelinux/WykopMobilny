@@ -1,7 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.models.dataclass
 
 open class Notification(
-    val id: Int,
+    val id: Long,
     val author: Author?,
     val body: String,
     val date: String,
@@ -19,6 +19,6 @@ open class Notification(
     }
 
     override fun hashCode(): Int {
-        return id
+        return id.toInt()
     }
 }

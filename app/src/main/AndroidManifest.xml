@@ -141,10 +141,7 @@
             <data android:mimeType="text/plain" />
         </intent-filter>
         </activity>
-        <activity android:name=".ui.modules.embedview.YoutubeActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="sensor"
-            android:theme="@style/FullscreenActivityTheme"/>
+
 
         <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
             <intent-filter>
@@ -175,6 +172,12 @@
                 <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>
         </service>
+
+        <activity android:name=".ui.modules.embedview.YTPlayer"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
     </application>
 
 </manifest>

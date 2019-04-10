@@ -99,9 +99,6 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [RelatedModule::class])
     abstract fun bindRelatedActivity(): RelatedActivity
 
-    @ContributesAndroidInjector(modules = [])
-    abstract fun bindYoutubeActivity(): YoutubeActivity
-
     @ContributesAndroidInjector(modules = [ProfileModule::class, ProfileFragmentProvider::class])
     abstract fun bindProfileActivity(): ProfileActivity
 

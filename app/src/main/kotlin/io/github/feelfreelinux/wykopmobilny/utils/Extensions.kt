@@ -99,9 +99,11 @@ fun String.toDurationPrettyDate(): String {
         return "${period.years} lata"
     } else if (period.years == 1 && period.months > 0) {
         return "${period.years} rok ${period.months} mies."
+    } else if (period.years == 1 && period.months == 0) {
+        return "${period.years} rok"
     } else if (period.years == 0 && period.months > 0) {
         return "${period.months} mies."
-    } else if (period.months == 0 && period.days > 0) {
+    }  else if (period.months == 0 && period.days > 0) {
         return "${period.days} dni"
     } else {
         val durationTime = LocalTime.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss", Locale.GERMAN))
