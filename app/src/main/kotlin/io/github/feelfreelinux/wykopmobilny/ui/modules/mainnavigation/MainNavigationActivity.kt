@@ -51,6 +51,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.shortcuts.ShortcutsDispatcher
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
@@ -60,7 +61,6 @@ import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.patron_list_item.view.*
 import kotlinx.android.synthetic.main.patrons_bottomsheet.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.net.URLDecoder
 import javax.inject.Inject
 
 interface MainNavigationInterface {
@@ -72,7 +72,7 @@ interface MainNavigationInterface {
 }
 
 class MainNavigationActivity : BaseActivity(), MainNavigationView,
-    com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
+        com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
 
     companion object {
         const val LOGIN_REQUEST_CODE = 142
@@ -82,16 +82,19 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         fun getIntent(context: Context, targetFragment: String? = null): Intent {
             val intent = Intent(context, MainNavigationActivity::class.java)
             targetFragment?.let {
-                intent.putExtra(MainNavigationActivity.TARGET_FRAGMENT_KEY, targetFragment)
+                intent.putExtra(TARGET_FRAGMENT_KEY, targetFragment)
             }
             return intent
         }
     }
 
-    @Inject lateinit var patronsApi: PatronsApi
+    @Inject
+    lateinit var patronsApi: PatronsApi
 
-    @Inject lateinit var blacklistPreferencesApi: BlacklistPreferencesApi
-    @Inject lateinit var settingsPreferencesApi: SettingsPreferencesApi
+    @Inject
+    lateinit var blacklistPreferencesApi: BlacklistPreferencesApi
+    @Inject
+    lateinit var settingsPreferencesApi: SettingsPreferencesApi
 
     override val activityToolbar: Toolbar get() = toolbar
     var tapDoubleClickedMillis = 0L
@@ -99,11 +102,11 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
     private val navHeader by lazy { navigationView.getHeaderView(0) }
     private val actionBarToggle by lazy {
         ActionBarDrawerToggle(
-            this,
-            drawer_layout,
-            toolbar,
-            R.string.nav_drawer_open,
-            R.string.nav_drawer_closed
+                this,
+                drawer_layout,
+                toolbar,
+                R.string.nav_drawer_open,
+                R.string.nav_drawer_closed
         )
     }
     private val badgeDrawable by lazy { BadgeDrawerDrawable(supportActionBar!!.themedContext) }
@@ -112,17 +115,24 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
     override val floatingButton: View
         get() = fab
 
-    @Inject lateinit var presenter: MainNavigationPresenter
-    @Inject lateinit var settingsApi: SettingsPreferencesApi
-    @Inject lateinit var navigator: NewNavigatorApi
-    @Inject lateinit var userManagerApi: UserManagerApi
-    @Inject lateinit var linkHandler: WykopLinkHandlerApi
+    @Inject
+    lateinit var presenter: MainNavigationPresenter
+    @Inject
+    lateinit var settingsApi: SettingsPreferencesApi
+    @Inject
+    lateinit var shortcutsDispatcher: ShortcutsDispatcher
+    @Inject
+    lateinit var navigator: NewNavigatorApi
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
+    @Inject
+    lateinit var linkHandler: WykopLinkHandlerApi
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
             R.id.login -> {
-                navigator.openLoginScreen(LOGIN_REQUEST_CODE)
+                openLoginScreen()
             }
             R.id.messages -> {
                 openFragment(ConversationsListFragment.newInstance())
@@ -193,14 +203,14 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         //Setup AppUpdater
         AppUpdater(this)
-            .setUpdateFrom(UpdateFrom.GITHUB)
-            .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
-            .setTitleOnUpdateAvailable(R.string.update_available)
-            .setContentOnUpdateAvailable(R.string.update_app)
-            .setButtonDismiss(R.string.cancel)
-            .setButtonDoNotShowAgain(R.string.do_not_show_again)
-            .setButtonUpdate(R.string.update)
-            .start()
+                .setUpdateFrom(UpdateFrom.GITHUB)
+                .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
+                .setTitleOnUpdateAvailable(R.string.update_available)
+                .setContentOnUpdateAvailable(R.string.update_app)
+                .setButtonDismiss(R.string.cancel)
+                .setButtonDoNotShowAgain(R.string.do_not_show_again)
+                .setButtonUpdate(R.string.update)
+                .start()
         //presenter.checkUpdates()
         checkBlacklist()
 
@@ -222,6 +232,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
             } else openMainFragment()
         }
         setupNavigation()
+        shortcutsDispatcher.dispatchIntent(intent,
+                this::openFragment,
+                this::openLoginScreen,
+                userManagerApi.isUserAuthorized())
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -407,8 +421,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
                 dialog2.setContentView(badgesDialogView2)
 
                 val headerItem = layoutInflater.inflate(R.layout.patron_list_item, null)
-                headerItem.setOnClickListener {
-                    _ ->
+                headerItem.setOnClickListener { _ ->
                     dialog.dismiss()
                     linkHandler.handleUrl("https://patronite.pl/wykop-mobilny")
                 }
@@ -417,8 +430,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
                 badgesDialogView2.patronsList.addView(headerItem)
                 for (badge in patronsApi.patrons.filter { patron -> patron.listMention }) {
                     val item = layoutInflater.inflate(R.layout.patron_list_item, null)
-                    item.setOnClickListener {
-                        _ ->
+                    item.setOnClickListener { _ ->
                         dialog.dismiss()
                         linkHandler.handleUrl("https://wykop.pl/ludzie/" + badge.username)
                     }
@@ -481,13 +493,13 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         printout(pInfo.versionName)
         if (versionCompare(owmVersion, pInfo.versionName) == 1) {
             createAlertBuilder()
-                .setTitle(R.string.update_available)
-                .setMessage("Aktualizacja $owmVersion jest dostępna.")
-                .setPositiveButton("Pobierz nową wersje") { _, _ ->
-                    openBrowser(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
+                    .setTitle(R.string.update_available)
+                    .setMessage("Aktualizacja $owmVersion jest dostępna.")
+                    .setPositiveButton("Pobierz nową wersje") { _, _ ->
+                        openBrowser(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
         }
 
     }
@@ -536,5 +548,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
             builder.setCancelable(false)
             builder.show()
         }
+    }
+
+    private fun openLoginScreen() {
+        navigator.openLoginScreen(LOGIN_REQUEST_CODE)
     }
 }
