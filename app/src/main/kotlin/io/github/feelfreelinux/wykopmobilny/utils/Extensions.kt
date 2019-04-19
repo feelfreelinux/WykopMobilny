@@ -21,6 +21,7 @@ import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDate
 import io.github.feelfreelinux.wykopmobilny.utils.api.parseDateJavaTime
 import io.github.feelfreelinux.wykopmobilny.utils.recyclerview.ViewHolderDependentItemDecorator
+import io.github.feelfreelinux.wykopmobilny.utils.view.SafeClickListener
 import org.ocpsoft.prettytime.PrettyTime
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
@@ -155,4 +156,11 @@ class KotlinGlideRequestListener(val failedListener: (GlideException?) -> Unit, 
         successListener()
         return false
     }
+}
+
+fun View.setSafeOnClickListener(onSafeClick: (View) -> Unit) {
+    val safeClickListener = SafeClickListener {
+        onSafeClick(it)
+    }
+    setOnClickListener(safeClickListener)
 }
