@@ -31,7 +31,7 @@
     <string name="pref_dark_style">Styl nocny</string>
     <string name="useAmoledTheme">Tryb AMOLED dla stylu nocnego</string>
     <string name="defaultScreen">Domyślny ekran aplikacji</string>
-    <string name="defaultHotScreen">Domyślny ekran w mirkoblogu</string>
+    <string name="defaultHotScreen">Domyślny ekran w mikroblogu</string>
     <string name="open_spoilers_in_dialog">Otwieraj spoilery w okienku</string>
     <string name="app_config_images">Ustawienia obrazków</string>
     <string name="app_config_images_minified">Obrazki w trybie miniaturki</string>
@@ -39,7 +39,7 @@
     <string name="app_config_images_cut_image_proportion">Wysokość obrazka względem ekranu</string>
     <string name="pref_notifications">Powiadomienia</string>
     <string name="pref_notifications_piggyback">Przechwyć powiadomienie push oficjalnej aplikacji</string>
-    <string name="pref_notifications_piggyback_summary">Wymaga zainstalowania oficjalnej aplikacji Wykop.pl.</string>
+    <string name="pref_notifications_piggyback_summary">Wymaga zainstalowania oficjalnej aplikacji Wykop.pl</string>
     <string name="pref_notifications_enable">Włącz powiadomienia</string>
     <string name="pref_notifications_frequency">Częstotliwość sprawdzania</string>
     <string name="pref_content_filter">Filtrowanie treści</string>
@@ -50,7 +50,7 @@
     <string name="pref_content_hide_blacklisted">Nie pokazuj ukrytych treści</string>
     <string name="pref_manage_blacklist">Zarządzaj czarną listą</string>
     <string name="pref_use_built_in_browser">Użyj wbudowanej przeglądarki</string>
-    <string name="pref_clear_history">Wyczyść historie wyszukiwarki</string>
+    <string name="pref_clear_history">Wyczyść historię wyszukiwarki</string>
     <string name="pref_disable_exit_confirmation">Wyłącz potwierdzenie wyjścia z aplikacji</string>
 
     <string name="license">Publikacja aplikacji na licencji MIT</string>
