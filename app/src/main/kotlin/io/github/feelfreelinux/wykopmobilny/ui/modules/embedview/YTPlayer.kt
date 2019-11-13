@@ -50,6 +50,10 @@ object YouTubeUrlParser {
     fun getVideoUrl(@NonNull videoId: String): String {
         return "http://youtu.be/$videoId"
     }
+
+    fun isVideoUrl(url: String): Boolean {
+        return reg.toRegex().find(url) != null
+    }
 }
 
 object StatusBarUtil {

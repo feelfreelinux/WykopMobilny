@@ -6,6 +6,7 @@ import android.content.Intent
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
+import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.YouTubeUrlParser
 import io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
@@ -65,7 +66,11 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
                         else -> null
                     }
                 }
-                "youtu", "youtube", "gfycat", "streamable", "coub" -> EmbedViewActivity.createIntent(context, url)
+                "gfycat", "streamable", "coub" -> EmbedViewActivity.createIntent(context, url)
+                "youtu", "youtube" -> {
+                    if (YouTubeUrlParser.isVideoUrl(url)) EmbedViewActivity.createIntent(context, url)
+                    else null
+                }
                 else -> null
             }
         }
