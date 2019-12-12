@@ -31,6 +31,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.annotation.NonNull
 import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
+import io.github.feelfreelinux.wykopmobilny.utils.youtubeTimestampToMsOrNull
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -39,12 +40,14 @@ object YouTubeUrlParser {
 
     // (?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})
     internal val reg = "(?:youtube(?:-nocookie)?\\.com\\/(?:[^\\/\\n\\s]+\\/\\S+\\/|(?:v|e(?:mbed)?)\\/|\\S*?[?&]v=)|youtu\\.be\\/)([a-zA-Z0-9_-]{11})"
+    private const val timestampRegex = "t=([^#&\n\r]+)"
 
     fun getVideoId(@NonNull videoUrl: String): String? {
-        val pattern = Pattern.compile(reg, Pattern.CASE_INSENSITIVE)
-        val matcher = pattern.matcher(videoUrl)
+        return findInUrl(reg, videoUrl)
+    }
 
-        return if (matcher.find()) matcher.group(1) else null
+    fun getTimestamp(videoUrl: String) : String? {
+        return findInUrl(timestampRegex, videoUrl)
     }
 
     fun getVideoUrl(@NonNull videoId: String): String {
@@ -53,6 +56,13 @@ object YouTubeUrlParser {
 
     fun isVideoUrl(url: String): Boolean {
         return reg.toRegex().find(url) != null
+    }
+
+    private fun findInUrl(regex : String, url : String) : String? {
+        val pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
+        val matcher = pattern.matcher(url)
+
+        return if (matcher.find()) matcher.group(1) else null
     }
 }
 
@@ -107,6 +117,7 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
 
     private var googleApiKey: String? = null
     private var videoId: String? = null
+    private var timestampMs : Int? = null
 
     private var playerStyle: YouTubePlayer.PlayerStyle? = null
     private var orientation: Orientation? = null
@@ -150,9 +161,12 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
         if (videoId == null)
             throw NullPointerException("Video ID must not be null")
 
-            playerStyle = YouTubePlayer.PlayerStyle.DEFAULT
+        playerStyle = YouTubePlayer.PlayerStyle.DEFAULT
+        orientation = Orientation.AUTO
 
-            orientation = Orientation.AUTO
+        intent.getStringExtra(EXTRA_TIMESTAMP)?.let { t ->
+            timestampMs = t.youtubeTimestampToMsOrNull()
+        }
 
         showAudioUi = intent.getBooleanExtra(EXTRA_SHOW_AUDIO_UI, true)
         handleError = intent.getBooleanExtra(EXTRA_HANDLE_ERROR, true)
@@ -199,7 +213,7 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
         }
 
         if (!wasRestored)
-            player.loadVideo(videoId)
+            player.loadVideo(videoId, timestampMs ?: 0)
     }
 
     override fun onInitializationFailure(provider: YouTubePlayer.Provider,
@@ -303,6 +317,8 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
 
 
         val EXTRA_VIDEO_ID = "video_id"
+
+        val EXTRA_TIMESTAMP = "timestamp"
 
         val EXTRA_PLAYER_STYLE = "player_style"
 

@@ -2,11 +2,9 @@ package io.github.feelfreelinux.wykopmobilny.utils
 
 import android.app.Activity
 import android.content.ContentResolver
-import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.provider.OpenableColumns
 import android.text.SpannableStringBuilder
 import android.view.View
@@ -27,6 +25,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.Period
 import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.DateTimeParseException
 import java.util.Locale
 
 var View.isVisible: Boolean
@@ -137,6 +136,32 @@ fun Uri.queryFileName(contentResolver: ContentResolver): String {
         }
     }
     return result
+}
+
+/**
+ * Parse YouTube timestamp from string to milliseconds value.
+ *
+ * Original value comes from 't' parameter from youtube url and is given in seconds. YouTube player needs this
+ * value in milliseconds.
+ *
+ * Parameter 't' can be in following formats:
+ * '3' we can assume that this values is in seconds
+ * '3m', '5m30s', '1h30m30s' needs conversion using ISO 8601.
+ *
+ * @return time in milliseconds, null if value cannot be converted.
+ *
+ */
+fun String.youtubeTimestampToMsOrNull(): Int? {
+    val timestamp = this.toLongOrNull()
+    if (timestamp != null) {
+        return Duration.ofSeconds(timestamp).toMillis().toInt()
+    }
+
+    return try {
+        Duration.parse("PT${this}").toMillis().toInt()
+    } catch (e: DateTimeParseException) {
+        null
+    }
 }
 
 class KotlinGlideRequestListener(val failedListener: (GlideException?) -> Unit, val successListener: () -> Unit) : RequestListener<Drawable> {
