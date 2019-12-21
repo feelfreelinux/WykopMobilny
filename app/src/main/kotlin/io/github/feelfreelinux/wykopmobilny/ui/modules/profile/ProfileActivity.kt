@@ -62,6 +62,10 @@ class ProfileActivity : BaseActivity(), ProfileView {
         setSupportActionBar(toolbar)
         presenter.subscribe(this)
         presenter.userName = username
+        fab.setOnClickListener {
+            navigator.openAddEntryActivity(null, "@$username: ")
+        }
+        fab.isVisible = userManagerApi.isUserAuthorized()
 
         supportActionBar?.apply {
             title = null
