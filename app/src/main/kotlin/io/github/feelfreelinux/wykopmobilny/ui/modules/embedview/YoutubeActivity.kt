@@ -25,6 +25,9 @@ class YoutubeActivity {
         fun createIntent(context: Context, url: String): Intent {
             val intent = Intent(context, YTPlayer::class.java)
             intent.putExtra(YTPlayer.EXTRA_VIDEO_ID, YouTubeUrlParser.getVideoId(url))
+            YouTubeUrlParser.getTimestamp(url)?.let { t ->
+                intent.putExtra(YTPlayer.EXTRA_TIMESTAMP, t)
+            }
             return intent
         }
 
