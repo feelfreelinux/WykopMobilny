@@ -63,7 +63,7 @@ class WykopImageFile(val uri: Uri, val context: Context) {
             try {
                 val buffer = ByteArray(4 * 1024) // or other buffer size
 
-                var read = input.read(buffer)
+                var read = input!!.read(buffer)
                 while (read != -1) {
                     output.write(buffer, 0, read)
                     read = input.read(buffer)

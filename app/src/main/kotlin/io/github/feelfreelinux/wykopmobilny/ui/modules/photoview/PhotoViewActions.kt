@@ -53,7 +53,7 @@ class PhotoViewActions(val context: Context) : PhotoViewCallbacks {
             addImageToGallery(file.path, context)
             val url = FileProvider.getUriForFile(context, context.applicationContext.packageName + ".fileprovider", file)
             val share = Intent(Intent.ACTION_SEND)
-            share.type = getMimeType(url.path)
+            share.type = getMimeType(url.path!!)
             share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             share.putExtra(Intent.EXTRA_STREAM, url)
             photoView.startActivityForResult(Intent.createChooser(share, "Udostępnij obrazek"), PhotoViewActivity.SHARE_REQUEST_CODE)

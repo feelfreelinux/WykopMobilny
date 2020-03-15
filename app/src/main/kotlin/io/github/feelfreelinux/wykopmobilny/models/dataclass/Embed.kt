@@ -16,13 +16,13 @@ class Embed(
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readByte() != 0.toByte(),
         parcel.readString(),
         parcel.readByte() != 0.toByte(),
-        parcel.readString(),
+        parcel.readString()!!,
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte()
     )

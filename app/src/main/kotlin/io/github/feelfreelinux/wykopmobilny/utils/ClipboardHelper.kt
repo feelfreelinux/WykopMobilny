@@ -13,7 +13,7 @@ interface ClipboardHelperApi {
 class ClipboardHelper(val context: Context) : ClipboardHelperApi {
     override fun copyTextToClipboard(text: String, label: String) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.primaryClip = ClipData.newPlainText(label, text)
+        clipboard.setPrimaryClip(ClipData.newPlainText(label, text))
         showToast(context.resources.getString(R.string.copied_to_clipboard))
     }
 

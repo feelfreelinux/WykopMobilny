@@ -50,7 +50,7 @@ class MonthYearPickerDialog : androidx.fragment.app.DialogFragment() {
             setView(dialogView)
         }
         val newDialog = dialogBuilder.create()
-        newDialog.window.requestFeature(Window.FEATURE_NO_TITLE)
+        newDialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialogView.apply {
             yearPicker.minValue = 2005
             yearPicker.maxValue = currentYear

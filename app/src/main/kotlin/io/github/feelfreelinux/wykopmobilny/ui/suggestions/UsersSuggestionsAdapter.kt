@@ -49,7 +49,7 @@ class UsersSuggestionsAdapter(
 
     override fun getFilter() = itemsFilter
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: View.inflate(context, R.layout.autosuggest_item, null)
         val item = items[position]
         view.textView.setTextColor(getGroupColor(item.group, false))

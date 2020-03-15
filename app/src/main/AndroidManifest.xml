@@ -270,6 +270,11 @@
         </provider>
 
         <service
+            android:name="com.evernote.android.job.gcm.PlatformGcmService"
+            android:enabled="true"
+            tools:replace="android:enabled"/>
+
+        <service
             android:name=".ui.modules.notifications.notificationsservice.NotificationPiggyback"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>

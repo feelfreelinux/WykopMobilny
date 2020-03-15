@@ -56,7 +56,7 @@ abstract class BaseLinkCommentViewHolder(
         }
     }
 
-    val collapseDrawable: Drawable by lazy {
+    val collapseDrawable: Drawable? by lazy {
         val typedArray = containerView.context.obtainStyledAttributes(
             arrayOf(
                 R.attr.collapseDrawable
@@ -67,7 +67,7 @@ abstract class BaseLinkCommentViewHolder(
         drawable
     }
 
-    val expandDrawable: Drawable by lazy {
+    val expandDrawable: Drawable? by lazy {
         val typedArray = containerView.context.obtainStyledAttributes(
             arrayOf(
                 R.attr.expandDrawable

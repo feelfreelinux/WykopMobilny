@@ -31,7 +31,7 @@ class TagEntriesFragment : BaseEntriesFragment(), TagEntriesView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
-        presenter.tag = entryTag
+        presenter.tag = entryTag!!
         entriesAdapter.entryActionListener = presenter
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
         presenter.loadData(true)

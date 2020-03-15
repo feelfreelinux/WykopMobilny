@@ -60,7 +60,7 @@ abstract class Preferences(var context: Context? = null, useDefaultFile: Boolean
     fun stringSetPref(prefKey: String? = null, defaultValue: Set<String> = HashSet()) = StringSetPrefDelegate(prefKey, defaultValue)
 
     inner class StringSetPrefDelegate(prefKey: String? = null, val defaultValue: Set<String>) : PrefDelegate<Set<String>>(prefKey) {
-        override fun getValue(thisRef: Any?, property: KProperty<*>): Set<String> = prefs.getStringSet(prefKey ?: property.name, defaultValue)
+        override fun getValue(thisRef: Any?, property: KProperty<*>): Set<String> = prefs.getStringSet(prefKey ?: property.name, defaultValue)!!
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: Set<String>) {
             prefs.edit().putStringSet(prefKey ?: property.name, value).apply()
             onPrefChanged(property)

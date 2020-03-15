@@ -267,7 +267,7 @@ class InputToolbar @JvmOverloads constructor(
 
     override fun onSaveInstanceState(): Parcelable {
         val superState = super.onSaveInstanceState()
-        return SavedState(superState, showToolbar, textBody)
+        return SavedState(superState!!, showToolbar, textBody)
     }
 
     override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>?) {
@@ -290,7 +290,7 @@ class InputToolbar @JvmOverloads constructor(
 
         constructor(`in`: Parcel) : super(`in`) {
             isOpened = `in`.readInt() == 1
-            text = `in`.readString()
+            text = `in`.readString()!!
         }
 
         override fun writeToParcel(destination: Parcel, flags: Int) {

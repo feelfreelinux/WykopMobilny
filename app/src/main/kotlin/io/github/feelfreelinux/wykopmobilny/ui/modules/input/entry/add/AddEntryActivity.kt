@@ -46,7 +46,7 @@ class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivit
                     textBody = text
                 }
 
-            } else if (intent.type.startsWith("image/")) {
+            } else if (intent!!.type!!.startsWith("image/")) {
                 val imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM) as Uri?
                 imageUri?.let {
                     markupToolbar.photo = imageUri

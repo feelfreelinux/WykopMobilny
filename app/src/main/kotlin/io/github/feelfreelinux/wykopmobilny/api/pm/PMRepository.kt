@@ -14,7 +14,6 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.PMMessageRe
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConversationResponse
 import io.reactivex.Single
 import retrofit2.Retrofit
-import rx.Completable
 import toRequestBody
 
 class PMRepository(

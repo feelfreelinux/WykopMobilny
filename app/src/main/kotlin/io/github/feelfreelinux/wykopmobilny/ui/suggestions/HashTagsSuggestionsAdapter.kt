@@ -24,7 +24,7 @@ class HashTagsSuggestionsAdapter(
 
     override fun getItem(index: Int) = items[index]
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         printout(items.size.toString())
         val view = convertView ?: View.inflate(context, R.layout.autosuggest_item, null)
         val item = items[position]

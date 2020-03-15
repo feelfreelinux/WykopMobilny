@@ -14,7 +14,7 @@ class NotificationHeaderViewHolder(
     var collapseListener: (Boolean, String) -> Unit
 ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    val collapseDrawable: Drawable by lazy {
+    val collapseDrawable: Drawable? by lazy {
         val typedArray = containerView.context.obtainStyledAttributes(
             arrayOf(
                 R.attr.collapseDrawable
@@ -25,7 +25,7 @@ class NotificationHeaderViewHolder(
         drawable
     }
 
-    val expandDrawable: Drawable by lazy {
+    val expandDrawable: Drawable? by lazy {
         val typedArray = containerView.context.obtainStyledAttributes(
             arrayOf(
                 R.attr.expandDrawable

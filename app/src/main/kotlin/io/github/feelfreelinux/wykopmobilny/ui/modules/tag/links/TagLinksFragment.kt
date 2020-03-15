@@ -32,7 +32,7 @@ class TagLinksFragment : BaseLinksFragment(), TagLinksView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.subscribe(this)
-        presenter.tag = tagString
+        presenter.tag = tagString!!
         linksAdapter.linksActionListener = presenter
         linksAdapter.loadNewDataListener = { loadDataListener(false) }
         presenter.loadData(true)

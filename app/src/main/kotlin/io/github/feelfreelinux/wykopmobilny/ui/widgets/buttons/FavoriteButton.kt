@@ -38,11 +38,11 @@ class FavoriteButton @JvmOverloads constructor(
                 R.attr.favoriteDrawable
             ).toIntArray()
         )
-        favoriteDrawable = typedArray.getDrawable(0)
+        favoriteDrawable = typedArray.getDrawable(0)!!
         typedArray.recycle()
 
         typedArray = context.obtainStyledAttributes(arrayOf(R.attr.favoriteOutlineDrawable).toIntArray())
-        favoriteOutlineDrawable = typedArray.getDrawable(0)
+        favoriteOutlineDrawable = typedArray.getDrawable(0)!!
         typedArray.recycle()
     }
 }

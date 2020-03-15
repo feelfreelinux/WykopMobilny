@@ -32,6 +32,6 @@ fun Activity.hideKeyboard() {
 fun Context.copyText(text: String, label: String = "wykopmobilny") {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clip = ClipData.newPlainText(label, text)
-    clipboard.primaryClip = clip
+    clipboard.setPrimaryClip(clip)
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }

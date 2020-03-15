@@ -33,8 +33,8 @@ class LinkComment(
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.readParcelable(Author::class.java.classLoader),
-        parcel.readString(),
+        parcel.readParcelable(Author::class.java.classLoader)!!,
+        parcel.readString()!!,
         parcel.readString(),
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
@@ -50,7 +50,7 @@ class LinkComment(
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
         parcel.readInt(),
-        parcel.readString(),
+        parcel.readString()!!,
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte()
     )

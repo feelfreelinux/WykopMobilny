@@ -14,12 +14,12 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import com.devbrackets.android.exomedia.core.source.MediaSourceProvider
-import com.ftinc.kit.util.Utils.getMimeType
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -29,6 +29,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.utils.FileUtils
 import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
@@ -249,7 +250,10 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
                 val values = ContentValues()
 
                 values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+
                 values.put(MediaStore.Images.Media.MIME_TYPE, getMimeType(it))
+
+
                 values.put(MediaStore.MediaColumns.DATA, it)
                 Toast.makeText(this, "Zapisano plik", Toast.LENGTH_SHORT).show()
                 contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
@@ -272,5 +276,14 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
         return writePermission != PackageManager.PERMISSION_DENIED && readPermission != PackageManager.PERMISSION_DENIED
+    }
+
+    private fun getMimeType(url: String): String? {
+        var type: String? = null
+        val extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        }
+        return type
     }
 }

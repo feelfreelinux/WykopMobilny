@@ -20,10 +20,10 @@ class Author(
     var badge: PatronBadge? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
+            parcel.readString()!!,
+            parcel.readString()!!,
             parcel.readInt(),
-            parcel.readString(),
+            parcel.readString()!!,
             parcel.readParcelable(PatronBadge::class.java.classLoader)) {
     }
 

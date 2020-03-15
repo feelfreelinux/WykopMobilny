@@ -44,8 +44,8 @@ fun createVotersDialogListener(
 }
 
 class ClickableUserSpan(val author: Author) : ClickableSpan() {
-    override fun onClick(authorView: View?) {
-        val activity = authorView?.getActivityContext()
+    override fun onClick(authorView: View) {
+        val activity = authorView.getActivityContext()
         activity?.startActivity(ProfileActivity.createIntent(activity, author.nick))
     }
 
