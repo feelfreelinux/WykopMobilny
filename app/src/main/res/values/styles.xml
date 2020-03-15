@@ -306,7 +306,7 @@
     </style>
 
     <style name="AuthorTextViewComment" parent="">
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/margin_dp_normal</item>
         <item name="android:layout_marginTop">@dimen/padding_dp_small</item>
@@ -314,7 +314,7 @@
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
-        <item name="layout_constraintWidth_default">wrap</item>
+        <item name="layout_constrainedWidth">true</item>
         <item name="layout_constraintHorizontal_bias">0.0</item>
         <item name="layout_constraintHorizontal_chainStyle">packed</item>
     </style>

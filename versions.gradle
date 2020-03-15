@@ -5,7 +5,7 @@ ext {
             kotlin            : '1.3.11',
             supportLibrary    : '27.1.0',
             constraintLayout  : '1.0.2',
-            glide             : '4.8.0-SNAPSHOT',
+            glide             : '4.11.0',
             prettytime        : '4.0.1.Final',
             photoview         : '2.1.2',
             mockito           : '2.9.0',
