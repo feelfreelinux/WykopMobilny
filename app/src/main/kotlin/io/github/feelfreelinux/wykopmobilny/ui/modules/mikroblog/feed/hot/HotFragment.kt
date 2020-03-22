@@ -102,6 +102,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
             }
         }
 
+        settingsPreferences.hotEntriesScreen = presenter.period
         swipeRefresh.isRefreshing = true
         presenter.loadData(true)
         return true
