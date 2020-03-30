@@ -68,7 +68,7 @@ class OWMContentFilter @Inject constructor(
 
         }
 
-    private val tagsRegex = "((#[a-z\\\\d-]+)|\\%23.+)".toRegex()
+    private val tagsRegex = "((#[a-z\\d-]+)|\\%23.+)".toRegex()
 
     private fun String.bodyContainsTags() = tagsRegex.containsMatchIn(this)
 
