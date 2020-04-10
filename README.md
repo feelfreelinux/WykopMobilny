@@ -36,7 +36,7 @@ If you want to build your very own version of Wykop Mobilny, copy `credentials.p
 
 ## Changelogs
 
-Usually I report all progress along with changelogs [on #otwartywykopmobilny on Wykop][wykop-tag].
+Usually I report all progress along with changelogs on [#otwartywykopmobilny on Wykop][wykop-tag].
 
 [build-badge]: https://travis-ci.org/feelfreelinux/WykopMobilny.svg?branch=master
 [build]: https://travis-ci.org/feelfreelinux/WykopMobilny
