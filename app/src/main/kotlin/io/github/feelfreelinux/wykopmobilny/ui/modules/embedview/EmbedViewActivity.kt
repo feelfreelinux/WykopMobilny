@@ -29,7 +29,6 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.utils.FileUtils
 import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
@@ -125,7 +124,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     }
 
     override fun playCoub(coub: Coub) {
-        val coubUrl = decodeCoubUrl(coub.fileVersions.mobile.gifv)
+        val coubUrl = coub.fileVersions.mobile.mp4
         presenter.mp4Url = coubUrl!!
         prepareVideoView()
         val videoSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coubUrl!!), null)
