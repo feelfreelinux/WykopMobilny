@@ -22,7 +22,7 @@ class ExternalRepository(val retrofit: Retrofit) : ExternalApi {
 
     override fun getStreamableUrl(streamableId: String): Single<URL> =
         embedApi.getStreamableFile(streamableId)
-            .map { URL("https:${it.files.mp4Mobile?.url ?: it.files.mp4.url}") }
+            .map { URL(it.files.mp4Mobile?.url ?: it.files.mp4.url) }
 
     override fun getCoub(coubId: String): Single<Coub> =
         embedApi.getCoub(coubId)
