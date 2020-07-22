@@ -30,34 +30,34 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
 
     override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences_appearance)
-        findPreference<Preference>("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
-        findPreference<Preference>("cutImageProportion").isEnabled = settingsApi.cutImages
-        findPreference<Preference>("linkImagePosition").isEnabled = !settingsApi.linkSimpleList && settingsApi.linkShowImage
-        findPreference<Preference>("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
+        findPreference<Preference>("useAmoledTheme")?.isEnabled = settingsApi.useDarkTheme
+        findPreference<Preference>("cutImageProportion")?.isEnabled = settingsApi.cutImages
+        findPreference<Preference>("linkImagePosition")?.isEnabled = !settingsApi.linkSimpleList && settingsApi.linkShowImage
+        findPreference<Preference>("linkShowAuthor")?.isEnabled = !settingsApi.linkSimpleList
 
-        (findPreference("hotEntriesScreen") as ListPreference).apply {
+        (findPreference("hotEntriesScreen") as ListPreference?)!!.apply {
             summary = entry
         }
 
-        (findPreference("fontSize") as ListPreference).apply {
+        (findPreference("fontSize") as ListPreference?)!!.apply {
             summary = entry
         }
 
-        (findPreference("defaultScreen") as ListPreference).apply {
+        (findPreference("defaultScreen") as ListPreference?)!!.apply {
             summary = entry
         }
 
-        (findPreference("linkImagePosition") as ListPreference).apply {
+        (findPreference("linkImagePosition") as ListPreference?)!!.apply {
             summary = entry
         }
     }
 
     override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {
         val pref = findPreference<Preference>(key)
-        findPreference<Preference>("useAmoledTheme").isEnabled = settingsApi.useDarkTheme
-        findPreference<Preference>("cutImageProportion").isEnabled = settingsApi.cutImages
-        findPreference<Preference>("linkShowAuthor").isEnabled = !settingsApi.linkSimpleList
-        findPreference<Preference>("linkImagePosition").isEnabled = !settingsApi.linkSimpleList
+        findPreference<Preference>("useAmoledTheme")?.isEnabled = settingsApi.useDarkTheme
+        findPreference<Preference>("cutImageProportion")?.isEnabled = settingsApi.cutImages
+        findPreference<Preference>("linkShowAuthor")?.isEnabled = !settingsApi.linkSimpleList
+        findPreference<Preference>("linkImagePosition")?.isEnabled = !settingsApi.linkSimpleList
 
         if (pref is ListPreference) {
             pref.setSummary(pref.entry)

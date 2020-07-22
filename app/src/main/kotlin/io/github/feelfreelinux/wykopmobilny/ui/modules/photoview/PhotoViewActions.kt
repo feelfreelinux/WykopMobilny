@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
+import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -20,6 +21,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.SingleOnSubscribe
 import java.io.File
+
 
 interface PhotoViewCallbacks {
     fun shareImage(url: String)
@@ -43,19 +45,24 @@ class PhotoViewActions(val context: Context) : PhotoViewCallbacks {
 
         Single.create(SingleOnSubscribe<File> {
             val file = Glide.with(context).downloadOnly().load(url).submit().get()
-            val newFile = File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "$SAVED_FOLDER/$SHARED_FOLDER/" + url.substringAfterLast("/")
-            )
-            file.copyTo(newFile, true)
+            var fileUrl = url.substringAfterLast("/")
+            if (fileUrl.contains("?")) {
+                fileUrl = fileUrl.substringBefore("?")
+            }
+            val newFile = File(file.path.substringBeforeLast("/") + "/" + fileUrl)
+            file.renameTo(newFile)
+
+
             it.onSuccess(newFile)
         }).subscribeOn(WykopSchedulers().backgroundThread()).observeOn(WykopSchedulers().mainThread()).subscribe { file: File ->
-            addImageToGallery(file.path, context)
+
             val url = FileProvider.getUriForFile(context, context.applicationContext.packageName + ".fileprovider", file)
             val share = Intent(Intent.ACTION_SEND)
             share.type = getMimeType(url.path!!)
             share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             share.putExtra(Intent.EXTRA_STREAM, url)
+            share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
             photoView.startActivityForResult(Intent.createChooser(share, "Udostępnij obrazek"), PhotoViewActivity.SHARE_REQUEST_CODE)
         }
     }
@@ -72,14 +79,29 @@ class PhotoViewActions(val context: Context) : PhotoViewCallbacks {
             return
         }
         Completable.fromAction {
-            val file = Glide.with(context).downloadOnly().load(url).submit().get()
-            var path = File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                SAVED_FOLDER
-            )
-            path = File(path, photoView.url.substringAfterLast('/'))
-            file.copyTo(path, true)
-            addImageToGallery(path.path, context)
+
+            val relativeLocation = Environment.DIRECTORY_PICTURES
+            var fileUrl = url.substringAfterLast("/")
+            if (fileUrl.contains("?")) {
+                fileUrl = fileUrl.substringBefore("?")
+            }
+            val contentValues = ContentValues()
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileUrl)
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, getMimeType(url))
+            contentValues.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, relativeLocation + "/" + PhotoViewActions.SAVED_FOLDER)
+            val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            val uri = context.contentResolver.insert(contentUri, contentValues)
+            uri?.let {
+                uri ->
+                val stream = context.contentResolver.openOutputStream(uri)
+
+                val file = Glide.with(context).downloadOnly().load(url).submit().get()
+
+                file.inputStream().copyTo(stream!!)
+
+            }
+
         }.subscribeOn(WykopSchedulers().backgroundThread())
             .observeOn(WykopSchedulers().mainThread()).subscribe({
                 showToastMessage("Zapisano plik")

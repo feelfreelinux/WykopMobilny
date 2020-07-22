@@ -42,29 +42,29 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences)
-        (findPreference("piggyBackPushNotifications") as CheckBoxPreference).isEnabled =
+        (findPreference("piggyBackPushNotifications") as CheckBoxPreference?)?.isEnabled =
                 (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
-        (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
+        (findPreference("notificationsSchedulerDelay") as ListPreference?)?.apply {
             summary = entry
         }
 
-        (findPreference("showNotifications") as CheckBoxPreference).isEnabled =
-                !(findPreference("piggyBackPushNotifications") as CheckBoxPreference).isChecked
-        (findPreference("appearance") as Preference).setOnPreferenceClickListener {
+        (findPreference("showNotifications") as CheckBoxPreference?)?.isEnabled =
+                !(findPreference("piggyBackPushNotifications") as CheckBoxPreference?)!!.isChecked
+        (findPreference("appearance") as Preference?)?.setOnPreferenceClickListener {
             (activity as SettingsActivity).openFragment(SettingsAppearance(), "appearance")
             true
         }
 
-        (findPreference("blacklist") as Preference).setOnPreferenceClickListener {
-            userManagerApi.runIfLoggedIn(activity!!) {
-                startActivity(BlacklistActivity.createIntent(activity!!))
+        (findPreference("blacklist") as Preference?)!!.setOnPreferenceClickListener {
+            userManagerApi.runIfLoggedIn(requireActivity()) {
+                startActivity(BlacklistActivity.createIntent(requireActivity()))
             }
             true
         }
 
-        (findPreference("clearhistory") as Preference).setOnPreferenceClickListener {
-            SuggestionDatabase(context!!).clearDb()
-            Toast.makeText(context!!, "Wyczyszczono historię wyszukiwarki", Toast.LENGTH_LONG).show()
+        (findPreference("clearhistory") as Preference?)?.setOnPreferenceClickListener {
+            SuggestionDatabase(requireContext()).clearDb()
+            Toast.makeText(requireContext(), "Wyczyszczono historię wyszukiwarki", Toast.LENGTH_LONG).show()
             true
         }
     }
@@ -74,8 +74,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         if (pref is CheckBoxPreference) {
             when (pref.key) {
                 "showNotifications" -> {
-                    findPreference<Preference>("notificationsSchedulerDelay").isEnabled = pref.isChecked
-                    findPreference<Preference>("piggyBackPushNotifications").isEnabled = pref.isChecked
+                    findPreference<Preference>("notificationsSchedulerDelay")?.isEnabled = pref.isChecked
+                    findPreference<Preference>("piggyBackPushNotifications")?.isEnabled = pref.isChecked
                     if (pref.isChecked) {
                         WykopNotificationsJob.schedule(settingsApi)
                     } else {
@@ -84,8 +84,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 }
 
                 "piggyBackPushNotifications" -> {
-                    findPreference<Preference>("notificationsSchedulerDelay").isEnabled = !pref.isChecked
-                    (findPreference("showNotifications") as Preference).isEnabled = !pref.isChecked
+                    findPreference<Preference>("notificationsSchedulerDelay")?.isEnabled = !pref.isChecked
+                    (findPreference("showNotifications") as Preference?)?.isEnabled = !pref.isChecked
                     if (pref.isChecked) {
                         if (isOfficialAppInstalled()) {
                             if (isNotificationAccessEnabled()) {
@@ -93,7 +93,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                             } else {
                                 pref.isChecked = false
                                 onSharedPreferenceChanged(sharedPrefs, key)
-                                Toast.makeText(activity!!, R.string.toast_allow_notification_access, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireActivity(), R.string.toast_allow_notification_access, Toast.LENGTH_SHORT).show()
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                                     startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                                 } else {
@@ -106,7 +106,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                             openWykopMarketPage()
                         }
                     } else {
-                        if ((findPreference("showNotifications") as CheckBoxPreference).isChecked) {
+                        if ((findPreference("showNotifications") as CheckBoxPreference?)!!.isChecked) {
                             WykopNotificationsJob.schedule(settingsApi)
                         } else {
                             WykopNotificationsJob.cancel()
@@ -117,7 +117,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         } else if (pref is ListPreference) {
             when (pref.key) {
                 "notificationsSchedulerDelay" -> {
-                    (findPreference("notificationsSchedulerDelay") as ListPreference).apply {
+                    (findPreference("notificationsSchedulerDelay") as ListPreference?)?.apply {
                         summary = entry
                         WykopNotificationsJob.schedule(settingsApi)
                     }
@@ -128,7 +128,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     private fun isOfficialAppInstalled(): Boolean {
         return try {
-            activity!!.packageManager.getApplicationInfo("pl.wykop.droid", 0)
+            requireActivity().packageManager.getApplicationInfo("pl.wykop.droid", 0)
             true
         } catch (e: PackageManager.NameNotFoundException) {
             false
@@ -136,7 +136,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     private fun isNotificationAccessEnabled(): Boolean {
-        val manager = activity!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val manager = requireActivity().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 
         return manager.getRunningServices(
             Integer.MAX_VALUE
@@ -144,7 +144,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     private fun openWykopMarketPage() {
-        activity!!.createAlertBuilder().apply {
+        requireActivity().createAlertBuilder().apply {
             setTitle(R.string.dialog_piggyback_market_title)
             setMessage(R.string.dialog_piggyback_market_message)
             setCancelable(false)
