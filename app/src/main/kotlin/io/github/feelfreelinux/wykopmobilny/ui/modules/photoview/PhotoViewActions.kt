@@ -45,16 +45,14 @@ class PhotoViewActions(val context: Context) : PhotoViewCallbacks {
 
         Single.create(SingleOnSubscribe<File> {
             val file = Glide.with(context).downloadOnly().load(url).submit().get()
-            var fileUrl = url.substringAfterLast("/")
-            if (fileUrl.contains("?")) {
-                fileUrl = fileUrl.substringBefore("?")
-            }
-            val newFile = File(file.path.substringBeforeLast("/") + "/" + fileUrl)
-            file.renameTo(newFile)
-
-
+            val newFile = File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    "$SAVED_FOLDER/$SHARED_FOLDER/" + url.substringAfterLast("/")
+            )
+            file.copyTo(newFile, true)
             it.onSuccess(newFile)
         }).subscribeOn(WykopSchedulers().backgroundThread()).observeOn(WykopSchedulers().mainThread()).subscribe { file: File ->
+            addImageToGallery(file.path, context)
 
             val url = FileProvider.getUriForFile(context, context.applicationContext.packageName + ".fileprovider", file)
             val share = Intent(Intent.ACTION_SEND)
@@ -62,7 +60,6 @@ class PhotoViewActions(val context: Context) : PhotoViewCallbacks {
             share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             share.putExtra(Intent.EXTRA_STREAM, url)
             share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
             photoView.startActivityForResult(Intent.createChooser(share, "Udostępnij obrazek"), PhotoViewActivity.SHARE_REQUEST_CODE)
         }
     }
@@ -79,29 +76,14 @@ class PhotoViewActions(val context: Context) : PhotoViewCallbacks {
             return
         }
         Completable.fromAction {
-
-            val relativeLocation = Environment.DIRECTORY_PICTURES
-            var fileUrl = url.substringAfterLast("/")
-            if (fileUrl.contains("?")) {
-                fileUrl = fileUrl.substringBefore("?")
-            }
-            val contentValues = ContentValues()
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileUrl)
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, getMimeType(url))
-            contentValues.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, relativeLocation + "/" + PhotoViewActions.SAVED_FOLDER)
-            val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            val uri = context.contentResolver.insert(contentUri, contentValues)
-            uri?.let {
-                uri ->
-                val stream = context.contentResolver.openOutputStream(uri)
-
-                val file = Glide.with(context).downloadOnly().load(url).submit().get()
-
-                file.inputStream().copyTo(stream!!)
-
-            }
-
+            val file = Glide.with(context).downloadOnly().load(url).submit().get()
+            var path = File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    SAVED_FOLDER
+            )
+            path = File(path, photoView.url.substringAfterLast('/'))
+            file.copyTo(path, true)
+            addImageToGallery(path.path, context)
         }.subscribeOn(WykopSchedulers().backgroundThread())
             .observeOn(WykopSchedulers().mainThread()).subscribe({
                 showToastMessage("Zapisano plik")

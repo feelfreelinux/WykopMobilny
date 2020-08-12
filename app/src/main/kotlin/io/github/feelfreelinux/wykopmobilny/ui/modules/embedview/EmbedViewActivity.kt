@@ -207,50 +207,34 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     private fun saveFile() {
         Single.create<String> {
             val url = presenter.mp4Url
+            val path = File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    PhotoViewActions.SAVED_FOLDER
+            )
 
-            val relativeLocation = Environment.DIRECTORY_MOVIES
-            var fileUrl = url.substringAfterLast("/")
-            if (fileUrl.contains("?")) {
-                fileUrl = fileUrl.substringBefore("?")
+            val file = File(path, url.substringAfterLast("/"))
+            val request = Request.Builder()
+                    .url(url)
+                    .build()
+            val result = OkHttpClient().newCall(request).execute()
+            if (result.isSuccessful) {
+                val sink = Okio.buffer(Okio.sink(file))
+                sink.writeAll(result.body()!!.source())
+                sink.close()
+            } else {
+                it.onError(Exception())
             }
-            val contentValues = ContentValues()
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileUrl)
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
-            contentValues.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, relativeLocation + "/" + PhotoViewActions.SAVED_FOLDER)
-            val contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-            val uri = contentResolver.insert(contentUri, contentValues);
-            uri?.let {
-                uri ->
-                val stream = contentResolver.openOutputStream(uri)
-                val request = Request.Builder()
-                        .url(url)
-                        .build()
-                val result = OkHttpClient().newCall(request).execute()
-                if (result.isSuccessful) {
-                    val sink = Okio.buffer(Okio.sink(stream))
-                    sink.writeAll(result.body()!!.source())
-                    sink.close()
-                } else {
-                    it.onError(Exception())
-                }
-            }
-            it.onSuccess(relativeLocation + "/" + PhotoViewActions.SAVED_FOLDER)
-
+            it.onSuccess(path.path)
 
         }.subscribeOn(WykopSchedulers().backgroundThread())
             .observeOn(WykopSchedulers().mainThread())
             .subscribe({
-//                val values = ContentValues()
-//
-//                values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-//
-//                values.put(MediaStore.Images.Media.MIME_TYPE, getMimeType(it))
-//
-//
-//                values.put(MediaStore.MediaColumns.DATA, it)
+                val values = ContentValues()
+                values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+                values.put(MediaStore.Images.Media.MIME_TYPE, getMimeType(it))
+                values.put(MediaStore.MediaColumns.DATA, it)
                 Toast.makeText(this, "Zapisano plik", Toast.LENGTH_SHORT).show()
-                // contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             }, {
                 throw it
                 Toast.makeText(this, "Błąd podczas zapisu pliku", Toast.LENGTH_SHORT).show()
