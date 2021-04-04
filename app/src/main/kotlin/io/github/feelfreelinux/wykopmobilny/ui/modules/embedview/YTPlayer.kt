@@ -1,17 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.os.Build
-import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
-import android.widget.FrameLayout.LayoutParams
-import android.widget.Toast
+import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
+import io.github.feelfreelinux.wykopmobilny.utils.youtubeTimestampToMsOrNull
 
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
@@ -19,64 +9,63 @@ import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayer.ErrorReason
 import com.google.android.youtube.player.YouTubePlayerView
 
-import android.content.Context
-import android.media.AudioManager
-import androidx.core.content.ContextCompat.startActivity
-import android.content.pm.ResolveInfo
-import android.net.Uri
-
-
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.media.AudioManager
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.View
-import android.view.WindowManager
-import androidx.annotation.NonNull
-import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
-import io.github.feelfreelinux.wykopmobilny.utils.youtubeTimestampToMsOrNull
-import java.util.regex.Matcher
-import java.util.regex.Pattern
+import android.widget.FrameLayout.LayoutParams
+import android.widget.Toast
+
+import java.net.URLDecoder
 
 
 object YouTubeUrlParser {
+    private val consentRegex = "consent.youtube.com/.+[?&]continue=([a-z0-9-_.~%]+[^&\\n])".toRegex(RegexOption.IGNORE_CASE)
+    private val videoRegex = "(?:youtube(?:-nocookie)?\\.com/(?:[^/\\n\\s]+/\\S+/|(?:v|e(?:mbed)?)/|\\S*?[?&]v=)|youtu\\.be/)([a-z0-9_-]{11})".toRegex(RegexOption.IGNORE_CASE)
+    private val timestampRegex = "t=([^#&\\n\\r]+)".toRegex(RegexOption.IGNORE_CASE)
 
-    // (?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})
-    internal val reg = "(?:youtube(?:-nocookie)?\\.com\\/(?:[^\\/\\n\\s]+\\/\\S+\\/|(?:v|e(?:mbed)?)\\/|\\S*?[?&]v=)|youtu\\.be\\/)([a-zA-Z0-9_-]{11})"
-    private const val timestampRegex = "t=([^#&\n\r]+)"
-
-    fun getVideoId(@NonNull videoUrl: String): String? {
-        return findInUrl(reg, videoUrl)
+    fun getVideoId(videoUrl: String): String? {
+        val unwrappedUrl = unwrapConsentYoutubeUrl(videoUrl)
+        return findInUrl(videoRegex, unwrappedUrl)
     }
 
     fun getTimestamp(videoUrl: String) : String? {
         return findInUrl(timestampRegex, videoUrl)
     }
 
-    fun getVideoUrl(@NonNull videoId: String): String {
+    fun getVideoUrl(videoId: String): String {
         return "http://youtu.be/$videoId"
     }
 
     fun isVideoUrl(url: String): Boolean {
-        return reg.toRegex().find(url) != null
+        return videoRegex.find(unwrapConsentYoutubeUrl(url)) != null
     }
 
-    private fun findInUrl(regex : String, url : String) : String? {
-        val pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
-        val matcher = pattern.matcher(url)
+    private fun findInUrl(regex : Regex, url : String) : String? {
+        val match = regex.find(url)
+        return match?.groupValues?.get(1)
+    }
 
-        return if (matcher.find()) matcher.group(1) else null
+    private fun unwrapConsentYoutubeUrl(url: String): String {
+        val match = consentRegex.find(url) ?: return url
+        return URLDecoder.decode(match.groupValues[1], "utf-8")
     }
 }
 
 object StatusBarUtil {
 
     fun hide(activity: Activity) {
-        if (Build.VERSION.SDK_INT < 16) {
-            activity.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        } else {
-            val decorView = activity.window.decorView
-            val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
-            decorView.systemUiVisibility = uiOptions
-        }
+        val decorView = activity.window.decorView
+        val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+        decorView.systemUiVisibility = uiOptions
     }
 }
 
@@ -100,12 +89,6 @@ object AudioUtil {
         val direction = if (up) AudioManager.ADJUST_RAISE else AudioManager.ADJUST_LOWER
         val flag = AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE or if (showInterface) AudioManager.FLAG_SHOW_UI else 0
         getInstance(context)!!.adjustStreamVolume(AudioManager.STREAM_MUSIC, direction, flag)
-    }
-
-    fun playKeyClickSound(context: Context, volume: Int) {
-        if (volume == 0)
-            return
-        getInstance(context)!!.playSoundEffect(AudioManager.FX_KEY_CLICK, volume.toFloat() / 100.0f)
     }
 }
 
@@ -146,9 +129,6 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
 
     private fun initialize() {
         try {
-            val ai = packageManager.getApplicationInfo(packageName,
-                    PackageManager.GET_META_DATA)
-            val bundle = ai.metaData
             googleApiKey = GOOGLE_KEY
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
@@ -252,10 +232,10 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
 
     override fun onFullscreen(fullScreen: Boolean) {
         when (orientation) {
-            Orientation.AUTO, Orientation.AUTO_START_WITH_LANDSCAPE -> if (fullScreen)
-                requestedOrientation = LANDSCAPE_ORIENTATION
+            Orientation.AUTO, Orientation.AUTO_START_WITH_LANDSCAPE -> requestedOrientation = if (fullScreen)
+                LANDSCAPE_ORIENTATION
             else
-                requestedOrientation = PORTRAIT_ORIENTATION
+                PORTRAIT_ORIENTATION
             Orientation.ONLY_LANDSCAPE, Orientation.ONLY_PORTRAIT -> {
             }
         }
@@ -265,14 +245,14 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
     override fun onError(reason: ErrorReason) {
         Log.e("onError", "onError : " + reason.name)
         if (handleError && ErrorReason.NOT_PLAYABLE == reason) {
-            val video_uri = Uri.parse(YouTubeUrlParser.getVideoUrl(videoId!!))
+            val videoUri = Uri.parse(YouTubeUrlParser.getVideoUrl(videoId!!))
             var intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
-            val list = getPackageManager().queryIntentActivities(
+            val list = packageManager.queryIntentActivities(
                     intent,
                     PackageManager.MATCH_DEFAULT_ONLY)
 
             if (list.isEmpty())
-                intent = Intent(Intent.ACTION_VIEW, video_uri)
+                intent = Intent(Intent.ACTION_VIEW, videoUri)
 
             startActivity(intent)
         }
@@ -312,35 +292,15 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
     }
 
     companion object {
+        const val EXTRA_VIDEO_ID = "video_id"
+        const val EXTRA_TIMESTAMP = "timestamp"
+        const val EXTRA_SHOW_AUDIO_UI = "show_audio_ui"
+        const val EXTRA_HANDLE_ERROR = "handle_error"
+        const val EXTRA_ANIM_ENTER = "anim_enter"
+        const val EXTRA_ANIM_EXIT = "anim_exit"
 
-        private val RECOVERY_DIALOG_REQUEST = 1
-
-
-        val EXTRA_VIDEO_ID = "video_id"
-
-        val EXTRA_TIMESTAMP = "timestamp"
-
-        val EXTRA_PLAYER_STYLE = "player_style"
-
-        val EXTRA_ORIENTATION = "orientation"
-
-        val EXTRA_SHOW_AUDIO_UI = "show_audio_ui"
-
-        val EXTRA_HANDLE_ERROR = "handle_error"
-
-        val EXTRA_ANIM_ENTER = "anim_enter"
-        val EXTRA_ANIM_EXIT = "anim_exit"
-
-        @SuppressLint("InlinedApi")
-        private val PORTRAIT_ORIENTATION = if (Build.VERSION.SDK_INT < 9)
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        else
-            ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
-
-        @SuppressLint("InlinedApi")
-        private val LANDSCAPE_ORIENTATION = if (Build.VERSION.SDK_INT < 9)
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        else
-            ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+        private const val RECOVERY_DIALOG_REQUEST = 1
+        private const val PORTRAIT_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+        private const val LANDSCAPE_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
     }
 }
