@@ -61,6 +61,7 @@
     <string name="badges">Osiągnięcia</string>
 
     <string name="error_occured">Błąd</string>
+    <string name="error_cannot_open_activity">Wystąpił błąd podczas wykonywania akcji %s</string>
     <string name="doubleback_to_exit">Naciśnij wstecz aby wyjść z aplikacji</string>
     <string name="expand_image">rozwiń obrazek</string>
 
@@ -137,6 +138,7 @@
     <string name="do_not_show_again">Nie pokazuj ponownie</string>
     <string name="update">Zaktualizuj</string>
     <string name="cancel">Anuluj</string>
+    <string name="close">Zamknij</string>
 
     <string name="related">Powiązane</string>
     <string name="upvoters">Wykopujący</string>
