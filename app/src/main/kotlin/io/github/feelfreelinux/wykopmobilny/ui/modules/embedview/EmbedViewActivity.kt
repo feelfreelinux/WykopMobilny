@@ -37,6 +37,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.wykopLog
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_embedview.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -204,6 +205,19 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         }
     }
 
+    private fun getFilenameFromResult(response: okhttp3.Response): String {
+        val contentDispositionRegex = "(?:inline|attachment)(?:;\\s*)filename\\s*=\\s*[\"'](.*)[\"']".toRegex()
+        val cd = response.header("content-disposition")
+        if (cd != null) {
+            val match = contentDispositionRegex.find(cd)
+            if (match != null)
+                return match.groupValues[1]
+        }
+
+        val pathSegments = response.request().url().pathSegments()
+        return pathSegments.last()
+    }
+
     private fun saveFile() {
         Single.create<String> {
             val url = presenter.mp4Url
@@ -211,18 +225,20 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                     PhotoViewActions.SAVED_FOLDER
             )
+            if (!path.exists())
+                path.mkdirs()
 
-            val file = File(path, url.substringAfterLast("/"))
             val request = Request.Builder()
                     .url(url)
                     .build()
             val result = OkHttpClient().newCall(request).execute()
             if (result.isSuccessful) {
+                val file = File(path, getFilenameFromResult(result))
                 val sink = Okio.buffer(Okio.sink(file))
                 sink.writeAll(result.body()!!.source())
                 sink.close()
             } else {
-                it.onError(Exception())
+                it.onError(Exception("Could not download the file, http code ${result.code()}"))
             }
             it.onSuccess(path.path)
 
@@ -233,11 +249,11 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
                 values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
                 values.put(MediaStore.Images.Media.MIME_TYPE, getMimeType(it))
                 values.put(MediaStore.MediaColumns.DATA, it)
-                Toast.makeText(this, "Zapisano plik", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.save_file_ok, Toast.LENGTH_SHORT).show()
                 contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             }, {
-                throw it
-                Toast.makeText(this, "Błąd podczas zapisu pliku", Toast.LENGTH_SHORT).show()
+                wykopLog(Log::e, "Exception when trying to save file", it)
+                Toast.makeText(this, R.string.save_file_failed, Toast.LENGTH_SHORT).show()
             })
     }
 
