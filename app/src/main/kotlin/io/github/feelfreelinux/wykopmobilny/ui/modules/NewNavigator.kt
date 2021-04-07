@@ -3,6 +3,8 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ShareCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
@@ -29,6 +31,9 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.wykopLog
+import java.lang.Exception
+
 
 interface NewNavigatorApi {
     fun openMainActivity(targetFragment: String? = null)
@@ -138,7 +143,7 @@ class NewNavigator(val context: Activity) : NewNavigatorApi {
         context.startActivity(EmbedViewActivity.createIntent(context, url))
 
     override fun openYoutubeActivity(url: String) =
-        context.startActivity(YoutubeActivity.createIntent(context, url))
+        startAndReportOnError({ YoutubeActivity.createIntent(context, url) }, "YouTube")
 
     override fun openAddLinkActivity() =
         context.startActivity(AddlinkActivity.createIntent(context))
@@ -150,5 +155,20 @@ class NewNavigator(val context: Activity) : NewNavigatorApi {
             .setChooserTitle(R.string.share)
             .setText(url)
             .startChooser()
+    }
+
+    private fun startAndReportOnError(intentCreator: () -> Intent, actionName: String) {
+        try {
+            val intent = intentCreator()
+            context.startActivity(intent)
+        } catch (ex: Exception) {
+            wykopLog(Log::e, "Failed to create and start '$actionName' activity", ex)
+            val message = context.getString(R.string.error_cannot_open_activity).format(actionName)
+            AlertDialog.Builder(context)
+                    .setTitle(R.string.error_occured)
+                    .setMessage(message)
+                    .setPositiveButton(R.string.close, null)
+                    .create().show()
+        }
     }
 }

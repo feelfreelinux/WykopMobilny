@@ -61,6 +61,7 @@
     <string name="badges">Osiągnięcia</string>
 
     <string name="error_occured">Błąd</string>
+    <string name="error_cannot_open_activity">Wystąpił błąd podczas wykonywania akcji %s</string>
     <string name="doubleback_to_exit">Naciśnij wstecz aby wyjść z aplikacji</string>
     <string name="expand_image">rozwiń obrazek</string>
 
@@ -137,6 +138,7 @@
     <string name="do_not_show_again">Nie pokazuj ponownie</string>
     <string name="update">Zaktualizuj</string>
     <string name="cancel">Anuluj</string>
+    <string name="close">Zamknij</string>
 
     <string name="related">Powiązane</string>
     <string name="upvoters">Wykopujący</string>
@@ -209,6 +211,8 @@
     <string name="link_image_position_bottom">Duża pod tekstem</string>
     <string name="open_in">Otwórz w ...</string>
     <string name="save_as_mp4">Zapisz do mp4</string>
+    <string name="save_file_ok">Zapisano plik</string>
+    <string name="save_file_failed">"Błąd podczas zapisu pliku"</string>
     <string name="addlink_url_address">Adres URL znaleziska które chcesz dodać</string>
     <string name="add_new_link">Dodaj nowe znalezisko</string>
     <string name="dialog_piggyback_market_message"><![CDATA[Aby skorzystać z tej funkcji, wymagana jest instalacja oficjalnej aplikacji Wykop.pl. Po instalacji i zalogowaniu się w aplikacji, Wykop Mobilny będzie mógł korzystać z powiadomień push serwisu. Następnie należy wrócić do ustawień i aktywować tę funkcje ponownie.]]></string>
