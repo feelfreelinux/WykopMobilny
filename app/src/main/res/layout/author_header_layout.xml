@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/userNameTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_dp_normal"
         android:layout_marginRight="@dimen/margin_dp_normal"
@@ -25,7 +25,7 @@
         android:lines="1"
         android:maxLines="1"
         android:ellipsize="end"
-        app:layout_constraintWidth_default="wrap"
+        app:layout_constrainedWidth="true"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
@@ -55,7 +55,7 @@
         tools:text="PATRON" />
     <TextView
         android:id="@+id/entryDateTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_dp_normal"
         android:layout_marginRight="@dimen/margin_dp_normal"
@@ -64,7 +64,7 @@
         android:lines="1"
         android:maxLines="1"
         android:ellipsize="end"
-        app:layout_constraintWidth_default="wrap"
+        app:layout_constrainedWidth="true"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toBottomOf="@+id/userNameTextView"

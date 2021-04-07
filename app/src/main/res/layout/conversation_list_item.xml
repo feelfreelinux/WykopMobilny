@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/userNameTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_dp_normal"
         android:layout_marginRight="@dimen/margin_dp_normal"
@@ -29,6 +29,7 @@
         android:lines="1"
         android:maxLines="1"
         android:textSize="?attr/textSizeNormal"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toTopOf="@id/entryDateTextView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -36,12 +37,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintWidth_default="wrap"
         tools:text="Kroguc" />
 
     <TextView
         android:id="@+id/entryDateTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_dp_normal"
         android:layout_marginRight="@dimen/margin_dp_normal"
@@ -50,7 +50,7 @@
         android:lines="1"
         android:maxLines="1"
         android:ellipsize="end"
-        app:layout_constraintWidth_default="wrap"
+        app:layout_constrainedWidth="true"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
