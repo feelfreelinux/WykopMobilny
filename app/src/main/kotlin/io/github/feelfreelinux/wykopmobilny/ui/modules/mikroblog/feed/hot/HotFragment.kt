@@ -79,7 +79,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.period6 -> {
                 presenter.period = "6"
                 navigation.activityToolbar.setTitle(R.string.period6)
@@ -102,6 +102,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
             }
         }
 
+        settingsPreferences.hotEntriesScreen = presenter.period
         swipeRefresh.isRefreshing = true
         presenter.loadData(true)
         return true
