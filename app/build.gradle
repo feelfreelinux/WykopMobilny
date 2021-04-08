@@ -170,4 +170,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
+    implementation 'com.52inc:52Kit-core:0.5.4'
 }

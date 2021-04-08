@@ -13,6 +13,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
+import io.github.feelfreelinux.wykopmobilny.utils.setSafeOnClickListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -114,7 +115,7 @@ class LinkHeaderViewHolder(
         relatedCountTextView.setOnClickListener {
             navigatorApi.openLinkRelatedActivity(link.id)
         }
-        containerView.setOnClickListener {
+        containerView.setSafeOnClickListener {
             linkHandlerApi.handleUrl(link.sourceUrl)
         }
     }
