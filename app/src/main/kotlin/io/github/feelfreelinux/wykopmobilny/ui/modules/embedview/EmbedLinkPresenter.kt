@@ -50,7 +50,7 @@ class EmbedLinkPresenter(
             }
 
             STREAMABLE_MATCHER -> {
-                val id = url.removeSuffix("/").substringAfterLast("/")
+                val id = url.getStreamableId()
                 embedApi.getStreamableUrl(id)
                     .subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
@@ -82,5 +82,9 @@ class EmbedLinkPresenter(
         val uri = URI(this)
         val domain = uri.host
         return if (domain.startsWith("www.")) domain.substring(4) else domain
+    }
+
+    private fun String.getStreamableId(): String {
+        return this.removeSuffix("/").substringAfterLast("/").substringBefore("?")
     }
 }
