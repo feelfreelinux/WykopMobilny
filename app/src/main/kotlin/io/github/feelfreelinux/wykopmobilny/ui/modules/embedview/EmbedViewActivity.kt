@@ -222,7 +222,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         Single.create<String> {
             val url = presenter.mp4Url
             val path = File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES),
                     PhotoViewActions.SAVED_FOLDER
             )
             if (!path.exists())
@@ -237,20 +237,20 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
                 val sink = Okio.buffer(Okio.sink(file))
                 sink.writeAll(result.body()!!.source())
                 sink.close()
+                it.onSuccess(file.path)
             } else {
                 it.onError(Exception("Could not download the file, http code ${result.code()}"))
             }
-            it.onSuccess(path.path)
 
         }.subscribeOn(WykopSchedulers().backgroundThread())
             .observeOn(WykopSchedulers().mainThread())
             .subscribe({
                 val values = ContentValues()
-                values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-                values.put(MediaStore.Images.Media.MIME_TYPE, getMimeType(it))
-                values.put(MediaStore.MediaColumns.DATA, it)
+                values.put(MediaStore.Video.Media.DATE_TAKEN, System.currentTimeMillis())
+                values.put(MediaStore.Video.Media.MIME_TYPE, getMimeType(it))
+                values.put(MediaStore.Video.Media.DATA, it)
+                contentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values)
                 Toast.makeText(this, R.string.save_file_ok, Toast.LENGTH_SHORT).show()
-                contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             }, {
                 wykopLog(Log::e, "Exception when trying to save file", it)
                 Toast.makeText(this, R.string.save_file_failed, Toast.LENGTH_SHORT).show()

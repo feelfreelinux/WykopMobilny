@@ -56,7 +56,7 @@ object YouTubeUrlParser {
 
     private fun unwrapConsentYoutubeUrl(url: String): String {
         val match = consentRegex.find(url) ?: return url
-        return URLDecoder.decode(match.groupValues[1], "utf-8")
+        return URLDecoder.decode(match.groupValues[1], Charsets.UTF_8.name())
     }
 }
 
