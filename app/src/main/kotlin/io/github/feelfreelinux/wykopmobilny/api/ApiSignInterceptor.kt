@@ -9,7 +9,8 @@ import okhttp3.FormBody
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.Response
-import okio.Okio
+import okio.buffer
+import okio.sink
 import java.io.ByteArrayOutputStream
 import java.util.ArrayList
 
@@ -22,33 +23,33 @@ class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
         const val API_SIGN_HEADER = "apisign"
     }
 
-    override fun intercept(chain: Interceptor.Chain?): Response? {
-        val request = chain!!.request()
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
         val builder = request.newBuilder()
-        var url = request.url().toString()
+        var url = request.url.toString()
 
         val customHeaders = request.headers("@")
         if (userManagerApi.isUserAuthorized() && !customHeaders.contains(REMOVE_USERKEY_HEADER))
             url += "/userkey/${userManagerApi.getUserCredentials()!!.userKey}"
 
-        val encodeUrl: String = when (request.body()) {
+        val encodeUrl: String = when (request.body) {
             is FormBody -> {
-                val formBody = request.body() as FormBody
-                val paramList = (0 until formBody.size())
-                    .filter { !formBody.value(it).isNullOrEmpty() }
+                val formBody = request.body as FormBody
+                val paramList = (0 until formBody.size)
+                    .filter { formBody.value(it).isNotEmpty() }
                     .mapTo(ArrayList<String>()) { formBody.value(it) }
                     .toList()
                 APP_SECRET + url + paramList.joinToString(",")
             }
             is MultipartBody -> {
-                val multipart = request.body() as MultipartBody
+                val multipart = request.body as MultipartBody
                 val parts = arrayListOf<String>()
                 for (i in 0..1) {
-                    val part = multipart.part(i).body()
+                    val part = multipart.part(i).body
                     // Get body from multipart
-                    val bufferedSink = Okio.buffer(Okio.sink(ByteArrayOutputStream()))
+                    val bufferedSink = ByteArrayOutputStream().sink().buffer()
                     part.writeTo(bufferedSink)
-                    parts.add(bufferedSink.buffer().readUtf8())
+                    parts.add(bufferedSink.buffer.readUtf8())
                 }
                 APP_SECRET + url + parts.joinToString(",")
             }
@@ -68,7 +69,7 @@ class ApiSignInterceptor(val userManagerApi: UserManagerApi) : Interceptor {
 
         var response = chain.proceed(newRequest)
         var tryCount = 0
-        while (!response.isSuccessful && response.code() != 401 && tryCount < MAX_RETRY_COUNT) {
+        while (!response.isSuccessful && response.code != 401 && tryCount < MAX_RETRY_COUNT) {
             tryCount++
             response = chain.proceed(newRequest)
         }

@@ -48,7 +48,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
     override val enableSwipeBackLayout = true
     override val isActivityTransfluent = true
 
-    val user by lazy { intent.getStringExtra(EXTRA_USER) }
+    val user by lazy { intent.getStringExtra(EXTRA_USER)!! }
     var receiver: Author? = null
 
     lateinit var contentUri: Uri

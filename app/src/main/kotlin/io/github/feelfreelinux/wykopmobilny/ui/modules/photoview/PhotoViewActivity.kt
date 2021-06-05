@@ -36,7 +36,7 @@ class PhotoViewActivity : BaseActivity() {
     override val enableSwipeBackLayout: Boolean = true // We manually attach it here
     override val isActivityTransfluent: Boolean = true
 
-    val url: String by lazy { intent.getStringExtra(URL_EXTRA) }
+    val url: String by lazy { intent.getStringExtra(URL_EXTRA)!! }
     private val photoViewActions by lazy { PhotoViewActions(this) as PhotoViewCallbacks }
 
     override fun onCreate(savedInstanceState: Bundle?) {

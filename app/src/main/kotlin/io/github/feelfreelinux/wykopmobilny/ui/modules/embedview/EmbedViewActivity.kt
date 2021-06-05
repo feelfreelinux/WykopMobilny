@@ -44,6 +44,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.Okio
+import okio.buffer
+import okio.sink
 import java.io.File
 import java.net.URL
 import javax.inject.Inject
@@ -76,7 +78,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         )
     }
     private var usingMixedAudio = false
-    private val extraUrl by lazy { intent.getStringExtra(EXTRA_URL) }
+    private val extraUrl by lazy { intent.getStringExtra(EXTRA_URL)!! }
     lateinit var audioSource: LoopingMediaSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -206,7 +208,8 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     }
 
     private fun getFilenameFromResult(response: okhttp3.Response): String {
-        val contentDispositionRegex = "(?:inline|attachment)(?:;\\s*)filename\\s*=\\s*[\"'](.*)[\"']".toRegex()
+        val contentDispositionRegex =
+            "(?:inline|attachment)(?:;\\s*)filename\\s*=\\s*[\"'](.*)[\"']".toRegex()
         val cd = response.header("content-disposition")
         if (cd != null) {
             val match = contentDispositionRegex.find(cd)
@@ -214,7 +217,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
                 return match.groupValues[1]
         }
 
-        val pathSegments = response.request().url().pathSegments()
+        val pathSegments = response.request.url.pathSegments
         return pathSegments.last()
     }
 
@@ -234,11 +237,11 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             val result = OkHttpClient().newCall(request).execute()
             if (result.isSuccessful) {
                 val file = File(path, getFilenameFromResult(result))
-                val sink = Okio.buffer(Okio.sink(file))
-                sink.writeAll(result.body()!!.source())
+                val sink = file.sink().buffer()
+                sink.writeAll(result.body!!.source())
                 sink.close()
             } else {
-                it.onError(Exception("Could not download the file, http code ${result.code()}"))
+                it.onError(Exception("Could not download the file, http code ${result.code}"))
             }
             it.onSuccess(path.path)
 

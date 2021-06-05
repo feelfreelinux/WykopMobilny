@@ -138,7 +138,7 @@ class EntryActivity : BaseActivity(), EntryDetailView, InputToolbarListener, Swi
         presenter.unsubscribe()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             android.R.id.home -> onBackPressed()
             R.id.refresh -> onRefresh()

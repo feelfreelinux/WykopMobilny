@@ -47,7 +47,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
     @Inject lateinit var userManagerApi: UserManagerApi
     @Inject lateinit var patronsApi: PatronsApi
 
-    val username by lazy { intent.getStringExtra(EXTRA_USERNAME) }
+    val username by lazy { intent.getStringExtra(EXTRA_USERNAME)!! }
     override val enableSwipeBackLayout: Boolean = true
     private var observeStateResponse: ObserveStateResponse? = null
     private lateinit var badgesDialogListener: (List<BadgeResponse>) -> Unit

@@ -248,7 +248,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         actionBarToggle.onConfigurationChanged(newConfig)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (actionBarToggle.onOptionsItemSelected(item))
             return true
         return super.onOptionsItemSelected(item)

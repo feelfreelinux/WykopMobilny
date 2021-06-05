@@ -1,0 +1,8 @@
+[*.{kt, kts, gradle}]
+indent_size = 4
+max_line_length = 140
+insert_final_newline = true
+
+[*.xml]
+indent_size = 4
+insert_final_newline = true

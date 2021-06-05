@@ -15,8 +15,8 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistActivity
@@ -27,13 +27,16 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreference
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
-class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
+class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasAndroidInjector {
 
-    @Inject lateinit var settingsApi: SettingsPreferencesApi
-    @Inject lateinit var userManagerApi: UserManagerApi
-    @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<androidx.fragment.app.Fragment>
+    @Inject
+    lateinit var settingsApi: SettingsPreferencesApi
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
-    override fun supportFragmentInjector() = childFragmentInjector
+    override fun androidInjector() = androidInjector
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -43,13 +46,13 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences)
         (findPreference("piggyBackPushNotifications") as CheckBoxPreference?)?.isEnabled =
-                (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
+            (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2)
         (findPreference("notificationsSchedulerDelay") as ListPreference?)?.apply {
             summary = entry
         }
 
         (findPreference("showNotifications") as CheckBoxPreference?)?.isEnabled =
-                !(findPreference("piggyBackPushNotifications") as CheckBoxPreference?)!!.isChecked
+            !(findPreference("piggyBackPushNotifications") as CheckBoxPreference?)!!.isChecked
         (findPreference("appearance") as Preference?)?.setOnPreferenceClickListener {
             (activity as SettingsActivity).openFragment(SettingsAppearance(), "appearance")
             true
