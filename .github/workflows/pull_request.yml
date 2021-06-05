@@ -44,5 +44,9 @@ jobs:
       - name: Unit tests
         run: ./gradlew projectCoverage
 
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Android Lint
         run: ./gradlew lint
