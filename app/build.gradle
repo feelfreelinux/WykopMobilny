@@ -1,5 +1,6 @@
 plugins {
     id("com.starter.application.android") version("0.28.0")
+    id("com.starter.easylauncher") version("4.0.0")
     id("org.jetbrains.kotlin.kapt") version("1.5.10")
 }
 apply plugin: 'kotlin-android-extensions'
@@ -145,4 +146,23 @@ tasks.register("detektProjectBaseline", io.gitlab.arturbosch.detekt.DetektCreate
     include("**/*.kts")
     exclude("**/resources/**")
     exclude("**/build/**")
+}
+
+/**
+ * Workaround for: https://issuetracker.google.com/issues/187096666
+ */
+tasks.withType(com.android.build.gradle.tasks.ExtractDeepLinksTask).configureEach {
+    def easylauncherTaskName = name.replace("extractDeepLinks", "easylauncher")
+    // Workaround for: https://github.com/gradle/gradle/issues/8057
+    if (tasks.getNames().contains(easylauncherTaskName)) {
+        dependsOn(easylauncherTaskName)
+    }
+}
+
+easylauncher {
+    buildTypes {
+        debug {
+            filters = customRibbon(ribbonColor: "#2F4F4F", position: "bottom")
+        }
+    }
 }
