@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.api.embed
 
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopMobilnyUpdate
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Gfycat
 import io.reactivex.Single
@@ -12,8 +11,5 @@ interface ExternalApi {
     fun getGifUrl(gfycatId: String): Single<URL>
     fun getCoub(coubId: String): Single<Coub>
     fun getGfycat(gfycatId: String): Single<Gfycat>
-
     fun getStreamableUrl(streamableId: String): Single<URL>
-    fun checkUpdates(): Single<WykopMobilnyUpdate>
-    fun checkWeeklyUpdates(): Single<WykopMobilnyUpdate>
 }

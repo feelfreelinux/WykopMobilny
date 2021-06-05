@@ -24,6 +24,7 @@ import com.evernote.android.job.util.JobUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.internal.NavigationMenuView
+import com.google.android.material.navigation.NavigationView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -31,7 +32,6 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
 import io.github.feelfreelinux.wykopmobilny.databinding.AppAboutBottomsheetBinding
 import io.github.feelfreelinux.wykopmobilny.databinding.PatronListItemBinding
 import io.github.feelfreelinux.wykopmobilny.databinding.PatronsBottomsheetBinding
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopMobilnyUpdate
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
@@ -55,7 +55,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.BadgeDrawerDrawable
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
-import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.shortcuts.ShortcutsDispatcher
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
@@ -76,7 +75,7 @@ interface MainNavigationInterface {
 class MainNavigationActivity :
     BaseActivity(),
     MainNavigationView,
-    com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener,
+    NavigationView.OnNavigationItemSelectedListener,
     MainNavigationInterface {
 
     companion object {
@@ -491,40 +490,6 @@ class MainNavigationActivity :
                 dialog.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
             }
         }
-    }
-
-    override fun checkUpdate(wykopMobilnyUpdate: WykopMobilnyUpdate) {
-        val pInfo = this.packageManager.getPackageInfo(packageName, 0)
-        val owmVersion = if (wykopMobilnyUpdate.tagName.contains("untagged")) wykopMobilnyUpdate.name else wykopMobilnyUpdate.tagName
-        printout(pInfo.versionName)
-        if (versionCompare(owmVersion, pInfo.versionName) == 1) {
-            createAlertBuilder()
-                .setTitle(R.string.update_available)
-                .setMessage("Aktualizacja $owmVersion jest dostępna.")
-                .setPositiveButton("Pobierz nową wersje") { _, _ ->
-                    openBrowser(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
-        }
-    }
-
-    private fun versionCompare(str1: String, str2: String): Int {
-        val vals1 = str1.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val vals2 = str2.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        var idk = 0
-        // set index to first non-equal ordinal or length of shortest version string
-        while (idk < vals1.size && idk < vals2.size && vals1[idk] == vals2[idk]) {
-            idk++
-        }
-        // compare first non-equal ordinal number
-        if (idk < vals1.size && idk < vals2.size) {
-            val diff = Integer.valueOf(vals1[idk]).compareTo(Integer.valueOf(vals2[idk]))
-            return Integer.signum(diff)
-        }
-        // the strings are equal or one string is a substring of the other
-        // e.g. "1.2.3" = "1.2.3" or "1.2.3" < "1.2.3.4"
-        return Integer.signum(vals1.size - vals2.size)
     }
 
     override fun importBlacklist(blacklist: Blacklist) {

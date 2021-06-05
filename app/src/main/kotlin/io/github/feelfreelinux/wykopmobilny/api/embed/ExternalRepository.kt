@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.api.embed
 
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopMobilnyUpdate
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Gfycat
 import io.reactivex.Single
@@ -29,10 +28,4 @@ class ExternalRepository(val retrofit: Retrofit) : ExternalApi {
 
     override fun getGfycat(gfycatId: String): Single<Gfycat> =
         embedApi.getGfycat(gfycatId)
-
-    override fun checkUpdates(): Single<WykopMobilnyUpdate> =
-        embedApi.checkUpdates()
-
-    override fun checkWeeklyUpdates(): Single<WykopMobilnyUpdate> =
-        embedApi.checkWeeklyUpdates()
 }
