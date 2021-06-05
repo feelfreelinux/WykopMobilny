@@ -61,7 +61,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         if (intent.hasExtra(EXTRA_LINK)) link.id else
             intent.getIntExtra(EXTRA_LINK_ID, -1)
     }
-    private val link by lazy { intent.getParcelableExtra<Link>(EXTRA_LINK) }
+    private val link by lazy { intent.getParcelableExtra<Link>(EXTRA_LINK)!! }
     private var replyLinkId: Int = 0
     private val linkCommentId by lazy {
         intent.getIntExtra(EXTRA_COMMENT_ID, -1)
@@ -288,6 +288,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 BaseInputActivity.USER_ACTION_INSERT_PHOTO -> {

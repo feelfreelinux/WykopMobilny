@@ -9,19 +9,19 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import javax.inject.Inject
 
 
-class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasSupportFragmentInjector {
+class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasAndroidInjector {
 
     @Inject lateinit var settingsApi: SettingsPreferencesApi
-    @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<androidx.fragment.app.Fragment>
+    @Inject lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
-    override fun supportFragmentInjector() = childFragmentInjector
+    override fun androidInjector() = androidInjector
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)

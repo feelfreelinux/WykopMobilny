@@ -111,8 +111,8 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.send -> {
                 val typedInputStream = markupToolbar.getWykopImageFile()
                 if (typedInputStream != null) {
@@ -127,6 +127,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 // Gallery chooser's callback

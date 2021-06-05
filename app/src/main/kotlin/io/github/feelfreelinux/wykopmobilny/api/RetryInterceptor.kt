@@ -9,10 +9,10 @@ class RetryInterceptor : Interceptor {
         private const val MAX_RETRY_COUNT = 3
     }
 
-    override fun intercept(chain: Interceptor.Chain?): Response? {
-        val request = chain!!.request()
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
         val builder = request.newBuilder()
-        val url = request.url().toString()
+        val url = request.url.toString()
 
         builder.apply {
             url(url)
@@ -23,7 +23,7 @@ class RetryInterceptor : Interceptor {
 
         var response = chain.proceed(newRequest)
         var tryCount = 0
-        while (!response.isSuccessful && response.code() != 401 && tryCount < MAX_RETRY_COUNT) {
+        while (!response.isSuccessful && response.code != 401 && tryCount < MAX_RETRY_COUNT) {
             tryCount++
             response.close()
             response = chain.proceed(newRequest)

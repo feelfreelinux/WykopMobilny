@@ -34,7 +34,7 @@ class TagActivity : BaseActivity(), TagActivityView {
     @Inject lateinit var userManagerApi: UserManagerApi
 
     override val enableSwipeBackLayout: Boolean = true
-    private val tagString by lazy { intent.getStringExtra(EXTRA_TAG) }
+    private val tagString by lazy { intent.getStringExtra(EXTRA_TAG)!! }
     private var tagMeta: TagMetaResponse? = null
     private val tagPagerAdapter by lazy { TagPagerAdapter(tagString, resources, supportFragmentManager) }
 

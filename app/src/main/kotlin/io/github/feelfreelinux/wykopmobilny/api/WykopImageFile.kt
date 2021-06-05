@@ -21,8 +21,9 @@ import com.google.android.youtube.player.internal.v
 import io.github.feelfreelinux.wykopmobilny.R.id.imageView
 import java.io.*
 import android.os.Environment.getExternalStorageDirectory
-
-
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.asRequestBody
 
 
 class WykopImageFile(val uri: Uri, val context: Context) {
@@ -51,8 +52,8 @@ class WykopImageFile(val uri: Uri, val context: Context) {
         }
 
         val rotatedFile = ensureRotation(file)
-        printout(rotatedFile!!.name!!)
-        return MultipartBody.Part.createFormData("embed", rotatedFile!!.name, RequestBody.create(MediaType.parse(mimetype), rotatedFile))
+        printout(rotatedFile!!.name)
+        return MultipartBody.Part.createFormData("embed", rotatedFile.name, rotatedFile.asRequestBody(mimetype?.toMediaTypeOrNull()))
     }
 
     private fun saveUri(uri: Uri, filename: String): File? {
@@ -75,7 +76,6 @@ class WykopImageFile(val uri: Uri, val context: Context) {
                 return file
             }
         }
-        return null
     }
 
     private fun ensureRotation(f: File?): File? {
