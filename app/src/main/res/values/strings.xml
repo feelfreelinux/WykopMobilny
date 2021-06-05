@@ -133,12 +133,7 @@
     <string name="block_tag">Zablokuj tag</string>
     <string name="unblock_tag">Odblokuj tag</string>
 
-    <string name="update_available">Dostępna aktualizacja</string>
-    <string name="update_app">Zaktualizuj aplikację do najnowszej wersji</string>
-    <string name="do_not_show_again">Nie pokazuj ponownie</string>
-    <string name="update">Zaktualizuj</string>
     <string name="cancel">Anuluj</string>
-    <string name="close">Zamknij</string>
 
     <string name="related">Powiązane</string>
     <string name="upvoters">Wykopujący</string>
