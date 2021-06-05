@@ -21,6 +21,7 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.devbrackets.android.exomedia.core.source.MediaSourceProvider
+import com.devbrackets.android.exomedia.ui.widget.VideoControlsCore
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -93,7 +94,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             presenter.subscribe(this)
             presenter.playUrl(extraUrl)
         }
-        binding.videoView.setControls(WykopMediaControls(this))
+        binding.videoView.setControls(WykopMediaControls(this) as VideoControlsCore)
         binding.videoView.setHandleAudioFocus(false)
         binding.videoView.isFocusable = false
     }
@@ -272,11 +273,11 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     }
 
     private fun getMimeType(url: String): String? {
-        var type: String? = null
         val extension = MimeTypeMap.getFileExtensionFromUrl(url)
-        if (extension != null) {
-            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        return if (extension != null) {
+            MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        } else {
+            null
         }
-        return type
     }
 }
