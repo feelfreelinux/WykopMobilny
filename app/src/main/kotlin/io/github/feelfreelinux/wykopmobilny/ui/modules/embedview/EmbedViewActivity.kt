@@ -22,12 +22,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.devbrackets.android.exomedia.core.source.MediaSourceProvider
 import com.google.android.exoplayer2.DefaultLoadControl
-import com.google.android.exoplayer2.DefaultRenderersFactory
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.source.LoopingMediaSource
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.MediaSource
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
@@ -76,18 +73,14 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     override val enableSwipeBackLayout: Boolean = true
     override val isActivityTransfluent: Boolean = true
 
+    lateinit var srcAudio: MediaSource
     private val audioPlayer by lazy {
-        ExoPlayerFactory.newSimpleInstance(
-            applicationContext,
-            DefaultTrackSelector(AdaptiveTrackSelection.Factory(DefaultBandwidthMeter())),
-            DefaultLoadControl(),
-            null,
-            DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF
-        )
+        SimpleExoPlayer.Builder(this)
+            .setLoadControl(DefaultLoadControl())
+            .build()
     }
     private var usingMixedAudio = false
     private val extraUrl by lazy { intent.getStringExtra(EXTRA_URL)!! }
-    lateinit var audioSource: LoopingMediaSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,15 +114,16 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         val coubUrl = coub.fileVersions.mobile.mp4
         presenter.mp4Url = coubUrl!!
         prepareVideoView()
-        val videoSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coubUrl!!), null)
-        val srcAudio =
+        val videoSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coubUrl), null)
+        srcAudio =
             MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coub.fileVersions.mobile.audio[0]), null)
         audioPlayer.playWhenReady = true
         usingMixedAudio = true
-        binding.videoView.setVideoURI(null, LoopingMediaSource(videoSource))
-        binding.videoView.setVolume(0f)
-        audioSource = LoopingMediaSource(srcAudio)
-        audioPlayer.prepare(audioSource, true, true)
+        binding.videoView.setRepeatMode(Player.REPEAT_MODE_ALL)
+        binding.videoView.setVideoURI(null, videoSource)
+        binding.videoView.volume = 0f
+        audioPlayer.repeatMode = Player.REPEAT_MODE_ALL
+        audioPlayer.setMediaSource(srcAudio, true)
     }
 
     override fun onPause() {
@@ -141,8 +135,8 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
 
     override fun onResume() {
         super.onResume()
-        if (usingMixedAudio && ::audioSource.isInitialized) {
-            audioPlayer.prepare(audioSource, false, false)
+        if (usingMixedAudio && ::srcAudio.isInitialized) {
+            audioPlayer.setMediaSource(srcAudio, false)
         }
     }
 
@@ -156,8 +150,8 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
 
     private fun playLoopingSource(url: Uri) {
         val mediaSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), url, null)
-        val loopingMediaSource = LoopingMediaSource(mediaSource)
-        binding.videoView.setVideoURI(null, loopingMediaSource)
+        binding.videoView.setRepeatMode(Player.REPEAT_MODE_ALL)
+        binding.videoView.setVideoURI(null, mediaSource)
     }
 
     override fun exitAndOpenYoutubeActivity() {

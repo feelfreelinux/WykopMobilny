@@ -23,7 +23,11 @@ interface WykopLinkHandlerApi {
     fun handleUrl(url: String, refreshNotifications: Boolean = false)
 }
 
-class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavigatorApi) : WykopLinkHandlerApi {
+class WykopLinkHandler(
+    private val context: Activity,
+    private val navigatorApi: NewNavigatorApi
+) : WykopLinkHandlerApi {
+
     companion object {
         private const val PROFILE_PREFIX = '@'
         private const val TAG_PREFIX = '#'
@@ -46,18 +50,15 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
                     when (resource.substringBefore(DELIMITER)) {
                         ENTRY_MATCHER -> {
                             val entryId = EntryLinkParser.getEntryId(url)
-                            if (entryId != null) EntryActivity.createIntent(context, entryId, EntryLinkParser.getEntryCommentId(url), false)
-                            else null
+                            if (entryId != null) {
+                                EntryActivity.createIntent(context, entryId, EntryLinkParser.getEntryCommentId(url), false)
+                            } else {
+                                null
+                            }
                         }
-                        TAG_MATCHER -> {
-                            TagActivity.createIntent(context, TagLinkParser.getTag(url))
-                        }
-                        PM_MATCHER -> {
-                            ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
-                        }
-                        PROFILE_MATCHER -> {
-                            ProfileActivity.createIntent(context, ProfileLinkParser.getProfile(url))
-                        }
+                        TAG_MATCHER -> TagActivity.createIntent(context, TagLinkParser.getTag(url))
+                        PM_MATCHER -> ConversationActivity.createIntent(context, ConversationLinkParser.getConversationUser(url))
+                        PROFILE_MATCHER -> ProfileActivity.createIntent(context, ProfileLinkParser.getProfile(url))
                         LINK_MATCHER -> {
                             val linkId = LinkParser.getLinkId(url)
                             if (linkId != null) LinkDetailsActivity.createIntent(context, linkId, LinkParser.getLinkCommentId(url))
