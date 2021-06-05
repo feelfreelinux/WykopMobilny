@@ -15,9 +15,11 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
         fun newInstance() = EntrySearchFragment()
     }
 
-    @Inject lateinit var presenter: EntrySearchPresenter
+    @Inject
+    lateinit var presenter: EntrySearchPresenter
 
-    @Inject lateinit var userManager: UserManagerApi
+    @Inject
+    lateinit var userManager: UserManagerApi
 
     var query = ""
     lateinit var querySubscribe: Disposable

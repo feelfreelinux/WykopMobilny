@@ -12,9 +12,11 @@ class ActionsFragment : BaseEntryLinkFragment(), ActionsView {
         fun newInstance() = ActionsFragment()
     }
 
-    @Inject lateinit var userManager: UserManagerApi
+    @Inject
+    lateinit var userManager: UserManagerApi
 
-    @Inject lateinit var presenter: ActionsFragmentPresenter
+    @Inject
+    lateinit var presenter: ActionsFragmentPresenter
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.getActions() }
     private val username by lazy { (activity as ProfileActivity).username }

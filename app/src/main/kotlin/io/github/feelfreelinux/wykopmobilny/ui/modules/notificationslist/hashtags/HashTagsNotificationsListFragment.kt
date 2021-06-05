@@ -26,13 +26,17 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
         fun newInstance() = HashTagsNotificationsListFragment()
     }
 
-    @Inject override lateinit var linkHandler: WykopLinkHandlerApi
+    @Inject
+    override lateinit var linkHandler: WykopLinkHandlerApi
 
-    @Inject override lateinit var notificationAdapter: NotificationsListAdapter
+    @Inject
+    override lateinit var notificationAdapter: NotificationsListAdapter
 
-    @Inject lateinit var settingsApi: SettingsPreferencesApi
+    @Inject
+    lateinit var settingsApi: SettingsPreferencesApi
 
-    @Inject lateinit var presenter: HashTagsNotificationsListPresenter
+    @Inject
+    lateinit var presenter: HashTagsNotificationsListPresenter
 
     private lateinit var entryFragmentData: DataFragment<PagedDataModel<List<Notification>>>
 

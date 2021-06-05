@@ -22,9 +22,11 @@ class TagLinksFragment : BaseLinksFragment(), TagLinksView {
         }
     }
 
-    @Inject lateinit var presenter: TagLinksPresenter
+    @Inject
+    lateinit var presenter: TagLinksPresenter
 
-    @Inject lateinit var userManager: UserManagerApi
+    @Inject
+    lateinit var userManager: UserManagerApi
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
 

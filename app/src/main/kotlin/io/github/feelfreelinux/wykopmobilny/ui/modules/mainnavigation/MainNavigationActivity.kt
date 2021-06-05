@@ -21,8 +21,6 @@ import androidx.core.os.postDelayed
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import com.evernote.android.job.util.JobUtil
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.internal.NavigationMenuView
@@ -214,17 +212,6 @@ class MainNavigationActivity :
         JobUtil.hasBootPermission(this)
         showFullReleaseDialog()
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
-        // Setup AppUpdater
-        AppUpdater(this)
-            .setUpdateFrom(UpdateFrom.GITHUB)
-            .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
-            .setTitleOnUpdateAvailable(R.string.update_available)
-            .setContentOnUpdateAvailable(R.string.update_app)
-            .setButtonDismiss(R.string.cancel)
-            .setButtonDoNotShowAgain(R.string.do_not_show_again)
-            .setButtonUpdate(R.string.update)
-            .start()
-        // presenter.checkUpdates()
         checkBlacklist()
 
         if (settingsApi.showNotifications) {

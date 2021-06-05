@@ -113,7 +113,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
     public BetterLinkMovementMethod setOnLinkClickListener(OnLinkClickListener clickListener) {
         if (this == singleInstance) {
             throw new UnsupportedOperationException("Setting a click listener on the instance returned by getInstance() is not supported to avoid memory " +
-                    "leaks. Please use newInstance() or any of the linkify() methods instead.");
+                "leaks. Please use newInstance() or any of the linkify() methods instead.");
         }
 
         this.onLinkClickListener = clickListener;
@@ -123,7 +123,7 @@ public class BetterLinkMovementMethod extends LinkMovementMethod {
     public BetterLinkMovementMethod setOnTextClickListener(OnTextClickListener clickListener) {
         if (this == singleInstance) {
             throw new UnsupportedOperationException("Setting a click listener on the instance returned by getInstance() is not supported to avoid memory " +
-                    "leaks. Please use newInstance() or any of the linkify() methods instead.");
+                "leaks. Please use newInstance() or any of the linkify() methods instead.");
         }
 
         this.onTextClickListener = clickListener;

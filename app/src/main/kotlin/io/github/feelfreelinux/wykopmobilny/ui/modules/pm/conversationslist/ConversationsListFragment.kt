@@ -17,7 +17,8 @@ import javax.inject.Inject
 
 class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRefreshLayout.OnRefreshListener {
 
-    @Inject lateinit var presenter: ConversationsListPresenter
+    @Inject
+    lateinit var presenter: ConversationsListPresenter
     private val conversationsAdapter by lazy { ConversationsListAdapter() }
 
     companion object {

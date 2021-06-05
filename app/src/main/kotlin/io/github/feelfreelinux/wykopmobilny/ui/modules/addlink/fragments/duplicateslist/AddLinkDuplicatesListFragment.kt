@@ -22,11 +22,14 @@ class AddLinkDuplicatesListFragment : BaseFragment(), LinkActionListener {
         fun newInstance() = AddLinkDuplicatesListFragment()
     }
 
-    @Inject lateinit var owmContentFilter: OWMContentFilter
+    @Inject
+    lateinit var owmContentFilter: OWMContentFilter
 
-    @Inject lateinit var settingsPreferencesApi: SettingsPreferencesApi
+    @Inject
+    lateinit var settingsPreferencesApi: SettingsPreferencesApi
 
-    @Inject lateinit var linksAdapter: LinksAdapter
+    @Inject
+    lateinit var linksAdapter: LinksAdapter
 
     override fun dig(link: Link) = Unit
 

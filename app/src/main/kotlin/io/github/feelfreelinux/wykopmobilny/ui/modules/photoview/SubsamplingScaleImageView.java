@@ -107,7 +107,7 @@ public class SubsamplingScaleImageView extends View {
     public static final int ORIENTATION_270 = 270;
 
     private static final List<Integer> VALID_ORIENTATIONS =
-            Arrays.asList(ORIENTATION_0, ORIENTATION_90, ORIENTATION_180, ORIENTATION_270, ORIENTATION_USE_EXIF);
+        Arrays.asList(ORIENTATION_0, ORIENTATION_90, ORIENTATION_180, ORIENTATION_270, ORIENTATION_USE_EXIF);
 
     /**
      * During zoom animation, keep the point of the image that was tapped in the same place, and scale the image around it.
@@ -1267,9 +1267,9 @@ public class SubsamplingScaleImageView extends View {
      */
     private boolean tileVisible(Tile tile) {
         float sVisLeft = viewToSourceX(0),
-                sVisRight = viewToSourceX(getWidth()),
-                sVisTop = viewToSourceY(0),
-                sVisBottom = viewToSourceY(getHeight());
+            sVisRight = viewToSourceX(getWidth()),
+            sVisTop = viewToSourceY(0),
+            sVisBottom = viewToSourceY(getHeight());
         return !(sVisLeft > tile.sRect.right || tile.sRect.left > sVisRight || sVisTop > tile.sRect.bottom || tile.sRect.top > sVisBottom);
     }
 
@@ -1446,10 +1446,10 @@ public class SubsamplingScaleImageView extends View {
                     tile.sampleSize = sampleSize;
                     tile.visible = sampleSize == fullImageSampleSize;
                     tile.sRect = new Rect(
-                            x * sTileWidth,
-                            y * sTileHeight,
-                            x == xTiles - 1 ? sWidth() : (x + 1) * sTileWidth,
-                            y == yTiles - 1 ? sHeight() : (y + 1) * sTileHeight
+                        x * sTileWidth,
+                        y * sTileHeight,
+                        x == xTiles - 1 ? sWidth() : (x + 1) * sTileWidth,
+                        y == yTiles - 1 ? sHeight() : (y + 1) * sTileHeight
                     );
                     tile.vRect = new Rect(0, 0, 0, 0);
                     tile.fileSRect = new Rect(tile.sRect);
@@ -1665,7 +1665,7 @@ public class SubsamplingScaleImageView extends View {
                 if (context != null && decoderFactory != null && subsamplingScaleImageView != null) {
                     try {
                         bitmap = decoderFactory.make().decode(context, source);
-                    } catch (OutOfMemoryError e){
+                    } catch (OutOfMemoryError e) {
                         System.gc();
                         bitmap = decoderFactory.make().decode(context, source);
                     }
@@ -1805,7 +1805,7 @@ public class SubsamplingScaleImageView extends View {
         }
         try {
             asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } catch(RejectedExecutionException e){
+        } catch (RejectedExecutionException e) {
             //todo catch gracefully
         }
     }
@@ -2063,10 +2063,10 @@ public class SubsamplingScaleImageView extends View {
      */
     private Rect sourceToViewRect(Rect sRect, Rect vTarget) {
         vTarget.set(
-                (int) sourceToViewX(sRect.left),
-                (int) sourceToViewY(sRect.top),
-                (int) sourceToViewX(sRect.right),
-                (int) sourceToViewY(sRect.bottom)
+            (int) sourceToViewX(sRect.left),
+            (int) sourceToViewY(sRect.top),
+            (int) sourceToViewX(sRect.right),
+            (int) sourceToViewY(sRect.bottom)
         );
         return vTarget;
     }
@@ -2782,8 +2782,8 @@ public class SubsamplingScaleImageView extends View {
             anim.sCenterEnd = targetSCenter;
             anim.vFocusStart = sourceToViewCoord(targetSCenter);
             anim.vFocusEnd = new PointF(
-                    vxCenter,
-                    vyCenter
+                vxCenter,
+                vyCenter
             );
             anim.duration = duration;
             anim.interruptible = interruptible;
@@ -2800,8 +2800,8 @@ public class SubsamplingScaleImageView extends View {
                 fitToBounds(true, satEnd);
                 // Adjust the position of the focus point at end so image will be in bounds
                 anim.vFocusEnd = new PointF(
-                        vFocus.x + (satEnd.vTranslate.x - vTranslateXEnd),
-                        vFocus.y + (satEnd.vTranslate.y - vTranslateYEnd)
+                    vFocus.x + (satEnd.vTranslate.x - vTranslateXEnd),
+                    vFocus.y + (satEnd.vTranslate.y - vTranslateYEnd)
                 );
             }
 

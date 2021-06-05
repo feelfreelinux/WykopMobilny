@@ -20,9 +20,11 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
         fun createIntent(context: Context) = Intent(context, BlacklistActivity::class.java)
     }
 
-    @Inject lateinit var blacklistPreferences: BlacklistPreferences
+    @Inject
+    lateinit var blacklistPreferences: BlacklistPreferences
 
-    @Inject lateinit var presenter: BlacklistPresenter
+    @Inject
+    lateinit var presenter: BlacklistPresenter
 
     val updateDataSubject = PublishSubject.create<Boolean>()
     override val enableSwipeBackLayout = true

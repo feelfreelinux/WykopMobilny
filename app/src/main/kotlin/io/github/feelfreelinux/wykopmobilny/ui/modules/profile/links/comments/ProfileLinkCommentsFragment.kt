@@ -7,7 +7,8 @@ import javax.inject.Inject
 
 class ProfileLinkCommentsFragment : BaseLinkCommentFragment(), ProfileLinkCommentsView {
 
-    @Inject lateinit var presenter: ProfileLinksFragmentPresenter
+    @Inject
+    lateinit var presenter: ProfileLinksFragmentPresenter
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
     private val username by lazy { (activity as ProfileActivity).username }

@@ -21,9 +21,11 @@ class ProfileRelatedFragment : BaseFragment(), ProfileRelatedView {
 
     private val username by lazy { (activity as ProfileActivity).username }
 
-    @Inject lateinit var feedAdapter: ProfileRelatedAdapter
+    @Inject
+    lateinit var feedAdapter: ProfileRelatedAdapter
 
-    @Inject lateinit var presenter: ProfileRelatedPresenter
+    @Inject
+    lateinit var presenter: ProfileRelatedPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.feed_fragment, container, false)

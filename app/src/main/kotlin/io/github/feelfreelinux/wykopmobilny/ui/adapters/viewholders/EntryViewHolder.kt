@@ -96,6 +96,7 @@ class EntryViewHolder(
             else TYPE_NORMAL
         }
     }
+
     override val containerView = binding.root
 
     var type: Int = TYPE_NORMAL

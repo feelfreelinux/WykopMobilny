@@ -22,9 +22,11 @@ class AddLinkDetailsFragment : BaseFragment(), AddLinkDetailsFragmentView {
         fun newInstance() = AddLinkDetailsFragment()
     }
 
-    @Inject lateinit var presenter: AddLinkDetailsFragmentPresenter
+    @Inject
+    lateinit var presenter: AddLinkDetailsFragmentPresenter
 
-    @Inject lateinit var navigator: NavigatorApi
+    @Inject
+    lateinit var navigator: NavigatorApi
 
     var imageKey: String = ""
     private val draftInformation by lazy { (activity as AddlinkActivity).draft.data }

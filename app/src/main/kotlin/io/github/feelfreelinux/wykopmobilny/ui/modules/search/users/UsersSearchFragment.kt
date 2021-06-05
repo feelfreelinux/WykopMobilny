@@ -18,7 +18,8 @@ import javax.inject.Inject
 
 class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
-    @Inject lateinit var presenter: UsersSearchPresenter
+    @Inject
+    lateinit var presenter: UsersSearchPresenter
 
     var queryString = ""
     lateinit var querySubscribe: Disposable

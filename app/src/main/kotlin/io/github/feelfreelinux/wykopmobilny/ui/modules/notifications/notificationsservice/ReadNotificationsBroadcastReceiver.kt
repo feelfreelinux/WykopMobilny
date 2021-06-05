@@ -10,7 +10,8 @@ import javax.inject.Inject
 
 class ReadNotificationsBroadcastReceiver : DaggerBroadcastReceiver() {
 
-    @Inject lateinit var notificationsApi: NotificationsApi
+    @Inject
+    lateinit var notificationsApi: NotificationsApi
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)

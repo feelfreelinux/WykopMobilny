@@ -29,9 +29,11 @@ class MyWykopObservedTagsFragment :
         fun newInstance() = MyWykopObservedTagsFragment()
     }
 
-    @Inject lateinit var adapter: ObservedTagsAdapter
+    @Inject
+    lateinit var adapter: ObservedTagsAdapter
 
-    @Inject lateinit var presenter: MyWykopObservedTagsPresenter
+    @Inject
+    lateinit var presenter: MyWykopObservedTagsPresenter
 
     lateinit var dataFragment: DataFragment<List<ObservedTagResponse>>
 

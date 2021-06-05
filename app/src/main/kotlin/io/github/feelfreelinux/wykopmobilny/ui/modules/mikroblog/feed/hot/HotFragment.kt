@@ -29,13 +29,17 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
         fun newInstance() = HotFragment()
     }
 
-    @Inject lateinit var presenter: HotPresenter
+    @Inject
+    lateinit var presenter: HotPresenter
 
-    @Inject lateinit var settingsPreferences: SettingsPreferencesApi
+    @Inject
+    lateinit var settingsPreferences: SettingsPreferencesApi
 
-    @Inject lateinit var navigatorApi: NavigatorApi
+    @Inject
+    lateinit var navigatorApi: NavigatorApi
 
-    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
 
     val fab by lazy { navigation.floatingButton }
     val entriesFragment by lazy { childFragmentManager.findFragmentById(R.id.entriesFragment) as EntriesFragment }

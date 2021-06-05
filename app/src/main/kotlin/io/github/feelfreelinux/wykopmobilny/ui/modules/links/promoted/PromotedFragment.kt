@@ -22,9 +22,11 @@ class PromotedFragment : BaseLinksFragment(), PromotedView, BaseNavigationView {
         fun newInstance() = PromotedFragment()
     }
 
-    @Inject lateinit var presenter: PromotedPresenter
+    @Inject
+    lateinit var presenter: PromotedPresenter
 
-    @Inject lateinit var navigator: NewNavigatorApi
+    @Inject
+    lateinit var navigator: NewNavigatorApi
 
     val navigation by lazy { activity as MainNavigationInterface }
     val fab by lazy { navigation.floatingButton }

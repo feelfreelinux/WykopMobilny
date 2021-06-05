@@ -11,7 +11,8 @@ class MicroblogEntriesFragment : BaseEntriesFragment(), MicroblogEntriesView {
         fun newInstance() = MicroblogEntriesFragment()
     }
 
-    @Inject lateinit var presenter: MicroblogEntriesPresenter
+    @Inject
+    lateinit var presenter: MicroblogEntriesPresenter
     private val username by lazy { (activity as ProfileActivity).username }
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
 

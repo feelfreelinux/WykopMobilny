@@ -52,17 +52,23 @@ class LinkDetailsActivity :
             }
     }
 
-    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
 
-    @Inject lateinit var settingsApi: SettingsPreferencesApi
+    @Inject
+    lateinit var settingsApi: SettingsPreferencesApi
 
-    @Inject lateinit var suggestionsApi: SuggestApi
+    @Inject
+    lateinit var suggestionsApi: SuggestApi
 
-    @Inject lateinit var linkPreferences: LinksPreferencesApi
+    @Inject
+    lateinit var linkPreferences: LinksPreferencesApi
 
-    @Inject lateinit var adapter: LinkDetailsAdapter
+    @Inject
+    lateinit var adapter: LinkDetailsAdapter
 
-    @Inject lateinit var presenter: LinkDetailsPresenter
+    @Inject
+    lateinit var presenter: LinkDetailsPresenter
 
     lateinit var contentUri: Uri
     override val enableSwipeBackLayout: Boolean = true

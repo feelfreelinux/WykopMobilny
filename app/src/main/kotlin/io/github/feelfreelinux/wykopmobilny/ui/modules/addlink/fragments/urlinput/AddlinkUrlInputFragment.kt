@@ -27,7 +27,8 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
         }
     }
 
-    @Inject lateinit var presenter: AddLinkUrlInputPresenter
+    @Inject
+    lateinit var presenter: AddLinkUrlInputPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.addlink_fragment, container, false)

@@ -29,11 +29,14 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
         fun createIntent(context: Context) = Intent(context, LoginScreenActivity::class.java)
     }
 
-    @Inject lateinit var navigatorApi: NewNavigatorApi
+    @Inject
+    lateinit var navigatorApi: NewNavigatorApi
 
-    @Inject lateinit var presenter: LoginScreenPresenter
+    @Inject
+    lateinit var presenter: LoginScreenPresenter
 
-    @Inject lateinit var blacklistPreferences: BlacklistPreferences
+    @Inject
+    lateinit var blacklistPreferences: BlacklistPreferences
 
     private val progressDialog by lazy { ProgressDialog(this) }
 

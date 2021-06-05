@@ -20,11 +20,14 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
         fun newInstance() = NotificationsListFragment()
     }
 
-    @Inject override lateinit var linkHandler: WykopLinkHandlerApi
+    @Inject
+    override lateinit var linkHandler: WykopLinkHandlerApi
 
-    @Inject override lateinit var notificationAdapter: NotificationsListAdapter
+    @Inject
+    override lateinit var notificationAdapter: NotificationsListAdapter
 
-    @Inject lateinit var presenter: NotificationsListPresenter
+    @Inject
+    lateinit var presenter: NotificationsListPresenter
 
     private lateinit var entryFragmentData: DataFragment<PagedDataModel<List<Notification>>>
 

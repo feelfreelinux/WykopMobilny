@@ -15,9 +15,11 @@ class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
         fun newInstance() = LinkSearchFragment()
     }
 
-    @Inject lateinit var userManager: UserManagerApi
+    @Inject
+    lateinit var userManager: UserManagerApi
 
-    @Inject lateinit var presenter: LinkSearchPresenter
+    @Inject
+    lateinit var presenter: LinkSearchPresenter
 
     var query = ""
     lateinit var querySubscribe: Disposable

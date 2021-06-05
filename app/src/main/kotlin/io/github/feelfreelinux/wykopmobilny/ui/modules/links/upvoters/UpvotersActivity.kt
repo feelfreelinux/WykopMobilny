@@ -29,9 +29,11 @@ class UpvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swip
             }
     }
 
-    @Inject lateinit var presenter: UpvotersPresenter
+    @Inject
+    lateinit var presenter: UpvotersPresenter
 
-    @Inject lateinit var upvotersAdapter: UpvoterListAdapter
+    @Inject
+    lateinit var upvotersAdapter: UpvoterListAdapter
 
     private lateinit var upvotersDataFragment: DataFragment<List<Upvoter>>
 

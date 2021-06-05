@@ -39,6 +39,7 @@ interface LinksApi {
         linkId: Int,
         linkComment: Int
     ): Single<LinkComment>
+
     fun relatedAdd(
         title: String,
         url: String,

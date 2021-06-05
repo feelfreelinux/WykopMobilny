@@ -24,9 +24,11 @@ class LinkCommentEditActivity : BaseInputActivity<LinkCommentEditPresenter>(), L
         }
     }
 
-    @Inject override lateinit var presenter: LinkCommentEditPresenter
+    @Inject
+    override lateinit var presenter: LinkCommentEditPresenter
 
-    @Inject override lateinit var suggestionApi: SuggestApi
+    @Inject
+    override lateinit var suggestionApi: SuggestApi
 
     val commentId by lazy { intent.getIntExtra(EXTRA_COMMENTID, 0) }
 

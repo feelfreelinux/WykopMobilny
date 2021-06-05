@@ -22,9 +22,11 @@ class UpcomingFragment : BaseLinksFragment(), UpcomingView {
         fun newInstance() = UpcomingFragment()
     }
 
-    @Inject lateinit var presenter: UpcomingPresenter
+    @Inject
+    lateinit var presenter: UpcomingPresenter
 
-    @Inject lateinit var linksPreferencesApi: LinksPreferencesApi
+    @Inject
+    lateinit var linksPreferencesApi: LinksPreferencesApi
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.getUpcomingLinks(it) }
 

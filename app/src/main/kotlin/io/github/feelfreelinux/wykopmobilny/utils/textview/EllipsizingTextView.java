@@ -39,7 +39,7 @@ public class EllipsizingTextView extends AppCompatTextView {
     private final SpannableString ELLIPSIS = new SpannableString("\u0020[pokaż\u00A0całość]");
 
     private static final Pattern DEFAULT_END_PUNCTUATION
-            = Pattern.compile("[\\.!?,;:\u2026]*$", Pattern.DOTALL);
+        = Pattern.compile("[\\.!?,;:\u2026]*$", Pattern.DOTALL);
     private final List<EllipsizeListener> mEllipsizeListeners = new ArrayList<>();
     private EllipsizeStrategy mEllipsizeStrategy;
     private boolean isEllipsized;
@@ -68,7 +68,7 @@ public class EllipsizingTextView extends AppCompatTextView {
     public EllipsizingTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs,
-                new int[]{android.R.attr.maxLines, android.R.attr.ellipsize}, defStyle, 0);
+            new int[]{android.R.attr.maxLines, android.R.attr.ellipsize}, defStyle, 0);
         setMaxLines(a.getInt(0, Integer.MAX_VALUE));
         a.recycle();
         setEndPunctuationPattern(DEFAULT_END_PUNCTUATION);
@@ -271,9 +271,9 @@ public class EllipsizingTextView extends AppCompatTextView {
          */
         protected Layout createWorkingLayout(CharSequence workingText) {
             return new StaticLayout(workingText, getPaint(),
-                    getWidth() - getCompoundPaddingLeft() - getCompoundPaddingRight(),
-                    Alignment.ALIGN_NORMAL, mLineSpacingMult,
-                    mLineAddVertPad, false /* includepad */);
+                getWidth() - getCompoundPaddingLeft() - getCompoundPaddingRight(),
+                Alignment.ALIGN_NORMAL, mLineSpacingMult,
+                mLineAddVertPad, false /* includepad */);
         }
 
         /**
@@ -387,7 +387,7 @@ public class EllipsizingTextView extends AppCompatTextView {
 
             if (fullText instanceof Spanned) {
                 TextUtils.copySpansFrom((Spanned) fullText, textLength - workingText.length(),
-                        textLength, null, dest, 0);
+                    textLength, null, dest, 0);
             }
             return dest;
         }
@@ -409,9 +409,9 @@ public class EllipsizingTextView extends AppCompatTextView {
             }
             cutOffLength += cutOffIndex % 2;    // Make it even.
             String firstPart = TextUtils.substring(
-                    fullText, 0, textLength / 2 - cutOffLength / 2).trim();
+                fullText, 0, textLength / 2 - cutOffLength / 2).trim();
             String secondPart = TextUtils.substring(
-                    fullText, textLength / 2 + cutOffLength / 2, textLength).trim();
+                fullText, textLength / 2 + cutOffLength / 2, textLength).trim();
 
             while (!isInLayout(TextUtils.concat(firstPart, ELLIPSIS, secondPart))) {
                 int lastSpaceFirstPart = firstPart.lastIndexOf(' ');
@@ -428,9 +428,9 @@ public class EllipsizingTextView extends AppCompatTextView {
 
             if (fullText instanceof Spanned) {
                 TextUtils.copySpansFrom((Spanned) fullText, 0, firstPart.length(),
-                        null, firstDest, 0);
+                    null, firstDest, 0);
                 TextUtils.copySpansFrom((Spanned) fullText, textLength - secondPart.length(),
-                        textLength, null, secondDest, 0);
+                    textLength, null, secondDest, 0);
             }
             return TextUtils.concat(firstDest, ELLIPSIS, secondDest);
         }

@@ -23,9 +23,11 @@ class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivit
             }
     }
 
-    @Inject override lateinit var suggestionApi: SuggestApi
+    @Inject
+    override lateinit var suggestionApi: SuggestApi
 
-    @Inject override lateinit var presenter: AddEntryPresenter
+    @Inject
+    override lateinit var presenter: AddEntryPresenter
 
     val navigator: NewNavigatorApi by lazy { NewNavigator(this) }
 

@@ -26,9 +26,11 @@ class MyWykopEntryLinkFragment : BaseEntryLinkFragment() {
         }
     }
 
-    @Inject lateinit var userManager: UserManagerApi
+    @Inject
+    lateinit var userManager: UserManagerApi
 
-    @Inject lateinit var presenter: MyWykopEntryLinkPresenter
+    @Inject
+    lateinit var presenter: MyWykopEntryLinkPresenter
 
     private val extraType by lazy { arguments?.getString(EXTRA_TYPE) }
 

@@ -110,12 +110,12 @@ public class FileUtils {
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {
-                column
+            column
         };
 
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
+                null);
             if (cursor != null && cursor.moveToFirst()) {
                 if (DEBUG) {
                     DatabaseUtils.dumpCursor(cursor);
@@ -169,7 +169,7 @@ public class FileUtils {
 
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
+                    Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
 
                 return getDataColumn(context, contentUri, null, null);
             } else if (isMediaDocument(uri)) { // MediaProvider
@@ -188,7 +188,7 @@ public class FileUtils {
 
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[]{
-                        split[1]
+                    split[1]
                 };
 
                 return getDataColumn(context, contentUri, selection, selectionArgs);

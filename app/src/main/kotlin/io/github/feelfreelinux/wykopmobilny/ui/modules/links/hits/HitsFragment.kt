@@ -25,7 +25,8 @@ class HitsFragment : BaseLinksFragment(), HitsView {
         fun newInstance() = HitsFragment()
     }
 
-    @Inject lateinit var presenter: HitsPresenter
+    @Inject
+    lateinit var presenter: HitsPresenter
 
     override var loadDataListener: (Boolean) -> Unit = {
         presenter.loadData()

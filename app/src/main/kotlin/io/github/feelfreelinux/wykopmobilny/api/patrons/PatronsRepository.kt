@@ -10,13 +10,11 @@ class PatronsRepository(val retrofit: Retrofit) : PatronsApi {
 
     override lateinit var patrons: List<Patron>
     override fun <T : Any> ensurePatrons(d: T): Single<T> {
-        return Single.create {
-            emitter ->
+        return Single.create { emitter ->
             if (!::patrons.isInitialized) {
                 getPatrons().subscribeOn(WykopSchedulers().backgroundThread()).observeOn(WykopSchedulers().mainThread())
                     .subscribe(
-                        {
-                            patrons ->
+                        { patrons ->
                             this.patrons = patrons
                             emitter.onSuccess(d)
                         },
@@ -30,6 +28,7 @@ class PatronsRepository(val retrofit: Retrofit) : PatronsApi {
             }
         }
     }
+
     override fun getPatrons(): Single<List<Patron>> =
         patronsApi.getPatrons().map { it.patrons }
             .doOnSuccess {

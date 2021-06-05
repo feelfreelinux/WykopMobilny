@@ -30,11 +30,14 @@ class TagActivity : BaseActivity(), TagActivityView {
         }
     }
 
-    @Inject lateinit var navigator: NavigatorApi
+    @Inject
+    lateinit var navigator: NavigatorApi
 
-    @Inject lateinit var presenter: TagActivityPresenter
+    @Inject
+    lateinit var presenter: TagActivityPresenter
 
-    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
 
     override val enableSwipeBackLayout: Boolean = true
     private val tagString by lazy { intent.getStringExtra(EXTRA_TAG)!! }

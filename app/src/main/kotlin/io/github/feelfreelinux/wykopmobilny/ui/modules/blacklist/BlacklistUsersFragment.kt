@@ -19,9 +19,11 @@ class BlacklistUsersFragment : BaseFragment() {
         fun createFragment() = BlacklistUsersFragment()
     }
 
-    @Inject lateinit var adapter: BlacklistAdapter
+    @Inject
+    lateinit var adapter: BlacklistAdapter
 
-    @Inject lateinit var blacklistPreferences: BlacklistPreferences
+    @Inject
+    lateinit var blacklistPreferences: BlacklistPreferences
 
     private val disposable = CompositeDisposable()
 

@@ -8,7 +8,8 @@ import javax.inject.Inject
 
 class WykopNotificationsBroadcastReceiver : DaggerBroadcastReceiver() {
 
-    @Inject lateinit var settingsApi: SettingsPreferencesApi
+    @Inject
+    lateinit var settingsApi: SettingsPreferencesApi
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)

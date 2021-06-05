@@ -41,13 +41,17 @@ class ProfileActivity : BaseActivity(), ProfileView {
             }
     }
 
-    @Inject lateinit var navigator: NewNavigatorApi
+    @Inject
+    lateinit var navigator: NewNavigatorApi
 
-    @Inject lateinit var presenter: ProfilePresenter
+    @Inject
+    lateinit var presenter: ProfilePresenter
 
-    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
 
-    @Inject lateinit var patronsApi: PatronsApi
+    @Inject
+    lateinit var patronsApi: PatronsApi
 
     val username by lazy { intent.getStringExtra(EXTRA_USERNAME)!! }
     override val enableSwipeBackLayout: Boolean = true

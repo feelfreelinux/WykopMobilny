@@ -31,7 +31,8 @@ class PhotoViewActivity : BaseActivity() {
             }
     }
 
-    @Inject lateinit var clipboardHelper: ClipboardHelperApi
+    @Inject
+    lateinit var clipboardHelper: ClipboardHelperApi
 
     override val enableSwipeBackLayout: Boolean = true // We manually attach it here
     override val isActivityTransfluent: Boolean = true
