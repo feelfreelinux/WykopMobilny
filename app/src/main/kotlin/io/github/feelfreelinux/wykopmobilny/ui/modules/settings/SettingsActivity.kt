@@ -7,8 +7,9 @@ import android.view.MenuItem
 import androidx.preference.PreferenceFragmentCompat
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivitySettingsBinding
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
 class SettingsActivity : BaseActivity() {
@@ -26,14 +27,15 @@ class SettingsActivity : BaseActivity() {
     @Inject
     lateinit var navigatorApi: NewNavigatorApi
 
+    private val binding by viewBinding(ActivitySettingsBinding::inflate)
+
     override val enableSwipeBackLayout: Boolean = true
     var shouldRestartMainScreen = false
     override val isActivityTransfluent = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         supportActionBar?.title = "Ustawienia"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (supportFragmentManager.backStackEntryCount == 0) {
@@ -50,7 +52,6 @@ class SettingsActivity : BaseActivity() {
     fun openFragment(fragment: PreferenceFragmentCompat, tag: String) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.settings_fragment, fragment, tag)
-            // Add this transaction to the back stack
             .addToBackStack(null)
             .commit()
     }

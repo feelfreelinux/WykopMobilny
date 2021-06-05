@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.isVisible
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityVoterslistBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
@@ -16,15 +18,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.RelatedListAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.addRelatedDialog
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.activity_conversations_list.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, RelatedView {
+class RelatedActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, RelatedView {
 
     companion object {
-        const val DATA_FRAGMENT_TAG = "RELATED_LIST"
-        const val EXTRA_LINKID = "LINK_ID_EXTRA"
+        private const val DATA_FRAGMENT_TAG = "RELATED_LIST"
+        private const val EXTRA_LINKID = "LINK_ID_EXTRA"
 
         fun createIntent(linkId: Int, activity: Activity) =
             Intent(activity, RelatedActivity::class.java).apply {
@@ -41,36 +42,37 @@ class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swipe
     @Inject
     lateinit var userManager: UserManagerApi
 
+    private val binding by viewBinding(ActivityVoterslistBinding::inflate)
+
     private lateinit var relatedDataFragment: DataFragment<List<Related>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         relatedDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        setContentView(R.layout.activity_voterslist)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         supportActionBar?.title = resources.getString(R.string.related)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        swiperefresh.setOnRefreshListener(this)
-        recyclerView?.apply {
+        binding.swiperefresh.setOnRefreshListener(this)
+        binding.recyclerView.apply {
             prepare()
             adapter = relatedAdapter
         }
-        swiperefresh?.isRefreshing = false
+        binding.swiperefresh.isRefreshing = false
         presenter.linkId = intent.getIntExtra(EXTRA_LINKID, -1)
         presenter.subscribe(this)
 
         if (relatedDataFragment.data == null) {
-            loadingView.isVisible = true
+            binding.loadingView.isVisible = true
             onRefresh()
         } else {
             relatedAdapter.items.addAll(relatedDataFragment.data!!)
-            loadingView.isVisible = false
+            binding.loadingView.isVisible = false
         }
     }
 
     override fun showRelated(related: List<Related>) {
-        loadingView.isVisible = false
-        swiperefresh?.isRefreshing = false
+        binding.loadingView.isVisible = false
+        binding.swiperefresh.isRefreshing = false
         relatedAdapter.apply {
             items.clear()
             items.addAll(related)

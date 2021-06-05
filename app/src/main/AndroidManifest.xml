@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.github.feelfreelinux.wykopmobilny">
+    package="io.github.feelfreelinux.wykopmobilny"
+    >
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,19 +20,23 @@
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/WykopAppTheme">
+        android:theme="@style/WykopAppTheme"
+        >
         <activity
             android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
         <activity
             android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            />
 
         <activity
             android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,22 +44,26 @@
 
             <meta-data
                 android:name="android.app.shortcuts"
-                android:resource="@xml/app_shortcuts" />
+                android:resource="@xml/app_shortcuts"
+                />
         </activity>
 
         <activity
             android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            />
         <activity
             android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            />
         <activity
             android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            >
             <intent-filter android:label="Dodaj wpis z zdjęciem">
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -68,39 +78,48 @@
         <activity
             android:name=".ui.modules.input.entry.edit.EditEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            />
         <activity
             android:name=".ui.modules.input.entry.comment.EditEntryCommentActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
         <activity
             android:name=".ui.modules.pm.conversation.ConversationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            />
         <activity
             android:name=".ui.modules.settings.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            />
         <activity
             android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            />
         <activity
             android:name=".ui.modules.links.upvoters.UpvotersActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            />
         <activity
             android:name=".ui.modules.links.downvoters.DownvotersActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            />
         <activity
             android:name=".ui.modules.input.link.edit.LinkCommentEditActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
         <activity
             android:name=".ui.modules.DeepLinkActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="stateUnchanged|adjustResize">
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -110,134 +129,166 @@
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/0.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/1.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/2.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/3.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/4.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/5.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/6.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/7.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/8.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/9.*"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/0.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/1.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/2.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/3.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/4.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/5.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/6.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/7.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/8.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPattern="/link/9.*"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPrefix="/tag"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPrefix="/tag"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPrefix="/ludzie"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPrefix="/ludzie"
-                    android:scheme="http" />
+                    android:scheme="http"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPrefix="/wpis"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
                 <data
                     android:host="www.wykop.pl"
                     android:pathPrefix="/wpis"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.modules.links.related.RelatedActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            />
         <activity
             android:name=".ui.modules.profile.ProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            />
         <activity
             android:name=".ui.modules.notificationslist.NotificationsListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/TransparentActivityTheme"
-            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            />
         <activity
             android:name=".ui.modules.embedview.EmbedViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/TransparentActivityTheme" />
+            android:theme="@style/TransparentActivityTheme"
+            />
         <activity
             android:name=".ui.modules.blacklist.BlacklistActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
         <activity
             android:name=".ui.modules.addlink.AddlinkActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            >
             <intent-filter android:label="Udostępnij link">
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -254,30 +305,36 @@
 
         <receiver
             android:name=".ui.modules.notifications.notificationsservice.ReadNotificationsBroadcastReceiver"
-            android:exported="false" />
+            android:exported="false"
+            />
 
         <provider
             android:name=".ui.modules.search.SearchSuggestionAdapter"
-            android:authorities="io.github.feelfreelinux.SearchSuggestionAdapter" />
+            android:authorities="io.github.feelfreelinux.SearchSuggestionAdapter"
+            />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="io.github.feelfreelinux.wykopmobilny.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/provider_paths"
+                />
         </provider>
 
         <service
             android:name="com.evernote.android.job.gcm.PlatformGcmService"
             android:enabled="true"
-            tools:replace="android:enabled"/>
+            tools:replace="android:enabled"
+            />
 
         <service
             android:name=".ui.modules.notifications.notificationsservice.NotificationPiggyback"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            >
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
@@ -287,7 +344,8 @@
             android:name=".ui.modules.embedview.YTPlayer"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="sensor"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            />
 
     </application>
 

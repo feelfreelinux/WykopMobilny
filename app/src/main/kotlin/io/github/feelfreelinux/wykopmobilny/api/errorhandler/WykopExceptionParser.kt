@@ -8,11 +8,7 @@ class WykopExceptionParser {
     class WykopApiException(val code: Int, override val message: String?) : IOException()
 
     companion object {
-        fun getException(apiResponse: ApiResponse<*>): WykopApiException? {
-            apiResponse.error?.apply {
-                return WykopApiException(code, messagePl)
-            }
-            return null
-        }
+
+        fun getException(apiResponse: ApiResponse<*>) = apiResponse.error?.run { WykopApiException(code, messagePl) }
     }
 }

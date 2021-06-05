@@ -9,13 +9,13 @@ import androidx.core.view.isVisible
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityTagBinding
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.activity_tag.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
 class TagActivity : BaseActivity(), TagActivityView {
@@ -39,6 +39,8 @@ class TagActivity : BaseActivity(), TagActivityView {
     @Inject
     lateinit var userManagerApi: UserManagerApi
 
+    private val binding by viewBinding(ActivityTagBinding::inflate)
+
     override val enableSwipeBackLayout: Boolean = true
     private val tagString by lazy { intent.getStringExtra(EXTRA_TAG)!! }
     private var tagMeta: TagMetaResponse? = null
@@ -46,25 +48,24 @@ class TagActivity : BaseActivity(), TagActivityView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tag)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         presenter.subscribe(this)
         presenter.tag = tagString
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             navigator.openAddEntryActivity(this, null, "#$tagString")
         }
-        fab.isVisible = userManagerApi.isUserAuthorized()
+        binding.fab.isVisible = userManagerApi.isUserAuthorized()
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             title = "\n#$tagString"
         }
 
-        pager.adapter = tagPagerAdapter
+        binding.pager.adapter = tagPagerAdapter
         tagMeta?.let {
             setMeta(tagMeta!!)
         }
-        tabLayout.setupWithViewPager(pager)
+        binding.tabLayout.setupWithViewPager(binding.pager)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -104,10 +105,10 @@ class TagActivity : BaseActivity(), TagActivityView {
 
     override fun setMeta(tagMeta: TagMetaResponse) {
         this.tagMeta = tagMeta
-        backgroundImg.isVisible = tagMeta.background != null
+        binding.backgroundImg.isVisible = tagMeta.background != null
         tagMeta.background?.let {
-            backgroundImg.loadImage(tagMeta.background)
-            toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
+            binding.backgroundImg.loadImage(tagMeta.background)
+            binding.toolbar.toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         }
         invalidateOptionsMenu()
     }

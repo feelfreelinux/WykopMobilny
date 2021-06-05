@@ -4,13 +4,12 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.Window
-import io.github.feelfreelinux.wykopmobilny.R
-import kotlinx.android.synthetic.main.year_picker.view.*
+import androidx.fragment.app.DialogFragment
+import io.github.feelfreelinux.wykopmobilny.databinding.YearPickerBinding
 import java.util.Calendar
 
-class YearPickerDialog : androidx.fragment.app.DialogFragment() {
+class YearPickerDialog : DialogFragment() {
 
     companion object {
         const val RESULT_CODE = 167
@@ -32,14 +31,14 @@ class YearPickerDialog : androidx.fragment.app.DialogFragment() {
         val dialogBuilder = AlertDialog.Builder(context)
         val argumentYear = requireArguments().getInt(EXTRA_YEAR)
         yearSelection = if (argumentYear == 0) currentYear else argumentYear
-        val dialogView = View.inflate(context, R.layout.year_picker, null)
+        val dialogView = YearPickerBinding.inflate(layoutInflater)
         dialogBuilder.apply {
             setPositiveButton(android.R.string.ok) { _, _ ->
                 val data = Intent()
                 data.putExtra(EXTRA_YEAR, yearSelection)
                 targetFragment?.onActivityResult(targetRequestCode, RESULT_CODE, data)
             }
-            setView(dialogView)
+            setView(dialogView.root)
         }
         val newDialog = dialogBuilder.create()
         newDialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
