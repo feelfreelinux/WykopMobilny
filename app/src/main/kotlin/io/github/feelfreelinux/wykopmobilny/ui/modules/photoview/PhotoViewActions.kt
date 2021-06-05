@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
-import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -21,7 +20,6 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.SingleOnSubscribe
 import java.io.File
-
 
 interface PhotoViewCallbacks {
     fun shareImage(url: String)
@@ -43,15 +41,17 @@ class PhotoViewActions(val context: Context) : PhotoViewCallbacks {
             return
         }
 
-        Single.create(SingleOnSubscribe<File> {
-            val file = Glide.with(context).downloadOnly().load(url).submit().get()
-            val newFile = File(
+        Single.create(
+            SingleOnSubscribe<File> {
+                val file = Glide.with(context).downloadOnly().load(url).submit().get()
+                val newFile = File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                     "$SAVED_FOLDER/$SHARED_FOLDER/" + url.substringAfterLast("/")
-            )
-            file.copyTo(newFile, true)
-            it.onSuccess(newFile)
-        }).subscribeOn(WykopSchedulers().backgroundThread()).observeOn(WykopSchedulers().mainThread()).subscribe { file: File ->
+                )
+                file.copyTo(newFile, true)
+                it.onSuccess(newFile)
+            }
+        ).subscribeOn(WykopSchedulers().backgroundThread()).observeOn(WykopSchedulers().mainThread()).subscribe { file: File ->
             addImageToGallery(file.path, context)
 
             val url = FileProvider.getUriForFile(context, context.applicationContext.packageName + ".fileprovider", file)
@@ -59,7 +59,7 @@ class PhotoViewActions(val context: Context) : PhotoViewCallbacks {
             share.type = getMimeType(url.path!!)
             share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             share.putExtra(Intent.EXTRA_STREAM, url)
-            share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             photoView.startActivityForResult(Intent.createChooser(share, "Udostępnij obrazek"), PhotoViewActivity.SHARE_REQUEST_CODE)
         }
     }
@@ -78,18 +78,21 @@ class PhotoViewActions(val context: Context) : PhotoViewCallbacks {
         Completable.fromAction {
             val file = Glide.with(context).downloadOnly().load(url).submit().get()
             var path = File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    SAVED_FOLDER
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                SAVED_FOLDER
             )
             path = File(path, photoView.url.substringAfterLast('/'))
             file.copyTo(path, true)
             addImageToGallery(path.path, context)
         }.subscribeOn(WykopSchedulers().backgroundThread())
-            .observeOn(WykopSchedulers().mainThread()).subscribe({
-                showToastMessage("Zapisano plik")
-            }, {
-                showToastMessage("Błąd podczas zapisu pliku")
-            })
+            .observeOn(WykopSchedulers().mainThread()).subscribe(
+                {
+                    showToastMessage("Zapisano plik")
+                },
+                {
+                    showToastMessage("Błąd podczas zapisu pliku")
+                }
+            )
     }
 
     private fun checkForWriteReadPermission(): Boolean {

@@ -8,7 +8,9 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 
 class MinusVoteButton @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.MirkoButtonStyle
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.MirkoButtonStyle
 ) : VoteButton(context, attrs, defStyleAttr) {
 
     init {

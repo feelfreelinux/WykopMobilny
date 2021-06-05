@@ -4,9 +4,9 @@ import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi

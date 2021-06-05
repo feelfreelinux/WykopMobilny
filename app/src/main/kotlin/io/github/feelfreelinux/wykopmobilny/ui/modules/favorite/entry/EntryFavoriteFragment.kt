@@ -10,7 +10,8 @@ class EntryFavoriteFragment : BaseEntriesFragment(), EntryFavoriteView {
         fun newInstance() = EntryFavoriteFragment()
     }
 
-    @Inject lateinit var presenter: EntryFavoritePresenter
+    @Inject
+    lateinit var presenter: EntryFavoritePresenter
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

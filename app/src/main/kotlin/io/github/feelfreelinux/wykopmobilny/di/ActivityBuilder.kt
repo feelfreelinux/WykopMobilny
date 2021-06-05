@@ -10,7 +10,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistFragme
 import io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist.BlacklistModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.EmbedViewModule
-import io.github.feelfreelinux.wykopmobilny.ui.modules.embedview.YoutubeActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivityModule
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
@@ -54,6 +53,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityModule
 
 @Module
 abstract class ActivityBuilder {
+
     @ContributesAndroidInjector
     abstract fun bindWykopStartupBroadcastReceiver(): WykopNotificationsBroadcastReceiver
 

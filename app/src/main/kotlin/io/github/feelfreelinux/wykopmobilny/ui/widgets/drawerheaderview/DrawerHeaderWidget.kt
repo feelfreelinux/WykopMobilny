@@ -3,16 +3,18 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserCredentials
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 
 class DrawerHeaderWidget @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : androidx.constraintlayout.widget.ConstraintLayout(context, attrs, defStyleAttr) {
 
     companion object {
@@ -25,13 +27,13 @@ class DrawerHeaderWidget @JvmOverloads constructor(
     }
 
     var hashTagsNotificationsCount: Int
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        get() = TODO("not implemented") // To change initializer of created properties use File | Settings | File Templates.
         set(value) {
             nav_notifications_tag.text = value.toString()
         }
 
     var notificationCount: Int
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        get() = TODO("not implemented") // To change initializer of created properties use File | Settings | File Templates.
         set(value) {
             nav_notifications.text = value.toString()
         }

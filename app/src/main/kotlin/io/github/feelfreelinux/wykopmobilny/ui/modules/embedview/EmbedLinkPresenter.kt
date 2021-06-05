@@ -35,10 +35,13 @@ class EmbedLinkPresenter(
                 embedApi.getGfycat(id)
                     .subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
-                    .subscribe({
-                        mp4Url = it.gfyItem.mp4Url
-                        view?.playUrl(URL(it.gfyItem.webmUrl))
-                    }, { view?.showErrorDialog(it) })
+                    .subscribe(
+                        {
+                            mp4Url = it.gfyItem.mp4Url
+                            view?.playUrl(URL(it.gfyItem.webmUrl))
+                        },
+                        { view?.showErrorDialog(it) }
+                    )
             }
 
             COUB_MATCHER -> {
@@ -54,10 +57,13 @@ class EmbedLinkPresenter(
                 embedApi.getStreamableUrl(id)
                     .subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
-                    .subscribe({
-                        mp4Url = it.toString()
-                        view?.playUrl(it)
-                    }, { view?.showErrorDialog(it) })
+                    .subscribe(
+                        {
+                            mp4Url = it.toString()
+                            view?.playUrl(it)
+                        },
+                        { view?.showErrorDialog(it) }
+                    )
             }
 
             SIMPLE_YOUTUBE_MATCHER, YOUTUBE_MATCHER -> view?.exitAndOpenYoutubeActivity()
@@ -65,7 +71,6 @@ class EmbedLinkPresenter(
                 Single.just(url)
             }
         }
-
     }
 
     private fun String.formatGfycat(): String {
@@ -75,7 +80,6 @@ class EmbedLinkPresenter(
             .replace(".webm", "")
             .replace("-size_restricted", "")
             .removeSuffix("/").substringAfterLast("/")
-
     }
 
     private fun String.getDomainName(): String {

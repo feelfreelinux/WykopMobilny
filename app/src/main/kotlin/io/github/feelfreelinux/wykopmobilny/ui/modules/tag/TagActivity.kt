@@ -5,12 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.view.isVisible
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObserveStateResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_tag.*
@@ -20,18 +21,23 @@ import javax.inject.Inject
 class TagActivity : BaseActivity(), TagActivityView {
 
     companion object {
-        const val EXTRA_TAG = "EXTRA_TAG"
+        private const val EXTRA_TAG = "EXTRA_TAG"
 
         fun createIntent(context: Context, tag: String): Intent {
             val intent = Intent(context, TagActivity::class.java)
-            intent.putExtra(TagActivity.EXTRA_TAG, tag)
+            intent.putExtra(EXTRA_TAG, tag)
             return intent
         }
     }
 
-    @Inject lateinit var navigator: NavigatorApi
-    @Inject lateinit var presenter: TagActivityPresenter
-    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject
+    lateinit var navigator: NavigatorApi
+
+    @Inject
+    lateinit var presenter: TagActivityPresenter
+
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
 
     override val enableSwipeBackLayout: Boolean = true
     private val tagString by lazy { intent.getStringExtra(EXTRA_TAG)!! }
@@ -89,7 +95,7 @@ class TagActivity : BaseActivity(), TagActivityView {
             android.R.id.home -> finish()
             R.id.refresh -> {
                 for (i in 0 until tagPagerAdapter.registeredFragments.size()) {
-                    (tagPagerAdapter.registeredFragments.valueAt(i) as? androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener)?.onRefresh()
+                    (tagPagerAdapter.registeredFragments.valueAt(i) as? SwipeRefreshLayout.OnRefreshListener)?.onRefresh()
                 }
             }
         }

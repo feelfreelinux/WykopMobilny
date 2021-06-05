@@ -1,27 +1,33 @@
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                                      xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <androidx.preference.Preference
         app:iconSpaceReserved="false"
         android:key="appearance"
-        android:title="@string/pref_appearance_settings"/>
+        android:title="@string/pref_appearance_settings"
+        />
 
     <com.takisoft.preferencex.PreferenceCategory
         app:iconSpaceReserved="false"
-        android:title="@string/pref_notifications">
+        android:title="@string/pref_notifications"
+        >
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="showNotifications"
             android:title="@string/pref_notifications_enable"
-            android:defaultValue="true"/>
+            android:defaultValue="true"
+            />
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="piggyBackPushNotifications"
             android:title="@string/pref_notifications_piggyback"
             android:summary="@string/pref_notifications_piggyback_summary"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            />
 
         <androidx.preference.ListPreference
             app:iconSpaceReserved="false"
@@ -29,65 +35,76 @@
             android:title="@string/pref_notifications_frequency"
             android:entries="@array/preferences_notifications_frequency"
             android:entryValues="@array/preferences_notifications_frequency_values"
-            android:defaultValue="15"/>
+            android:defaultValue="15"
+            />
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="disableExitConfirmation"
             android:title="@string/pref_disable_exit_confirmation"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            />
 
     </com.takisoft.preferencex.PreferenceCategory>
 
     <com.takisoft.preferencex.PreferenceCategory
         app:iconSpaceReserved="false"
-        android:title="@string/pref_content_filter">
+        android:title="@string/pref_content_filter"
+        >
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="showAdultContent"
             android:title="@string/pref_content_plus18"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            />
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="hideNsfw"
             android:title="@string/pref_content_filter_nsfw"
-            android:defaultValue="true"/>
+            android:defaultValue="true"
+            />
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="hideLowRangeAuthors"
             android:title="@string/pref_content_filter_low_range_authors"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            />
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="hideContentWithoutTags"
             android:title="@string/pref_content_filter_without_tags"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            />
 
         <androidx.preference.CheckBoxPreference
             app:iconSpaceReserved="false"
             android:key="hideBlacklistedViews"
             android:title="@string/pref_content_hide_blacklisted"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            />
 
     </com.takisoft.preferencex.PreferenceCategory>
 
     <androidx.preference.Preference
         app:iconSpaceReserved="false"
         android:key="blacklist"
-        android:title="@string/pref_manage_blacklist"/>
+        android:title="@string/pref_manage_blacklist"
+        />
 
     <androidx.preference.CheckBoxPreference
         app:iconSpaceReserved="false"
         android:key="useBuiltInBrowser"
         android:title="@string/pref_use_built_in_browser"
-        android:defaultValue="true"/>
+        android:defaultValue="true"
+        />
 
     <androidx.preference.Preference
         app:iconSpaceReserved="false"
         android:key="clearhistory"
-        android:title="@string/pref_clear_history"/>
+        android:title="@string/pref_clear_history"
+        />
 </androidx.preference.PreferenceScreen>

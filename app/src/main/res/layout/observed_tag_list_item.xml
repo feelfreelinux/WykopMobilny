@@ -7,7 +7,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/itemBackgroundColorStatelist"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    >
 
     <TextView
         android:id="@+id/blockedTextView"
@@ -21,5 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="#otwartywykopmobilny" />
+        tools:text="#otwartywykopmobilny"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

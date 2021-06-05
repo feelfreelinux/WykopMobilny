@@ -4,17 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityVoterslistBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Downvoter
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.DownvoterListAdapter
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.activity_conversations_list.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
 class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, DownvotersView {
@@ -29,38 +29,42 @@ class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Sw
             }
     }
 
-    @Inject lateinit var presenter: DownvotersPresenter
-    @Inject lateinit var downvotersAdapter: DownvoterListAdapter
+    @Inject
+    lateinit var presenter: DownvotersPresenter
+
+    @Inject
+    lateinit var downvotersAdapter: DownvoterListAdapter
     private lateinit var downvotersDataFragment: DataFragment<List<Downvoter>>
+
+    private val binding by viewBinding(ActivityVoterslistBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         downvotersDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        setContentView(R.layout.activity_voterslist)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         supportActionBar?.title = resources.getString(R.string.downvoters)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        swiperefresh.setOnRefreshListener(this)
-        recyclerView?.apply {
+        binding.swiperefresh.setOnRefreshListener(this)
+        binding.recyclerView.apply {
             prepare()
             adapter = downvotersAdapter
         }
-        swiperefresh?.isRefreshing = false
+        binding.swiperefresh.isRefreshing = false
         presenter.linkId = intent.getIntExtra(EXTRA_LINKID, -1)
         presenter.subscribe(this)
 
         if (downvotersDataFragment.data == null) {
-            loadingView?.isVisible = true
+            binding.loadingView.isVisible = true
             onRefresh()
         } else {
             downvotersAdapter.items.addAll(downvotersDataFragment.data!!)
-            loadingView?.isVisible = false
+            binding.loadingView.isVisible = false
         }
     }
 
     override fun showDownvoters(downvoters: List<Downvoter>) {
-        loadingView?.isVisible = false
-        swiperefresh?.isRefreshing = false
+        binding.loadingView.isVisible = false
+        binding.swiperefresh.isRefreshing = false
         downvotersAdapter.apply {
             items.clear()
             items.addAll(downvoters)

@@ -32,11 +32,11 @@ class MicroblogPagerAdapter(
         super.destroyItem(container, position, `object`)
     }
 
-    override fun getPageTitle(position: Int): CharSequence {
-        super.getPageTitle(position)
-        return when (position) {
-            0 -> resources.getString(R.string.entries)
-            else -> resources.getString(R.string.commented)
+    override fun getPageTitle(position: Int) =
+        if (position == 0) {
+            R.string.entries
+        } else {
+            R.string.commented
         }
-    }
+            .let(resources::getString)
 }

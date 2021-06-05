@@ -21,7 +21,12 @@ fun TextView.prepareBody(html: String, listener: (String) -> Unit) {
     }
 }
 
-fun TextView.prepareBody(html: String, urlClickListener: (String) -> Unit, clickListener: (() -> Unit)? = null, shouldOpenSpoilerDialog: Boolean) {
+fun TextView.prepareBody(
+    html: String,
+    urlClickListener: (String) -> Unit,
+    clickListener: (() -> Unit)? = null,
+    shouldOpenSpoilerDialog: Boolean
+) {
     text = SpannableStringBuilder(html.toSpannable())
     val method = BetterLinkMovementMethod.linkifyHtml(this)
     clickListener?.let {
@@ -34,15 +39,15 @@ fun TextView.prepareBody(html: String, urlClickListener: (String) -> Unit, click
             if (!shouldOpenSpoilerDialog) {
                 openSpoilers(url.span(), url.text())
             } else {
-                val s = SpannableString(URLDecoder.decode(url.text().substringAfter("spoiler:"), "UTF-8"))
-                Linkify.addLinks(s, Linkify.WEB_URLS)
+                val spoiler = SpannableString(URLDecoder.decode(url.text().substringAfter("spoiler:"), "UTF-8"))
+                Linkify.addLinks(spoiler, Linkify.WEB_URLS)
                 context.createAlertBuilder().apply {
                     setTitle("Spoiler")
-                    setMessage(s)
+                    setMessage(spoiler)
                     setPositiveButton(android.R.string.ok, null)
-                    val d = create()
-                    d.show()
-                    d.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+                    val dialog = create()
+                    dialog.show()
+                    dialog.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
                 }
             }
         } else urlClickListener(url.text())
@@ -70,4 +75,3 @@ fun TextView.openSpoilers(span: ClickableSpan, rawText: String) {
 
     text = ssb
 }
-

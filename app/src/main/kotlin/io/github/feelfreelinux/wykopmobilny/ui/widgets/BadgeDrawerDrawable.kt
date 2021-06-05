@@ -70,12 +70,12 @@ class BadgeDrawerDrawable(context: Context) : DrawerArrowDrawable(context) {
         if (!isEnabled || this.text.isNullOrEmpty()) return
 
         val bounds = bounds
-        val x = (1 - HALF_SIZE_FACTOR) * bounds.width()
-        val y = HALF_SIZE_FACTOR * bounds.height()
-        canvas.drawCircle(x, y, SIZE_FACTOR * bounds.width(), backgroundPaint)
+        val xPosition = (1 - HALF_SIZE_FACTOR) * bounds.width()
+        val yPosition = HALF_SIZE_FACTOR * bounds.height()
+        canvas.drawCircle(xPosition, yPosition, SIZE_FACTOR * bounds.width(), backgroundPaint)
 
         val textBounds = Rect()
         textPaint.getTextBounds(this.text, 0, this.text!!.length, textBounds)
-        canvas.drawText(this.text!!, x, y + textBounds.height() / 2, textPaint)
+        canvas.drawText(this.text!!, xPosition, yPosition + textBounds.height() / 2, textPaint)
     }
 }

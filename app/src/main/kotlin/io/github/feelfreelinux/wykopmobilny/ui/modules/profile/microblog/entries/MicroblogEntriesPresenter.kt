@@ -43,17 +43,14 @@ class MicroblogEntriesPresenter(
 
     override fun unvoteEntry(entry: Entry) {
         entriesInteractor.unvoteEntry(entry).processEntrySingle(entry)
-
     }
 
     override fun markFavorite(entry: Entry) {
         entriesInteractor.markFavorite(entry).processEntrySingle(entry)
-
     }
 
     override fun deleteEntry(entry: Entry) {
         entriesInteractor.deleteEntry(entry).processEntrySingle(entry)
-
     }
 
     override fun voteSurvey(entry: Entry, index: Int) {
@@ -65,11 +62,14 @@ class MicroblogEntriesPresenter(
         entriesApi.getEntryVoters(entry.id)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.showVoters(it)
-            }, {
-                view?.showErrorDialog(it)
-            })
+            .subscribe(
+                {
+                    view?.showVoters(it)
+                },
+                {
+                    view?.showErrorDialog(it)
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -77,11 +77,13 @@ class MicroblogEntriesPresenter(
         this
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateEntry(it) },
+            .subscribe(
+                { view?.updateEntry(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateEntry(entry)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

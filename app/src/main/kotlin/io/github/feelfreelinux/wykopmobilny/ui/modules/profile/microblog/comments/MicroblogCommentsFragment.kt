@@ -11,7 +11,8 @@ class MicroblogCommentsFragment : BaseEntryCommentFragment(), MicroblogCommentsV
         fun newInstance() = MicroblogCommentsFragment()
     }
 
-    @Inject lateinit var presenter: MicroblogCommentsPresenter
+    @Inject
+    lateinit var presenter: MicroblogCommentsPresenter
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
     private val username by lazy { (activity as ProfileActivity).username }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <ImageView
         android:id="@+id/linkIcon"
@@ -15,7 +16,8 @@
         android:src="?attr/relatedDrawable"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/iconTitle"
@@ -23,10 +25,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/add_new_link"
-        android:textSize="28dp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linkIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/linkIcon"
+        />
 
     <TextView
         android:id="@+id/description"
@@ -35,10 +38,11 @@
         android:layout_marginTop="8dp"
         android:text="Upewnij się że dodawana przez ciebie \ntreść jest oryginalna"
         android:textAlignment="center"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/iconTitle"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/link_url_layout"
@@ -50,7 +54,8 @@
         android:hint="@string/addlink_url_address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description">
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        >
 
         <EditText
             android:id="@+id/linkUrl"
@@ -58,7 +63,8 @@
             android:layout_height="wrap_content"
             android:inputType="textUri"
             android:singleLine="true"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -71,7 +77,8 @@
         android:text="Dodaj znalezisko"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -81,17 +88,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/progressBarTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Szukanie duplikatów"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@id/progressBar"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

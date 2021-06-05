@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView android:id="@+id/showHiddenTextView"
+<TextView
+    android:id="@+id/showHiddenTextView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/padding_dp_small"
@@ -9,4 +10,5 @@
     tools:text="Ukryty wpis od @feelfree"
     android:textSize="?attr/textSizeLarge"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" />
+    xmlns:tools="http://schemas.android.com/tools"
+    />

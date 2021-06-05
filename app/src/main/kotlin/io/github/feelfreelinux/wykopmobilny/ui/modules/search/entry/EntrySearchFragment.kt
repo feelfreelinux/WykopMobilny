@@ -1,10 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry
 
-
 import android.os.Bundle
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntriesFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.entries_fragment.*
@@ -16,8 +15,11 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
         fun newInstance() = EntrySearchFragment()
     }
 
-    @Inject lateinit var presenter: EntrySearchPresenter
-    @Inject lateinit var userManager: UserManagerApi
+    @Inject
+    lateinit var presenter: EntrySearchPresenter
+
+    @Inject
+    lateinit var userManager: UserManagerApi
 
     var query = ""
     lateinit var querySubscribe: Disposable
@@ -35,7 +37,6 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
         loadingView.isVisible = false
         showSearchEmptyView = true
-
     }
 
     override fun onDestroy() {

@@ -39,8 +39,10 @@ interface NavigatorApi {
 class Navigator : NavigatorApi {
 
     override fun openMainActivity(context: Activity, targetFragment: String?) {
-        context.startActivity(MainNavigationActivity.getIntent(context, targetFragment)
-            .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) })
+        context.startActivity(
+            MainNavigationActivity.getIntent(context, targetFragment)
+                .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) }
+        )
     }
 
     override fun openEntryDetailsActivity(context: Activity, entryId: Int, isRevealed: Boolean) =
@@ -68,7 +70,10 @@ class Navigator : NavigatorApi {
         context.startActivityForResult(EditEntryActivity.createIntent(context, body, entryId), BaseInputActivity.REQUEST_CODE)
 
     override fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int) =
-        context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.REQUEST_CODE)
+        context.startActivityForResult(
+            EditEntryCommentActivity.createIntent(context, body, entryId, commentId),
+            BaseInputActivity.REQUEST_CODE,
+        )
 
     override fun openBrowser(context: Activity, url: String) =
         context.openBrowser(url)

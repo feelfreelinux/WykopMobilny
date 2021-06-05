@@ -23,7 +23,8 @@ class SettingsActivity : BaseActivity() {
         fun createIntent(context: Context) = Intent(context, SettingsActivity::class.java)
     }
 
-    @Inject lateinit var navigatorApi: NewNavigatorApi
+    @Inject
+    lateinit var navigatorApi: NewNavigatorApi
 
     override val enableSwipeBackLayout: Boolean = true
     var shouldRestartMainScreen = false

@@ -19,8 +19,11 @@ class BlacklistTagsFragment : BaseFragment() {
         fun createFragment() = BlacklistTagsFragment()
     }
 
-    @Inject lateinit var adapter: BlacklistAdapter
-    @Inject lateinit var blacklistPreferences: BlacklistPreferences
+    @Inject
+    lateinit var adapter: BlacklistAdapter
+
+    @Inject
+    lateinit var blacklistPreferences: BlacklistPreferences
 
     private val disposable = CompositeDisposable()
 
@@ -49,9 +52,11 @@ class BlacklistTagsFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        disposable.add((activity as BlacklistActivity).updateDataSubject.subscribe {
-            updateData()
-        })
+        disposable.add(
+            (activity as BlacklistActivity).updateDataSubject.subscribe {
+                updateData()
+            }
+        )
     }
 
     override fun onDestroy() {

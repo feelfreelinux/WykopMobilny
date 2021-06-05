@@ -8,9 +8,9 @@ abstract class BaseFragment : DaggerFragment() {
     protected val supportFragmentManager by lazy { (activity as BaseActivity).supportFragmentManager }
 
     fun showErrorDialog(e: Throwable) {
-        val baseActivity = activity as? BaseActivity
-        if (activity != null && activity is BaseActivity && baseActivity!!.isRunning) {
-            activity?.showExceptionDialog(e)
+        val activity = activity
+        if (activity is BaseActivity && activity.isRunning) {
+            activity.showExceptionDialog(e)
         }
     }
 }

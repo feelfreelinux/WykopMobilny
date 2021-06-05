@@ -20,10 +20,13 @@ class RelatedWidgetPresenter(
         linksApi.relatedVoteUp(relatedId)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.setVoteCount(it.voteCount)
-                view?.markVoted()
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    view?.setVoteCount(it.voteCount)
+                    view?.markVoted()
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -31,10 +34,13 @@ class RelatedWidgetPresenter(
         linksApi.relatedVoteDown(relatedId)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.setVoteCount(it.voteCount)
-                view?.markUnvoted()
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    view?.setVoteCount(it.voteCount)
+                    view?.markUnvoted()
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 }

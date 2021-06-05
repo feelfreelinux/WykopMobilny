@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.autosuggest_item.view.*
 
 class UsersSuggestionsAdapter(
@@ -27,7 +27,9 @@ class UsersSuggestionsAdapter(
             val filterResults = FilterResults()
             if (constraint != null) {
                 val data = ArrayList<Author>()
-                if (constraint.matches("[\\w-]+".toRegex())) data.addAll(suggestionApi.getUserSuggestions(constraint.toString()).blockingGet())
+                if (constraint.matches("[\\w-]+".toRegex())) {
+                    data.addAll(suggestionApi.getUserSuggestions(constraint.toString()).blockingGet())
+                }
                 filterResults.values = data.toList()
                 filterResults.count = data.size
             }

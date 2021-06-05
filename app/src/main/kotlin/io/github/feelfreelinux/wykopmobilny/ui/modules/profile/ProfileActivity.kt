@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
@@ -19,7 +19,6 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.BadgeRes
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGenderStripResource
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.toDurationPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
@@ -42,10 +41,17 @@ class ProfileActivity : BaseActivity(), ProfileView {
             }
     }
 
-    @Inject lateinit var navigator: NewNavigatorApi
-    @Inject lateinit var presenter: ProfilePresenter
-    @Inject lateinit var userManagerApi: UserManagerApi
-    @Inject lateinit var patronsApi: PatronsApi
+    @Inject
+    lateinit var navigator: NewNavigatorApi
+
+    @Inject
+    lateinit var presenter: ProfilePresenter
+
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
+
+    @Inject
+    lateinit var patronsApi: PatronsApi
 
     val username by lazy { intent.getStringExtra(EXTRA_USERNAME)!! }
     override val enableSwipeBackLayout: Boolean = true

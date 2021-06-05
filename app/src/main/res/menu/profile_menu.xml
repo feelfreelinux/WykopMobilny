@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <item
         android:id="@+id/pw"
         android:visible="false"
         android:title="@string/private_message"
         android:icon="@drawable/ic_pw"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        />
 
     <item
         android:visible="false"
         android:id="@+id/observe_profile"
         android:title="@string/observe_user"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        />
 
     <item
         android:visible="false"
         android:id="@+id/unobserve_profile"
         android:title="@string/unobserve_user"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        />
 
     <item
         android:visible="false"
         android:id="@+id/block"
         android:title="@string/block_user"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        />
 
     <item
         android:visible="false"
         android:id="@+id/unblock"
         android:title="@string/unblock_user"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        />
 
     <item
         android:visible="false"
         android:id="@+id/report"
         android:title="@string/report"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        />
 
     <item
         android:visible="true"
         android:id="@+id/badges"
         android:title="@string/badges"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        />
 
 </menu>

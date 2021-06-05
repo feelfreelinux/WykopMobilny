@@ -3,22 +3,25 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.tag
 import android.content.res.Resources
 import android.util.SparseArray
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.entries.TagEntriesFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.links.TagLinksFragment
 
 class TagPagerAdapter(
-    val tag: String,
-    val resources: Resources,
-    fragmentManager: androidx.fragment.app.FragmentManager
-) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+    private val tag: String,
+    private val resources: Resources,
+    fragmentManager: FragmentManager
+) : FragmentPagerAdapter(fragmentManager) {
 
     val registeredFragments = SparseArray<androidx.fragment.app.Fragment>()
 
     override fun getItem(position: Int): androidx.fragment.app.Fragment {
-        return when (position) {
-            0 -> TagLinksFragment.newInstance(tag)
-            else -> TagEntriesFragment.newInstance(tag)
+        return if (position == 0) {
+            TagLinksFragment.newInstance(tag)
+        } else {
+            TagEntriesFragment.newInstance(tag)
         }
     }
 
@@ -35,11 +38,11 @@ class TagPagerAdapter(
         super.destroyItem(container, position, `object`)
     }
 
-    override fun getPageTitle(position: Int): CharSequence {
-        super.getPageTitle(position)
-        return when (position) {
-            0 -> resources.getString(R.string.links)
-            else -> resources.getString(R.string.entries)
+    override fun getPageTitle(position: Int) =
+        if (position == 0) {
+            R.string.links
+        } else {
+            R.string.entries
         }
-    }
+            .let(resources::getString)
 }

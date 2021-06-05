@@ -18,15 +18,16 @@ class UserTokenRefresher(
         t.flatMap {
             when (it) {
                 is WykopExceptionParser.WykopApiException -> {
-                    when {
-                        it.code == 11 || it.code == 12 -> getSaveUserSessionFlowable()
+                    when (it.code) {
+                        11, 12 -> getSaveUserSessionFlowable()
                         else -> Flowable.error(it)
                     }
                 }
                 is HttpException -> {
-                    when {
-                        it.code() == 401 -> getSaveUserSessionFlowable()
-                        else -> Flowable.error(it)
+                    if (it.code() == 401) {
+                        getSaveUserSessionFlowable()
+                    } else {
+                        Flowable.error(it)
                     }
                 }
                 else -> Flowable.error(it)

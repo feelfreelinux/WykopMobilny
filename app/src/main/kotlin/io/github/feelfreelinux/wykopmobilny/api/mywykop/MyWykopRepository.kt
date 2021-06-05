@@ -22,21 +22,21 @@ class MyWykopRepository(
     override fun getIndex(page: Int): Single<List<EntryLink>> =
         myWykopApi.getIndex(page)
             .retryWhen(userTokenRefresher)
-                .flatMap { patronsApi.ensurePatrons(it) }
-                .compose<List<EntryLinkResponse>>(ErrorHandlerTransformer())
-                .map { it.map { response -> EntryLinkMapper.map(response, owmContentFilter) } }
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<List<EntryLinkResponse>>(ErrorHandlerTransformer())
+            .map { it.map { response -> EntryLinkMapper.map(response, owmContentFilter) } }
 
     override fun byUsers(page: Int): Single<List<EntryLink>> =
         myWykopApi.byUsers(page)
             .retryWhen(userTokenRefresher)
-                .flatMap { patronsApi.ensurePatrons(it) }
-                .compose<List<EntryLinkResponse>>(ErrorHandlerTransformer())
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<List<EntryLinkResponse>>(ErrorHandlerTransformer())
             .map { it.map { response -> EntryLinkMapper.map(response, owmContentFilter) } }
 
     override fun byTags(page: Int): Single<List<EntryLink>> =
         myWykopApi.byTags(page)
             .retryWhen(userTokenRefresher)
-                .flatMap { patronsApi.ensurePatrons(it) }
-                .compose<List<EntryLinkResponse>>(ErrorHandlerTransformer())
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<List<EntryLinkResponse>>(ErrorHandlerTransformer())
             .map { it.map { response -> EntryLinkMapper.map(response, owmContentFilter) } }
 }

@@ -50,8 +50,8 @@ jobs:
         with:
           old-file-path: diffuse-source-file-release
           old-mapping-path: diffuse-mapping-file-release
-          # new-file-path: app/build/outputs/apk/release/app-release-unsigned.apk
-          # new-mapping-path: app/build/outputs/mapping/release/mapping.txt
+          new-file-path: app/build/outputs/apk/release/app-release-unsigned.apk
+          new-mapping-path: app/build/outputs/mapping/release/mapping.txt
 
       - uses: peter-evans/find-comment@v1
         id: find_comment

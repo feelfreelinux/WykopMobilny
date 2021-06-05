@@ -15,5 +15,4 @@ class ProfileLinkParser {
             } else possibleNickMatch
         }
     }
-
 }

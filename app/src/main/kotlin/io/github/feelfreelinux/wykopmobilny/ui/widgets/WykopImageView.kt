@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
@@ -13,11 +13,12 @@ import com.bumptech.glide.signature.ObjectKey
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
-import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 
 class WykopImageView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : ImageView(context, attrs, defStyleAttr) {
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : AppCompatImageView(context, attrs, defStyleAttr) {
 
     init {
         setOnClickListener { openImageListener() }
@@ -30,7 +31,7 @@ class WykopImageView @JvmOverloads constructor(
     var onResizedListener: (Boolean) -> Unit = {}
     var showResizeView: (Boolean) -> Unit = {}
 
-    private val settingsPreferencesApi by lazy { SettingsPreferences(context) as SettingsPreferencesApi }
+    private val settingsPreferencesApi by lazy { SettingsPreferences(context) }
     private val screenMetrics by lazy {
         val metrics = DisplayMetrics()
         getActivityContext()!!.windowManager.defaultDisplay.getMetrics(metrics)
@@ -58,10 +59,11 @@ class WykopImageView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val proportion =
-            (screenMetrics.heightPixels.toFloat() * (settingsPreferencesApi.cutImageProportion.toFloat() / 100)) / screenMetrics.widthPixels.toFloat()
-        val widthSpec =
-            MeasureSpec.getSize(if (settingsPreferencesApi.showMinifiedImages && !forceDisableMinimizedMode) widthMeasureSpec / 2 else widthMeasureSpec)
+        val targetHeightPercentage = settingsPreferencesApi.cutImageProportion.toFloat() / 100
+        val proportion = (screenMetrics.heightPixels.toFloat() * targetHeightPercentage) / screenMetrics.widthPixels.toFloat()
+        val widthSpec = MeasureSpec.getSize(
+            if (settingsPreferencesApi.showMinifiedImages && !forceDisableMinimizedMode) widthMeasureSpec / 2 else widthMeasureSpec
+        )
         if (drawable != null) {
             val measuredMultiplier = (drawable.intrinsicHeight.toFloat() / drawable.intrinsicWidth.toFloat())
             val heightSpec = widthSpec.toFloat() * measuredMultiplier

@@ -1,7 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.api.embed
 
 import io.github.feelfreelinux.wykopmobilny.api.REMOVE_USERKEY_HEADER
-import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopMobilnyUpdate
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Gfycat
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Streamable
@@ -23,12 +22,4 @@ interface ExternalRetrofitApi {
     @Headers("@: $REMOVE_USERKEY_HEADER")
     @GET("https://coub.com/api/v2/coubs/{coubId}")
     fun getCoub(@Path("coubId") coubId: String): Single<Coub>
-
-    @Headers("@: $REMOVE_USERKEY_HEADER")
-    @GET("https://api.github.com/repos/feelfreelinux/WykopMobilny/releases/latest")
-    fun checkUpdates(): Single<WykopMobilnyUpdate>
-
-    @Headers("@: $REMOVE_USERKEY_HEADER")
-    @GET("https://api.github.com/repos/feelfreelinux/WykopMobilnyWeekly/releases/latest")
-    fun checkWeeklyUpdates(): Single<WykopMobilnyUpdate>
 }

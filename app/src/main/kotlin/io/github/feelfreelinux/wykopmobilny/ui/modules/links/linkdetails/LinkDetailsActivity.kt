@@ -9,27 +9,31 @@ import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityLinkDetailsBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkDetailsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.activity_link_details.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
-    InputToolbarListener, LinkCommentViewListener {
+class LinkDetailsActivity :
+    BaseActivity(),
+    LinkDetailsView,
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
+    InputToolbarListener,
+    LinkCommentViewListener {
 
     companion object {
         const val EXTRA_LINK = "LINK_PARCEL"
@@ -48,18 +52,32 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
             }
     }
 
-    @Inject lateinit var userManagerApi: UserManagerApi
-    @Inject lateinit var settingsApi: SettingsPreferencesApi
-    @Inject lateinit var suggestionsApi: SuggestApi
-    @Inject lateinit var linkPreferences: LinksPreferencesApi
-    @Inject lateinit var adapter: LinkDetailsAdapter
-    @Inject lateinit var presenter: LinkDetailsPresenter
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
+
+    @Inject
+    lateinit var settingsApi: SettingsPreferencesApi
+
+    @Inject
+    lateinit var suggestionsApi: SuggestApi
+
+    @Inject
+    lateinit var linkPreferences: LinksPreferencesApi
+
+    @Inject
+    lateinit var adapter: LinkDetailsAdapter
+
+    @Inject
+    lateinit var presenter: LinkDetailsPresenter
+
+    private val binding by viewBinding(ActivityLinkDetailsBinding::inflate)
 
     lateinit var contentUri: Uri
     override val enableSwipeBackLayout: Boolean = true
     val linkId by lazy {
-        if (intent.hasExtra(EXTRA_LINK)) link.id else
+        if (intent.hasExtra(EXTRA_LINK)) link.id else {
             intent.getIntExtra(EXTRA_LINK_ID, -1)
+        }
     }
     private val link by lazy { intent.getParcelableExtra<Link>(EXTRA_LINK)!! }
     private var replyLinkId: Int = 0
@@ -73,7 +91,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
 
     override fun replyComment(comment: LinkComment) {
         replyLinkId = comment.id
-        inputToolbar.addAddressant(comment.author.nick)
+        binding.inputToolbar.addAddressant(comment.author.nick)
     }
 
     override fun setCollapsed(comment: LinkComment, isCollapsed: Boolean) {
@@ -90,14 +108,13 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
     }
 
     override fun getReplyCommentId(): Int {
-        return if (replyLinkId != 0 && inputToolbar.textBody.contains("@")) replyLinkId
+        return if (replyLinkId != 0 && binding.inputToolbar.textBody.contains("@")) replyLinkId
         else -1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_link_details)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         presenter.subscribe(this)
         adapter.linkCommentViewListener = this
         adapter.linkHeaderActionListener = presenter
@@ -106,10 +123,10 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
             title = null
             setDisplayHomeAsUpEnabled(true)
         }
-        toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_sort)
+        binding.toolbar.toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_sort)
 
         // Prepare RecyclerView
-        recyclerView?.apply {
+        binding.recyclerView.apply {
             prepare()
             // Set margin, adapter
             this.adapter = this@LinkDetailsActivity.adapter
@@ -123,14 +140,14 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         adapter.highlightCommentId = linkCommentId
 
         // Prepare InputToolbar
-        inputToolbar.setup(userManagerApi, suggestionsApi)
-        inputToolbar.inputToolbarListener = this
+        binding.inputToolbar.setup(userManagerApi, suggestionsApi)
+        binding.inputToolbar.inputToolbarListener = this
 
-        swiperefresh.setOnRefreshListener(this)
+        binding.swiperefresh.setOnRefreshListener(this)
 
         presenter.sortBy = linkPreferences.linkCommentsDefaultSort ?: "best"
         adapter.notifyDataSetChanged()
-        loadingView?.isVisible = true
+        binding.loadingView.isVisible = true
         hideInputToolbar()
         if (adapter.link != null) {
             presenter.loadComments()
@@ -139,12 +156,11 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
             presenter.loadLinkAndComments()
         }
 
-
         setSubtitle()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater?.inflate(R.menu.link_details_menu, menu)
+        menuInflater.inflate(R.menu.link_details_menu, menu)
         return true
     }
 
@@ -166,14 +182,14 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
                 linkPreferences.linkCommentsDefaultSort = "best"
                 setSubtitle()
                 presenter.loadComments()
-                swiperefresh?.isRefreshing = true
+                binding.swiperefresh.isRefreshing = true
             }
             R.id.sortbyNewest -> {
                 presenter.sortBy = "new"
                 linkPreferences.linkCommentsDefaultSort = "new"
                 setSubtitle()
                 presenter.loadComments()
-                swiperefresh?.isRefreshing = true
+                binding.swiperefresh.isRefreshing = true
             }
 
             R.id.sortbyOldest -> {
@@ -181,7 +197,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
                 linkPreferences.linkCommentsDefaultSort = "old"
                 setSubtitle()
                 presenter.loadComments()
-                swiperefresh?.isRefreshing = true
+                binding.swiperefresh.isRefreshing = true
             }
 
             android.R.id.home -> finish()
@@ -207,10 +223,10 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
                 }
             }
         }
-        loadingView?.isVisible = false
-        swiperefresh?.isRefreshing = false
+        binding.loadingView.isVisible = false
+        binding.swiperefresh.isRefreshing = false
         adapter.notifyDataSetChanged()
-        inputToolbar.show()
+        binding.inputToolbar.show()
         if (linkCommentId != -1 && adapter.link != null) {
             if (settingsApi.hideLinkCommentsByDefault) {
                 expandAndScrollToComment(linkCommentId)
@@ -236,21 +252,21 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         var index = 0
         for (i in 0 until comments.size) {
             if (!comments[i].isParentCollapsed) index++
-            if (comments[i].id ==  linkCommentId) break
+            if (comments[i].id == linkCommentId) break
         }
 
-        recyclerView?.scrollToPosition(index + 1)
+        binding.recyclerView.scrollToPosition(index + 1)
     }
 
     override fun scrollToComment(id: Int) {
         val index = adapter.link!!.comments.indexOfFirst { it.id == id }
-        recyclerView?.scrollToPosition(index + 1)
+        binding.recyclerView.scrollToPosition(index + 1)
     }
 
     override fun updateLink(link: Link) {
         link.comments = adapter.link?.comments ?: mutableListOf()
         adapter.updateLinkHeader(link)
-        inputToolbar.show()
+        binding.inputToolbar.show()
     }
 
     override fun openGalleryImageChooser() {
@@ -260,8 +276,9 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         startActivityForResult(
             Intent.createChooser(
                 intent,
-                getString(R.string.insert_photo_galery)
-            ), BaseInputActivity.USER_ACTION_INSERT_PHOTO
+                getString(R.string.insert_photo_galery),
+            ),
+            BaseInputActivity.USER_ACTION_INSERT_PHOTO,
         )
     }
 
@@ -274,16 +291,16 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
     }
 
     override fun hideInputToolbar() {
-        inputToolbar.hide()
+        binding.inputToolbar.hide()
     }
 
     override fun hideInputbarProgress() {
-        inputToolbar.showProgress(false)
+        binding.inputToolbar.showProgress(false)
     }
 
     override fun resetInputbarState() {
         hideInputbarProgress()
-        inputToolbar.resetState()
+        binding.inputToolbar.resetState()
         replyLinkId = 0
     }
 
@@ -292,7 +309,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 BaseInputActivity.USER_ACTION_INSERT_PHOTO -> {
-                    inputToolbar.setPhoto(data?.data)
+                    binding.inputToolbar.setPhoto(data?.data)
                 }
 
                 BaseInputActivity.REQUEST_CODE -> {
@@ -300,7 +317,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
                 }
 
                 BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA -> {
-                    inputToolbar.setPhoto(contentUri)
+                    binding.inputToolbar.setPhoto(contentUri)
                 }
 
                 BaseInputActivity.EDIT_LINK_COMMENT -> {

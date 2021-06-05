@@ -27,10 +27,13 @@ class ActionsFragmentPresenter(
         profileApi.getActions(username)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.addItems(it, true)
-                view?.disableLoading()
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    view?.addItems(it, true)
+                    view?.disableLoading()
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -54,11 +57,14 @@ class ActionsFragmentPresenter(
         entriesApi.getEntryVoters(entry.id)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.showVoters(it)
-            }, {
-                view?.showErrorDialog(it)
-            })
+            .subscribe(
+                {
+                    view?.showVoters(it)
+                },
+                {
+                    view?.showErrorDialog(it)
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -72,11 +78,13 @@ class ActionsFragmentPresenter(
         this
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateEntry(it) },
+            .subscribe(
+                { view?.updateEntry(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateEntry(entry)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -84,11 +92,13 @@ class ActionsFragmentPresenter(
         this
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateLink(it) },
+            .subscribe(
+                { view?.updateLink(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateLink(link)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.utils
 import android.util.Log
 import io.github.feelfreelinux.wykopmobilny.BuildConfig
 
-
 public var APP_TAG = "WykopAPI"
 
 fun printout(msg: String) {

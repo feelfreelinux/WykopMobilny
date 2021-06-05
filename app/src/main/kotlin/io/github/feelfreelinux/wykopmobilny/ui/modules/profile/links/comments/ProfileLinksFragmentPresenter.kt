@@ -51,11 +51,13 @@ class ProfileLinksFragmentPresenter(
         this
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateComment(it) },
+            .subscribe(
+                { view?.updateComment(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateComment(link)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

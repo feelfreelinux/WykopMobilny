@@ -4,7 +4,6 @@ import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AuthorResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkCommentResponse
-import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
 class LinkCommentMapper {
     companion object {

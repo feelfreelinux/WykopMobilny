@@ -6,13 +6,15 @@
     tools:parentTag="androidx.cardview.widget.CardView"
     style="@style/EntryCommentsCardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
-        android:focusable="false">
+        android:focusable="false"
+        >
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
             android:id="@+id/authorHeaderView"
@@ -25,7 +27,8 @@
             android:focusable="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/title"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
 
         <TextView
             android:id="@+id/userNameTextView"
@@ -39,7 +42,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/lineTop"
-            tools:text="feelfree"/>
+            tools:text="feelfree"
+            />
 
         <View
             android:id="@+id/lineTop"
@@ -48,7 +52,8 @@
             android:background="?attr/lineColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/authorHeaderView"/>
+            app:layout_constraintTop_toBottomOf="@+id/authorHeaderView"
+            />
 
         <TextView
             android:id="@+id/title"
@@ -62,7 +67,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lineTop"
-            tools:text="Przykładowy opis strzelaniny w rosji"/>
+            tools:text="Przykładowy opis strzelaniny w rosji"
+            />
 
         <TextView
             android:id="@+id/urlTextView"
@@ -76,7 +82,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title"
-            tools:text="https://www.wykop.pl/wykopalisko/aktywne/"/>
+            tools:text="https://www.wykop.pl/wykopalisko/aktywne/"
+            />
 
         <View
             android:id="@+id/lineBottom"
@@ -85,7 +92,8 @@
             android:background="?attr/lineColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/urlTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/urlTextView"
+            />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/buttonsToolbar"
@@ -95,7 +103,8 @@
             android:paddingRight="@dimen/comment_layout_button_padding_horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lineBottom">
+            app:layout_constraintTop_toBottomOf="@id/lineBottom"
+            >
 
             <TextView
                 android:id="@+id/shareTextView"
@@ -104,7 +113,8 @@
                 android:background="?attr/voteButtonStatelist"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
             <TextView
                 android:id="@+id/reportTextView"
@@ -114,7 +124,8 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@id/shareTextView"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
             <TextView
                 android:id="@+id/voteCountTextView"
@@ -122,7 +133,8 @@
                 app:layout_constraintEnd_toStartOf="@id/plusButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="+16"/>
+                tools:text="+16"
+                />
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
                 android:id="@+id/plusButton"
@@ -131,7 +143,8 @@
                 android:drawablePadding="0dp"
                 app:layout_constraintEnd_toStartOf="@id/minusButton"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
                 android:id="@+id/minusButton"
@@ -140,7 +153,8 @@
                 android:drawablePadding="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

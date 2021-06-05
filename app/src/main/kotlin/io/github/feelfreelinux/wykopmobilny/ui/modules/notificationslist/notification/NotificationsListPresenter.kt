@@ -18,12 +18,15 @@ class NotificationsListPresenter(
         notificationsApi.getNotifications(page)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                if (it.isNotEmpty()) {
-                    page++
-                    view?.addNotifications(it, shouldRefresh)
-                } else view?.disableLoading()
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addNotifications(it, shouldRefresh)
+                    } else view?.disableLoading()
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 

@@ -7,7 +7,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/itemBackgroundColorStatelist"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    >
 
     <TextView
         android:id="@+id/notificationTag"
@@ -15,15 +16,16 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        android:paddingLeft="@dimen/padding_dp_huge"
-        android:paddingTop="@dimen/padding_dp_small"
-        android:paddingRight="@dimen/padding_dp_small"
-        android:paddingBottom="@dimen/padding_dp_small"
+        android:paddingVertical="@dimen/padding_dp_small"
+        android:paddingStart="@dimen/padding_dp_huge"
+        android:paddingEnd="@dimen/padding_dp_small"
         android:textSize="?attr/textSizeHuge"
         app:layout_constraintEnd_toStartOf="@+id/notificationCount"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="#otwartywykopmobilny" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="#otwartywykopmobilny"
+        />
 
     <TextView
         android:id="@+id/notificationCount"
@@ -38,17 +40,20 @@
         android:textColor="#00a645"
         android:textSize="?attr/textSizeHuge"
         app:layout_constraintEnd_toStartOf="@+id/collapseButtonImageView"
-        tools:text="213" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="213"
+        />
 
     <ImageView
         android:id="@+id/collapseButtonImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/padding_dp_tiny"
         android:paddingLeft="@dimen/margin_dp_small"
         android:paddingRight="@dimen/margin_dp_small"
+        android:paddingBottom="@dimen/padding_dp_tiny"
         android:src="?attr/collapseDrawable"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

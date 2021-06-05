@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityAddlinkBinding
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.NewLinkResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.confirmdetails.AddLinkDetailsFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.duplicateslist.AddLinkDuplicatesListFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.urlinput.AddlinkUrlInputFragment
-import kotlinx.android.synthetic.main.toolbar.*
 
 class AddlinkActivity : BaseActivity() {
 
@@ -22,8 +22,8 @@ class AddlinkActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_addlink)
-        setSupportActionBar(toolbar)
+        val binding = ActivityAddlinkBinding.inflate(layoutInflater)
+        setSupportActionBar(binding.toolbar.toolbar)
         supportActionBar?.title = getString(R.string.add_new_link)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         var url = ""

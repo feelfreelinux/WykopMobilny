@@ -5,7 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.view.ViewCompat
 
-@Suppress("unused") // Used in XML layout files
+// Used in XML layout files
+@Suppress("unused")
 class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) :
     com.google.android.material.floatingactionbutton.FloatingActionButton.Behavior(context, attrs) {
 

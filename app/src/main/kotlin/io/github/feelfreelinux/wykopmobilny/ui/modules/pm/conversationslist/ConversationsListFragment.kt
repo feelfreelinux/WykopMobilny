@@ -4,19 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ConversationsListAdapter
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
 
-class ConversationsListFragment : BaseFragment(), ConversationsListView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class ConversationsListFragment : BaseFragment(), ConversationsListView, SwipeRefreshLayout.OnRefreshListener {
 
-    @Inject lateinit var presenter: ConversationsListPresenter
+    @Inject
+    lateinit var presenter: ConversationsListPresenter
     private val conversationsAdapter by lazy { ConversationsListAdapter() }
 
     companion object {
@@ -40,7 +42,7 @@ class ConversationsListFragment : BaseFragment(), ConversationsListView, android
         swiperefresh?.isRefreshing = false
         presenter.subscribe(this)
 
-        loadingView?.isVisible = true
+        loadingView.isVisible = true
         onRefresh()
     }
 

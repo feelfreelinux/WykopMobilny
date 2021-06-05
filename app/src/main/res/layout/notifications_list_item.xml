@@ -6,7 +6,8 @@
     android:id="@+id/notificationItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/itemBackgroundColorStatelist">
+    android:background="?attr/itemBackgroundColorStatelist"
+    >
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/avatarView"
@@ -16,7 +17,8 @@
         android:paddingBottom="@dimen/padding_dp_large"
         android:paddingLeft="@dimen/padding_dp_large"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
     <TextView
         android:id="@+id/body"
@@ -29,7 +31,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/avatarView"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="feelfee wysłał Ci prywatną wiadomość." />
+        tools:text="feelfee wysłał Ci prywatną wiadomość."
+        />
 
     <TextView
         android:id="@+id/date"
@@ -42,7 +45,8 @@
         app:layout_constraintTop_toBottomOf="@id/body"
         app:layout_constraintLeft_toRightOf="@id/unreadDotMark"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="14 min. temu" />
+        tools:text="14 min. temu"
+        />
 
     <TextView
         android:id="@+id/unreadMark"
@@ -52,7 +56,8 @@
         android:textSize="?attr/textSizeTiny"
         android:text="Nowe"
         app:layout_constraintTop_toBottomOf="@id/body"
-        app:layout_constraintLeft_toLeftOf="@id/body" />
+        app:layout_constraintLeft_toLeftOf="@id/body"
+        />
 
     <TextView
         android:id="@+id/unreadDotMark"
@@ -64,7 +69,8 @@
         android:text="•"
         android:textColor="?attr/textColorLight"
         app:layout_constraintTop_toBottomOf="@id/body"
-        app:layout_constraintLeft_toRightOf="@id/unreadMark" />
+        app:layout_constraintLeft_toRightOf="@id/unreadMark"
+        />
 
     <View
         android:id="@+id/unreadLine"
@@ -73,6 +79,7 @@
         android:background="#00a645"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

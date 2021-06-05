@@ -9,10 +9,12 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 
 class ShortcutsDispatcher {
 
-    fun dispatchIntent(intent: Intent,
-                       startFragment: (fragment: Fragment) -> (Unit),
-                       startActivity: () -> (Unit),
-                       isUserAuthorized: Boolean) {
+    fun dispatchIntent(
+        intent: Intent,
+        startFragment: (fragment: Fragment) -> (Unit),
+        startActivity: () -> (Unit),
+        isUserAuthorized: Boolean
+    ) {
         when (intent.action) {
             HotFragment::class.java.canonicalName -> startFragment.invoke(HotFragment.newInstance())
             SearchFragment::class.java.canonicalName -> startFragment.invoke(SearchFragment.newInstance())

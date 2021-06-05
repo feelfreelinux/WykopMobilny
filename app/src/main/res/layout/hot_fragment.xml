@@ -3,13 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-<fragment
-    android:id="@+id/entriesFragment"
-    android:name="io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout="@layout/entries_fragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
-</fragment>
+    <fragment
+        android:id="@+id/entriesFragment"
+        android:name="io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/entries_fragment"
+        >
+
+    </fragment>
 </FrameLayout>

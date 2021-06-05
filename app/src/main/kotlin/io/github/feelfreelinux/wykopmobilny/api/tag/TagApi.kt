@@ -15,5 +15,4 @@ interface TagApi {
     fun block(tag: String): Single<ObserveStateResponse>
     fun unblock(tag: String): Single<ObserveStateResponse>
     fun getObservedTags(): Single<List<ObservedTagResponse>>
-
 }

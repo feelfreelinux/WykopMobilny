@@ -2,10 +2,14 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.graphics.Color
 import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.EntryListItemBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.EntryMenuBottomsheetBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
@@ -14,7 +18,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
 import io.github.feelfreelinux.wykopmobilny.utils.copyText
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
@@ -22,20 +26,18 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.entry_list_item.*
-import kotlinx.android.synthetic.main.entry_menu_bottomsheet.view.*
 
 typealias EntryListener = (Entry) -> Unit
 
 class EntryViewHolder(
-    override val containerView: View,
+    private val binding: EntryListItemBinding,
     private val userManagerApi: UserManagerApi,
     private val settingsPreferencesApi: SettingsPreferencesApi,
     private val navigatorApi: NewNavigatorApi,
     private val linkHandlerApi: WykopLinkHandlerApi,
     private val entryActionListener: EntryActionListener,
     private val replyListener: EntryListener?
-) : RecyclableViewHolder(containerView), LayoutContainer {
+) : RecyclableViewHolder(binding.root), LayoutContainer {
 
     companion object {
         const val TYPE_SURVEY = 4
@@ -58,19 +60,19 @@ class EntryViewHolder(
             replyListener: EntryListener?
         ): EntryViewHolder {
             val view = EntryViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.entry_list_item, parent, false),
+                EntryListItemBinding.inflate(parent.layoutInflater, parent, false),
                 userManagerApi,
                 settingsPreferencesApi,
                 navigatorApi,
                 linkHandlerApi,
                 entryActionListener,
-                replyListener
+                replyListener,
             )
 
             view.containerView.tag = if (replyListener == null) {
-                RecyclableViewHolder.SEPARATOR_SMALL
+                SEPARATOR_SMALL
             } else {
-                RecyclableViewHolder.SEPARATOR_NORMAL
+                SEPARATOR_NORMAL
             }
 
             view.type = viewType
@@ -87,17 +89,19 @@ class EntryViewHolder(
         }
 
         fun getViewTypeForEntry(entry: Entry): Int {
-            return if (entry.isBlocked) EntryViewHolder.TYPE_BLOCKED
-            else if (entry.embed != null && entry.survey != null) EntryViewHolder.TYPE_EMBED_SURVEY
-            else if (entry.embed == null && entry.survey != null) EntryViewHolder.TYPE_SURVEY
-            else if (entry.embed != null && entry.survey == null) EntryViewHolder.TYPE_EMBED
-            else EntryViewHolder.TYPE_NORMAL
+            return if (entry.isBlocked) TYPE_BLOCKED
+            else if (entry.embed != null && entry.survey != null) TYPE_EMBED_SURVEY
+            else if (entry.embed == null && entry.survey != null) TYPE_SURVEY
+            else if (entry.embed != null && entry.survey == null) TYPE_EMBED
+            else TYPE_NORMAL
         }
     }
 
+    override val containerView = binding.root
+
     var type: Int = TYPE_NORMAL
     lateinit var embedView: WykopEmbedView
-    lateinit var surveyView: SurveyWidget
+    private lateinit var surveyView: SurveyWidget
     private val enableClickListener: Boolean
         get() = replyListener == null
 
@@ -108,16 +112,16 @@ class EntryViewHolder(
     }
 
     private fun setupHeader(entry: Entry) {
-        authorHeaderView.setAuthorData(entry.author, entry.date, entry.app)
+        binding.authorHeaderView.setAuthorData(entry.author, entry.date, entry.app)
     }
 
     private fun setupButtons(entry: Entry) {
-        moreOptionsTextView.setOnClickListener {
+        binding.moreOptionsTextView.setOnClickListener {
             openOptionsMenu(entry)
         }
 
         // Show comments count
-        with(commentsCountTextView) {
+        with(binding.commentsCountTextView) {
             text = entry.commentsCount.toString()
             setOnClickListener {
                 handleClick(entry)
@@ -125,15 +129,16 @@ class EntryViewHolder(
         }
 
         // Only show reply view in entry details
-        replyTextView.isVisible = replyListener != null && userManagerApi.isUserAuthorized() && entry.isCommentingPossible
-        replyTextView.setOnClickListener { replyListener?.invoke(entry) }
+        binding.replyTextView.isVisible =
+            replyListener != null && userManagerApi.isUserAuthorized() && entry.isCommentingPossible
+        binding.replyTextView.setOnClickListener { replyListener?.invoke(entry) }
 
         containerView.setOnClickListener {
             handleClick(entry)
         }
 
         // Setup vote button
-        with(voteButton) {
+        with(binding.voteButton) {
             isEnabled = true
             isButtonSelected = entry.isVoted
             voteCount = entry.voteCount
@@ -147,7 +152,7 @@ class EntryViewHolder(
         }
 
         // Setup favorite button
-        with(favoriteButton) {
+        with(binding.favoriteButton) {
             isVisible = userManagerApi.isUserAuthorized()
             isFavorite = entry.isFavorite
             setOnClickListener {
@@ -156,16 +161,15 @@ class EntryViewHolder(
         }
 
         // Setup share button
-        shareTextView.setOnClickListener {
+        binding.shareTextView.setOnClickListener {
             navigatorApi.shareUrl(entry.url)
         }
-
     }
 
     private fun setupBody(entry: Entry) {
         // Add URL and click handler if body is not empty
         if (entry.body.isNotEmpty()) {
-            with(entryContentTextView) {
+            with(binding.entryContentTextView) {
                 isVisible = true
                 if (replyListener == null && settingsPreferencesApi.cutLongEntries && entry.collapsed) {
                     maxLines = EllipsizingTextView.MAX_LINES
@@ -173,18 +177,22 @@ class EntryViewHolder(
                 }
 
                 // Setup unEllipsize listener, handle clicks
-                prepareBody(entry.body, { linkHandlerApi.handleUrl(it) }, {
-                    if (enableClickListener && !isEllipsized) {
-                        handleClick(entry)
-                    } else if (enableClickListener) {
-                        entry.collapsed = false
-                        maxLines = Int.MAX_VALUE
-                        ellipsize = null
-                    }
-                }, settingsPreferencesApi.openSpoilersDialog)
+                prepareBody(
+                    entry.body, { linkHandlerApi.handleUrl(it) },
+                    {
+                        if (enableClickListener && !isEllipsized) {
+                            handleClick(entry)
+                        } else if (enableClickListener) {
+                            entry.collapsed = false
+                            maxLines = Int.MAX_VALUE
+                            ellipsize = null
+                        }
+                    },
+                    settingsPreferencesApi.openSpoilersDialog
+                )
             }
         } else {
-            entryContentTextView.isVisible = false
+            binding.entryContentTextView.isVisible = false
         }
 
         containerView.setOnClickListener { handleClick(entry) }
@@ -202,64 +210,68 @@ class EntryViewHolder(
                 surveyView.setSurvey(entry.survey!!, userManagerApi)
             }
         }
-
     }
 
     private fun openOptionsMenu(entry: Entry) {
         val activityContext = containerView.getActivityContext()!!
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
-        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_menu_bottomsheet, null)
-        dialog.setContentView(bottomSheetView)
-        (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = EntryMenuBottomsheetBinding.inflate(activityContext.layoutInflater)
+        dialog.setContentView(bottomSheetView.root)
+        (bottomSheetView.root.parent as View).setBackgroundColor(Color.TRANSPARENT)
         bottomSheetView.apply {
             author.text = entry.author.nick
             date.text = entry.fullDate
             entry.app?.let {
-                date.text = context.getString(R.string.date_with_user_app, entry.fullDate, entry.app)
+                date.text = activityContext.getString(
+                    R.string.date_with_user_app,
+                    entry.fullDate,
+                    entry.app
+                )
             }
 
-            entry_menu_copy.setOnClickListener {
-                context.copyText(entry.body.stripWykopFormatting(), "entry-body")
+            entryMenuCopy.setOnClickListener {
+                it.context.copyText(entry.body.stripWykopFormatting(), "entry-body")
                 dialog.dismiss()
             }
 
-            entry_menu_copy_entry_url.setOnClickListener {
-                context.copyText(entry.url, "entry-url")
+            entryMenuCopyEntryUrl.setOnClickListener {
+                it.context.copyText(entry.url, "entry-url")
                 dialog.dismiss()
             }
 
-            entry_menu_edit.setOnClickListener {
+            entryMenuEdit.setOnClickListener {
                 navigatorApi.openEditEntryActivity(entry.body, entry.id)
                 dialog.dismiss()
             }
 
-            entry_menu_delete.setOnClickListener {
-                confirmationDialog(getActivityContext()!!) {
+            entryMenuDelete.setOnClickListener {
+                confirmationDialog(it.context) {
                     entryActionListener.deleteEntry(entry)
                 }.show()
                 dialog.dismiss()
             }
 
-            entry_menu_report.setOnClickListener {
+            entryMenuReport.setOnClickListener {
                 navigatorApi.openReportScreen(entry.violationUrl)
                 dialog.dismiss()
             }
 
-            entry_menu_voters.setOnClickListener {
+            entryMenuVoters.setOnClickListener {
                 entryActionListener.getVoters(entry)
                 dialog.dismiss()
             }
 
-            entry_menu_report.isVisible = userManagerApi.isUserAuthorized()
+            entryMenuReport.isVisible = userManagerApi.isUserAuthorized()
 
-            val canUserEdit = userManagerApi.isUserAuthorized() && entry.author.nick == userManagerApi.getUserCredentials()!!.login
-            entry_menu_delete.isVisible = canUserEdit
-            entry_menu_edit.isVisible = canUserEdit
+            val canUserEdit =
+                userManagerApi.isUserAuthorized() && entry.author.nick == userManagerApi.getUserCredentials()!!.login
+            entryMenuDelete.isVisible = canUserEdit
+            entryMenuEdit.isVisible = canUserEdit
         }
 
-        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.root.parent as View)
         dialog.setOnShowListener {
-            mBehavior.peekHeight = bottomSheetView.height
+            mBehavior.peekHeight = bottomSheetView.root.height
         }
         dialog.show()
     }
@@ -271,10 +283,10 @@ class EntryViewHolder(
     }
 
     fun inflateEmbed() {
-        embedView = entryImageViewStub.inflate() as WykopEmbedView
+        embedView = binding.entryImageViewStub.inflate() as WykopEmbedView
     }
 
     fun inflateSurvey() {
-        surveyView = surveyStub.inflate() as SurveyWidget
+        surveyView = binding.surveyStub.inflate() as SurveyWidget
     }
 }

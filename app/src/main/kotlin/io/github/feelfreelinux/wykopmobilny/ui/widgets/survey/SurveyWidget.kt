@@ -4,21 +4,26 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.children
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.SurveyAnswerItemBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.SurveyListviewBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Answer
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.survey_answer_item.view.*
-import kotlinx.android.synthetic.main.survey_listview.view.*
 
 class SurveyWidget @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : androidx.constraintlayout.widget.ConstraintLayout(context, attrs, defStyleAttr) {
 
+    private val binding = SurveyListviewBinding.inflate(layoutInflater, this)
+
     init {
-        View.inflate(context, R.layout.survey_listview, this)
-        isVisible = false
+        this.isVisible = false
     }
 
     private lateinit var userManager: UserManagerApi
@@ -29,43 +34,44 @@ class SurveyWidget @JvmOverloads constructor(
         isVisible = true
         deselectRadioExcept(-1)
         surveyData = survey
-        surveyQuestion.text = survey.question
+        binding.surveyQuestion.text = survey.question
         userManager = userManagerApi
-        answerItems.removeAllViews()
+        binding.answerItems.removeAllViews()
 
         survey.answers.forEach {
-            val answerView = View.inflate(context, R.layout.survey_answer_item, null)
+            val answerView = SurveyAnswerItemBinding.inflate(layoutInflater, null, false)
             answerView.answer.text = it.answer
-            answerItems.addView(createAnswerView(it))
+            binding.answerItems.addView(createAnswerView(it))
         }
 
-        survey.userAnswer?.apply {
-            val answerCheck = answerItems.getChildAt(this - 1).radioButton
-            answerCheck.isChecked = true
+        survey.userAnswer?.let { selected ->
+            val answerCheck = binding.answerItems.getChildAt(selected - 1).let(SurveyAnswerItemBinding::bind)
+            answerCheck.radioButton.isChecked = true
             // Disable click
-            (0 until answerItems.childCount)
-                .map { answerItems.getChildAt(it).radioButton }
-                .forEach { it.isClickable = false }
+            binding.answerItems.children
+                .map(SurveyAnswerItemBinding::bind)
+                .forEach { it.radioButton.isClickable = false }
         }
         setupButtons()
     }
 
     private fun createAnswerView(answerData: Answer): View {
-        val answerView = View.inflate(context, R.layout.survey_answer_item, null)
+        val answerView = SurveyAnswerItemBinding.inflate(layoutInflater, null, false)
         answerView.apply {
             answer.text = answerData.answer
-            val llp = percentage_view.layoutParams as LinearLayout.LayoutParams
+            val llp = percentageView.layoutParams as LinearLayout.LayoutParams
             votesCount.text = resources.getString(R.string.votePercentageCount, answerData.percentage.toInt(), answerData.count)
             llp.weight = answerData.percentage.toFloat()
-            percentage_view.layoutParams = llp
+            percentageView.layoutParams = llp
             radioButton.isVisible = userManager.isUserAuthorized()
         }
-        return answerView
+        return answerView.root
     }
 
     private fun setupButtons() {
-        (0 until answerItems.childCount)
-            .map { answerItems.getChildAt(it).radioButton }
+        binding.answerItems.children
+            .map(SurveyAnswerItemBinding::bind)
+            .map { it.radioButton }
             .forEachIndexed { index, button ->
                 button.setOnCheckedChangeListener { _, checked ->
                     if (checked) {
@@ -77,10 +83,10 @@ class SurveyWidget @JvmOverloads constructor(
     }
 
     private fun deselectRadioExcept(index: Int) {
-        (0 until answerItems.childCount)
-            .filter { it != index }
-            .map { answerItems.getChildAt(it).radioButton }
+        binding.answerItems.children
+            .filterIndexed { itemIndex, _ -> itemIndex != index }
+            .map(SurveyAnswerItemBinding::bind)
+            .map { it.radioButton }
             .forEach { it.isChecked = false }
     }
-
 }

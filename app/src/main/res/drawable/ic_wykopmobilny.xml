@@ -4,7 +4,8 @@
     android:height="24dp"
     android:viewportHeight="238.12502"
     android:viewportWidth="270.93332"
-    android:width="24dp">
+    android:width="24dp"
+    >
 
     <path
         android:fillAlpha="1"
@@ -14,7 +15,8 @@
         android:strokeColor="#00000000"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:strokeWidth="13.84788227"/>
+        android:strokeWidth="13.84788227"
+        />
 
     <path
         android:fillAlpha="1"
@@ -24,6 +26,7 @@
         android:strokeColor="#00000000"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:strokeWidth="13.84788227"/>
+        android:strokeWidth="13.84788227"
+        />
 
 </vector>

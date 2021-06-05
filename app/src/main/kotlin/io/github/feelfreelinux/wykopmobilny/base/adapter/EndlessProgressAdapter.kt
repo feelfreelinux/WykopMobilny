@@ -1,13 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.base.adapter
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import io.github.feelfreelinux.wykopmobilny.R
+import androidx.recyclerview.widget.RecyclerView
+import io.github.feelfreelinux.wykopmobilny.databinding.ProgressItemBinding
 import io.github.feelfreelinux.wykopmobilny.ui.helpers.EndlessScrollListener
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 
-abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerView.ViewHolder, A : Any> :
-    androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val ITEM_PROGRESS = 0
@@ -27,15 +27,17 @@ abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerV
     override fun getItemId(position: Int) = dataset[position]?.hashCode()?.toLong() ?: position.toLong()
 
     // Attach EndlessScrollListener
-    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         if (recyclerView.layoutManager is androidx.recyclerview.widget.LinearLayoutManager) {
-            recyclerView.addOnScrollListener(EndlessScrollListener(recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager) {
-                if (dataset.isNotEmpty() && dataset.last() == null) {
-                    if (!isLoading) loadNewDataListener()
-                    isLoading = true
+            recyclerView.addOnScrollListener(
+                EndlessScrollListener(recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager) {
+                    if (dataset.isNotEmpty() && dataset.last() == null) {
+                        if (!isLoading) loadNewDataListener()
+                        isLoading = true
+                    }
                 }
-            })
+            )
         }
     }
 
@@ -73,19 +75,23 @@ abstract class EndlessProgressAdapter<T : androidx.recyclerview.widget.RecyclerV
     abstract fun getViewType(position: Int): Int
 
     override fun getItemViewType(position: Int): Int =
-        if (dataset[position] == null) ITEM_PROGRESS
-        else getViewType(position)
+        if (dataset[position] == null) {
+            ITEM_PROGRESS
+        } else {
+            getViewType(position)
+        }
 
     @Suppress("UNCHECKED_CAST")
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (dataset[position] != null) bindHolder(holder as T, position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        when (viewType) {
-            ITEM_PROGRESS -> ProgressViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.progress_item, parent, false))
-            else -> constructViewHolder(parent, viewType)
+        if (viewType == ITEM_PROGRESS) {
+            ProgressViewHolder(ProgressItemBinding.inflate(parent.layoutInflater, parent, false))
+        } else {
+            createViewHolder(parent, viewType)
         }
 
-    class ProgressViewHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
+    class ProgressViewHolder(val binding: ProgressItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

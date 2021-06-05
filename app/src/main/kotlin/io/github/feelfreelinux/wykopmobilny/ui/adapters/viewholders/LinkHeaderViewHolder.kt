@@ -1,9 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.LinkBuryMenuBottomsheetBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.LinkDetailsHeaderLayoutBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.LinkMenuBottomsheetBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.link.LinkHeaderActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.link.LinkInteractor
@@ -11,25 +16,22 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.link_bury_menu_bottomsheet.view.*
-import kotlinx.android.synthetic.main.link_details_header_layout.*
-import kotlinx.android.synthetic.main.link_menu_bottomsheet.view.*
 import java.net.URL
 
 class LinkHeaderViewHolder(
-    override val containerView: View,
+    private val binding: LinkDetailsHeaderLayoutBinding,
     private val linkActionListener: LinkHeaderActionListener,
     val navigatorApi: NewNavigatorApi,
     val linkHandlerApi: WykopLinkHandlerApi,
     val userManagerApi: UserManagerApi
-) : RecyclableViewHolder(containerView), LayoutContainer {
+) : RecyclableViewHolder(binding.root), LayoutContainer {
 
     companion object {
         const val TYPE_HEADER = 64
@@ -45,7 +47,7 @@ class LinkHeaderViewHolder(
             linkHeaderActionListener: LinkHeaderActionListener
         ): LinkHeaderViewHolder {
             return LinkHeaderViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.link_details_header_layout, parent, false),
+                LinkDetailsHeaderLayoutBinding.inflate(parent.layoutInflater, parent, false),
                 linkHeaderActionListener,
                 navigatorApi,
                 linkHandlerApi,
@@ -53,6 +55,8 @@ class LinkHeaderViewHolder(
             )
         }
     }
+
+    override val containerView = binding.root
 
     fun bindView(link: Link) {
         when (link.userVote) {
@@ -66,52 +70,56 @@ class LinkHeaderViewHolder(
     }
 
     private fun setupHeader(link: Link) {
-        dateTextView.text = link.date
-        hotBadgeStrip.isVisible = link.isHot
+        binding.dateTextView.text = link.date
+        binding.hotBadgeStrip.isVisible = link.isHot
         val author = link.author
         if (author != null) {
-            avatarView.isVisible = true
-            userTextView.isVisible = true
-            userTextView.setOnClickListener { navigatorApi.openProfileActivity(link.author.nick) }
-            avatarView.setOnClickListener { navigatorApi.openProfileActivity(link.author.nick) }
-            avatarView.setAuthor(link.author)
-            userTextView.text = link.author.nick
-            userTextView.setTextColor(containerView.context.getGroupColor(link.author.group))
+            binding.avatarView.isVisible = true
+            binding.userTextView.isVisible = true
+            binding.userTextView.setOnClickListener { navigatorApi.openProfileActivity(link.author.nick) }
+            binding.avatarView.setOnClickListener { navigatorApi.openProfileActivity(link.author.nick) }
+            binding.avatarView.setAuthor(link.author)
+            binding.userTextView.text = link.author.nick
+            binding.userTextView.setTextColor(containerView.context.getGroupColor(link.author.group))
         } else {
-            avatarView.isVisible = false
-            userTextView.isVisible = false
+            binding.avatarView.isVisible = false
+            binding.userTextView.isVisible = false
         }
 
-        urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
-        blockedTextView.prepareBody(link.tags.convertToTagsHtml()) { linkHandlerApi.handleUrl(it) }
+        binding.urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
+        binding.blockedTextView.prepareBody(link.tags.convertToTagsHtml()) {
+            linkHandlerApi.handleUrl(
+                it
+            )
+        }
     }
 
     private fun setupButtons(link: Link) {
-        diggCountTextView.text = link.voteCount.toString()
-        diggCountTextView.setup(userManagerApi)
-        commentsCountTextView.text = link.commentsCount.toString()
-        moreOptionsTextView.setOnClickListener {
+        binding.diggCountTextView.text = link.voteCount.toString()
+        binding.diggCountTextView.setup(userManagerApi)
+        binding.commentsCountTextView.text = link.commentsCount.toString()
+        binding.moreOptionsTextView.setOnClickListener {
             openOptionsMenu(link)
         }
-        shareTextView.setOnClickListener {
+        binding.shareTextView.setOnClickListener {
             navigatorApi.shareUrl(link.url)
         }
-        commentsCountTextView.setOnClickListener {}
+        binding.commentsCountTextView.setOnClickListener {}
 
-        favoriteButton.isVisible = userManagerApi.isUserAuthorized()
-        favoriteButton.isFavorite = link.userFavorite
-        favoriteButton.setOnClickListener {
+        binding.favoriteButton.isVisible = userManagerApi.isUserAuthorized()
+        binding.favoriteButton.isFavorite = link.userFavorite
+        binding.favoriteButton.setOnClickListener {
             linkActionListener.markFavorite(link)
         }
     }
 
     private fun setupBody(link: Link) {
-        titleTextView.text = link.title.removeHtml()
-        image.isVisible = link.preview != null
-        link.preview?.let { image.loadImage(link.preview.stripImageCompression()) }
-        description.text = link.description.removeHtml()
-        relatedCountTextView.text = link.relatedCount.toString()
-        relatedCountTextView.setOnClickListener {
+        binding.titleTextView.text = link.title.removeHtml()
+        binding.image.isVisible = link.preview != null
+        link.preview?.let { binding.image.loadImage(link.preview.stripImageCompression()) }
+        binding.description.text = link.description.removeHtml()
+        binding.relatedCountTextView.text = link.relatedCount.toString()
+        binding.relatedCountTextView.setOnClickListener {
             navigatorApi.openLinkRelatedActivity(link.id)
         }
         containerView.setOnClickListener {
@@ -121,111 +129,111 @@ class LinkHeaderViewHolder(
 
     private fun showBurried(link: Link) {
         link.userVote = "bury"
-        diggCountTextView.isButtonSelected = true
-        diggCountTextView.setVoteState("bury")
-        diggCountTextView.unvoteListener = {
+        binding.diggCountTextView.isButtonSelected = true
+        binding.diggCountTextView.setVoteState("bury")
+        binding.diggCountTextView.unvoteListener = {
             linkActionListener.removeVote(link)
-            diggCountTextView.isEnabled = false
+            binding.diggCountTextView.isEnabled = false
         }
-        diggCountTextView.isEnabled = true
+        binding.diggCountTextView.isEnabled = true
     }
 
     private fun showDigged(link: Link) {
         link.userVote = "dig"
-        diggCountTextView.isButtonSelected = true
-        diggCountTextView.setVoteState("dig")
-        diggCountTextView.unvoteListener = {
+        binding.diggCountTextView.isButtonSelected = true
+        binding.diggCountTextView.setVoteState("dig")
+        binding.diggCountTextView.unvoteListener = {
             linkActionListener.removeVote(link)
-            diggCountTextView.isEnabled = false
+            binding.diggCountTextView.isEnabled = false
         }
-        diggCountTextView.isEnabled = true
+        binding.diggCountTextView.isEnabled = true
     }
 
     private fun showUnvoted(link: Link) {
-        diggCountTextView.isButtonSelected = false
-        diggCountTextView.setVoteState(null)
-        diggCountTextView.voteListener = {
+        binding.diggCountTextView.isButtonSelected = false
+        binding.diggCountTextView.setVoteState(null)
+        binding.diggCountTextView.voteListener = {
             linkActionListener.digLink(link)
-            diggCountTextView.isEnabled = false
+            binding.diggCountTextView.isEnabled = false
         }
         link.userVote = null
-        diggCountTextView.isEnabled = true
+        binding.diggCountTextView.isEnabled = true
     }
 
     private fun openOptionsMenu(link: Link) {
         val activityContext = containerView.getActivityContext()!!
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
-        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_menu_bottomsheet, null)
-        dialog.setContentView(bottomSheetView)
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = LinkMenuBottomsheetBinding.inflate(activityContext.layoutInflater)
+        dialog.setContentView(bottomSheetView.root)
 
         bottomSheetView.apply {
-            tvDiggerList.text = resources.getString(R.string.dig_list, link.voteCount)
-            tvBuryList.text = resources.getString(R.string.bury_list, link.buryCount)
-            link_diggers.setOnClickListener {
+            tvDiggerList.text = root.resources.getString(R.string.dig_list, link.voteCount)
+            tvBuryList.text = root.resources.getString(R.string.bury_list, link.buryCount)
+            linkDiggers.setOnClickListener {
                 navigatorApi.openLinkUpvotersActivity(link.id)
                 dialog.dismiss()
             }
 
-            link_bury_list.setOnClickListener {
+            linkBuryList.setOnClickListener {
                 navigatorApi.openLinkDownvotersActivity(link.id)
                 dialog.dismiss()
             }
 
-            link_bury.setOnClickListener {
+            linkBury.setOnClickListener {
                 dialog.dismiss()
                 openBuryReasonMenu(link)
             }
 
-            link_related.setOnClickListener {
+            linkRelated.setOnClickListener {
                 navigatorApi.openLinkRelatedActivity(link.id)
                 dialog.dismiss()
             }
-            link_bury.isVisible = userManagerApi.isUserAuthorized()
+            linkBury.isVisible = userManagerApi.isUserAuthorized()
         }
 
-        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.root.parent as View)
         dialog.setOnShowListener {
-            mBehavior.peekHeight = bottomSheetView.height
+            mBehavior.peekHeight = bottomSheetView.root.height
         }
         dialog.show()
     }
 
     private fun openBuryReasonMenu(link: Link) {
         val activityContext = containerView.getActivityContext()!!
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
-        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_bury_menu_bottomsheet, null)
-        dialog.setContentView(bottomSheetView)
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = LinkBuryMenuBottomsheetBinding.inflate(activityContext.layoutInflater)
+        dialog.setContentView(bottomSheetView.root)
 
         bottomSheetView.apply {
-            reason_duplicate.setOnClickListener {
+            reasonDuplicate.setOnClickListener {
                 linkActionListener.buryLink(link, LinkInteractor.BURY_REASON_DUPLICATE)
                 dialog.dismiss()
             }
 
-            reason_spam.setOnClickListener {
+            reasonSpam.setOnClickListener {
                 linkActionListener.buryLink(link, LinkInteractor.BURY_REASON_SPAM)
                 dialog.dismiss()
             }
 
-            reason_fake_info.setOnClickListener {
+            reasonFakeInfo.setOnClickListener {
                 linkActionListener.buryLink(link, LinkInteractor.BURY_REASON_FAKE_INFO)
                 dialog.dismiss()
             }
 
-            reason_wrong_content.setOnClickListener {
+            reasonWrongContent.setOnClickListener {
                 linkActionListener.buryLink(link, LinkInteractor.BURY_REASON_WRONG_CONTENT)
                 dialog.dismiss()
             }
 
-            reason_unsuitable_content.setOnClickListener {
+            reasonUnsuitableContent.setOnClickListener {
                 linkActionListener.buryLink(link, LinkInteractor.BURY_REASON_UNSUITABLE_CONTENT)
                 dialog.dismiss()
             }
         }
 
-        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.root.parent as View)
         dialog.setOnShowListener {
-            mBehavior.peekHeight = bottomSheetView.height
+            mBehavior.peekHeight = bottomSheetView.root.height
         }
         dialog.show()
     }

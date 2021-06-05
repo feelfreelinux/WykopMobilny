@@ -3,12 +3,12 @@ package io.github.feelfreelinux.wykopmobilny.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkCommentAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentsFragmentView
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView, SwipeRefreshLayout.OnRefreshListener {
 
-    @Inject lateinit var linkCommentsAdapter: LinkCommentAdapter
+    @Inject
+    lateinit var linkCommentsAdapter: LinkCommentAdapter
 
     var showSearchEmptyView: Boolean
         get() = searchEmptyView.isVisible

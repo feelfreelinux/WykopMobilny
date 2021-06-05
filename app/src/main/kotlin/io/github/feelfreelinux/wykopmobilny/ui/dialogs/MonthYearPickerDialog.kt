@@ -34,8 +34,8 @@ class MonthYearPickerDialog : androidx.fragment.app.DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogBuilder = AlertDialog.Builder(context)
-        val argumentYear = arguments!!.getInt(EXTRA_YEAR)
-        val argumentMonth = arguments!!.getInt(EXTRA_MONTH)
+        val argumentYear = requireArguments().getInt(EXTRA_YEAR)
+        val argumentMonth = requireArguments().getInt(EXTRA_MONTH)
 
         yearSelection = if (argumentYear == 0) currentYear else argumentYear
         selectedMonth = if (argumentMonth == 0) currentMonth else argumentMonth - 1

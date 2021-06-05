@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:drawable="@drawable/button_background_deselected_dark"
-        android:state_selected="true"
-        android:color="@color/minusPressedColor" />
+    <item android:drawable="@drawable/button_background_deselected_dark" android:state_selected="true" android:color="@color/minusPressedColor" />
 
-    <item
-        android:drawable="@drawable/button_background_focused_dark"
-        android:state_focused="false"
-        android:state_pressed="true"
-        android:color="@color/textColorButtonToolbar.Dark" />
+    <item android:drawable="@drawable/button_background_focused_dark" android:state_focused="false" android:state_pressed="true" android:color="@color/textColorButtonToolbar.Dark" />
 
-    <item
-        android:drawable="@drawable/button_background_deselected_dark"
-        android:state_focused="false"
-        android:state_pressed="false"
-        android:color="@color/textColorButtonToolbar.Dark" />
-    
+    <item android:drawable="@drawable/button_background_deselected_dark" android:state_focused="false" android:state_pressed="false" android:color="@color/textColorButtonToolbar.Dark" />
+
 </selector>

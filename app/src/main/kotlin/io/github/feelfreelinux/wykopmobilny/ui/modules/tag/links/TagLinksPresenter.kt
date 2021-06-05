@@ -47,11 +47,13 @@ class TagLinksPresenter(
     fun Single<Link>.processLinkSingle(link: Link) {
         this.subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateLink(it) },
+            .subscribe(
+                { view?.updateLink(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateLink(link)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

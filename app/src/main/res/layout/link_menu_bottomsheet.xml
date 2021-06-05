@@ -7,34 +7,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/backgroundColor">
+    android:background="?attr/backgroundColor"
+    >
 
     <LinearLayout
         android:id="@+id/link_bury"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetBury"/>
+            android:src="?attr/bottomSheetBury"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/bury"/>
+            android:text="@string/bury"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/link_diggers"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetDiggerList"/>
+            android:src="?attr/bottomSheetDiggerList"
+            />
 
         <TextView
             android:id="@+id/tvDiggerList"
@@ -42,18 +48,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/dig_list"/>
+            android:text="@string/dig_list"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/link_bury_list"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetBuryList"/>
+            android:src="?attr/bottomSheetBuryList"
+            />
 
         <TextView
             android:id="@+id/tvBuryList"
@@ -61,25 +70,29 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/bury_list"/>
+            android:text="@string/bury_list"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/link_related"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetRelated"/>
+            android:src="?attr/bottomSheetRelated"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/related"/>
+            android:text="@string/related"
+            />
 
     </LinearLayout>
 

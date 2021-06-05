@@ -5,14 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
         android:id="@+id/authorHeaderView"
         style="@style/AuthorHeaderView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
         android:id="@+id/entryContentTextView"
@@ -20,7 +22,8 @@
         app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="Treść wpisy na mikroblogu" />
+        tools:text="Treść wpisy na mikroblogu"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
         android:id="@+id/survey"
@@ -31,7 +34,8 @@
         android:paddingRight="@dimen/padding_dp_large"
         app:layout_constraintTop_toBottomOf="@id/entryContentTextView"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
         android:id="@+id/entryImageView"
@@ -40,28 +44,32 @@
         android:layout_marginTop="@dimen/margin_dp_normal"
         app:layout_constraintTop_toBottomOf="@id/survey"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <TextView
         android:id="@+id/shareTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/sharebtnDrawable"
         app:layout_constraintTop_toBottomOf="@id/entryImageView"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
         android:id="@+id/favoriteButton"
         style="@style/ButtonTextView"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/entryImageView"
-        app:layout_constraintLeft_toRightOf="@id/shareTextView" />
+        app:layout_constraintLeft_toRightOf="@id/shareTextView"
+        />
 
     <TextView
         android:id="@+id/replyTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/replyDrawable"
         app:layout_constraintTop_toBottomOf="@id/entryImageView"
-        app:layout_constraintLeft_toRightOf="@id/favoriteButton" />
+        app:layout_constraintLeft_toRightOf="@id/favoriteButton"
+        />
 
     <TextView
         android:id="@+id/commentsCountTextView"
@@ -69,7 +77,8 @@
         android:drawableStart="?attr/commentDrawable"
         app:layout_constraintTop_toBottomOf="@id/entryImageView"
         app:layout_constraintRight_toLeftOf="@+id/voteButton"
-        tools:text="3" />
+        tools:text="3"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
         android:id="@+id/voteButton"
@@ -77,12 +86,14 @@
         android:drawableStart="?attr/plusDrawable"
         app:layout_constraintTop_toBottomOf="@id/entryImageView"
         app:layout_constraintRight_toLeftOf="@+id/moreOptionsTextView"
-        tools:text="2" />
+        tools:text="2"
+        />
 
     <TextView
         android:id="@+id/moreOptionsTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/dotsDrawable"
         app:layout_constraintTop_toBottomOf="@id/entryImageView"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        />
 </merge>

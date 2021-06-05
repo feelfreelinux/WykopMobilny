@@ -10,7 +10,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigator
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.utils.printout
-import kotlinx.android.synthetic.main.activity_write_comment.*
 import javax.inject.Inject
 
 class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivityView {
@@ -23,10 +22,13 @@ class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivit
             }
     }
 
-    @Inject override lateinit var suggestionApi: SuggestApi
-    @Inject override lateinit var presenter: AddEntryPresenter
+    @Inject
+    override lateinit var suggestionApi: SuggestApi
 
-    val navigator by lazy { NewNavigator(this) as NewNavigatorApi }
+    @Inject
+    override lateinit var presenter: AddEntryPresenter
+
+    val navigator: NewNavigatorApi by lazy { NewNavigator(this) }
 
     override fun openEntryActivity(id: Int) {
         navigator.openEntryDetailsActivity(id, false)
@@ -45,11 +47,10 @@ class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivit
                 text?.let {
                     textBody = text
                 }
-
             } else if (intent!!.type!!.startsWith("image/")) {
                 val imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM) as Uri?
                 imageUri?.let {
-                    markupToolbar.photo = imageUri
+                    binding.markupToolbar.photo = imageUri
                     printout(imageUri.toString())
                 }
             }

@@ -21,7 +21,8 @@ class EditEntryPresenter(
                 {
                     view?.showProgressBar = false
                     view?.showErrorDialog(it)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 

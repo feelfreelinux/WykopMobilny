@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/collapseAll"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/collapseAll"
         android:titleCondensed="Zwiń wszystkie powiadomienia"
         android:title="Zwiń wszystkie powiadomienia"
         app:showAsAction="always"
-        android:icon="@drawable/ic_collapse_dark"/>
-    <item android:id="@+id/expandAll"
+        android:icon="@drawable/ic_collapse_dark"
+        />
+    <item
+        android:id="@+id/expandAll"
         android:titleCondensed="Rozwiń wszystkie powiadomienia"
         android:title="Rozwiń wszystkie powiadomienia"
         app:showAsAction="always"
-        android:icon="@drawable/ic_expand_dark"/>
-    <item android:id="@+id/groupNotifications"
+        android:icon="@drawable/ic_expand_dark"
+        />
+    <item
+        android:id="@+id/groupNotifications"
         android:titleCondensed="Grupuj powiadomienia"
         android:title="Grupuj powiadomienia"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:checkable="true" />
+        android:checkable="true"
+        />
 </menu>

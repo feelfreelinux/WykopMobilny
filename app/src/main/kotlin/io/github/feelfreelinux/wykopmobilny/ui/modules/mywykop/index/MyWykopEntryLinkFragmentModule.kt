@@ -12,6 +12,13 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksInteractor
 @Module
 class MyWykopEntryLinkFragmentModule {
     @Provides
-    fun provideMyWykopIndexFragmentPresenter(schedulers: Schedulers, myWykopApi: MyWykopApi, linksInteractor: LinksInteractor, entriesInteractor: EntriesInteractor, entriesApi: EntriesApi, linksApi: LinksApi) =
-            MyWykopEntryLinkPresenter(schedulers, entriesApi, entriesInteractor, linksInteractor, linksApi, myWykopApi)
+    fun provideMyWykopIndexFragmentPresenter(
+        schedulers: Schedulers,
+        myWykopApi: MyWykopApi,
+        linksInteractor: LinksInteractor,
+        entriesInteractor: EntriesInteractor,
+        entriesApi: EntriesApi,
+        linksApi: LinksApi
+    ) =
+        MyWykopEntryLinkPresenter(schedulers, entriesApi, entriesInteractor, linksInteractor, linksApi, myWykopApi)
 }

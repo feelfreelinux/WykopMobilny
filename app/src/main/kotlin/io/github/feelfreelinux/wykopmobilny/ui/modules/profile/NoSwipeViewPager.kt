@@ -13,5 +13,4 @@ class NoSwipeViewPager(context: Context, attributeSet: AttributeSet) : androidx.
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         return false
     }
-
 }

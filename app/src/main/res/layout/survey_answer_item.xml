@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <TextView
         android:id="@+id/answer"
@@ -16,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Ansver"/>
+        tools:text="Ansver"
+        />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -29,18 +31,21 @@
         android:weightSum="100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/answer"
-        app:layout_constraintEnd_toStartOf="@id/radioButton">
+        app:layout_constraintEnd_toStartOf="@id/radioButton"
+        >
 
         <View
             android:id="@+id/percentage_view"
             android:layout_width="0dp"
             android:layout_height="@dimen/survey_percentage_view_height"
             android:layout_weight="30"
-            android:background="?surveyBar"/>
+            android:background="?surveyBar"
+            />
 
         <View
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            />
 
     </LinearLayout>
 
@@ -53,7 +58,8 @@
         android:textSize="@dimen/survey_votes_count_text_size"
         app:layout_constraintEnd_toEndOf="@id/linearLayout"
         app:layout_constraintTop_toBottomOf="@id/answer"
-        tools:text="30% (0 głosów)"/>
+        tools:text="30% (0 głosów)"
+        />
 
     <RadioButton
         android:id="@+id/radioButton"
@@ -63,6 +69,7 @@
         android:layout_marginStart="@dimen/survey_votes_radio_button_margin_start"
         app:layout_constraintStart_toEndOf="@id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/answer"/>
+        app:layout_constraintTop_toBottomOf="@id/answer"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

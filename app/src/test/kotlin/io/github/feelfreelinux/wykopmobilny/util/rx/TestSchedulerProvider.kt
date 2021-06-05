@@ -4,20 +4,14 @@ import io.github.feelfreelinux.wykopmobilny.base.Schedulers
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.TestScheduler
 
+class TestSchedulerProvider : Schedulers {
 
-/**
- * Created by hrskrs on 5/8/2017.
- */
+    val mTestScheduler: TestScheduler = TestScheduler()
+    override fun mainThread(): Scheduler {
+        return mTestScheduler
+    }
 
-class TestSchedulerProvider() : Schedulers {
-
-	val mTestScheduler: TestScheduler = TestScheduler()
-	override fun mainThread(): Scheduler {
-		return mTestScheduler
-	}
-
-	override fun backgroundThread(): Scheduler {
-		return mTestScheduler
-	}
-
+    override fun backgroundThread(): Scheduler {
+        return mTestScheduler
+    }
 }

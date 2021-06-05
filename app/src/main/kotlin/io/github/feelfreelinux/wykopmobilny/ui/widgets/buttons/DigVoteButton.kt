@@ -7,7 +7,9 @@ import androidx.core.content.ContextCompat
 import io.github.feelfreelinux.wykopmobilny.R
 
 class DigVoteButton @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.MirkoButtonStyle
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.MirkoButtonStyle
 ) : VoteButton(context, attrs, defStyleAttr) {
 
     fun setVoteState(voteState: String?) {

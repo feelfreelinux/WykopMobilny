@@ -1,6 +1,6 @@
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
-internal fun Boolean.toRequestBody() = RequestBody.create(MultipartBody.FORM, if (this) "1" else "")!!
+internal fun Boolean.toRequestBody() = (if (this) "1" else "").toRequestBody(MultipartBody.FORM)
 
-internal fun String.toRequestBody() = RequestBody.create(MultipartBody.FORM, this)!!
+internal fun String.toRequestBody() = this.toRequestBody(MultipartBody.FORM)

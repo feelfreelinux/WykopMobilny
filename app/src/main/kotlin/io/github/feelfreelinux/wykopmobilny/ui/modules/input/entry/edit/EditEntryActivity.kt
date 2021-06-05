@@ -21,8 +21,11 @@ class EditEntryActivity : BaseInputActivity<EditEntryPresenter>(), EditEntryView
             }
     }
 
-    @Inject override lateinit var presenter: EditEntryPresenter
-    @Inject override lateinit var suggestionApi: SuggestApi
+    @Inject
+    override lateinit var presenter: EditEntryPresenter
+
+    @Inject
+    override lateinit var suggestionApi: SuggestApi
 
     override val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, 0) }
 

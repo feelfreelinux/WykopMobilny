@@ -22,16 +22,19 @@ class LinkSearchPresenter(
         searchApi.searchLinks(page, q)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.showSearchEmptyView = (page == 1 && it.isEmpty())
-                if (it.isNotEmpty()) {
-                    page++
-                    view?.addItems(it, shouldRefresh)
-                } else {
-                    view?.addItems(it, (page == 1))
-                    view?.disableLoading()
-                }
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    view?.showSearchEmptyView = (page == 1 && it.isEmpty())
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addItems(it, shouldRefresh)
+                    } else {
+                        view?.addItems(it, (page == 1))
+                        view?.disableLoading()
+                    }
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -43,11 +46,13 @@ class LinkSearchPresenter(
         this
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateLink(it) },
+            .subscribe(
+                { view?.updateLink(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateLink(link)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

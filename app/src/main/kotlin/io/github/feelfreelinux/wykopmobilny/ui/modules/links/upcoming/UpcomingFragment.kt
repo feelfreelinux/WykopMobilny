@@ -22,8 +22,11 @@ class UpcomingFragment : BaseLinksFragment(), UpcomingView {
         fun newInstance() = UpcomingFragment()
     }
 
-    @Inject lateinit var presenter: UpcomingPresenter
-    @Inject lateinit var linksPreferencesApi: LinksPreferencesApi
+    @Inject
+    lateinit var presenter: UpcomingPresenter
+
+    @Inject
+    lateinit var linksPreferencesApi: LinksPreferencesApi
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.getUpcomingLinks(it) }
 
@@ -31,7 +34,7 @@ class UpcomingFragment : BaseLinksFragment(), UpcomingView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity!!, R.drawable.ic_sort)
+        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_sort)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

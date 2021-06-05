@@ -7,21 +7,22 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.Gravity
 import android.view.View
+import androidx.core.view.isVisible
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.DialogVotersBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.appendNewSpan
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
-import kotlinx.android.synthetic.main.dialog_voters.view.*
 
 typealias VotersDialogListener = (List<Voter>) -> Unit
 
 fun createVotersDialogListener(
-    dialog: com.google.android.material.bottomsheet.BottomSheetDialog,
-    votersDialogView: View
+    dialog: BottomSheetDialog,
+    votersDialogView: DialogVotersBinding
 ): (List<Voter>) -> Unit = {
     if (dialog.isShowing) {
         votersDialogView.progressView.isVisible = false
@@ -36,7 +37,7 @@ fun createVotersDialogListener(
             }
         if (spannableStringBuilder.isEmpty()) {
             votersDialogView.votersTextView.gravity = Gravity.CENTER
-            spannableStringBuilder.append(votersDialogView.context.getString(R.string.dialogNoVotes))
+            spannableStringBuilder.append(votersDialogView.root.context.getString(R.string.dialogNoVotes))
         }
         votersDialogView.votersTextView.movementMethod = (LinkMovementMethod.getInstance()) // Auuu
         votersDialogView.votersTextView.text = spannableStringBuilder

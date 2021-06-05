@@ -47,8 +47,7 @@ class WykopNotificationsJob(
         }
 
         fun scheduleOnce() {
-            var build: JobRequest? = null
-            build = JobRequest.Builder(TAG)
+            val build: JobRequest = JobRequest.Builder(TAG)
                 .startNow()
                 .build()
             build.schedule()
@@ -85,13 +84,14 @@ class WykopNotificationsJob(
             val pendingIntent = if (intent != null) {
                 intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-
             } else {
                 val notificationIntent = Intent(Intent.ACTION_VIEW, Uri.parse(notification.url))
                 PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             }
-            notificationManager.updateNotification(WykopNotificationsJob.NOTIFICATION_ID, buildNotification(notification.body, pendingIntent))
-
+            notificationManager.updateNotification(
+                NOTIFICATION_ID,
+                buildNotification(notification.body, pendingIntent),
+            )
         }
     }
 
@@ -108,11 +108,10 @@ class WykopNotificationsJob(
                 NOTIFICATION_ID,
                 buildNotification(context.getString(R.string.notificationsCountMessage, count), pendingIntent)
             )
-
         }
     }
 
     override fun cancelNotification() = notificationManager.cancelNotification(NOTIFICATION_ID)
 
-    override fun showErrorDialog(e: Throwable) {} // @TODO idk how to handle it
+    override fun showErrorDialog(e: Throwable) = Unit // @TODO idk how to handle it
 }

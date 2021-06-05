@@ -5,7 +5,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/itemBackgroundColorStatelist">
+    android:background="?attr/itemBackgroundColorStatelist"
+    >
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/authorAvatarView"
@@ -17,7 +18,8 @@
         android:layout_marginRight="@dimen/margin_dp_normal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
     <TextView
         android:id="@+id/userNameTextView"
@@ -37,7 +39,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Kroguc" />
+        tools:text="Kroguc"
+        />
 
     <TextView
         android:id="@+id/entryDateTextView"
@@ -57,6 +60,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/authorAvatarView"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="1 min. temu" />
+        tools:text="1 min. temu"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

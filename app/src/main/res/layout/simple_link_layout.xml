@@ -6,7 +6,8 @@
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/itemBackgroundColorStatelist">
+    android:background="?attr/itemBackgroundColorStatelist"
+    >
 
     <View
         android:id="@+id/simple_digg"
@@ -16,7 +17,8 @@
         android:background="?attr/digCountDrawable"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
     <View
         android:id="@+id/simple_digg_hot"
@@ -24,13 +26,14 @@
         android:layout_height="17dp"
         android:background="?attr/hotOutlineDrawable"
         app:layout_constraintTop_toTopOf="@id/simple_digg"
-        app:layout_constraintRight_toRightOf="@id/simple_digg" />
+        app:layout_constraintRight_toRightOf="@id/simple_digg"
+        />
 
     <TextView
         android:id="@+id/simple_digg_count"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="13dp"
+        android:textSize="13sp"
         android:textStyle="bold"
         android:textColor="@color/digCountColor"
         android:gravity="center"
@@ -40,7 +43,8 @@
         app:layout_constraintBottom_toBottomOf="@id/simple_digg"
         app:layout_constraintLeft_toLeftOf="@id/simple_digg"
         app:layout_constraintRight_toRightOf="@id/simple_digg"
-        tools:text="2137" />
+        tools:text="2137"
+        />
 
     <TextView
         android:id="@+id/simple_title"
@@ -59,7 +63,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/simple_digg"
         app:layout_constraintRight_toLeftOf="@id/simple_image"
-        tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet." />
+        tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet."
+        />
 
     <ImageView
         android:id="@+id/simple_image"
@@ -72,7 +77,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:visibility="gone"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        />
 
     <View
         android:id="@+id/hotBadgeStripSimple"
@@ -82,6 +88,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:visibility="visible" />
+        android:visibility="visible"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

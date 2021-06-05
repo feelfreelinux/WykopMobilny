@@ -5,11 +5,11 @@ import android.util.AttributeSet
 import android.util.Patterns
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import kotlinx.android.synthetic.main.wykopembedview.view.*
@@ -17,7 +17,9 @@ import java.lang.ref.WeakReference
 import java.net.URI
 
 class WykopEmbedView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     companion object {
@@ -26,7 +28,7 @@ class WykopEmbedView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.wykopembedview, this)
-        isVisible = false
+        this.isVisible = false
         image.onResizedListener = { mEmbed.get()?.isResize = it }
         image.showResizeView = { post { imageExpand.isVisible = it } }
         image.openImageListener = { handleUrl() }
@@ -57,7 +59,10 @@ class WykopEmbedView @JvmOverloads constructor(
                 image.isResized = embed.isResize
                 imageExpand.isVisible = false
                 isVisible = true
-                if (!embed.isRevealed && (plus18 && !settingsPreferencesApi.showAdultContent || isNsfw && settingsPreferencesApi.hideNsfw)) {
+                if (
+                    !embed.isRevealed &&
+                    (plus18 && !settingsPreferencesApi.showAdultContent || isNsfw && settingsPreferencesApi.hideNsfw)
+                ) {
                     image.loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
                     hiddenPreview = preview
                 } else {
@@ -116,7 +121,6 @@ class WykopEmbedView @JvmOverloads constructor(
                 // APIV2 WTF
                 val url = if (image.isAnimated) image.url.replace(".jpg", ".gif") else image.url
                 navigator.openPhotoViewActivity(url)
-
             }
             "video" -> {
                 val url = URI(image.url.replace("\\", ""))

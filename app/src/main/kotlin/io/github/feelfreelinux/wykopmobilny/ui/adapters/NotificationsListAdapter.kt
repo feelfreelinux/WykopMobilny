@@ -64,7 +64,8 @@ class NotificationsListAdapter @Inject constructor(
                     R.layout.hashtag_notification_header_list_item,
                     parent,
                     false
-                ), navigatorApi, collapseListener
+                ),
+                navigatorApi, collapseListener
             )
             else -> NotificationViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, parent, false),

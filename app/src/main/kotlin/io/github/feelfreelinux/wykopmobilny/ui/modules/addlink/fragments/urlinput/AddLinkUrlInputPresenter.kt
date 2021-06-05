@@ -15,13 +15,16 @@ class AddLinkUrlInputPresenter(
         addLinkApi.getDraft(url)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.setLinkDraft(it)
-                view?.showDuplicatesLoading(false)
-            }, {
-                view?.showErrorDialog(it)
-                view?.showDuplicatesLoading(false)
-            })
+            .subscribe(
+                {
+                    view?.setLinkDraft(it)
+                    view?.showDuplicatesLoading(false)
+                },
+                {
+                    view?.showErrorDialog(it)
+                    view?.showDuplicatesLoading(false)
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

@@ -15,11 +15,13 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import javax.inject.Inject
 
-
 class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, HasAndroidInjector {
 
-    @Inject lateinit var settingsApi: SettingsPreferencesApi
-    @Inject lateinit var androidInjector: DispatchingAndroidInjector<Any>
+    @Inject
+    lateinit var settingsApi: SettingsPreferencesApi
+
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     override fun androidInjector() = androidInjector
 

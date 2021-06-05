@@ -32,7 +32,6 @@ interface EntriesApi {
     fun deleteEntryComment(commentId: Int): Single<EntryCommentResponse>
     fun voteSurvey(entryId: Int, answerId: Int): Single<Survey>
 
-
     fun getHot(page: Int, period: String): Single<List<Entry>>
     fun getStream(page: Int): Single<List<Entry>>
     fun getActive(page: Int): Single<List<Entry>>

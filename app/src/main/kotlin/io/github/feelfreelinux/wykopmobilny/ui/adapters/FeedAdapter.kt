@@ -13,7 +13,7 @@ class FeedAdapter @Inject constructor(
     val settingsPreferencesApi: SettingsPreferencesApi
 ) : SimpleBaseProgressAdapter<BlockedViewHolder, Entry>() {
 
-    override val ITEM_TYPE = 0
+    override val itemType: Int = 0
 
     override fun bindHolder(holder: BlockedViewHolder, position: Int) =
         holder.bindView(data[position])

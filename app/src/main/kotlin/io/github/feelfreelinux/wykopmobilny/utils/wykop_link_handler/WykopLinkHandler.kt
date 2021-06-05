@@ -37,9 +37,9 @@ class WykopLinkHandler(val context: Activity, private val navigatorApi: NewNavig
         fun getLinkIntent(url: String, context: Context): Intent? {
             val parsedUrl = URI(url.replace("\\", ""))
             val domain = parsedUrl.host
-                    .replace("www.", "")
-                    .substringBeforeLast(".")
-                    .substringAfterLast(".")
+                .replace("www.", "")
+                .substringBeforeLast(".")
+                .substringAfterLast(".")
             return when (domain) {
                 "wykop" -> {
                     val resource = url.substringAfter("wykop.pl/")

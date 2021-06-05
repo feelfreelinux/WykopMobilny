@@ -1,5 +1,6 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
+import android.util.Log
 import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
@@ -46,16 +47,25 @@ class LinkDetailsAdapter @Inject constructor(
                 if (holder is TopLinkCommentViewHolder) {
                     holder.bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
                     holder.containerView.tag =
-                            if (comment.childCommentCount > 0 && !comment.isCollapsed) RecyclableViewHolder.SEPARATOR_SMALL else RecyclableViewHolder.SEPARATOR_NORMAL
+                        if (comment.childCommentCount > 0 && !comment.isCollapsed) {
+                            RecyclableViewHolder.SEPARATOR_SMALL
+                        } else {
+                            RecyclableViewHolder.SEPARATOR_NORMAL
+                        }
                 } else if (holder is LinkCommentViewHolder) {
                     val parent = commentsList!!.first { it.id == comment.parentId }
                     val index = commentsList!!.subList(commentsList!!.indexOf(parent), position - 1).size
                     holder.bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
                     holder.itemView.tag =
-                            if (parent.childCommentCount == index) RecyclableViewHolder.SEPARATOR_NORMAL else RecyclableViewHolder.SEPARATOR_SMALL
+                        if (parent.childCommentCount == index) {
+                            RecyclableViewHolder.SEPARATOR_NORMAL
+                        } else {
+                            RecyclableViewHolder.SEPARATOR_SMALL
+                        }
                 }
             }
-        } catch (e: Exception) {
+        } catch (exception: Exception) {
+            Log.w(this::class.simpleName, "Couldn't bind view holder", exception)
         }
     }
 

@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
         android:id="@+id/image"
@@ -17,7 +18,8 @@
         android:duplicateParentState="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -35,7 +37,8 @@
         app:layout_constraintTop_toBottomOf="@id/image"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="Tytuł znaleziska" />
+        tools:text="Tytuł znaleziska"
+        />
 
     <TextView
         android:id="@+id/description"
@@ -51,7 +54,8 @@
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="Opis znaleziska" />
+        tools:text="Opis znaleziska"
+        />
 
     <View
         android:id="@+id/separator1"
@@ -60,7 +64,8 @@
         android:background="?attr/lineColor"
         app:layout_constraintTop_toBottomOf="@id/description"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <HorizontalScrollView
         android:id="@+id/detailsScrollView"
@@ -69,20 +74,23 @@
         android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@id/separator1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:paddingTop="@dimen/padding_dp_mini"
-            android:paddingBottom="@dimen/padding_dp_mini">
+            android:paddingBottom="@dimen/padding_dp_mini"
+            >
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
                 android:id="@+id/avatarView"
                 android:layout_width="@dimen/link_details_layout_scroll_avatar_width"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/padding_dp_large" />
+                android:paddingLeft="@dimen/padding_dp_large"
+                />
 
             <TextView
                 android:id="@+id/userTextView"
@@ -92,12 +100,14 @@
                 android:paddingLeft="@dimen/padding_dp_normal"
                 android:paddingRight="@dimen/padding_dp_normal"
                 android:textSize="?attr/textSizeSmall"
-                tools:text="Powodzenia" />
+                tools:text="Powodzenia"
+                />
 
             <View
                 android:layout_width="@dimen/separator_normal"
                 android:layout_height="match_parent"
-                android:background="?attr/lineColor" />
+                android:background="?attr/lineColor"
+                />
 
             <TextView
                 android:id="@+id/dateTextView"
@@ -107,12 +117,14 @@
                 android:paddingLeft="@dimen/padding_dp_normal"
                 android:paddingRight="@dimen/padding_dp_normal"
                 android:textSize="?attr/textSizeSmall"
-                tools:text="2 godz. temu" />
+                tools:text="2 godz. temu"
+                />
 
             <View
                 android:layout_width="@dimen/separator_normal"
                 android:layout_height="match_parent"
-                android:background="?attr/lineColor" />
+                android:background="?attr/lineColor"
+                />
 
             <TextView
                 android:id="@+id/urlTextView"
@@ -122,12 +134,14 @@
                 android:paddingLeft="@dimen/padding_dp_normal"
                 android:paddingRight="@dimen/padding_dp_normal"
                 android:textSize="?attr/textSizeSmall"
-                tools:text="wykop.pl" />
+                tools:text="wykop.pl"
+                />
 
             <View
                 android:layout_width="@dimen/separator_normal"
                 android:layout_height="match_parent"
-                android:background="?attr/lineColor" />
+                android:background="?attr/lineColor"
+                />
 
             <TextView
                 android:id="@+id/blockedTextView"
@@ -137,7 +151,8 @@
                 android:paddingLeft="@dimen/padding_dp_normal"
                 android:paddingRight="@dimen/padding_dp_normal"
                 android:textSize="?attr/textSizeSmall"
-                tools:text="#permdlacauki" />
+                tools:text="#permdlacauki"
+                />
 
         </LinearLayout>
 
@@ -150,20 +165,23 @@
         android:background="?attr/lineColor"
         app:layout_constraintTop_toBottomOf="@id/detailsScrollView"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <TextView
         android:id="@+id/shareTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/sharebtnDrawable"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/separator2" />
+        app:layout_constraintTop_toBottomOf="@id/separator2"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
         android:id="@+id/favoriteButton"
         style="@style/ButtonTextView"
         app:layout_constraintLeft_toRightOf="@id/shareTextView"
-        app:layout_constraintTop_toBottomOf="@id/separator2" />
+        app:layout_constraintTop_toBottomOf="@id/separator2"
+        />
 
     <TextView
         android:id="@+id/relatedCountTextView"
@@ -172,7 +190,8 @@
         android:drawablePadding="0dp"
         app:layout_constraintTop_toBottomOf="@id/separator2"
         app:layout_constraintRight_toLeftOf="@id/commentsCountTextView"
-        tools:text="21" />
+        tools:text="21"
+        />
 
     <TextView
         android:id="@+id/commentsCountTextView"
@@ -180,7 +199,8 @@
         android:drawableStart="?attr/commentDrawable"
         app:layout_constraintTop_toBottomOf="@id/separator2"
         app:layout_constraintRight_toLeftOf="@id/diggCountTextView"
-        tools:text="37" />
+        tools:text="37"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
         android:id="@+id/diggCountTextView"
@@ -189,14 +209,16 @@
         android:drawablePadding="@dimen/padding_dp_mini"
         app:layout_constraintTop_toBottomOf="@id/separator2"
         app:layout_constraintRight_toLeftOf="@id/moreOptionsTextView"
-        tools:text="2137" />
+        tools:text="2137"
+        />
 
     <TextView
         android:id="@+id/moreOptionsTextView"
         style="@style/ButtonTextView"
         android:drawableStart="?attr/dotsDrawable"
         app:layout_constraintTop_toBottomOf="@id/separator2"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <View
         android:id="@+id/hotBadgeStrip"
@@ -206,6 +228,7 @@
         android:visibility="visible"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

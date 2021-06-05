@@ -36,13 +36,24 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Code style check
-        run: ./gradlew projectCodestyle --stacktrace
+        run: ./gradlew projectCodestyle -x checkstyle --stacktrace
 
       - name: Assemble
         run: ./gradlew assembleRelease
 
       - name: Unit tests
-        run: ./gradlew test
+        run: ./gradlew projectCoverage
+
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Android Lint
         run: ./gradlew lint
+
+      - uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: lint-results
+          path: '*/build/**/reports/lint-results-*.html'
+

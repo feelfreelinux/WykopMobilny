@@ -2,9 +2,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/backgroundColor"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
+    >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -17,14 +18,15 @@
         android:minHeight="?attr/actionBarSize"
         app:buttonGravity="top"
         app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleTextAppearance="@style/Toolbar.Subtitle.Messages"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:titleTextAppearance="@style/Toolbar.TitleText.Messages"
-        app:subtitleTextAppearance="@style/Toolbar.Subtitle.Messages"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteY="0dp"
-        tools:title="feelfree">
+        tools:title="feelfree"
+        >
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
             android:id="@+id/avatarview"
@@ -32,27 +34,29 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/conversation_avatar_margin_end"
-            android:visibility="visible"/>
-
+            android:visibility="visible"
+            />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/inputToolbar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/inputToolbar">
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:paddingTop="@dimen/conversation_recycler_padding_vertical"
             android:paddingBottom="@dimen/conversation_recycler_padding_vertical"
-            android:clipToPadding="false"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -63,17 +67,18 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
         android:id="@+id/inputToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
+        app:layout_constraintStart_toStartOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

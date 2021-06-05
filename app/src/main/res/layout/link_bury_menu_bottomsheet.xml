@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/backgroundColor">
+    android:background="?attr/backgroundColor"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,70 +18,82 @@
         android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
         android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
         android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
-        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"
+        />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/separator_line_height"
-        android:background="?attr/lineColor"/>
+        android:background="?attr/lineColor"
+        />
 
     <LinearLayout
         android:id="@+id/reason_duplicate"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/reason_duplicate"/>
+            android:text="@string/reason_duplicate"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/reason_spam"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/reason_spam"/>
+            android:text="@string/reason_spam"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/reason_fake_info"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/reason_fake_info"/>
+            android:text="@string/reason_fake_info"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/reason_wrong_content"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/reason_wrong_content"/>
+            android:text="@string/reason_wrong_content"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/reason_unsuitable_content"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/reason_unsuitable_content"/>
+            android:text="@string/reason_unsuitable_content"
+            />
 
     </LinearLayout>
 

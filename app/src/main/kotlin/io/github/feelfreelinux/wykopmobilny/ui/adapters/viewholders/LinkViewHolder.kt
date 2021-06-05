@@ -1,28 +1,26 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import io.github.feelfreelinux.wykopmobilny.R
+import androidx.core.view.isVisible
+import io.github.feelfreelinux.wykopmobilny.databinding.LinkLayoutBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.link_layout.*
 
 class LinkViewHolder(
-    override val containerView: View,
-    val settingsApi: SettingsPreferencesApi,
-    val navigatorApi: NewNavigatorApi,
-    val userManagerApi: UserManagerApi,
+    private val binding: LinkLayoutBinding,
+    private val settingsApi: SettingsPreferencesApi,
+    private val navigatorApi: NewNavigatorApi,
+    private val userManagerApi: UserManagerApi,
     private val linkActionListener: LinkActionListener
-) : RecyclableViewHolder(containerView), LayoutContainer {
+) : RecyclableViewHolder(binding.root), LayoutContainer {
 
     companion object {
         const val ALPHA_VISITED = 0.6f
@@ -43,7 +41,7 @@ class LinkViewHolder(
             linkActionListener: LinkActionListener
         ): LinkViewHolder {
             val view = LinkViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.link_layout, parent, false),
+                LinkLayoutBinding.inflate(parent.layoutInflater, parent, false),
                 settingsPreferencesApi,
                 navigatorApi,
                 userManagerApi,
@@ -65,23 +63,24 @@ class LinkViewHolder(
         }
     }
 
-    var type: Int = TYPE_IMAGE
-    lateinit var previewImageView: ImageView
+    override val containerView = binding.root
+    private var type: Int = TYPE_IMAGE
+    private lateinit var previewImageView: ImageView
     private val linksPreferences by lazy { LinksPreferences(containerView.context) }
 
     fun inflateCorrectImageView() {
         previewImageView = when (settingsApi.linkImagePosition) {
             "top" -> {
-                val img = image_top.inflate() as ImageView
+                val img = binding.imageTop.inflate() as ImageView
                 if (settingsApi.linkShowAuthor) {
                     val params = img.layoutParams as ViewGroup.MarginLayoutParams
                     params.topMargin = (img.context.resources.displayMetrics.density * 8).toInt()
                 }
                 img
             }
-            "right" -> image_right.inflate() as ImageView
-            "bottom" -> image_bottom.inflate() as ImageView
-            else -> image_left.inflate() as ImageView
+            "right" -> binding.imageRight.inflate() as ImageView
+            "bottom" -> binding.imageBottom.inflate() as ImageView
+            else -> binding.imageLeft.inflate() as ImageView
         }
     }
 
@@ -107,42 +106,41 @@ class LinkViewHolder(
         }
 
         if (settingsApi.linkImagePosition == "left" || settingsApi.linkImagePosition == "right") {
-            titleTextView.maxLines = 2
-            description.maxLines = 3
+            binding.titleTextView.maxLines = 2
+            binding.description.maxLines = 3
         }
 
         if (type == TYPE_IMAGE) {
             previewImageView.loadImage(link.preview!!)
-
         }
         if (settingsApi.linkShowAuthor && link.author != null) {
-            authorHeaderView.setAuthorData(link.author, link.date, link.app)
-            authorHeaderView.isVisible = true
-            dateTextView.isVisible = false
+            binding.authorHeaderView.setAuthorData(link.author, link.date, link.app)
+            binding.authorHeaderView.isVisible = true
+            binding.dateTextView.isVisible = false
         }
 
-        titleTextView.text = link.title
-        description.text = link.description
+        binding.titleTextView.text = link.title
+        binding.description.text = link.description
     }
 
     private fun setupButtons(link: Link) {
-        diggCountTextView.voteCount = link.voteCount
-        diggCountTextView.setup(userManagerApi)
-        diggCountTextView.setVoteState(link.userVote)
+        binding.diggCountTextView.voteCount = link.voteCount
+        binding.diggCountTextView.setup(userManagerApi)
+        binding.diggCountTextView.setVoteState(link.userVote)
         when (link.userVote) {
             "dig" -> showDigged(link)
             "bury" -> showBurried(link)
             else -> showUnvoted(link)
         }
 
-        commentsCountTextView.text = link.commentsCount.toString()
-        dateTextView.text = link.date
-        hotBadgeStrip.isVisible = link.isHot
-        hotIcon.isVisible = link.isHot
-        commentsCountTextView.setOnClickListener {
+        binding.commentsCountTextView.text = link.commentsCount.toString()
+        binding.dateTextView.text = link.date
+        binding.hotBadgeStrip.isVisible = link.isHot
+        binding.hotIcon.isVisible = link.isHot
+        binding.commentsCountTextView.setOnClickListener {
             openLinkDetail(link)
         }
-        shareTextView.setOnClickListener {
+        binding.shareTextView.setOnClickListener {
         }
         containerView.setOnClickListener {
             openLinkDetail(link)
@@ -151,40 +149,40 @@ class LinkViewHolder(
 
     private fun showBurried(link: Link) {
         link.userVote = "bury"
-        diggCountTextView.isButtonSelected = true
-        diggCountTextView.setVoteState("bury")
-        diggCountTextView.unvoteListener = {
+        binding.diggCountTextView.isButtonSelected = true
+        binding.diggCountTextView.setVoteState("bury")
+        binding.diggCountTextView.unvoteListener = {
             linkActionListener.dig(link)
-            diggCountTextView.isEnabled = false
+            binding.diggCountTextView.isEnabled = false
         }
-        diggCountTextView.isEnabled = true
+        binding.diggCountTextView.isEnabled = true
     }
 
     private fun showDigged(link: Link) {
         link.userVote = "dig"
-        diggCountTextView.isButtonSelected = true
-        diggCountTextView.setVoteState("dig")
-        diggCountTextView.unvoteListener = {
+        binding.diggCountTextView.isButtonSelected = true
+        binding.diggCountTextView.setVoteState("dig")
+        binding.diggCountTextView.unvoteListener = {
             linkActionListener.removeVote(link)
-            diggCountTextView.isEnabled = false
+            binding.diggCountTextView.isEnabled = false
         }
-        diggCountTextView.isEnabled = true
+        binding.diggCountTextView.isEnabled = true
     }
 
     private fun showUnvoted(link: Link) {
-        diggCountTextView.isButtonSelected = false
-        diggCountTextView.setVoteState(null)
-        diggCountTextView.voteListener = {
+        binding.diggCountTextView.isButtonSelected = false
+        binding.diggCountTextView.setVoteState(null)
+        binding.diggCountTextView.voteListener = {
             linkActionListener.dig(link)
-            diggCountTextView.isEnabled = false
+            binding.diggCountTextView.isEnabled = false
         }
         link.userVote = null
-        diggCountTextView.isEnabled = true
+        binding.diggCountTextView.isEnabled = true
     }
 
     private fun setWidgetAlpha(alpha: Float) {
         if (type == TYPE_IMAGE) previewImageView.alpha = alpha
-        titleTextView.alpha = alpha
-        description.alpha = alpha
+        binding.titleTextView.alpha = alpha
+        binding.description.alpha = alpha
     }
 }

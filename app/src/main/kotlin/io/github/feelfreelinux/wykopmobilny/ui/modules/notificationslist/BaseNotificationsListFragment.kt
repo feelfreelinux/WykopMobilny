@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 
-abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView,
+abstract class BaseNotificationsListFragment :
+    BaseFragment(),
+    NotificationsListView,
     androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     abstract var notificationAdapter: NotificationsListAdapter
@@ -55,10 +57,12 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     }
 
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter: Boolean) {
-        loadingView?.isVisible = false
+        loadingView.isVisible = false
         swiperefresh?.isRefreshing = false
-        notificationAdapter.addData(if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications,
-            shouldClearAdapter)
+        notificationAdapter.addData(
+            if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications,
+            shouldClearAdapter
+        )
     }
 
     override fun showReadToast() {
@@ -67,5 +71,4 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     }
 
     override fun disableLoading() = notificationAdapter.disableLoading()
-
 }

@@ -31,8 +31,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     @Inject
     lateinit var settingsApi: SettingsPreferencesApi
+
     @Inject
     lateinit var userManagerApi: UserManagerApi
+
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 

@@ -7,7 +7,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/itemBackgroundColorStatelist"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    >
 
     <TextView
         android:id="@+id/blockedTextView"
@@ -22,7 +23,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/unlockImageView"
-        tools:text="#otwartywykopmobilny" />
+        tools:text="#otwartywykopmobilny"
+        />
 
     <ImageView
         android:id="@+id/unlockImageView"
@@ -35,6 +37,7 @@
         android:src="?attr/bottomSheetUnlock"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

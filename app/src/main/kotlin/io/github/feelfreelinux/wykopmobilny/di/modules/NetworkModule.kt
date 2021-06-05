@@ -110,5 +110,4 @@ class NetworkModule {
 
     @Provides
     fun provideClipboardHelper(context: Context): ClipboardHelperApi = ClipboardHelper(context)
-
 }

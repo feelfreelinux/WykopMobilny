@@ -3,37 +3,43 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        layout="@layout/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <LinearLayout
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone"
-        android:gravity="center_horizontal"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        >
 
         <ProgressBar
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/sending_entry"/>
+            android:text="@string/sending_entry"
+            />
 
     </LinearLayout>
 
@@ -41,13 +47,14 @@
         android:id="@+id/contentView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         android:paddingTop="@dimen/write_comment_scroll_padding_vertical"
         android:paddingBottom="@dimen/write_comment_scroll_padding_vertical"
-        android:clipToPadding="false"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/markupToolbar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/markupToolbar">
+        >
 
         <MultiAutoCompleteTextView
             android:id="@+id/body"
@@ -55,12 +62,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/input_toolbar_text_margin_horizontal"
             android:layout_marginEnd="@dimen/input_toolbar_text_margin_horizontal"
+            android:background="@null"
+            android:dropDownWidth="wrap_content"
+            android:inputType="text|textMultiLine|textCapSentences|textAutoCorrect"
             android:paddingTop="@dimen/input_toolbar_text_padding_vertical"
             android:paddingBottom="@dimen/input_toolbar_text_padding_vertical"
             android:textSize="@dimen/input_toolbar_text_size"
-            android:inputType="text|textMultiLine|textCapSentences|textAutoCorrect"
-            android:background="@null"
-            android:dropDownWidth="wrap_content" />
+            />
 
     </ScrollView>
 
@@ -68,21 +76,23 @@
         android:id="@+id/markupToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/padding_dp_small"
-        android:paddingBottom="@dimen/padding_dp_tiny"
-        android:paddingLeft="@dimen/padding_dp_large"
-        android:paddingRight="@dimen/padding_dp_large"
-        android:background="?attr/itemBackgroundColor"
         android:alpha="0.6"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="?attr/itemBackgroundColor"
+        android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:paddingRight="@dimen/padding_dp_large"
+        android:paddingBottom="@dimen/padding_dp_tiny"
+        app:layout_constraintBottom_toTopOf="@id/floatingImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/floatingImageView"/>
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
         android:id="@+id/floatingImageView"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/floating_image_height"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

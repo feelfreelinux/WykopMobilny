@@ -32,8 +32,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.wykopLog
-import java.lang.Exception
-
 
 interface NewNavigatorApi {
     fun openMainActivity(targetFragment: String? = null)
@@ -71,8 +69,10 @@ class NewNavigator(val context: Activity) : NewNavigatorApi {
     private val settingsPreferencesApi = SettingsPreferences(context)
 
     override fun openMainActivity(targetFragment: String?) {
-        context.startActivity(MainNavigationActivity.getIntent(context, targetFragment)
-            .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) })
+        context.startActivity(
+            MainNavigationActivity.getIntent(context, targetFragment)
+                .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) }
+        )
     }
 
     override fun openEntryDetailsActivity(entryId: Int, isRevealed: Boolean) =
@@ -100,18 +100,25 @@ class NewNavigator(val context: Activity) : NewNavigatorApi {
         context.startActivityForResult(EditEntryActivity.createIntent(context, body, entryId), BaseInputActivity.EDIT_ENTRY)
 
     override fun openEditLinkCommentActivity(commentId: Int, body: String, linkId: Int) =
-        context.startActivityForResult(LinkCommentEditActivity.createIntent(context, commentId, body, linkId), BaseInputActivity.EDIT_LINK_COMMENT)
+        context.startActivityForResult(
+            LinkCommentEditActivity.createIntent(context, commentId, body, linkId),
+            BaseInputActivity.EDIT_LINK_COMMENT,
+        )
 
     override fun openEditEntryCommentActivity(body: String, entryId: Int, commentId: Int) =
-        context.startActivityForResult(EditEntryCommentActivity.createIntent(context, body, entryId, commentId), BaseInputActivity.EDIT_ENTRY_COMMENT)
+        context.startActivityForResult(
+            EditEntryCommentActivity.createIntent(context, body, entryId, commentId),
+            BaseInputActivity.EDIT_ENTRY_COMMENT,
+        )
 
     override fun openBrowser(url: String) {
         if (settingsPreferencesApi.useBuiltInBrowser) {
             context.openBrowser(url)
         } else {
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            context.startActivity(i)
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(url)
+            }
+            context.startActivity(intent)
         }
     }
 
@@ -149,8 +156,7 @@ class NewNavigator(val context: Activity) : NewNavigatorApi {
         context.startActivity(AddlinkActivity.createIntent(context))
 
     override fun shareUrl(url: String) {
-        ShareCompat.IntentBuilder
-            .from(context)
+        ShareCompat.IntentBuilder(context)
             .setType("text/plain")
             .setChooserTitle(R.string.share)
             .setText(url)
@@ -165,10 +171,10 @@ class NewNavigator(val context: Activity) : NewNavigatorApi {
             wykopLog(Log::e, "Failed to create and start '$actionName' activity", ex)
             val message = context.getString(R.string.error_cannot_open_activity).format(actionName)
             AlertDialog.Builder(context)
-                    .setTitle(R.string.error_occured)
-                    .setMessage(message)
-                    .setPositiveButton(R.string.close, null)
-                    .create().show()
+                .setTitle(R.string.error_occured)
+                .setMessage(message)
+                .setPositiveButton(R.string.close, null)
+                .create().show()
         }
     }
 }

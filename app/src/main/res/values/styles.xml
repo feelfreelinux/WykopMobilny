@@ -34,7 +34,8 @@
         <item name="shadowUpGradient">@drawable/gradient_separator_input</item>
         <item name="adminNickColor">@android:color/black</item>
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list</item>
-        <item name="voteMinusButtonStatelist">@drawable/button_minus_vote_background_state_list</item>
+        <item name="voteMinusButtonStatelist">@drawable/button_minus_vote_background_state_list
+        </item>
         <item name="buttonStatelist">@drawable/button_background_state_list</item>
 
         <item name="drawable404">@drawable/kosmonauta</item>
@@ -133,7 +134,9 @@
         <item name="adminNickColor">@android:color/white</item>
         <item name="linkViewClicked">@color/linkItemClicked.Dark</item>
         <item name="voteButtonStatelist">@drawable/button_vote_background_state_list_dark</item>
-        <item name="voteMinusButtonStatelist">@drawable/button_minus_vote_background_state_list_dark</item>
+        <item name="voteMinusButtonStatelist">
+            @drawable/button_minus_vote_background_state_list_dark
+        </item>
         <item name="buttonStatelist">@drawable/button_background_state_list_dark</item>
 
         <item name="drawable404">@drawable/kosmonauta_dark</item>
@@ -413,7 +416,7 @@
         <item name="colorControlNormal">@color/toolbarItemsColor.Dark</item>
     </style>
 
-    <style name="CheckBoxStyle"  parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="CheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
         <item name="colorControlNormal">#808080</item>
     </style>
 

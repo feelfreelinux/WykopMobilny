@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.URLUtil
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.NewLinkResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.AddlinkActivity
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.addlink_fragment.*
 import javax.inject.Inject
 
@@ -27,7 +27,8 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
         }
     }
 
-    @Inject lateinit var presenter: AddLinkUrlInputPresenter
+    @Inject
+    lateinit var presenter: AddLinkUrlInputPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.addlink_fragment, container, false)
@@ -42,7 +43,7 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
                 link_url_layout.error = getString(R.string.invalid_url)
             }
         }
-        linkUrl.setText(arguments!!.getString(EXTRA_URL, ""))
+        linkUrl.setText(requireArguments().getString(EXTRA_URL, ""))
     }
 
     override fun setLinkDraft(draft: NewLinkResponse) =

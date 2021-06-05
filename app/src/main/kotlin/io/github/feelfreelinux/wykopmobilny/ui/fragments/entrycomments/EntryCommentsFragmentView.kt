@@ -4,7 +4,6 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 
-
 interface EntryCommentsFragmentView : BaseView {
     fun updateComment(comment: EntryComment)
     fun disableLoading()

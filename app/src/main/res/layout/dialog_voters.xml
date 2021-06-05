@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="?attr/backgroundColor">
+    android:background="?attr/backgroundColor"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,12 +15,14 @@
         android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
         android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
         android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
-        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"
+        />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/separator_line_height"
-        android:background="?attr/lineColor"/>
+        android:background="?attr/lineColor"
+        />
 
     <ProgressBar
         android:id="@+id/progressView"
@@ -27,11 +30,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
-        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"
+        />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <TextView
             android:id="@+id/votersTextView"
@@ -43,7 +48,8 @@
             android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
             android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
             android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
-            android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+            android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"
+            />
 
     </androidx.core.widget.NestedScrollView>
 

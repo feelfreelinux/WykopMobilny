@@ -7,19 +7,24 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ImagechooserBottomsheetBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.MarkdownToolbarBinding
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.FormatDialogCallback
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.editTextFormatDialog
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.formatDialogCallback
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
 import io.github.feelfreelinux.wykopmobilny.utils.CameraUtils
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import kotlinx.android.synthetic.main.imagechooser_bottomsheet.view.*
-import kotlinx.android.synthetic.main.markdown_toolbar.view.*
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 
 class MarkdownToolbar @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     var photoUrl: String?
@@ -42,7 +47,7 @@ class MarkdownToolbar @JvmOverloads constructor(
     var containsAdultContent = false
     var floatingImageView: FloatingImageView? = null
     private val markdownDialogs by lazy { MarkdownDialogs(context) }
-    private var formatText: formatDialogCallback = {
+    private var formatText: FormatDialogCallback = {
         markdownListener?.apply {
             val prefix = textBody.substring(0, selectionStart)
             textBody = prefix + it + textBody.substring(selectionStart, textBody.length)
@@ -51,18 +56,18 @@ class MarkdownToolbar @JvmOverloads constructor(
     }
 
     init {
-        View.inflate(context, R.layout.markdown_toolbar, this)
+        val binding = MarkdownToolbarBinding.inflate(layoutInflater, this, true)
 
         // Create callbacks
         markdownDialogs.apply {
-            format_bold.setOnClickListener { insertFormat("**", "**") }
-            format_quote.setOnClickListener { insertFormat("\n>", "") }
-            format_italic.setOnClickListener { insertFormat("__", "__") }
-            insert_link.setOnClickListener { insertFormat("[", "](www.wykop.pl)") }
-            insert_code.setOnClickListener { insertFormat("`", "`") }
-            insert_spoiler.setOnClickListener { insertFormat("\n!", "") }
-            insert_emoticon.setOnClickListener { showLennyfaceDialog(formatText) }
-            insert_photo.setOnClickListener {
+            binding.formatBold.setOnClickListener { insertFormat("**", "**") }
+            binding.formatQuote.setOnClickListener { insertFormat("\n>", "") }
+            binding.formatItalic.setOnClickListener { insertFormat("__", "__") }
+            binding.insertLink.setOnClickListener { insertFormat("[", "](www.wykop.pl)") }
+            binding.insertCode.setOnClickListener { insertFormat("`", "`") }
+            binding.insertSpoiler.setOnClickListener { insertFormat("\n!", "") }
+            binding.insertEmoticon.setOnClickListener { showLennyfaceDialog(formatText) }
+            binding.insertPhoto.setOnClickListener {
                 val activity = getActivityContext() as? BaseActivity
                 activity?.let {
                     if (!activity.rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -70,7 +75,11 @@ class MarkdownToolbar @JvmOverloads constructor(
                             if (it) {
                                 showUploadPhotoBottomsheet()
                             } else {
-                                Toast.makeText(activity, "Aplikacja wymaga uprawnień zapisu do pamięci aby wysyłać zdjęcia.", Toast.LENGTH_LONG)
+                                Toast.makeText(
+                                    activity,
+                                    "Aplikacja wymaga uprawnień zapisu do pamięci aby wysyłać zdjęcia.",
+                                    Toast.LENGTH_LONG,
+                                )
                                     .show()
                             }
                         }
@@ -90,9 +99,11 @@ class MarkdownToolbar @JvmOverloads constructor(
     }
 
     fun hasUserEditedContent(): Boolean {
-        return (photo != null ||
+        return (
+            photo != null ||
                 !floatingImageView?.photoUrl.isNullOrEmpty() ||
-                (markdownListener != null && markdownListener?.textBody!!.isNotEmpty()))
+                (markdownListener != null && markdownListener?.textBody!!.isNotEmpty())
+            )
     }
 
     private fun insertFormat(prefix: String, suffix: String) {
@@ -115,40 +126,38 @@ class MarkdownToolbar @JvmOverloads constructor(
 
     private fun showUploadPhotoBottomsheet() {
         val activityContext = getActivityContext()!!
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
-        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.imagechooser_bottomsheet, null)
-        dialog.setContentView(bottomSheetView)
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = ImagechooserBottomsheetBinding.inflate(activityContext.layoutInflater)
+        dialog.setContentView(bottomSheetView.root)
 
         bottomSheetView.apply {
-            insert_gallery.setOnClickListener {
+            insertGallery.setOnClickListener {
                 markdownListener?.openGalleryImageChooser()
                 dialog.dismiss()
             }
 
-            insert_camera.setOnClickListener {
+            insertCamera.setOnClickListener {
                 val cameraUri = CameraUtils.createPictureUri(context)
                 markdownListener?.openCamera(cameraUri!!)
                 dialog.dismiss()
             }
 
-            insert_url.setOnClickListener {
+            insertUrl.setOnClickListener {
                 editTextFormatDialog(R.string.insert_photo_url, context) { insertImageFromUrl(it) }.show()
                 dialog.dismiss()
             }
 
-            mark_nsfw_checkbox.isChecked = containsAdultContent
-            mark_nsfw_checkbox.setOnCheckedChangeListener { _, isChecked ->
+            markNsfwCheckbox.isChecked = containsAdultContent
+            markNsfwCheckbox.setOnCheckedChangeListener { _, isChecked ->
                 containsAdultContent = isChecked
             }
 
-            mark_nsfw.setOnClickListener {
-                mark_nsfw_checkbox.performClick()
-            }
+            markNsfw.setOnClickListener { markNsfwCheckbox.performClick() }
         }
 
-        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.root.parent as View)
         dialog.setOnShowListener {
-            mBehavior.peekHeight = bottomSheetView.height
+            mBehavior.peekHeight = bottomSheetView.root.height
         }
         dialog.show()
     }

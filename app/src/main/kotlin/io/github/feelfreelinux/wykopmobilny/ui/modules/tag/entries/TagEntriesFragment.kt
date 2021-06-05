@@ -21,12 +21,15 @@ class TagEntriesFragment : BaseEntriesFragment(), TagEntriesView {
         }
     }
 
-    @Inject lateinit var presenter: TagEntriesPresenter
-    @Inject lateinit var userManager: UserManagerApi
+    @Inject
+    lateinit var presenter: TagEntriesPresenter
+
+    @Inject
+    lateinit var userManager: UserManagerApi
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
 
-    private val entryTag by lazy { arguments!!.getString(EXTRA_TAG) }
+    private val entryTag by lazy { requireArguments().getString(EXTRA_TAG) }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

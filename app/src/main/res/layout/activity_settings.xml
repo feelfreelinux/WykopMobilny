@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <include
-        layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <FrameLayout
         android:id="@+id/settings_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

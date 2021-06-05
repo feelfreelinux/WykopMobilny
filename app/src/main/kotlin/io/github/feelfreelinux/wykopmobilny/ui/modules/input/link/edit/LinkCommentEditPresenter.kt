@@ -24,7 +24,8 @@ class LinkCommentEditPresenter(
                 {
                     view?.showProgressBar = false
                     view?.showErrorDialog(it)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 

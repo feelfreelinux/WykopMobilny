@@ -22,7 +22,7 @@ class EntryLinkAdapter @Inject constructor(
     }
 
     override fun getItemViewType(position: Int): Int = when {
-        dataset[position] == null -> AdvancedProgressAdapter.VIEWTYPE_PROGRESS
+        dataset[position] == null -> VIEWTYPE_PROGRESS
         dataset[position]!!.entry != null -> ENTRY_VIEWTYPE
         else -> if (settingsPreferencesApi.linkSimpleList) SIMPLE_LINK_VIEWTYPE else LINK_VIEWTYPE
     }

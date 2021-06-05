@@ -3,23 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:elevation="0dp">
+            app:elevation="0dp"
+            >
 
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/toolbar"
-                app:layout_scrollFlags="scroll|enterAlways" />
+                app:layout_scrollFlags="scroll|enterAlways"
+                />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -28,7 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -41,7 +46,8 @@
             app:fabSize="normal"
             app:layout_anchor="@id/contentView"
             app:layout_anchorGravity="bottom|right"
-            app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior" />
+            app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior"
+            />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -54,6 +60,7 @@
         app:menu="@menu/navigation_menu"
         app:itemIconTint="?attr/textColorGrey"
         app:itemTextColor="?android:textColor"
-        app:itemTextAppearance="@style/NavigationDrawerStyle" />
+        app:itemTextAppearance="@style/NavigationDrawerStyle"
+        />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
@@ -21,7 +22,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepareNoDivider
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_conversation.*
@@ -31,19 +31,26 @@ import javax.inject.Inject
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
 
     companion object {
-        const val EXTRA_USER = "USER"
-        const val DATA_FRAGMENT_TAG = "CONVERSATION_TAG"
+        private const val EXTRA_USER = "USER"
+        private const val DATA_FRAGMENT_TAG = "CONVERSATION_TAG"
 
         fun createIntent(context: Context, user: String) =
             Intent(context, ConversationActivity::class.java).apply {
-                putExtra(ConversationActivity.EXTRA_USER, user)
+                putExtra(EXTRA_USER, user)
             }
     }
 
-    @Inject lateinit var conversationAdapter: PMMessageAdapter
-    @Inject lateinit var presenter: ConversationPresenter
-    @Inject lateinit var userManagerApi: UserManagerApi
-    @Inject lateinit var suggestionApi: SuggestApi
+    @Inject
+    lateinit var conversationAdapter: PMMessageAdapter
+
+    @Inject
+    lateinit var presenter: ConversationPresenter
+
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
+
+    @Inject
+    lateinit var suggestionApi: SuggestApi
 
     override val enableSwipeBackLayout = true
     override val isActivityTransfluent = true
@@ -75,7 +82,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
         if (conversationDataFragment.data == null) {
             toolbar.avatarview.isVisible = false
-            loadingView?.isVisible = true
+            loadingView.isVisible = true
             presenter.loadConversation()
         } else {
             showConversation(conversationDataFragment.data!!)
@@ -83,19 +90,24 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
         inputToolbar.inputToolbarListener = this
         inputToolbar.setup(userManagerApi, suggestionApi)
-
     }
 
     override fun showConversation(conversation: FullConversation) {
-        loadingView?.isVisible = false
+        loadingView.isVisible = false
         swiperefresh?.isRefreshing = false
         receiver = conversation.receiver
         toolbar.apply {
-            subtitle = if (conversation.messages.isNotEmpty()) conversation.messages.last().date else null
+            subtitle =
+                if (conversation.messages.isNotEmpty()) conversation.messages.last().date else null
             avatarview.setAuthor(conversation.receiver)
             avatarview.isVisible = true
             avatarview.setOnClickListener {
-                getActivityContext()!!.startActivity(ProfileActivity.createIntent(getActivityContext()!!, conversation.receiver.nick))
+                getActivityContext()!!.startActivity(
+                    ProfileActivity.createIntent(
+                        getActivityContext()!!,
+                        conversation.receiver.nick
+                    )
+                )
             }
         }
 
@@ -126,8 +138,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         receiver?.let {
-            conversationDataFragment.data =
-                    FullConversation(conversationAdapter.messages.reversed(), receiver!!)
+            conversationDataFragment.data = FullConversation(conversationAdapter.messages.reversed(), it)
         }
     }
 
@@ -138,8 +149,9 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         startActivityForResult(
             Intent.createChooser(
                 intent,
-                getString(R.string.insert_photo_galery)
-            ), BaseInputActivity.USER_ACTION_INSERT_PHOTO
+                getString(R.string.insert_photo_galery),
+            ),
+            BaseInputActivity.USER_ACTION_INSERT_PHOTO,
         )
     }
 
@@ -158,15 +170,11 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         presenter.sendMessage(body, photo, containsAdultContent)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                BaseInputActivity.USER_ACTION_INSERT_PHOTO -> {
-                    inputToolbar.setPhoto(data?.data)
-                }
-
-                BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA -> {
-                    inputToolbar.setPhoto(contentUri)
-                }
+                BaseInputActivity.USER_ACTION_INSERT_PHOTO -> inputToolbar.setPhoto(data?.data)
+                BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA -> inputToolbar.setPhoto(contentUri)
             }
         }
     }

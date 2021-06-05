@@ -11,7 +11,8 @@ import androidx.annotation.RequiresApi
 typealias TokenUrlCallback = (url: String) -> Unit
 
 class LoginActivityWebClient(private val tokenUrlCallback: TokenUrlCallback) : WebViewClient() {
-    @Suppress("OverridingDeprecatedMember")
+
+    @Suppress("DEPRECATION")
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         url?.let { tokenUrlCallback.invoke(it) }
         return super.shouldOverrideUrlLoading(view, url)
@@ -28,9 +29,6 @@ class LoginActivityWebClient(private val tokenUrlCallback: TokenUrlCallback) : W
     override fun onPageFinished(view: WebView, url: String?) {
         val cookieManager = CookieManager.getInstance()
         CookieSyncManager.getInstance().sync()
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            cookieManager.flush()
-        } else {
-        }
+        cookieManager.flush()
     }
 }

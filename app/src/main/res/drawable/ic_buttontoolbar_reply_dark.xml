@@ -4,17 +4,20 @@
     android:width="24dp"
     android:height="24dp"
     android:viewportWidth="24.0"
-    android:viewportHeight="24.0">
+    android:viewportHeight="24.0"
+    >
 
     <group
         android:scaleY="0.9"
         android:scaleX="0.9"
         android:pivotY="10"
-        android:pivotX="10">
+        android:pivotX="10"
+        >
 
         <path
             android:fillColor="#80ffffff"
-            android:pathData="M10,9V5L3,12L10,19V14.9C15,14.9 18.5,16.5 21,20C20,15 17,10 10,9Z" />
+            android:pathData="M10,9V5L3,12L10,19V14.9C15,14.9 18.5,16.5 21,20C20,15 17,10 10,9Z"
+            />
 
     </group>
 

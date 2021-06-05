@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<paths
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<paths>
 
     <!--TODO: make path more specific-->
-<!--    <external-path-->
-<!--        name="external_files"-->
-<!--        path="/"/>-->
-    <external-path name="external_files" path="."/>
-    <cache-path name="cache" path="." />
-    <external-files-path name="files" path="." />
-    <external-path name="external_files" path="."/>
+    <!--    <external-path-->
+    <!--        name="external_files"-->
+    <!--        path="/"/>-->
+    <external-path
+        name="external_files"
+        path="."
+        />
+    <cache-path
+        name="cache"
+        path="."
+        />
+    <external-files-path
+        name="files"
+        path="."
+        />
+    <external-path
+        name="external_files"
+        path="."
+        />
 
 </paths>

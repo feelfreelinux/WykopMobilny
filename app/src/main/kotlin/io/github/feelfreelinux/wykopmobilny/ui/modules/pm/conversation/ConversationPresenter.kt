@@ -37,7 +37,8 @@ class ConversationPresenter(
                 {
                     view?.hideInputbarProgress()
                     view?.showErrorDialog(it)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -54,7 +55,8 @@ class ConversationPresenter(
                 {
                     view?.hideInputbarProgress()
                     view?.showErrorDialog(it)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

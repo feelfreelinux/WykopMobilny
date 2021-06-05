@@ -1,9 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search.links
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.entries_fragment.*
@@ -15,8 +15,11 @@ class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
         fun newInstance() = LinkSearchFragment()
     }
 
-    @Inject lateinit var userManager: UserManagerApi
-    @Inject lateinit var presenter: LinkSearchPresenter
+    @Inject
+    lateinit var userManager: UserManagerApi
+
+    @Inject
+    lateinit var presenter: LinkSearchPresenter
 
     var query = ""
     lateinit var querySubscribe: Disposable
@@ -35,7 +38,6 @@ class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
         linksAdapter.linksActionListener = presenter
         linksAdapter.loadNewDataListener = { loadDataListener(false) }
         loadingView.isVisible = false
-
     }
 
     override fun onDestroy() {

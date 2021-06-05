@@ -12,13 +12,13 @@ class WykopNotificationJobCreator @Inject constructor(
 ) : JobCreator {
 
     override fun create(tag: String) =
-        when (tag) {
-            WykopNotificationsJob.TAG ->
-                WykopNotificationsJob(
-                    wykopNotificationsJobPresenter,
-                    settingsPreferencesApi,
-                    wykopNotificationManagerApi
-                )
-            else -> null
+        if (tag == WykopNotificationsJob.TAG) {
+            WykopNotificationsJob(
+                wykopNotificationsJobPresenter,
+                settingsPreferencesApi,
+                wykopNotificationManagerApi
+            )
+        } else {
+            null
         }
 }

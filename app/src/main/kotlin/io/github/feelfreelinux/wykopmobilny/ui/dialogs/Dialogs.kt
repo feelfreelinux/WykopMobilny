@@ -7,10 +7,10 @@ import io.github.feelfreelinux.wykopmobilny.R
 import kotlinx.android.synthetic.main.dialog_edittext.view.*
 import kotlinx.android.synthetic.main.dialog_insert_link.view.*
 
-typealias formatDialogCallback = (String) -> Unit
-typealias addRelatedDialogCallback = (String, String) -> Unit
+typealias FormatDialogCallback = (String) -> Unit
+typealias AddRelatedDialogCallback = (String, String) -> Unit
 
-fun editTextFormatDialog(titleId: Int, context: Context, callback: formatDialogCallback): AlertDialog {
+fun editTextFormatDialog(titleId: Int, context: Context, callback: FormatDialogCallback): AlertDialog {
     val editTextLayout = getEditTextView(context)
     context.createAlertBuilder().run {
         setTitle(titleId)
@@ -20,7 +20,7 @@ fun editTextFormatDialog(titleId: Int, context: Context, callback: formatDialogC
     }
 }
 
-fun lennyfaceDialog(context: Context, callback: formatDialogCallback): AlertDialog {
+fun lennyfaceDialog(context: Context, callback: FormatDialogCallback): AlertDialog {
     context.createAlertBuilder().run {
         setTitle(R.string.insert_emoticon)
         val lennyArray = context.resources.getStringArray(R.array.lenny_face_array)
@@ -39,12 +39,14 @@ fun confirmationDialog(context: Context, callback: () -> Unit): AlertDialog {
     }
 }
 
-fun addRelatedDialog(context: Context, callback: addRelatedDialogCallback): AlertDialog {
+fun addRelatedDialog(context: Context, callback: AddRelatedDialogCallback): AlertDialog {
     val editTextLayout = View.inflate(context, R.layout.dialog_insert_link, null)
     context.createAlertBuilder().run {
         setTitle("Dodaj powiązane")
         setView(editTextLayout)
-        setPositiveButton(android.R.string.ok) { _, _ -> callback.invoke(editTextLayout.link.text.toString(), editTextLayout.description.text.toString()) }
+        setPositiveButton(android.R.string.ok) { _, _ ->
+            callback(editTextLayout.link.text.toString(), editTextLayout.description.text.toString())
+        }
         return create()
     }
 }

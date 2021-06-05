@@ -62,7 +62,6 @@ interface EntriesRetrofitApi {
         @Part file: MultipartBody.Part
     ): Single<WykopApiResponse<EntryResponse>>
 
-
     @GET("/entries/upvoters/{entryId}/appkey/$APP_KEY")
     fun getEntryVoters(@Path("entryId") entryId: Int): Single<WykopApiResponse<List<VoterResponse>>>
 

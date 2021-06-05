@@ -12,51 +12,50 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.Conversatio
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ConversationResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.PMMessageResponse
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.responses.FullConversationResponse
-import io.reactivex.Single
 import retrofit2.Retrofit
 import toRequestBody
 
 class PMRepository(
-        val retrofit: Retrofit,
-        val userTokenRefresher: UserTokenRefresher,
-        val patronsApi: PatronsApi
+    val retrofit: Retrofit,
+    val userTokenRefresher: UserTokenRefresher,
+    val patronsApi: PatronsApi
 ) : PMApi {
 
     private val pmRetrofitApi by lazy { retrofit.create(PMRetrofitApi::class.java) }
 
     override fun getConversations() = pmRetrofitApi.getConversations()
-            .retryWhen(userTokenRefresher)
-            .flatMap { patronsApi.ensurePatrons(it) }
-            .compose<List<ConversationResponse>>(ErrorHandlerTransformer())
-            .map { it.map { response -> ConversationMapper.map(response) } }
+        .retryWhen(userTokenRefresher)
+        .flatMap { patronsApi.ensurePatrons(it) }
+        .compose<List<ConversationResponse>>(ErrorHandlerTransformer())
+        .map { it.map { response -> ConversationMapper.map(response) } }
 
     override fun getConversation(user: String) = pmRetrofitApi.getConversation(user)
-            .retryWhen(userTokenRefresher)
-            .flatMap { patronsApi.ensurePatrons(it) }
-            .flatMap<FullConversationResponse>(ErrorHandler())
-            .map { FullConversationMapper.map(it) }
+        .retryWhen(userTokenRefresher)
+        .flatMap { patronsApi.ensurePatrons(it) }
+        .flatMap<FullConversationResponse>(ErrorHandler())
+        .map { FullConversationMapper.map(it) }
 
     override fun deleteConversation(user: String) = pmRetrofitApi.deleteConversation(user)
-            .retryWhen(userTokenRefresher)
-            .flatMap { patronsApi.ensurePatrons(it) }
-            .compose<ConversationDeleteResponse>(ErrorHandlerTransformer())
+        .retryWhen(userTokenRefresher)
+        .flatMap { patronsApi.ensurePatrons(it) }
+        .compose<ConversationDeleteResponse>(ErrorHandlerTransformer())
 
     override fun sendMessage(body: String, user: String, embed: String?, plus18: Boolean) =
-            pmRetrofitApi.sendMessage(body, user, embed, plus18)
-                    .retryWhen(userTokenRefresher)
-                    .flatMap { patronsApi.ensurePatrons(it) }
-                    .compose<PMMessageResponse>(ErrorHandlerTransformer())
-                    .map { PMMessageMapper.map(it) }
+        pmRetrofitApi.sendMessage(body, user, embed, plus18)
+            .retryWhen(userTokenRefresher)
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<PMMessageResponse>(ErrorHandlerTransformer())
+            .map { PMMessageMapper.map(it) }
 
     override fun sendMessage(body: String, user: String, plus18: Boolean, embed: WykopImageFile) =
-            pmRetrofitApi.sendMessage(
-                    body.toRequestBody(),
-                    plus18.toRequestBody(),
-                    user,
-                    embed.getFileMultipart()
-            )
-                    .retryWhen(userTokenRefresher)
-                    .flatMap { patronsApi.ensurePatrons(it) }
-                    .compose<PMMessageResponse>(ErrorHandlerTransformer())
-                    .map { PMMessageMapper.map(it) }
+        pmRetrofitApi.sendMessage(
+            body.toRequestBody(),
+            plus18.toRequestBody(),
+            user,
+            embed.getFileMultipart()
+        )
+            .retryWhen(userTokenRefresher)
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<PMMessageResponse>(ErrorHandlerTransformer())
+            .map { PMMessageMapper.map(it) }
 }

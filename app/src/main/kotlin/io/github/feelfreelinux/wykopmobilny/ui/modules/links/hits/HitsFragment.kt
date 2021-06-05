@@ -25,7 +25,8 @@ class HitsFragment : BaseLinksFragment(), HitsView {
         fun newInstance() = HitsFragment()
     }
 
-    @Inject lateinit var presenter: HitsPresenter
+    @Inject
+    lateinit var presenter: HitsPresenter
 
     override var loadDataListener: (Boolean) -> Unit = {
         presenter.loadData()
@@ -77,13 +78,11 @@ class HitsFragment : BaseLinksFragment(), HitsView {
                 setTitle()
             }
 
-
             R.id.byYear -> {
                 val pickerFragment = YearPickerDialog.newInstance(presenter.yearSelection)
                 pickerFragment.setTargetFragment(this, PICKER_REQUEST_CODE)
                 pickerFragment.show(supportFragmentManager, "pickerDialogFragment")
             }
-
         }
         return super.onOptionsItemSelected(item)
     }
@@ -132,7 +131,6 @@ class HitsFragment : BaseLinksFragment(), HitsView {
                     presenter.loadData()
                     setTitle()
                 }
-
             }
         }
     }

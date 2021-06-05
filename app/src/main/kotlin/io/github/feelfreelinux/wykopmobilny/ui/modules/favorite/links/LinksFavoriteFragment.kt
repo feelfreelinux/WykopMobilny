@@ -10,7 +10,8 @@ class LinksFavoriteFragment : BaseLinksFragment(), LinksFavoriteView {
         fun newInstance() = LinksFavoriteFragment()
     }
 
-    @Inject lateinit var presenter: LinksFavoritePresenter
+    @Inject
+    lateinit var presenter: LinksFavoritePresenter
 
     override var loadDataListener: (Boolean) -> Unit = {
         presenter.loadData(it)

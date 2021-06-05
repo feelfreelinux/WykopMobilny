@@ -9,55 +9,55 @@ class WykopSuggestionsTokenizer(
     val setUsersAdapter: () -> Unit,
     val setHashTagsAdapter: () -> Unit
 ) : MultiAutoCompleteTextView.Tokenizer {
-    override fun terminateToken(text: CharSequence): CharSequence {
-        var i = text.length
 
-        while (i > 0 && text[i - 1] == ' ') {
-            i--
+    override fun terminateToken(text: CharSequence): CharSequence {
+        var index = text.length
+
+        while (index > 0 && text[index - 1] == ' ') {
+            index--
         }
 
-        return if (i > 0 && text[i - 1] == ' ') {
+        return if (index > 0 && text[index - 1] == ' ') {
             text
         } else {
             if (text is Spanned) {
-                val sp = SpannableString(text.toString() + " ")
+                val sp = SpannableString("$text ")
                 TextUtils.copySpansFrom(text, 0, text.length, Any::class.java, sp, 0)
                 sp
             } else {
-                text.toString() + " "
+                "$text "
             }
         }
     }
 
     override fun findTokenStart(text: CharSequence, cursor: Int): Int {
-        var i = cursor
+        var index = cursor
 
-        while (i > 0 && text[i - 1] != '@' && text[i - 1] != '#') {
-            i--
+        while (index > 0 && text[index - 1] != '@' && text[index - 1] != '#') {
+            index--
         }
 
-        //Check if token really started with @, else we don't have a valid token
-        return if (i < 1 || (text[i - 1] != '@' && text[i - 1] != '#')) {
+        // Check if token really started with @, else we don't have a valid token
+        return if (index < 1 || (text[index - 1] != '@' && text[index - 1] != '#')) {
             cursor
-        } else if (text[i - 1] == '@') {
+        } else if (text[index - 1] == '@') {
             setUsersAdapter()
-            i
-        } else if (text[i - 1] == '#') {
+            index
+        } else if (text[index - 1] == '#') {
             setHashTagsAdapter()
-            i
+            index
         } else cursor
-
     }
 
     override fun findTokenEnd(text: CharSequence, cursor: Int): Int {
-        var i = cursor
+        var index = cursor
         val len = text.length
 
-        while (i < len) {
-            if (text[i] == ' ') {
-                return i
+        while (index < len) {
+            if (text[index] == ' ') {
+                return index
             } else {
-                i++
+                index++
             }
         }
 

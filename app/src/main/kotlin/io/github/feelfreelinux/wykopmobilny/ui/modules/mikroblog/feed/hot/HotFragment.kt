@@ -29,10 +29,17 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
         fun newInstance() = HotFragment()
     }
 
-    @Inject lateinit var presenter: HotPresenter
-    @Inject lateinit var settingsPreferences: SettingsPreferencesApi
-    @Inject lateinit var navigatorApi: NavigatorApi
-    @Inject lateinit var userManagerApi: UserManagerApi
+    @Inject
+    lateinit var presenter: HotPresenter
+
+    @Inject
+    lateinit var settingsPreferences: SettingsPreferencesApi
+
+    @Inject
+    lateinit var navigatorApi: NavigatorApi
+
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
 
     val fab by lazy { navigation.floatingButton }
     val entriesFragment by lazy { childFragmentManager.findFragmentById(R.id.entriesFragment) as EntriesFragment }
@@ -40,10 +47,8 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        fab.setOnClickListener {
-            navigatorApi.openAddEntryActivity(activity!!)
-        }
-        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(activity!!, R.drawable.ic_hot)
+        fab.setOnClickListener { navigatorApi.openAddEntryActivity(requireActivity()) }
+        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_hot)
         return inflater.inflate(R.layout.hot_fragment, container, false)
     }
 
@@ -108,7 +113,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //TODO: get this callback work on hot/mywkop to update edited entry
+        // TODO: get this callback work on hot/mywkop to update edited entry
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 BaseInputActivity.EDIT_ENTRY -> {
