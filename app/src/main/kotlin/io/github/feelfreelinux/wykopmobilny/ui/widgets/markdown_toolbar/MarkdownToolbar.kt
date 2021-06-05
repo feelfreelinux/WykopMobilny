@@ -14,8 +14,8 @@ import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.databinding.ImagechooserBottomsheetBinding
 import io.github.feelfreelinux.wykopmobilny.databinding.MarkdownToolbarBinding
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.editTextFormatDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.FormatDialogCallback
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.editTextFormatDialog
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
 import io.github.feelfreelinux.wykopmobilny.utils.CameraUtils
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext

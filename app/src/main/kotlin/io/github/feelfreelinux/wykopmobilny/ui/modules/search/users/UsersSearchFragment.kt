@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ProfilesAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.feed_fragment.*
@@ -48,15 +48,15 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefre
             adapter = profilesAdapter
         }
         swiperefresh?.isRefreshing = false
-        loadingView?.isVisible = false
+        loadingView.isVisible = false
     }
 
     override fun onRefresh() {
         if (queryString.length > 2) {
-            loadingView?.isVisible = true
+            loadingView.isVisible = true
             presenter.searchProfiles(queryString)
         } else {
-            loadingView?.isVisible = false
+            loadingView.isVisible = false
         }
     }
 
@@ -67,7 +67,7 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefre
     }
 
     override fun showUsers(entryList: List<Author>) {
-        loadingView?.isVisible = false
+        loadingView.isVisible = false
         swiperefresh?.isRefreshing = false
         searchEmptyView.isVisible = entryList.isEmpty()
         profilesAdapter.apply {

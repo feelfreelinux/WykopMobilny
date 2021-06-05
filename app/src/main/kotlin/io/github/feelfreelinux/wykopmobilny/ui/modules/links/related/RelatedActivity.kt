@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
@@ -13,7 +14,6 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.RelatedListAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.addRelatedDialog
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.android.synthetic.main.activity_conversations_list.*
@@ -57,16 +57,16 @@ class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swipe
         presenter.subscribe(this)
 
         if (relatedDataFragment.data == null) {
-            loadingView?.isVisible = true
+            loadingView.isVisible = true
             onRefresh()
         } else {
             relatedAdapter.items.addAll(relatedDataFragment.data!!)
-            loadingView?.isVisible = false
+            loadingView.isVisible = false
         }
     }
 
     override fun showRelated(related: List<Related>) {
-        loadingView?.isVisible = false
+        loadingView.isVisible = false
         swiperefresh?.isRefreshing = false
         relatedAdapter.apply {
             items.clear()

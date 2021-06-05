@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
@@ -17,7 +18,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.survey.SurveyWidget
 import io.github.feelfreelinux.wykopmobilny.utils.copyText
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
@@ -128,7 +128,8 @@ class EntryViewHolder(
         }
 
         // Only show reply view in entry details
-        binding.replyTextView.isVisible = replyListener != null && userManagerApi.isUserAuthorized() && entry.isCommentingPossible
+        binding.replyTextView.isVisible =
+            replyListener != null && userManagerApi.isUserAuthorized() && entry.isCommentingPossible
         binding.replyTextView.setOnClickListener { replyListener?.invoke(entry) }
 
         containerView.setOnClickListener {
@@ -220,7 +221,11 @@ class EntryViewHolder(
             author.text = entry.author.nick
             date.text = entry.fullDate
             entry.app?.let {
-                date.text = activityContext.getString(R.string.date_with_user_app, entry.fullDate, entry.app)
+                date.text = activityContext.getString(
+                    R.string.date_with_user_app,
+                    entry.fullDate,
+                    entry.app
+                )
             }
 
             entryMenuCopy.setOnClickListener {
@@ -257,7 +262,8 @@ class EntryViewHolder(
 
             entryMenuReport.isVisible = userManagerApi.isUserAuthorized()
 
-            val canUserEdit = userManagerApi.isUserAuthorized() && entry.author.nick == userManagerApi.getUserCredentials()!!.login
+            val canUserEdit =
+                userManagerApi.isUserAuthorized() && entry.author.nick == userManagerApi.getUserCredentials()!!.login
             entryMenuDelete.isVisible = canUserEdit
             entryMenuEdit.isVisible = canUserEdit
         }

@@ -4,14 +4,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
+import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import kotlinx.android.synthetic.main.author_header_layout.view.*
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
 
 class AuthorHeaderView @JvmOverloads constructor(
     context: Context,

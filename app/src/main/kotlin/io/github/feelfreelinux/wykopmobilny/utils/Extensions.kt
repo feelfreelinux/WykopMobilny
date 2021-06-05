@@ -26,12 +26,6 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeParseException
 import java.util.Locale
 
-var View.isVisible: Boolean
-    get() = visibility == View.VISIBLE
-    set(value) {
-        visibility = if (value) View.VISIBLE else View.GONE
-    }
-
 fun SpannableStringBuilder.appendNewSpan(text: CharSequence, what: Any, flags: Int): SpannableStringBuilder {
     val start = length
     append(text)
@@ -116,13 +110,12 @@ fun String.toDurationPrettyDate(): String {
 fun Uri.queryFileName(contentResolver: ContentResolver): String {
     var result: String? = null
     if (scheme == "content") {
-        val cursor = contentResolver.query(this, null, null, null, null)
-        try {
-            if (cursor != null && cursor.moveToFirst()) {
-                result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+        result = contentResolver.query(this, null, null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+            } else {
+                null
             }
-        } finally {
-            cursor!!.close()
         }
     }
     if (result == null) {

@@ -2,11 +2,11 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.databinding.LinkLayoutBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences

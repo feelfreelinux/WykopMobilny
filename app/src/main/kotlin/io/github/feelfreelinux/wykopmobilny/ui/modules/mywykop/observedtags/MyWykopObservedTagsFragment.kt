@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -12,7 +13,6 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTagResponse
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ObservedTagsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopNotifier
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
@@ -52,7 +52,7 @@ class MyWykopObservedTagsFragment :
             adapter.items.addAll(dataFragment.data!!)
             adapter.notifyDataSetChanged()
         } else {
-            loadingView?.isVisible = true
+            loadingView.isVisible = true
             presenter.loadTags()
         }
     }
@@ -63,7 +63,7 @@ class MyWykopObservedTagsFragment :
     }
 
     override fun showTags(tags: List<ObservedTagResponse>) {
-        loadingView?.isVisible = false
+        loadingView.isVisible = false
         swiperefresh?.isRefreshing = false
         adapter.items.clear()
         adapter.items.addAll(tags)

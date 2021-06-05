@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
@@ -19,7 +20,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapt
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.ZERO_WIDTH_SPACE
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 import kotlinx.android.synthetic.main.activity_write_comment.*
 import kotlinx.android.synthetic.main.toolbar.*

@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.databinding.DialogVotersBinding
@@ -14,9 +15,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinksAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrylink.EntryLinkFragmentView
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject

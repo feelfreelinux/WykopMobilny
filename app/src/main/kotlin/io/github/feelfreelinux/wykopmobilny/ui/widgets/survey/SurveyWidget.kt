@@ -5,12 +5,12 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.databinding.SurveyAnswerItemBinding
 import io.github.feelfreelinux.wykopmobilny.databinding.SurveyListviewBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Answer
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Survey
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
@@ -23,7 +23,7 @@ class SurveyWidget @JvmOverloads constructor(
     private val binding = SurveyListviewBinding.inflate(layoutInflater, this)
 
     init {
-        isVisible = false
+        this.isVisible = false
     }
 
     private lateinit var userManager: UserManagerApi

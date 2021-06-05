@@ -50,3 +50,10 @@ jobs:
 
       - name: Android Lint
         run: ./gradlew lint
+
+      - uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: lint-results
+          path: '*/build/**/reports/lint-results-*.html'
+

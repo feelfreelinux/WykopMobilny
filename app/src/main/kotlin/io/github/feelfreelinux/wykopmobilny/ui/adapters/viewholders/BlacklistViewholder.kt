@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.blacklist_blocked_item.view.*
 

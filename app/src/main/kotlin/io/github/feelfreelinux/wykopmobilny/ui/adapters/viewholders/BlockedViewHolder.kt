@@ -15,7 +15,6 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.blocked_entry_view.*
 
 class BlockedViewHolder(
     val binding: BlockedEntryViewBinding,

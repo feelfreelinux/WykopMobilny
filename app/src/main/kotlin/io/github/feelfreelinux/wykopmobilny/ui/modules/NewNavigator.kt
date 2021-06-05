@@ -32,7 +32,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.wykopLog
-import java.lang.Exception
 
 interface NewNavigatorApi {
     fun openMainActivity(targetFragment: String? = null)

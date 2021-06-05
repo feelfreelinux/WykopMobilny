@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Upvoter
@@ -11,7 +12,6 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.UpvoterListAdapter
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_conversations_list.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -52,16 +52,16 @@ class UpvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swip
         presenter.subscribe(this)
 
         if (upvotersDataFragment.data == null) {
-            loadingView?.isVisible = true
+            loadingView.isVisible = true
             onRefresh()
         } else {
             upvotersAdapter.items.addAll(upvotersDataFragment.data!!)
-            loadingView?.isVisible = false
+            loadingView.isVisible = false
         }
     }
 
     override fun showUpvoters(upvoter: List<Upvoter>) {
-        loadingView?.isVisible = false
+        loadingView.isVisible = false
         swiperefresh?.isRefreshing = false
         upvotersAdapter.apply {
             items.clear()

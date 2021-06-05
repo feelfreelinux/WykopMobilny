@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.devbrackets.android.exomedia.core.source.MediaSourceProvider
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
@@ -34,7 +35,6 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActions
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykopLog

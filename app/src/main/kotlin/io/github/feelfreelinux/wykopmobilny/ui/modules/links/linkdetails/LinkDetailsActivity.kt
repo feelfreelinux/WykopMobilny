@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
@@ -19,7 +20,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkDetailsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentViewListener
 import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
@@ -140,7 +140,7 @@ class LinkDetailsActivity :
 
         presenter.sortBy = linkPreferences.linkCommentsDefaultSort ?: "best"
         adapter.notifyDataSetChanged()
-        loadingView?.isVisible = true
+        loadingView.isVisible = true
         hideInputToolbar()
         if (adapter.link != null) {
             presenter.loadComments()

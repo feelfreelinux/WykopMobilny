@@ -5,9 +5,9 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import kotlinx.android.synthetic.main.floating_image_view_layout.view.*
 
@@ -19,7 +19,7 @@ class FloatingImageView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.floating_image_view_layout, this)
-        isVisible = false
+        this.isVisible = false
         deleteButton.setOnClickListener { removeImage() }
     }
 

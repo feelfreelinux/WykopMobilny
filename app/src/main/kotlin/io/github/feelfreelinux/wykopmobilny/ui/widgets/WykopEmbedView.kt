@@ -5,11 +5,11 @@ import android.util.AttributeSet
 import android.util.Patterns
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Embed
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import kotlinx.android.synthetic.main.wykopembedview.view.*
@@ -28,7 +28,7 @@ class WykopEmbedView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.wykopembedview, this)
-        isVisible = false
+        this.isVisible = false
         image.onResizedListener = { mEmbed.get()?.isResize = it }
         image.showResizeView = { post { imageExpand.isVisible = it } }
         image.openImageListener = { handleUrl() }

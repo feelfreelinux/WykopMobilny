@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
@@ -15,7 +16,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.api.stripImageCompression
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
@@ -87,7 +87,11 @@ class LinkHeaderViewHolder(
         }
 
         binding.urlTextView.text = URL(link.sourceUrl).host.removePrefix("www.")
-        binding.blockedTextView.prepareBody(link.tags.convertToTagsHtml()) { linkHandlerApi.handleUrl(it) }
+        binding.blockedTextView.prepareBody(link.tags.convertToTagsHtml()) {
+            linkHandlerApi.handleUrl(
+                it
+            )
+        }
     }
 
     private fun setupButtons(link: Link) {

@@ -1,9 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
 
-import io.github.feelfreelinux.wykopmobilny.ui.modules.IntentCreationFailedException
-
 import android.content.Context
 import android.content.Intent
+import io.github.feelfreelinux.wykopmobilny.ui.modules.IntentCreationFailedException
 
 class YoutubeActivity {
     companion object {

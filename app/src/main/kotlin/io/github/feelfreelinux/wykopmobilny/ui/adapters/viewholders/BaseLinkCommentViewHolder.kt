@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
@@ -17,7 +18,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
 import io.github.feelfreelinux.wykopmobilny.utils.copyText
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
@@ -113,7 +113,8 @@ abstract class BaseLinkCommentViewHolder(
         containerView.setOnClickListener { handleClick(comment) }
 
         commentContent.isVisible = !comment.body.isNullOrEmpty()
-        collapseButton.isVisible = !((comment.id != comment.parentId) || comment.childCommentCount == 0) && commentViewListener != null
+        collapseButton.isVisible =
+            !((comment.id != comment.parentId) || comment.childCommentCount == 0) && commentViewListener != null
     }
 
     private fun handleClick(comment: LinkComment) {
@@ -127,17 +128,32 @@ abstract class BaseLinkCommentViewHolder(
         val credentials = userManagerApi.getUserCredentials()
         if (credentials != null && credentials.login == comment.author.nick) {
             authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.colorBadgeOwn))
+            authorBadgeStrip.setBackgroundColor(
+                ContextCompat.getColor(
+                    containerView.context,
+                    R.color.colorBadgeOwn
+                )
+            )
         } else if (isAuthorComment) {
             authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.colorBadgeAuthors))
+            authorBadgeStrip.setBackgroundColor(
+                ContextCompat.getColor(
+                    containerView.context,
+                    R.color.colorBadgeAuthors
+                )
+            )
         } else {
             authorBadgeStrip.isVisible = false
         }
 
         if (commentId == comment.id) {
             authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.plusPressedColor))
+            authorBadgeStrip.setBackgroundColor(
+                ContextCompat.getColor(
+                    containerView.context,
+                    R.color.plusPressedColor
+                )
+            )
         }
     }
 
@@ -221,7 +237,8 @@ abstract class BaseLinkCommentViewHolder(
             author.text = comment.author.nick
             date.text = comment.fullDate
             comment.app?.let {
-                date.text = context.getString(R.string.date_with_user_app, comment.fullDate, comment.app)
+                date.text =
+                    context.getString(R.string.date_with_user_app, comment.fullDate, comment.app)
             }
 
             comment_menu_copy.setOnClickListener {
@@ -249,7 +266,8 @@ abstract class BaseLinkCommentViewHolder(
 
             comment_menu_report.isVisible = userManagerApi.isUserAuthorized()
 
-            val canUserEdit = userManagerApi.isUserAuthorized() && comment.author.nick == userManagerApi.getUserCredentials()!!.login
+            val canUserEdit =
+                userManagerApi.isUserAuthorized() && comment.author.nick == userManagerApi.getUserCredentials()!!.login
             comment_menu_delete.isVisible = canUserEdit
             comment_menu_edit.isVisible = canUserEdit
         }

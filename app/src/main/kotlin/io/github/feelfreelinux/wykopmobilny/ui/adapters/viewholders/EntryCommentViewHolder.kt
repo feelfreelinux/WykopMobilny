@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.databinding.CommentListItemBinding
@@ -20,7 +21,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.copyText
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
@@ -125,7 +125,11 @@ class EntryCommentViewHolder(
             binding.dateTextView.text = comment.date.replace(" temu", "")
             comment.app?.let {
                 binding.dateTextView.text =
-                    containerView.context.getString(R.string.date_with_user_app, comment.date.replace(" temu", ""), comment.app)
+                    containerView.context.getString(
+                        R.string.date_with_user_app,
+                        comment.date.replace(" temu", ""),
+                        comment.app
+                    )
             }
         }
     }
@@ -136,7 +140,8 @@ class EntryCommentViewHolder(
         }
 
         // Only show reply view in entry details
-        binding.replyTextView.isVisible = userManagerApi.isUserAuthorized() && commentViewListener != null
+        binding.replyTextView.isVisible =
+            userManagerApi.isUserAuthorized() && commentViewListener != null
         binding.replyTextView.setOnClickListener { commentViewListener?.addReply(comment.author) }
 
         // Setup vote button
@@ -196,7 +201,11 @@ class EntryCommentViewHolder(
             author.text = comment.author.nick
             date.text = comment.fullDate
             comment.app?.let {
-                date.text = root.context.getString(R.string.date_with_user_app, comment.fullDate, comment.app)
+                date.text = root.context.getString(
+                    R.string.date_with_user_app,
+                    comment.fullDate,
+                    comment.app
+                )
             }
 
             entryCommentMenuCopy.setOnClickListener {
@@ -255,17 +264,32 @@ class EntryCommentViewHolder(
         val credentials = userManagerApi.getUserCredentials()
         if (credentials != null && credentials.login == comment.author.nick) {
             binding.authorBadgeStrip.isVisible = true
-            binding.authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.colorBadgeOwn))
+            binding.authorBadgeStrip.setBackgroundColor(
+                ContextCompat.getColor(
+                    containerView.context,
+                    R.color.colorBadgeOwn
+                )
+            )
         } else if (isAuthorComment) {
             binding.authorBadgeStrip.isVisible = true
-            binding.authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.colorBadgeAuthors))
+            binding.authorBadgeStrip.setBackgroundColor(
+                ContextCompat.getColor(
+                    containerView.context,
+                    R.color.colorBadgeAuthors
+                )
+            )
         } else {
             binding.authorBadgeStrip.isVisible = false
         }
 
         if (commentId == comment.id) {
             binding.authorBadgeStrip.isVisible = true
-            binding.authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.plusPressedColor))
+            binding.authorBadgeStrip.setBackgroundColor(
+                ContextCompat.getColor(
+                    containerView.context,
+                    R.color.plusPressedColor
+                )
+            )
         }
     }
 }

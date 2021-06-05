@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.notification
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.PagedDataModel
@@ -8,7 +9,6 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.BaseNotificationsListFragment
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 import javax.inject.Inject
@@ -39,12 +39,12 @@ class NotificationsListFragment : BaseNotificationsListFragment() {
 
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         if (entryFragmentData.data != null && entryFragmentData.data!!.model.isNotEmpty()) {
-            loadingView?.isVisible = false
+            loadingView.isVisible = false
             presenter.page = entryFragmentData.data!!.page
             notificationAdapter.addData(entryFragmentData.data!!.model, true)
             notificationAdapter.disableLoading()
         } else {
-            loadingView?.isVisible = true
+            loadingView.isVisible = true
             onRefresh()
         }
     }

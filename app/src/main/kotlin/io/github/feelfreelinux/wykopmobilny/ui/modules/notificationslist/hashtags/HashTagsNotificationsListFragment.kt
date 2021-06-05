@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -13,7 +14,6 @@ import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInst
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist.BaseNotificationsListFragment
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
@@ -46,12 +46,12 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
         entryFragmentData = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         val pagedModel = entryFragmentData.data
         if (pagedModel != null && pagedModel.model.isNotEmpty()) {
-            loadingView?.isVisible = false
+            loadingView.isVisible = false
             presenter.page = pagedModel.page
             notificationAdapter.addData(pagedModel.model, true)
             notificationAdapter.disableLoading()
         } else {
-            loadingView?.isVisible = true
+            loadingView.isVisible = true
             onRefresh()
         }
     }

@@ -19,6 +19,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.postDelayed
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import com.evernote.android.job.util.JobUtil
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
@@ -53,7 +54,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.BadgeDrawerDrawable
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
@@ -64,8 +64,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
-import kotlinx.android.synthetic.main.patron_list_item.view.*
-import kotlinx.android.synthetic.main.patrons_bottomsheet.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 

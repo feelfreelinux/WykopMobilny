@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
@@ -10,22 +11,22 @@ import io.github.feelfreelinux.wykopmobilny.databinding.DialogVotersBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntriesAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragmentView
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.dialog_voters.view.*
 import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
 open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView, SwipeRefreshLayout.OnRefreshListener {
 
-    @Inject lateinit var entriesApi: EntriesApi
+    @Inject
+    lateinit var entriesApi: EntriesApi
 
-    @Inject lateinit var entriesAdapter: EntriesAdapter
+    @Inject
+    lateinit var entriesAdapter: EntriesAdapter
 
     open var loadDataListener: (Boolean) -> Unit = {}
     lateinit var votersDialogListener: VotersDialogListener

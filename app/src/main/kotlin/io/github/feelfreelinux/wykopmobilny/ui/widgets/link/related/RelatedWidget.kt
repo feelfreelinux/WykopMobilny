@@ -3,24 +3,25 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.link.related
 import android.content.Context
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.View
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import com.google.android.material.card.MaterialCardView
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.LinkRelatedLayoutBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
-import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.link_related_layout.view.*
 
-class RelatedWidget(context: Context, attrs: AttributeSet) :
-    androidx.cardview.widget.CardView(context, attrs), RelatedWidgetView {
+class RelatedWidget(context: Context, attrs: AttributeSet) : MaterialCardView(context, attrs), RelatedWidgetView {
+
+    private val binding = LinkRelatedLayoutBinding.inflate(layoutInflater, this)
 
     init {
-        View.inflate(context, R.layout.link_related_layout, this)
         isClickable = true
         isFocusable = true
         val typedValue = TypedValue()
@@ -34,32 +35,36 @@ class RelatedWidget(context: Context, attrs: AttributeSet) :
     private lateinit var presenter: RelatedWidgetPresenter
     private lateinit var relatedItem: Related
 
-    fun setRelatedData(related: Related, userManagerApi: UserManagerApi, relatedWidgetPresenter: RelatedWidgetPresenter) {
+    fun setRelatedData(
+        related: Related,
+        userManagerApi: UserManagerApi,
+        relatedWidgetPresenter: RelatedWidgetPresenter
+    ) {
         relatedItem = related
         presenter = relatedWidgetPresenter
-        title.text = related.title
-        urlTextView.text = related.url
+        binding.title.text = related.title
+        binding.urlTextView.text = related.url
         presenter.subscribe(this)
         presenter.relatedId = relatedItem.id
         setOnClickListener {
             presenter.handleLink(related.url)
         }
-        shareTextView.setOnClickListener {
+        binding.shareTextView.setOnClickListener {
             shareUrl()
         }
         setVoteCount(related.voteCount)
-        authorHeaderView.isVisible = related.author != null
-        userNameTextView.isVisible = related.author != null
+        binding.authorHeaderView.isVisible = related.author != null
+        binding.userNameTextView.isVisible = related.author != null
         related.author?.apply {
-            userNameTextView.text = nick
-            userNameTextView.setOnClickListener { openProfile() }
-            authorHeaderView.setOnClickListener { openProfile() }
-            authorHeaderView.setAuthor(this)
-            userNameTextView.setTextColor(context.getGroupColor(group))
+            binding.userNameTextView.text = nick
+            binding.userNameTextView.setOnClickListener { openProfile() }
+            binding.authorHeaderView.setOnClickListener { openProfile() }
+            binding.authorHeaderView.setAuthor(this)
+            binding.userNameTextView.setTextColor(context.getGroupColor(group))
         }
         setupButtons()
-        plusButton.setup(userManagerApi)
-        minusButton.setup(userManagerApi)
+        binding.plusButton.setup(userManagerApi)
+        binding.minusButton.setup(userManagerApi)
     }
 
     private fun openProfile() {
@@ -70,34 +75,28 @@ class RelatedWidget(context: Context, attrs: AttributeSet) :
     private fun setupButtons() {
         when (relatedItem.userVote) {
             1 -> {
-                plusButton.isButtonSelected = true
-                plusButton.isEnabled = false
-                minusButton.isButtonSelected = false
-                minusButton.isEnabled = true
-                minusButton.voteListener = {
-                    presenter.voteDown()
-                }
+                binding.plusButton.isButtonSelected = true
+                binding.plusButton.isEnabled = false
+                binding.minusButton.isButtonSelected = false
+                binding.minusButton.isEnabled = true
+                binding.minusButton.voteListener = { presenter.voteDown() }
             }
 
             0 -> {
-                plusButton.isButtonSelected = false
-                plusButton.isEnabled = true
-                plusButton.voteListener = {
-                    presenter.voteUp()
-                }
-                minusButton.isButtonSelected = false
-                minusButton.isEnabled = true
-                minusButton.voteListener = {
-                    presenter.voteDown()
-                }
+                binding.plusButton.isButtonSelected = false
+                binding.plusButton.isEnabled = true
+                binding.plusButton.voteListener = { presenter.voteUp() }
+                binding.minusButton.isButtonSelected = false
+                binding.minusButton.isEnabled = true
+                binding.minusButton.voteListener = { presenter.voteDown() }
             }
 
             -1 -> {
-                minusButton.isButtonSelected = true
-                minusButton.isEnabled = false
-                plusButton.isButtonSelected = false
-                plusButton.isEnabled = true
-                plusButton.voteListener = {
+                binding.minusButton.isButtonSelected = true
+                binding.minusButton.isEnabled = false
+                binding.plusButton.isButtonSelected = false
+                binding.plusButton.isEnabled = true
+                binding.plusButton.voteListener = {
                     presenter.voteUp()
                 }
             }
@@ -116,19 +115,20 @@ class RelatedWidget(context: Context, attrs: AttributeSet) :
 
     override fun setVoteCount(voteCount: Int) {
         relatedItem.voteCount = voteCount
-        voteCountTextView.text = if (relatedItem.voteCount > 0) "+${relatedItem.voteCount}" else "${relatedItem.voteCount}"
+        binding.voteCountTextView.text = if (relatedItem.voteCount > 0) "+${relatedItem.voteCount}" else "${relatedItem.voteCount}"
         if (relatedItem.voteCount > 0) {
-            voteCountTextView.setTextColor(ContextCompat.getColor(context, R.color.plusPressedColor))
+            R.color.plusPressedColor
         } else if (relatedItem.voteCount < 0) {
-            voteCountTextView.setTextColor(ContextCompat.getColor(context, R.color.minusPressedColor))
-        }
+            R.color.minusPressedColor
+        } else {
+            null
+        }?.let { binding.voteCountTextView.setTextColor(ContextCompat.getColor(context, it)) }
     }
 
     override fun showErrorDialog(e: Throwable) = context.showExceptionDialog(e)
 
     private fun shareUrl() {
-        ShareCompat.IntentBuilder
-            .from(getActivityContext()!!)
+        ShareCompat.IntentBuilder(getActivityContext()!!)
             .setType("text/plain")
             .setChooserTitle(R.string.share)
             .setText(url)
