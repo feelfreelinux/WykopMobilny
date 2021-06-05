@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/searchEmptyView"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/searchEmptyView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    android:layout_gravity="center">
+    >
 
     <ImageView
-        android:src="?attr/drawable404"
         android:layout_width="150dp"
-        android:layout_height="150dp" />
+        android:layout_height="150dp"
+        android:src="?attr/drawable404"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/searchNoResults"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:textSize="22sp"
         android:gravity="center"
-        android:layout_gravity="center">
-
-    </TextView>
+        android:text="@string/searchNoResults"
+        android:textSize="22sp"
+        ></TextView>
 </LinearLayout>

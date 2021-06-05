@@ -42,7 +42,7 @@ class AddlinkUrlInputFragment : BaseFragment(), AddLinkUrlInputFragmentView {
                 link_url_layout.error = getString(R.string.invalid_url)
             }
         }
-        linkUrl.setText(arguments!!.getString(EXTRA_URL, ""))
+        linkUrl.setText(requireArguments().getString(EXTRA_URL, ""))
     }
 
     override fun setLinkDraft(draft: NewLinkResponse) =

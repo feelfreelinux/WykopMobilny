@@ -17,5 +17,4 @@ class AddlinkModule {
     @Provides
     fun provideLinkHandler(activity: AddlinkActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi =
         WykopLinkHandler(activity, navigator)
-
 }

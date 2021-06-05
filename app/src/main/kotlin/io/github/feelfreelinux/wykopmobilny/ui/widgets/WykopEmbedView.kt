@@ -17,7 +17,9 @@ import java.lang.ref.WeakReference
 import java.net.URI
 
 class WykopEmbedView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     companion object {
@@ -57,7 +59,10 @@ class WykopEmbedView @JvmOverloads constructor(
                 image.isResized = embed.isResize
                 imageExpand.isVisible = false
                 isVisible = true
-                if (!embed.isRevealed && (plus18 && !settingsPreferencesApi.showAdultContent || isNsfw && settingsPreferencesApi.hideNsfw)) {
+                if (
+                    !embed.isRevealed &&
+                    (plus18 && !settingsPreferencesApi.showAdultContent || isNsfw && settingsPreferencesApi.hideNsfw)
+                ) {
                     image.loadImageFromUrl(NSFW_IMAGE_PLACEHOLDER)
                     hiddenPreview = preview
                 } else {
@@ -116,7 +121,6 @@ class WykopEmbedView @JvmOverloads constructor(
                 // APIV2 WTF
                 val url = if (image.isAnimated) image.url.replace(".jpg", ".gif") else image.url
                 navigator.openPhotoViewActivity(url)
-
             }
             "video" -> {
                 val url = URI(image.url.replace("\\", ""))

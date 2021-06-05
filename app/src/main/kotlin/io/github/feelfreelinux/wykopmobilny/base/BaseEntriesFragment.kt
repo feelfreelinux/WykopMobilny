@@ -3,8 +3,10 @@ package io.github.feelfreelinux.wykopmobilny.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.entries.EntriesApi
+import io.github.feelfreelinux.wykopmobilny.databinding.DialogVotersBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntriesAdapter
@@ -19,9 +21,10 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject lateinit var entriesApi: EntriesApi
+
     @Inject lateinit var entriesAdapter: EntriesAdapter
 
     open var loadDataListener: (Boolean) -> Unit = {}
@@ -105,10 +108,10 @@ open class BaseEntriesFragment : BaseFragment(), EntriesFragmentView, androidx.s
     override fun showVoters(voters: List<Voter>) = votersDialogListener(voters)
 
     override fun openVotersMenu() {
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activity!!)
-        val votersDialogView = activity!!.layoutInflater.inflate(R.layout.dialog_voters, null)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(requireActivity())
+        val votersDialogView = DialogVotersBinding.inflate(layoutInflater)
         votersDialogView.votersTextView.isVisible = false
-        dialog.setContentView(votersDialogView)
+        dialog.setContentView(votersDialogView.root)
         votersDialogListener = createVotersDialogListener(dialog, votersDialogView)
         dialog.show()
     }

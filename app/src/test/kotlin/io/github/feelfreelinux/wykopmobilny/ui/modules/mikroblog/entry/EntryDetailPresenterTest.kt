@@ -32,7 +32,7 @@ class EntryDetailPresenterTest {
     @Test
     fun testSuccess() {
         val testEntry =
-                mock<Entry>()
+            mock<Entry>()
 
         systemUnderTest.entryId = 12
 
@@ -51,5 +51,4 @@ class EntryDetailPresenterTest {
         systemUnderTest.loadData()
         verify(mockOfView).showErrorDialog(any())
     }
-
 }

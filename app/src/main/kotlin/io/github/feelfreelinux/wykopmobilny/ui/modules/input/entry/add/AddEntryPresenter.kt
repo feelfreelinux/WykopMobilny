@@ -21,7 +21,8 @@ class AddEntryPresenter(
                 {
                     view?.showProgressBar = false
                     view?.showErrorDialog(it)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -35,7 +36,8 @@ class AddEntryPresenter(
                 {
                     view?.showProgressBar = false
                     view?.showErrorDialog(it)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

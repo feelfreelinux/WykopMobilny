@@ -13,32 +13,32 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.LinkRespons
 import retrofit2.Retrofit
 
 class SearchRepository(
-        val retrofit: Retrofit,
-        val userTokenRefresher: UserTokenRefresher,
-        val owmContentFilter: OWMContentFilter,
-        val patronsApi: PatronsApi
+    val retrofit: Retrofit,
+    val userTokenRefresher: UserTokenRefresher,
+    val owmContentFilter: OWMContentFilter,
+    val patronsApi: PatronsApi
 ) : SearchApi {
 
     private val searchApi by lazy { retrofit.create(SearchRetrofitApi::class.java) }
 
     override fun searchLinks(page: Int, query: String) = searchApi
-            .searchLinks(page, query)
-            .retryWhen(userTokenRefresher)
-            .flatMap { patronsApi.ensurePatrons(it) }
-            .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-            .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
+        .searchLinks(page, query)
+        .retryWhen(userTokenRefresher)
+        .flatMap { patronsApi.ensurePatrons(it) }
+        .compose<List<LinkResponse>>(ErrorHandlerTransformer())
+        .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
 
     override fun searchEntries(page: Int, query: String) = searchApi
-            .searchEntries(page, query)
-            .retryWhen(userTokenRefresher)
-            .flatMap { patronsApi.ensurePatrons(it) }
-            .compose<List<EntryResponse>>(ErrorHandlerTransformer())
-            .map { it.map { response -> EntryMapper.map(response, owmContentFilter) } }
+        .searchEntries(page, query)
+        .retryWhen(userTokenRefresher)
+        .flatMap { patronsApi.ensurePatrons(it) }
+        .compose<List<EntryResponse>>(ErrorHandlerTransformer())
+        .map { it.map { response -> EntryMapper.map(response, owmContentFilter) } }
 
     override fun searchProfiles(query: String) = searchApi
-            .searchProfiles(query)
-            .retryWhen(userTokenRefresher)
-            .flatMap { patronsApi.ensurePatrons(it) }
-            .compose<List<AuthorResponse>>(ErrorHandlerTransformer())
-            .map { it.map { response -> AuthorMapper.map(response) } }
+        .searchProfiles(query)
+        .retryWhen(userTokenRefresher)
+        .flatMap { patronsApi.ensurePatrons(it) }
+        .compose<List<AuthorResponse>>(ErrorHandlerTransformer())
+        .map { it.map { response -> AuthorMapper.map(response) } }
 }

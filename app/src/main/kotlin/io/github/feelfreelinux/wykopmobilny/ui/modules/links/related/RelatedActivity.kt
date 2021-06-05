@@ -33,7 +33,9 @@ class RelatedActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swipe
     }
 
     @Inject lateinit var presenter: RelatedPresenter
+
     @Inject lateinit var relatedAdapter: RelatedListAdapter
+
     @Inject lateinit var userManager: UserManagerApi
 
     private lateinit var relatedDataFragment: DataFragment<List<Related>>

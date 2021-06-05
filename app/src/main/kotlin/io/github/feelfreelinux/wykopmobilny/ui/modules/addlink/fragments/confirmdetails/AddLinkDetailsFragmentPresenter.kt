@@ -15,13 +15,16 @@ class AddLinkDetailsFragmentPresenter(
         addLinkApi.getImages(key)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.showImages(it)
-                view?.showImagesLoading(false)
-            }, {
-                view?.showErrorDialog(it)
-                view?.showImagesLoading(false)
-            })
+            .subscribe(
+                {
+                    view?.showImages(it)
+                    view?.showImagesLoading(false)
+                },
+                {
+                    view?.showErrorDialog(it)
+                    view?.showImagesLoading(false)
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -38,9 +41,12 @@ class AddLinkDetailsFragmentPresenter(
         addLinkApi.publishLink(key, title, description, tags, imageKey, sourceUrl, plus18)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.openLinkScreen(it)
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    view?.openLinkScreen(it)
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 }

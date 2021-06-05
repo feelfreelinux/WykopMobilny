@@ -8,7 +8,9 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 
 class PlusVoteButton @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.MirkoButtonStyle
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.MirkoButtonStyle
 ) : VoteButton(context, attrs, defStyleAttr) {
 
     init {
@@ -27,7 +29,6 @@ class PlusVoteButton @JvmOverloads constructor(
             )
             setCompoundDrawablesWithIntrinsicBounds(typedArray.getDrawable(0), null, null, null)
             typedArray.recycle()
-
         }
     }
 }

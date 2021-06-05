@@ -7,11 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/conversation_list_item_margin_top"
-    android:layout_marginBottom="@dimen/conversation_list_item_margin_bottom">
+    android:layout_marginBottom="@dimen/conversation_list_item_margin_bottom"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
             android:id="@+id/authorHeaderView"
@@ -20,7 +22,8 @@
             android:layout_margin="@dimen/conversation_list_item_author_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
         <TextView
             android:id="@+id/reason_textview"
@@ -30,7 +33,8 @@
             android:textSize="@dimen/link_related_layout_link_text_size"
             tools:text="Nie nadaje się"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

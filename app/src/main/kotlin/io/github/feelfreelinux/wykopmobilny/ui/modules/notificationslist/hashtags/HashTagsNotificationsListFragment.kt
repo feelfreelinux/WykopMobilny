@@ -27,8 +27,11 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
     }
 
     @Inject override lateinit var linkHandler: WykopLinkHandlerApi
+
     @Inject override lateinit var notificationAdapter: NotificationsListAdapter
+
     @Inject lateinit var settingsApi: SettingsPreferencesApi
+
     @Inject lateinit var presenter: HashTagsNotificationsListPresenter
 
     private lateinit var entryFragmentData: DataFragment<PagedDataModel<List<Notification>>>
@@ -119,10 +122,9 @@ class HashTagsNotificationsListFragment : BaseNotificationsListFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         entryFragmentData.data =
-                PagedDataModel(presenter.page, notificationAdapter.data)
+            PagedDataModel(presenter.page, notificationAdapter.data)
     }
 
     override fun showTooManyNotifications() =
         Toast.makeText(context, "Zbyt wiele powiadomień, funkcja grupowania wyłączona", Toast.LENGTH_LONG).show()
-
 }

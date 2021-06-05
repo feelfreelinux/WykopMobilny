@@ -6,25 +6,29 @@
     android:id="@+id/fragment_history_menu_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/gradient_toolbar_down">
+        android:background="@drawable/gradient_toolbar_down"
+        >
 
         <TextView
             android:id="@+id/author"
             style="@style/BottomSheetAuthor"
             android:paddingTop="@dimen/padding_dp_huge"
-            android:textSize="?attr/textSizeLarge" />
+            android:textSize="?attr/textSizeLarge"
+            />
 
         <TextView
             android:id="@+id/date"
             style="@style/BottomSheetAuthor"
             android:paddingTop="@dimen/padding_dp_mini"
-            android:paddingBottom="@dimen/padding_dp_normal" />
+            android:paddingBottom="@dimen/padding_dp_normal"
+            />
 
     </LinearLayout>
 
@@ -32,115 +36,134 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="?attr/backgroundColor">
-
-    <LinearLayout
-        android:id="@+id/entry_menu_voters"
-        style="@style/BottomSheetMenuItem">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetVoters"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/voters_list"/>
-
-    </LinearLayout>
+        android:background="?attr/backgroundColor"
+        >
 
         <LinearLayout
-            android:id="@+id/entry_menu_copy"
-            style="@style/BottomSheetMenuItem">
+            android:id="@+id/entry_menu_voters"
+            style="@style/BottomSheetMenuItem"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="?attr/bottomSheetCopy"/>
+                android:src="?attr/bottomSheetVoters"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-                android:text="@string/copy_content"/>
+                android:text="@string/voters_list"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/entry_menu_copy"
+            style="@style/BottomSheetMenuItem"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="?attr/bottomSheetCopy"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
+                android:text="@string/copy_content"
+                />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/entry_menu_copy_entry_url"
-            style="@style/BottomSheetMenuItem">
+            style="@style/BottomSheetMenuItem"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="?attr/bottomSheetLink"/>
+                android:src="?attr/bottomSheetLink"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-                android:text="@string/copy_entry_url"/>
+                android:text="@string/copy_entry_url"
+                />
 
         </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/entry_menu_report"
-        style="@style/BottomSheetMenuItem">
+        <LinearLayout
+            android:id="@+id/entry_menu_report"
+            style="@style/BottomSheetMenuItem"
+            >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetReport"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="?attr/bottomSheetReport"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/report"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
+                android:text="@string/report"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/entry_menu_edit"
+            style="@style/BottomSheetMenuItem"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="?attr/bottomSheetEdit"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
+                android:text="@string/edit_entry"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/entry_menu_delete"
+            style="@style/BottomSheetMenuItem"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="?attr/bottomSheetDelete"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
+                android:text="@string/delete"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/entry_menu_edit"
-        style="@style/BottomSheetMenuItem">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetEdit"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/edit_entry"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/entry_menu_delete"
-        style="@style/BottomSheetMenuItem">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="?attr/bottomSheetDelete"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/delete"/>
-
-    </LinearLayout>
-
-</LinearLayout>
 </LinearLayout>

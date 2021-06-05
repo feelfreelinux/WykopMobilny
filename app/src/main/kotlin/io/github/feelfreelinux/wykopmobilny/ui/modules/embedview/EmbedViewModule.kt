@@ -22,5 +22,4 @@ class EmbedViewModule {
     @Provides
     fun provideLinkHandler(activity: EmbedViewActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi =
         WykopLinkHandler(activity, navigator)
-
 }

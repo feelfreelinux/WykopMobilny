@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+    >
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/avatarView"
         style="@style/AvatarViewComment"
-        app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/authorTextView"
         style="@style/AuthorTextViewComment"
-        app:layout_constraintTop_toTopOf="@id/avatarView"
         app:layout_constraintLeft_toRightOf="@id/avatarView"
         app:layout_constraintRight_toLeftOf="@id/patronBadgeTextView"
-        tools:text="Kroguc" />
+        app:layout_constraintTop_toTopOf="@id/avatarView"
+        tools:text="Kroguc"
+        />
+
     <TextView
         android:id="@+id/patronBadgeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_dp_tiny"
-        android:layout_marginRight="0dp"
+        android:layout_marginStart="@dimen/margin_dp_tiny"
+        android:layout_marginEnd="0dp"
         android:ellipsize="end"
         android:lines="1"
         android:maxLines="1"
-        android:paddingLeft="@dimen/margin_dp_tiny"
-        android:paddingRight="@dimen/margin_dp_mini"
-        android:textColor="@color/white"
+        android:paddingStart="@dimen/margin_dp_tiny"
+        android:paddingEnd="@dimen/margin_dp_mini"
         android:textSize="?attr/textSizeTiny"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/authorTextView"
         app:layout_constraintLeft_toRightOf="@id/authorTextView"
         app:layout_constraintRight_toLeftOf="@id/dotTextView"
-        app:layout_constraintBottom_toBottomOf="@+id/authorTextView"
         tools:background="@drawable/patron_badge"
-        tools:text="PATRON" />
+        tools:text="PATRON"
+        tools:textColor="fff"
+        />
 
     <TextView
         android:id="@+id/dotTextView"
@@ -46,90 +51,101 @@
         app:layout_constraintBottom_toBottomOf="@+id/dateTextView"
         app:layout_constraintLeft_toRightOf="@id/patronBadgeTextView"
         app:layout_constraintRight_toLeftOf="@id/dateTextView"
-        app:layout_constraintTop_toTopOf="@id/dateTextView" />
+        app:layout_constraintTop_toTopOf="@id/dateTextView"
+        />
 
     <TextView
         android:id="@+id/dateTextView"
         style="@style/DateTextViewComment"
-        app:layout_constraintTop_toTopOf="@id/avatarView"
         app:layout_constraintBottom_toBottomOf="@id/authorTextView"
         app:layout_constraintLeft_toRightOf="@id/dotTextView"
         app:layout_constraintRight_toLeftOf="@id/collapseButtonImageView"
-        tools:text="5 godz." />
+        app:layout_constraintTop_toTopOf="@id/avatarView"
+        tools:text="5 godz."
+        />
 
     <ImageView
         android:id="@+id/collapseButtonImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin_dp_small"
         android:paddingLeft="@dimen/margin_dp_small"
+        android:paddingTop="@dimen/margin_dp_small"
         android:paddingRight="@dimen/margin_dp_small"
         android:src="?attr/collapseDrawable"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        />
 
     <TextView
         android:id="@+id/commentContentTextView"
         style="@style/ContentTextViewComment"
-        app:layout_constraintTop_toBottomOf="@id/authorTextView"
         app:layout_constraintLeft_toLeftOf="@id/authorTextView"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="Wesoły komentarz do znaleziska" />
+        app:layout_constraintTop_toBottomOf="@id/authorTextView"
+        tools:text="Wesoły komentarz do znaleziska"
+        />
 
     <ViewStub
         android:id="@+id/wykopEmbedView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_dp_normal"
-        android:layout_marginRight="@dimen/margin_dp_large"
+        android:layout_marginEnd="@dimen/margin_dp_large"
         android:inflatedId="@id/wykopEmbedView"
         android:layout="@layout/stub_embed"
-        app:layout_constraintTop_toBottomOf="@id/commentContentTextView"
         app:layout_constraintLeft_toLeftOf="@id/authorTextView"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/commentContentTextView"
+        />
 
     <TextView
         android:id="@+id/shareTextView"
         style="@style/ButtonTextView"
-        android:drawableStart="?attr/sharebtnDrawable"
+        app:layout_constraintLeft_toRightOf="@id/avatarView"
         app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
-        app:layout_constraintLeft_toRightOf="@id/avatarView" />
+        app:drawableStartCompat="?attr/sharebtnDrawable"
+        />
 
     <TextView
         android:id="@+id/replyTextView"
         style="@style/ButtonTextView"
-        android:drawableStart="?attr/replyDrawable"
+        app:layout_constraintLeft_toRightOf="@id/shareTextView"
         app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
-        app:layout_constraintLeft_toRightOf="@id/shareTextView" />
+        app:drawableStartCompat="?attr/replyDrawable"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
         android:id="@+id/plusVoteButton"
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/plusDrawable"
-        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
         app:layout_constraintRight_toLeftOf="@id/minusVoteButton"
-        tools:text="7" />
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
+        tools:text="7"
+        />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
         android:id="@+id/minusVoteButton"
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/minusDrawable"
-        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
         app:layout_constraintRight_toLeftOf="@+id/moreOptionsTextView"
-        tools:text="1" />
+        app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
+        tools:text="1"
+        />
 
     <TextView
         android:id="@+id/moreOptionsTextView"
         style="@style/ButtonTextView"
-        android:drawableStart="?attr/dotsDrawable"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/wykopEmbedView"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:drawableStartCompat="?attr/dotsDrawable"
+        />
 
     <View
         android:id="@+id/authorBadgeStripView"
         style="@style/AuthorBadgeStrip"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

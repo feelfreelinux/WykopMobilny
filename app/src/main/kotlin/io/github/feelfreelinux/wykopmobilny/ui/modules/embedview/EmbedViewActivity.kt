@@ -43,7 +43,6 @@ import kotlinx.android.synthetic.main.activity_embedview.*
 import kotlinx.android.synthetic.main.toolbar.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okio.Okio
 import okio.buffer
 import okio.sink
 import java.io.File
@@ -60,10 +59,17 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             }
     }
 
-    @Inject lateinit var presenter: EmbedLinkPresenter
-    @Inject lateinit var navigatorApi: NewNavigatorApi
-    @Inject lateinit var clipboardHelper: ClipboardHelperApi
-    @Inject lateinit var settingsPreferencesApi: SettingsPreferencesApi
+    @Inject
+    lateinit var presenter: EmbedLinkPresenter
+
+    @Inject
+    lateinit var navigatorApi: NewNavigatorApi
+
+    @Inject
+    lateinit var clipboardHelper: ClipboardHelperApi
+
+    @Inject
+    lateinit var settingsPreferencesApi: SettingsPreferencesApi
 
     override val enableSwipeBackLayout: Boolean = true
     override val isActivityTransfluent: Boolean = true
@@ -115,7 +121,8 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         presenter.mp4Url = coubUrl!!
         prepareVideoView()
         val videoSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coubUrl!!), null)
-        val srcAudio = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coub.fileVersions.mobile.audio[0]), null)
+        val srcAudio =
+            MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coub.fileVersions.mobile.audio[0]), null)
         audioPlayer.playWhenReady = true
         usingMixedAudio = true
         videoView.setVideoURI(null, LoopingMediaSource(videoSource))
@@ -177,15 +184,12 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_copy_url -> clipboardHelper.copyTextToClipboard(extraUrl, "imageUrl")
-            R.id.action_open_browser -> {
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = Uri.parse(extraUrl)
-                startActivity(i)
-            }
-            R.id.action_share -> {
-                shareUrl()
-            }
-            R.id.action_save_mp4 -> if (checkForWriteReadPermission()) saveFile()
+            R.id.action_open_browser -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(extraUrl)))
+            R.id.action_share -> shareUrl()
+            R.id.action_save_mp4 ->
+                if (checkForWriteReadPermission()) {
+                    saveFile()
+                }
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
@@ -213,8 +217,9 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         val cd = response.header("content-disposition")
         if (cd != null) {
             val match = contentDispositionRegex.find(cd)
-            if (match != null)
+            if (match != null) {
                 return match.groupValues[1]
+            }
         }
 
         val pathSegments = response.request.url.pathSegments
@@ -225,15 +230,16 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         Single.create<String> {
             val url = presenter.mp4Url
             val path = File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    PhotoViewActions.SAVED_FOLDER
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                PhotoViewActions.SAVED_FOLDER
             )
-            if (!path.exists())
+            if (!path.exists()) {
                 path.mkdirs()
+            }
 
             val request = Request.Builder()
-                    .url(url)
-                    .build()
+                .url(url)
+                .build()
             val result = OkHttpClient().newCall(request).execute()
             if (result.isSuccessful) {
                 val file = File(path, getFilenameFromResult(result))
@@ -244,20 +250,22 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
                 it.onError(Exception("Could not download the file, http code ${result.code}"))
             }
             it.onSuccess(path.path)
-
         }.subscribeOn(WykopSchedulers().backgroundThread())
             .observeOn(WykopSchedulers().mainThread())
-            .subscribe({
-                val values = ContentValues()
-                values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-                values.put(MediaStore.Images.Media.MIME_TYPE, getMimeType(it))
-                values.put(MediaStore.MediaColumns.DATA, it)
-                Toast.makeText(this, R.string.save_file_ok, Toast.LENGTH_SHORT).show()
-                contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-            }, {
-                wykopLog(Log::e, "Exception when trying to save file", it)
-                Toast.makeText(this, R.string.save_file_failed, Toast.LENGTH_SHORT).show()
-            })
+            .subscribe(
+                {
+                    val values = ContentValues()
+                    values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+                    values.put(MediaStore.Images.Media.MIME_TYPE, getMimeType(it))
+                    values.put(MediaStore.MediaColumns.DATA, it)
+                    Toast.makeText(this, R.string.save_file_ok, Toast.LENGTH_SHORT).show()
+                    contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                },
+                {
+                    wykopLog(Log::e, "Exception when trying to save file", it)
+                    Toast.makeText(this, R.string.save_file_failed, Toast.LENGTH_SHORT).show()
+                }
+            )
     }
 
     private fun checkForWriteReadPermission(): Boolean {
@@ -278,7 +286,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
 
     private fun getMimeType(url: String): String? {
         var type: String? = null
-        val extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        val extension = MimeTypeMap.getFileExtensionFromUrl(url)
         if (extension != null) {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
         }

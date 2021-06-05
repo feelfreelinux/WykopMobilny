@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
@@ -16,15 +17,21 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.postDelayed
 import androidx.core.view.GravityCompat
 import com.evernote.android.job.util.JobUtil
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.internal.NavigationMenuView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
+import io.github.feelfreelinux.wykopmobilny.databinding.AppAboutBottomsheetBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.PatronListItemBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.PatronsBottomsheetBinding
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.WykopMobilnyUpdate
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
@@ -55,7 +62,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.shortcuts.ShortcutsDispatcher
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_navigation.*
-import kotlinx.android.synthetic.main.app_about_bottomsheet.view.*
 import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
 import kotlinx.android.synthetic.main.navigation_header.view.*
 import kotlinx.android.synthetic.main.patron_list_item.view.*
@@ -71,8 +77,11 @@ interface MainNavigationInterface {
     fun forceRefreshNotifications()
 }
 
-class MainNavigationActivity : BaseActivity(), MainNavigationView,
-        com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, MainNavigationInterface {
+class MainNavigationActivity :
+    BaseActivity(),
+    MainNavigationView,
+    com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener,
+    MainNavigationInterface {
 
     companion object {
         const val LOGIN_REQUEST_CODE = 142
@@ -93,6 +102,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
 
     @Inject
     lateinit var blacklistPreferencesApi: BlacklistPreferencesApi
+
     @Inject
     lateinit var settingsPreferencesApi: SettingsPreferencesApi
 
@@ -102,11 +112,11 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
     private val navHeader by lazy { navigationView.getHeaderView(0) }
     private val actionBarToggle by lazy {
         ActionBarDrawerToggle(
-                this,
-                drawer_layout,
-                toolbar,
-                R.string.nav_drawer_open,
-                R.string.nav_drawer_closed
+            this,
+            drawer_layout,
+            toolbar,
+            R.string.nav_drawer_open,
+            R.string.nav_drawer_closed
         )
     }
     private val badgeDrawable by lazy { BadgeDrawerDrawable(supportActionBar!!.themedContext) }
@@ -117,14 +127,19 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
 
     @Inject
     lateinit var presenter: MainNavigationPresenter
+
     @Inject
     lateinit var settingsApi: SettingsPreferencesApi
+
     @Inject
     lateinit var shortcutsDispatcher: ShortcutsDispatcher
+
     @Inject
     lateinit var navigator: NewNavigatorApi
+
     @Inject
     lateinit var userManagerApi: UserManagerApi
+
     @Inject
     lateinit var linkHandler: WykopLinkHandlerApi
 
@@ -194,24 +209,24 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
             presenter.subscribe(this)
         }
 
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed(333) {
             presenter.startListeningForNotifications()
-        }, 333)
+        }
 
         JobUtil.hasBootPermission(this)
         showFullReleaseDialog()
         (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
-        //Setup AppUpdater
+        // Setup AppUpdater
         AppUpdater(this)
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
-                .setTitleOnUpdateAvailable(R.string.update_available)
-                .setContentOnUpdateAvailable(R.string.update_app)
-                .setButtonDismiss(R.string.cancel)
-                .setButtonDoNotShowAgain(R.string.do_not_show_again)
-                .setButtonUpdate(R.string.update)
-                .start()
-        //presenter.checkUpdates()
+            .setUpdateFrom(UpdateFrom.GITHUB)
+            .setGitHubUserAndRepo("feelfreelinux", "WykopMobilny")
+            .setTitleOnUpdateAvailable(R.string.update_available)
+            .setContentOnUpdateAvailable(R.string.update_app)
+            .setButtonDismiss(R.string.cancel)
+            .setButtonDoNotShowAgain(R.string.do_not_show_again)
+            .setButtonUpdate(R.string.update)
+            .start()
+        // presenter.checkUpdates()
         checkBlacklist()
 
         if (settingsApi.showNotifications) {
@@ -228,14 +243,15 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
                 when (intent.getStringExtra(TARGET_FRAGMENT_KEY)) {
                     TARGET_NOTIFICATIONS -> openFragment(NotificationsListFragment.newInstance())
                 }
-
             } else openMainFragment()
         }
         setupNavigation()
-        shortcutsDispatcher.dispatchIntent(intent,
-                this::openFragment,
-                this::openLoginScreen,
-                userManagerApi.isUserAuthorized())
+        shortcutsDispatcher.dispatchIntent(
+            intent,
+            this::openFragment,
+            this::openLoginScreen,
+            userManagerApi.isUserAuthorized()
+        )
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -249,8 +265,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (actionBarToggle.onOptionsItemSelected(item))
+        if (actionBarToggle.onOptionsItemSelected(item)) {
             return true
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -258,9 +275,10 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         super.onResume()
         if (!presenter.isSubscribed) {
             presenter.subscribe(this)
-            Handler().postDelayed({
+
+            Handler(Looper.getMainLooper()).postDelayed(333) {
                 presenter.startListeningForNotifications()
-            }, 333)
+            }
         }
     }
 
@@ -336,14 +354,12 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         drawer_layout.view_container?.apply {
             notificationCount = notifications
         }
-
     }
 
     override fun showHashNotificationsCount(hashNotifications: Int) {
         drawer_layout.view_container?.apply {
             hashTagsNotificationsCount = hashNotifications
         }
-
     }
 
     override fun onBackPressed() {
@@ -368,6 +384,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             LOGIN_REQUEST_CODE -> {
                 if (resultCode == LoginScreenActivity.USER_LOGGED_IN) {
@@ -392,45 +409,45 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
     }
 
     private fun openAboutSheet() {
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
-        val bottomSheetView = layoutInflater.inflate(R.layout.app_about_bottomsheet, null)
-        dialog.setContentView(bottomSheetView)
+        val dialog = BottomSheetDialog(this)
+        val bottomSheetView = AppAboutBottomsheetBinding.inflate(layoutInflater)
+        dialog.setContentView(bottomSheetView.root)
 
         bottomSheetView.apply {
             val versionName = packageManager.getPackageInfo(packageName, 0).versionName
-            app_version_textview.text = getString(R.string.app_version, versionName)
-            app_version.setOnClickListener {
+            appVersionTextview.text = getString(R.string.app_version, versionName)
+            appVersion.setOnClickListener {
                 openBrowser("https://github.com/feelfreelinux/WykopMobilny")
                 dialog.dismiss()
             }
 
-            app_report_bug.setOnClickListener {
+            appReportBug.setOnClickListener {
                 navigator.openTagActivity("owmbugi")
                 dialog.dismiss()
             }
 
-            app_observe_tag.setOnClickListener {
+            appObserveTag.setOnClickListener {
                 navigator.openTagActivity("otwartywykopmobilny")
                 dialog.dismiss()
             }
 
-            app_patrons.setOnClickListener {
+            appPatrons.setOnClickListener {
                 dialog.dismiss()
-                val dialog2 = com.google.android.material.bottomsheet.BottomSheetDialog(context)
-                val badgesDialogView2 = layoutInflater.inflate(R.layout.patrons_bottomsheet, null)
-                dialog2.setContentView(badgesDialogView2)
+                val dialog2 = BottomSheetDialog(root.context)
+                val badgesDialogView2 = PatronsBottomsheetBinding.inflate(layoutInflater)
+                dialog2.setContentView(badgesDialogView2.root)
 
-                val headerItem = layoutInflater.inflate(R.layout.patron_list_item, null)
-                headerItem.setOnClickListener { _ ->
+                val headerItem = PatronListItemBinding.inflate(layoutInflater)
+                headerItem.root.setOnClickListener { _ ->
                     dialog.dismiss()
                     linkHandler.handleUrl("https://patronite.pl/wykop-mobilny")
                 }
-                headerItem.nickname.text = context.getString(R.string.support_app)
-                headerItem.tierTextView.text = context.getString(R.string.became_patron)
-                badgesDialogView2.patronsList.addView(headerItem)
+                headerItem.nickname.text = root.context.getString(R.string.support_app)
+                headerItem.tierTextView.text = root.context.getString(R.string.became_patron)
+                badgesDialogView2.patronsList.addView(headerItem.root)
                 for (badge in patronsApi.patrons.filter { patron -> patron.listMention }) {
-                    val item = layoutInflater.inflate(R.layout.patron_list_item, null)
-                    item.setOnClickListener { _ ->
+                    val item = PatronListItemBinding.inflate(layoutInflater)
+                    item.root.setOnClickListener { _ ->
                         dialog.dismiss()
                         linkHandler.handleUrl("https://wykop.pl/ludzie/" + badge.username)
                     }
@@ -442,8 +459,7 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
                         "patron5" -> "Patron próg \"Zielony\""
                         else -> "Patron"
                     }
-                    badgesDialogView2.patronsList.addView(item)
-
+                    badgesDialogView2.patronsList.addView(item.root)
                 }
                 dialog2.show()
             }
@@ -454,9 +470,9 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
             }
         }
 
-        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.root.parent as View)
         dialog.setOnShowListener {
-            mBehavior.peekHeight = bottomSheetView.height
+            mBehavior.peekHeight = bottomSheetView.root.height
         }
         dialog.show()
     }
@@ -465,24 +481,29 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         presenter.checkNotifications(true)
     }
 
-
     fun showFullReleaseDialog() {
         if (!settingsPreferencesApi.dialogShown) {
-            val s = SpannableString("Po prawie dwóch latach pracy publikuję wersję 1.0 aplikacji. Jestem wdzięczny wszystkim osobom zaangażowanym w projekt. Aplikacja nadal pozostaje całkowicie darmowa i wolna od reklam. Jeżeli chcesz, możesz wesprzeć rozwój aplikacji na https://patronite.pl/wykop-mobilny \nDziękuję :)")
-            Linkify.addLinks(s, Linkify.WEB_URLS)
+            val message = SpannableString(
+                "Po prawie dwóch latach pracy publikuję wersję 1.0 aplikacji. " +
+                    "Jestem wdzięczny wszystkim osobom zaangażowanym w projekt. " +
+                    "Aplikacja nadal pozostaje całkowicie darmowa i wolna od reklam. " +
+                    "Jeżeli chcesz, możesz wesprzeć rozwój aplikacji na https://patronite.pl/wykop-mobilny \n" +
+                    "Dziękuję :)"
+            )
+            Linkify.addLinks(message, Linkify.WEB_URLS)
             createAlertBuilder().apply {
                 setTitle("Wersja 1.0")
-                setMessage(s)
+                setMessage(message)
                 setPositiveButton(android.R.string.ok) { _, _ ->
                     settingsPreferencesApi.dialogShown = true
                 }
 
-                val d = create()
-                d.setOnDismissListener {
+                val dialog = create()
+                dialog.setOnDismissListener {
                     settingsPreferencesApi.dialogShown = true
                 }
-                d.show()
-                d.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+                dialog.show()
+                dialog.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
             }
         }
     }
@@ -493,28 +514,27 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
         printout(pInfo.versionName)
         if (versionCompare(owmVersion, pInfo.versionName) == 1) {
             createAlertBuilder()
-                    .setTitle(R.string.update_available)
-                    .setMessage("Aktualizacja $owmVersion jest dostępna.")
-                    .setPositiveButton("Pobierz nową wersje") { _, _ ->
-                        openBrowser(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
-                    }
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .show()
+                .setTitle(R.string.update_available)
+                .setMessage("Aktualizacja $owmVersion jest dostępna.")
+                .setPositiveButton("Pobierz nową wersje") { _, _ ->
+                    openBrowser(wykopMobilnyUpdate.assets[0].browserDownloadUrl)
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
         }
-
     }
 
     private fun versionCompare(str1: String, str2: String): Int {
         val vals1 = str1.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val vals2 = str2.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        var i = 0
+        var idk = 0
         // set index to first non-equal ordinal or length of shortest version string
-        while (i < vals1.size && i < vals2.size && vals1[i] == vals2[i]) {
-            i++
+        while (idk < vals1.size && idk < vals2.size && vals1[idk] == vals2[idk]) {
+            idk++
         }
         // compare first non-equal ordinal number
-        if (i < vals1.size && i < vals2.size) {
-            val diff = Integer.valueOf(vals1[i]).compareTo(Integer.valueOf(vals2[i]))
+        if (idk < vals1.size && idk < vals2.size) {
+            val diff = Integer.valueOf(vals1[idk]).compareTo(Integer.valueOf(vals2[idk]))
             return Integer.signum(diff)
         }
         // the strings are equal or one string is a substring of the other
@@ -534,7 +554,12 @@ class MainNavigationActivity : BaseActivity(), MainNavigationView,
     }
 
     private fun checkBlacklist() {
-        if (userManagerApi.isUserAuthorized() && !blacklistPreferencesApi.blockedImported && blacklistPreferencesApi.blockedUsers.isEmpty() && blacklistPreferencesApi.blockedTags.isEmpty()) {
+        if (
+            userManagerApi.isUserAuthorized() &&
+            !blacklistPreferencesApi.blockedImported &&
+            blacklistPreferencesApi.blockedUsers.isEmpty() &&
+            blacklistPreferencesApi.blockedTags.isEmpty()
+        ) {
             val builder = createAlertBuilder()
             builder.setTitle(getString(R.string.blacklist_import_title))
             builder.setMessage(getString(R.string.blacklist_import_ask))

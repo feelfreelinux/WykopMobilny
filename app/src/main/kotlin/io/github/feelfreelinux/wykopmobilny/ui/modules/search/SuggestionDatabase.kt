@@ -44,7 +44,7 @@ class SuggestionDatabase(context: Context) {
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(
                 "CREATE TABLE " + TABLE_SUGGESTION + " (" +
-                        FIELD_ID + " integer primary key autoincrement, " + FIELD_SUGGESTION + " text unique);"
+                    FIELD_ID + " integer primary key autoincrement, " + FIELD_SUGGESTION + " text unique);"
             )
             Log.d("SUGGESTION", "DB CREATED")
         }

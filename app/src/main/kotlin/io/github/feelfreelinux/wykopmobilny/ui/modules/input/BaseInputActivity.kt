@@ -46,7 +46,12 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     lateinit var contentUri: Uri
 
     override var textBody: String
-        get() = if ((markupToolbar.photoUrl != null || markupToolbar.photo != null) && body.text.isEmpty()) ZERO_WIDTH_SPACE else body.text.toString()
+        get() =
+            if ((markupToolbar.photoUrl != null || markupToolbar.photo != null) && body.text.isEmpty()) {
+                ZERO_WIDTH_SPACE
+            } else {
+                body.text.toString()
+            }
         set(value) {
             body.setText(value, TextView.BufferType.EDITABLE)
         }
@@ -64,13 +69,20 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         }
 
     fun setupSuggestions() {
-        body.setTokenizer(WykopSuggestionsTokenizer({
-            if (body.adapter !is UsersSuggestionsAdapter)
-                body.setAdapter(usersSuggestionAdapter)
-        }, {
-            if (body.adapter !is HashTagsSuggestionsAdapter)
-                body.setAdapter(hashTagsSuggestionAdapter)
-        }))
+        body.setTokenizer(
+            WykopSuggestionsTokenizer(
+                {
+                    if (body.adapter !is UsersSuggestionsAdapter) {
+                        body.setAdapter(usersSuggestionAdapter)
+                    }
+                },
+                {
+                    if (body.adapter !is HashTagsSuggestionsAdapter) {
+                        body.setAdapter(hashTagsSuggestionAdapter)
+                    }
+                }
+            )
+        )
         body.threshold = 3
     }
 
@@ -158,10 +170,11 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
 
     override fun onBackPressed() {
         if (!markupToolbar.hasUserEditedContent()) exitActivity()
-        else
+        else {
             exitConfirmationDialog(this) {
                 exitActivity()
             }?.show()
+        }
     }
 
     override fun openGalleryImageChooser() {
@@ -172,7 +185,8 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
             Intent.createChooser(
                 intent,
                 getString(R.string.insert_photo_galery)
-            ), USER_ACTION_INSERT_PHOTO
+            ),
+            USER_ACTION_INSERT_PHOTO
         )
     }
 
@@ -180,6 +194,6 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
         contentUri = uri
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-        startActivityForResult(intent, BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA)
+        startActivityForResult(intent, USER_ACTION_INSERT_PHOTO_CAMERA)
     }
 }

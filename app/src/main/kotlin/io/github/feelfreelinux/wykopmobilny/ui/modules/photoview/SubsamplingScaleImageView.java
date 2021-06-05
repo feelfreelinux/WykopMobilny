@@ -105,7 +105,8 @@ public class SubsamplingScaleImageView extends View {
      */
     public static final int ORIENTATION_270 = 270;
 
-    private static final List<Integer> VALID_ORIENTATIONS = Arrays.asList(ORIENTATION_0, ORIENTATION_90, ORIENTATION_180, ORIENTATION_270, ORIENTATION_USE_EXIF);
+    private static final List<Integer> VALID_ORIENTATIONS =
+            Arrays.asList(ORIENTATION_0, ORIENTATION_90, ORIENTATION_180, ORIENTATION_270, ORIENTATION_USE_EXIF);
 
     /**
      * During zoom animation, keep the point of the image that was tapped in the same place, and scale the image around it.

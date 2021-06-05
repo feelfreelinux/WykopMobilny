@@ -49,7 +49,6 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefre
         }
         swiperefresh?.isRefreshing = false
         loadingView?.isVisible = false
-
     }
 
     override fun onRefresh() {
@@ -77,5 +76,4 @@ class UsersSearchFragment : BaseFragment(), UsersSearchView, androidx.swiperefre
             notifyDataSetChanged()
         }
     }
-
 }

@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/backgroundColor">
+    android:background="?attr/backgroundColor"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,72 +18,84 @@
         android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
         android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
         android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
-        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"/>
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"
+        />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/separator_line_height"
-        android:background="?attr/lineColor"/>
+        android:background="?attr/lineColor"
+        />
 
 
     <LinearLayout
         android:id="@+id/app_version"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/app_version_textview"
             android:layout_gravity="center"
-            android:text="@string/app_version"/>
+            android:text="@string/app_version"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/app_patrons"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/app_patrons_textview"
             android:layout_gravity="center"
-            android:text="Patroni"/>
+            android:text="Patroni"
+            />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/app_observe_tag"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/observe_otwartywykopmobilny"/>
+            android:text="@string/observe_otwartywykopmobilny"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/app_report_bug"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/report_bug"/>
+            android:text="@string/report_bug"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/license"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/license"/>
+            android:text="@string/license"
+            />
 
     </LinearLayout>
 

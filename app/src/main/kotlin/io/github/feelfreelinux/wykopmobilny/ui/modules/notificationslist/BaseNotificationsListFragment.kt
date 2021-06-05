@@ -15,7 +15,9 @@ import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.synthetic.main.activity_notifications_list.*
 
-abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsListView,
+abstract class BaseNotificationsListFragment :
+    BaseFragment(),
+    NotificationsListView,
     androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     abstract var notificationAdapter: NotificationsListAdapter
@@ -57,8 +59,10 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter: Boolean) {
         loadingView?.isVisible = false
         swiperefresh?.isRefreshing = false
-        notificationAdapter.addData(if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications,
-            shouldClearAdapter)
+        notificationAdapter.addData(
+            if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications,
+            shouldClearAdapter
+        )
     }
 
     override fun showReadToast() {
@@ -67,5 +71,4 @@ abstract class BaseNotificationsListFragment : BaseFragment(), NotificationsList
     }
 
     override fun disableLoading() = notificationAdapter.disableLoading()
-
 }

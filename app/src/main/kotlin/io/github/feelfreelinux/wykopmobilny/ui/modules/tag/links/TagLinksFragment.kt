@@ -23,11 +23,12 @@ class TagLinksFragment : BaseLinksFragment(), TagLinksView {
     }
 
     @Inject lateinit var presenter: TagLinksPresenter
+
     @Inject lateinit var userManager: UserManagerApi
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
 
-    private val tagString by lazy { arguments!!.getString(EXTRA_TAG) }
+    private val tagString by lazy { requireArguments().getString(EXTRA_TAG) }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,7 +12,8 @@
         android:paddingBottom="@dimen/padding_dp_small"
         android:paddingLeft="@dimen/padding_dp_normal"
         android:paddingRight="@dimen/padding_dp_normal"
-        android:background="?attr/itemBackgroundColor">
+        android:background="?attr/itemBackgroundColor"
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/imageCard"
@@ -21,13 +23,15 @@
             app:cardCornerRadius="3dp"
             android:background="?attr/lineColor"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
+            app:layout_constraintLeft_toLeftOf="parent"
+            >
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                />
 
         </androidx.cardview.widget.CardView>
 
@@ -39,7 +43,8 @@
             android:background="@drawable/ic_trash"
             app:layout_constraintTop_toTopOf="@id/imageCard"
             app:layout_constraintBottom_toBottomOf="@id/imageCard"
-            app:layout_constraintLeft_toRightOf="@id/imageCard" />
+            app:layout_constraintLeft_toRightOf="@id/imageCard"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

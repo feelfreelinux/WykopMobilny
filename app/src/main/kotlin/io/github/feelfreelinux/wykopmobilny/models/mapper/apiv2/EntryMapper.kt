@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.models.mapper.apiv2
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.EntryResponse
-import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
 class EntryMapper {
     companion object {

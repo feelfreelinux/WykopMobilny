@@ -51,12 +51,15 @@ class LinkDetailsPresenter(
         linksApi.getLinkComments(linkId, sortBy)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.showLinkComments(it)
-                scrollCommentId?.let {
-                    view?.scrollToComment(scrollCommentId)
-                }
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    view?.showLinkComments(it)
+                    scrollCommentId?.let {
+                        view?.scrollToComment(scrollCommentId)
+                    }
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -64,12 +67,15 @@ class LinkDetailsPresenter(
         linksApi.getLink(linkId)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.updateLink(it)
-                loadComments(scrollCommentId)
-            }, {
-                view?.showErrorDialog(it)
-            })
+            .subscribe(
+                {
+                    view?.updateLink(it)
+                    loadComments(scrollCommentId)
+                },
+                {
+                    view?.showErrorDialog(it)
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -87,27 +93,33 @@ class LinkDetailsPresenter(
             linksApi.commentAdd(body, containsAdultContent, typedInputStream, linkId, replyCommentId)
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.resetInputbarState()
-                    view?.hideInputToolbar()
-                    loadComments(it.id)
-                }, {
-                    view?.showErrorDialog(it)
-                    view?.hideInputbarProgress()
-                })
+                .subscribe(
+                    {
+                        view?.resetInputbarState()
+                        view?.hideInputToolbar()
+                        loadComments(it.id)
+                    },
+                    {
+                        view?.showErrorDialog(it)
+                        view?.hideInputbarProgress()
+                    }
+                )
                 .intoComposite(compositeObservable)
         } else {
             linksApi.commentAdd(body, containsAdultContent, typedInputStream, linkId)
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.resetInputbarState()
-                    view?.hideInputToolbar()
-                    loadComments(it.id)
-                }, {
-                    view?.showErrorDialog(it)
-                    view?.hideInputbarProgress()
-                })
+                .subscribe(
+                    {
+                        view?.resetInputbarState()
+                        view?.hideInputToolbar()
+                        loadComments(it.id)
+                    },
+                    {
+                        view?.showErrorDialog(it)
+                        view?.hideInputbarProgress()
+                    }
+                )
                 .intoComposite(compositeObservable)
         }
     }
@@ -118,27 +130,33 @@ class LinkDetailsPresenter(
             linksApi.commentAdd(body, embed, containsAdultContent, linkId, replyCommentId)
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.resetInputbarState()
-                    view?.hideInputToolbar()
-                    loadComments(it.id)
-                }, {
-                    view?.showErrorDialog(it)
-                    view?.hideInputbarProgress()
-                })
+                .subscribe(
+                    {
+                        view?.resetInputbarState()
+                        view?.hideInputToolbar()
+                        loadComments(it.id)
+                    },
+                    {
+                        view?.showErrorDialog(it)
+                        view?.hideInputbarProgress()
+                    }
+                )
                 .intoComposite(compositeObservable)
         } else {
             linksApi.commentAdd(body, embed, containsAdultContent, linkId)
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
-                .subscribe({
-                    view?.resetInputbarState()
-                    view?.hideInputToolbar()
-                    loadComments(it.id)
-                }, {
-                    view?.showErrorDialog(it)
-                    view?.hideInputbarProgress()
-                })
+                .subscribe(
+                    {
+                        view?.resetInputbarState()
+                        view?.hideInputToolbar()
+                        loadComments(it.id)
+                    },
+                    {
+                        view?.showErrorDialog(it)
+                        view?.hideInputbarProgress()
+                    }
+                )
                 .intoComposite(compositeObservable)
         }
     }
@@ -147,22 +165,26 @@ class LinkDetailsPresenter(
         this
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateLinkComment(it) },
+            .subscribe(
+                { view?.updateLinkComment(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateLinkComment(link)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
     private fun Single<Link>.processLinkSingle(link: Link) {
         this.subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateLink(it) },
+            .subscribe(
+                { view?.updateLink(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateLink(link)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

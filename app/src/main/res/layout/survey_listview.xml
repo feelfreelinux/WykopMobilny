@@ -7,7 +7,8 @@
     android:id="@+id/surveyItems"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <TextView
         android:id="@+id/surveyQuestion"
@@ -18,7 +19,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Question?"/>
+        tools:text="Question?"
+        />
 
     <LinearLayout
         android:id="@+id/answerItems"
@@ -27,7 +29,8 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/surveyQuestion"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
     </LinearLayout>
 

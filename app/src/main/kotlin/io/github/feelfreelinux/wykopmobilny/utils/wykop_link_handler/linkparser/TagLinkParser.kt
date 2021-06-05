@@ -15,5 +15,4 @@ class TagLinkParser {
             return subUrl.substringBefore("/")
         }
     }
-
 }

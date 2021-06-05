@@ -66,11 +66,7 @@ class PhotoViewActivity : BaseActivity() {
             R.id.action_share -> photoViewActions.shareImage(url)
             R.id.action_save_image -> photoViewActions.saveImage(url)
             R.id.action_copy_url -> clipboardHelper.copyTextToClipboard(url, "imageUrl")
-            R.id.action_open_browser -> {
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = Uri.parse(url)
-                startActivity(i)
-            }
+            R.id.action_open_browser -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
             android.R.id.home -> finish()
             else -> return super.onOptionsItemSelected(item)
         }

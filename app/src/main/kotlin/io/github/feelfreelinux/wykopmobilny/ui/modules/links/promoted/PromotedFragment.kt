@@ -23,6 +23,7 @@ class PromotedFragment : BaseLinksFragment(), PromotedView, BaseNavigationView {
     }
 
     @Inject lateinit var presenter: PromotedPresenter
+
     @Inject lateinit var navigator: NewNavigatorApi
 
     val navigation by lazy { activity as MainNavigationInterface }

@@ -3,14 +3,16 @@ package io.github.feelfreelinux.wykopmobilny.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.DialogVotersBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryLinksAdapter
-import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
+import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrylink.EntryLinkFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
@@ -19,9 +21,13 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+open class BaseEntryLinkFragment :
+    BaseFragment(),
+    EntryLinkFragmentView,
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
-    @Inject lateinit var entriesAdapter: EntryLinksAdapter
+    @Inject
+    lateinit var entriesAdapter: EntryLinksAdapter
     lateinit var votersDialogListener: VotersDialogListener
 
     var showSearchEmptyView: Boolean
@@ -73,7 +79,7 @@ open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView, androi
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
+            (recyclerView?.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
         }
     }
 
@@ -84,10 +90,10 @@ open class BaseEntryLinkFragment : BaseFragment(), EntryLinkFragmentView, androi
     override fun showVoters(voters: List<Voter>) = votersDialogListener(voters)
 
     override fun openVotersMenu() {
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activity!!)
-        val votersDialogView = activity!!.layoutInflater.inflate(R.layout.dialog_voters, null)
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(requireActivity())
+        val votersDialogView = DialogVotersBinding.inflate(layoutInflater)
         votersDialogView.votersTextView.isVisible = false
-        dialog.setContentView(votersDialogView)
+        dialog.setContentView(votersDialogView.root)
         votersDialogListener = createVotersDialogListener(dialog, votersDialogView)
         dialog.show()
     }

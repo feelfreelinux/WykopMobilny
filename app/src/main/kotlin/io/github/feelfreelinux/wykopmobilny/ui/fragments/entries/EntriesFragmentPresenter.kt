@@ -28,11 +28,14 @@ open class EntriesFragmentPresenter(
         entriesApi.getEntryVoters(entry.id)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.showVoters(it)
-            }, {
-                view?.showErrorDialog(it)
-            })
+            .subscribe(
+                {
+                    view?.showVoters(it)
+                },
+                {
+                    view?.showErrorDialog(it)
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -40,11 +43,13 @@ open class EntriesFragmentPresenter(
         this
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateEntry(it) },
+            .subscribe(
+                { view?.updateEntry(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateEntry(entry)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

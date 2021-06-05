@@ -24,6 +24,7 @@ class EditEntryCommentActivity : BaseInputActivity<EditEntryCommentPresenter>(),
     }
 
     @Inject override lateinit var suggestionApi: SuggestApi
+
     @Inject override lateinit var presenter: EditEntryCommentPresenter
 
     override val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, 0) }

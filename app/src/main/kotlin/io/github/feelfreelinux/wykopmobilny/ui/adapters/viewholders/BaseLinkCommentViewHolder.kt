@@ -44,7 +44,6 @@ abstract class BaseLinkCommentViewHolder(
                     comment.isBlocked -> LinkCommentViewHolder.TYPE_BLOCKED
                     comment.embed == null -> LinkCommentViewHolder.TYPE_NORMAL
                     else -> LinkCommentViewHolder.TYPE_EMBED
-
                 }
             } else {
                 when {
@@ -140,7 +139,6 @@ abstract class BaseLinkCommentViewHolder(
             authorBadgeStrip.isVisible = true
             authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.plusPressedColor))
         }
-
     }
 
     private fun setupButtons(comment: LinkComment) {

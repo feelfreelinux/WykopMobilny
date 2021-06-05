@@ -11,50 +11,46 @@ import io.reactivex.Single
 import retrofit2.Retrofit
 
 class HitsRepository(
-        val retrofit: Retrofit,
-        val userTokenRefresher: UserTokenRefresher,
-        val owmContentFilter: OWMContentFilter,
-        val patronsApi: PatronsApi
+    val retrofit: Retrofit,
+    val userTokenRefresher: UserTokenRefresher,
+    val owmContentFilter: OWMContentFilter,
+    val patronsApi: PatronsApi
 ) : HitsApi {
 
     private val hitsApi by lazy { retrofit.create(HitsRetrofitApi::class.java) }
 
     override fun byMonth(year: Int, month: Int): Single<List<Link>> =
-            hitsApi.byMonth(year, month)
-                    .retryWhen(userTokenRefresher)
-                    .flatMap { patronsApi.ensurePatrons(it) }
-                    .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
-
+        hitsApi.byMonth(year, month)
+            .retryWhen(userTokenRefresher)
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<List<LinkResponse>>(ErrorHandlerTransformer())
+            .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
 
     override fun currentDay(): Single<List<Link>> =
-            hitsApi.currentDay()
-                    .retryWhen(userTokenRefresher)
-                    .flatMap { patronsApi.ensurePatrons(it) }
-                    .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
-
+        hitsApi.currentDay()
+            .retryWhen(userTokenRefresher)
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<List<LinkResponse>>(ErrorHandlerTransformer())
+            .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
 
     override fun byYear(year: Int): Single<List<Link>> =
-            hitsApi.byYear(year)
-                    .retryWhen(userTokenRefresher)
-                    .flatMap { patronsApi.ensurePatrons(it) }
-                    .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
-
+        hitsApi.byYear(year)
+            .retryWhen(userTokenRefresher)
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<List<LinkResponse>>(ErrorHandlerTransformer())
+            .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
 
     override fun currentWeek(): Single<List<Link>> =
-            hitsApi.currentWeek()
-                    .retryWhen(userTokenRefresher)
-                    .flatMap { patronsApi.ensurePatrons(it) }
-                    .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
-
+        hitsApi.currentWeek()
+            .retryWhen(userTokenRefresher)
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<List<LinkResponse>>(ErrorHandlerTransformer())
+            .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
 
     override fun popular(): Single<List<Link>> =
-            hitsApi.popular()
-                    .retryWhen(userTokenRefresher)
-                    .flatMap { patronsApi.ensurePatrons(it) }
-                    .compose<List<LinkResponse>>(ErrorHandlerTransformer())
-                    .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
+        hitsApi.popular()
+            .retryWhen(userTokenRefresher)
+            .flatMap { patronsApi.ensurePatrons(it) }
+            .compose<List<LinkResponse>>(ErrorHandlerTransformer())
+            .map { it.map { response -> LinkMapper.map(response, owmContentFilter) } }
 }

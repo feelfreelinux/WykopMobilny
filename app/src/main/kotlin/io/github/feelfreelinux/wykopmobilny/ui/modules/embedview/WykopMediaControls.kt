@@ -2,9 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.annotation.TargetApi
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -28,7 +26,6 @@ class WykopMediaControls : VideoControls {
         override fun onAnimationEnd(animation: Animator?) {
             super.onAnimationEnd(animation)
             view.isVisible = true
-
         }
 
         companion object {
@@ -63,12 +60,7 @@ class WykopMediaControls : VideoControls {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-
-    override fun getLayoutResource(): Int {
-        return R.layout.media_controls
-    }
+    override fun getLayoutResource() = R.layout.media_controls
 
     override fun setPosition(position: Long) {
         currentTimeTextView.text = TimeFormatUtil.formatMs(position)
@@ -116,7 +108,7 @@ class WykopMediaControls : VideoControls {
             return super.getExtraViews()
         }
 
-        //Retrieves the layouts children
+        // Retrieves the layouts children
         val children = LinkedList<View>()
         for (i in 0 until childCount) {
             children.add(extraViewsContainer.getChildAt(i))
@@ -132,7 +124,7 @@ class WykopMediaControls : VideoControls {
             return
         }
 
-        //If the user is interacting with controls we don't want to start the delayed hide yet
+        // If the user is interacting with controls we don't want to start the delayed hide yet
         if (!userInteracting) {
             visibilityHandler.postDelayed({ animateVisibility(false) }, delay)
         }

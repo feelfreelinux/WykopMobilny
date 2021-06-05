@@ -15,7 +15,7 @@ import org.junit.Test
 import java.io.IOException
 
 class UserTokenRefresherTest {
-    lateinit var systemUnderTest : UserTokenRefresher
+    lateinit var systemUnderTest: UserTokenRefresher
     val mockOfUserApi = mock<LoginApi>()
     val mockOfMyWykopApi = mock<NotificationsApi>()
     val mockOfUserManager = mock<UserManagerApi>()
@@ -31,9 +31,9 @@ class UserTokenRefresherTest {
         whenever(mockOfMyWykopApi.getNotificationCount()).thenReturn(Single.just(response))
         val testObserver = TestObserver<NotificationsCountResponse>()
         mockOfMyWykopApi
-                .getNotificationCount()
-                .retryWhen(systemUnderTest)
-                .subscribe(testObserver)
+            .getNotificationCount()
+            .retryWhen(systemUnderTest)
+            .subscribe(testObserver)
 
         testObserver.assertNoErrors()
         testObserver.assertComplete()
@@ -46,9 +46,9 @@ class UserTokenRefresherTest {
         whenever(mockOfMyWykopApi.getNotificationCount()).thenReturn(Single.error(exception))
         val testObserver = TestObserver<NotificationsCountResponse>()
         mockOfMyWykopApi
-                .getNotificationCount()
-                .retryWhen(systemUnderTest)
-                .subscribe(testObserver)
+            .getNotificationCount()
+            .retryWhen(systemUnderTest)
+            .subscribe(testObserver)
 
         testObserver.assertError(exception)
         verifyZeroInteractions(mockOfUserApi)
@@ -61,9 +61,9 @@ class UserTokenRefresherTest {
         whenever(mockOfMyWykopApi.getNotificationCount()).thenReturn(Single.error(exception))
         val testObserver = TestObserver<NotificationsCountResponse>()
         mockOfMyWykopApi
-                .getNotificationCount()
-                .retryWhen(systemUnderTest)
-                .subscribe(testObserver)
+            .getNotificationCount()
+            .retryWhen(systemUnderTest)
+            .subscribe(testObserver)
 
         testObserver.assertError(exception)
         verifyZeroInteractions(mockOfUserApi)

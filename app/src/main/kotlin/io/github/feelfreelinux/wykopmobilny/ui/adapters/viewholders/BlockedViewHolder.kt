@@ -3,29 +3,31 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import io.github.feelfreelinux.wykopmobilny.R
+import androidx.recyclerview.widget.RecyclerView
+import io.github.feelfreelinux.wykopmobilny.databinding.BlockedEntryViewBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.blocked_entry_view.*
 
 class BlockedViewHolder(
-    override val containerView: View,
+    val binding: BlockedEntryViewBinding,
     val blockListener: (Int) -> Unit
-) : androidx.recyclerview.widget.RecyclerView.ViewHolder(containerView), LayoutContainer {
+) : RecyclerView.ViewHolder(binding.root), LayoutContainer {
 
     companion object {
         fun inflateView(parent: ViewGroup, blockListener: (Int) -> Unit) =
-            BlockedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_entry_view, parent, false), blockListener)
+            BlockedViewHolder(BlockedEntryViewBinding.inflate(parent.layoutInflater, parent, false), blockListener)
     }
+
+    override val containerView = binding.root
 
     fun bindView(entry: Entry) {
         showText("wpis", entry.author)
@@ -34,7 +36,6 @@ class BlockedViewHolder(
             entry.isBlocked = false
             blockListener(adapterPosition)
         }
-
     }
 
     fun bindView(comment: EntryComment) {
@@ -72,6 +73,6 @@ class BlockedViewHolder(
             text.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        showHiddenTextView.setText(text, TextView.BufferType.SPANNABLE)
+        binding.showHiddenTextView.setText(text, TextView.BufferType.SPANNABLE)
     }
 }

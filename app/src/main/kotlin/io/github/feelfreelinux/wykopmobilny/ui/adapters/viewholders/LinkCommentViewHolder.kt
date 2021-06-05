@@ -1,11 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.LinkCommentLayoutBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
@@ -16,14 +17,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.link_comment_layout.*
 
 class LinkCommentViewHolder(
-    override val containerView: View,
+    private val binding: LinkCommentLayoutBinding,
     userManagerApi: UserManagerApi,
     settingsPreferencesApi: SettingsPreferencesApi,
     navigatorApi: NewNavigatorApi,
@@ -31,14 +32,15 @@ class LinkCommentViewHolder(
     commentActionListener: LinkCommentActionListener,
     commentViewListener: LinkCommentViewListener
 ) : BaseLinkCommentViewHolder(
-    containerView,
+    binding.root,
     userManagerApi,
     settingsPreferencesApi,
     navigatorApi,
     linkHandlerApi,
     commentViewListener,
     commentActionListener
-), LayoutContainer {
+),
+    LayoutContainer {
 
     companion object {
         const val TYPE_EMBED = 17
@@ -59,7 +61,7 @@ class LinkCommentViewHolder(
             commentViewListener: LinkCommentViewListener
         ): LinkCommentViewHolder {
             val view = LinkCommentViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.link_comment_layout, parent, false),
+                LinkCommentLayoutBinding.inflate(parent.layoutInflater, parent, false),
                 userManagerApi,
                 settingsPreferencesApi,
                 navigatorApi,
@@ -77,45 +79,48 @@ class LinkCommentViewHolder(
         }
     }
 
+    override val containerView = binding.root
     override lateinit var embedView: WykopEmbedView
 
     // Bind correct views
-    override var commentContent: TextView = commentContentTextView
-    override var replyButton: TextView = replyTextView
-    override var collapseButton: ImageView = collapseButtonImageView
-    override var authorBadgeStrip: View = authorBadgeStripView
-    override var plusButton: PlusVoteButton = plusVoteButton
-    override var minusButton: MinusVoteButton = minusVoteButton
-    override var moreOptionsButton: TextView = moreOptionsTextView
-    override var shareButton: TextView = shareTextView
+    override var commentContent: TextView = binding.commentContentTextView
+    override var replyButton: TextView = binding.replyTextView
+    override var collapseButton: ImageView = binding.collapseButtonImageView
+    override var authorBadgeStrip: View = binding.authorBadgeStripView
+    override var plusButton: PlusVoteButton = binding.plusVoteButton
+    override var minusButton: MinusVoteButton = binding.minusVoteButton
+    override var moreOptionsButton: TextView = binding.moreOptionsTextView
+    override var shareButton: TextView = binding.shareTextView
 
     override fun bindView(linkComment: LinkComment, isAuthorComment: Boolean, commentId: Int) {
         super.bindView(linkComment, isAuthorComment, commentId)
 
         // setup header
         linkComment.author.apply {
-            avatarView.setAuthor(this)
-            avatarView.setOnClickListener { navigatorApi.openProfileActivity(nick) }
-            authorTextView.apply {
+            binding.avatarView.setAuthor(this)
+            binding.avatarView.setOnClickListener { navigatorApi.openProfileActivity(nick) }
+            binding.authorTextView.apply {
                 text = nick
                 setTextColor(context.getGroupColor(group))
                 setOnClickListener { }
             }
-            patronBadgeTextView.isVisible = badge != null
+            binding.patronBadgeTextView.isVisible = badge != null
             badge?.let {
                 try {
-                    badge?.drawBadge(patronBadgeTextView)
-                } catch (e: Throwable) {}
+                    badge?.drawBadge(binding.patronBadgeTextView)
+                } catch (exception: Throwable) {
+                    Log.w(this::class.simpleName, "Couldn't draw badge", exception)
+                }
             }
-            dateTextView.text = linkComment.date.replace(" temu", "")
+            binding.dateTextView.text = linkComment.date.replace(" temu", "")
             linkComment.app?.let {
-                dateTextView.text =
-                        containerView.context.getString(R.string.date_with_user_app, linkComment.date.replace(" temu", ""), linkComment.app)
+                binding.dateTextView.text =
+                    containerView.context.getString(R.string.date_with_user_app, linkComment.date.replace(" temu", ""), linkComment.app)
             }
         }
     }
 
     fun inflateEmbed() {
-        embedView = wykopEmbedView.inflate() as WykopEmbedView
+        embedView = binding.wykopEmbedView.inflate() as WykopEmbedView
     }
 }

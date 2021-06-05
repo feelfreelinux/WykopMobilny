@@ -13,6 +13,7 @@ class ActionsFragment : BaseEntryLinkFragment(), ActionsView {
     }
 
     @Inject lateinit var userManager: UserManagerApi
+
     @Inject lateinit var presenter: ActionsFragmentPresenter
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.getActions() }

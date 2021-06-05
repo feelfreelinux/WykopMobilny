@@ -21,5 +21,6 @@ class LoginScreenModule {
     fun provideNavigator(activity: LoginScreenActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity: LoginScreenActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun provideLinkHandler(activity: LoginScreenActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigator)
 }

@@ -1,21 +1,21 @@
 package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.res.use
 import io.github.feelfreelinux.wykopmobilny.R
-import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 
 class FavoriteButton @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.MirkoButtonStyle
-) : ImageView(context, attrs, defStyleAttr) {
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.MirkoButtonStyle
+) : AppCompatImageView(context, attrs, defStyleAttr) {
 
-    var favoriteDrawable: Drawable
-    var favoriteOutlineDrawable: Drawable
-    var typedArray: TypedArray
+    private var favoriteDrawable: Drawable
+    private var favoriteOutlineDrawable: Drawable
     var isFavorite: Boolean
         get() = isSelected
         set(value) {
@@ -30,19 +30,13 @@ class FavoriteButton @JvmOverloads constructor(
 
     init {
         val typedValue = TypedValue()
-        getActivityContext()!!.theme?.resolveAttribute(R.attr.buttonStatelist, typedValue, true)
+        context.theme.resolveAttribute(R.attr.buttonStatelist, typedValue, true)
         setBackgroundResource(typedValue.resourceId)
 
-        typedArray = context.obtainStyledAttributes(
-            arrayOf(
-                R.attr.favoriteDrawable
-            ).toIntArray()
-        )
-        favoriteDrawable = typedArray.getDrawable(0)!!
-        typedArray.recycle()
+        favoriteDrawable = context.obtainStyledAttributes(arrayOf(R.attr.favoriteDrawable).toIntArray())
+            .use { it.getDrawable(0)!! }
 
-        typedArray = context.obtainStyledAttributes(arrayOf(R.attr.favoriteOutlineDrawable).toIntArray())
-        favoriteOutlineDrawable = typedArray.getDrawable(0)!!
-        typedArray.recycle()
+        favoriteOutlineDrawable = context.obtainStyledAttributes(arrayOf(R.attr.favoriteOutlineDrawable).toIntArray())
+            .use { it.getDrawable(0)!! }
     }
 }

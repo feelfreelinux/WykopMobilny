@@ -8,7 +8,6 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.actions.ActionsFr
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.LinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.MicroblogFragment
 
-
 class ProfilePagerAdapter(
     val resources: Resources,
     fragmentManager: androidx.fragment.app.FragmentManager

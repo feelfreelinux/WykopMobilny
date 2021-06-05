@@ -51,11 +51,14 @@ class MicroblogCommentsPresenter(
         entriesApi.getEntryCommentVoters(comment.id)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.showVoters(it)
-            }, {
-                view?.showErrorDialog(it)
-            })
+            .subscribe(
+                {
+                    view?.showVoters(it)
+                },
+                {
+                    view?.showErrorDialog(it)
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -63,11 +66,13 @@ class MicroblogCommentsPresenter(
         this
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateComment(it) },
+            .subscribe(
+                { view?.updateComment(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateComment(comment)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

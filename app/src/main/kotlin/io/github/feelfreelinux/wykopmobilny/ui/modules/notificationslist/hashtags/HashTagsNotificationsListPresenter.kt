@@ -21,12 +21,15 @@ class HashTagsNotificationsListPresenter(
         notificationsApi.getHashTagNotifications(page)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                if (it.isNotEmpty()) {
-                    page++
-                    view?.addNotifications(it, shouldRefresh)
-                } else view?.disableLoading()
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addNotifications(it, shouldRefresh)
+                    } else view?.disableLoading()
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -42,13 +45,16 @@ class HashTagsNotificationsListPresenter(
         notificationsApi.getHashTagNotificationCount()
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                if (it.count > 325) {
-                    view?.showTooManyNotifications()
-                } else {
-                    fetchAllPages(shouldRefresh)
-                }
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    if (it.count > 325) {
+                        view?.showTooManyNotifications()
+                    } else {
+                        fetchAllPages(shouldRefresh)
+                    }
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -60,25 +66,28 @@ class HashTagsNotificationsListPresenter(
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
             .repeatUntil { dataEmpty }
-            .subscribe({
-                val data = it.filter { it.new }.toMutableList()
+            .subscribe(
+                {
+                    val data = it.filter { it.new }.toMutableList()
 
-                if (data.isNotEmpty()) {
-                    allData.addAll(data)
-                    page++
-                } else {
-                    dataEmpty = true
+                    if (data.isNotEmpty()) {
+                        allData.addAll(data)
+                        page++
+                    } else {
+                        dataEmpty = true
 
-                    val sortedData = arrayListOf<Notification>()
+                        val sortedData = arrayListOf<Notification>()
 
-                    for (notification in allData.map { it.tag }.toHashSet().toList()) {
-                        sortedData.add(NotificationHeader(notification, allData.count { item -> item.tag == notification }))
-                        sortedData.addAll(allData.filter { it.tag == notification })
+                        for (notification in allData.map { it.tag }.toHashSet().toList()) {
+                            sortedData.add(NotificationHeader(notification, allData.count { item -> item.tag == notification }))
+                            sortedData.addAll(allData.filter { it.tag == notification })
+                        }
+                        view?.addNotifications(sortedData, true)
+                        view?.disableLoading()
                     }
-                    view?.addNotifications(sortedData, true)
-                    view?.disableLoading()
-                }
-            }, { view?.showErrorDialog(it) })
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 }

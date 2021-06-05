@@ -13,12 +13,10 @@ class EntryLink(
         return link?.hashCode() ?: entry!!.hashCode()
     }
 
-
-
     companion object {
         const val TYPE_LINK = "LINK"
         const val TYPE_ENTRY = "ENTRY"
     }
 
-    val DATA_TYPE = if (link == null) TYPE_ENTRY else TYPE_LINK
+    val dataType = if (link == null) TYPE_ENTRY else TYPE_LINK
 }

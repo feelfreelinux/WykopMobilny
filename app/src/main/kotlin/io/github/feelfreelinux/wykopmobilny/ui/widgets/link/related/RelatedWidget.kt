@@ -134,5 +134,4 @@ class RelatedWidget(context: Context, attrs: AttributeSet) :
             .setText(url)
             .startChooser()
     }
-
 }

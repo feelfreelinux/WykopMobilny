@@ -1,11 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.TopLinkCommentLayoutBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentViewListener
@@ -14,14 +13,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.MinusVoteButton
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.top_link_comment_layout.*
 
 class TopLinkCommentViewHolder(
-    override val containerView: View,
+    private val binding: TopLinkCommentLayoutBinding,
     userManagerApi: UserManagerApi,
     settingsPreferencesApi: SettingsPreferencesApi,
     navigatorApi: NewNavigatorApi,
@@ -29,26 +28,27 @@ class TopLinkCommentViewHolder(
     commentActionListener: LinkCommentActionListener,
     commentViewListener: LinkCommentViewListener?
 ) : BaseLinkCommentViewHolder(
-    containerView,
+    binding.root,
     userManagerApi,
     settingsPreferencesApi,
     navigatorApi,
     linkHandlerApi,
     commentViewListener,
     commentActionListener
-), LayoutContainer {
+),
+    LayoutContainer {
 
     override lateinit var embedView: WykopEmbedView
 
     // Bind correct views
-    override var commentContent: TextView = commentContentTextView
-    override var replyButton: TextView = replyTextView
-    override var collapseButton: ImageView = collapseButtonImageView
-    override var authorBadgeStrip: View = authorBadgeStripView
-    override var plusButton: PlusVoteButton = plusVoteButton
-    override var minusButton: MinusVoteButton = minusVoteButton
-    override var moreOptionsButton: TextView = moreOptionsTextView
-    override var shareButton: TextView = shareTextView
+    override var commentContent: TextView = binding.commentContentTextView
+    override var replyButton: TextView = binding.replyTextView
+    override var collapseButton: ImageView = binding.collapseButtonImageView
+    override var authorBadgeStrip: View = binding.authorBadgeStripView
+    override var plusButton: PlusVoteButton = binding.plusVoteButton
+    override var minusButton: MinusVoteButton = binding.minusVoteButton
+    override var moreOptionsButton: TextView = binding.moreOptionsTextView
+    override var shareButton: TextView = binding.shareTextView
 
     companion object {
         const val TYPE_TOP_EMBED = 20
@@ -69,7 +69,7 @@ class TopLinkCommentViewHolder(
             commentViewListener: LinkCommentViewListener?
         ): TopLinkCommentViewHolder {
             val view = TopLinkCommentViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.top_link_comment_layout, parent, false),
+                TopLinkCommentLayoutBinding.inflate(parent.layoutInflater, parent, false),
                 userManagerApi,
                 settingsPreferencesApi,
                 navigatorApi,
@@ -87,22 +87,24 @@ class TopLinkCommentViewHolder(
         }
     }
 
+    override val containerView = binding.root
+
     override fun bindView(linkComment: LinkComment, isAuthorComment: Boolean, commentId: Int) {
         super.bindView(linkComment, isAuthorComment, commentId)
 
-        authorHeaderView.setAuthorData(linkComment.author, linkComment.date, linkComment.app)
+        binding.authorHeaderView.setAuthorData(linkComment.author, linkComment.date, linkComment.app)
         if (linkComment.isCollapsed) {
-            messageTextView.isVisible = linkComment.childCommentCount > 0
-            messageTextView.text = "${linkComment.childCommentCount} ukrytych komentarzy"
-            messageTextView.setOnClickListener {
+            binding.messageTextView.isVisible = linkComment.childCommentCount > 0
+            binding.messageTextView.text = "${linkComment.childCommentCount} ukrytych komentarzy"
+            binding.messageTextView.setOnClickListener {
                 commentViewListener?.setCollapsed(linkComment, false)
             }
         } else {
-            messageTextView.isVisible = false
+            binding.messageTextView.isVisible = false
         }
     }
 
     fun inflateEmbed() {
-        embedView = wykopEmbedView.inflate() as WykopEmbedView
+        embedView = binding.wykopEmbedView.inflate() as WykopEmbedView
     }
 }

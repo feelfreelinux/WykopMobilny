@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 
-
 class LinkComment(
     val id: Int,
     val author: Author,
@@ -92,7 +91,6 @@ class LinkComment(
             return arrayOfNulls(size)
         }
     }
-
 
     val date: String
         get() = this.fullDate.toPrettyDate()

@@ -17,7 +17,10 @@ import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import kotlinx.android.synthetic.main.activity_conversations_list.*
 import javax.inject.Inject
 
-class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
+class MyWykopObservedTagsFragment :
+    BaseFragment(),
+    MyWykopObservedTagsView,
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
     MyWykopNotifier {
 
     companion object {
@@ -27,6 +30,7 @@ class MyWykopObservedTagsFragment : BaseFragment(), MyWykopObservedTagsView, and
     }
 
     @Inject lateinit var adapter: ObservedTagsAdapter
+
     @Inject lateinit var presenter: MyWykopObservedTagsPresenter
 
     lateinit var dataFragment: DataFragment<List<ObservedTagResponse>>

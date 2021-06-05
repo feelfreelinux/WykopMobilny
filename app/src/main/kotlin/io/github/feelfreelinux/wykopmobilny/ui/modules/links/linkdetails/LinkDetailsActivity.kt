@@ -28,8 +28,12 @@ import kotlinx.android.synthetic.main.activity_link_details.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
-    InputToolbarListener, LinkCommentViewListener {
+class LinkDetailsActivity :
+    BaseActivity(),
+    LinkDetailsView,
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
+    InputToolbarListener,
+    LinkCommentViewListener {
 
     companion object {
         const val EXTRA_LINK = "LINK_PARCEL"
@@ -49,17 +53,23 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
     }
 
     @Inject lateinit var userManagerApi: UserManagerApi
+
     @Inject lateinit var settingsApi: SettingsPreferencesApi
+
     @Inject lateinit var suggestionsApi: SuggestApi
+
     @Inject lateinit var linkPreferences: LinksPreferencesApi
+
     @Inject lateinit var adapter: LinkDetailsAdapter
+
     @Inject lateinit var presenter: LinkDetailsPresenter
 
     lateinit var contentUri: Uri
     override val enableSwipeBackLayout: Boolean = true
     val linkId by lazy {
-        if (intent.hasExtra(EXTRA_LINK)) link.id else
+        if (intent.hasExtra(EXTRA_LINK)) link.id else {
             intent.getIntExtra(EXTRA_LINK_ID, -1)
+        }
     }
     private val link by lazy { intent.getParcelableExtra<Link>(EXTRA_LINK)!! }
     private var replyLinkId: Int = 0
@@ -138,7 +148,6 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         } else {
             presenter.loadLinkAndComments()
         }
-
 
         setSubtitle()
     }
@@ -236,7 +245,7 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
         var index = 0
         for (i in 0 until comments.size) {
             if (!comments[i].isParentCollapsed) index++
-            if (comments[i].id ==  linkCommentId) break
+            if (comments[i].id == linkCommentId) break
         }
 
         recyclerView?.scrollToPosition(index + 1)
@@ -261,7 +270,8 @@ class LinkDetailsActivity : BaseActivity(), LinkDetailsView, androidx.swiperefre
             Intent.createChooser(
                 intent,
                 getString(R.string.insert_photo_galery)
-            ), BaseInputActivity.USER_ACTION_INSERT_PHOTO
+            ),
+            BaseInputActivity.USER_ACTION_INSERT_PHOTO
         )
     }
 

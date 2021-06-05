@@ -23,6 +23,7 @@ class AddLinkDetailsFragment : BaseFragment(), AddLinkDetailsFragmentView {
     }
 
     @Inject lateinit var presenter: AddLinkDetailsFragmentPresenter
+
     @Inject lateinit var navigator: NavigatorApi
 
     var imageKey: String = ""
@@ -46,8 +47,8 @@ class AddLinkDetailsFragment : BaseFragment(), AddLinkDetailsFragmentView {
     }
 
     override fun openLinkScreen(link: Link) {
-        navigator.openLinkDetailsActivity(activity!!, link)
-        activity!!.finish()
+        navigator.openLinkDetailsActivity(requireActivity(), link)
+        requireActivity().finish()
     }
 
     override fun showImages(images: List<AddLinkPreviewImage>) {

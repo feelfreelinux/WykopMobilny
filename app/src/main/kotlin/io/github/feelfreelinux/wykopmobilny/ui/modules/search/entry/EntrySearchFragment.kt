@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search.entry
 
-
 import android.os.Bundle
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntriesFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
@@ -17,6 +16,7 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
     }
 
     @Inject lateinit var presenter: EntrySearchPresenter
+
     @Inject lateinit var userManager: UserManagerApi
 
     var query = ""
@@ -35,7 +35,6 @@ class EntrySearchFragment : BaseEntriesFragment(), EntrySearchView {
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
         loadingView.isVisible = false
         showSearchEmptyView = true
-
     }
 
     override fun onDestroy() {

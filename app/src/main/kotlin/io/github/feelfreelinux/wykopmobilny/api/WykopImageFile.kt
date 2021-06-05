@@ -1,30 +1,22 @@
 package io.github.feelfreelinux.wykopmobilny.api
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
+import android.util.Log
 import io.github.feelfreelinux.wykopmobilny.utils.FileUtils
 import io.github.feelfreelinux.wykopmobilny.utils.printout
 import io.github.feelfreelinux.wykopmobilny.utils.queryFileName
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import com.google.android.youtube.player.internal.y
-import com.google.android.youtube.player.internal.x
-import android.graphics.Bitmap
-import android.R.attr.orientation
-import android.graphics.Matrix
-import android.media.ExifInterface
-import android.util.Log
-import com.evernote.android.job.JobProxy.Common
-import com.google.android.youtube.player.internal.v
-import io.github.feelfreelinux.wykopmobilny.R.id.imageView
-import java.io.*
-import android.os.Environment.getExternalStorageDirectory
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
 
 class WykopImageFile(val uri: Uri, val context: Context) {
 
@@ -48,7 +40,6 @@ class WykopImageFile(val uri: Uri, val context: Context) {
             opt.inJustDecodeBounds = true
             BitmapFactory.decodeFile(it.absolutePath, opt)
             mimetype = opt.outMimeType
-
         }
 
         val rotatedFile = ensureRotation(file)
@@ -82,8 +73,9 @@ class WykopImageFile(val uri: Uri, val context: Context) {
         try {
             val exif = ExifInterface(f!!.getPath())
             val orientation = exif.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL)
+                ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_NORMAL
+            )
 
             var angle = 0
 
@@ -101,17 +93,20 @@ class WykopImageFile(val uri: Uri, val context: Context) {
             val options = BitmapFactory.Options()
             options.inSampleSize = 2
 
-            val bmp = BitmapFactory.decodeStream(FileInputStream(f),
-                    null, options)
-            val bitmap = Bitmap.createBitmap(bmp!!, 0, 0, bmp.width,
-                    bmp.height, mat, true)
+            val bmp = BitmapFactory.decodeStream(
+                FileInputStream(f),
+                null, options
+            )
+            val bitmap = Bitmap.createBitmap(
+                bmp!!, 0, 0, bmp.width,
+                bmp.height, mat, true
+            )
 
             val file = File.createTempFile("rSaved", ".0", context.cacheDir)
             val fileOutputStream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
             fileOutputStream.close()
             return file
-
         } catch (e: IOException) {
             Log.w("TAG", "-- Error in setting image")
         } catch (oom: OutOfMemoryError) {

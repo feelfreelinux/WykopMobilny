@@ -32,7 +32,8 @@ class MainNavigationModule {
     fun provideNavigator(activity: MainNavigationActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity: MainNavigationActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun provideLinkHandler(activity: MainNavigationActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigator)
 
     @Provides
     fun provideShortcutsDispatcher() = ShortcutsDispatcher()

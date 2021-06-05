@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.devbrackets.android.exomedia.ui.widget.FitsSystemWindowRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.devbrackets.android.exomedia.ui.widget.FitsSystemWindowRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/controls_layout"
@@ -12,7 +14,8 @@
         android:background="@color/windowBackgroundTransparent"
         android:layout_alignParentBottom="true"
         android:paddingBottom="16dp"
-        android:paddingTop="16dp">
+        android:paddingTop="16dp"
+        >
 
         <TextView
             android:id="@+id/exomedia_controls_current_time"
@@ -24,7 +27,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:textColor="@android:color/white"
             tools:ignore="RtlHardcoded"
-            tools:text="1:06:29" />
+            tools:text="1:06:29"
+            />
 
         <SeekBar
             android:id="@+id/player_seekbar"
@@ -36,7 +40,8 @@
             app:layout_constraintStart_toEndOf="@id/exomedia_controls_current_time"
             app:layout_constraintEnd_toStartOf="@id/exomedia_controls_end_time"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"
+            />
 
         <TextView
             android:id="@+id/exomedia_controls_end_time"
@@ -48,7 +53,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@android:color/white"
             tools:ignore="RtlHardcoded"
-            tools:text="1:23:49" />
+            tools:text="1:23:49"
+            />
 
 
         <ImageButton
@@ -66,7 +72,8 @@
             app:layout_constraintTop_toTopOf="@+id/exomedia_controls_play_pause_btn"
             app:srcCompat="@drawable/exomedia_ic_skip_previous_white"
             tools:ignore="ContentDescription,RtlHardcoded"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            />
 
 
         <ImageButton
@@ -85,7 +92,8 @@
             app:layout_constraintTop_toTopOf="@+id/exomedia_controls_play_pause_btn"
             app:srcCompat="@drawable/exomedia_ic_skip_next_white"
             tools:ignore="ContentDescription,RtlHardcoded"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            />
 
         <ImageButton
             android:id="@+id/exomedia_controls_play_pause_btn"
@@ -99,7 +107,8 @@
             android:minHeight="70dp"
             android:minWidth="70dp"
             app:srcCompat="@drawable/exomedia_ic_play_arrow_white"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            />
 
         <ProgressBar
             android:id="@+id/exomedia_controls_video_loading"
@@ -110,7 +119,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="visible" />
+            android:visibility="visible"
+            />
 
         <LinearLayout
             app:layout_constraintTop_toTopOf="parent"
@@ -118,6 +128,7 @@
             android:orientation="horizontal"
             android:id="@+id/test"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></LinearLayout>
+            android:layout_height="wrap_content"
+            ></LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.devbrackets.android.exomedia.ui.widget.FitsSystemWindowRelativeLayout>

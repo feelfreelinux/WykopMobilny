@@ -3,7 +3,6 @@ package io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments
 import io.github.feelfreelinux.wykopmobilny.base.BaseView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 
-
 interface LinkCommentsFragmentView : BaseView {
     fun updateComment(comment: LinkComment)
     fun disableLoading()

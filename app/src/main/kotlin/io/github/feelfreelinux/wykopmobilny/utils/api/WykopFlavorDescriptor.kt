@@ -17,14 +17,13 @@ import org.intellij.markdown.parser.sequentialparsers.impl.BacktickParser
 import org.intellij.markdown.parser.sequentialparsers.impl.EmphStrongParser
 import org.intellij.markdown.parser.sequentialparsers.impl.InlineLinkParser
 import org.intellij.markdown.parser.sequentialparsers.impl.ReferenceLinkParser
-import java.io.Reader
 import java.net.URI
 
 class WykopFlavorDescriptor : CommonMarkFlavourDescriptor() {
 
     override val markerProcessorFactory = CommonMarkMarkerProcessor.Factory
 
-    override fun createInlinesLexer() = MarkdownLexer(_GFMLexer(null as Reader?))
+    override fun createInlinesLexer() = MarkdownLexer(_GFMLexer())
 
     override val sequentialParserManager = object : SequentialParserManager() {
         override fun getParserSequence() =

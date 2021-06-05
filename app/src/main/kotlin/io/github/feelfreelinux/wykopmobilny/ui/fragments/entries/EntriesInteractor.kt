@@ -23,7 +23,6 @@ class EntriesInteractor @Inject constructor(val entriesApi: EntriesApi) {
                 entry
             }
 
-
     fun markFavorite(entry: Entry): Single<Entry> =
         entriesApi.markFavorite(entry.id)
             .map {

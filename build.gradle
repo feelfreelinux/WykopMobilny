@@ -1,36 +1,20 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id("com.starter.config") version("0.28.0")
+}
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
-    }
+commonConfig {
+    javaFilesAllowed true
 }
 
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        jcenter()
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-    }
-
-    project.ext {
-        versionMajor = 1
-        versionMinor = 0
-        versionPatch = 3
-        versionBuild = 0
+    pluginManager.withPlugin("kotlin") { plugin ->
+        def kotlinVersion = plugins.getPlugin("kotlin").kotlinPluginVersion
+        configurations.configureEach {
+            resolutionStrategy.eachDependency {
+                if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
+                    useVersion kotlinVersion
+                }
+            }
+        }
     }
 }
-
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
-}
-
-tasks.register("projectCodestyle")

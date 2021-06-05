@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import io.github.feelfreelinux.wykopmobilny.base.adapter.EndlessProgressAdapter
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
@@ -22,14 +23,14 @@ class EntryLinksAdapter @Inject constructor(
     val settingsPreferencesApi: SettingsPreferencesApi,
     val navigatorApi: NewNavigatorApi,
     val linkHandlerApi: WykopLinkHandlerApi
-) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, EntryLink>() {
+) : EndlessProgressAdapter<ViewHolder, EntryLink>() {
     // Required field, interacts with presenter. Otherwise will throw exception
     lateinit var entryActionListener: EntryActionListener
     lateinit var linkActionListener: LinkActionListener
 
     override fun getViewType(position: Int): Int {
         val entryLink = dataset[position]
-        return if (entryLink?.DATA_TYPE == EntryLink.TYPE_ENTRY) {
+        return if (entryLink?.dataType == EntryLink.TYPE_ENTRY) {
             EntryViewHolder.getViewTypeForEntry(entryLink.entry!!)
         } else {
             LinkViewHolder.getViewTypeForLink(entryLink!!.link!!, settingsPreferencesApi)
@@ -38,17 +39,21 @@ class EntryLinksAdapter @Inject constructor(
 
     override fun addData(items: List<EntryLink>, shouldClearAdapter: Boolean) {
         super.addData(
-                items.asSequence().filterNot { settingsPreferencesApi.hideBlacklistedViews && if (it.entry != null) it.entry!!.isBlocked else it.link!!.isBlocked }.toList(),
-            shouldClearAdapter
+            items.asSequence()
+                .filterNot {
+                    val isBlocked = if (it.entry != null) it.entry!!.isBlocked else it.link!!.isBlocked
+                    settingsPreferencesApi.hideBlacklistedViews && isBlocked
+                }
+                .toList(),
+            shouldClearAdapter,
         )
     }
 
-    override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun constructViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             LinkViewHolder.TYPE_IMAGE, LinkViewHolder.TYPE_NOIMAGE ->
                 LinkViewHolder.inflateView(parent, viewType, userManagerApi, settingsPreferencesApi, navigatorApi, linkActionListener)
-            EntryViewHolder.TYPE_BLOCKED, LinkViewHolder.TYPE_BLOCKED ->
-                BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
+            EntryViewHolder.TYPE_BLOCKED, LinkViewHolder.TYPE_BLOCKED -> BlockedViewHolder.inflateView(parent, ::notifyItemChanged)
             else -> EntryViewHolder.inflateView(
                 parent,
                 viewType,
@@ -57,28 +62,21 @@ class EntryLinksAdapter @Inject constructor(
                 navigatorApi,
                 linkHandlerApi,
                 entryActionListener,
-                null
+                null,
             )
         }
     }
 
-    override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun bindHolder(holder: ViewHolder, position: Int) {
         when (holder) {
-            is EntryViewHolder -> {
-                dataset[position]?.entry?.let { holder.bindView(it) }
-            }
-            is LinkViewHolder -> dataset[position]?.link?.let { holder.bindView(it) }
+            is EntryViewHolder -> dataset[position]?.entry?.let(holder::bindView)
+            is LinkViewHolder -> dataset[position]?.link?.let(holder::bindView)
             is BlockedViewHolder -> {
                 val data = dataset[position]
-                data?.link?.let {
-                    holder.bindView(it)
-                }
-
-                data?.entry?.let {
-                    holder.bindView(it)
-                }
+                data?.link?.let(holder::bindView)
+                data?.entry?.let(holder::bindView)
             }
-            is SimpleLinkViewHolder -> dataset[position]!!.link?.let { holder.bindView(it) }
+            is SimpleLinkViewHolder -> dataset[position]!!.link?.let(holder::bindView)
         }
     }
 

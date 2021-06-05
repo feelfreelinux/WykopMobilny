@@ -16,4 +16,3 @@ class BlacklistPreferences @Inject constructor(context: Context) : Preferences(c
     override var scraperSession: String? by stringPref("sessionString", "nosession")
     override var blockedImported: Boolean by booleanPref(defaultValue = false)
 }
-

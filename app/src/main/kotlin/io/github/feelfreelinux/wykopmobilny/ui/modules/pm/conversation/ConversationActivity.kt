@@ -31,19 +31,26 @@ import javax.inject.Inject
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
 
     companion object {
-        const val EXTRA_USER = "USER"
-        const val DATA_FRAGMENT_TAG = "CONVERSATION_TAG"
+        private const val EXTRA_USER = "USER"
+        private const val DATA_FRAGMENT_TAG = "CONVERSATION_TAG"
 
         fun createIntent(context: Context, user: String) =
             Intent(context, ConversationActivity::class.java).apply {
-                putExtra(ConversationActivity.EXTRA_USER, user)
+                putExtra(EXTRA_USER, user)
             }
     }
 
-    @Inject lateinit var conversationAdapter: PMMessageAdapter
-    @Inject lateinit var presenter: ConversationPresenter
-    @Inject lateinit var userManagerApi: UserManagerApi
-    @Inject lateinit var suggestionApi: SuggestApi
+    @Inject
+    lateinit var conversationAdapter: PMMessageAdapter
+
+    @Inject
+    lateinit var presenter: ConversationPresenter
+
+    @Inject
+    lateinit var userManagerApi: UserManagerApi
+
+    @Inject
+    lateinit var suggestionApi: SuggestApi
 
     override val enableSwipeBackLayout = true
     override val isActivityTransfluent = true
@@ -83,7 +90,6 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
         inputToolbar.inputToolbarListener = this
         inputToolbar.setup(userManagerApi, suggestionApi)
-
     }
 
     override fun showConversation(conversation: FullConversation) {
@@ -126,8 +132,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         receiver?.let {
-            conversationDataFragment.data =
-                    FullConversation(conversationAdapter.messages.reversed(), receiver!!)
+            conversationDataFragment.data = FullConversation(conversationAdapter.messages.reversed(), it)
         }
     }
 
@@ -138,8 +143,9 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         startActivityForResult(
             Intent.createChooser(
                 intent,
-                getString(R.string.insert_photo_galery)
-            ), BaseInputActivity.USER_ACTION_INSERT_PHOTO
+                getString(R.string.insert_photo_galery),
+            ),
+            BaseInputActivity.USER_ACTION_INSERT_PHOTO,
         )
     }
 
@@ -158,15 +164,11 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         presenter.sendMessage(body, photo, containsAdultContent)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                BaseInputActivity.USER_ACTION_INSERT_PHOTO -> {
-                    inputToolbar.setPhoto(data?.data)
-                }
-
-                BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA -> {
-                    inputToolbar.setPhoto(contentUri)
-                }
+                BaseInputActivity.USER_ACTION_INSERT_PHOTO -> inputToolbar.setPhoto(data?.data)
+                BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA -> inputToolbar.setPhoto(contentUri)
             }
         }
     }

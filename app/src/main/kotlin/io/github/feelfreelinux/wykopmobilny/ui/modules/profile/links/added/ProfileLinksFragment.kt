@@ -29,6 +29,7 @@ class ProfileLinksFragment : BaseLinksFragment(), ProfileLinksView {
     }
 
     @Inject lateinit var userManager: UserManagerApi
+
     @Inject lateinit var presenter: ProfileLinksPresenter
 
     private val extraType by lazy { arguments?.getString(EXTRA_TYPE) }

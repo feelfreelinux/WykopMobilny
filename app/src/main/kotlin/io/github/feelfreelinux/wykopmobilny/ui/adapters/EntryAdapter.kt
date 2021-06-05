@@ -1,13 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryCommentViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryListener
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.EntryViewHolder
-import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.RecyclableViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
@@ -18,23 +18,21 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import javax.inject.Inject
 
 class EntryAdapter @Inject constructor(
-    val userManagerApi: UserManagerApi,
-    val settingsPreferencesApi: SettingsPreferencesApi,
-    val navigatorApi: NewNavigatorApi,
-    val linkHandlerApi: WykopLinkHandlerApi
-) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+    private val userManagerApi: UserManagerApi,
+    private val settingsPreferencesApi: SettingsPreferencesApi,
+    private val navigatorApi: NewNavigatorApi,
+    private val linkHandlerApi: WykopLinkHandlerApi
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var entryActionListener: EntryActionListener
     lateinit var commentActionListener: EntryCommentActionListener
     lateinit var commentViewListener: EntryCommentViewListener
-    var replyListener: EntryListener = {
-        commentViewListener.addReply(it.author)
-    }
+    private var replyListener: EntryListener = { commentViewListener.addReply(it.author) }
 
     var entry: Entry? = null
     var commentId: Int? = null
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EntryViewHolder -> {
                 holder.bindView(entry!!)
@@ -65,10 +63,12 @@ class EntryAdapter @Inject constructor(
         return 0
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            EntryCommentViewHolder.TYPE_BLOCKED, EntryViewHolder.TYPE_BLOCKED -> BlockedViewHolder.inflateView(parent, { notifyItemChanged(it) })
-            EntryCommentViewHolder.TYPE_NORMAL, EntryCommentViewHolder.TYPE_EMBED -> EntryCommentViewHolder.inflateView(
+            EntryCommentViewHolder.TYPE_BLOCKED,
+            EntryViewHolder.TYPE_BLOCKED -> BlockedViewHolder.inflateView(parent, ::notifyItemChanged)
+            EntryCommentViewHolder.TYPE_NORMAL,
+            EntryCommentViewHolder.TYPE_EMBED -> EntryCommentViewHolder.inflateView(
                 parent,
                 viewType,
                 userManagerApi,
@@ -77,7 +77,7 @@ class EntryAdapter @Inject constructor(
                 linkHandlerApi,
                 commentActionListener,
                 commentViewListener,
-                false
+                false,
             )
             else -> EntryViewHolder.inflateView(
                 parent,

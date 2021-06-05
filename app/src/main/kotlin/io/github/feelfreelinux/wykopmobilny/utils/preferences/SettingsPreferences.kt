@@ -64,5 +64,4 @@ class SettingsPreferences(context: Context) : Preferences(context, true), Settin
     override var groupNotifications by booleanPref(defaultValue = true)
     override var disableExitConfirmation by booleanPref(defaultValue = false)
     override var dialogShown by booleanPref(defaultValue = false)
-
 }

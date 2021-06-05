@@ -43,7 +43,6 @@ class NotificationHeaderViewHolder(
         containerView.collapseButtonImageView.setImageDrawable(drawable)
         containerView.collapseButtonImageView.setOnClickListener {
             collapseListener(!tag.visible, tag.tag)
-
         }
         containerView.setOnClickListener {
             navigatorApi.openTagActivity(tag.tag.removePrefix("#"))

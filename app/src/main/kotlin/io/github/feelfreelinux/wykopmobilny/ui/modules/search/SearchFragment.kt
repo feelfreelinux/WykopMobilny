@@ -50,10 +50,14 @@ class SearchFragment : BaseFragment() {
         val item = menu.findItem(R.id.action_search)
         item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM or MenuItem.SHOW_AS_ACTION_WITH_TEXT)
         val searchView = item.actionView as SearchView
-        val historyDb = HistorySuggestionListener(context!!, {
-            querySubject.onNext(it)
-            activity?.hideKeyboard()
-        }, searchView)
+        val historyDb = HistorySuggestionListener(
+            requireContext(),
+            {
+                querySubject.onNext(it)
+                activity?.hideKeyboard()
+            },
+            searchView,
+        )
 
         with(searchView) {
             setOnQueryTextListener(historyDb)

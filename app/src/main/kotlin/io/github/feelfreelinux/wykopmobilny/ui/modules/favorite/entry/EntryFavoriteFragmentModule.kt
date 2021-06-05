@@ -8,10 +8,16 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesInteract
 
 @Module
 class EntryFavoriteFragmentModule {
+
     @Provides
-    fun provideLinksFavoritePresenter(schedulers: Schedulers, entriesApi: EntriesApi, entriesInteractor: EntriesInteractor) = EntryFavoritePresenter(
-        schedulers,
-        entriesInteractor,
-        entriesApi
-    )
+    fun provideLinksFavoritePresenter(
+        schedulers: Schedulers,
+        entriesApi: EntriesApi,
+        entriesInteractor: EntriesInteractor
+    ) =
+        EntryFavoritePresenter(
+            schedulers,
+            entriesInteractor,
+            entriesApi,
+        )
 }

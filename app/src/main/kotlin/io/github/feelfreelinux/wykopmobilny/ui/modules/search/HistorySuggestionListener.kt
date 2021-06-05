@@ -6,7 +6,6 @@ import androidx.appcompat.widget.SearchView
 import io.github.feelfreelinux.wykopmobilny.R
 import java.net.URLEncoder
 
-
 class HistorySuggestionListener(
     val context: Context,
     val queryListener: (String) -> Unit,

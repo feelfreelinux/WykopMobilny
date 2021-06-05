@@ -44,10 +44,8 @@ interface LinksRetrofitApi {
     @GET("/links/commentVoteUp/1/{linkId}/appkey/$APP_KEY")
     fun commentVoteUp(@Path("linkId") linkId: Int): Single<WykopApiResponse<LinkVoteResponse>>
 
-
     @GET("/links/commentVoteDown/1/{linkId}/appkey/$APP_KEY")
     fun commentVoteDown(@Path("linkId") linkId: Int): Single<WykopApiResponse<LinkVoteResponse>>
-
 
     @GET("/links/commentVoteCancel/1/{linkId}/appkey/$APP_KEY")
     fun commentVoteCancel(@Path("linkId") linkId: Int): Single<WykopApiResponse<LinkVoteResponse>>
@@ -123,10 +121,10 @@ interface LinksRetrofitApi {
     @FormUrlEncoded
     @POST("/links/relatedadd/{linkId}/appkey/$APP_KEY")
     fun addRelated(
-            @Field("title") body: String,
-            @Path("linkId") linkId: Int,
-            @Field("url") url: String,
-            @Field("plus18") plus18: Boolean
+        @Field("title") body: String,
+        @Path("linkId") linkId: Int,
+        @Field("url") url: String,
+        @Field("plus18") plus18: Boolean
     ): Single<WykopApiResponse<RelatedResponse>>
 
     @FormUrlEncoded

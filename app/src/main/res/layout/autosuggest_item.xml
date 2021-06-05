@@ -9,12 +9,14 @@
     android:paddingLeft="@dimen/padding_dp_large"
     android:paddingRight="@dimen/padding_dp_large"
     android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    >
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/avatarView"
         android:layout_width="22dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
     <TextView
         android:id="@+id/textView"
@@ -23,6 +25,7 @@
         android:paddingRight="@dimen/padding_dp_large"
         android:paddingLeft="@dimen/padding_dp_large"
         android:textSize="?attr/textSizeNormal"
-        tools:text="Kroguc" />
+        tools:text="Kroguc"
+        />
 
 </LinearLayout>

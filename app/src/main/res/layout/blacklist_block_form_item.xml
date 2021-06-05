@@ -7,7 +7,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/itemBackgroundColorStatelist"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    >
 
     <MultiAutoCompleteTextView
         android:id="@+id/blockUserEditText"
@@ -26,7 +27,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@id/lockImageView"
         tools:text="Tag / użytkownik do zablokowania"
-        android:dropDownWidth="wrap_content" />
+        android:dropDownWidth="wrap_content"
+        />
 
     <ImageView
         android:id="@+id/lockImageView"
@@ -39,7 +41,8 @@
         android:src="?attr/bottomSheetLock"
         app:layout_constraintTop_toTopOf="@id/blockUserEditText"
         app:layout_constraintBottom_toBottomOf="@id/blockUserEditText"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

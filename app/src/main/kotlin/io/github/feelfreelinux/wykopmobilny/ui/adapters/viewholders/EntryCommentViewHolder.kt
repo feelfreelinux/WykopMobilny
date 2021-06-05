@@ -1,11 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.graphics.Color
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.CommentListItemBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.EntryCommentMenuBottomsheetBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
@@ -18,18 +21,16 @@ import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.copyText
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.isVisible
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.author_header_layout.view.*
-import kotlinx.android.synthetic.main.comment_list_item.*
-import kotlinx.android.synthetic.main.entry_comment_menu_bottomsheet.view.*
 
 class EntryCommentViewHolder(
-    override val containerView: View,
+    private val binding: CommentListItemBinding,
     private val userManagerApi: UserManagerApi,
     private val settingsPreferencesApi: SettingsPreferencesApi,
     private val navigatorApi: NewNavigatorApi,
@@ -37,7 +38,7 @@ class EntryCommentViewHolder(
     private val commentActionListener: EntryCommentActionListener,
     private val commentViewListener: EntryCommentViewListener?,
     private val enableClickListener: Boolean
-) : RecyclableViewHolder(containerView), LayoutContainer {
+) : RecyclableViewHolder(binding.root), LayoutContainer {
 
     companion object {
         const val TYPE_EMBED = 9
@@ -59,14 +60,14 @@ class EntryCommentViewHolder(
             enableClickListener: Boolean
         ): EntryCommentViewHolder {
             val view = EntryCommentViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false),
+                CommentListItemBinding.inflate(parent.layoutInflater, parent, false),
                 userManagerApi,
                 settingsPreferencesApi,
                 navigatorApi,
                 linkHandlerApi,
                 commentActionListener,
                 commentViewListener,
-                enableClickListener
+                enableClickListener,
             )
 
             view.type = viewType
@@ -84,6 +85,8 @@ class EntryCommentViewHolder(
             }
         }
     }
+
+    override val containerView = binding.root
 
     var type: Int = TYPE_NORMAL
     private var isAuthorComment: Boolean = false
@@ -104,39 +107,40 @@ class EntryCommentViewHolder(
 
     private fun setupHeader(comment: EntryComment) {
         comment.author.apply {
-            avatarView.setAuthor(this)
-            avatarView.setOnClickListener { navigatorApi.openProfileActivity(nick) }
-            authorTextView.apply {
+            binding.avatarView.setAuthor(this)
+            binding.avatarView.setOnClickListener { navigatorApi.openProfileActivity(nick) }
+            binding.authorTextView.apply {
                 text = nick
                 setTextColor(context.getGroupColor(group))
                 setOnClickListener { navigatorApi.openProfileActivity(nick) }
             }
-            patronBadgeTextView.isVisible = badge != null
+            binding.patronBadgeTextView.isVisible = badge != null
             badge?.let {
                 try {
-
-                    badge?.drawBadge(patronBadgeTextView)
-                } catch (e: Throwable) {}
+                    badge?.drawBadge(binding.patronBadgeTextView)
+                } catch (exception: Throwable) {
+                    Log.w(this::class.simpleName, "Couldn't draw badge", exception)
+                }
             }
-            dateTextView.text = comment.date.replace(" temu", "")
+            binding.dateTextView.text = comment.date.replace(" temu", "")
             comment.app?.let {
-                dateTextView.text = containerView.context.getString(R.string.date_with_user_app, comment.date.replace(" temu", ""), comment.app)
+                binding.dateTextView.text =
+                    containerView.context.getString(R.string.date_with_user_app, comment.date.replace(" temu", ""), comment.app)
             }
         }
     }
 
     private fun setupButtons(comment: EntryComment) {
-        moreOptionsTextView.setOnClickListener {
+        binding.moreOptionsTextView.setOnClickListener {
             openOptionsMenu(comment)
         }
 
         // Only show reply view in entry details
-        replyTextView.isVisible = userManagerApi.isUserAuthorized() && commentViewListener != null
-        replyTextView.setOnClickListener { commentViewListener?.addReply(comment.author) }
-
+        binding.replyTextView.isVisible = userManagerApi.isUserAuthorized() && commentViewListener != null
+        binding.replyTextView.setOnClickListener { commentViewListener?.addReply(comment.author) }
 
         // Setup vote button
-        with(voteButton) {
+        with(binding.voteButton) {
             isEnabled = true
             isButtonSelected = comment.isVoted
             voteCount = comment.voteCount
@@ -150,28 +154,26 @@ class EntryCommentViewHolder(
         }
 
         // Setup share button
-        shareTextView.setOnClickListener {
+        binding.shareTextView.setOnClickListener {
             navigatorApi.shareUrl(comment.url)
         }
-
     }
 
     private fun setupBody(comment: EntryComment) {
         // Add URL and click handler if body is not empty
-        replyTextView.isVisible = userManagerApi.isUserAuthorized()
-        replyTextView.setOnClickListener { commentViewListener?.addReply(comment.author) }
-        quoteTextView.isVisible = userManagerApi.isUserAuthorized()
-        quoteTextView.setOnClickListener { commentViewListener?.quoteComment(comment) }
+        binding.replyTextView.isVisible = userManagerApi.isUserAuthorized()
+        binding.replyTextView.setOnClickListener { commentViewListener?.addReply(comment.author) }
+        binding.quoteTextView.isVisible = userManagerApi.isUserAuthorized()
+        binding.quoteTextView.setOnClickListener { commentViewListener?.quoteComment(comment) }
         if (comment.body.isNotEmpty()) {
-            entryContentTextView.isVisible = true
-            entryContentTextView.prepareBody(
+            binding.entryContentTextView.isVisible = true
+            binding.entryContentTextView.prepareBody(
                 comment.body,
                 { linkHandlerApi.handleUrl(it) },
                 { handleClick(comment) },
                 settingsPreferencesApi.openSpoilersDialog
             )
-        } else entryContentTextView.isVisible = false
-
+        } else binding.entryContentTextView.isVisible = false
 
         if (comment.embed != null && type == TYPE_EMBED) {
             embedView.setEmbed(comment.embed, settingsPreferencesApi, navigatorApi, comment.isNsfw)
@@ -187,54 +189,54 @@ class EntryCommentViewHolder(
     private fun openOptionsMenu(comment: EntryComment) {
         val activityContext = containerView.getActivityContext()!!
         val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
-        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.entry_comment_menu_bottomsheet, null)
-        dialog.setContentView(bottomSheetView)
-        (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
+        val bottomSheetView = EntryCommentMenuBottomsheetBinding.inflate(activityContext.layoutInflater)
+        dialog.setContentView(bottomSheetView.root)
+        (bottomSheetView.root.parent as View).setBackgroundColor(Color.TRANSPARENT)
         bottomSheetView.apply {
             author.text = comment.author.nick
             date.text = comment.fullDate
             comment.app?.let {
-                date.text = context.getString(R.string.date_with_user_app, comment.fullDate, comment.app)
+                date.text = root.context.getString(R.string.date_with_user_app, comment.fullDate, comment.app)
             }
 
-            entry_comment_menu_copy.setOnClickListener {
-                context.copyText(comment.body.stripWykopFormatting(), "entry-comment-body")
+            entryCommentMenuCopy.setOnClickListener {
+                it.context.copyText(comment.body.stripWykopFormatting(), "entry-comment-body")
                 dialog.dismiss()
             }
 
-            entry_comment_menu_edit.setOnClickListener {
+            entryCommentMenuEdit.setOnClickListener {
                 navigatorApi.openEditEntryCommentActivity(comment.body, comment.entryId, comment.id)
                 dialog.dismiss()
             }
 
-            entry_comment_menu_delete.setOnClickListener {
-                confirmationDialog(getActivityContext()!!) {
+            entryCommentMenuDelete.setOnClickListener {
+                confirmationDialog(it.context) {
                     commentActionListener.deleteComment(comment)
                 }.show()
                 dialog.dismiss()
             }
 
-            entry_comment_menu_voters.setOnClickListener {
+            entryCommentMenuVoters.setOnClickListener {
                 commentActionListener.getVoters(comment)
                 dialog.dismiss()
             }
 
-            entry_comment_menu_report.setOnClickListener {
+            entryCommentMenuReport.setOnClickListener {
                 navigatorApi.openReportScreen(comment.violationUrl)
                 dialog.dismiss()
             }
 
-            entry_comment_menu_report.isVisible = userManagerApi.isUserAuthorized()
+            entryCommentMenuReport.isVisible = userManagerApi.isUserAuthorized()
 
             val canUserEdit = userManagerApi.isUserAuthorized() &&
-                    comment.author.nick == userManagerApi.getUserCredentials()?.login
-            entry_comment_menu_delete.isVisible = canUserEdit || isOwnEntry
-            entry_comment_menu_edit.isVisible = canUserEdit
+                comment.author.nick == userManagerApi.getUserCredentials()?.login
+            entryCommentMenuDelete.isVisible = canUserEdit || isOwnEntry
+            entryCommentMenuEdit.isVisible = canUserEdit
         }
 
-        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.root.parent as View)
         dialog.setOnShowListener {
-            mBehavior.peekHeight = bottomSheetView.height
+            mBehavior.peekHeight = bottomSheetView.root.height
         }
         dialog.show()
     }
@@ -246,26 +248,24 @@ class EntryCommentViewHolder(
     }
 
     fun inflateEmbed() {
-        embedView = entryImageViewStub.inflate() as WykopEmbedView
+        embedView = binding.entryImageViewStub.inflate() as WykopEmbedView
     }
 
     private fun setStyleForComment(comment: EntryComment, commentId: Int = -1) {
         val credentials = userManagerApi.getUserCredentials()
         if (credentials != null && credentials.login == comment.author.nick) {
-            authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.colorBadgeOwn))
+            binding.authorBadgeStrip.isVisible = true
+            binding.authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.colorBadgeOwn))
         } else if (isAuthorComment) {
-            authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.colorBadgeAuthors))
+            binding.authorBadgeStrip.isVisible = true
+            binding.authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.colorBadgeAuthors))
         } else {
-            authorBadgeStrip.isVisible = false
+            binding.authorBadgeStrip.isVisible = false
         }
 
         if (commentId == comment.id) {
-            authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.plusPressedColor))
+            binding.authorBadgeStrip.isVisible = true
+            binding.authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(containerView.context, R.color.plusPressedColor))
         }
-
     }
-
 }

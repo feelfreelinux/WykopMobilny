@@ -19,5 +19,4 @@ class CredentialsPreferences(context: Context) : Preferences(context), Credentia
     override var avatarUrl by stringPref(defaultValue = "")
     override var backgroundUrl by stringPref(defaultValue = "")
     override var timeStamp by stringPref(defaultValue = "")
-
 }

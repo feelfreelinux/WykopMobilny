@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +18,8 @@
         android:paddingStart="@dimen/bottomsheet_item_padding_horizontal"
         android:paddingEnd="@dimen/bottomsheet_item_padding_horizontal"
         android:paddingTop="@dimen/bottomsheet_item_padding_vertical"
-        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical">
+        android:paddingBottom="@dimen/bottomsheet_item_padding_vertical"
+        >
 
         <TextView
             android:id="@+id/yearTextView"
@@ -25,7 +27,8 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textSize="@dimen/bottomsheet_item_title_text_size"
-            tools:text="2016"/>
+            tools:text="2016"
+            />
 
     </LinearLayout>
 
@@ -34,6 +37,7 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/bottomsheet_item_padding_vertical"
-        android:descendantFocusability="blocksDescendants"/>
+        android:descendantFocusability="blocksDescendants"
+        />
 
 </LinearLayout>

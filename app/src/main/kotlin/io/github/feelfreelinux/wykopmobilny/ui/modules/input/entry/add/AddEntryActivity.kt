@@ -24,6 +24,7 @@ class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivit
     }
 
     @Inject override lateinit var suggestionApi: SuggestApi
+
     @Inject override lateinit var presenter: AddEntryPresenter
 
     val navigator by lazy { NewNavigator(this) as NewNavigatorApi }
@@ -45,7 +46,6 @@ class AddEntryActivity : BaseInputActivity<AddEntryPresenter>(), AddEntryActivit
                 text?.let {
                     textBody = text
                 }
-
             } else if (intent!!.type!!.startsWith("image/")) {
                 val imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM) as Uri?
                 imageUri?.let {

@@ -19,5 +19,6 @@ class ProfileModule {
     fun provideNavigator(activity: ProfileActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity: ProfileActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun provideLinkHandler(activity: ProfileActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigator)
 }

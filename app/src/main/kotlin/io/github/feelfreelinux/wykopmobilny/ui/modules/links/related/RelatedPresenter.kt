@@ -22,9 +22,9 @@ class RelatedPresenter(
 
     fun addRelated(title: String, description: String) {
         linksApi.relatedAdd(title, description, false, linkId)
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .subscribe({ view?.onRefresh() }, { view?.showErrorDialog(it) })
-                .intoComposite(compositeObservable)
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .subscribe({ view?.onRefresh() }, { view?.showErrorDialog(it) })
+            .intoComposite(compositeObservable)
     }
 }

@@ -5,5 +5,5 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseView
 interface RelatedWidgetView : BaseView {
     fun markVoted()
     fun markUnvoted()
-    fun setVoteCount(voteCount : Int)
+    fun setVoteCount(voteCount: Int)
 }

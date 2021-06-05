@@ -24,16 +24,19 @@ class EntrySearchPresenter(
         searchApi.searchEntries(page, q)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.showSearchEmptyView = (page == 1 && it.isEmpty())
-                if (it.isNotEmpty()) {
-                    page++
-                    view?.addItems(it, shouldRefresh)
-                } else {
-                    view?.addItems(it, (page == 1))
-                    view?.disableLoading()
-                }
-            }, { view?.showErrorDialog(it) })
+            .subscribe(
+                {
+                    view?.showSearchEmptyView = (page == 1 && it.isEmpty())
+                    if (it.isNotEmpty()) {
+                        page++
+                        view?.addItems(it, shouldRefresh)
+                    } else {
+                        view?.addItems(it, (page == 1))
+                        view?.disableLoading()
+                    }
+                },
+                { view?.showErrorDialog(it) }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -57,11 +60,14 @@ class EntrySearchPresenter(
         entriesApi.getEntryVoters(entry.id)
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({
-                view?.showVoters(it)
-            }, {
-                view?.showErrorDialog(it)
-            })
+            .subscribe(
+                {
+                    view?.showVoters(it)
+                },
+                {
+                    view?.showErrorDialog(it)
+                }
+            )
             .intoComposite(compositeObservable)
     }
 
@@ -69,11 +75,13 @@ class EntrySearchPresenter(
         this
             .subscribeOn(schedulers.backgroundThread())
             .observeOn(schedulers.mainThread())
-            .subscribe({ view?.updateEntry(it) },
+            .subscribe(
+                { view?.updateEntry(it) },
                 {
                     view?.showErrorDialog(it)
                     view?.updateEntry(entry)
-                })
+                }
+            )
             .intoComposite(compositeObservable)
     }
 }

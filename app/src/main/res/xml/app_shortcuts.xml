@@ -1,14 +1,17 @@
-<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+<shortcuts
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:enabled="true"
         android:icon="@drawable/ic_shortcut_mywkop"
         android:shortcutId="mywkop"
         android:shortcutLongLabel="@string/mywykop"
-        android:shortcutShortLabel="@string/mywykop">
+        android:shortcutShortLabel="@string/mywykop"
+        >
         <intent
             android:action="io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment"
             android:targetClass="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.feelfreelinux.wykopmobilny" />
+            android:targetPackage="io.github.feelfreelinux.wykopmobilny"
+            />
     </shortcut>
 
     <shortcut
@@ -16,11 +19,13 @@
         android:icon="@drawable/ic_shortcut_mikroblog"
         android:shortcutId="mikroblog"
         android:shortcutLongLabel="@string/mikroblog"
-        android:shortcutShortLabel="@string/mikroblog">
+        android:shortcutShortLabel="@string/mikroblog"
+        >
         <intent
             android:action="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment"
             android:targetClass="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.feelfreelinux.wykopmobilny" />
+            android:targetPackage="io.github.feelfreelinux.wykopmobilny"
+            />
 
     </shortcut>
     <shortcut
@@ -28,11 +33,13 @@
         android:icon="@drawable/ic_shortcut_hits"
         android:shortcutId="hits"
         android:shortcutLongLabel="@string/hits"
-        android:shortcutShortLabel="@string/hits">
+        android:shortcutShortLabel="@string/hits"
+        >
         <intent
             android:action="io.github.feelfreelinux.wykopmobilny.ui.modules.links.hits.HitsFragment"
             android:targetClass="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.feelfreelinux.wykopmobilny" />
+            android:targetPackage="io.github.feelfreelinux.wykopmobilny"
+            />
     </shortcut>
 
     <shortcut
@@ -40,11 +47,13 @@
         android:icon="@drawable/ic_shortcut_search"
         android:shortcutId="search"
         android:shortcutLongLabel="@string/search"
-        android:shortcutShortLabel="@string/search">
+        android:shortcutShortLabel="@string/search"
+        >
         <intent
             android:action="io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment"
             android:targetClass="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.feelfreelinux.wykopmobilny" />
+            android:targetPackage="io.github.feelfreelinux.wykopmobilny"
+            />
     </shortcut>
 
 </shortcuts>

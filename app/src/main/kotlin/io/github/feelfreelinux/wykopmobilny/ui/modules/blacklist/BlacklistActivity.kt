@@ -21,6 +21,7 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
     }
 
     @Inject lateinit var blacklistPreferences: BlacklistPreferences
+
     @Inject lateinit var presenter: BlacklistPresenter
 
     val updateDataSubject = PublishSubject.create<Boolean>()
@@ -42,8 +43,8 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blacklist)
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = "Zarządzaj czarną listą"
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Zarządzaj czarną listą"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         presenter.subscribe(this)
         pager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(pager)
@@ -66,9 +67,7 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.sync -> {
-                presenter.importBlacklist()
-            }
+            R.id.sync -> presenter.importBlacklist()
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)

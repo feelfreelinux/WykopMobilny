@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatTextView;
 import android.text.Layout;
 import android.text.Layout.Alignment;
 import android.text.Spannable;
@@ -20,6 +16,10 @@ import android.text.TextUtils.TruncateAt;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +35,8 @@ import io.github.feelfreelinux.wykopmobilny.R;
  * Note: {@link android.text.TextUtils.TruncateAt#MARQUEE} ellipsizing type is not supported.
  */
 public class EllipsizingTextView extends AppCompatTextView {
-    public static final int ELLIPSIZE_ALPHA = 0x88;
     public static final int MAX_LINES = 8;
-    private SpannableString ELLIPSIS = new SpannableString("\u0020[pokaż\u00A0całość]");
+    private final SpannableString ELLIPSIS = new SpannableString("\u0020[pokaż\u00A0całość]");
 
     private static final Pattern DEFAULT_END_PUNCTUATION
             = Pattern.compile("[\\.!?,;:\u2026]*$", Pattern.DOTALL);
@@ -405,7 +404,9 @@ public class EllipsizingTextView extends AppCompatTextView {
             int cutOffIndex = layout.getLineEnd(mMaxLines - 1);
             int textLength = fullText.length();
             int cutOffLength = textLength - cutOffIndex;
-            if (cutOffLength < ELLIPSIS.length()) cutOffLength = ELLIPSIS.length();
+            if (cutOffLength < ELLIPSIS.length()) {
+                cutOffLength = ELLIPSIS.length();
+            }
             cutOffLength += cutOffIndex % 2;    // Make it even.
             String firstPart = TextUtils.substring(
                     fullText, 0, textLength / 2 - cutOffLength / 2).trim();
@@ -415,7 +416,9 @@ public class EllipsizingTextView extends AppCompatTextView {
             while (!isInLayout(TextUtils.concat(firstPart, ELLIPSIS, secondPart))) {
                 int lastSpaceFirstPart = firstPart.lastIndexOf(' ');
                 int firstSpaceSecondPart = secondPart.indexOf(' ');
-                if (lastSpaceFirstPart == -1 || firstSpaceSecondPart == -1) break;
+                if (lastSpaceFirstPart == -1 || firstSpaceSecondPart == -1) {
+                    break;
+                }
                 firstPart = firstPart.substring(0, lastSpaceFirstPart).trim();
                 secondPart = secondPart.substring(firstSpaceSecondPart, secondPart.length()).trim();
             }

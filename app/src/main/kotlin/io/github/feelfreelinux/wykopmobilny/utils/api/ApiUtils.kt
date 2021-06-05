@@ -48,7 +48,6 @@ fun Context.getGroupColor(role: Int): Int = when (role) {
         val tv = TypedValue()
         theme.resolveAttribute(R.attr.adminNickColor, tv, true)
         tv.data
-
     }
     999 -> Color.parseColor("#BF9B30")
     1001 -> Color.parseColor("#999999")

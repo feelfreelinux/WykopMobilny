@@ -1,14 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.embedview
 
-import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
-import io.github.feelfreelinux.wykopmobilny.utils.youtubeTimestampToMsOrNull
-
-import com.google.android.youtube.player.YouTubeBaseActivity
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayer.ErrorReason
-import com.google.android.youtube.player.YouTubePlayerView
-
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -23,13 +14,21 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.FrameLayout.LayoutParams
 import android.widget.Toast
-
+import com.google.android.youtube.player.YouTubeBaseActivity
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayer.ErrorReason
+import com.google.android.youtube.player.YouTubePlayerView
+import io.github.feelfreelinux.wykopmobilny.GOOGLE_KEY
+import io.github.feelfreelinux.wykopmobilny.utils.youtubeTimestampToMsOrNull
 import java.net.URLDecoder
-
 
 object YouTubeUrlParser {
     private val consentRegex = "consent.youtube.com/.+[?&]continue=([a-z0-9-_.~%]+[^&\\n])".toRegex(RegexOption.IGNORE_CASE)
-    private val videoRegex = "(?:youtube(?:-nocookie)?\\.com/(?:[^/\\n\\s]+/\\S+/|(?:v|e(?:mbed)?)/|\\S*?[?&]v=)|youtu\\.be/)([a-z0-9_-]{11})".toRegex(RegexOption.IGNORE_CASE)
+    private val videoRegex =
+        "(?:youtube(?:-nocookie)?\\.com/(?:[^/\\n\\s]+/\\S+/|(?:v|e(?:mbed)?)/|\\S*?[?&]v=)|youtu\\.be/)([a-z0-9_-]{11})".toRegex(
+            RegexOption.IGNORE_CASE
+        )
     private val timestampRegex = "t=([^#&\\n\\r]+)".toRegex(RegexOption.IGNORE_CASE)
 
     fun getVideoId(videoUrl: String): String? {
@@ -37,7 +36,7 @@ object YouTubeUrlParser {
         return findInUrl(videoRegex, unwrappedUrl)
     }
 
-    fun getTimestamp(videoUrl: String) : String? {
+    fun getTimestamp(videoUrl: String): String? {
         return findInUrl(timestampRegex, videoUrl)
     }
 
@@ -49,7 +48,7 @@ object YouTubeUrlParser {
         return videoRegex.find(unwrapConsentYoutubeUrl(url)) != null
     }
 
-    private fun findInUrl(regex : Regex, url : String) : String? {
+    private fun findInUrl(regex: Regex, url: String): String? {
         val match = regex.find(url)
         return match?.groupValues?.get(1)
     }
@@ -69,7 +68,6 @@ object StatusBarUtil {
     }
 }
 
-
 object AudioUtil {
 
     private val mSingletonLock = Any()
@@ -77,10 +75,12 @@ object AudioUtil {
 
     private fun getInstance(context: Context?): AudioManager? {
         synchronized(mSingletonLock) {
-            if (audioManager != null)
+            if (audioManager != null) {
                 return audioManager
-            if (context != null)
+            }
+            if (context != null) {
                 audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            }
             return audioManager
         }
     }
@@ -96,11 +96,15 @@ enum class Orientation {
     AUTO, AUTO_START_WITH_LANDSCAPE, ONLY_LANDSCAPE, ONLY_PORTRAIT
 }
 
-class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, YouTubePlayer.OnFullscreenListener, YouTubePlayer.PlayerStateChangeListener {
+class YTPlayer :
+    YouTubeBaseActivity(),
+    YouTubePlayer.OnInitializedListener,
+    YouTubePlayer.OnFullscreenListener,
+    YouTubePlayer.PlayerStateChangeListener {
 
     private var googleApiKey: String? = null
     private var videoId: String? = null
-    private var timestampMs : Int? = null
+    private var timestampMs: Int? = null
 
     private var playerStyle: YouTubePlayer.PlayerStyle? = null
     private var orientation: Orientation? = null
@@ -119,8 +123,13 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
         playerView = YouTubePlayerView(this)
         playerView!!.initialize(googleApiKey, this)
 
-        addContentView(playerView, LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT))
+        addContentView(
+            playerView,
+            LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT
+            )
+        )
 
         playerView!!.setBackgroundResource(android.R.color.black)
 
@@ -134,12 +143,14 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
             e.printStackTrace()
         }
 
-        if (googleApiKey == null)
+        if (googleApiKey == null) {
             throw NullPointerException("Google API key must not be null. Set your api key as meta data in AndroidManifest.xml file.")
+        }
 
         videoId = intent.getStringExtra(EXTRA_VIDEO_ID)
-        if (videoId == null)
+        if (videoId == null) {
             throw NullPointerException("Video ID must not be null")
+        }
 
         playerStyle = YouTubePlayer.PlayerStyle.DEFAULT
         orientation = Orientation.AUTO
@@ -154,33 +165,41 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
         animExit = intent.getIntExtra(EXTRA_ANIM_EXIT, 0)
     }
 
-    override fun onInitializationSuccess(provider: YouTubePlayer.Provider,
-                                         player: YouTubePlayer,
-                                         wasRestored: Boolean) {
+    override fun onInitializationSuccess(
+        provider: YouTubePlayer.Provider,
+        player: YouTubePlayer,
+        wasRestored: Boolean
+    ) {
         this.player = player
         player.setOnFullscreenListener(this)
         player.setPlayerStateChangeListener(this)
 
         when (orientation) {
-            Orientation.AUTO -> player.fullscreenControlFlags = (YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION
+            Orientation.AUTO -> player.fullscreenControlFlags = (
+                YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION
                     or YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI
                     or YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE
-                    or YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT)
+                    or YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT
+                )
             Orientation.AUTO_START_WITH_LANDSCAPE -> {
-                player.fullscreenControlFlags = (YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION
+                player.fullscreenControlFlags = (
+                    YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION
                         or YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI
                         or YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE
-                        or YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT)
+                        or YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT
+                    )
                 player.setFullscreen(true)
             }
             Orientation.ONLY_LANDSCAPE -> {
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                player.fullscreenControlFlags = YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI or YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT
+                player.fullscreenControlFlags =
+                    YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI or YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT
                 player.setFullscreen(true)
             }
             Orientation.ONLY_PORTRAIT -> {
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                player.fullscreenControlFlags = YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI or YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT
+                player.fullscreenControlFlags =
+                    YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI or YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT
                 player.setFullscreen(true)
             }
         }
@@ -192,18 +211,22 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
             else -> player.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
         }
 
-        if (!wasRestored)
+        if (!wasRestored) {
             player.loadVideo(videoId, timestampMs ?: 0)
+        }
     }
 
-    override fun onInitializationFailure(provider: YouTubePlayer.Provider,
-                                         errorReason: YouTubeInitializationResult) {
+    override fun onInitializationFailure(
+        provider: YouTubePlayer.Provider,
+        errorReason: YouTubeInitializationResult
+    ) {
         if (errorReason.isUserRecoverableError) {
             errorReason.getErrorDialog(this, RECOVERY_DIALOG_REQUEST).show()
         } else {
             val errorMessage = String.format(
-                    "There was an error initializing the YouTubePlayer (%1\$s)",
-                    errorReason.toString())
+                "There was an error initializing the YouTubePlayer (%1\$s)",
+                errorReason.toString()
+            )
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         }
     }
@@ -220,8 +243,9 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
         super.onConfigurationChanged(newConfig)
         when (orientation) {
             Orientation.AUTO, Orientation.AUTO_START_WITH_LANDSCAPE -> if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                if (player != null)
+                if (player != null) {
                     player!!.setFullscreen(true)
+                }
             } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT && player != null) {
                 player!!.setFullscreen(false)
             }
@@ -232,10 +256,11 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
 
     override fun onFullscreen(fullScreen: Boolean) {
         when (orientation) {
-            Orientation.AUTO, Orientation.AUTO_START_WITH_LANDSCAPE -> requestedOrientation = if (fullScreen)
+            Orientation.AUTO, Orientation.AUTO_START_WITH_LANDSCAPE -> requestedOrientation = if (fullScreen) {
                 LANDSCAPE_ORIENTATION
-            else
+            } else {
                 PORTRAIT_ORIENTATION
+            }
             Orientation.ONLY_LANDSCAPE, Orientation.ONLY_PORTRAIT -> {
             }
         }
@@ -248,23 +273,25 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
             val videoUri = Uri.parse(YouTubeUrlParser.getVideoUrl(videoId!!))
             var intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
             val list = packageManager.queryIntentActivities(
-                    intent,
-                    PackageManager.MATCH_DEFAULT_ONLY)
+                intent,
+                PackageManager.MATCH_DEFAULT_ONLY
+            )
 
-            if (list.isEmpty())
+            if (list.isEmpty()) {
                 intent = Intent(Intent.ACTION_VIEW, videoUri)
+            }
 
             startActivity(intent)
         }
     }
 
-    override fun onAdStarted() {}
+    override fun onAdStarted() = Unit
 
-    override fun onLoaded(videoId: String) {}
+    override fun onLoaded(videoId: String) = Unit
 
-    override fun onLoading() {}
+    override fun onLoading() = Unit
 
-    override fun onVideoEnded() {}
+    override fun onVideoEnded() = Unit
 
     override fun onVideoStarted() {
         StatusBarUtil.hide(this)
@@ -287,8 +314,9 @@ class YTPlayer : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, You
     // Animation
     override fun onBackPressed() {
         super.onBackPressed()
-        if (animEnter != 0 && animExit != 0)
+        if (animEnter != 0 && animExit != 0) {
             overridePendingTransition(animEnter, animExit)
+        }
     }
 
     companion object {

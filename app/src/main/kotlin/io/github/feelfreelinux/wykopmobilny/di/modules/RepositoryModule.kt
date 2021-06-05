@@ -21,7 +21,6 @@ import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsApi
 import io.github.feelfreelinux.wykopmobilny.api.notifications.NotificationsRepository
 import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsRepository
-import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsRetrofitApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMApi
 import io.github.feelfreelinux.wykopmobilny.api.pm.PMRepository
 import io.github.feelfreelinux.wykopmobilny.api.profile.ProfileApi
@@ -80,7 +79,12 @@ class RepositoryModule {
     ): LinksApi = LinksRepository(retrofit, userTokenRefresher, owmContentFilter, patronsApi)
 
     @Provides
-    fun provideTagApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter, blacklistPreferences: BlacklistPreferencesApi) : TagApi = TagRepository(
+    fun provideTagApi(
+        retrofit: Retrofit,
+        userTokenRefresher: UserTokenRefresher,
+        owmContentFilter: OWMContentFilter,
+        blacklistPreferences: BlacklistPreferencesApi
+    ): TagApi = TagRepository(
         retrofit,
         userTokenRefresher,
         owmContentFilter,
@@ -89,7 +93,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun providePatronsApi(retrofit: Retrofit) : PatronsApi = PatronsRepository(retrofit)
+    fun providePatronsApi(retrofit: Retrofit): PatronsApi = PatronsRepository(retrofit)
 
     @Provides
     fun provideUserApi(
@@ -138,7 +142,8 @@ class RepositoryModule {
     fun provideEmbedApi(retrofit: Retrofit): ExternalApi = ExternalRepository(retrofit)
 
     @Provides
-    fun provideAddlinkApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter) : AddLinkApi = AddLinkRepository(retrofit, userTokenRefresher, owmContentFilter)
+    fun provideAddlinkApi(retrofit: Retrofit, userTokenRefresher: UserTokenRefresher, owmContentFilter: OWMContentFilter): AddLinkApi =
+        AddLinkRepository(retrofit, userTokenRefresher, owmContentFilter)
 
     @Provides
     fun provideScraperApi(): ScraperApi = ScraperRepository(createScraperRetrofit())

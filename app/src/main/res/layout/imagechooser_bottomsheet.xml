@@ -7,63 +7,75 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/backgroundColor">
+    android:background="?attr/backgroundColor"
+    >
+
     <LinearLayout
         android:id="@+id/insert_camera"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetCamera"/>
+            android:src="?attr/bottomSheetCamera"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/insert_photo_camera"/>
+            android:text="@string/insert_photo_camera"
+            />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/insert_gallery"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/markdownInsertPhoto"/>
+            android:src="?attr/markdownInsertPhoto"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/insert_photo_galery"/>
+            android:text="@string/insert_photo_galery"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/insert_url"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="?attr/bottomSheetRelated"/>
+            android:src="?attr/bottomSheetRelated"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/bottomsheet_item_textview_margin_left"
-            android:text="@string/insert_photo_url"/>
+            android:text="@string/insert_photo_url"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/mark_nsfw"
-        style="@style/BottomSheetMenuItem">
+        style="@style/BottomSheetMenuItem"
+        >
 
         <CheckBox
             android:id="@+id/mark_nsfw_checkbox"
@@ -71,14 +83,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_marginStart="-4dp"/>
+            android:layout_marginStart="-4dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="11dp"
-            android:text="@string/mark_nsfw"/>
+            android:text="@string/mark_nsfw"
+            />
 
     </LinearLayout>
 

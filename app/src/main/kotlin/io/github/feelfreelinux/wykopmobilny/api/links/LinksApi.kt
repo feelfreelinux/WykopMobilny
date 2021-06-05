@@ -36,19 +36,22 @@ interface LinksApi {
         body: String,
         plus18: Boolean,
         inputStream: WykopImageFile,
-        linkId: Int, linkComment: Int
+        linkId: Int,
+        linkComment: Int
     ): Single<LinkComment>
     fun relatedAdd(
-            title: String,
-            url: String,
-            plus18: Boolean,
-            linkId: Int
+        title: String,
+        url: String,
+        plus18: Boolean,
+        linkId: Int
     ): Single<Related>
 
     fun commentAdd(
-        body: String, embed: String?,
+        body: String,
+        embed: String?,
         plus18: Boolean,
-        linkId: Int, linkComment: Int
+        linkId: Int,
+        linkComment: Int
     ): Single<LinkComment>
 
     fun commentAdd(
@@ -59,7 +62,8 @@ interface LinksApi {
     ): Single<LinkComment>
 
     fun commentAdd(
-        body: String, embed: String?,
+        body: String,
+        embed: String?,
         plus18: Boolean,
         linkId: Int
     ): Single<LinkComment>

@@ -30,6 +30,7 @@ class DownvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Sw
     }
 
     @Inject lateinit var presenter: DownvotersPresenter
+
     @Inject lateinit var downvotersAdapter: DownvoterListAdapter
     private lateinit var downvotersDataFragment: DataFragment<List<Downvoter>>
 

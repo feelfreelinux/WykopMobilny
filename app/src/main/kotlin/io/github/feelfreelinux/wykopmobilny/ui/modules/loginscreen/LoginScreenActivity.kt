@@ -30,7 +30,9 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     }
 
     @Inject lateinit var navigatorApi: NewNavigatorApi
+
     @Inject lateinit var presenter: LoginScreenPresenter
+
     @Inject lateinit var blacklistPreferences: BlacklistPreferences
 
     private val progressDialog by lazy { ProgressDialog(this) }
@@ -103,4 +105,3 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
         super.onStop()
     }
 }
-

@@ -3,6 +3,7 @@ package io.github.feelfreelinux.wykopmobilny.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
@@ -15,9 +16,10 @@ import kotlinx.android.synthetic.main.entries_fragment.*
 import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-open class BaseLinksFragment : BaseFragment(), LinksFragmentView, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+open class BaseLinksFragment : BaseFragment(), LinksFragmentView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject lateinit var linksApi: LinksApi
+
     @Inject lateinit var linksAdapter: LinksAdapter
 
     var showSearchEmptyView: Boolean

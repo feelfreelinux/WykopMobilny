@@ -2,15 +2,16 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.showExceptionDialog
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 
-@Suppress("LeakingThis")
 abstract class VoteButton @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.MirkoButtonStyle
-) : TextView(context, attrs, defStyleAttr) {
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.MirkoButtonStyle
+) : AppCompatTextView(context, attrs, defStyleAttr) {
 
     var voteCount: Int
         get() = text.toString().toInt()

@@ -8,7 +8,6 @@ import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.drawBadge
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
@@ -43,8 +42,11 @@ class ProfileActivity : BaseActivity(), ProfileView {
     }
 
     @Inject lateinit var navigator: NewNavigatorApi
+
     @Inject lateinit var presenter: ProfilePresenter
+
     @Inject lateinit var userManagerApi: UserManagerApi
+
     @Inject lateinit var patronsApi: PatronsApi
 
     val username by lazy { intent.getStringExtra(EXTRA_USERNAME)!! }

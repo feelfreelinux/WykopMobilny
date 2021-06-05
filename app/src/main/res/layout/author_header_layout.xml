@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/authorAvatarView"
@@ -13,7 +14,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
     <TextView
         android:id="@+id/userNameTextView"
@@ -32,7 +34,8 @@
         app:layout_constraintBottom_toTopOf="@id/entryDateTextView"
         app:layout_constraintLeft_toRightOf="@+id/authorAvatarView"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="Kroguc" />
+        tools:text="Kroguc"
+        />
 
     <TextView
         android:id="@+id/patronBadgeTextView"
@@ -52,7 +55,9 @@
         app:layout_constraintTop_toTopOf="@id/userNameTextView"
         tools:background="@drawable/patron_badge"
         tools:layout_editor_absoluteX="85dp"
-        tools:text="PATRON" />
+        tools:text="PATRON"
+        />
+
     <TextView
         android:id="@+id/entryDateTextView"
         android:layout_width="wrap_content"
@@ -71,6 +76,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/authorAvatarView"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="1 min. temu" />
+        tools:text="1 min. temu"
+        />
 
 </merge>

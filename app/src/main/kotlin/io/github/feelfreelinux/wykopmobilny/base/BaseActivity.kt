@@ -2,7 +2,6 @@ package io.github.feelfreelinux.wykopmobilny.base
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.r0adkll.slidr.Slidr
@@ -52,17 +51,14 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         if (themeSettingsPreferences.useDarkTheme) {
             if (themeSettingsPreferences.useAmoledTheme) {
                 setTheme(R.style.WykopAppTheme_Amoled)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark_Amoled)
+                window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark_Amoled)
             } else {
                 setTheme(R.style.WykopAppTheme_Dark)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark_Dark)
+                window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark_Dark)
             }
         } else {
             setTheme(R.style.WykopAppTheme)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+            window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         }
         if (isActivityTransfluent || enableSwipeBackLayout) {
             theme.applyStyle(R.style.TransparentActivityTheme, true)

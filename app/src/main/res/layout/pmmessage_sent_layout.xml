@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/notificationItem"
@@ -19,7 +20,8 @@
         app:cardElevation="0dp"
         android:layout_alignParentStart="true"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -27,7 +29,8 @@
             android:paddingTop="@dimen/pmmessage_sent_layout_item_padding_vertical"
             android:paddingBottom="@dimen/pmmessage_sent_layout_item_padding_vertical"
             android:paddingLeft="@dimen/pmmessage_sent_layout_item_padding_horizontal"
-            android:paddingRight="@dimen/pmmessage_sent_layout_item_padding_horizontal">
+            android:paddingRight="@dimen/pmmessage_sent_layout_item_padding_horizontal"
+            >
 
             <TextView
                 android:id="@+id/body"
@@ -36,7 +39,8 @@
                 android:textIsSelectable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."/>
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                />
 
             <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
                 android:id="@+id/embedImage"
@@ -46,7 +50,8 @@
                 android:adjustViewBounds="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/body"/>
+                app:layout_constraintTop_toBottomOf="@id/body"
+                />
 
             <TextView
                 android:id="@+id/date"
@@ -59,7 +64,8 @@
                 android:textSize="@dimen/pmmessage_sent_layout_date_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/embedImage"
-                tools:text="1 minute ago via Android"/>
+                tools:text="1 minute ago via Android"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

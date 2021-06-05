@@ -23,7 +23,7 @@ class WykopNotificationManager(private val notificationManager: NotificationMana
     private val ids = AtomicInteger(0)
 
     init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
                     NOTIFICATION_CHANNEL_ID,
@@ -31,6 +31,7 @@ class WykopNotificationManager(private val notificationManager: NotificationMana
                     NotificationManager.IMPORTANCE_HIGH
                 )
             )
+        }
     }
 
     override fun getNewId() = ids.incrementAndGet()

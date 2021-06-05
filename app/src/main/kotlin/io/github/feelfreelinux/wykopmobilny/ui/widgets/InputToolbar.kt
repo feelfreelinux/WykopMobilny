@@ -4,13 +4,12 @@ import android.content.Context
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.SparseArray
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.doOnTextChanged
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
@@ -34,7 +33,9 @@ interface InputToolbarListener {
 }
 
 class InputToolbar @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : androidx.constraintlayout.widget.ConstraintLayout(context, attrs, defStyleAttr), MarkdownToolbarListener {
 
     override var selectionStart: Int
@@ -83,29 +84,30 @@ class InputToolbar @JvmOverloads constructor(
             }
         }
 
-        body.setTokenizer(WykopSuggestionsTokenizer({
-            if (body.adapter !is UsersSuggestionsAdapter)
-                body.setAdapter(usersSuggestionAdapter)
-        }, {
-            if (body.adapter !is HashTagsSuggestionsAdapter)
-                body.setAdapter(hashTagsSuggestionAdapter)
-        }))
-        body.threshold = 3
-        body.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if ((textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null)) {
-                    if (!send.isEnabled) {
-                        enableSendButton()
+        body.setTokenizer(
+            WykopSuggestionsTokenizer(
+                {
+                    if (body.adapter !is UsersSuggestionsAdapter) {
+                        body.setAdapter(usersSuggestionAdapter)
                     }
-                } else if (textBody.length < 3) {
-                    disableSendButton()
+                },
+                {
+                    if (body.adapter !is HashTagsSuggestionsAdapter) {
+                        body.setAdapter(hashTagsSuggestionAdapter)
+                    }
                 }
+            )
+        )
+        body.threshold = 3
+        body.doOnTextChanged { text, start, before, count ->
+            if ((textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null)) {
+                if (!send.isEnabled) {
+                    enableSendButton()
+                }
+            } else if (textBody.length < 3) {
+                disableSendButton()
             }
-        })
+        }
         send.setOnClickListener {
             showProgress(true)
             val wykopImageFile = markdownToolbar.getWykopImageFile()
@@ -312,6 +314,5 @@ class InputToolbar @JvmOverloads constructor(
                 return arrayOfNulls(size)
             }
         }
-
     }
 }

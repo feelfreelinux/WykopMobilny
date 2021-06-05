@@ -16,6 +16,7 @@ class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
     }
 
     @Inject lateinit var userManager: UserManagerApi
+
     @Inject lateinit var presenter: LinkSearchPresenter
 
     var query = ""
@@ -35,7 +36,6 @@ class LinkSearchFragment : BaseLinksFragment(), LinkSearchView {
         linksAdapter.linksActionListener = presenter
         linksAdapter.loadNewDataListener = { loadDataListener(false) }
         loadingView.isVisible = false
-
     }
 
     override fun onDestroy() {
