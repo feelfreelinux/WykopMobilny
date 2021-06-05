@@ -4,22 +4,20 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
 import io.github.feelfreelinux.wykopmobilny.APP_KEY
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityWebviewBinding
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
-import kotlinx.android.synthetic.main.activity_webview.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-@Suppress("DEPRECATION")
 class LoginScreenActivity : BaseActivity(), LoginScreenView {
 
     companion object {
@@ -38,6 +36,8 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     @Inject
     lateinit var blacklistPreferences: BlacklistPreferences
 
+    private val binding by viewBinding(ActivityWebviewBinding::inflate)
+
     private val progressDialog by lazy { ProgressDialog(this) }
 
     override fun importBlacklist(blacklist: Blacklist) {
@@ -54,9 +54,8 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_webview)
-        toolbar.title = getString(R.string.login)
-        setSupportActionBar(toolbar)
+        binding.toolbar.toolbar.title = getString(R.string.login)
+        setSupportActionBar(binding.toolbar.toolbar)
         presenter.subscribe(this)
         setupWebView()
     }
@@ -84,18 +83,14 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView() {
-        webView.apply {
+        binding.webView.apply {
             CookieSyncManager.createInstance(this@LoginScreenActivity)
             CookieSyncManager.getInstance().startSync()
             val cookieManager = CookieManager.getInstance()
 
-            if (Build.VERSION.SDK_INT >= 21) {
-                // AppRTC requires third party cookies to work
-                cookieManager.setAcceptCookie(true)
-                cookieManager.setAcceptThirdPartyCookies(webView, true)
-            } else {
-                cookieManager.setAcceptCookie(true)
-            }
+            // AppRTC requires third party cookies to work
+            cookieManager.setAcceptCookie(true)
+            cookieManager.setAcceptThirdPartyCookies(binding.webView, true)
             settings.javaScriptEnabled = true
 
             webViewClient = LoginActivityWebClient { presenter.handleUrl(it) }

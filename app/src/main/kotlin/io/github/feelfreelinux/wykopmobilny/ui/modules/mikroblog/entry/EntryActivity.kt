@@ -10,10 +10,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityEntryBinding
 import io.github.feelfreelinux.wykopmobilny.databinding.DialogVotersBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
@@ -29,9 +31,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity.C
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.activity_entry.*
-import kotlinx.android.synthetic.main.dialog_voters.view.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
 class EntryActivity :
@@ -51,15 +51,12 @@ class EntryActivity :
             entryId: Int,
             commentId: Int?,
             isRevealed: Boolean
-        ): Intent {
-            val intent = Intent(context, EntryActivity::class.java)
-            intent.putExtra(EXTRA_ENTRY_ID, entryId)
-            intent.putExtra(EXTRA_IS_REVEALED, isRevealed)
-            commentId?.let {
-                intent.putExtra(EXTRA_COMMENT_ID, commentId)
+        ) =
+            Intent(context, EntryActivity::class.java).apply {
+                putExtra(EXTRA_ENTRY_ID, entryId)
+                putExtra(EXTRA_IS_REVEALED, isRevealed)
+                commentId?.let<Int, Unit> { putExtra(EXTRA_COMMENT_ID, commentId) }
             }
-            return intent
-        }
     }
 
     @Inject
@@ -77,13 +74,15 @@ class EntryActivity :
     lateinit var votersDialogListener: VotersDialogListener
     lateinit var contentUri: Uri
 
+    private val binding by viewBinding(ActivityEntryBinding::inflate)
+
     override val enableSwipeBackLayout: Boolean = true
     val entryId by lazy { intent.getIntExtra(EXTRA_ENTRY_ID, -1) }
     private val isRevealed by lazy { intent.getBooleanExtra(EXTRA_IS_REVEALED, false) }
     private val highLightCommentId by lazy { intent.getIntExtra(EXTRA_COMMENT_ID, -1) }
 
     override fun openVotersMenu() {
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
+        val dialog = BottomSheetDialog(this)
         val votersDialogView = DialogVotersBinding.inflate(layoutInflater)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView.root)
@@ -104,17 +103,17 @@ class EntryActivity :
     }
 
     override fun addReply(author: Author) {
-        inputToolbar.addAddressant(author.nick)
+        binding.inputToolbar.addAddressant(author.nick)
     }
 
     override fun quoteComment(comment: EntryComment) {
-        inputToolbar.addQuoteText(comment.body, comment.author.nick)
+        binding.inputToolbar.addQuoteText(comment.body, comment.author.nick)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
 
         presenter.subscribe(this)
         adapter.commentId = highLightCommentId
@@ -130,19 +129,19 @@ class EntryActivity :
         supportActionBar?.title = getString(R.string.entry)
 
         // Prepare RecyclerView
-        recyclerView?.apply {
+        binding.recyclerView.apply {
             prepare()
             // Set margin, adapter
             this.adapter = this@EntryActivity.adapter
         }
 
         // Prepare InputToolbar
-        inputToolbar.setup(userManager, suggestionApi)
-        inputToolbar.inputToolbarListener = this
-        swiperefresh.setOnRefreshListener(this)
+        binding.inputToolbar.setup(userManager, suggestionApi)
+        binding.inputToolbar.inputToolbarListener = this
+        binding.swiperefresh.setOnRefreshListener(this)
 
         // Trigger data loading
-        loadingView?.isVisible = true
+        binding.loadingView.isVisible = true
         presenter.loadData()
     }
 
@@ -165,40 +164,40 @@ class EntryActivity :
     }
 
     override fun onRefresh() {
-        swiperefresh.isRefreshing = true
+        binding.swiperefresh.isRefreshing = true
         presenter.loadData()
     }
 
     override fun showEntry(entry: Entry) {
         adapter.entry = entry
         entry.comments.forEach { it.entryId = entry.id }
-        inputToolbar.setDefaultAddressant(entry.author.nick)
-        inputToolbar.setIfIsCommentingPossible(entry.isCommentingPossible)
-        inputToolbar.show()
-        loadingView?.isVisible = false
-        swiperefresh?.isRefreshing = false
+        binding.inputToolbar.setDefaultAddressant(entry.author.nick)
+        binding.inputToolbar.setIfIsCommentingPossible(entry.isCommentingPossible)
+        binding.inputToolbar.show()
+        binding.loadingView.isVisible = false
+        binding.swiperefresh.isRefreshing = false
         entry.embed?.isRevealed = isRevealed
         adapter.notifyDataSetChanged()
         if (highLightCommentId != -1) {
             entry.comments.forEachIndexed { index, comment ->
                 if (comment.id == highLightCommentId) {
-                    recyclerView?.scrollToPosition(index + 1)
+                    binding.recyclerView.scrollToPosition(index + 1)
                 }
-                recyclerView?.refreshDrawableState()
+                binding.recyclerView.refreshDrawableState()
             }
         }
     }
 
     override fun hideInputToolbar() {
-        inputToolbar.hide()
+        binding.inputToolbar.hide()
     }
 
     override fun hideInputbarProgress() {
-        inputToolbar.showProgress(false)
+        binding.inputToolbar.showProgress(false)
     }
 
     override fun resetInputbarState() {
-        inputToolbar.resetState()
+        binding.inputToolbar.resetState()
     }
 
     override fun openGalleryImageChooser() {
@@ -215,7 +214,7 @@ class EntryActivity :
     }
 
     override fun onBackPressed() {
-        if (inputToolbar.hasUserEditedContent()) {
+        if (binding.inputToolbar.hasUserEditedContent()) {
             exitConfirmationDialog(this) { finish() }?.show()
         } else {
             finish()
@@ -237,20 +236,20 @@ class EntryActivity :
 
             when (requestCode) {
                 BaseInputActivity.USER_ACTION_INSERT_PHOTO -> {
-                    inputToolbar.setPhoto(data?.data)
+                    binding.inputToolbar.setPhoto(data?.data)
                 }
 
                 USER_ACTION_INSERT_PHOTO_CAMERA -> {
-                    inputToolbar.setPhoto(contentUri)
+                    binding.inputToolbar.setPhoto(contentUri)
                 }
 
                 BaseInputActivity.EDIT_ENTRY_COMMENT -> {
-                    swiperefresh.isRefreshing = true
+                    binding.swiperefresh.isRefreshing = true
                     onRefresh()
                 }
 
                 BaseInputActivity.EDIT_ENTRY -> {
-                    swiperefresh.isRefreshing = true
+                    binding.swiperefresh.isRefreshing = true
                     onRefresh()
                 }
             }

@@ -6,7 +6,10 @@
     android:orientation="vertical"
     >
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        />
 
     <WebView
         android:id="@+id/webView"

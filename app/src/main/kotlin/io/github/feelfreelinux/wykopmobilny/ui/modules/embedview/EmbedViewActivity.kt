@@ -31,16 +31,16 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.WykopSchedulers
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityEmbedviewBinding
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.embed.Coub
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActions
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import io.github.feelfreelinux.wykopmobilny.utils.wykopLog
 import io.reactivex.Single
-import kotlinx.android.synthetic.main.activity_embedview.*
-import kotlinx.android.synthetic.main.toolbar.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.buffer
@@ -71,6 +71,8 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     @Inject
     lateinit var settingsPreferencesApi: SettingsPreferencesApi
 
+    private val binding by viewBinding(ActivityEmbedviewBinding::inflate)
+
     override val enableSwipeBackLayout: Boolean = true
     override val isActivityTransfluent: Boolean = true
 
@@ -89,9 +91,8 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_embedview)
-        setSupportActionBar(toolbar)
-        toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
+        setSupportActionBar(binding.toolbar.toolbar)
+        binding.toolbar.toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
         supportActionBar?.title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -99,9 +100,9 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             presenter.subscribe(this)
             presenter.playUrl(extraUrl)
         }
-        videoView.setControls(WykopMediaControls(this))
-        videoView.setHandleAudioFocus(false)
-        videoView.isFocusable = false
+        binding.videoView.setControls(WykopMediaControls(this))
+        binding.videoView.setHandleAudioFocus(false)
+        binding.videoView.isFocusable = false
     }
 
     override fun checkEmbedSettings() {
@@ -125,8 +126,8 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coub.fileVersions.mobile.audio[0]), null)
         audioPlayer.playWhenReady = true
         usingMixedAudio = true
-        videoView.setVideoURI(null, LoopingMediaSource(videoSource))
-        videoView.setVolume(0f)
+        binding.videoView.setVideoURI(null, LoopingMediaSource(videoSource))
+        binding.videoView.setVolume(0f)
         audioSource = LoopingMediaSource(srcAudio)
         audioPlayer.prepare(audioSource, true, true)
     }
@@ -146,24 +147,17 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     }
 
     private fun prepareVideoView() {
-        videoView.setOnPreparedListener {
-            videoView.isVisible = true
-            loadingView.isVisible = false
-            videoView.start()
+        binding.videoView.setOnPreparedListener {
+            binding.videoView.isVisible = true
+            binding.loadingView.isVisible = false
+            binding.videoView.start()
         }
     }
 
     private fun playLoopingSource(url: Uri) {
-        if (android.os.Build.VERSION.SDK_INT >= 17) {
-            val mediaSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), url, null)
-            val loopingMediaSource = LoopingMediaSource(mediaSource)
-            videoView.setVideoURI(null, loopingMediaSource)
-        } else {
-            videoView.setOnCompletionListener {
-                videoView.restart()
-            }
-            videoView.setVideoURI(url)
-        }
+        val mediaSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), url, null)
+        val loopingMediaSource = LoopingMediaSource(mediaSource)
+        binding.videoView.setVideoURI(null, loopingMediaSource)
     }
 
     override fun exitAndOpenYoutubeActivity() {
@@ -196,8 +190,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     }
 
     private fun shareUrl() {
-        ShareCompat.IntentBuilder
-            .from(this)
+        ShareCompat.IntentBuilder(this)
             .setType("text/plain")
             .setChooserTitle(R.string.share)
             .setText(extraUrl)

@@ -34,10 +34,10 @@ class OWMContentFilter @Inject constructor(
             author.badge = getBadgeFor(author)
             isBlocked =
                 isBlocked ||
-                    body.bodyContainsBlockedTags() ||
-                    author.nick.isUserBlocked() ||
-                    (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0) ||
-                    (settingsPreferencesApi.hideContentWithoutTags && !body.bodyContainsTags())
+                body.bodyContainsBlockedTags() ||
+                author.nick.isUserBlocked() ||
+                (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0) ||
+                (settingsPreferencesApi.hideContentWithoutTags && !body.bodyContainsTags())
         }
 
     fun filterEntryComment(comment: EntryComment) =
@@ -45,9 +45,9 @@ class OWMContentFilter @Inject constructor(
             author.badge = getBadgeFor(author)
             isBlocked =
                 isBlocked ||
-                    body.bodyContainsBlockedTags() ||
-                    author.nick.isUserBlocked() ||
-                    (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0)
+                body.bodyContainsBlockedTags() ||
+                author.nick.isUserBlocked() ||
+                (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0)
         }
 
     fun filterLinkComment(comment: LinkComment) =
@@ -55,9 +55,9 @@ class OWMContentFilter @Inject constructor(
             author.badge = getBadgeFor(author)
             isBlocked =
                 isBlocked ||
-                    body?.bodyContainsBlockedTags() ?: false ||
-                    author.nick.isUserBlocked() ||
-                    (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0)
+                body?.bodyContainsBlockedTags() ?: false ||
+                author.nick.isUserBlocked() ||
+                (settingsPreferencesApi.hideLowRangeAuthors && author.group == 0)
         }
 
     fun filterLink(link: Link) =
@@ -65,9 +65,9 @@ class OWMContentFilter @Inject constructor(
             gotSelected = linksPreferencesApi.readLinksIds.contains("link_$id")
             isBlocked =
                 isBlocked ||
-                    tags.bodyContainsBlockedTags() ||
-                    author?.nick?.isUserBlocked() ?: false ||
-                    (settingsPreferencesApi.hideLowRangeAuthors && author?.group == 0)
+                tags.bodyContainsBlockedTags() ||
+                author?.nick?.isUserBlocked() ?: false ||
+                (settingsPreferencesApi.hideLowRangeAuthors && author?.group == 0)
         }
 
     private val tagsRegex = "(^|\\s)(#[a-z\\d-]+)".toRegex()

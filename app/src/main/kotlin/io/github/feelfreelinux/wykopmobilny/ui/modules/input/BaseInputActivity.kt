@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityWriteCommentBinding
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.exitConfirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
@@ -21,8 +22,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsToken
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.ZERO_WIDTH_SPACE
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
-import kotlinx.android.synthetic.main.activity_write_comment.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 
 abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseInputView, MarkdownToolbarListener {
 
@@ -47,49 +47,50 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
 
     override var textBody: String
         get() =
-            if ((markupToolbar.photoUrl != null || markupToolbar.photo != null) && body.text.isEmpty()) {
+            if ((binding.markupToolbar.photoUrl != null || binding.markupToolbar.photo != null) && binding.body.text.isEmpty()) {
                 ZERO_WIDTH_SPACE
             } else {
-                body.text.toString()
+                binding.body.text.toString()
             }
         set(value) {
-            body.setText(value, TextView.BufferType.EDITABLE)
+            binding.body.setText(value, TextView.BufferType.EDITABLE)
         }
 
     override var selectionStart: Int
-        get() = body.selectionStart
+        get() = binding.body.selectionStart
         set(value) {
-            body.setSelection(value)
+            binding.body.setSelection(value)
         }
 
     override var selectionEnd: Int
-        get() = body.selectionEnd
+        get() = binding.body.selectionEnd
         set(value) {
-            body.setSelection(value)
+            binding.body.setSelection(value)
         }
 
     fun setupSuggestions() {
-        body.setTokenizer(
+        binding.body.setTokenizer(
             WykopSuggestionsTokenizer(
                 {
-                    if (body.adapter !is UsersSuggestionsAdapter) {
-                        body.setAdapter(usersSuggestionAdapter)
+                    if (binding.body.adapter !is UsersSuggestionsAdapter) {
+                        binding.body.setAdapter(usersSuggestionAdapter)
                     }
                 },
                 {
-                    if (body.adapter !is HashTagsSuggestionsAdapter) {
-                        body.setAdapter(hashTagsSuggestionAdapter)
+                    if (binding.body.adapter !is HashTagsSuggestionsAdapter) {
+                        binding.body.setAdapter(hashTagsSuggestionAdapter)
                     }
                 }
             )
         )
-        body.threshold = 3
+        binding.body.threshold = 3
     }
+
+    protected val binding by viewBinding(ActivityWriteCommentBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_write_comment)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         intent.apply {
             getStringExtra(EXTRA_RECEIVER)?.apply {
@@ -107,16 +108,16 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
             }
         }
 
-        markupToolbar.markdownListener = this
-        markupToolbar.floatingImageView = floatingImageView
+        binding.markupToolbar.markdownListener = this
+        binding.markupToolbar.floatingImageView = binding.floatingImageView
 
         // show focus
-        body.requestFocus()
+        binding.body.requestFocus()
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(body, InputMethodManager.SHOW_IMPLICIT)
+        imm.showSoftInput(binding.body, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    override fun setSelection(start: Int, end: Int) = body.setSelection(start, end)
+    override fun setSelection(start: Int, end: Int) = binding.body.setSelection(start, end)
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_add_comment, menu)
@@ -126,11 +127,11 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.send -> {
-                val typedInputStream = markupToolbar.getWykopImageFile()
+                val typedInputStream = binding.markupToolbar.getWykopImageFile()
                 if (typedInputStream != null) {
-                    presenter.sendWithPhoto(typedInputStream, markupToolbar.containsAdultContent)
+                    presenter.sendWithPhoto(typedInputStream, binding.markupToolbar.containsAdultContent)
                 } else {
-                    presenter.sendWithPhotoUrl(markupToolbar.photoUrl, markupToolbar.containsAdultContent)
+                    presenter.sendWithPhotoUrl(binding.markupToolbar.photoUrl, binding.markupToolbar.containsAdultContent)
                 }
             }
             android.R.id.home -> onBackPressed()
@@ -144,11 +145,11 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
             when (requestCode) {
                 // Gallery chooser's callback
                 USER_ACTION_INSERT_PHOTO -> {
-                    markupToolbar.photo = data?.data
+                    binding.markupToolbar.photo = data?.data
                 }
 
                 USER_ACTION_INSERT_PHOTO_CAMERA -> {
-                    markupToolbar.photo = contentUri
+                    binding.markupToolbar.photo = contentUri
                 }
             }
         }
@@ -156,11 +157,11 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
 
     // Shows "sending entry" progress in notification
     override var showProgressBar: Boolean
-        get() = progressBar.isVisible
+        get() = binding.progressBar.isVisible
         set(value) {
-            progressBar.isVisible = value
-            contentView.isVisible = !value
-            markupToolbar.isVisible = !value
+            binding.progressBar.isVisible = value
+            binding.contentView.isVisible = !value
+            binding.markupToolbar.isVisible = !value
         }
 
     override fun exitActivity() {
@@ -169,7 +170,7 @@ abstract class BaseInputActivity<T : BaseInputPresenter> : BaseActivity(), BaseI
     }
 
     override fun onBackPressed() {
-        if (!markupToolbar.hasUserEditedContent()) exitActivity()
+        if (!binding.markupToolbar.hasUserEditedContent()) exitActivity()
         else {
             exitConfirmationDialog(this) {
                 exitActivity()

@@ -7,11 +7,11 @@ import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityBlacklistBinding
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_blacklist.*
-import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class BlacklistActivity : BaseActivity(), BlacklistView {
@@ -29,6 +29,7 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
     val updateDataSubject = PublishSubject.create<Boolean>()
     override val enableSwipeBackLayout = true
     private val pagerAdapter by lazy { BlacklistPagerAdapter(supportFragmentManager) }
+    private val binding by viewBinding(ActivityBlacklistBinding::inflate)
 
     override fun importBlacklist(blacklist: Blacklist) {
         if (blacklist.tags?.blockedTags != null) {
@@ -43,13 +44,12 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_blacklist)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         supportActionBar?.title = "Zarządzaj czarną listą"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         presenter.subscribe(this)
-        pager.adapter = pagerAdapter
-        tabLayout.setupWithViewPager(pager)
+        binding.pager.adapter = pagerAdapter
+        binding.tabLayout.setupWithViewPager(binding.pager)
     }
 
     fun unblockTag(tag: String) = presenter.unblockTag(tag)

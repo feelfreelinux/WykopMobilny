@@ -12,12 +12,12 @@ import javax.inject.Inject
 class LinkCommentEditActivity : BaseInputActivity<LinkCommentEditPresenter>(), LinkCommentEditView {
 
     companion object {
-        const val EXTRA_LINKID = "LINK_ID"
-        const val EXTRA_COMMENTID = "COMMENT_ID"
+        private const val EXTRA_LINKID = "LINK_ID"
+        private const val EXTRA_COMMENTID = "COMMENT_ID"
 
         fun createIntent(context: Context, commentId: Int, body: String, linkId: Int): Intent {
             val intent = Intent(context, LinkCommentEditActivity::class.java)
-            intent.putExtra(BaseInputActivity.EXTRA_BODY, body)
+            intent.putExtra(EXTRA_BODY, body)
             intent.putExtra(EXTRA_LINKID, linkId)
             intent.putExtra(EXTRA_COMMENTID, commentId)
             return intent

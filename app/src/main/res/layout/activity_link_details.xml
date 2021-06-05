@@ -25,6 +25,7 @@
 
             <include
                 android:layout_width="match_parent"
+                android:id="@+id/toolbar"
                 android:layout_height="wrap_content"
                 layout="@layout/toolbar"
                 app:layout_scrollFlags="scroll|enterAlways"
