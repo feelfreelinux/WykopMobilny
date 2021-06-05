@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_notifications.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityNotificationsBinding
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 
 class NotificationsListActivity : BaseActivity() {
 
@@ -23,19 +23,20 @@ class NotificationsListActivity : BaseActivity() {
             }
     }
 
+    private val binding by viewBinding(ActivityNotificationsBinding::inflate)
+
     override val enableSwipeBackLayout: Boolean = true
     private val pagerAdapter by lazy { NotificationsListViewPagerAdapter(resources, supportFragmentManager) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notifications)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         supportActionBar?.setTitle(R.string.notifications_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        pager.offscreenPageLimit = 1
-        pager.adapter = pagerAdapter
-        pager.setCurrentItem(intent.getIntExtra(EXTRA_PRESELECT_INDEX, 0), false)
-        tabLayout.setupWithViewPager(pager)
+        binding.pager.offscreenPageLimit = 1
+        binding.pager.adapter = pagerAdapter
+        binding.pager.setCurrentItem(intent.getIntExtra(EXTRA_PRESELECT_INDEX, 0), false)
+        binding.tabLayout.setupWithViewPager(binding.pager)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -44,13 +45,13 @@ class NotificationsListActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 return true
             }
             R.id.markAsRead -> {
-                (pagerAdapter.registeredFragments.get(pager.currentItem) as? BaseNotificationsListFragment)?.markAsRead()
+                (pagerAdapter.registeredFragments.get(binding.pager.currentItem) as? BaseNotificationsListFragment)?.markAsRead()
                 return true
             }
         }

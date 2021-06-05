@@ -3,48 +3,49 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/windowBackgroundTransparent"
     android:layout_height="match_parent"
+    android:background="@color/windowBackgroundTransparent"
     >
 
     <io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.SubsamplingScaleImageView
         android:id="@+id/image"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
         />
 
     <ImageView
         android:id="@+id/gif"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
         />
 
     <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 
     <ProgressBar
+        android:id="@+id/loadingView"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:indeterminate="false"
         android:max="100"
         android:progress="0"
-        android:layout_height="wrap_content"
-        style="?android:attr/progressBarStyleHorizontal"
         android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/loadingView"
-        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

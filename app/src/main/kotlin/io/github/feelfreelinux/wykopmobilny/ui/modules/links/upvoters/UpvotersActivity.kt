@@ -7,14 +7,14 @@ import android.view.MenuItem
 import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityVoterslistBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Upvoter
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.UpvoterListAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.activity_conversations_list.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
 class UpvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, UpvotersView {
@@ -35,36 +35,37 @@ class UpvotersActivity : BaseActivity(), androidx.swiperefreshlayout.widget.Swip
     @Inject
     lateinit var upvotersAdapter: UpvoterListAdapter
 
+    private val binding by viewBinding(ActivityVoterslistBinding::inflate)
+
     private lateinit var upvotersDataFragment: DataFragment<List<Upvoter>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         upvotersDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        setContentView(R.layout.activity_voterslist)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         supportActionBar?.title = resources.getString(R.string.upvoters)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        swiperefresh.setOnRefreshListener(this)
-        recyclerView?.apply {
+        binding.swiperefresh.setOnRefreshListener(this)
+        binding.recyclerView.apply {
             prepare()
             adapter = upvotersAdapter
         }
-        swiperefresh?.isRefreshing = false
+        binding.swiperefresh.isRefreshing = false
         presenter.linkId = intent.getIntExtra(EXTRA_LINK_ID, -1)
         presenter.subscribe(this)
 
         if (upvotersDataFragment.data == null) {
-            loadingView.isVisible = true
+            binding.loadingView.isVisible = true
             onRefresh()
         } else {
             upvotersAdapter.items.addAll(upvotersDataFragment.data!!)
-            loadingView.isVisible = false
+            binding.loadingView.isVisible = false
         }
     }
 
     override fun showUpvoters(upvoter: List<Upvoter>) {
-        loadingView.isVisible = false
-        swiperefresh?.isRefreshing = false
+        binding.loadingView.isVisible = false
+        binding.swiperefresh.isRefreshing = false
         upvotersAdapter.apply {
             items.clear()
             items.addAll(upvoter)

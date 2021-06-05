@@ -19,9 +19,9 @@
             >
 
             <include
+                layout="@layout/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/toolbar"
                 app:layout_scrollFlags="scroll|enterAlways"
                 />
 
@@ -39,8 +39,8 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
             android:src="@drawable/ic_pen_dark"
             app:elevation="5dp"
             app:fabSize="normal"
@@ -57,10 +57,10 @@
         android:layout_gravity="start"
         android:scrollbars="none"
         app:headerLayout="@layout/navigation_header"
-        app:menu="@menu/navigation_menu"
         app:itemIconTint="?attr/textColorGrey"
-        app:itemTextColor="?android:textColor"
         app:itemTextAppearance="@style/NavigationDrawerStyle"
+        app:itemTextColor="?android:textColor"
+        app:menu="@menu/navigation_menu"
         />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -2,20 +2,22 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.photoview
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.isVisible
-import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityPhotoviewBinding
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
 import io.github.feelfreelinux.wykopmobilny.utils.ClipboardHelperApi
 import io.github.feelfreelinux.wykopmobilny.utils.KotlinGlideRequestListener
-import kotlinx.android.synthetic.main.activity_photoview.*
-import kotlinx.android.synthetic.main.toolbar.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import java.io.File
 import javax.inject.Inject
 
@@ -27,25 +29,26 @@ class PhotoViewActivity : BaseActivity() {
 
         fun createIntent(context: Context, imageUrl: String) =
             Intent(context, PhotoViewActivity::class.java).apply {
-                putExtra(PhotoViewActivity.URL_EXTRA, imageUrl)
+                putExtra(URL_EXTRA, imageUrl)
             }
     }
 
     @Inject
     lateinit var clipboardHelper: ClipboardHelperApi
 
+    private val binding by viewBinding(ActivityPhotoviewBinding::inflate)
+
     override val enableSwipeBackLayout: Boolean = true // We manually attach it here
     override val isActivityTransfluent: Boolean = true
 
     val url: String by lazy { intent.getStringExtra(URL_EXTRA)!! }
-    private val photoViewActions by lazy { PhotoViewActions(this) as PhotoViewCallbacks }
+    private val photoViewActions: PhotoViewCallbacks by lazy { PhotoViewActions(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_photoview)
-        setSupportActionBar(toolbar)
-        toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
-        loadingView.isIndeterminate = true
+        setSupportActionBar(binding.toolbar.toolbar)
+        binding.toolbar.toolbar.setBackgroundResource(R.drawable.gradient_toolbar_up)
+        binding.loadingView.isIndeterminate = true
         title = null
         if (url.endsWith(".gif")) {
             loadGif()
@@ -75,28 +78,28 @@ class PhotoViewActivity : BaseActivity() {
     }
 
     fun loadImage() {
-        image.isVisible = true
-        image.setMinimumDpi(70)
-        image.setMinimumTileDpi(240)
-        gif.isVisible = false
+        binding.image.isVisible = true
+        binding.image.setMinimumDpi(70)
+        binding.image.setMinimumTileDpi(240)
+        binding.gif.isVisible = false
         GlideApp.with(this).downloadOnly().load(url)
-            .into(object : SimpleTarget<File>() {
+            .into(object : CustomTarget<File>() {
                 override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-                    loadingView.isVisible = false
-                    resource.let {
-                        image.setImage(io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.ImageSource.uri(resource.absolutePath))
-                    }
+                    binding.loadingView.isVisible = false
+                    binding.image.setImage(ImageSource.uri(resource.absolutePath))
                 }
+
+                override fun onLoadCleared(placeholder: Drawable?) = Unit
             })
     }
 
     private fun loadGif() {
-        image.isVisible = false
-        gif.isVisible = true
+        binding.image.isVisible = false
+        binding.gif.isVisible = true
         GlideApp.with(this).load(url)
-            .listener(KotlinGlideRequestListener({ loadingView?.isVisible = false }, { loadingView?.isVisible = false }))
+            .listener(KotlinGlideRequestListener({ binding.loadingView.isVisible = false }, { binding.loadingView.isVisible = false }))
             .dontTransform()
-            .override(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL, com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
-            .into(gif)
+            .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+            .into(binding.gif)
     }
 }
