@@ -1,8 +1,8 @@
-package io.github.wykopmobilny.models.scraper
+package io.github.wykopmobilny.blacklist.api
 
 import pl.droidsonroids.jspoon.annotation.Selector
 
 class BlockedTags {
     @Selector("div.tagcard")
-    var blockedTags: List<BlockedTag>? = null
+    var tags: List<BlockedTag>? = null
 }

@@ -1,8 +1,8 @@
-package io.github.wykopmobilny.models.scraper
+package io.github.wykopmobilny.blacklist.api
 
 import pl.droidsonroids.jspoon.annotation.Selector
 
 class BlockedUsers {
     @Selector("div.usercard")
-    var blockedUsers: List<BlockedUser>? = null
+    var users: List<BlockedUser>? = null
 }

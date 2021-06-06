@@ -1,4 +1,4 @@
-package io.github.wykopmobilny.models.scraper
+package io.github.wykopmobilny.blacklist.api
 
 import pl.droidsonroids.jspoon.annotation.Selector
 

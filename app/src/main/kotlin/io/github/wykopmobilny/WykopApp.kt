@@ -1,5 +1,6 @@
 package io.github.wykopmobilny
 
+import android.webkit.CookieManager
 import com.devbrackets.android.exomedia.ExoMedia
 import com.evernote.android.job.JobManager
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory
@@ -7,6 +8,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.github.wykopmobilny.api.ApiSignInterceptor
+import io.github.wykopmobilny.blacklist.remote.DaggerScraperComponent
 import io.github.wykopmobilny.di.DaggerAppComponent
 import io.github.wykopmobilny.patrons.remote.DaggerPatronsComponent
 import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationJobCreator
@@ -50,6 +52,14 @@ class WykopApp : DaggerApplication() {
             okHttpClient = okHttpClient,
             wykop = createWykop(),
             patrons = createPatrons(),
+            scraper = createScraper()
+        )
+
+    private fun createScraper() =
+        DaggerScraperComponent.factory().create(
+            okHttpClient = okHttpClient,
+            baseUrl = "https://wykop.pl",
+            cookieProvider = { webPage -> CookieManager.getInstance().getCookie(webPage) },
         )
 
     private fun createPatrons() =

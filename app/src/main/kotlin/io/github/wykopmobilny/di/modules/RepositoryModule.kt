@@ -2,7 +2,6 @@ package io.github.wykopmobilny.di.modules
 
 import dagger.Module
 import dagger.Provides
-import io.github.wykopmobilny.api.ScraperInterceptor
 import io.github.wykopmobilny.api.addlink.AddLinkApi
 import io.github.wykopmobilny.api.addlink.AddLinkRepository
 import io.github.wykopmobilny.api.embed.ExternalApi
@@ -33,11 +32,6 @@ import io.github.wykopmobilny.api.tag.TagApi
 import io.github.wykopmobilny.api.tag.TagRepository
 import io.github.wykopmobilny.api.user.LoginApi
 import io.github.wykopmobilny.api.user.LoginRepository
-import okhttp3.OkHttpClient
-import pl.droidsonroids.retrofit2.JspoonConverterFactory
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import javax.inject.Singleton
 
 @Module
 class RepositoryModule {
@@ -85,16 +79,5 @@ class RepositoryModule {
     fun PatronsRepository.patrons(patronsApi: PatronsRepository): PatronsApi = this
 
     @Provides
-    @Singleton
-    fun provideScraperApi(okHttpClient: OkHttpClient): ScraperApi = ScraperRepository(createScraperRetrofit(okHttpClient))
-
-    private fun createScraperRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        val client = okHttpClient.newBuilder().addInterceptor(ScraperInterceptor()).build()
-        return Retrofit.Builder()
-            .baseUrl("https://wykop.pl")
-            .client(client)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(JspoonConverterFactory.create())
-            .build()
-    }
+    fun ScraperRepository.provideScraperApi(): ScraperApi = this
 }
