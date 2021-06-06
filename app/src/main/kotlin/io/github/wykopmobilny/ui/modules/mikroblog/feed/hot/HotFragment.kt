@@ -12,7 +12,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.base.BaseFragment
 import io.github.wykopmobilny.base.BaseNavigationView
-import io.github.wykopmobilny.databinding.HotFragmentBinding
 import io.github.wykopmobilny.models.dataclass.Entry
 import io.github.wykopmobilny.ui.fragments.entries.EntriesFragment
 import io.github.wykopmobilny.ui.modules.NavigatorApi
@@ -20,7 +19,6 @@ import io.github.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
-import io.github.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
 class HotFragment : BaseFragment(R.layout.hot_fragment), BaseNavigationView, HotView {
@@ -40,8 +38,6 @@ class HotFragment : BaseFragment(R.layout.hot_fragment), BaseNavigationView, Hot
 
     @Inject
     lateinit var userManagerApi: UserManagerApi
-
-    private val binding by viewBinding(HotFragmentBinding::bind)
 
     private val fab by lazy { navigation.floatingButton }
     private val entriesFragment by lazy { childFragmentManager.findFragmentById(R.id.entriesFragment) as EntriesFragment }

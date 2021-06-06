@@ -5,9 +5,9 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class SettingsFragmentProvider {
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     abstract fun provideMainSettingsFragment(): SettingsFragment
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     abstract fun provideAppereanceFragment(): SettingsAppearance
 }

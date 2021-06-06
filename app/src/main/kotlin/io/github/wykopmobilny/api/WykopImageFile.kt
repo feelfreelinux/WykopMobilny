@@ -71,22 +71,18 @@ class WykopImageFile(val uri: Uri, val context: Context) {
 
     private fun ensureRotation(f: File?): File? {
         try {
-            val exif = ExifInterface(f!!.getPath())
+            val exif = ExifInterface(f!!.path)
             val orientation = exif.getAttributeInt(
                 ExifInterface.TAG_ORIENTATION,
                 ExifInterface.ORIENTATION_NORMAL
             )
 
-            var angle = 0
-
-            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-                angle = 90
-            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-                angle = 180
-            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-                angle = 270
+            val angle = when (orientation) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> 90
+                ExifInterface.ORIENTATION_ROTATE_180 -> 180
+                ExifInterface.ORIENTATION_ROTATE_270 -> 270
+                else -> return f
             }
-            if (angle == 0) return f
 
             val mat = Matrix()
             mat.postRotate(angle.toFloat())

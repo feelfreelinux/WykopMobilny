@@ -7,7 +7,6 @@ import io.github.wykopmobilny.api.responses.ProfileResponse
 import io.github.wykopmobilny.api.scraper.ScraperApi
 import io.github.wykopmobilny.api.user.LoginApi
 import io.github.wykopmobilny.util.rx.TestSchedulerProvider
-import io.github.wykopmobilny.utils.api.CredentialsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.LoginCredentials
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Single
@@ -25,8 +24,6 @@ class LoginScreenPresenterTest {
     private val mockOfUserManager = mock<UserManagerApi>()
     private val mockOfUserApi = mock<LoginApi>()
     private val mockOfScraperApi = mock<ScraperApi>()
-
-    private val mockOfApiPreferences = mock<CredentialsPreferencesApi>()
 
     lateinit var testSchedulerProvider: TestSchedulerProvider
 

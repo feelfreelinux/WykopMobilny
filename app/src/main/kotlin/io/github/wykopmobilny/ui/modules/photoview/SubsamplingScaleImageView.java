@@ -283,7 +283,7 @@ public class SubsamplingScaleImageView extends View {
     private OnLongClickListener onLongClickListener;
 
     // Long click handler
-    private Handler handler;
+    private final Handler handler;
     private static final int MESSAGE_LONG_CLICK = 1;
 
     // Paint objects created once and reused for efficiency
@@ -295,8 +295,8 @@ public class SubsamplingScaleImageView extends View {
     private ScaleAndTranslate satTemp;
     private Matrix matrix;
     private RectF sRect;
-    private float[] srcArray = new float[8];
-    private float[] dstArray = new float[8];
+    private final float[] srcArray = new float[8];
+    private final float[] dstArray = new float[8];
 
     public SubsamplingScaleImageView(Context context, AttributeSet attr) {
         super(context, attr);
@@ -1792,11 +1792,11 @@ public class SubsamplingScaleImageView extends View {
     }
 
     private void execute(AsyncTask<Void, Void, ?> asyncTask) {
-        if (parallelLoadingEnabled && VERSION.SDK_INT >= 11) {
+        if (parallelLoadingEnabled) {
             try {
                 Field executorField = AsyncTask.class.getField("THREAD_POOL_EXECUTOR");
                 Executor executor = (Executor) executorField.get(null);
-                Method executeMethod = AsyncTask.class.getMethod("executeOnExecutor", new Class[]{Executor.class, Object[].class});
+                Method executeMethod = AsyncTask.class.getMethod("executeOnExecutor", Executor.class, Object[].class);
                 executeMethod.invoke(asyncTask, executor, null);
                 return;
             } catch (Exception e) {
@@ -1848,7 +1848,7 @@ public class SubsamplingScaleImageView extends View {
         }
 
         private float scale;
-        private PointF vTranslate;
+        private final PointF vTranslate;
     }
 
     /**
@@ -1867,14 +1867,12 @@ public class SubsamplingScaleImageView extends View {
      * In SDK 14 and above, use canvas max bitmap width and height instead of the default 2048, to avoid redundant tiling.
      */
     private Point getMaxBitmapDimensions(Canvas canvas) {
-        if (VERSION.SDK_INT >= 14) {
-            try {
-                int maxWidth = (Integer) Canvas.class.getMethod("getMaximumBitmapWidth").invoke(canvas);
-                int maxHeight = (Integer) Canvas.class.getMethod("getMaximumBitmapHeight").invoke(canvas);
-                return new Point(maxWidth, maxHeight);
-            } catch (Exception e) {
-                // Return default
-            }
+        try {
+            int maxWidth = (Integer) Canvas.class.getMethod("getMaximumBitmapWidth").invoke(canvas);
+            int maxHeight = (Integer) Canvas.class.getMethod("getMaximumBitmapHeight").invoke(canvas);
+            return new Point(maxWidth, maxHeight);
+        } catch (Exception e) {
+            // Return default
         }
         return new Point(2048, 2048);
     }

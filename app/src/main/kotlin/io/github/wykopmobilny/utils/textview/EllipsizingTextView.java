@@ -420,7 +420,7 @@ public class EllipsizingTextView extends AppCompatTextView {
                     break;
                 }
                 firstPart = firstPart.substring(0, lastSpaceFirstPart).trim();
-                secondPart = secondPart.substring(firstSpaceSecondPart, secondPart.length()).trim();
+                secondPart = secondPart.substring(firstSpaceSecondPart).trim();
             }
 
             SpannableStringBuilder firstDest = new SpannableStringBuilder(firstPart);

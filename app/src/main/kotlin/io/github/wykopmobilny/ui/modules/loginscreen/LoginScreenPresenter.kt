@@ -7,7 +7,6 @@ import io.github.wykopmobilny.base.Schedulers
 import io.github.wykopmobilny.utils.intoComposite
 import io.github.wykopmobilny.utils.usermanager.LoginCredentials
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
-import io.reactivex.Single
 
 class LoginScreenPresenter(
     private val schedulers: Schedulers,
@@ -23,10 +22,7 @@ class LoginScreenPresenter(
             userApi.getUserSessionToken()
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
-                .flatMap { it ->
-                    userManager.saveCredentials(it)
-                    Single.just(it)
-                }
+                .doOnSuccess { userManager.saveCredentials(it) }
                 .subscribe({ view?.goBackToSplashScreen() }, { view?.showErrorDialog(it) })
                 .intoComposite(compositeObservable)
         }

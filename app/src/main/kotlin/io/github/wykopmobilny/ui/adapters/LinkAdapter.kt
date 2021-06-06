@@ -1,6 +1,7 @@
 package io.github.wykopmobilny.ui.adapters
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import io.github.wykopmobilny.base.adapter.AdvancedProgressAdapter
 import io.github.wykopmobilny.models.dataclass.Link
 import io.github.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
@@ -12,21 +13,25 @@ import javax.inject.Inject
 class LinkAdapter @Inject constructor(val settingsPreferencesApi: SettingsPreferencesApi) : AdvancedProgressAdapter<Link>() {
 
     companion object {
-        const val LINK_VIEWTYPE = 1
-        const val SIMPLE_LINK_VIEWTYPE = 3
+        private const val LINK_VIEWTYPE = 1
+        private const val SIMPLE_LINK_VIEWTYPE = 3
     }
 
-    override fun getItemViewType(position: Int): Int = when {
-        dataset[position] == null -> AdvancedProgressAdapter.VIEWTYPE_PROGRESS
-        else -> if (settingsPreferencesApi.linkSimpleList) SIMPLE_LINK_VIEWTYPE else LINK_VIEWTYPE
-    }
+    override fun getItemViewType(position: Int): Int =
+        when {
+            dataset[position] == null -> VIEWTYPE_PROGRESS
+            settingsPreferencesApi.linkSimpleList -> SIMPLE_LINK_VIEWTYPE
+            else -> LINK_VIEWTYPE
+        }
 
-    override fun createViewHolder(viewType: Int, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder =
+    override fun createViewHolder(viewType: Int, parent: ViewGroup): RecyclerView.ViewHolder =
         BlockedViewHolder.inflateView(parent) { notifyItemChanged(it) }
 
-    override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = dataset[position]!!
-        if (holder is SimpleLinkViewHolder) holder.bindView(item)
-        else (holder as? LinkViewHolder)?.bindView(item)
+        when (holder) {
+            is SimpleLinkViewHolder -> holder.bindView(item)
+            is LinkViewHolder -> holder.bindView(item)
+        }
     }
 }

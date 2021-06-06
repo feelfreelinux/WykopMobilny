@@ -110,7 +110,7 @@
     <dimen name="survey_percentage_margin_vertical">2dp</dimen>
     <dimen name="survey_votes_count_margin_top">4.5dp</dimen>
     <dimen name="survey_votes_count_margin_end">8dp</dimen>
-    <dimen name="survey_votes_count_text_size">11.5dp</dimen>
+    <dimen name="survey_votes_count_text_size">11.5sp</dimen>
     <dimen name="survey_votes_radio_button_width">28dp</dimen>
     <dimen name="survey_votes_radio_button_height">26dp</dimen>
     <dimen name="survey_votes_radio_button_margin_start">2dp</dimen>

@@ -29,7 +29,7 @@ class EntryCommentAdapter @Inject constructor(
         super.addData(items.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }, shouldClearAdapter)
     }
 
-    override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             EntryCommentViewHolder.TYPE_EMBED, EntryCommentViewHolder.TYPE_NORMAL ->
                 EntryCommentViewHolder.inflateView(
@@ -47,7 +47,7 @@ class EntryCommentAdapter @Inject constructor(
         }
     }
 
-    override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EntryCommentViewHolder -> holder.bindView(dataset[position]!!, null)
             is BlockedViewHolder -> {
