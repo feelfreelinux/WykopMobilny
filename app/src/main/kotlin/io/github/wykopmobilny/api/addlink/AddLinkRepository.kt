@@ -45,7 +45,7 @@ class AddLinkRepository @Inject constructor(
                 tags = tags,
                 photo = photo.takeIf { it.isNotEmpty() },
                 url = url,
-                plus18 = if (plus18) 1 else 0
+                plus18 = if (plus18) 1 else 0,
             )
         }
             .retryWhen(userTokenRefresher)

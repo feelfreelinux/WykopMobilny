@@ -72,7 +72,7 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [ConversationActivityModule::class])
     abstract fun bindConversationActivity(): ConversationActivity
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     abstract fun bindPhotoViewActivity(): PhotoViewActivity
 
     @ContributesAndroidInjector(modules = [AddEntryActivityModule::class])
@@ -117,6 +117,6 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [AddlinkModule::class, AddlinkFragmentProvider::class])
     abstract fun bindAddLinkActivity(): AddlinkActivity
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     abstract fun bindReadNotificationsReceiver(): ReadNotificationsBroadcastReceiver
 }

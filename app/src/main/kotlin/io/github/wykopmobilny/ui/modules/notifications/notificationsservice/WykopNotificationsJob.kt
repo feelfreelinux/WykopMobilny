@@ -13,8 +13,8 @@ import io.github.wykopmobilny.R
 import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandler
+import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import java.util.concurrent.TimeUnit
 
 class WykopNotificationsJob(

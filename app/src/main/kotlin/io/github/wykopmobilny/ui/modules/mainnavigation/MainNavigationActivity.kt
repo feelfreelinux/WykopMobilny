@@ -19,7 +19,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.os.postDelayed
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import com.evernote.android.job.util.JobUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.internal.NavigationMenuView
@@ -28,12 +27,12 @@ import io.github.wykopmobilny.R
 import io.github.wykopmobilny.api.patrons.PatronsApi
 import io.github.wykopmobilny.base.BaseActivity
 import io.github.wykopmobilny.base.BaseNavigationView
+import io.github.wykopmobilny.blacklist.api.Blacklist
 import io.github.wykopmobilny.databinding.ActivityNavigationBinding
 import io.github.wykopmobilny.databinding.AppAboutBottomsheetBinding
 import io.github.wykopmobilny.databinding.DrawerHeaderViewLayoutBinding
 import io.github.wykopmobilny.databinding.PatronListItemBinding
 import io.github.wykopmobilny.databinding.PatronsBottomsheetBinding
-import io.github.wykopmobilny.blacklist.api.Blacklist
 import io.github.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.wykopmobilny.ui.modules.NewNavigator
@@ -54,13 +53,13 @@ import io.github.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.wykopmobilny.ui.widgets.BadgeDrawerDrawable
 import io.github.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderWidget
+import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 import io.github.wykopmobilny.utils.openBrowser
 import io.github.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.shortcuts.ShortcutsDispatcher
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.wykopmobilny.utils.viewBinding
-import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 import javax.inject.Inject
 
 interface MainNavigationInterface {
@@ -186,7 +185,6 @@ class MainNavigationActivity :
             presenter.startListeningForNotifications()
         }
 
-        JobUtil.hasBootPermission(this)
         showFullReleaseDialog()
         (binding.navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         checkBlacklist()
@@ -396,7 +394,7 @@ class MainNavigationActivity :
                 dialog2.setContentView(badgesDialogView2.root)
 
                 val headerItem = PatronListItemBinding.inflate(layoutInflater)
-                headerItem.root.setOnClickListener { _ ->
+                headerItem.root.setOnClickListener {
                     dialog.dismiss()
                     linkHandler.handleUrl("https://patronite.pl/wykop-mobilny")
                 }
@@ -405,7 +403,7 @@ class MainNavigationActivity :
                 badgesDialogView2.patronsList.addView(headerItem.root)
                 for (badge in patronsApi.patrons.filter { patron -> patron.listMention }) {
                     val item = PatronListItemBinding.inflate(layoutInflater)
-                    item.root.setOnClickListener { _ ->
+                    item.root.setOnClickListener {
                         dialog.dismiss()
                         linkHandler.handleUrl("https://wykop.pl/ludzie/" + badge.username)
                     }

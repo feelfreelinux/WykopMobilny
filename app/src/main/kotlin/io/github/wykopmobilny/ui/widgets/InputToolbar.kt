@@ -207,7 +207,7 @@ class InputToolbar(context: Context, attrs: AttributeSet) : ConstraintLayout(con
     fun addQuoteText(quote: String, quoteAuthor: String) {
         defaultText = ""
         binding.body.requestFocus()
-        if (textBody.length > 0) textBody += "\n\n"
+        if (textBody.isNotEmpty()) textBody += "\n\n"
         textBody += "> ${quote.removeHtml().replace("\n", "\n> ")}\n@$quoteAuthor: "
         selectionStart = textBody.length
         if (textBody.length > 2 || binding.markdownToolbar.photo != null || binding.markdownToolbar.photoUrl != null) enableSendButton()

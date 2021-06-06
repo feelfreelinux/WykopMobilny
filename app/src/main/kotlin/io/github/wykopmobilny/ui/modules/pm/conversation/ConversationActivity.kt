@@ -74,7 +74,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
         presenter.subscribe(this)
         presenter.user = user
-        binding.recyclerView?.apply {
+        binding.recyclerView.apply {
             prepareNoDivider()
             adapter = conversationAdapter
             (layoutManager as androidx.recyclerview.widget.LinearLayoutManager).reverseLayout = true

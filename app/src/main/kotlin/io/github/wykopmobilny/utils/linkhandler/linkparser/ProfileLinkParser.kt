@@ -11,7 +11,7 @@ object ProfileLinkParser {
             "obserwujący", "obserwowani", "osiagniecia"
         )
         return if (possibleMatchers.contains(possibleNickMatch)) {
-            data.substringAfter(possibleNickMatch + "/").substringBefore("/")
+            data.substringAfter("$possibleNickMatch/").substringBefore("/")
         } else possibleNickMatch
     }
 }

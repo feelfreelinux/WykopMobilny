@@ -14,11 +14,11 @@ internal class ScraperModule {
 
     @Provides
     @Reusable
-    fun asd(retrofit: Retrofit) = retrofit.create<ScraperRetrofitApi>()
+    fun scraperApi(retrofit: Retrofit) = retrofit.create<ScraperRetrofitApi>()
 
     @Provides
     @Reusable
-    fun createScraperRetrofit(
+    fun retrofit(
         okHttpClient: OkHttpClient,
         url: String,
         interceptor: ScraperInterceptor,

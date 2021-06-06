@@ -13,26 +13,3 @@ commonConfig {
 doctor {
     warnWhenJetifierEnabled = false
 }
-
-allprojects {
-    pluginManager.withPlugin("kotlin") { plugin ->
-        def kotlinVersion = "1.5.10" // plugins.getPlugin("kotlin").kotlinPluginVersion
-        configurations.configureEach {
-            resolutionStrategy.eachDependency {
-                if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
-                    useVersion kotlinVersion
-                }
-            }
-        }
-    }
-    pluginManager.withPlugin("kotlin-android") { plugin ->
-        def kotlinVersion = "1.5.10" // plugins.getPlugin("kotlin-android").kotlinPluginVersion
-        configurations.configureEach {
-            resolutionStrategy.eachDependency {
-                if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin")) {
-                    useVersion kotlinVersion
-                }
-            }
-        }
-    }
-}
