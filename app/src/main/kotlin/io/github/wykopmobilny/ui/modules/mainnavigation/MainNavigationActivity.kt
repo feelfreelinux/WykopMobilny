@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.os.postDelayed
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.internal.NavigationMenuView
@@ -64,7 +65,7 @@ import javax.inject.Inject
 
 interface MainNavigationInterface {
     val activityToolbar: Toolbar
-    fun openFragment(fragment: androidx.fragment.app.Fragment)
+    fun openFragment(fragment: Fragment)
     fun showErrorDialog(e: Throwable)
     val floatingButton: View
     fun forceRefreshNotifications()
@@ -112,7 +113,7 @@ class MainNavigationActivity :
             binding.drawerLayout,
             binding.toolbar.toolbar,
             R.string.nav_drawer_open,
-            R.string.nav_drawer_closed
+            R.string.nav_drawer_closed,
         )
     }
     private val badgeDrawable by lazy { BadgeDrawerDrawable(supportActionBar!!.themedContext) }
@@ -210,7 +211,7 @@ class MainNavigationActivity :
             intent,
             this::openFragment,
             this::openLoginScreen,
-            userManagerApi.isUserAuthorized()
+            userManagerApi.isUserAuthorized(),
         )
     }
 
@@ -288,7 +289,7 @@ class MainNavigationActivity :
         }
     }
 
-    override fun openFragment(fragment: androidx.fragment.app.Fragment) {
+    override fun openFragment(fragment: Fragment) {
         supportActionBar?.subtitle = null
         binding.fab.isVisible = false
         binding.fab.setOnClickListener(null)
@@ -444,7 +445,7 @@ class MainNavigationActivity :
                     "Jestem wdzięczny wszystkim osobom zaangażowanym w projekt. " +
                     "Aplikacja nadal pozostaje całkowicie darmowa i wolna od reklam. " +
                     "Jeżeli chcesz, możesz wesprzeć rozwój aplikacji na https://patronite.pl/wykop-mobilny \n" +
-                    "Dziękuję :)"
+                    "Dziękuję :)",
             )
             Linkify.addLinks(message, Linkify.WEB_URLS)
             AlertDialog.Builder(this).apply {
