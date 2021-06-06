@@ -83,8 +83,9 @@ class SimpleLinkViewHolder(
         binding.hotBadgeStripSimple.isVisible = link.isHot
         binding.simpleDiggHot.isVisible = link.isHot
 
-        binding.simpleImage.isVisible = link.preview != null && settingsApi.linkShowImage
-        if (settingsApi.linkShowImage) {
+        val shouldShowSimpleImages = settingsApi.linkShowImage ?: true
+        binding.simpleImage.isVisible = link.preview != null && shouldShowSimpleImages
+        if (shouldShowSimpleImages) {
             link.preview?.let { binding.simpleImage.loadImage(link.preview) }
         }
 
@@ -93,7 +94,7 @@ class SimpleLinkViewHolder(
             if (!link.gotSelected) {
                 setWidgetAlpha(ALPHA_VISITED)
                 link.gotSelected = true
-                linksPreferences.readLinksIds = linksPreferences.readLinksIds.plusElement("link_${link.id}")
+                linksPreferences.readLinksIds = linksPreferences.readLinksIds.orEmpty().plusElement("link_${link.id}")
             }
         }
     }

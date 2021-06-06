@@ -6,10 +6,9 @@ import javax.inject.Inject
 
 internal class BlacklistPreferences @Inject constructor(
     context: Context
-) : Preferences(context), BlacklistPreferencesApi {
+) : BasePreferences(context), BlacklistPreferencesApi {
 
-    override var blockedTags: Set<String> by stringSetPref("blockedTagsSet")
-    override var blockedUsers: Set<String> by stringSetPref("blockedUsersSet")
-    override var scraperSession: String? by stringPref("sessionString", "nosession")
-    override var blockedImported: Boolean by booleanPref(defaultValue = false)
+    override var blockedTags by stringSetPref("blockedTagsSet")
+    override var blockedUsers by stringSetPref("blockedUsersSet")
+    override var blockedImported by booleanPref(key = "blockedImported")
 }

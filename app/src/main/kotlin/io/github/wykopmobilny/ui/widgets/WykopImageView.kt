@@ -2,19 +2,20 @@ package io.github.wykopmobilny.ui.widgets
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.signature.ObjectKey
 import io.github.wykopmobilny.WykopApp
 import io.github.wykopmobilny.glide.GlideApp
 import io.github.wykopmobilny.utils.getActivityContext
 
-class WykopImageView(context: Context, attrs: AttributeSet?,) : AppCompatImageView(context, attrs) {
+class WykopImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView(context, attrs) {
 
     init {
         setOnClickListener { openImageListener() }
@@ -43,10 +44,12 @@ class WykopImageView(context: Context, attrs: AttributeSet?,) : AppCompatImageVi
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .signature(ObjectKey(url))
             )
-            .into(object : SimpleTarget<Bitmap>() {
+            .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     setImageBitmap(resource)
                 }
+
+                override fun onLoadCleared(placeholder: Drawable?) = Unit
             })
     }
 
@@ -55,7 +58,7 @@ class WykopImageView(context: Context, attrs: AttributeSet?,) : AppCompatImageVi
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val targetHeightPercentage = settingsPreferencesApi.cutImageProportion.toFloat() / 100
+        val targetHeightPercentage = (settingsPreferencesApi.cutImageProportion ?: DEFAULT_CUT_IMAGE_PROPORTION).toFloat() / 100
         val proportion = (screenMetrics.heightPixels.toFloat() * targetHeightPercentage) / screenMetrics.widthPixels.toFloat()
         val widthSpec = MeasureSpec.getSize(
             if (settingsPreferencesApi.showMinifiedImages && !forceDisableMinimizedMode) widthMeasureSpec / 2 else widthMeasureSpec
@@ -84,5 +87,9 @@ class WykopImageView(context: Context, attrs: AttributeSet?,) : AppCompatImageVi
             showResizeView(false)
         }
         if (!settingsPreferencesApi.cutImages) showResizeView(false)
+    }
+
+    companion object {
+        const val DEFAULT_CUT_IMAGE_PROPORTION = 60
     }
 }

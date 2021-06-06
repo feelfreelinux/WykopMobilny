@@ -7,7 +7,6 @@ import dagger.Provides
 import io.github.wykopmobilny.api.UserTokenRefresher
 import io.github.wykopmobilny.api.user.LoginApi
 import io.github.wykopmobilny.base.WykopSchedulers
-import io.github.wykopmobilny.storage.api.CredentialsPreferencesApi
 import io.github.wykopmobilny.ui.modules.Navigator
 import io.github.wykopmobilny.ui.modules.NavigatorApi
 import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManager
@@ -25,8 +24,7 @@ class NetworkModule {
     fun provideWykopSchedulers(): io.github.wykopmobilny.base.Schedulers = WykopSchedulers()
 
     @Provides
-    fun provideUserManagerApi(credentialsPreferencesApi: CredentialsPreferencesApi): UserManagerApi =
-        UserManager(credentialsPreferencesApi)
+    fun UserManager.provideUserManagerApi(): UserManagerApi = this
 
     @Provides
     fun provideNotificationManager(context: Context): NotificationManager =

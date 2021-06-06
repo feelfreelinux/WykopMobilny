@@ -32,10 +32,11 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
 
     override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.app_preferences_appearance)
-        findPreference<Preference>("useAmoledTheme")?.isEnabled = settingsApi.useDarkTheme
-        findPreference<Preference>("cutImageProportion")?.isEnabled = settingsApi.cutImages
-        findPreference<Preference>("linkImagePosition")?.isEnabled = !settingsApi.linkSimpleList && settingsApi.linkShowImage
-        findPreference<Preference>("linkShowAuthor")?.isEnabled = !settingsApi.linkSimpleList
+        findPreference<Preference>("useAmoledTheme")?.isEnabled = settingsApi.useDarkTheme == true
+        findPreference<Preference>("cutImageProportion")?.isEnabled = settingsApi.cutImages == true
+        findPreference<Preference>("linkImagePosition")?.isEnabled =
+            settingsApi.linkSimpleList != false && settingsApi.linkShowImage != false
+        findPreference<Preference>("linkShowAuthor")?.isEnabled = settingsApi.linkSimpleList != false
 
         (findPreference("hotEntriesScreen") as ListPreference?)!!.apply {
             summary = entry
@@ -56,10 +57,10 @@ class SettingsAppearance : PreferenceFragmentCompat(), SharedPreferences.OnShare
 
     override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String) {
         val pref = findPreference<Preference>(key)
-        findPreference<Preference>("useAmoledTheme")?.isEnabled = settingsApi.useDarkTheme
-        findPreference<Preference>("cutImageProportion")?.isEnabled = settingsApi.cutImages
-        findPreference<Preference>("linkShowAuthor")?.isEnabled = !settingsApi.linkSimpleList
-        findPreference<Preference>("linkImagePosition")?.isEnabled = !settingsApi.linkSimpleList
+        findPreference<Preference>("useAmoledTheme")?.isEnabled = settingsApi.useDarkTheme == true
+        findPreference<Preference>("cutImageProportion")?.isEnabled = settingsApi.cutImages == true
+        findPreference<Preference>("linkShowAuthor")?.isEnabled = settingsApi.linkSimpleList != false
+        findPreference<Preference>("linkImagePosition")?.isEnabled = settingsApi.linkSimpleList != false
 
         if (pref is ListPreference) {
             pref.setSummary(pref.entry)

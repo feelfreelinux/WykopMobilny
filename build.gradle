@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.starter.config")
     id("com.starter.versioning")
@@ -17,4 +18,15 @@ commonConfig {
 
 doctor {
     warnWhenJetifierEnabled = false
+}
+
+allprojects {
+    tasks.withType(KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs = freeCompilerArgs +
+                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi" +
+                "-Xopt-in=kotlin.RequiresOptIn" +
+                "-Xopt-in=kotlin.contracts.ExperimentalContracts"
+        }
+    }
 }

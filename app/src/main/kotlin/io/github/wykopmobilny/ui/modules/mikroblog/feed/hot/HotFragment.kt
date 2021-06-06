@@ -54,7 +54,7 @@ class HotFragment : BaseFragment(R.layout.hot_fragment), BaseNavigationView, Hot
         navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_hot)
 
         presenter.subscribe(this)
-        presenter.period = settingsPreferences.hotEntriesScreen ?: "24"
+        presenter.period = settingsPreferences.hotEntriesScreen ?: "newest"
         entriesFragment.loadDataListener = { presenter.loadData(it) }
         presenter.loadData(true)
     }

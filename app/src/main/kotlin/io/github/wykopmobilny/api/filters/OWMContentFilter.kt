@@ -53,7 +53,7 @@ class OWMContentFilter @Inject constructor(
 
     fun filterLink(link: Link) =
         link.apply {
-            gotSelected = linksPreferencesApi.readLinksIds.contains("link_$id")
+            gotSelected = linksPreferencesApi.readLinksIds.orEmpty().contains("link_$id")
             isBlocked =
                 isBlocked ||
                 tags.bodyContainsBlockedTags() ||
@@ -67,10 +67,10 @@ class OWMContentFilter @Inject constructor(
 
     private fun String.bodyContainsBlockedTags(): Boolean {
         return !Collections.disjoint(
-            blacklistPreferences.blockedTags,
+            blacklistPreferences.blockedTags.orEmpty(),
             tagsRegex.matchEntire(this)?.groupValues?.map { it.removePrefix("#") } ?: emptyList<String>()
         )
     }
 
-    private fun String.isUserBlocked() = blacklistPreferences.blockedUsers.contains(this.removePrefix("@"))
+    private fun String.isUserBlocked() = blacklistPreferences.blockedUsers.orEmpty().contains(this.removePrefix("@"))
 }

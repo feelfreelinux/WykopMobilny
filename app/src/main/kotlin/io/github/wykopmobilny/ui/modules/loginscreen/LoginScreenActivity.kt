@@ -7,12 +7,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.CookieManager
-import android.webkit.CookieSyncManager
 import io.github.wykopmobilny.APP_KEY
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.base.BaseActivity
-import io.github.wykopmobilny.databinding.ActivityWebviewBinding
 import io.github.wykopmobilny.blacklist.api.Blacklist
+import io.github.wykopmobilny.databinding.ActivityWebviewBinding
 import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.viewBinding
@@ -84,8 +83,6 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView() {
         binding.webView.apply {
-            CookieSyncManager.createInstance(this@LoginScreenActivity)
-            CookieSyncManager.getInstance().startSync()
             val cookieManager = CookieManager.getInstance()
 
             // AppRTC requires third party cookies to work

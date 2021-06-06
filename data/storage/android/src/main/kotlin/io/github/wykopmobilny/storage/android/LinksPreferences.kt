@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 internal class LinksPreferences @Inject constructor(
     context: Context
-) : Preferences(context), LinksPreferencesApi {
+) : BasePreferences(context), LinksPreferencesApi {
 
-    override var readLinksIds by stringSetPref(defaultValue = HashSet())
-    override var linkCommentsDefaultSort by stringPref(defaultValue = "best")
-    override var upcomingDefaultSort by stringPref(defaultValue = null)
+    override var readLinksIds by stringSetPref(key = "readLinksIds")
+    override var linkCommentsDefaultSort by stringPref(key = "linkCommentsDefaultSort")
+    override var upcomingDefaultSort by stringPref(key = "upcomingDefaultSort")
 }

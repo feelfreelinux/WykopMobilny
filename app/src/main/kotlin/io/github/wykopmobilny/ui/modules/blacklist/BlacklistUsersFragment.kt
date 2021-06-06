@@ -40,7 +40,7 @@ class BlacklistUsersFragment : BaseFragment(R.layout.blacklist_fragment) {
 
     private fun updateData() {
         adapter.items.clear()
-        adapter.items.addAll(blacklistPreferences.blockedUsers)
+        adapter.items.addAll(blacklistPreferences.blockedUsers.orEmpty())
         adapter.notifyDataSetChanged()
     }
 
