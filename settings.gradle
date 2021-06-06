@@ -7,5 +7,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include ":app",
     "data:wykop:remote",
     "data:wykop:api",
-    "data:patrons:remote",
-    "data:patrons:api"
+    "data:scraper:remote",
+    "data:scraper:api",
+    "data:github:remote",
+    "data:github:api"

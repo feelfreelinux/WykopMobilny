@@ -33,7 +33,7 @@ import io.github.wykopmobilny.databinding.AppAboutBottomsheetBinding
 import io.github.wykopmobilny.databinding.DrawerHeaderViewLayoutBinding
 import io.github.wykopmobilny.databinding.PatronListItemBinding
 import io.github.wykopmobilny.databinding.PatronsBottomsheetBinding
-import io.github.wykopmobilny.models.scraper.Blacklist
+import io.github.wykopmobilny.blacklist.api.Blacklist
 import io.github.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.wykopmobilny.ui.modules.NewNavigator
@@ -467,11 +467,11 @@ class MainNavigationActivity :
     }
 
     override fun importBlacklist(blacklist: Blacklist) {
-        if (blacklist.tags?.blockedTags != null) {
-            blacklistPreferencesApi.blockedTags = HashSet<String>(blacklist.tags!!.blockedTags!!.map { it.tag.removePrefix("#") })
+        if (blacklist.tags?.tags != null) {
+            blacklistPreferencesApi.blockedTags = HashSet<String>(blacklist.tags!!.tags!!.map { it.tag.removePrefix("#") })
         }
-        if (blacklist.users?.blockedUsers != null) {
-            blacklistPreferencesApi.blockedUsers = HashSet<String>(blacklist.users!!.blockedUsers!!.map { it.nick.removePrefix("@") })
+        if (blacklist.users?.users != null) {
+            blacklistPreferencesApi.blockedUsers = HashSet<String>(blacklist.users!!.users!!.map { it.nick.removePrefix("@") })
         }
         blacklistPreferencesApi.blockedImported = true
         progressDialog.hide()

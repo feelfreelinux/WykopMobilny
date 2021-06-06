@@ -1,7 +1,7 @@
 package io.github.wykopmobilny.ui.modules.loginscreen
 
 import io.github.wykopmobilny.base.BaseView
-import io.github.wykopmobilny.models.scraper.Blacklist
+import io.github.wykopmobilny.blacklist.api.Blacklist
 
 interface LoginScreenView : BaseView {
     fun goBackToSplashScreen()

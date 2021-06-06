@@ -8,7 +8,7 @@ import android.view.MenuItem
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.base.BaseActivity
 import io.github.wykopmobilny.databinding.ActivityBlacklistBinding
-import io.github.wykopmobilny.models.scraper.Blacklist
+import io.github.wykopmobilny.blacklist.api.Blacklist
 import io.github.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.wykopmobilny.utils.viewBinding
 import io.reactivex.subjects.PublishSubject
@@ -32,11 +32,11 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
     private val binding by viewBinding(ActivityBlacklistBinding::inflate)
 
     override fun importBlacklist(blacklist: Blacklist) {
-        if (blacklist.tags?.blockedTags != null) {
-            blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags!!.blockedTags!!.map { it.tag.removePrefix("#") })
+        if (blacklist.tags?.tags != null) {
+            blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags!!.tags!!.map { it.tag.removePrefix("#") })
         }
-        if (blacklist.users?.blockedUsers != null) {
-            blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users!!.blockedUsers!!.map { it.nick.removePrefix("@") })
+        if (blacklist.users?.users != null) {
+            blacklistPreferences.blockedUsers = HashSet<String>(blacklist.users!!.users!!.map { it.nick.removePrefix("@") })
         }
         blacklistPreferences.blockedImported = true
         updateDataSubject.onNext(true)

@@ -1,7 +1,7 @@
 package io.github.wykopmobilny.ui.modules.mainnavigation
 
 import io.github.wykopmobilny.base.BaseView
-import io.github.wykopmobilny.models.scraper.Blacklist
+import io.github.wykopmobilny.blacklist.api.Blacklist
 
 interface MainNavigationView : BaseView {
     fun showUsersMenu(value: Boolean)

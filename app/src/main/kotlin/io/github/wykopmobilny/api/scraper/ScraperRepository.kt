@@ -1,12 +1,13 @@
 package io.github.wykopmobilny.api.scraper
 
-import io.github.wykopmobilny.models.scraper.Blacklist
+import io.github.wykopmobilny.blacklist.api.Blacklist
+import io.github.wykopmobilny.blacklist.api.ScraperRetrofitApi
 import io.reactivex.Single
-import retrofit2.Retrofit
+import javax.inject.Inject
 
-class ScraperRepository(val retrofit: Retrofit) : ScraperApi {
-
-    private val scraperApi by lazy { retrofit.create(ScraperRetrofitApi::class.java) }
+class ScraperRepository @Inject constructor(
+    private val scraperApi: ScraperRetrofitApi
+) : ScraperApi {
 
     override fun getBlacklist(): Single<Blacklist> =
         scraperApi.getBlacklist()
