@@ -23,7 +23,7 @@ import io.github.wykopmobilny.utils.api.getGroupColor
 import io.github.wykopmobilny.utils.copyText
 import io.github.wykopmobilny.utils.getActivityContext
 import io.github.wykopmobilny.utils.layoutInflater
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.textview.prepareBody
 import io.github.wykopmobilny.utils.textview.stripWykopFormatting
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi

@@ -72,8 +72,6 @@
     <ID>MagicNumber:WykopMediaControls.kt$WykopMediaControls.FadeOutListener.Companion$300</ID>
     <ID>MagicNumber:WykopNotificationsJob.kt$WykopNotificationsJob.Companion$5</ID>
     <ID>MagicNumber:YearPickerDialog.kt$YearPickerDialog$2006</ID>
-    <ID>MemberNameEqualsClassName:BlockedTags.kt$BlockedTags$@Selector("div.tagcard") var blockedTags: List&lt;BlockedTag&gt;? = null</ID>
-    <ID>MemberNameEqualsClassName:BlockedUsers.kt$BlockedUsers$@Selector("div.usercard") var blockedUsers: List&lt;BlockedUser&gt;? = null</ID>
     <ID>PrintStackTrace:YTPlayer.kt$YTPlayer$e</ID>
     <ID>SwallowedException:SettingsFragment.kt$SettingsFragment$catch (e: PackageManager.NameNotFoundException) { false }</ID>
     <ID>SwallowedException:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$catch (e: Exception) { // Do nothing }</ID>
@@ -94,9 +92,7 @@
     <ID>UseIfInsteadOfWhen:ExceptionDialog.kt$when (e) { is WykopExceptionParser.WykopApiException -&gt; { "${e.message} (${e.code})" } else -&gt; if (e.message.isNullOrEmpty()) e.toString() else e.message }</ID>
     <ID>UseIfInsteadOfWhen:FavoritePagerAdapter.kt$FavoritePagerAdapter$when (position) { 0 -&gt; LinksFavoriteFragment.newInstance() else -&gt; EntryFavoriteFragment.newInstance() }</ID>
     <ID>UseIfInsteadOfWhen:FavoritePagerAdapter.kt$FavoritePagerAdapter$when (position) { 0 -&gt; resources.getString(R.string.links) else -&gt; resources.getString(R.string.entries) }</ID>
-    <ID>UseIfInsteadOfWhen:LinkAdapter.kt$LinkAdapter$when { dataset[position] == null -&gt; AdvancedProgressAdapter.VIEWTYPE_PROGRESS else -&gt; if (settingsPreferencesApi.linkSimpleList) SIMPLE_LINK_VIEWTYPE else LINK_VIEWTYPE }</ID>
     <ID>UseIfInsteadOfWhen:MicroblogPagerAdapter.kt$MicroblogPagerAdapter$when (position) { 0 -&gt; MicroblogEntriesFragment.newInstance() else -&gt; MicroblogCommentsFragment.newInstance() }</ID>
-    <ID>UseIfInsteadOfWhen:NotificationsListViewPagerAdapter.kt$NotificationsListViewPagerAdapter$when (position) { 0 -&gt; NotificationsListFragment.newInstance() else -&gt; HashTagsNotificationsListFragment.newInstance() }</ID>
     <ID>UseIfInsteadOfWhen:NotificationsListViewPagerAdapter.kt$NotificationsListViewPagerAdapter$when (position) { 0 -&gt; resources.getString(R.string.notifications_directed) else -&gt; resources.getString(R.string.hashtags_notifications_title) }</ID>
   </CurrentIssues>
 </SmellBaseline>

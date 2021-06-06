@@ -5,12 +5,15 @@ import com.devbrackets.android.exomedia.ExoMedia
 import com.evernote.android.job.JobManager
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory
 import com.jakewharton.threetenabp.AndroidThreeTen
+import dagger.Lazy
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.github.wykopmobilny.api.ApiSignInterceptor
 import io.github.wykopmobilny.blacklist.remote.DaggerScraperComponent
 import io.github.wykopmobilny.di.DaggerAppComponent
 import io.github.wykopmobilny.patrons.remote.DaggerPatronsComponent
+import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationJobCreator
 import io.github.wykopmobilny.utils.usermanager.SimpleUserManagerApi
 import io.github.wykopmobilny.utils.usermanager.UserCredentials
@@ -30,10 +33,13 @@ class WykopApp : DaggerApplication() {
     }
 
     @Inject
-    lateinit var jobCreator: WykopNotificationJobCreator
+    lateinit var jobCreator: Lazy<WykopNotificationJobCreator>
 
     @Inject
-    lateinit var userManagerApi: UserManagerApi
+    lateinit var userManagerApi: Lazy<UserManagerApi>
+
+    @Inject
+    lateinit var settingsPreferencesApi: Lazy<SettingsPreferencesApi>
 
     private val okHttpClient = OkHttpClient()
 
@@ -43,7 +49,7 @@ class WykopApp : DaggerApplication() {
             OkHttpDataSourceFactory(okHttpClient, userAgent, listener)
         }
         AndroidThreeTen.init(this)
-        JobManager.create(this).addJobCreator(jobCreator)
+        JobManager.create(this).addJobCreator(jobCreator.get())
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
@@ -52,7 +58,13 @@ class WykopApp : DaggerApplication() {
             okHttpClient = okHttpClient,
             wykop = createWykop(),
             patrons = createPatrons(),
-            scraper = createScraper()
+            scraper = createScraper(),
+            storages = storages(),
+        )
+
+    private fun storages() =
+        DaggerStoragesComponent.factory().create(
+            context = this,
         )
 
     private fun createScraper() =
@@ -77,9 +89,9 @@ class WykopApp : DaggerApplication() {
                     ApiSignInterceptor(
                         object : SimpleUserManagerApi {
 
-                            override fun isUserAuthorized(): Boolean = userManagerApi.isUserAuthorized()
+                            override fun isUserAuthorized(): Boolean = userManagerApi.get().isUserAuthorized()
 
-                            override fun getUserCredentials(): UserCredentials? = userManagerApi.getUserCredentials()
+                            override fun getUserCredentials(): UserCredentials? = userManagerApi.get().getUserCredentials()
                         }
                     )
                 )

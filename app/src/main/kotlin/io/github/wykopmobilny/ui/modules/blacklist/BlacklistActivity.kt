@@ -7,9 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.base.BaseActivity
-import io.github.wykopmobilny.databinding.ActivityBlacklistBinding
 import io.github.wykopmobilny.blacklist.api.Blacklist
-import io.github.wykopmobilny.utils.preferences.BlacklistPreferences
+import io.github.wykopmobilny.databinding.ActivityBlacklistBinding
+import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.utils.viewBinding
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
     }
 
     @Inject
-    lateinit var blacklistPreferences: BlacklistPreferences
+    lateinit var blacklistPreferences: BlacklistPreferencesApi
 
     @Inject
     lateinit var presenter: BlacklistPresenter

@@ -15,7 +15,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-fun parseDate(date: String): Date {
+fun parseDate(date: String): Date? {
     val format = SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.GERMANY)
     format.timeZone = TimeZone.getTimeZone("Europe/Warsaw")
     return format.parse(date)

@@ -3,28 +3,37 @@ package io.github.wykopmobilny.base
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrConfig
 import com.tbruyelle.rxpermissions2.RxPermissions
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.android.AndroidInjection
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import io.github.wykopmobilny.R
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.dialogs.showExceptionDialog
-import io.github.wykopmobilny.utils.preferences.SettingsPreferences
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import javax.inject.Inject
 
 /**
  * This class should be extended in all activities in this app. Place global-activity settings here.
  */
-abstract class BaseActivity : DaggerAppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
 
     open val enableSwipeBackLayout: Boolean = false
     open val isActivityTransfluent: Boolean = false
     var isRunning = false
     lateinit var rxPermissions: RxPermissions
-    private val themeSettingsPreferences: SettingsPreferencesApi by lazy { SettingsPreferences(this) }
+
+    @Inject
+    lateinit var themeSettingsPreferences: SettingsPreferencesApi
+
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         initTheme()
         super.onCreate(savedInstanceState)
         rxPermissions = RxPermissions(this)
@@ -77,4 +86,6 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     fun showErrorDialog(e: Throwable) {
         if (isRunning) showExceptionDialog(e)
     }
+
+    override fun androidInjector() = androidInjector
 }

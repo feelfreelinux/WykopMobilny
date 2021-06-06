@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.wykopmobilny.api.entries.EntriesApi
 import io.github.wykopmobilny.base.Schedulers
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.fragments.entries.EntriesInteractor
 import io.github.wykopmobilny.ui.fragments.entrycomments.EntryCommentInteractor
 import io.github.wykopmobilny.ui.modules.NewNavigator
@@ -26,5 +27,9 @@ class EntryDetailModule {
     fun provideNavigator(activity: EntryActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity: EntryActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun provideLinkHandler(
+        activity: EntryActivity,
+        navigator: NewNavigatorApi,
+        settingsPreferences: SettingsPreferencesApi,
+    ): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator, settingsPreferences)
 }

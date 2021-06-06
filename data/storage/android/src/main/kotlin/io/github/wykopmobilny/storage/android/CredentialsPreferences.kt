@@ -1,18 +1,14 @@
 package io.github.wykopmobilny.utils.api
 
 import android.content.Context
-import io.github.wykopmobilny.utils.preferences.Preferences
+import io.github.wykopmobilny.storage.android.Preferences
+import io.github.wykopmobilny.storage.api.CredentialsPreferencesApi
+import javax.inject.Inject
 
-interface CredentialsPreferencesApi {
-    var login: String?
-    var userKey: String?
-    var userToken: String?
-    var avatarUrl: String?
-    var backgroundUrl: String?
-    var timeStamp: String?
-}
+internal class CredentialsPreferences @Inject constructor(
+    context: Context
+) : Preferences(context), CredentialsPreferencesApi {
 
-class CredentialsPreferences(context: Context) : Preferences(context), CredentialsPreferencesApi {
     override var login by stringPref(defaultValue = "")
     override var userKey by stringPref(defaultValue = "")
     override var userToken by stringPref(defaultValue = "")

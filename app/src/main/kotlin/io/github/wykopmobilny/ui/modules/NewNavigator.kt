@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ShareCompat
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.models.dataclass.Link
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.addlink.AddlinkActivity
 import io.github.wykopmobilny.ui.modules.embedview.EmbedViewActivity
 import io.github.wykopmobilny.ui.modules.embedview.YoutubeActivity
@@ -30,7 +31,6 @@ import io.github.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.wykopmobilny.utils.openBrowser
-import io.github.wykopmobilny.utils.preferences.SettingsPreferences
 import io.github.wykopmobilny.utils.wykopLog
 
 interface NewNavigatorApi {
@@ -45,7 +45,7 @@ interface NewNavigatorApi {
     fun openEditEntryActivity(body: String, entryId: Int)
     fun openEditLinkCommentActivity(commentId: Int, body: String, linkId: Int)
     fun openEditEntryCommentActivity(body: String, entryId: Int, commentId: Int)
-    fun openBrowser(url: String)
+    fun openBrowser(settingsPreferences: SettingsPreferencesApi, url: String)
     fun openReportScreen(violationUrl: String)
     fun openLinkDetailsActivity(link: Link)
     fun openLinkDetailsActivity(linkId: Int, commentId: Int = -1)
@@ -60,13 +60,11 @@ interface NewNavigatorApi {
     fun shareUrl(url: String)
 }
 
-class NewNavigator(val context: Activity) : NewNavigatorApi {
+class NewNavigator(private val context: Activity) : NewNavigatorApi {
 
     companion object {
         const val STARTED_FROM_NOTIFICATIONS_CODE = 228
     }
-
-    private val settingsPreferencesApi = SettingsPreferences(context)
 
     override fun openMainActivity(targetFragment: String?) {
         context.startActivity(
@@ -111,8 +109,11 @@ class NewNavigator(val context: Activity) : NewNavigatorApi {
             BaseInputActivity.EDIT_ENTRY_COMMENT,
         )
 
-    override fun openBrowser(url: String) {
-        if (settingsPreferencesApi.useBuiltInBrowser) {
+    override fun openBrowser(
+        settingsPreferences: SettingsPreferencesApi,
+        url: String
+    ) {
+        if (settingsPreferences.useBuiltInBrowser) {
             context.openBrowser(url)
         } else {
             val intent = Intent(Intent.ACTION_VIEW).apply {

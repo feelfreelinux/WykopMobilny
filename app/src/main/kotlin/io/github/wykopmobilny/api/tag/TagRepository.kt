@@ -10,7 +10,7 @@ import io.github.wykopmobilny.api.responses.TagEntriesResponse
 import io.github.wykopmobilny.api.responses.TagLinksResponse
 import io.github.wykopmobilny.models.mapper.apiv2.TagEntriesMapper
 import io.github.wykopmobilny.models.mapper.apiv2.TagLinksMapper
-import io.github.wykopmobilny.utils.preferences.BlacklistPreferencesApi
+import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.reactivex.Single
 import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject

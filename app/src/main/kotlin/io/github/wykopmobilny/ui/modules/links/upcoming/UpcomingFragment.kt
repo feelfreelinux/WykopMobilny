@@ -12,7 +12,7 @@ import io.github.wykopmobilny.R
 import io.github.wykopmobilny.base.BaseActivity
 import io.github.wykopmobilny.base.BaseLinksFragment
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
-import io.github.wykopmobilny.utils.preferences.LinksPreferencesApi
+import io.github.wykopmobilny.storage.api.LinksPreferencesApi
 import javax.inject.Inject
 
 class UpcomingFragment : BaseLinksFragment(), UpcomingView {
@@ -84,7 +84,7 @@ class UpcomingFragment : BaseLinksFragment(), UpcomingView {
         super.onViewCreated(view, savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.wykopalisko)
         presenter.subscribe(this)
-        presenter.sortBy = linksPreferencesApi.upcomingDefaultSort!!
+        presenter.sortBy = linksPreferencesApi.upcomingDefaultSort ?: UpcomingPresenter.SORTBY_COMMENTS
         linksAdapter.linksActionListener = presenter
         linksAdapter.loadNewDataListener = { loadDataListener(false) }
         setSubtitle()

@@ -2,7 +2,9 @@ package io.github.wykopmobilny.ui.modules.notifications.notificationsservice
 
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import io.github.wykopmobilny.utils.preferences.SettingsPreferences
+import dagger.android.AndroidInjection
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
+import javax.inject.Inject
 
 /***
  * `NotificationPiggyback` captures notifications from official wykop.pl application,
@@ -10,12 +12,16 @@ import io.github.wykopmobilny.utils.preferences.SettingsPreferences
  */
 class NotificationPiggyback : NotificationListenerService() {
 
-    val settingsPreferencesApi by lazy { SettingsPreferences(applicationContext) }
+    @Inject
+    lateinit var settingsPreferencesApi: SettingsPreferencesApi
 
+    override fun onCreate() {
+        AndroidInjection.inject(this)
+        super.onCreate()
+    }
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         if (settingsPreferencesApi.piggyBackPushNotifications) {
-            val packageName = sbn.packageName
-            if (packageName.isNotEmpty() && packageName == "pl.wykop.droid" || packageName == "com.tylerr147.notisend") {
+            if (sbn.packageName == "pl.wykop.droid" || sbn.packageName == "com.tylerr147.notisend") {
                 cancelNotification(sbn.key)
                 WykopNotificationsJob.scheduleOnce()
             }

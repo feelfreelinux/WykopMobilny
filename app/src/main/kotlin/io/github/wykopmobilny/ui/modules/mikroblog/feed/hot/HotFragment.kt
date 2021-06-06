@@ -17,7 +17,7 @@ import io.github.wykopmobilny.ui.fragments.entries.EntriesFragment
 import io.github.wykopmobilny.ui.modules.NavigatorApi
 import io.github.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 

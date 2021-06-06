@@ -8,7 +8,7 @@ import io.github.wykopmobilny.databinding.PmmessageSentLayoutBinding
 import io.github.wykopmobilny.glide.GlideApp
 import io.github.wykopmobilny.models.dataclass.PMMessage
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.textview.prepareBody
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 

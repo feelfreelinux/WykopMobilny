@@ -14,7 +14,7 @@ import io.github.wykopmobilny.ui.widgets.WykopEmbedView
 import io.github.wykopmobilny.ui.widgets.buttons.MinusVoteButton
 import io.github.wykopmobilny.ui.widgets.buttons.PlusVoteButton
 import io.github.wykopmobilny.utils.layoutInflater
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 

@@ -1,9 +1,14 @@
 plugins {
     id("com.starter.config")
     id("com.starter.versioning")
+    id("com.gradleup.auto.manifest")
     id("com.osacky.doctor") version("0.7.0")
 
     id("com.starter.easylauncher") version("4.0.0") apply(false)
+}
+
+autoManifest {
+    packageName.set("io.github.feelfreelinux.wykopmobilny")
 }
 
 commonConfig {

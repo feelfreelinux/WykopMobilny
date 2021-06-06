@@ -7,20 +7,13 @@ import dagger.Provides
 import io.github.wykopmobilny.api.UserTokenRefresher
 import io.github.wykopmobilny.api.user.LoginApi
 import io.github.wykopmobilny.base.WykopSchedulers
+import io.github.wykopmobilny.storage.api.CredentialsPreferencesApi
 import io.github.wykopmobilny.ui.modules.Navigator
 import io.github.wykopmobilny.ui.modules.NavigatorApi
 import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.wykopmobilny.utils.ClipboardHelper
 import io.github.wykopmobilny.utils.ClipboardHelperApi
-import io.github.wykopmobilny.utils.api.CredentialsPreferences
-import io.github.wykopmobilny.utils.api.CredentialsPreferencesApi
-import io.github.wykopmobilny.utils.preferences.BlacklistPreferences
-import io.github.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-import io.github.wykopmobilny.utils.preferences.LinksPreferences
-import io.github.wykopmobilny.utils.preferences.LinksPreferencesApi
-import io.github.wykopmobilny.utils.preferences.SettingsPreferences
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManager
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Singleton
@@ -30,18 +23,6 @@ class NetworkModule {
 
     @Provides
     fun provideWykopSchedulers(): io.github.wykopmobilny.base.Schedulers = WykopSchedulers()
-
-    @Provides
-    fun provideCredentialsPreferences(context: Context): CredentialsPreferencesApi =
-        CredentialsPreferences(context)
-
-    @Provides
-    fun provideSettingsPreferences(context: Context): SettingsPreferencesApi =
-        SettingsPreferences(context)
-
-    @Provides
-    fun provideLinksPreferencesApi(context: Context): LinksPreferencesApi =
-        LinksPreferences(context)
 
     @Provides
     fun provideUserManagerApi(credentialsPreferencesApi: CredentialsPreferencesApi): UserManagerApi =
@@ -62,9 +43,6 @@ class NetworkModule {
 
     @Provides
     fun provideNavigatorApi(): NavigatorApi = Navigator()
-
-    @Provides
-    fun provideBlacklistApi(context: Context): BlacklistPreferencesApi = BlacklistPreferences(context)
 
     @Provides
     fun provideClipboardHelper(context: Context): ClipboardHelperApi = ClipboardHelper(context)

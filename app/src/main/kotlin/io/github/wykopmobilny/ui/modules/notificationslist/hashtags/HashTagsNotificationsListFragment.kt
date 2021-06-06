@@ -15,7 +15,7 @@ import io.github.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.wykopmobilny.models.fragments.removeDataFragment
 import io.github.wykopmobilny.ui.adapters.NotificationsListAdapter
 import io.github.wykopmobilny.ui.modules.notificationslist.BaseNotificationsListFragment
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 import javax.inject.Inject
 

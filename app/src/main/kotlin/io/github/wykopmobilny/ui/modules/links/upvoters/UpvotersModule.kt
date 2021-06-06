@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.wykopmobilny.api.links.LinksApi
 import io.github.wykopmobilny.base.Schedulers
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigator
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandler
@@ -20,6 +21,10 @@ class UpvotersModule {
         NewNavigator(activity)
 
     @Provides
-    fun provideWykopLinkHandler(activity: UpvotersActivity, navigatorApi: NewNavigatorApi): WykopLinkHandlerApi =
-        WykopLinkHandler(activity, navigatorApi)
+    fun provideWykopLinkHandler(
+        activity: UpvotersActivity,
+        navigatorApi: NewNavigatorApi,
+        settingsPreferences: SettingsPreferencesApi,
+    ): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigatorApi, settingsPreferences)
 }

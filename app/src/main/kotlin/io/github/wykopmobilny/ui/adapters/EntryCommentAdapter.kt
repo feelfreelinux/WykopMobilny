@@ -8,7 +8,7 @@ import io.github.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.wykopmobilny.ui.adapters.viewholders.EntryCommentViewHolder
 import io.github.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 import javax.inject.Inject

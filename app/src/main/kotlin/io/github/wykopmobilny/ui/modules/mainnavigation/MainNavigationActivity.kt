@@ -1,5 +1,6 @@
 package io.github.wykopmobilny.ui.modules.mainnavigation
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -34,7 +35,6 @@ import io.github.wykopmobilny.databinding.DrawerHeaderViewLayoutBinding
 import io.github.wykopmobilny.databinding.PatronListItemBinding
 import io.github.wykopmobilny.databinding.PatronsBottomsheetBinding
 import io.github.wykopmobilny.ui.dialogs.confirmationDialog
-import io.github.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.wykopmobilny.ui.modules.NewNavigator
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.ui.modules.favorite.FavoriteFragment
@@ -55,8 +55,8 @@ import io.github.wykopmobilny.ui.widgets.BadgeDrawerDrawable
 import io.github.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderWidget
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 import io.github.wykopmobilny.utils.openBrowser
-import io.github.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.shortcuts.ShortcutsDispatcher
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.wykopmobilny.utils.viewBinding
@@ -447,7 +447,7 @@ class MainNavigationActivity :
                     "Dziękuję :)"
             )
             Linkify.addLinks(message, Linkify.WEB_URLS)
-            createAlertBuilder().apply {
+            AlertDialog.Builder(this).apply {
                 setTitle("Wersja 1.0")
                 setMessage(message)
                 setPositiveButton(android.R.string.ok) { _, _ ->
@@ -482,7 +482,7 @@ class MainNavigationActivity :
             blacklistPreferencesApi.blockedUsers.isEmpty() &&
             blacklistPreferencesApi.blockedTags.isEmpty()
         ) {
-            val builder = createAlertBuilder()
+            val builder = AlertDialog.Builder(this)
             builder.setTitle(getString(R.string.blacklist_import_title))
             builder.setMessage(getString(R.string.blacklist_import_ask))
             builder.setPositiveButton(getString(R.string.blacklist_import_action)) { _, _ ->

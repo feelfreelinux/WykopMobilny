@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.wykopmobilny.api.pm.PMApi
 import io.github.wykopmobilny.base.Schedulers
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigator
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandler
@@ -18,6 +19,10 @@ class ConversationActivityModule {
     fun provideNavigatorApi(activity: ConversationActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandlerApi(navigatorApi: NewNavigatorApi, activity: ConversationActivity): WykopLinkHandlerApi =
-        WykopLinkHandler(activity, navigatorApi)
+    fun provideLinkHandlerApi(
+        navigatorApi: NewNavigatorApi,
+        activity: ConversationActivity,
+        settingsPreferences: SettingsPreferencesApi,
+    ): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigatorApi, settingsPreferences)
 }

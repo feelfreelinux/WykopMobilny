@@ -1,11 +1,12 @@
-package io.github.wykopmobilny.utils.preferences
+package io.github.wykopmobilny.storage.android
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import kotlin.reflect.KProperty
 
-abstract class Preferences(
+@Suppress("UnnecessaryAbstractClass")
+internal abstract class Preferences(
     private val context: Context,
     useDefaultFile: Boolean = false
 ) {
@@ -14,7 +15,7 @@ abstract class Preferences(
         if (useDefaultFile) {
             PreferenceManager.getDefaultSharedPreferences(context)
         } else {
-            context.getSharedPreferences(javaClass.simpleName, Context.MODE_PRIVATE)
+            context.getSharedPreferences("Preferences", Context.MODE_PRIVATE)
         }
     }
 
@@ -42,7 +43,7 @@ abstract class Preferences(
     fun intPref(prefKey: String? = null, defaultValue: Int = 0) = IntPrefDelegate(prefKey, defaultValue)
 
     inner class IntPrefDelegate(prefKey: String? = null, val defaultValue: Int) : PrefDelegate<Int>(prefKey) {
-        override fun getValue(thisRef: Any?, property: KProperty<*>) = prefs.getInt(prefKey ?: property.name, defaultValue)
+        override fun getValue(thisRef: Any?, property: KProperty<*>): Int = prefs.getInt(prefKey ?: property.name, defaultValue)
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) {
             prefs.edit().putInt(prefKey ?: property.name, value).apply()
             onPrefChanged(property)
@@ -52,7 +53,7 @@ abstract class Preferences(
     fun booleanPref(prefKey: String? = null, defaultValue: Boolean = false) = BooleanPrefDelegate(prefKey, defaultValue)
 
     inner class BooleanPrefDelegate(prefKey: String? = null, val defaultValue: Boolean) : PrefDelegate<Boolean>(prefKey) {
-        override fun getValue(thisRef: Any?, property: KProperty<*>) = prefs.getBoolean(prefKey ?: property.name, defaultValue)
+        override fun getValue(thisRef: Any?, property: KProperty<*>): Boolean = prefs.getBoolean(prefKey ?: property.name, defaultValue)
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: Boolean) {
             prefs.edit().putBoolean(prefKey ?: property.name, value).apply()
             onPrefChanged(property)
@@ -64,7 +65,7 @@ abstract class Preferences(
     inner class StringSetPrefDelegate(prefKey: String? = null, val defaultValue: Set<String>) : PrefDelegate<Set<String>>(prefKey) {
 
         override fun getValue(thisRef: Any?, property: KProperty<*>): Set<String> =
-            prefs.getStringSet(prefKey ?: property.name, defaultValue)!!
+            prefs.getStringSet(prefKey ?: property.name, defaultValue).orEmpty()
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: Set<String>) {
             prefs.edit().putStringSet(prefKey ?: property.name, value).apply()

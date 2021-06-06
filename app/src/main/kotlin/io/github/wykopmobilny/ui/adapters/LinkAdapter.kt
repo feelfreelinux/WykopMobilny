@@ -7,7 +7,7 @@ import io.github.wykopmobilny.models.dataclass.Link
 import io.github.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
 import io.github.wykopmobilny.ui.adapters.viewholders.SimpleLinkViewHolder
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import javax.inject.Inject
 
 class LinkAdapter @Inject constructor(val settingsPreferencesApi: SettingsPreferencesApi) : AdvancedProgressAdapter<Link>() {

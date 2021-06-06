@@ -2,6 +2,7 @@ package io.github.wykopmobilny.ui.modules.notificationslist
 
 import dagger.Module
 import dagger.Provides
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigator
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandler
@@ -13,6 +14,10 @@ class NotificationsListModule {
     fun provideNavigatorApi(activity: NotificationsListActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandlerApi(activity: NotificationsListActivity, newNavigatorApi: NewNavigatorApi): WykopLinkHandlerApi =
-        WykopLinkHandler(activity, newNavigatorApi)
+    fun provideLinkHandlerApi(
+        activity: NotificationsListActivity,
+        newNavigatorApi: NewNavigatorApi,
+        settingsPreferences: SettingsPreferencesApi,
+    ): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, newNavigatorApi, settingsPreferences)
 }

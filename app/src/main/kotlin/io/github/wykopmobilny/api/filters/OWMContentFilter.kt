@@ -6,9 +6,9 @@ import io.github.wykopmobilny.models.dataclass.Entry
 import io.github.wykopmobilny.models.dataclass.EntryComment
 import io.github.wykopmobilny.models.dataclass.Link
 import io.github.wykopmobilny.models.dataclass.LinkComment
-import io.github.wykopmobilny.utils.preferences.BlacklistPreferencesApi
-import io.github.wykopmobilny.utils.preferences.LinksPreferencesApi
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
+import io.github.wykopmobilny.storage.api.LinksPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.textview.removeHtml
 import java.util.Collections
 import javax.inject.Inject

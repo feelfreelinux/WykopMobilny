@@ -1,6 +1,7 @@
 package io.github.wykopmobilny.ui.modules.settings
 
 import android.app.ActivityManager
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -17,12 +18,11 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import io.github.wykopmobilny.R
-import io.github.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.wykopmobilny.ui.modules.blacklist.BlacklistActivity
 import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.NotificationPiggyback
 import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.wykopmobilny.ui.modules.search.SuggestionDatabase
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
@@ -142,7 +142,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     private fun openWykopMarketPage() {
-        requireActivity().createAlertBuilder().apply {
+        AlertDialog.Builder(requireActivity()).apply {
             setTitle(R.string.dialog_piggyback_market_title)
             setMessage(R.string.dialog_piggyback_market_message)
             setCancelable(false)
