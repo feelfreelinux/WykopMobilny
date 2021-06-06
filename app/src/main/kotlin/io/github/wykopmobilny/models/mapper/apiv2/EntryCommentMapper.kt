@@ -4,24 +4,23 @@ import io.github.wykopmobilny.api.filters.OWMContentFilter
 import io.github.wykopmobilny.api.responses.EntryCommentResponse
 import io.github.wykopmobilny.models.dataclass.EntryComment
 
-class EntryCommentMapper {
-    companion object {
-        fun map(value: EntryCommentResponse, owmContentFilter: OWMContentFilter) =
-            owmContentFilter.filterEntryComment(
-                EntryComment(
-                    value.id,
-                    value.entryId ?: 0,
-                    AuthorMapper.map(value.author),
-                    value.body.orEmpty(),
-                    value.date,
-                    value.userVote > 0,
-                    value.embed?.let(EmbedMapper::map),
-                    value.voteCount,
-                    value.app,
-                    value.violationUrl ?: "",
-                    value.body?.lowercase()?.contains("#nsfw") ?: false,
-                    value.blocked,
-                )
+object EntryCommentMapper {
+
+    fun map(value: EntryCommentResponse, owmContentFilter: OWMContentFilter) =
+        owmContentFilter.filterEntryComment(
+            EntryComment(
+                id = value.id,
+                entryId = value.entryId ?: 0,
+                author = AuthorMapper.map(value.author),
+                body = value.body.orEmpty(),
+                fullDate = value.date,
+                isVoted = value.userVote > 0,
+                embed = value.embed?.let(EmbedMapper::map),
+                voteCount = value.voteCount,
+                app = value.app,
+                violationUrl = value.violationUrl ?: "",
+                isNsfw = value.body?.lowercase()?.contains("#nsfw") ?: false,
+                isBlocked = value.blocked,
             )
-    }
+        )
 }

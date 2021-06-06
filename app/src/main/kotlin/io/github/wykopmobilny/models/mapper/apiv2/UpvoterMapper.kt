@@ -4,8 +4,8 @@ import io.github.wykopmobilny.api.responses.UpvoterResponse
 import io.github.wykopmobilny.models.dataclass.Upvoter
 import io.github.wykopmobilny.models.mapper.Mapper
 
-class UpvoterMapper {
-    companion object : Mapper<UpvoterResponse, Upvoter> {
-        override fun map(value: UpvoterResponse) = Upvoter(AuthorMapper.map(value.author), value.date)
-    }
+object UpvoterMapper : Mapper<UpvoterResponse, Upvoter> {
+
+    override fun map(value: UpvoterResponse) =
+        Upvoter(AuthorMapper.map(value.author), value.date)
 }

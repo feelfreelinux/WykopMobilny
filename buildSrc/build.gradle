@@ -3,5 +3,5 @@ repositories {
     google()
 }
 dependencies {
-    implementation("com.project.starter:android:0.28.0")
+    implementation("com.project.starter:android:0.28.1")
 }

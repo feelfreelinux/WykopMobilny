@@ -11,28 +11,6 @@
     <ID>EqualsWithHashCodeExist:Link.kt$Link : Parcelable</ID>
     <ID>ImplicitDefaultLocale:YTPlayer.kt$YTPlayer$String.format( "There was an error initializing the YouTubePlayer (%1\$s)", errorReason.toString() )</ID>
     <ID>LongMethod:MainNavigationActivity.kt$MainNavigationActivity$private fun openAboutSheet()</ID>
-    <ID>LongParameterList:AddLinkApi.kt$AddLinkApi$( key: String, title: String, description: String, tags: String, photo: String, url: String, plus18: Boolean )</ID>
-    <ID>LongParameterList:AddLinkDetailsFragmentPresenter.kt$AddLinkDetailsFragmentPresenter$( key: String, title: String, sourceUrl: String, description: String, tags: String, plus18: Boolean, imageKey: String )</ID>
-    <ID>LongParameterList:AddLinkRetrofitApi.kt$AddLinkRetrofitApi$( @Path("key") key: String, @Field("title") title: String, @Field("description") description: String, @Field("tags") tags: String, @Field("photo") photo: String? = null, @Field("url") url: String, @Field("plus18") plus18: Int )</ID>
-    <ID>LongParameterList:BaseLinkCommentViewHolder.kt$BaseLinkCommentViewHolder$( view: View, private val userManagerApi: UserManagerApi, private val settingsPreferencesApi: SettingsPreferencesApi, protected val navigatorApi: NewNavigatorApi, private val linkHandlerApi: WykopLinkHandlerApi, protected val commentViewListener: LinkCommentViewListener?, private val commentActionListener: LinkCommentActionListener )</ID>
-    <ID>LongParameterList:Embed.kt$Embed$( val type: String, val preview: String, val url: String, val plus18: Boolean, val source: String?, val isAnimated: Boolean, val size: String, var isResize: Boolean = false, var isRevealed: Boolean = false )</ID>
-    <ID>LongParameterList:Entry.kt$Entry$( val id: Int, val author: Author, var body: String, val fullDate: String, var isVoted: Boolean, var isFavorite: Boolean, var survey: Survey?, var embed: Embed?, var voteCount: Int, val commentsCount: Int, val comments: MutableList&lt;EntryComment&gt;, val app: String?, val violationUrl: String, var isNsfw: Boolean = false, var isBlocked: Boolean = false, var collapsed: Boolean = true, val isCommentingPossible: Boolean )</ID>
-    <ID>LongParameterList:EntryComment.kt$EntryComment$( val id: Int, var entryId: Int, val author: Author, var body: String, val fullDate: String, var isVoted: Boolean, var embed: Embed?, var voteCount: Int, val app: String?, val violationUrl: String, var isNsfw: Boolean = false, var isBlocked: Boolean = false )</ID>
-    <ID>LongParameterList:EntryCommentViewHolder.kt$EntryCommentViewHolder$( private val binding: CommentListItemBinding, private val userManagerApi: UserManagerApi, private val settingsPreferencesApi: SettingsPreferencesApi, private val navigatorApi: NewNavigatorApi, private val linkHandlerApi: WykopLinkHandlerApi, private val commentActionListener: EntryCommentActionListener, private val commentViewListener: EntryCommentViewListener?, private val enableClickListener: Boolean )</ID>
-    <ID>LongParameterList:EntryCommentViewHolder.kt$EntryCommentViewHolder.Companion$( parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi: WykopLinkHandlerApi, commentActionListener: EntryCommentActionListener, commentViewListener: EntryCommentViewListener?, enableClickListener: Boolean )</ID>
-    <ID>LongParameterList:EntryResponse.kt$EntryResponse$( @JsonProperty("id") val id: Int, @JsonProperty("date") val date: String, @JsonProperty("body") val body: String?, @JsonProperty("author") val author: AuthorResponse, @JsonProperty("blocked") val blocked: Boolean, @JsonProperty("favorite") val favorite: Boolean, @JsonProperty("vote_count") val voteCount: Int, @JsonProperty("comments_count") val commentsCount: Int, @JsonProperty("comments") val comments: List&lt;EntryCommentResponse&gt;?, @JsonProperty("status") val status: String, @JsonProperty("embed") val embed: EmbedResponse?, @JsonProperty("survey") val survey: SurveyResponse?, @JsonProperty("user_vote") val userVote: Int, @JsonProperty("violation_url") val violationUrl: String?, @JsonProperty("app") val app: String?, @JsonProperty("can_comment") val isCommentingPossible: Boolean )</ID>
-    <ID>LongParameterList:EntryViewHolder.kt$EntryViewHolder$( private val binding: EntryListItemBinding, private val userManagerApi: UserManagerApi, private val settingsPreferencesApi: SettingsPreferencesApi, private val navigatorApi: NewNavigatorApi, private val linkHandlerApi: WykopLinkHandlerApi, private val entryActionListener: EntryActionListener, private val replyListener: EntryListener? )</ID>
-    <ID>LongParameterList:EntryViewHolder.kt$EntryViewHolder.Companion$( parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi: WykopLinkHandlerApi, entryActionListener: EntryActionListener, replyListener: EntryListener? )</ID>
-    <ID>LongParameterList:Link.kt$Link$( val id: Int, val title: String, val description: String, val tags: String, val sourceUrl: String, var voteCount: Int, var buryCount: Int, var comments: MutableList&lt;LinkComment&gt;, val commentsCount: Int, val relatedCount: Int, val author: Author?, val fullDate: String, val preview: String?, val plus18: Boolean, val canVote: Boolean, val isHot: Boolean, val status: String, var userVote: String?, var userFavorite: Boolean, val app: String?, var gotSelected: Boolean, var isBlocked: Boolean = false )</ID>
-    <ID>LongParameterList:LinkComment.kt$LinkComment$( val id: Int, val author: Author, val fullDate: String, var body: String?, val blocked: Boolean, val favorite: Boolean, var voteCount: Int, var voteCountPlus: Int, var voteCountMinus: Int, var userVote: Int, var parentId: Int, val canVote: Boolean, val linkId: Int, var embed: Embed?, val app: String?, var isCollapsed: Boolean, var isParentCollapsed: Boolean, var childCommentCount: Int, val violationUrl: String, var isNsfw: Boolean = false, var isBlocked: Boolean = false )</ID>
-    <ID>LongParameterList:LinkCommentViewHolder.kt$LinkCommentViewHolder$( private val binding: LinkCommentLayoutBinding, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi: WykopLinkHandlerApi, commentActionListener: LinkCommentActionListener, commentViewListener: LinkCommentViewListener )</ID>
-    <ID>LongParameterList:LinkCommentViewHolder.kt$LinkCommentViewHolder.Companion$( parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi: WykopLinkHandlerApi, commentActionListener: LinkCommentActionListener, commentViewListener: LinkCommentViewListener )</ID>
-    <ID>LongParameterList:LinkResponse.kt$LinkResponse$( @JsonProperty("id") val id: Int, @JsonProperty("title") val title: String?, @JsonProperty("description") val description: String?, @JsonProperty("tags") val tags: String, @JsonProperty("source_url") val sourceUrl: String, @JsonProperty("vote_count") val voteCount: Int, @JsonProperty("bury_count") val buryCount: Int, @JsonProperty("comments_count") val commentsCount: Int, @JsonProperty("related_count") val relatedCount: Int, @JsonProperty("author") val author: AuthorResponse?, @JsonProperty("date") val date: String, @JsonProperty("preview") val preview: String?, @JsonProperty("plus18") val plus18: Boolean, @JsonProperty("can_vote") val canVote: Boolean, @JsonProperty("is_hot") val isHot: Boolean, @JsonProperty("status") val status: String, @JsonProperty("user_vote") val userVote: String?, @JsonProperty("user_favorite") val userFavorite: Boolean?, @JsonProperty("app") val app: String? )</ID>
-    <ID>LongParameterList:LinkViewHolder.kt$LinkViewHolder.Companion$( parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkActionListener: LinkActionListener )</ID>
-    <ID>LongParameterList:MyWykopEntryLinkFragmentModule.kt$MyWykopEntryLinkFragmentModule$( schedulers: Schedulers, myWykopApi: MyWykopApi, linksInteractor: LinksInteractor, entriesInteractor: EntriesInteractor, entriesApi: EntriesApi, linksApi: LinksApi )</ID>
-    <ID>LongParameterList:Notification.kt$Notification$( val id: Long, val author: Author?, val body: String, val date: String, val type: String, val url: String?, var new: Boolean )</ID>
-    <ID>LongParameterList:TopLinkCommentViewHolder.kt$TopLinkCommentViewHolder$( private val binding: TopLinkCommentLayoutBinding, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi: WykopLinkHandlerApi, commentActionListener: LinkCommentActionListener, commentViewListener: LinkCommentViewListener? )</ID>
-    <ID>LongParameterList:TopLinkCommentViewHolder.kt$TopLinkCommentViewHolder.Companion$( parent: ViewGroup, viewType: Int, userManagerApi: UserManagerApi, settingsPreferencesApi: SettingsPreferencesApi, navigatorApi: NewNavigatorApi, linkHandlerApi: WykopLinkHandlerApi, commentActionListener: LinkCommentActionListener, commentViewListener: LinkCommentViewListener? )</ID>
     <ID>MagicNumber:ApiSignInterceptor.kt$ApiSignInterceptor$401</ID>
     <ID>MagicNumber:ApiUtils.kt$1001</ID>
     <ID>MagicNumber:ApiUtils.kt$1002</ID>
@@ -50,7 +28,7 @@
     <ID>MagicNumber:HitsFragment.kt$HitsFragment$2005</ID>
     <ID>MagicNumber:InputToolbar.kt$InputToolbar$0.3f</ID>
     <ID>MagicNumber:InputToolbar.kt$InputToolbar$3</ID>
-    <ID>MagicNumber:LinkCommentMapper.kt$LinkCommentMapper.Companion$9999</ID>
+    <ID>MagicNumber:LinkCommentMapper.kt$LinkCommentMapper$9999</ID>
     <ID>MagicNumber:LinkViewHolder.kt$LinkViewHolder$3</ID>
     <ID>MagicNumber:LinkViewHolder.kt$LinkViewHolder$8</ID>
     <ID>MagicNumber:LinksPagerAdapter.kt$LinksPagerAdapter$3</ID>
@@ -82,6 +60,7 @@
     <ID>MagicNumber:WykopApp.kt$WykopApp$1024</ID>
     <ID>MagicNumber:WykopApp.kt$WykopApp$1024L</ID>
     <ID>MagicNumber:WykopApp.kt$WykopApp$30</ID>
+    <ID>MagicNumber:WykopApp.kt$WykopApp$5</ID>
     <ID>MagicNumber:WykopEmbedView.kt$WykopEmbedView$6</ID>
     <ID>MagicNumber:WykopImageFile.kt$WykopImageFile$1024</ID>
     <ID>MagicNumber:WykopImageFile.kt$WykopImageFile$180</ID>
@@ -95,14 +74,7 @@
     <ID>MagicNumber:YearPickerDialog.kt$YearPickerDialog$2006</ID>
     <ID>MemberNameEqualsClassName:BlockedTags.kt$BlockedTags$@Selector("div.tagcard") var blockedTags: List&lt;BlockedTag&gt;? = null</ID>
     <ID>MemberNameEqualsClassName:BlockedUsers.kt$BlockedUsers$@Selector("div.usercard") var blockedUsers: List&lt;BlockedUser&gt;? = null</ID>
-    <ID>NestedBlockDepth:CodeTagHandler.kt$CodeTagHandler$override fun handleTag(opening: Boolean, tag: String?, output: Editable?, reader: XMLReader?)</ID>
-    <ID>NestedBlockDepth:LinkDetailsAdapter.kt$LinkDetailsAdapter$override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int)</ID>
-    <ID>NestedBlockDepth:SettingsFragment.kt$SettingsFragment$override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String)</ID>
-    <ID>NestedBlockDepth:TagActivity.kt$TagActivity$override fun onCreateOptionsMenu(menu: Menu): Boolean</ID>
-    <ID>NestedBlockDepth:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State)</ID>
     <ID>PrintStackTrace:YTPlayer.kt$YTPlayer$e</ID>
-    <ID>SwallowedException:OWMContentFilter.kt$OWMContentFilter$catch (e: Throwable) { null }</ID>
-    <ID>SwallowedException:ProfileActivity.kt$ProfileActivity$catch (e: Throwable) { null }</ID>
     <ID>SwallowedException:SettingsFragment.kt$SettingsFragment$catch (e: PackageManager.NameNotFoundException) { false }</ID>
     <ID>SwallowedException:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$catch (e: Exception) { // Do nothing }</ID>
     <ID>SwallowedException:WykopImageFile.kt$WykopImageFile$catch (e: IOException) { Log.w("TAG", "-- Error in setting image") }</ID>
@@ -114,43 +86,10 @@
     <ID>TooGenericExceptionCaught:LinkCommentViewHolder.kt$LinkCommentViewHolder$exception: Throwable</ID>
     <ID>TooGenericExceptionCaught:LinkDetailsAdapter.kt$LinkDetailsAdapter$exception: Exception</ID>
     <ID>TooGenericExceptionCaught:NewNavigator.kt$NewNavigator$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:OWMContentFilter.kt$OWMContentFilter$e: Throwable</ID>
-    <ID>TooGenericExceptionCaught:ProfileActivity.kt$ProfileActivity$e: Throwable</ID>
     <ID>TooGenericExceptionCaught:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$exception: Throwable</ID>
     <ID>TooGenericExceptionCaught:WykopImageFile.kt$WykopImageFile$e: Throwable</ID>
     <ID>TooGenericExceptionCaught:WykopLinkHandler.kt$WykopLinkHandler$e: Throwable</ID>
-    <ID>TooManyFunctions:ActionsFragmentPresenter.kt$ActionsFragmentPresenter : BasePresenterLinkActionListenerEntryActionListener</ID>
-    <ID>TooManyFunctions:ActivityBuilder.kt$ActivityBuilder</ID>
-    <ID>TooManyFunctions:ConversationActivity.kt$ConversationActivity : BaseActivityConversationViewInputToolbarListener</ID>
-    <ID>TooManyFunctions:EmbedViewActivity.kt$EmbedViewActivity : BaseActivityEmbedView</ID>
-    <ID>TooManyFunctions:EndlessProgressAdapter.kt$EndlessProgressAdapter&lt;T : RecyclerView.ViewHolder, A : Any&gt; : Adapter</ID>
-    <ID>TooManyFunctions:EntriesApi.kt$EntriesApi</ID>
-    <ID>TooManyFunctions:EntriesRepository.kt$EntriesRepository : EntriesApi</ID>
-    <ID>TooManyFunctions:EntriesRetrofitApi.kt$EntriesRetrofitApi</ID>
-    <ID>TooManyFunctions:EntryActivity.kt$EntryActivity : BaseActivityEntryDetailViewInputToolbarListenerOnRefreshListenerEntryCommentViewListener</ID>
-    <ID>TooManyFunctions:EntryDetailPresenter.kt$EntryDetailPresenter : BasePresenterEntryActionListenerEntryCommentActionListener</ID>
-    <ID>TooManyFunctions:InputToolbar.kt$InputToolbar : ConstraintLayoutMarkdownToolbarListener</ID>
-    <ID>TooManyFunctions:LinkDetailsActivity.kt$LinkDetailsActivity : BaseActivityLinkDetailsViewOnRefreshListenerInputToolbarListenerLinkCommentViewListener</ID>
-    <ID>TooManyFunctions:LinkDetailsPresenter.kt$LinkDetailsPresenter : BasePresenterLinkCommentActionListenerLinkHeaderActionListener</ID>
-    <ID>TooManyFunctions:LinksApi.kt$LinksApi</ID>
-    <ID>TooManyFunctions:LinksRepository.kt$LinksRepository : LinksApi</ID>
-    <ID>TooManyFunctions:LinksRetrofitApi.kt$LinksRetrofitApi</ID>
-    <ID>TooManyFunctions:MainNavigationActivity.kt$MainNavigationActivity : BaseActivityMainNavigationViewOnNavigationItemSelectedListenerMainNavigationInterface</ID>
-    <ID>TooManyFunctions:MyWykopEntryLinkPresenter.kt$MyWykopEntryLinkPresenter : BasePresenterEntryActionListenerLinkActionListener</ID>
-    <ID>TooManyFunctions:Navigator.kt$Navigator : NavigatorApi</ID>
-    <ID>TooManyFunctions:Navigator.kt$NavigatorApi</ID>
-    <ID>TooManyFunctions:NetworkModule.kt$NetworkModule</ID>
-    <ID>TooManyFunctions:NewNavigator.kt$NewNavigator : NewNavigatorApi</ID>
-    <ID>TooManyFunctions:NewNavigator.kt$NewNavigatorApi</ID>
-    <ID>TooManyFunctions:ProfileApi.kt$ProfileApi</ID>
-    <ID>TooManyFunctions:ProfileRepository.kt$ProfileRepository : ProfileApi</ID>
-    <ID>TooManyFunctions:ProfileRetrofitApi.kt$ProfileRetrofitApi</ID>
-    <ID>TooManyFunctions:RepositoryModule.kt$RepositoryModule</ID>
-    <ID>TooManyFunctions:WykopComponent.kt$WykopComponent</ID>
-    <ID>TooManyFunctions:WykopMediaControls.kt$WykopMediaControls : VideoControls</ID>
-    <ID>TooManyFunctions:WykopModule.kt$WykopModule</ID>
-    <ID>TooManyFunctions:YTPlayer.kt$YTPlayer : YouTubeBaseActivityOnInitializedListenerOnFullscreenListenerPlayerStateChangeListener</ID>
     <ID>UnnecessaryAbstractClass:Preferences.kt$Preferences</ID>
     <ID>UseIfInsteadOfWhen:ExceptionDialog.kt$when (e) { is WykopExceptionParser.WykopApiException -&gt; { "${e.message} (${e.code})" } else -&gt; if (e.message.isNullOrEmpty()) e.toString() else e.message }</ID>
     <ID>UseIfInsteadOfWhen:FavoritePagerAdapter.kt$FavoritePagerAdapter$when (position) { 0 -&gt; LinksFavoriteFragment.newInstance() else -&gt; EntryFavoriteFragment.newInstance() }</ID>
@@ -159,32 +98,5 @@
     <ID>UseIfInsteadOfWhen:MicroblogPagerAdapter.kt$MicroblogPagerAdapter$when (position) { 0 -&gt; MicroblogEntriesFragment.newInstance() else -&gt; MicroblogCommentsFragment.newInstance() }</ID>
     <ID>UseIfInsteadOfWhen:NotificationsListViewPagerAdapter.kt$NotificationsListViewPagerAdapter$when (position) { 0 -&gt; NotificationsListFragment.newInstance() else -&gt; HashTagsNotificationsListFragment.newInstance() }</ID>
     <ID>UseIfInsteadOfWhen:NotificationsListViewPagerAdapter.kt$NotificationsListViewPagerAdapter$when (position) { 0 -&gt; resources.getString(R.string.notifications_directed) else -&gt; resources.getString(R.string.hashtags_notifications_title) }</ID>
-    <ID>UtilityClassWithPublicConstructor:AnswerMapper.kt$AnswerMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:AuthorMapper.kt$AuthorMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:CameraUtils.kt$CameraUtils</ID>
-    <ID>UtilityClassWithPublicConstructor:ConversationLinkParser.kt$ConversationLinkParser</ID>
-    <ID>UtilityClassWithPublicConstructor:ConversationMapper.kt$ConversationMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:DownvoterMapper.kt$DownvoterMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:EmbedMapper.kt$EmbedMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:EntryCommentMapper.kt$EntryCommentMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:EntryLinkMapper.kt$EntryLinkMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:EntryLinkParser.kt$EntryLinkParser</ID>
-    <ID>UtilityClassWithPublicConstructor:EntryMapper.kt$EntryMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:FullConversationMapper.kt$FullConversationMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:LinkCommentMapper.kt$LinkCommentMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:LinkMapper.kt$LinkMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:LinkParser.kt$LinkParser</ID>
-    <ID>UtilityClassWithPublicConstructor:NotificationMapper.kt$NotificationMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:PMMessageMapper.kt$PMMessageMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:ProfileLinkParser.kt$ProfileLinkParser</ID>
-    <ID>UtilityClassWithPublicConstructor:RelatedMapper.kt$RelatedMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:SurveyMapper.kt$SurveyMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:TagEntriesMapper.kt$TagEntriesMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:TagLinkParser.kt$TagLinkParser</ID>
-    <ID>UtilityClassWithPublicConstructor:TagLinksMapper.kt$TagLinksMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:TagSuggestionsMapper.kt$TagSuggestionsMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:UpvoterMapper.kt$UpvoterMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:VoterMapper.kt$VoterMapper</ID>
-    <ID>UtilityClassWithPublicConstructor:YoutubeActivity.kt$YoutubeActivity</ID>
   </CurrentIssues>
 </SmellBaseline>

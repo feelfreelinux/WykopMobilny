@@ -10,23 +10,21 @@ import java.io.File
 import java.io.IOException
 import java.util.Date
 
-class CameraUtils {
+object CameraUtils {
 
-    companion object {
-        fun createPictureUri(context: Context): Uri? {
-            val filename = "owmcamera%d.jpg".format(Date().time)
-            val file = File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "${PhotoViewActions.SAVED_FOLDER}/${PhotoViewActions.SHARED_FOLDER}/" + filename
-            )
+    fun createPictureUri(context: Context): Uri? {
+        val filename = "owmcamera%d.jpg".format(Date().time)
+        val file = File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+            "${PhotoViewActions.SAVED_FOLDER}/${PhotoViewActions.SHARED_FOLDER}/" + filename
+        )
 
-            try {
-                file.createNewFile()
-            } catch (exception: IOException) {
-                Log.i(this::class.simpleName, "Couldn't create file", exception)
-            }
-
-            return FileProvider.getUriForFile(context, "io.github.feelfreelinux.wykopmobilny.fileprovider", file)
+        try {
+            file.createNewFile()
+        } catch (exception: IOException) {
+            Log.i(this::class.simpleName, "Couldn't create file", exception)
         }
+
+        return FileProvider.getUriForFile(context, "io.github.feelfreelinux.wykopmobilny.fileprovider", file)
     }
 }

@@ -1,19 +1,18 @@
 package io.github.wykopmobilny.utils.linkhandler.linkparser
 
-class EntryLinkParser {
-    companion object {
-        fun getEntryId(url: String): Int? {
-            if (url.contains("/wpis/")) {
-                return url.substringAfter("/wpis/").substringBefore("/").toIntOrNull()
-            }
-            return null
-        }
+object EntryLinkParser {
 
-        fun getEntryCommentId(url: String): Int? {
-            if (url.contains("/#comment-")) {
-                return url.substringAfter("/#comment-").substringBefore("/").toIntOrNull()
-            }
-            return null
+    fun getEntryId(url: String): Int? {
+        if (url.contains("/wpis/")) {
+            return url.substringAfter("/wpis/").substringBefore("/").toIntOrNull()
         }
+        return null
+    }
+
+    fun getEntryCommentId(url: String): Int? {
+        if (url.contains("/#comment-")) {
+            return url.substringAfter("/#comment-").substringBefore("/").toIntOrNull()
+        }
+        return null
     }
 }

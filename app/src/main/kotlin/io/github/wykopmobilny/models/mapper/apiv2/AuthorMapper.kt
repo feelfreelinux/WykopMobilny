@@ -4,9 +4,7 @@ import io.github.wykopmobilny.api.responses.AuthorResponse
 import io.github.wykopmobilny.models.dataclass.Author
 import io.github.wykopmobilny.models.mapper.Mapper
 
-class AuthorMapper {
-    companion object : Mapper<AuthorResponse, Author> {
-        override fun map(value: AuthorResponse) =
-            Author(value.login, value.avatar, value.color, value.sex ?: "")
-    }
+object AuthorMapper : Mapper<AuthorResponse, Author> {
+    override fun map(value: AuthorResponse) =
+        Author(value.login, value.avatar, value.color, value.sex ?: "")
 }

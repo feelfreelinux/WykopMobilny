@@ -12,18 +12,25 @@ class PatronsRepository @Inject constructor(
     private val patronsApi: PatronsRetrofitApi
 ) : PatronsApi {
 
-    override lateinit var patrons: List<Patron>
+    private lateinit var _patrons: List<Patron>
+    override val patrons: List<Patron>
+        get() = if (::_patrons.isInitialized) {
+            _patrons
+        } else {
+            emptyList()
+        }
+
     override fun <T : Any> ensurePatrons(d: T): Single<T> {
         return Single.create { emitter ->
-            if (!::patrons.isInitialized) {
+            if (!::_patrons.isInitialized) {
                 getPatrons().subscribeOn(WykopSchedulers().backgroundThread()).observeOn(WykopSchedulers().mainThread())
                     .subscribe(
                         { patrons ->
-                            this.patrons = patrons
+                            this._patrons = patrons
                             emitter.onSuccess(d)
                         },
                         { _ ->
-                            this.patrons = listOf()
+                            this._patrons = listOf()
                             emitter.onSuccess(d)
                         }
                     )
@@ -36,8 +43,8 @@ class PatronsRepository @Inject constructor(
     override fun getPatrons(): Single<List<Patron>> =
         patronsApi.getPatrons().map { it.patrons }
             .doOnSuccess {
-                this.patrons = it
+                this._patrons = it
             }.doOnError {
-                this.patrons = listOf()
+                this._patrons = listOf()
             }
 }

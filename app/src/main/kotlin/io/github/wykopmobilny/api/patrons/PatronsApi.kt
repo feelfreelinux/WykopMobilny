@@ -8,19 +8,15 @@ import io.reactivex.Single
 interface PatronsApi {
     fun getPatrons(): Single<List<Patron>>
     fun <T : Any> ensurePatrons(d: T): Single<T>
-    var patrons: List<Patron>
+    val patrons: List<Patron>
 }
 
 fun PatronsApi.getBadgeFor(nick: String) =
-    try {
-        patrons.firstOrNull { it.username == nick }?.badge?.let { badge ->
-            AndroidPatronBadge(
-                badge.hexColor,
-                badge.text,
-            )
-        }
-    } catch (e: Throwable) {
-        null
+    patrons.firstOrNull { it.username == nick }?.badge?.let { badge ->
+        AndroidPatronBadge(
+            badge.hexColor,
+            badge.text,
+        )
     }
 
 fun PatronsApi.getBadgeFor(author: Author) = getBadgeFor(author.nick)
