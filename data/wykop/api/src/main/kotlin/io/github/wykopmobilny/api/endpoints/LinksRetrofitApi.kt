@@ -10,7 +10,6 @@ import io.github.wykopmobilny.api.responses.LinkVoteResponse
 import io.github.wykopmobilny.api.responses.RelatedResponse
 import io.github.wykopmobilny.api.responses.UpvoterResponse
 import io.github.wykopmobilny.api.responses.VoteResponse
-import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field
@@ -24,116 +23,116 @@ import retrofit2.http.Path
 interface LinksRetrofitApi {
 
     @GET("/links/upcoming/page/{page}/sort/{sortBy}/appkey/$APP_KEY")
-    fun getUpcoming(
+    suspend fun getUpcoming(
         @Path("page") page: Int,
         @Path("sortBy") sortBy: String
-    ): Single<WykopApiResponse<List<LinkResponse>>>
+    ): WykopApiResponse<List<LinkResponse>>
 
     @GET("/links/promoted/page/{page}/appkey/$APP_KEY")
-    fun getPromoted(@Path("page") page: Int): Single<WykopApiResponse<List<LinkResponse>>>
+    suspend fun getPromoted(@Path("page") page: Int): WykopApiResponse<List<LinkResponse>>
 
     @GET("/links/observed/page/{page}/appkey/$APP_KEY")
-    fun getObserved(@Path("page") page: Int): Single<WykopApiResponse<List<LinkResponse>>>
+    suspend fun getObserved(@Path("page") page: Int): WykopApiResponse<List<LinkResponse>>
 
     @GET("/links/comments/{linkId}/sort/{sortBy}/appkey/$APP_KEY")
-    fun getLinkComments(@Path("linkId") linkId: Int, @Path("sortBy") sortBy: String): Single<WykopApiResponse<List<LinkCommentResponse>>>
+    suspend fun getLinkComments(@Path("linkId") linkId: Int, @Path("sortBy") sortBy: String): WykopApiResponse<List<LinkCommentResponse>>
 
     @GET("/links/link/{linkId}/appkey/$APP_KEY")
-    fun getLink(@Path("linkId") linkId: Int): Single<WykopApiResponse<LinkResponse>>
+    suspend fun getLink(@Path("linkId") linkId: Int): WykopApiResponse<LinkResponse>
 
     @GET("/links/commentVoteUp/1/{linkId}/appkey/$APP_KEY")
-    fun commentVoteUp(@Path("linkId") linkId: Int): Single<WykopApiResponse<LinkVoteResponse>>
+    suspend fun commentVoteUp(@Path("linkId") linkId: Int): WykopApiResponse<LinkVoteResponse>
 
     @GET("/links/commentVoteDown/1/{linkId}/appkey/$APP_KEY")
-    fun commentVoteDown(@Path("linkId") linkId: Int): Single<WykopApiResponse<LinkVoteResponse>>
+    suspend fun commentVoteDown(@Path("linkId") linkId: Int): WykopApiResponse<LinkVoteResponse>
 
     @GET("/links/commentVoteCancel/1/{linkId}/appkey/$APP_KEY")
-    fun commentVoteCancel(@Path("linkId") linkId: Int): Single<WykopApiResponse<LinkVoteResponse>>
+    suspend fun commentVoteCancel(@Path("linkId") linkId: Int): WykopApiResponse<LinkVoteResponse>
 
     @GET("/links/upvoters/{linkId}/appkey/$APP_KEY")
-    fun getUpvoters(@Path("linkId") linkId: Int): Single<WykopApiResponse<List<UpvoterResponse>>>
+    suspend fun getUpvoters(@Path("linkId") linkId: Int): WykopApiResponse<List<UpvoterResponse>>
 
     @GET("/links/downvoters/{linkId}/appkey/$APP_KEY")
-    fun getDownvoters(@Path("linkId") linkId: Int): Single<WykopApiResponse<List<DownvoterResponse>>>
+    suspend fun getDownvoters(@Path("linkId") linkId: Int): WykopApiResponse<List<DownvoterResponse>>
 
     @GET("/links/related/{linkId}/appkey/$APP_KEY")
-    fun getRelated(@Path("linkId") linkId: Int): Single<WykopApiResponse<List<RelatedResponse>>>
+    suspend fun getRelated(@Path("linkId") linkId: Int): WykopApiResponse<List<RelatedResponse>>
 
     @GET("/links/voteup/{linkId}/appkey/$APP_KEY")
-    fun voteUp(@Path("linkId") linkId: Int): Single<WykopApiResponse<DigResponse>>
+    suspend fun voteUp(@Path("linkId") linkId: Int): WykopApiResponse<DigResponse>
 
     @GET("/links/votedown/{linkId}/{voteType}/appkey/$APP_KEY")
-    fun voteDown(
+    suspend fun voteDown(
         @Path("linkId") linkId: Int,
         @Path("voteType") reason: Int
-    ): Single<WykopApiResponse<DigResponse>>
+    ): WykopApiResponse<DigResponse>
 
     @GET("/links/relatedvoteup/0/{relatedId}/appkey/$APP_KEY")
-    fun relatedVoteUp(@Path("relatedId") relatedId: Int): Single<WykopApiResponse<VoteResponse>>
+    suspend fun relatedVoteUp(@Path("relatedId") relatedId: Int): WykopApiResponse<VoteResponse>
 
     @GET("/links/relatedvotedown/1/{relatedId}/appkey/$APP_KEY")
-    fun relatedVoteDown(@Path("relatedId") relatedId: Int): Single<WykopApiResponse<VoteResponse>>
+    suspend fun relatedVoteDown(@Path("relatedId") relatedId: Int): WykopApiResponse<VoteResponse>
 
     @GET("/links/voteremove/{linkId}/appkey/$APP_KEY")
-    fun voteRemove(@Path("linkId") linkId: Int): Single<WykopApiResponse<DigResponse>>
+    suspend fun voteRemove(@Path("linkId") linkId: Int): WykopApiResponse<DigResponse>
 
     @Multipart
     @POST("/links/commentadd/{linkId}/{commentId}/appkey/$APP_KEY")
-    fun addComment(
+    suspend fun addComment(
         @Part("body") body: RequestBody,
         @Part("adultmedia") plus18: RequestBody,
         @Path("linkId") linkId: Int,
         @Path("commentId") commentId: Int,
         @Part file: MultipartBody.Part
-    ): Single<WykopApiResponse<LinkCommentResponse>>
+    ): WykopApiResponse<LinkCommentResponse>
 
     @FormUrlEncoded
     @POST("/links/commentadd/{linkId}/{commentId}/appkey/$APP_KEY")
-    fun addComment(
+    suspend fun addComment(
         @Field("body") body: String,
         @Path("linkId") linkId: Int,
         @Path("commentId") commentId: Int,
         @Field("embed") embed: String?,
         @Field("adultmedia") plus18: Boolean
-    ): Single<WykopApiResponse<LinkCommentResponse>>
+    ): WykopApiResponse<LinkCommentResponse>
 
     @POST("/links/commentdelete/{linkCommentId}/appkey/$APP_KEY")
-    fun deleteComment(@Path("linkCommentId") linkId: Int): Single<WykopApiResponse<LinkCommentResponse>>
+    suspend fun deleteComment(@Path("linkCommentId") linkId: Int): WykopApiResponse<LinkCommentResponse>
 
     @Multipart
     @POST("/links/commentadd/{linkId}/appkey/$APP_KEY")
-    fun addComment(
+    suspend fun addComment(
         @Part("body") body: RequestBody,
         @Part("adultmedia") plus18: RequestBody,
         @Path("linkId") linkId: Int,
         @Part file: MultipartBody.Part
-    ): Single<WykopApiResponse<LinkCommentResponse>>
+    ): WykopApiResponse<LinkCommentResponse>
 
     @FormUrlEncoded
     @POST("/links/commentadd/{linkId}/appkey/$APP_KEY")
-    fun addComment(
+    suspend fun addComment(
         @Field("body") body: String,
         @Path("linkId") linkId: Int,
         @Field("embed") embed: String?,
         @Field("adultmedia") plus18: Boolean
-    ): Single<WykopApiResponse<LinkCommentResponse>>
+    ): WykopApiResponse<LinkCommentResponse>
 
     @FormUrlEncoded
     @POST("/links/relatedadd/{linkId}/appkey/$APP_KEY")
-    fun addRelated(
+    suspend fun addRelated(
         @Field("title") body: String,
         @Path("linkId") linkId: Int,
         @Field("url") url: String,
         @Field("plus18") plus18: Boolean
-    ): Single<WykopApiResponse<RelatedResponse>>
+    ): WykopApiResponse<RelatedResponse>
 
     @FormUrlEncoded
     @POST("/links/commentedit/{linkId}/appkey/$APP_KEY")
-    fun editComment(
+    suspend fun editComment(
         @Field("body") body: String,
         @Path("linkId") linkId: Int
-    ): Single<WykopApiResponse<LinkCommentResponse>>
+    ): WykopApiResponse<LinkCommentResponse>
 
     @GET("/links/favorite/{linkId}/appkey/$APP_KEY")
-    fun markFavorite(@Path("linkId") entryId: Int): Single<WykopApiResponse<List<Boolean>>>
+    suspend fun markFavorite(@Path("linkId") entryId: Int): WykopApiResponse<List<Boolean>>
 }

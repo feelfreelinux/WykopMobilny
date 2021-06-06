@@ -6,7 +6,7 @@ import dagger.Reusable
 import io.github.wykopmobilny.patrons.api.PatronsRetrofitApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.jackson.JacksonConverterFactory
 import retrofit2.create
 
 @Module
@@ -17,7 +17,7 @@ internal class PatronsModule {
     fun retrofit(okHttpClient: OkHttpClient, baseUrl: String) = Retrofit.Builder()
         .client(okHttpClient)
         .baseUrl(baseUrl)
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(JacksonConverterFactory.create())
         .build()
 
     @Reusable

@@ -1,14 +1,13 @@
 package io.github.wykopmobilny.api.endpoints
 
 import io.github.wykopmobilny.APP_KEY
-import io.github.wykopmobilny.api.responses.WykopApiResponse
 import io.github.wykopmobilny.api.responses.EntryCommentResponse
 import io.github.wykopmobilny.api.responses.EntryResponse
 import io.github.wykopmobilny.api.responses.FavoriteResponse
 import io.github.wykopmobilny.api.responses.SurveyResponse
 import io.github.wykopmobilny.api.responses.VoteResponse
 import io.github.wykopmobilny.api.responses.VoterResponse
-import io.reactivex.Single
+import io.github.wykopmobilny.api.responses.WykopApiResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field
@@ -22,95 +21,95 @@ import retrofit2.http.Path
 interface EntriesRetrofitApi {
 
     @GET("/entries/hot/page/{page}/period/{period}/appkey/$APP_KEY")
-    fun getHot(@Path("page") page: Int, @Path("period") period: String): Single<WykopApiResponse<List<EntryResponse>>>
+    suspend fun getHot(@Path("page") page: Int, @Path("period") period: String): WykopApiResponse<List<EntryResponse>>
 
     @GET("/entries/stream/page/{page}/appkey/$APP_KEY")
-    fun getStream(@Path("page") page: Int): Single<WykopApiResponse<List<EntryResponse>>>
+    suspend fun getStream(@Path("page") page: Int): WykopApiResponse<List<EntryResponse>>
 
     @GET("/entries/active/page/{page}/appkey/$APP_KEY")
-    fun getActive(@Path("page") page: Int): Single<WykopApiResponse<List<EntryResponse>>>
+    suspend fun getActive(@Path("page") page: Int): WykopApiResponse<List<EntryResponse>>
 
     @GET("/entries/observed/page/{page}/appkey/$APP_KEY")
-    fun getObserved(@Path("page") page: Int): Single<WykopApiResponse<List<EntryResponse>>>
+    suspend fun getObserved(@Path("page") page: Int): WykopApiResponse<List<EntryResponse>>
 
     @GET("/entries/entry/{id}/appkey/$APP_KEY")
-    fun getEntry(@Path("id") id: Int): Single<WykopApiResponse<EntryResponse>>
+    suspend fun getEntry(@Path("id") id: Int): WykopApiResponse<EntryResponse>
 
     @GET("/entries/voteup/{entryId}/appkey/$APP_KEY")
-    fun voteEntry(@Path("entryId") entryId: Int): Single<WykopApiResponse<VoteResponse>>
+    suspend fun voteEntry(@Path("entryId") entryId: Int): WykopApiResponse<VoteResponse>
 
     @GET("/entries/voteremove/{entryId}/appkey/$APP_KEY")
-    fun unvoteEntry(@Path("entryId") entryId: Int): Single<WykopApiResponse<VoteResponse>>
+    suspend fun unvoteEntry(@Path("entryId") entryId: Int): WykopApiResponse<VoteResponse>
 
     @GET("/entries/commentvoteup/{commentId}/appkey/$APP_KEY")
-    fun voteComment(@Path("commentId") commentId: Int): Single<WykopApiResponse<VoteResponse>>
+    suspend fun voteComment(@Path("commentId") commentId: Int): WykopApiResponse<VoteResponse>
 
     @GET("/entries/commentvoteremove/{commentId}/appkey/$APP_KEY")
-    fun unvoteComment(@Path("commentId") commentId: Int): Single<WykopApiResponse<VoteResponse>>
+    suspend fun unvoteComment(@Path("commentId") commentId: Int): WykopApiResponse<VoteResponse>
 
     @GET("/entries/favorite/{entryId}/appkey/$APP_KEY")
-    fun markFavorite(@Path("entryId") entryId: Int): Single<WykopApiResponse<FavoriteResponse>>
+    suspend fun markFavorite(@Path("entryId") entryId: Int): WykopApiResponse<FavoriteResponse>
 
     @GET("/entries/surveyvote/{entryId}/{answerId}/appkey/$APP_KEY")
-    fun voteSurvey(@Path("entryId") entryId: Int, @Path("answerId") answerId: Int): Single<WykopApiResponse<SurveyResponse>>
+    suspend fun voteSurvey(@Path("entryId") entryId: Int, @Path("answerId") answerId: Int): WykopApiResponse<SurveyResponse>
 
     @Multipart
     @POST("/entries/add/appkey/$APP_KEY")
-    fun addEntry(
+    suspend fun addEntry(
         @Part("body") body: RequestBody,
         @Part("adultmedia") plus18: RequestBody,
         @Part file: MultipartBody.Part
-    ): Single<WykopApiResponse<EntryResponse>>
+    ): WykopApiResponse<EntryResponse>
 
     @GET("/entries/upvoters/{entryId}/appkey/$APP_KEY")
-    fun getEntryVoters(@Path("entryId") entryId: Int): Single<WykopApiResponse<List<VoterResponse>>>
+    suspend fun getEntryVoters(@Path("entryId") entryId: Int): WykopApiResponse<List<VoterResponse>>
 
     @GET("/entries/commentupvoters/{commentId}/appkey/$APP_KEY")
-    fun getCommentUpvoters(@Path("commentId") commentId: Int): Single<WykopApiResponse<List<VoterResponse>>>
+    suspend fun getCommentUpvoters(@Path("commentId") commentId: Int): WykopApiResponse<List<VoterResponse>>
 
     @FormUrlEncoded
     @POST("/entries/add/appkey/$APP_KEY")
-    fun addEntry(
+    suspend fun addEntry(
         @Field("body") body: String,
         @Field("embed") embed: String?,
         @Field("adultmedia") plus18: Boolean
-    ): Single<WykopApiResponse<EntryResponse>>
+    ): WykopApiResponse<EntryResponse>
 
     @Multipart
     @POST("/entries/commentadd/{entryId}/appkey/$APP_KEY")
-    fun addEntryComment(
+    suspend fun addEntryComment(
         @Part("body") body: RequestBody,
         @Part("adultmedia") plus18: RequestBody,
         @Path("entryId") entryId: Int,
         @Part file: MultipartBody.Part
-    ): Single<WykopApiResponse<EntryCommentResponse>>
+    ): WykopApiResponse<EntryCommentResponse>
 
     @FormUrlEncoded
     @POST("/entries/commentadd/{entryId}/appkey/$APP_KEY")
-    fun addEntryComment(
+    suspend fun addEntryComment(
         @Field("body") body: String,
         @Field("embed") embed: String?,
         @Field("adultmedia") plus18: Boolean,
         @Path("entryId") entryId: Int
-    ): Single<WykopApiResponse<EntryCommentResponse>>
+    ): WykopApiResponse<EntryCommentResponse>
 
     @FormUrlEncoded
     @POST("/entries/edit/{entryId}/appkey/$APP_KEY")
-    fun editEntry(
+    suspend fun editEntry(
         @Field("body") body: String,
         @Path("entryId") entryId: Int
-    ): Single<WykopApiResponse<EntryResponse>>
+    ): WykopApiResponse<EntryResponse>
 
     @GET("/entries/delete/{entryId}/appkey/$APP_KEY")
-    fun deleteEntry(@Path("entryId") entryId: Int): Single<WykopApiResponse<EntryResponse>>
+    suspend fun deleteEntry(@Path("entryId") entryId: Int): WykopApiResponse<EntryResponse>
 
     @FormUrlEncoded
     @POST("/entries/commentedit/{commentId}/appkey/$APP_KEY")
-    fun editEntryComment(
+    suspend fun editEntryComment(
         @Field("body") body: String,
         @Path("commentId") commentId: Int
-    ): Single<WykopApiResponse<EntryCommentResponse>>
+    ): WykopApiResponse<EntryCommentResponse>
 
     @GET("/entries/commentdelete/{commentId}/appkey/$APP_KEY")
-    fun deleteEntryComment(@Path("commentId") commentId: Int): Single<WykopApiResponse<EntryCommentResponse>>
+    suspend fun deleteEntryComment(@Path("commentId") commentId: Int): WykopApiResponse<EntryCommentResponse>
 }

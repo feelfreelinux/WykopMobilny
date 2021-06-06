@@ -6,8 +6,7 @@ import io.github.wykopmobilny.patrons.api.Patron
 import io.reactivex.Single
 
 interface PatronsApi {
-    fun getPatrons(): Single<List<Patron>>
-    fun <T : Any> ensurePatrons(d: T): Single<T>
+    fun <T : Any> ensurePatrons(continuation: T): Single<T>
     val patrons: List<Patron>
 }
 

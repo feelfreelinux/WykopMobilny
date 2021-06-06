@@ -10,7 +10,7 @@ interface LinksPreferencesApi {
     var upcomingDefaultSort: String?
 }
 
-class LinksPreferences @Inject constructor(context: Context) : Preferences(context, false), LinksPreferencesApi {
+class LinksPreferences @Inject constructor(context: Context) : Preferences(context), LinksPreferencesApi {
     override var readLinksIds by stringSetPref(defaultValue = HashSet())
     override var linkCommentsDefaultSort by stringPref(defaultValue = "best")
     override var upcomingDefaultSort by stringPref(defaultValue = UpcomingPresenter.SORTBY_COMMENTS)

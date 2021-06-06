@@ -18,8 +18,8 @@ import io.github.wykopmobilny.api.endpoints.SuggestRetrofitApi
 import io.github.wykopmobilny.api.endpoints.TagRetrofitApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
+import retrofit2.create
 
 @Module(includes = [RetrofitModule::class])
 internal class WykopModule {
@@ -27,67 +27,67 @@ internal class WykopModule {
     @Reusable
     @Provides
     fun addLinkRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(AddLinkRetrofitApi::class.java)
+        retrofit.create<AddLinkRetrofitApi>()
 
     @Reusable
     @Provides
     fun entriesRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(EntriesRetrofitApi::class.java)
+        retrofit.create<EntriesRetrofitApi>()
 
     @Reusable
     @Provides
     fun externalRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(ExternalRetrofitApi::class.java)
+        retrofit.create<ExternalRetrofitApi>()
 
     @Reusable
     @Provides
     fun hitsRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(HitsRetrofitApi::class.java)
+        retrofit.create<HitsRetrofitApi>()
 
     @Reusable
     @Provides
     fun linksRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(LinksRetrofitApi::class.java)
+        retrofit.create<LinksRetrofitApi>()
 
     @Reusable
     @Provides
     fun loginRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(LoginRetrofitApi::class.java)
+        retrofit.create<LoginRetrofitApi>()
 
     @Reusable
     @Provides
     fun myWykopRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(MyWykopRetrofitApi::class.java)
+        retrofit.create<MyWykopRetrofitApi>()
 
     @Reusable
     @Provides
     fun notificationsRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(NotificationsRetrofitApi::class.java)
+        retrofit.create<NotificationsRetrofitApi>()
 
     @Reusable
     @Provides
     fun pMRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(PMRetrofitApi::class.java)
+        retrofit.create<PMRetrofitApi>()
 
     @Reusable
     @Provides
     fun profileRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(ProfileRetrofitApi::class.java)
+        retrofit.create<ProfileRetrofitApi>()
 
     @Reusable
     @Provides
     fun searchRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(SearchRetrofitApi::class.java)
+        retrofit.create<SearchRetrofitApi>()
 
     @Reusable
     @Provides
     fun suggestRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(SuggestRetrofitApi::class.java)
+        retrofit.create<SuggestRetrofitApi>()
 
     @Reusable
     @Provides
     fun tagRetrofitApi(retrofit: Retrofit) =
-        retrofit.create(TagRetrofitApi::class.java)
+        retrofit.create<TagRetrofitApi>()
 }
 
 @Module
@@ -100,6 +100,5 @@ internal class RetrofitModule {
             .client(okHttpClient)
             .baseUrl(apiUrl)
             .addConverterFactory(JacksonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 }

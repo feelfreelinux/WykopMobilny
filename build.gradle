@@ -1,12 +1,17 @@
 plugins {
     id("com.starter.config")
     id("com.starter.versioning")
+    id("com.osacky.doctor") version("0.7.0")
 
     id("com.starter.easylauncher") version("4.0.0") apply(false)
 }
 
 commonConfig {
     javaFilesAllowed false
+}
+
+doctor {
+    warnWhenJetifierEnabled = false
 }
 
 allprojects {

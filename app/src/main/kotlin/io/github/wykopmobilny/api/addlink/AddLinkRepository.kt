@@ -9,6 +9,7 @@ import io.github.wykopmobilny.api.responses.NewLinkResponse
 import io.github.wykopmobilny.models.dataclass.Link
 import io.github.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 
 class AddLinkRepository @Inject constructor(
@@ -18,12 +19,12 @@ class AddLinkRepository @Inject constructor(
 ) : AddLinkApi {
 
     override fun getDraft(url: String) =
-        addlinkApi.getDraft(url)
+        rxSingle { addlinkApi.getDraft(url) }
             .retryWhen(userTokenRefresher)
             .flatMap(ErrorHandler<NewLinkResponse>())
 
     override fun getImages(key: String) =
-        addlinkApi.getImages(key)
+        rxSingle { addlinkApi.getImages(key) }
             .retryWhen(userTokenRefresher)
             .compose(ErrorHandlerTransformer())
 
@@ -36,7 +37,17 @@ class AddLinkRepository @Inject constructor(
         url: String,
         plus18: Boolean
     ): Single<Link> =
-        addlinkApi.publishLink(key, title, description, tags, if (photo.isNotEmpty()) photo else null, url, if (plus18) 1 else 0)
+        rxSingle {
+            addlinkApi.publishLink(
+                key = key,
+                title = title,
+                description = description,
+                tags = tags,
+                photo = photo.takeIf { it.isNotEmpty() },
+                url = url,
+                plus18 = if (plus18) 1 else 0
+            )
+        }
             .retryWhen(userTokenRefresher)
             .compose(ErrorHandlerTransformer())
             .map { LinkMapper.map(it, owmContentFilter) }
