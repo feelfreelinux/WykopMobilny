@@ -9,9 +9,11 @@ plugins {
 commonConfig {
     javaFilesAllowed false
 }
+
 doctor {
     warnWhenJetifierEnabled = false
 }
+
 allprojects {
     pluginManager.withPlugin("kotlin") { plugin ->
         def kotlinVersion = "1.5.10" // plugins.getPlugin("kotlin").kotlinPluginVersion

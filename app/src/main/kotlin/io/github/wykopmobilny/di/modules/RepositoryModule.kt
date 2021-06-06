@@ -76,7 +76,7 @@ class RepositoryModule {
     fun AddLinkRepository.addLink(): AddLinkApi = this
 
     @Provides
-    fun PatronsRepository.patrons(patronsApi: PatronsRepository): PatronsApi = this
+    fun PatronsRepository.patrons(): PatronsApi = this
 
     @Provides
     fun ScraperRepository.provideScraperApi(): ScraperApi = this

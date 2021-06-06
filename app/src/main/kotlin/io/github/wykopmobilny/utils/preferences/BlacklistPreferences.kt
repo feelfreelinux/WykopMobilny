@@ -10,7 +10,7 @@ interface BlacklistPreferencesApi {
     var blockedImported: Boolean
 }
 
-class BlacklistPreferences @Inject constructor(context: Context) : Preferences(context, false), BlacklistPreferencesApi {
+class BlacklistPreferences @Inject constructor(context: Context) : Preferences(context), BlacklistPreferencesApi {
     override var blockedTags: Set<String> by stringSetPref("blockedTagsSet")
     override var blockedUsers: Set<String> by stringSetPref("blockedUsersSet")
     override var scraperSession: String? by stringPref("sessionString", "nosession")
