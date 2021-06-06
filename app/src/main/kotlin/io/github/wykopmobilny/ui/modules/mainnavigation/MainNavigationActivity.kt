@@ -66,7 +66,6 @@ import javax.inject.Inject
 interface MainNavigationInterface {
     val activityToolbar: Toolbar
     fun openFragment(fragment: Fragment)
-    fun showErrorDialog(e: Throwable)
     val floatingButton: View
     fun forceRefreshNotifications()
 }
@@ -173,10 +172,6 @@ class MainNavigationActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar.toolbar)
-        if (!isTaskRoot) {
-            finish()
-            return
-        }
 
         if (!presenter.isSubscribed) {
             presenter.subscribe(this)
@@ -390,35 +385,7 @@ class MainNavigationActivity :
 
             appPatrons.setOnClickListener {
                 dialog.dismiss()
-                val dialog2 = BottomSheetDialog(root.context)
-                val badgesDialogView2 = PatronsBottomsheetBinding.inflate(layoutInflater)
-                dialog2.setContentView(badgesDialogView2.root)
-
-                val headerItem = PatronListItemBinding.inflate(layoutInflater)
-                headerItem.root.setOnClickListener {
-                    dialog.dismiss()
-                    linkHandler.handleUrl("https://patronite.pl/wykop-mobilny")
-                }
-                headerItem.nickname.text = root.context.getString(R.string.support_app)
-                headerItem.tierTextView.text = root.context.getString(R.string.became_patron)
-                badgesDialogView2.patronsList.addView(headerItem.root)
-                for (badge in patronsApi.patrons.filter { patron -> patron.listMention }) {
-                    val item = PatronListItemBinding.inflate(layoutInflater)
-                    item.root.setOnClickListener {
-                        dialog.dismiss()
-                        linkHandler.handleUrl("https://wykop.pl/ludzie/" + badge.username)
-                    }
-                    item.nickname.text = badge.username
-                    item.tierTextView.text = when (badge.tier) {
-                        "patron50" -> "Patron próg \"Białkowy\""
-                        "patron25" -> "Patron próg \"Bordowy\""
-                        "patron10" -> "Patron próg \"Pomaranczowy\""
-                        "patron5" -> "Patron próg \"Zielony\""
-                        else -> "Patron"
-                    }
-                    badgesDialogView2.patronsList.addView(item.root)
-                }
-                dialog2.show()
+                showAppPatronsDialog()
             }
 
             license.setOnClickListener {
@@ -432,6 +399,38 @@ class MainNavigationActivity :
             mBehavior.peekHeight = bottomSheetView.root.height
         }
         dialog.show()
+    }
+
+    private fun showAppPatronsDialog() {
+        val dialog2 = BottomSheetDialog(this)
+        val badgesDialogView2 = PatronsBottomsheetBinding.inflate(layoutInflater)
+        dialog2.setContentView(badgesDialogView2.root)
+
+        val headerItem = PatronListItemBinding.inflate(layoutInflater)
+        headerItem.root.setOnClickListener {
+            dialog2.dismiss()
+            linkHandler.handleUrl("https://patronite.pl/wykop-mobilny")
+        }
+        headerItem.nickname.text = badgesDialogView2.root.context.getString(R.string.support_app)
+        headerItem.tierTextView.text = badgesDialogView2.root.context.getString(R.string.became_patron)
+        badgesDialogView2.patronsList.addView(headerItem.root)
+        for (badge in patronsApi.patrons.filter { patron -> patron.listMention }) {
+            val item = PatronListItemBinding.inflate(layoutInflater)
+            item.root.setOnClickListener {
+                dialog2.dismiss()
+                linkHandler.handleUrl("https://wykop.pl/ludzie/" + badge.username)
+            }
+            item.nickname.text = badge.username
+            item.tierTextView.text = when (badge.tier) {
+                "patron50" -> "Patron próg \"Białkowy\""
+                "patron25" -> "Patron próg \"Bordowy\""
+                "patron10" -> "Patron próg \"Pomaranczowy\""
+                "patron5" -> "Patron próg \"Zielony\""
+                else -> "Patron"
+            }
+            badgesDialogView2.patronsList.addView(item.root)
+        }
+        dialog2.show()
     }
 
     override fun forceRefreshNotifications() {

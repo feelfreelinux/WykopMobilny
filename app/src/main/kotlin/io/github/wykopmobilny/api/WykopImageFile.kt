@@ -29,7 +29,7 @@ class WykopImageFile(val uri: Uri, val context: Context) {
             if (file == null) {
                 file = saveUri(uri, filename)
             }
-        } catch (e: Throwable) {
+        } catch (_: Throwable) {
             file = saveUri(uri, filename)
         }
 
@@ -103,9 +103,9 @@ class WykopImageFile(val uri: Uri, val context: Context) {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
             fileOutputStream.close()
             return file
-        } catch (e: IOException) {
-            Log.w("TAG", "-- Error in setting image")
-        } catch (oom: OutOfMemoryError) {
+        } catch (error: IOException) {
+            Log.w("TAG", "-- Error in setting image", error)
+        } catch (_: OutOfMemoryError) {
             Log.w("TAG", "-- OOM Error in setting image")
         }
         return f

@@ -12,8 +12,9 @@ import java.util.Calendar
 class YearPickerDialog : DialogFragment() {
 
     companion object {
-        const val RESULT_CODE = 167
-        const val EXTRA_YEAR = "EXTRA_YEAR"
+        private const val RESULT_CODE = 167
+        private const val MIN_YEAR = 2006
+        private const val EXTRA_YEAR = "EXTRA_YEAR"
 
         fun newInstance(selectedYear: Int = 0): YearPickerDialog {
             val intent = YearPickerDialog()
@@ -43,7 +44,7 @@ class YearPickerDialog : DialogFragment() {
         val newDialog = dialogBuilder.create()
         newDialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialogView.apply {
-            yearPicker.minValue = 2006
+            yearPicker.minValue = MIN_YEAR
             yearPicker.maxValue = currentYear
             yearPicker.value = yearSelection
             yearTextView.text = yearSelection.toString()

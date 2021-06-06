@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ComplexCondition:MainNavigationActivity.kt$MainNavigationActivity$userManagerApi.isUserAuthorized() &amp;&amp; !blacklistPreferencesApi.blockedImported &amp;&amp; blacklistPreferencesApi.blockedUsers.isEmpty() &amp;&amp; blacklistPreferencesApi.blockedTags.isEmpty()</ID>
     <ID>ComplexCondition:WykopEmbedView.kt$WykopEmbedView$!embed.isRevealed &amp;&amp; (plus18 &amp;&amp; !settingsPreferencesApi.showAdultContent || isNsfw &amp;&amp; settingsPreferencesApi.hideNsfw)</ID>
     <ID>ComplexMethod:Extensions.kt$fun String.toDurationPrettyDate(): String</ID>
     <ID>ComplexMethod:MainNavigationActivity.kt$MainNavigationActivity$override fun onNavigationItemSelected(item: MenuItem): Boolean</ID>
@@ -10,7 +9,6 @@
     <ID>ConstructorParameterNaming:InputToolbar.kt$InputToolbar.SavedState$`in`: Parcel</ID>
     <ID>EqualsWithHashCodeExist:Link.kt$Link : Parcelable</ID>
     <ID>ImplicitDefaultLocale:YTPlayer.kt$YTPlayer$String.format( "There was an error initializing the YouTubePlayer (%1\$s)", errorReason.toString() )</ID>
-    <ID>LongMethod:MainNavigationActivity.kt$MainNavigationActivity$private fun openAboutSheet()</ID>
     <ID>MagicNumber:ApiSignInterceptor.kt$ApiSignInterceptor$401</ID>
     <ID>MagicNumber:ApiUtils.kt$1001</ID>
     <ID>MagicNumber:ApiUtils.kt$1002</ID>
@@ -71,28 +69,11 @@
     <ID>MagicNumber:WykopMediaControls.kt$WykopMediaControls.FadeInListener.Companion$300</ID>
     <ID>MagicNumber:WykopMediaControls.kt$WykopMediaControls.FadeOutListener.Companion$300</ID>
     <ID>MagicNumber:WykopNotificationsJob.kt$WykopNotificationsJob.Companion$5</ID>
-    <ID>MagicNumber:YearPickerDialog.kt$YearPickerDialog$2006</ID>
-    <ID>PrintStackTrace:YTPlayer.kt$YTPlayer$e</ID>
-    <ID>SwallowedException:SettingsFragment.kt$SettingsFragment$catch (e: PackageManager.NameNotFoundException) { false }</ID>
-    <ID>SwallowedException:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$catch (e: Exception) { // Do nothing }</ID>
-    <ID>SwallowedException:WykopImageFile.kt$WykopImageFile$catch (e: IOException) { Log.w("TAG", "-- Error in setting image") }</ID>
-    <ID>SwallowedException:WykopImageFile.kt$WykopImageFile$catch (e: Throwable) { file = saveUri(uri, filename) }</ID>
-    <ID>SwallowedException:WykopImageFile.kt$WykopImageFile$catch (oom: OutOfMemoryError) { Log.w("TAG", "-- OOM Error in setting image") }</ID>
-    <ID>SwallowedException:WykopLinkHandler.kt$WykopLinkHandler$catch (e: Throwable) { // Something went wrong while parsing url, fallback to browser navigatorApi.openBrowser(url) }</ID>
     <ID>TooGenericExceptionCaught:AuthorHeaderView.kt$AuthorHeaderView$exception: Throwable</ID>
     <ID>TooGenericExceptionCaught:EntryCommentViewHolder.kt$EntryCommentViewHolder$exception: Throwable</ID>
     <ID>TooGenericExceptionCaught:LinkCommentViewHolder.kt$LinkCommentViewHolder$exception: Throwable</ID>
     <ID>TooGenericExceptionCaught:LinkDetailsAdapter.kt$LinkDetailsAdapter$exception: Exception</ID>
     <ID>TooGenericExceptionCaught:NewNavigator.kt$NewNavigator$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$exception: Throwable</ID>
-    <ID>TooGenericExceptionCaught:WykopImageFile.kt$WykopImageFile$e: Throwable</ID>
-    <ID>TooGenericExceptionCaught:WykopLinkHandler.kt$WykopLinkHandler$e: Throwable</ID>
-    <ID>UnnecessaryAbstractClass:Preferences.kt$Preferences</ID>
-    <ID>UseIfInsteadOfWhen:ExceptionDialog.kt$when (e) { is WykopExceptionParser.WykopApiException -&gt; { "${e.message} (${e.code})" } else -&gt; if (e.message.isNullOrEmpty()) e.toString() else e.message }</ID>
-    <ID>UseIfInsteadOfWhen:FavoritePagerAdapter.kt$FavoritePagerAdapter$when (position) { 0 -&gt; LinksFavoriteFragment.newInstance() else -&gt; EntryFavoriteFragment.newInstance() }</ID>
-    <ID>UseIfInsteadOfWhen:FavoritePagerAdapter.kt$FavoritePagerAdapter$when (position) { 0 -&gt; resources.getString(R.string.links) else -&gt; resources.getString(R.string.entries) }</ID>
-    <ID>UseIfInsteadOfWhen:MicroblogPagerAdapter.kt$MicroblogPagerAdapter$when (position) { 0 -&gt; MicroblogEntriesFragment.newInstance() else -&gt; MicroblogCommentsFragment.newInstance() }</ID>
-    <ID>UseIfInsteadOfWhen:NotificationsListViewPagerAdapter.kt$NotificationsListViewPagerAdapter$when (position) { 0 -&gt; resources.getString(R.string.notifications_directed) else -&gt; resources.getString(R.string.hashtags_notifications_title) }</ID>
   </CurrentIssues>
 </SmellBaseline>

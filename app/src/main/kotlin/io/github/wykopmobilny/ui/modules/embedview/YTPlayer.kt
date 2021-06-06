@@ -139,8 +139,8 @@ class YTPlayer :
     private fun initialize() {
         try {
             googleApiKey = GOOGLE_KEY
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
+        } catch (notFound: PackageManager.NameNotFoundException) {
+            Log.w(YTPlayer::class.java.simpleName, "Failed to initialize YTplayer", notFound)
         }
 
         if (googleApiKey == null) {
