@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
+    <io.github.wykopmobilny.ui.widgets.AuthorHeaderView
         android:id="@+id/authorHeaderView"
         style="@style/AuthorHeaderView"
         app:layout_constraintTop_toTopOf="parent"
@@ -139,7 +139,7 @@
         tools:text="50"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
+    <io.github.wykopmobilny.ui.widgets.buttons.DigVoteButton
         android:id="@+id/diggCountTextView"
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/wypokDrawable"

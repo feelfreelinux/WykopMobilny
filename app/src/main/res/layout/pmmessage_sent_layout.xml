@@ -42,7 +42,7 @@
                 tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                 />
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
+            <io.github.wykopmobilny.ui.widgets.WykopEmbedView
                 android:id="@+id/embedImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

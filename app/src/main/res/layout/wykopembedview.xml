@@ -14,7 +14,7 @@
         android:clickable="false"
         >
 
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopImageView
+        <io.github.wykopmobilny.ui.widgets.WykopImageView
             android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     >
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AuthorHeaderView
+    <io.github.wykopmobilny.ui.widgets.AuthorHeaderView
         android:id="@+id/authorHeaderView"
         style="@style/AuthorHeaderView"
         app:layout_constraintTop_toTopOf="parent"
@@ -16,7 +16,7 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.utils.textview.EllipsizingTextView
+    <io.github.wykopmobilny.utils.textview.EllipsizingTextView
         android:id="@+id/entryContentTextView"
         style="@style/ContentTextView"
         app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
@@ -59,7 +59,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
+    <io.github.wykopmobilny.ui.widgets.buttons.FavoriteButton
         android:id="@+id/favoriteButton"
         style="@style/ButtonTextView"
         android:visibility="gone"
@@ -84,7 +84,7 @@
         tools:text="3"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
+    <io.github.wykopmobilny.ui.widgets.buttons.PlusVoteButton
         android:id="@+id/voteButton"
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/plusDrawable"

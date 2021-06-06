@@ -85,7 +85,7 @@
             android:paddingBottom="@dimen/padding_dp_mini"
             >
 
-            <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
+            <io.github.wykopmobilny.ui.widgets.AvatarView
                 android:id="@+id/avatarView"
                 android:layout_width="@dimen/link_details_layout_scroll_avatar_width"
                 android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
         app:layout_constraintTop_toBottomOf="@id/separator2"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.FavoriteButton
+    <io.github.wykopmobilny.ui.widgets.buttons.FavoriteButton
         android:id="@+id/favoriteButton"
         style="@style/ButtonTextView"
         app:layout_constraintLeft_toRightOf="@id/shareTextView"
@@ -202,7 +202,7 @@
         tools:text="37"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.DigVoteButton
+    <io.github.wykopmobilny.ui.widgets.buttons.DigVoteButton
         android:id="@+id/diggCountTextView"
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/wypokDrawable"

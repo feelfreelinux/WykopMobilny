@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView
+<io.github.wykopmobilny.ui.widgets.WykopEmbedView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    ></io.github.feelfreelinux.wykopmobilny.ui.widgets.WykopEmbedView>
+    ></io.github.wykopmobilny.ui.widgets.WykopEmbedView>

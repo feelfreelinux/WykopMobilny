@@ -370,6 +370,6 @@
         app:fabSize="normal"
         app:layout_anchor="@id/pager"
         app:layout_anchorGravity="bottom|right"
-        app:layout_behavior="io.github.feelfreelinux.wykopmobilny.ui.ScrollAwareFABBehavior"
+        app:layout_behavior="io.github.wykopmobilny.ui.ScrollAwareFABBehavior"
         />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
