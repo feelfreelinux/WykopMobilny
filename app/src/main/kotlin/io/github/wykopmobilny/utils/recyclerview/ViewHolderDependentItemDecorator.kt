@@ -63,7 +63,7 @@ class ViewHolderDependentItemDecorator(val context: Context) : RecyclerView.Item
                     }
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // Do nothing
         }
     }

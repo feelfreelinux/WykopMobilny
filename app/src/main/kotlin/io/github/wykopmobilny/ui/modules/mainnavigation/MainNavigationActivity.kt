@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.os.postDelayed
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.internal.NavigationMenuView
@@ -64,8 +65,7 @@ import javax.inject.Inject
 
 interface MainNavigationInterface {
     val activityToolbar: Toolbar
-    fun openFragment(fragment: androidx.fragment.app.Fragment)
-    fun showErrorDialog(e: Throwable)
+    fun openFragment(fragment: Fragment)
     val floatingButton: View
     fun forceRefreshNotifications()
 }
@@ -112,7 +112,7 @@ class MainNavigationActivity :
             binding.drawerLayout,
             binding.toolbar.toolbar,
             R.string.nav_drawer_open,
-            R.string.nav_drawer_closed
+            R.string.nav_drawer_closed,
         )
     }
     private val badgeDrawable by lazy { BadgeDrawerDrawable(supportActionBar!!.themedContext) }
@@ -172,10 +172,6 @@ class MainNavigationActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar.toolbar)
-        if (!isTaskRoot) {
-            finish()
-            return
-        }
 
         if (!presenter.isSubscribed) {
             presenter.subscribe(this)
@@ -210,7 +206,7 @@ class MainNavigationActivity :
             intent,
             this::openFragment,
             this::openLoginScreen,
-            userManagerApi.isUserAuthorized()
+            userManagerApi.isUserAuthorized(),
         )
     }
 
@@ -288,7 +284,7 @@ class MainNavigationActivity :
         }
     }
 
-    override fun openFragment(fragment: androidx.fragment.app.Fragment) {
+    override fun openFragment(fragment: Fragment) {
         supportActionBar?.subtitle = null
         binding.fab.isVisible = false
         binding.fab.setOnClickListener(null)
@@ -389,35 +385,7 @@ class MainNavigationActivity :
 
             appPatrons.setOnClickListener {
                 dialog.dismiss()
-                val dialog2 = BottomSheetDialog(root.context)
-                val badgesDialogView2 = PatronsBottomsheetBinding.inflate(layoutInflater)
-                dialog2.setContentView(badgesDialogView2.root)
-
-                val headerItem = PatronListItemBinding.inflate(layoutInflater)
-                headerItem.root.setOnClickListener {
-                    dialog.dismiss()
-                    linkHandler.handleUrl("https://patronite.pl/wykop-mobilny")
-                }
-                headerItem.nickname.text = root.context.getString(R.string.support_app)
-                headerItem.tierTextView.text = root.context.getString(R.string.became_patron)
-                badgesDialogView2.patronsList.addView(headerItem.root)
-                for (badge in patronsApi.patrons.filter { patron -> patron.listMention }) {
-                    val item = PatronListItemBinding.inflate(layoutInflater)
-                    item.root.setOnClickListener {
-                        dialog.dismiss()
-                        linkHandler.handleUrl("https://wykop.pl/ludzie/" + badge.username)
-                    }
-                    item.nickname.text = badge.username
-                    item.tierTextView.text = when (badge.tier) {
-                        "patron50" -> "Patron próg \"Białkowy\""
-                        "patron25" -> "Patron próg \"Bordowy\""
-                        "patron10" -> "Patron próg \"Pomaranczowy\""
-                        "patron5" -> "Patron próg \"Zielony\""
-                        else -> "Patron"
-                    }
-                    badgesDialogView2.patronsList.addView(item.root)
-                }
-                dialog2.show()
+                showAppPatronsDialog()
             }
 
             license.setOnClickListener {
@@ -433,6 +401,38 @@ class MainNavigationActivity :
         dialog.show()
     }
 
+    private fun showAppPatronsDialog() {
+        val dialog2 = BottomSheetDialog(this)
+        val badgesDialogView2 = PatronsBottomsheetBinding.inflate(layoutInflater)
+        dialog2.setContentView(badgesDialogView2.root)
+
+        val headerItem = PatronListItemBinding.inflate(layoutInflater)
+        headerItem.root.setOnClickListener {
+            dialog2.dismiss()
+            linkHandler.handleUrl("https://patronite.pl/wykop-mobilny")
+        }
+        headerItem.nickname.text = badgesDialogView2.root.context.getString(R.string.support_app)
+        headerItem.tierTextView.text = badgesDialogView2.root.context.getString(R.string.became_patron)
+        badgesDialogView2.patronsList.addView(headerItem.root)
+        for (badge in patronsApi.patrons.filter { patron -> patron.listMention }) {
+            val item = PatronListItemBinding.inflate(layoutInflater)
+            item.root.setOnClickListener {
+                dialog2.dismiss()
+                linkHandler.handleUrl("https://wykop.pl/ludzie/" + badge.username)
+            }
+            item.nickname.text = badge.username
+            item.tierTextView.text = when (badge.tier) {
+                "patron50" -> "Patron próg \"Białkowy\""
+                "patron25" -> "Patron próg \"Bordowy\""
+                "patron10" -> "Patron próg \"Pomaranczowy\""
+                "patron5" -> "Patron próg \"Zielony\""
+                else -> "Patron"
+            }
+            badgesDialogView2.patronsList.addView(item.root)
+        }
+        dialog2.show()
+    }
+
     override fun forceRefreshNotifications() {
         presenter.checkNotifications(true)
     }
@@ -444,7 +444,7 @@ class MainNavigationActivity :
                     "Jestem wdzięczny wszystkim osobom zaangażowanym w projekt. " +
                     "Aplikacja nadal pozostaje całkowicie darmowa i wolna od reklam. " +
                     "Jeżeli chcesz, możesz wesprzeć rozwój aplikacji na https://patronite.pl/wykop-mobilny \n" +
-                    "Dziękuję :)"
+                    "Dziękuję :)",
             )
             Linkify.addLinks(message, Linkify.WEB_URLS)
             AlertDialog.Builder(this).apply {

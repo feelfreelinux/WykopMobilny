@@ -3,28 +3,30 @@ package io.github.wykopmobilny.ui.modules.favorite
 import android.content.res.Resources
 import android.util.SparseArray
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.ui.modules.favorite.entry.EntryFavoriteFragment
 import io.github.wykopmobilny.ui.modules.favorite.links.LinksFavoriteFragment
 
 class FavoritePagerAdapter(
-    val resources: Resources,
-    fragmentManager: androidx.fragment.app.FragmentManager
+    private val resources: Resources,
+    fragmentManager: FragmentManager,
 ) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
 
-    val registeredFragments = SparseArray<androidx.fragment.app.Fragment>()
+    val registeredFragments = SparseArray<Fragment>()
 
-    override fun getItem(position: Int): androidx.fragment.app.Fragment {
-        return when (position) {
-            0 -> LinksFavoriteFragment.newInstance()
-            else -> EntryFavoriteFragment.newInstance()
+    override fun getItem(position: Int): Fragment =
+        if (position == 0) {
+            LinksFavoriteFragment.newInstance()
+        } else {
+            EntryFavoriteFragment.newInstance()
         }
-    }
 
     override fun getCount() = 2
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val fragment = super.instantiateItem(container, position) as androidx.fragment.app.Fragment
+        val fragment = super.instantiateItem(container, position) as Fragment
         registeredFragments.put(position, fragment)
         return fragment
     }
@@ -34,11 +36,10 @@ class FavoritePagerAdapter(
         super.destroyItem(container, position, `object`)
     }
 
-    override fun getPageTitle(position: Int): CharSequence {
-        super.getPageTitle(position)
-        return when (position) {
-            0 -> resources.getString(R.string.links)
-            else -> resources.getString(R.string.entries)
+    override fun getPageTitle(position: Int) =
+        if (position == 0) {
+            resources.getString(R.string.links)
+        } else {
+            resources.getString(R.string.entries)
         }
-    }
 }

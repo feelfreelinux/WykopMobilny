@@ -13,11 +13,10 @@ fun Context.showExceptionDialog(e: Throwable) {
 }
 
 private fun exceptionDialog(context: Context, e: Throwable): AlertDialog? {
-    val message = when (e) {
-        is WykopExceptionParser.WykopApiException -> {
-            "${e.message} (${e.code})"
-        }
-        else -> if (e.message.isNullOrEmpty()) e.toString() else e.message
+    val message = when {
+        e is WykopExceptionParser.WykopApiException -> "${e.message} (${e.code})"
+        e.message.isNullOrEmpty() -> e.toString()
+        else -> e.message
     }
     AlertDialog.Builder(context).run {
         setTitle(context.getString(R.string.error_occured))
