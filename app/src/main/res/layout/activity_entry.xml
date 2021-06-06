@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
+    <io.github.wykopmobilny.ui.widgets.InputToolbar
         android:id="@+id/inputToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,9 +1,12 @@
 plugins {
-    id("com.starter.config") version("0.28.0")
+    id("com.starter.config")
+    id("com.starter.versioning")
+
+    id("com.starter.easylauncher") version("4.0.0") apply(false)
 }
 
 commonConfig {
-    javaFilesAllowed true
+    javaFilesAllowed false
 }
 
 allprojects {

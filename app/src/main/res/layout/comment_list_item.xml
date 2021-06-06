@@ -8,7 +8,7 @@
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     >
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
+    <io.github.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/avatarView"
         style="@style/AvatarViewComment"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -111,7 +111,7 @@
         app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.buttons.PlusVoteButton
+    <io.github.wykopmobilny.ui.widgets.buttons.PlusVoteButton
         android:id="@+id/voteButton"
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/plusDrawable"

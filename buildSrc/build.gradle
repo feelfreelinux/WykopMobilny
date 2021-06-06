@@ -1,0 +1,7 @@
+repositories {
+    gradlePluginPortal()
+    google()
+}
+dependencies {
+    implementation("com.project.starter:android:0.28.0")
+}

@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.github.feelfreelinux.wykopmobilny"
+    package="io.github.wykopmobilny"
     >
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -23,17 +23,17 @@
         android:theme="@style/WykopAppTheme"
         >
         <activity
-            android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"
+            android:name="io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity
-            android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.photoview.PhotoViewActivity"
+            android:name="io.github.wykopmobilny.ui.modules.photoview.PhotoViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/TransparentActivityTheme"
             />
 
         <activity
-            android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
+            android:name="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             >
@@ -49,19 +49,19 @@
         </activity>
 
         <activity
-            android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
+            android:name="io.github.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
+            android:parentActivityName="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
             android:theme="@style/TransparentActivityTheme"
             />
         <activity
-            android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivity"
+            android:name="io.github.wykopmobilny.ui.modules.tag.TagActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
+            android:parentActivityName="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
             android:theme="@style/TransparentActivityTheme"
             />
         <activity
-            android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity"
+            android:name="io.github.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             >
             <intent-filter android:label="Dodaj wpis z zdjęciem">
@@ -95,9 +95,9 @@
             android:theme="@style/TransparentActivityTheme"
             />
         <activity
-            android:name="io.github.feelfreelinux.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity"
+            android:name="io.github.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
+            android:parentActivityName="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
             android:theme="@style/TransparentActivityTheme"
             />
         <activity
@@ -315,7 +315,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="io.github.feelfreelinux.wykopmobilny.fileprovider"
+            android:authorities="io.github.wykopmobilny.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
             >

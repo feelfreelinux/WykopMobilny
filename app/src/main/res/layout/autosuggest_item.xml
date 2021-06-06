@@ -10,7 +10,7 @@
     android:paddingVertical="@dimen/padding_dp_small"
     >
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
+    <io.github.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/avatarView"
         android:layout_width="22dp"
         android:layout_height="wrap_content"

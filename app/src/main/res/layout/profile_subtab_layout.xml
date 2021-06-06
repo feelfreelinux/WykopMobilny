@@ -25,13 +25,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <io.github.feelfreelinux.wykopmobilny.ui.modules.profile.NoSwipeViewPager
+    <io.github.wykopmobilny.ui.modules.profile.NoSwipeViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-    </io.github.feelfreelinux.wykopmobilny.ui.modules.profile.NoSwipeViewPager>
+    </io.github.wykopmobilny.ui.modules.profile.NoSwipeViewPager>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

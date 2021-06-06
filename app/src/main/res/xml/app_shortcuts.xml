@@ -8,9 +8,9 @@
         android:shortcutShortLabel="@string/mywykop"
         >
         <intent
-            android:action="io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopFragment"
-            android:targetClass="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.feelfreelinux.wykopmobilny"
+            android:action="io.github.wykopmobilny.ui.modules.mywykop.MyWykopFragment"
+            android:targetClass="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
+            android:targetPackage="io.github.wykopmobilny"
             />
     </shortcut>
 
@@ -22,9 +22,9 @@
         android:shortcutShortLabel="@string/mikroblog"
         >
         <intent
-            android:action="io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment"
-            android:targetClass="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.feelfreelinux.wykopmobilny"
+            android:action="io.github.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment"
+            android:targetClass="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
+            android:targetPackage="io.github.wykopmobilny"
             />
 
     </shortcut>
@@ -36,9 +36,9 @@
         android:shortcutShortLabel="@string/hits"
         >
         <intent
-            android:action="io.github.feelfreelinux.wykopmobilny.ui.modules.links.hits.HitsFragment"
-            android:targetClass="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.feelfreelinux.wykopmobilny"
+            android:action="io.github.wykopmobilny.ui.modules.links.hits.HitsFragment"
+            android:targetClass="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
+            android:targetPackage="io.github.wykopmobilny"
             />
     </shortcut>
 
@@ -50,9 +50,9 @@
         android:shortcutShortLabel="@string/search"
         >
         <intent
-            android:action="io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment"
-            android:targetClass="io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.feelfreelinux.wykopmobilny"
+            android:action="io.github.wykopmobilny.ui.modules.search.SearchFragment"
+            android:targetClass="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
+            android:targetPackage="io.github.wykopmobilny"
             />
     </shortcut>
 

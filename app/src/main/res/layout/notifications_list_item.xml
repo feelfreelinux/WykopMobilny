@@ -9,7 +9,7 @@
     android:background="?attr/itemBackgroundColorStatelist"
     >
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
+    <io.github.wykopmobilny.ui.widgets.AvatarView
         android:id="@+id/avatarView"
         android:layout_width="46dp"
         android:layout_height="wrap_content"

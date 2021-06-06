@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@id/separator"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbar
+    <io.github.wykopmobilny.ui.widgets.markdowntoolbar.MarkdownToolbar
         android:id="@+id/markdownToolbar"
         android:layout_width="0dp"
         android:layout_height="42dp"
@@ -94,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@id/body"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
+    <io.github.wykopmobilny.ui.widgets.FloatingImageView
         android:id="@+id/floatingImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

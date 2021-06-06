@@ -70,9 +70,6 @@
     <ID>MagicNumber:MonthYearPickerDialog.kt$MonthYearPickerDialog$8</ID>
     <ID>MagicNumber:MonthYearPickerDialog.kt$MonthYearPickerDialog$9</ID>
     <ID>MagicNumber:MyWykopFragment.kt$MyWykopFragment$4</ID>
-    <ID>MagicNumber:NetworkModule.kt$NetworkModule$10</ID>
-    <ID>MagicNumber:NetworkModule.kt$NetworkModule$1024</ID>
-    <ID>MagicNumber:NetworkModule.kt$NetworkModule$30</ID>
     <ID>MagicNumber:PhotoViewActivity.kt$PhotoViewActivity$240</ID>
     <ID>MagicNumber:PhotoViewActivity.kt$PhotoViewActivity$70</ID>
     <ID>MagicNumber:RetryInterceptor.kt$RetryInterceptor$401</ID>
@@ -81,6 +78,10 @@
     <ID>MagicNumber:UserTokenRefresher.kt$UserTokenRefresher$11</ID>
     <ID>MagicNumber:UserTokenRefresher.kt$UserTokenRefresher$12</ID>
     <ID>MagicNumber:UserTokenRefresher.kt$UserTokenRefresher$401</ID>
+    <ID>MagicNumber:WykopApp.kt$WykopApp$10</ID>
+    <ID>MagicNumber:WykopApp.kt$WykopApp$1024</ID>
+    <ID>MagicNumber:WykopApp.kt$WykopApp$1024L</ID>
+    <ID>MagicNumber:WykopApp.kt$WykopApp$30</ID>
     <ID>MagicNumber:WykopEmbedView.kt$WykopEmbedView$6</ID>
     <ID>MagicNumber:WykopImageFile.kt$WykopImageFile$1024</ID>
     <ID>MagicNumber:WykopImageFile.kt$WykopImageFile$180</ID>
@@ -99,15 +100,6 @@
     <ID>NestedBlockDepth:SettingsFragment.kt$SettingsFragment$override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String)</ID>
     <ID>NestedBlockDepth:TagActivity.kt$TagActivity$override fun onCreateOptionsMenu(menu: Menu): Boolean</ID>
     <ID>NestedBlockDepth:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State)</ID>
-    <ID>PackageNaming:ConversationLinkParser.kt$package io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser</ID>
-    <ID>PackageNaming:EntryLinkParser.kt$package io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser</ID>
-    <ID>PackageNaming:LinkParser.kt$package io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser</ID>
-    <ID>PackageNaming:MarkdownDialogs.kt$package io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar</ID>
-    <ID>PackageNaming:MarkdownToolbar.kt$package io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar</ID>
-    <ID>PackageNaming:MarkdownToolbarListener.kt$package io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar</ID>
-    <ID>PackageNaming:ProfileLinkParser.kt$package io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser</ID>
-    <ID>PackageNaming:TagLinkParser.kt$package io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.linkparser</ID>
-    <ID>PackageNaming:WykopLinkHandler.kt$package io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler</ID>
     <ID>PrintStackTrace:YTPlayer.kt$YTPlayer$e</ID>
     <ID>SwallowedException:OWMContentFilter.kt$OWMContentFilter$catch (e: Throwable) { null }</ID>
     <ID>SwallowedException:ProfileActivity.kt$ProfileActivity$catch (e: Throwable) { null }</ID>
@@ -155,7 +147,9 @@
     <ID>TooManyFunctions:ProfileRepository.kt$ProfileRepository : ProfileApi</ID>
     <ID>TooManyFunctions:ProfileRetrofitApi.kt$ProfileRetrofitApi</ID>
     <ID>TooManyFunctions:RepositoryModule.kt$RepositoryModule</ID>
+    <ID>TooManyFunctions:WykopComponent.kt$WykopComponent</ID>
     <ID>TooManyFunctions:WykopMediaControls.kt$WykopMediaControls : VideoControls</ID>
+    <ID>TooManyFunctions:WykopModule.kt$WykopModule</ID>
     <ID>TooManyFunctions:YTPlayer.kt$YTPlayer : YouTubeBaseActivityOnInitializedListenerOnFullscreenListenerPlayerStateChangeListener</ID>
     <ID>UnnecessaryAbstractClass:Preferences.kt$Preferences</ID>
     <ID>UseIfInsteadOfWhen:ExceptionDialog.kt$when (e) { is WykopExceptionParser.WykopApiException -&gt; { "${e.message} (${e.code})" } else -&gt; if (e.message.isNullOrEmpty()) e.toString() else e.message }</ID>

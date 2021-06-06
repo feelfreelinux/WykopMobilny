@@ -28,7 +28,7 @@
         tools:title="feelfree"
         >
 
-        <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
+        <io.github.wykopmobilny.ui.widgets.AvatarView
             android:id="@+id/avatarview"
             android:layout_width="@dimen/conversation_avatar_width"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         />
 
-    <io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbar
+    <io.github.wykopmobilny.ui.widgets.InputToolbar
         android:id="@+id/inputToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

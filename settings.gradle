@@ -1,9 +1,9 @@
-pluginManagement {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        google()
-    }
+plugins {
+    id "com.gradle.enterprise" version "3.6.1"
 }
 
-include ':app'
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+include ":app",
+    ":wykop:remote",
+    ":wykop:api"
