@@ -13,7 +13,6 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.MonthYearPickerDialog
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.YearPickerDialog
-import kotlinx.android.synthetic.main.feed_fragment.*
 import javax.inject.Inject
 
 class HitsFragment : BaseLinksFragment(), HitsView {
@@ -45,20 +44,20 @@ class HitsFragment : BaseLinksFragment(), HitsView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.refresh -> {
-                swiperefresh?.isRefreshing = true
+                binding.swipeRefresh.isRefreshing = true
                 loadDataListener(true)
                 setTitle()
             }
 
             R.id.byDay -> {
-                swiperefresh?.isRefreshing = true
+                binding.swipeRefresh.isRefreshing = true
                 presenter.currentScreen = HitsPresenter.HITS_DAY
                 presenter.loadData()
                 setTitle()
             }
 
             R.id.byWeek -> {
-                swiperefresh?.isRefreshing = true
+                binding.swipeRefresh.isRefreshing = true
                 presenter.currentScreen = HitsPresenter.HITS_WEEK
                 presenter.loadData()
                 setTitle()
@@ -72,7 +71,7 @@ class HitsFragment : BaseLinksFragment(), HitsView {
             }
 
             R.id.popular -> {
-                swiperefresh?.isRefreshing = true
+                binding.swipeRefresh.isRefreshing = true
                 presenter.currentScreen = HitsPresenter.HITS_POPULAR
                 presenter.loadData()
                 setTitle()
@@ -87,8 +86,8 @@ class HitsFragment : BaseLinksFragment(), HitsView {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.hits)
         linksAdapter.linksActionListener = presenter
@@ -122,12 +121,12 @@ class HitsFragment : BaseLinksFragment(), HitsView {
                 if (data.hasExtra(MonthYearPickerDialog.EXTRA_MONTH)) {
                     presenter.monthSelection = data.getIntExtra(MonthYearPickerDialog.EXTRA_MONTH, 12)
                     presenter.currentScreen = HitsPresenter.HITS_MONTH
-                    swiperefresh?.isRefreshing = true
+                    binding.swipeRefresh.isRefreshing = true
                     presenter.loadData()
                     setTitle()
                 } else {
                     presenter.currentScreen = HitsPresenter.HITS_YEAR
-                    swiperefresh?.isRefreshing = true
+                    binding.swipeRefresh.isRefreshing = true
                     presenter.loadData()
                     setTitle()
                 }

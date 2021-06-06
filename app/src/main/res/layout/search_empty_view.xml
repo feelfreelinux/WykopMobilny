@@ -23,5 +23,5 @@
         android:gravity="center"
         android:text="@string/searchNoResults"
         android:textSize="22sp"
-        ></TextView>
+        />
 </LinearLayout>

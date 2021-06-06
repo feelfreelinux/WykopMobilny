@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.fragments.entries
 
 import android.os.Bundle
+import android.view.View
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntriesFragment
 import javax.inject.Inject
 
@@ -10,8 +11,8 @@ class EntriesFragment : BaseEntriesFragment() {
     @Inject
     lateinit var presenter: EntriesFragmentPresenter
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         entriesAdapter.entryActionListener = presenter
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }

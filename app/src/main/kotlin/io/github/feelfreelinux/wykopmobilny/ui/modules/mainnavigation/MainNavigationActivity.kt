@@ -1,6 +1,5 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation
 
-import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -29,7 +28,9 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.patrons.PatronsApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityNavigationBinding
 import io.github.feelfreelinux.wykopmobilny.databinding.AppAboutBottomsheetBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.DrawerHeaderViewLayoutBinding
 import io.github.feelfreelinux.wykopmobilny.databinding.PatronListItemBinding
 import io.github.feelfreelinux.wykopmobilny.databinding.PatronsBottomsheetBinding
 import io.github.feelfreelinux.wykopmobilny.models.scraper.Blacklist
@@ -52,16 +53,14 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.search.SearchFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.BadgeDrawerDrawable
+import io.github.feelfreelinux.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderWidget
 import io.github.feelfreelinux.wykopmobilny.utils.openBrowser
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.shortcuts.ShortcutsDispatcher
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.synthetic.main.activity_navigation.*
-import kotlinx.android.synthetic.main.drawer_header_view_layout.view.*
-import kotlinx.android.synthetic.main.navigation_header.view.*
-import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 interface MainNavigationInterface {
@@ -101,15 +100,18 @@ class MainNavigationActivity :
     @Inject
     lateinit var settingsPreferencesApi: SettingsPreferencesApi
 
-    override val activityToolbar: Toolbar get() = toolbar
+    private val binding by viewBinding(ActivityNavigationBinding::inflate)
+
+    override val activityToolbar: Toolbar get() = binding.toolbar.toolbar
     var tapDoubleClickedMillis = 0L
 
-    private val navHeader by lazy { navigationView.getHeaderView(0) }
+    private val navHeader by lazy { binding.navigationView.getHeaderView(0) as DrawerHeaderWidget }
+    private val navHeaderBinding by lazy { DrawerHeaderViewLayoutBinding.bind(navHeader) }
     private val actionBarToggle by lazy {
         ActionBarDrawerToggle(
             this,
-            drawer_layout,
-            toolbar,
+            binding.drawerLayout,
+            binding.toolbar.toolbar,
             R.string.nav_drawer_open,
             R.string.nav_drawer_closed
         )
@@ -118,7 +120,7 @@ class MainNavigationActivity :
     private val progressDialog by lazy { ProgressDialog(this) }
 
     override val floatingButton: View
-        get() = fab
+        get() = binding.fab
 
     @Inject
     lateinit var presenter: MainNavigationPresenter
@@ -141,39 +143,17 @@ class MainNavigationActivity :
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
-            R.id.login -> {
-                openLoginScreen()
-            }
-            R.id.messages -> {
-                openFragment(ConversationsListFragment.newInstance())
-            }
-            R.id.nav_settings -> {
-                navigator.openSettingsActivity()
-            }
-            R.id.nav_mojwykop -> {
-                openFragment(MyWykopFragment.newInstance())
-            }
-            R.id.nav_home -> {
-                openFragment(PromotedFragment.newInstance())
-            }
-            R.id.search -> {
-                openFragment(SearchFragment.newInstance())
-            }
-            R.id.favourite -> {
-                openFragment(FavoriteFragment.newInstance())
-            }
-            R.id.your_profile -> {
-                startActivity(ProfileActivity.createIntent(this, userManagerApi.getUserCredentials()!!.login))
-            }
-            R.id.nav_wykopalisko -> {
-                openFragment(UpcomingFragment.newInstance())
-            }
-            R.id.hits -> {
-                openFragment(HitsFragment.newInstance())
-            }
-            R.id.about -> {
-                openAboutSheet()
-            }
+            R.id.login -> openLoginScreen()
+            R.id.messages -> openFragment(ConversationsListFragment.newInstance())
+            R.id.nav_settings -> navigator.openSettingsActivity()
+            R.id.nav_mojwykop -> openFragment(MyWykopFragment.newInstance())
+            R.id.nav_home -> openFragment(PromotedFragment.newInstance())
+            R.id.search -> openFragment(SearchFragment.newInstance())
+            R.id.favourite -> openFragment(FavoriteFragment.newInstance())
+            R.id.your_profile -> startActivity(ProfileActivity.createIntent(this, userManagerApi.getUserCredentials()!!.login))
+            R.id.nav_wykopalisko -> openFragment(UpcomingFragment.newInstance())
+            R.id.hits -> openFragment(HitsFragment.newInstance())
+            R.id.about -> openAboutSheet()
             R.id.logout -> {
                 confirmationDialog(this) {
                     blacklistPreferencesApi.blockedTags = emptySet()
@@ -186,15 +166,13 @@ class MainNavigationActivity :
         }
 
         item.isChecked = true
-        drawer_layout.closeDrawers()
+        binding.drawerLayout.closeDrawers()
         return true
     }
 
-    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_navigation)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.toolbar)
         if (!isTaskRoot) {
             finish()
             return
@@ -210,7 +188,7 @@ class MainNavigationActivity :
 
         JobUtil.hasBootPermission(this)
         showFullReleaseDialog()
-        (navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
+        (binding.navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         checkBlacklist()
 
         if (settingsApi.showNotifications) {
@@ -218,8 +196,8 @@ class MainNavigationActivity :
             WykopNotificationsJob.schedule(settingsApi)
         }
         actionBarToggle.drawerArrowDrawable = badgeDrawable
-        toolbar.tag = toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
-        navHeader.view_container?.showDrawerHeader(userManagerApi.isUserAuthorized(), userManagerApi.getUserCredentials())
+        binding.toolbar.toolbar.tag = binding.toolbar.toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
+        navHeader.showDrawerHeader(userManagerApi.isUserAuthorized(), userManagerApi.getUserCredentials())
         showUsersMenu(userManagerApi.isUserAuthorized())
 
         if (savedInstanceState == null) {
@@ -277,26 +255,26 @@ class MainNavigationActivity :
     }
 
     private fun setupNavigation() {
-        drawer_layout.addDrawerListener(actionBarToggle)
-        navigationView.setNavigationItemSelectedListener(this)
+        binding.drawerLayout.addDrawerListener(actionBarToggle)
+        binding.navigationView.setNavigationItemSelectedListener(this)
     }
 
     override fun showUsersMenu(value: Boolean) {
-        navigationView.menu.apply {
+        binding.navigationView.menu.apply {
             setGroupVisible(R.id.nav_user, value)
             findItem(R.id.nav_mojwykop).isVisible = value
             findItem(R.id.login).isVisible = !value
             findItem(R.id.logout).isVisible = value
         }
 
-        navHeader.view_container.isVisible = value
-        navHeader.view_container.apply {
-            nav_notifications_tag.setOnClickListener {
+        navHeader.isVisible = value
+        navHeader.apply {
+            navHeaderBinding.navNotificationsTag.setOnClickListener {
                 deselectItems()
                 navigator.openNotificationsListActivity(NotificationsListActivity.PRESELECT_HASHTAGS)
             }
 
-            nav_notifications.setOnClickListener {
+            navHeaderBinding.navNotifications.setOnClickListener {
                 deselectItems()
                 navigator.openNotificationsListActivity(NotificationsListActivity.PRESELECT_NOTIFICATIONS)
             }
@@ -314,9 +292,9 @@ class MainNavigationActivity :
 
     override fun openFragment(fragment: androidx.fragment.app.Fragment) {
         supportActionBar?.subtitle = null
-        fab.isVisible = false
-        fab.setOnClickListener(null)
-        fab.isVisible = fragment is BaseNavigationView && userManagerApi.isUserAuthorized()
+        binding.fab.isVisible = false
+        binding.fab.setOnClickListener(null)
+        binding.fab.isVisible = fragment is BaseNavigationView && userManagerApi.isUserAuthorized()
         val ft = supportFragmentManager.beginTransaction()
         ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
         ft.replace(R.id.contentView, fragment)
@@ -324,10 +302,10 @@ class MainNavigationActivity :
         closeDrawer()
     }
 
-    private fun closeDrawer() = drawer_layout.closeDrawers()
+    private fun closeDrawer() = binding.drawerLayout.closeDrawers()
 
     private fun deselectItems() {
-        val menu = navigationView.menu
+        val menu = binding.navigationView.menu
         for (i in 0 until menu.size()) {
             menu.getItem(i).isChecked = false
         }
@@ -335,19 +313,15 @@ class MainNavigationActivity :
 
     override fun showNotificationsCount(notifications: Int) {
         badgeDrawable.text = if (notifications > 0) notifications.toString() else null
-        drawer_layout.view_container?.apply {
-            notificationCount = notifications
-        }
+        navHeader.notificationCount = notifications
     }
 
     override fun showHashNotificationsCount(hashNotifications: Int) {
-        drawer_layout.view_container?.apply {
-            hashTagsNotificationsCount = hashNotifications
-        }
+        navHeader.hashTagsNotificationsCount = hashNotifications
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) closeDrawer()
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) closeDrawer()
         else {
             if (settingsApi.disableExitConfirmation || tapDoubleClickedMillis + 2000L > System.currentTimeMillis()) {
                 super.onBackPressed()

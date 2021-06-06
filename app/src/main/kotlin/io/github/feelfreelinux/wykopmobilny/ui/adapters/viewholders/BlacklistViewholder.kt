@@ -1,12 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.View
-import kotlinx.android.synthetic.main.blacklist_blocked_item.view.*
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import io.github.feelfreelinux.wykopmobilny.databinding.BlacklistBlockedItemBinding
 
-class BlacklistViewholder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+class BlacklistViewholder(private val binding: BlacklistBlockedItemBinding) : ViewHolder(binding.root) {
     fun bind(blockedName: String, unblockListener: (String) -> Unit) {
-        view.blockedTextView.text = blockedName
-        view.unlockImageView.setOnClickListener {
+        binding.blockedTextView.text = blockedName
+        binding.unlockImageView.setOnClickListener {
             unblockListener(blockedName)
         }
     }

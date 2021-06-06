@@ -1,10 +1,10 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.ConversationListItemBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.AuthorViewHolder
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 
 class ProfilesAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<AuthorViewHolder>() {
 
@@ -16,5 +16,5 @@ class ProfilesAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Author
     override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuthorViewHolder =
-        AuthorViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.conversation_list_item, parent, false))
+        AuthorViewHolder(ConversationListItemBinding.inflate(parent.layoutInflater, parent, false))
 }

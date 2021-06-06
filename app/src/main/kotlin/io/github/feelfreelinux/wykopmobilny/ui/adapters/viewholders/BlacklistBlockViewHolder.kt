@@ -1,20 +1,20 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.text.Selection
-import android.view.View
 import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.RecyclerView
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
+import io.github.feelfreelinux.wykopmobilny.databinding.BlacklistBlockFormItemBinding
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
-import kotlinx.android.synthetic.main.blacklist_block_form_item.view.*
 
-class BlacklistBlockViewHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+class BlacklistBlockViewHolder(private val binding: BlacklistBlockFormItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(isUserView: Boolean, blockListener: (String) -> Unit, suggestApi: SuggestApi) {
-        view.apply {
-            val usersSuggestionAdapter = UsersSuggestionsAdapter(context, suggestApi)
-            val hashTagsSuggestionAdapter = HashTagsSuggestionsAdapter(context, suggestApi)
+        binding.apply {
+            val usersSuggestionAdapter = UsersSuggestionsAdapter(root.context, suggestApi)
+            val hashTagsSuggestionAdapter = HashTagsSuggestionsAdapter(root.context, suggestApi)
             val prefix = if (isUserView) "@" else "#"
             blockUserEditText.hint = if (isUserView) "Zablokuj użytkownika" else "Zablokuj tag"
             lockImageView.setOnClickListener {

@@ -1,21 +1,21 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import io.github.feelfreelinux.wykopmobilny.databinding.ConversationListItemBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Upvoter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
-import kotlinx.android.synthetic.main.conversation_list_item.view.*
 
-class UpvoterViewHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+class UpvoterViewHolder(private val binding: ConversationListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindView(upvoter: Upvoter) {
-        view.authorAvatarView.setAuthor(upvoter.author)
-        view.userNameTextView.apply {
+        binding.authorAvatarView.setAuthor(upvoter.author)
+        binding.userNameTextView.apply {
             text = upvoter.author.nick
             setTextColor(context.getGroupColor(upvoter.author.group))
         }
-        view.entryDateTextView.text = upvoter.date.toPrettyDate()
-        view.setOnClickListener { view.context.startActivity(ProfileActivity.createIntent(view.context, upvoter.author.nick)) }
+        binding.entryDateTextView.text = upvoter.date.toPrettyDate()
+        binding.root.setOnClickListener { it.context.startActivity(ProfileActivity.createIntent(it.context, upvoter.author.nick)) }
     }
 }

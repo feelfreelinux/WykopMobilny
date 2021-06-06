@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.tag.links
 
 import android.os.Bundle
+import android.view.View
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityView
@@ -32,8 +33,8 @@ class TagLinksFragment : BaseLinksFragment(), TagLinksView {
 
     private val tagString by lazy { requireArguments().getString(EXTRA_TAG) }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         presenter.tag = tagString!!
         linksAdapter.linksActionListener = presenter

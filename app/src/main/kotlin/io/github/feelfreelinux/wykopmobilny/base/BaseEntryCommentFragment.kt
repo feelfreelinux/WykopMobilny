@@ -1,12 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.databinding.DialogVotersBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.EntriesFragmentBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryComment
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Voter
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.EntryCommentAdapter
@@ -14,21 +16,25 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrycomments.EntryCommentsFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.entries_fragment.*
-import kotlinx.android.synthetic.main.search_empty_view.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-open class BaseEntryCommentFragment : BaseFragment(), EntryCommentsFragmentView, SwipeRefreshLayout.OnRefreshListener {
+open class BaseEntryCommentFragment :
+    BaseFragment(R.layout.entries_fragment),
+    EntryCommentsFragmentView,
+    SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var entryCommentsAdapter: EntryCommentAdapter
     lateinit var votersDialogListener: VotersDialogListener
 
+    protected val binding by viewBinding(EntriesFragmentBinding::bind)
+
     open var loadDataListener: (Boolean) -> Unit = {}
     var showSearchEmptyView: Boolean
-        get() = searchEmptyView.isVisible
+        get() = binding.empty.searchEmptyView.isVisible
         set(value) {
-            searchEmptyView.isVisible = value
+            binding.empty.searchEmptyView.isVisible = value
             if (value) {
                 entryCommentsAdapter.addData(emptyList(), true)
                 entryCommentsAdapter.disableLoading()
@@ -36,7 +42,7 @@ open class BaseEntryCommentFragment : BaseFragment(), EntryCommentsFragmentView,
         }
 
     override fun openVotersMenu() {
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(requireActivity())
+        val dialog = BottomSheetDialog(requireActivity())
         val votersDialogView = DialogVotersBinding.inflate(layoutInflater)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView.root)
@@ -47,21 +53,19 @@ open class BaseEntryCommentFragment : BaseFragment(), EntryCommentsFragmentView,
     override fun showVoters(voters: List<Voter>) = votersDialogListener(voters)
 
     // Inflate view
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-        inflater.inflate(R.layout.entries_fragment, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         entryCommentsAdapter.loadNewDataListener = { loadDataListener(false) }
 
         // Setup views
-        swipeRefresh.setOnRefreshListener(this)
-        recyclerView.run {
+        binding.swipeRefresh.setOnRefreshListener(this)
+        binding.recyclerView.run {
             prepare()
             adapter = entryCommentsAdapter
         }
 
-        loadingView.isVisible = true
+        binding.loadingView.isVisible = true
     }
 
     override fun onRefresh() = loadDataListener(true)
@@ -78,12 +82,12 @@ open class BaseEntryCommentFragment : BaseFragment(), EntryCommentsFragmentView,
      */
     override fun addItems(items: List<EntryComment>, shouldRefresh: Boolean) {
         entryCommentsAdapter.addData(items, shouldRefresh)
-        swipeRefresh?.isRefreshing = false
-        loadingView?.isVisible = false
+        binding.swipeRefresh.isRefreshing = false
+        binding.loadingView.isVisible = false
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
+            (binding.recyclerView.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
         }
     }
 

@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.tag.entries
 
 import android.os.Bundle
+import android.view.View
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntriesFragment
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.TagMetaResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.tag.TagActivityView
@@ -10,7 +11,7 @@ import javax.inject.Inject
 class TagEntriesFragment : BaseEntriesFragment(), TagEntriesView {
 
     companion object {
-        const val EXTRA_TAG = "EXTRA_TAG"
+        private const val EXTRA_TAG = "EXTRA_TAG"
 
         fun newInstance(tag: String): androidx.fragment.app.Fragment {
             val fragment = TagEntriesFragment()
@@ -29,12 +30,12 @@ class TagEntriesFragment : BaseEntriesFragment(), TagEntriesView {
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
 
-    private val entryTag by lazy { requireArguments().getString(EXTRA_TAG) }
+    private val entryTag by lazy { requireArguments().getString(EXTRA_TAG)!! }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
-        presenter.tag = entryTag!!
+        presenter.tag = entryTag
         entriesAdapter.entryActionListener = presenter
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
         presenter.loadData(true)

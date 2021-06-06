@@ -7,7 +7,6 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.SparseArray
 import android.util.TypedValue
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -15,14 +14,15 @@ import androidx.core.widget.doOnTextChanged
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
+import io.github.feelfreelinux.wykopmobilny.databinding.InputToolbarBinding
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.HashTagsSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.UsersSuggestionsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.suggestions.WykopSuggestionsTokenizer
 import io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.input_toolbar.view.*
 
 const val ZERO_WIDTH_SPACE = "\u200B\u200B\u200B\u200B\u200B"
 
@@ -33,23 +33,22 @@ interface InputToolbarListener {
     fun openCamera(uri: Uri)
 }
 
-class InputToolbar @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr), MarkdownToolbarListener {
+class InputToolbar(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs), MarkdownToolbarListener {
+
+    // Inflate view
+    private val binding = InputToolbarBinding.inflate(layoutInflater, this)
 
     override var selectionStart: Int
-        get() = body.selectionStart
-        set(value) = body.setSelection(value)
+        get() = binding.body.selectionStart
+        set(value) = binding.body.setSelection(value)
 
     override var selectionEnd: Int
-        get() = body.selectionEnd
-        set(value) = body.setSelection(value)
+        get() = binding.body.selectionEnd
+        set(value) = binding.body.setSelection(value)
 
     override var textBody: String
-        get() = body.text.toString()
-        set(value) = body.setText(value)
+        get() = binding.body.text.toString()
+        set(value) = binding.body.setText(value)
 
     lateinit var userManager: UserManagerApi
     lateinit var suggestApi: SuggestApi
@@ -68,61 +67,56 @@ class InputToolbar @JvmOverloads constructor(
         theme.resolveAttribute(R.attr.itemBackgroundColor, typedValue, true)
         setBackgroundColor(typedValue.data)
 
-        // Inflate view
-        View.inflate(context, R.layout.input_toolbar, this)
-
-        markdownToolbar.markdownListener = this
-        markdownToolbar.floatingImageView = floatingImageView
-        markdownToolbar.remoteImageInserted = {
-            enableSendButton()
-        }
+        binding.markdownToolbar.markdownListener = this
+        binding.markdownToolbar.floatingImageView = binding.floatingImageView
+        binding.markdownToolbar.remoteImageInserted = { enableSendButton() }
 
         // Setup listeners
-        body.setOnFocusChangeListener { _, focused ->
+        binding.body.setOnFocusChangeListener { _, focused ->
             if (focused && !hasUserEditedContent()) {
                 textBody = defaultText
                 showMarkdownToolbar()
             }
         }
 
-        body.setTokenizer(
+        binding.body.setTokenizer(
             WykopSuggestionsTokenizer(
                 {
-                    if (body.adapter !is UsersSuggestionsAdapter) {
-                        body.setAdapter(usersSuggestionAdapter)
+                    if (binding.body.adapter !is UsersSuggestionsAdapter) {
+                        binding.body.setAdapter(usersSuggestionAdapter)
                     }
                 },
                 {
-                    if (body.adapter !is HashTagsSuggestionsAdapter) {
-                        body.setAdapter(hashTagsSuggestionAdapter)
+                    if (binding.body.adapter !is HashTagsSuggestionsAdapter) {
+                        binding.body.setAdapter(hashTagsSuggestionAdapter)
                     }
                 }
             )
         )
-        body.threshold = 3
-        body.doOnTextChanged { text, start, before, count ->
-            if ((textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null)) {
-                if (!send.isEnabled) {
+        binding.body.threshold = 3
+        binding.body.doOnTextChanged { text, start, before, count ->
+            if ((textBody.length > 2 || binding.markdownToolbar.photo != null || binding.markdownToolbar.photoUrl != null)) {
+                if (!binding.send.isEnabled) {
                     enableSendButton()
                 }
             } else if (textBody.length < 3) {
                 disableSendButton()
             }
         }
-        send.setOnClickListener {
+        binding.send.setOnClickListener {
             showProgress(true)
-            val wykopImageFile = markdownToolbar.getWykopImageFile()
+            val wykopImageFile = binding.markdownToolbar.getWykopImageFile()
             if (wykopImageFile != null) {
                 inputToolbarListener?.sendPhoto(
                     wykopImageFile,
-                    if (body.text.toString().isNotEmpty()) body.text.toString() else ZERO_WIDTH_SPACE,
-                    markdownToolbar.containsAdultContent
+                    if (binding.body.text.toString().isNotEmpty()) binding.body.text.toString() else ZERO_WIDTH_SPACE,
+                    binding.markdownToolbar.containsAdultContent
                 )
             } else {
                 inputToolbarListener?.sendPhoto(
-                    markdownToolbar.photoUrl,
-                    if (body.text.toString().isNotEmpty()) body.text.toString() else ZERO_WIDTH_SPACE,
-                    markdownToolbar.containsAdultContent
+                    binding.markdownToolbar.photoUrl,
+                    if (binding.body.text.toString().isNotEmpty()) binding.body.text.toString() else ZERO_WIDTH_SPACE,
+                    binding.markdownToolbar.containsAdultContent
                 )
             }
         }
@@ -132,7 +126,7 @@ class InputToolbar @JvmOverloads constructor(
         else closeMarkdownToolbar()
     }
 
-    override fun setSelection(start: Int, end: Int) = body.setSelection(start, end)
+    override fun setSelection(start: Int, end: Int) = binding.body.setSelection(start, end)
 
     override fun openCamera(uri: Uri) {
         inputToolbarListener?.openCamera(uri)
@@ -144,7 +138,7 @@ class InputToolbar @JvmOverloads constructor(
 
     fun setPhoto(photo: Uri?) {
         enableSendButton()
-        markdownToolbar.photo = photo
+        binding.markdownToolbar.photo = photo
     }
 
     fun setup(userManagerApi: UserManagerApi, suggestionApi: SuggestApi) {
@@ -155,22 +149,22 @@ class InputToolbar @JvmOverloads constructor(
 
     private fun showMarkdownToolbar() {
         if (!hasUserEditedContent()) textBody = defaultText
-        markdownToolbar.isVisible = true
-        separatorButton.isVisible = true
-        send.isVisible = true
+        binding.markdownToolbar.isVisible = true
+        binding.separatorButton.isVisible = true
+        binding.send.isVisible = true
         showToolbar = true
     }
 
     private fun closeMarkdownToolbar() {
-        markdownToolbar.isVisible = false
-        separatorButton.isVisible = false
-        send.isVisible = false
+        binding.markdownToolbar.isVisible = false
+        binding.separatorButton.isVisible = false
+        binding.send.isVisible = false
         showToolbar = false
     }
 
     fun showProgress(shouldShowProgress: Boolean) {
-        progressBar.isVisible = shouldShowProgress
-        send.isVisible = !shouldShowProgress
+        binding.progressBar.isVisible = shouldShowProgress
+        binding.send.isVisible = !shouldShowProgress
     }
 
     fun resetState() {
@@ -181,18 +175,18 @@ class InputToolbar @JvmOverloads constructor(
 
         textBody = ""
         selectionStart = textBody.length
-        markdownToolbar.apply {
+        binding.markdownToolbar.apply {
             photo = null
             photoUrl = null
             containsAdultContent = false
         }
 
-        if (textBody.length < 3 && !(markdownToolbar.photo != null || markdownToolbar.photoUrl != null)) disableSendButton()
+        if (textBody.length < 3 && !(binding.markdownToolbar.photo != null || binding.markdownToolbar.photoUrl != null)) disableSendButton()
         closeMarkdownToolbar()
-        body.isFocusableInTouchMode = false
-        body.isFocusable = false
-        body.isFocusableInTouchMode = true
-        body.isFocusable = true
+        binding.body.isFocusableInTouchMode = false
+        binding.body.isFocusable = false
+        binding.body.isFocusableInTouchMode = true
+        binding.body.isFocusable = true
     }
 
     fun setDefaultAddressant(user: String) {
@@ -203,46 +197,46 @@ class InputToolbar @JvmOverloads constructor(
 
     fun addAddressant(user: String) {
         defaultText = ""
-        body.requestFocus()
+        binding.body.requestFocus()
         textBody += "@$user: "
-        if (textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null) enableSendButton()
+        if (textBody.length > 2 || binding.markdownToolbar.photo != null || binding.markdownToolbar.photoUrl != null) enableSendButton()
         selectionStart = textBody.length
         showKeyboard()
     }
 
     fun addQuoteText(quote: String, quoteAuthor: String) {
         defaultText = ""
-        body.requestFocus()
+        binding.body.requestFocus()
         if (textBody.length > 0) textBody += "\n\n"
         textBody += "> ${quote.removeHtml().replace("\n", "\n> ")}\n@$quoteAuthor: "
         selectionStart = textBody.length
-        if (textBody.length > 2 || markdownToolbar.photo != null || markdownToolbar.photoUrl != null) enableSendButton()
+        if (textBody.length > 2 || binding.markdownToolbar.photo != null || binding.markdownToolbar.photoUrl != null) enableSendButton()
         showKeyboard()
     }
 
     fun setCustomHint(hint: String) {
-        body.hint = hint
+        binding.body.hint = hint
     }
 
-    fun hasUserEditedContent() = textBody != defaultText && markdownToolbar.hasUserEditedContent()
+    fun hasUserEditedContent() = textBody != defaultText && binding.markdownToolbar.hasUserEditedContent()
 
     fun hide() {
         isVisible = false
     }
 
     fun disableSendButton() {
-        send.alpha = 0.3f
-        send.isEnabled = false
+        binding.send.alpha = 0.3f
+        binding.send.isEnabled = false
     }
 
     fun enableSendButton() {
-        send.alpha = 1f
-        send.isEnabled = true
+        binding.send.alpha = 1f
+        binding.send.isEnabled = true
     }
 
     private fun showKeyboard() {
         val imm = getActivityContext()!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(body, InputMethodManager.SHOW_IMPLICIT)
+        imm.showSoftInput(binding.body, InputMethodManager.SHOW_IMPLICIT)
     }
 
     fun setIfIsCommentingPossible(value: Boolean) {
@@ -281,7 +275,7 @@ class InputToolbar @JvmOverloads constructor(
         super.dispatchThawSelfOnly(container)
     }
 
-    class SavedState : View.BaseSavedState {
+    class SavedState : BaseSavedState {
 
         val isOpened: Boolean
         val text: String

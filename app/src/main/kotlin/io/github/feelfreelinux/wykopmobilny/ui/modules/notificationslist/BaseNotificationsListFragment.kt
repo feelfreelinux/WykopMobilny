@@ -1,25 +1,26 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.notificationslist
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityNotificationsListBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.NotificationsListAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
 import io.github.feelfreelinux.wykopmobilny.utils.printout
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.synthetic.main.activity_notifications_list.*
 
 abstract class BaseNotificationsListFragment :
-    BaseFragment(),
+    BaseFragment(R.layout.activity_notifications_list),
     NotificationsListView,
-    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout.OnRefreshListener {
 
+    protected val binding by viewBinding(ActivityNotificationsListBinding::bind)
     abstract var notificationAdapter: NotificationsListAdapter
     abstract var linkHandler: WykopLinkHandlerApi
 
@@ -37,28 +38,25 @@ abstract class BaseNotificationsListFragment :
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.activity_notifications_list, container, false)
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        swiperefresh.setOnRefreshListener(this)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.swiperefresh.setOnRefreshListener(this)
 
         notificationAdapter.loadNewDataListener = {
             loadMore()
         }
 
         notificationAdapter.itemClickListener = { onNotificationClicked(it) }
-        recyclerView?.apply {
+        binding.recyclerView.apply {
             prepare()
             adapter = notificationAdapter
         }
-        swiperefresh?.isRefreshing = false
-        super.onActivityCreated(savedInstanceState)
+        binding.swiperefresh.isRefreshing = false
     }
 
     override fun addNotifications(notifications: List<Notification>, shouldClearAdapter: Boolean) {
-        loadingView.isVisible = false
-        swiperefresh?.isRefreshing = false
+        binding.loadingView.isVisible = false
+        binding.swiperefresh.isRefreshing = false
         notificationAdapter.addData(
             if (!shouldClearAdapter) notifications.filterNot { notificationAdapter.data.contains(it) } else notifications,
             shouldClearAdapter

@@ -1,19 +1,18 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.blacklist
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
+import io.github.feelfreelinux.wykopmobilny.databinding.BlacklistFragmentBinding
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.BlacklistAdapter
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.blacklist_fragment.*
 import javax.inject.Inject
 
-class BlacklistUsersFragment : BaseFragment() {
+class BlacklistUsersFragment : BaseFragment(R.layout.blacklist_fragment) {
 
     companion object {
         fun createFragment() = BlacklistUsersFragment()
@@ -25,22 +24,17 @@ class BlacklistUsersFragment : BaseFragment() {
     @Inject
     lateinit var blacklistPreferences: BlacklistPreferences
 
-    private val disposable = CompositeDisposable()
+    private val binding by viewBinding(BlacklistFragmentBinding::bind)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.blacklist_fragment, container, false)
+    private val disposable = CompositeDisposable()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter.isBlockUser = true
-        adapter.unblockListener = {
-            (activity as BlacklistActivity).unblockUser(it)
-        }
-        adapter.blockListener = {
-            (activity as BlacklistActivity).blockUser(it)
-        }
-        recyclerView.prepare()
-        recyclerView.adapter = adapter
+        adapter.unblockListener = { (activity as BlacklistActivity).unblockUser(it) }
+        adapter.blockListener = { (activity as BlacklistActivity).blockUser(it) }
+        binding.recyclerView.prepare()
+        binding.recyclerView.adapter = adapter
         updateData()
     }
 
@@ -52,11 +46,7 @@ class BlacklistUsersFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        disposable.add(
-            (activity as BlacklistActivity).updateDataSubject.subscribe {
-                updateData()
-            }
-        )
+        disposable.add((activity as BlacklistActivity).updateDataSubject.subscribe { updateData() })
     }
 
     override fun onDestroy() {

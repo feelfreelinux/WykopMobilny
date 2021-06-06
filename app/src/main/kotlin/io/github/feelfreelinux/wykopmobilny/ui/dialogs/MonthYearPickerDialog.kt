@@ -4,13 +4,13 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.Window
+import androidx.fragment.app.DialogFragment
 import io.github.feelfreelinux.wykopmobilny.R
-import kotlinx.android.synthetic.main.year_month_picker.view.*
+import io.github.feelfreelinux.wykopmobilny.databinding.YearMonthPickerBinding
 import java.util.Calendar
 
-class MonthYearPickerDialog : androidx.fragment.app.DialogFragment() {
+class MonthYearPickerDialog : DialogFragment() {
 
     companion object {
         const val RESULT_CODE = 167
@@ -39,7 +39,7 @@ class MonthYearPickerDialog : androidx.fragment.app.DialogFragment() {
 
         yearSelection = if (argumentYear == 0) currentYear else argumentYear
         selectedMonth = if (argumentMonth == 0) currentMonth else argumentMonth - 1
-        val dialogView = View.inflate(context, R.layout.year_month_picker, null)
+        val dialogView = YearMonthPickerBinding.inflate(layoutInflater)
         dialogBuilder.apply {
             setPositiveButton(android.R.string.ok) { _, _ ->
                 val data = Intent()
@@ -47,7 +47,7 @@ class MonthYearPickerDialog : androidx.fragment.app.DialogFragment() {
                 data.putExtra(EXTRA_MONTH, selectedMonth + 1)
                 targetFragment?.onActivityResult(targetRequestCode, RESULT_CODE, data)
             }
-            setView(dialogView)
+            setView(dialogView.root)
         }
         val newDialog = dialogBuilder.create()
         newDialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -70,8 +70,8 @@ class MonthYearPickerDialog : androidx.fragment.app.DialogFragment() {
         return newDialog
     }
 
-    private fun setYear(view: View) {
-        view.apply {
+    private fun setYear(binding: YearMonthPickerBinding) {
+        binding.apply {
             when (yearSelection) {
                 currentYear -> {
                     monthPicker.displayedValues = (1..12).map { getMonthString(it) }.toTypedArray()
@@ -97,7 +97,7 @@ class MonthYearPickerDialog : androidx.fragment.app.DialogFragment() {
         }
     }
 
-    private fun setTitleDate(view: View) {
+    private fun setTitleDate(view: YearMonthPickerBinding) {
         view.monthTextView.text = getMonthString(selectedMonth + 1)
         view.yearTextView.text = yearSelection.toString()
     }

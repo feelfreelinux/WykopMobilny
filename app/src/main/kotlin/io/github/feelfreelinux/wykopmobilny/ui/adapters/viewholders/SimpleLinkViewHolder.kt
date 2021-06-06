@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.use
 import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.databinding.SimpleLinkLayoutBinding
@@ -13,7 +14,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.extensions.LayoutContainer
 
 class SimpleLinkViewHolder(
     private val binding: SimpleLinkLayoutBinding,
@@ -21,7 +21,7 @@ class SimpleLinkViewHolder(
     private val navigatorApi: NewNavigatorApi,
     private val userManagerApi: UserManagerApi,
     private val linkActionListener: LinkActionListener
-) : RecyclableViewHolder(binding.root), LayoutContainer {
+) : RecyclableViewHolder(binding.root) {
 
     companion object {
         const val ALPHA_NEW = 1f
@@ -46,24 +46,18 @@ class SimpleLinkViewHolder(
             linkActionListener
         )
 
-        fun getViewTypeForLink(link: Link): Int {
-            return if (link.isBlocked) TYPE_BLOCKED
-            else TYPE_SIMPLE_LINK
-        }
+        fun getViewTypeForLink(link: Link): Int =
+            if (link.isBlocked) {
+                TYPE_BLOCKED
+            } else {
+                TYPE_SIMPLE_LINK
+            }
     }
 
-    override val containerView = binding.root
-
-    private val linkPreferences by lazy { LinksPreferences(containerView.context) }
+    private val linkPreferences by lazy { LinksPreferences(itemView.context) }
     private val digCountDrawable by lazy {
-        val typedArray = containerView.context.obtainStyledAttributes(
-            arrayOf(
-                R.attr.digCountDrawable
-            ).toIntArray()
-        )
-        val selectedDrawable = typedArray.getDrawable(0)
-        typedArray.recycle()
-        selectedDrawable
+        itemView.context.obtainStyledAttributes(arrayOf(R.attr.digCountDrawable).toIntArray())
+            .use { it.getDrawable(0) }
     }
 
     fun bindView(link: Link) {
@@ -92,7 +86,7 @@ class SimpleLinkViewHolder(
             link.preview?.let { binding.simpleImage.loadImage(link.preview) }
         }
 
-        containerView.setOnClickListener {
+        itemView.setOnClickListener {
             navigatorApi.openLinkDetailsActivity(link)
             if (!link.gotSelected) {
                 setWidgetAlpha(ALPHA_VISITED)
@@ -105,9 +99,9 @@ class SimpleLinkViewHolder(
     private fun showBurried(link: Link) {
         link.userVote = "bury"
         binding.simpleDigg.isEnabled = true
-        binding.simpleDigg.background = ContextCompat.getDrawable(containerView.context, R.drawable.ic_frame_votes_buried)
+        binding.simpleDigg.background = ContextCompat.getDrawable(itemView.context, R.drawable.ic_frame_votes_buried)
         binding.simpleDigg.setOnClickListener {
-            userManagerApi.runIfLoggedIn(containerView.context) {
+            userManagerApi.runIfLoggedIn(itemView.context) {
                 binding.simpleDigg.isEnabled = false
                 linkActionListener.removeVote(link)
             }
@@ -117,9 +111,9 @@ class SimpleLinkViewHolder(
     private fun showDigged(link: Link) {
         link.userVote = "dig"
         binding.simpleDigg.isEnabled = true
-        binding.simpleDigg.background = ContextCompat.getDrawable(containerView.context, R.drawable.ic_frame_votes_digged)
+        binding.simpleDigg.background = ContextCompat.getDrawable(itemView.context, R.drawable.ic_frame_votes_digged)
         binding.simpleDigg.setOnClickListener {
-            userManagerApi.runIfLoggedIn(containerView.context) {
+            userManagerApi.runIfLoggedIn(itemView.context) {
                 binding.simpleDigg.isEnabled = false
                 linkActionListener.removeVote(link)
             }
@@ -131,7 +125,7 @@ class SimpleLinkViewHolder(
         binding.simpleDigg.isEnabled = true
         binding.simpleDigg.background = digCountDrawable
         binding.simpleDigg.setOnClickListener {
-            userManagerApi.runIfLoggedIn(containerView.context) {
+            userManagerApi.runIfLoggedIn(itemView.context) {
                 binding.simpleDigg.isEnabled = false
                 linkActionListener.dig(link)
             }

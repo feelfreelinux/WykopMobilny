@@ -14,24 +14,21 @@ import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
-import kotlinx.android.extensions.LayoutContainer
 
 class BlockedViewHolder(
-    val binding: BlockedEntryViewBinding,
-    val blockListener: (Int) -> Unit
-) : RecyclerView.ViewHolder(binding.root), LayoutContainer {
+    private val binding: BlockedEntryViewBinding,
+    private val blockListener: (Int) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
         fun inflateView(parent: ViewGroup, blockListener: (Int) -> Unit) =
             BlockedViewHolder(BlockedEntryViewBinding.inflate(parent.layoutInflater, parent, false), blockListener)
     }
 
-    override val containerView = binding.root
-
     fun bindView(entry: Entry) {
         showText("wpis", entry.author)
 
-        containerView.setOnClickListener {
+        itemView.setOnClickListener {
             entry.isBlocked = false
             blockListener(adapterPosition)
         }
@@ -40,7 +37,7 @@ class BlockedViewHolder(
     fun bindView(comment: EntryComment) {
         showText("komentarz", comment.author)
 
-        containerView.setOnClickListener {
+        itemView.setOnClickListener {
             comment.isBlocked = false
             blockListener(adapterPosition)
         }
@@ -49,7 +46,7 @@ class BlockedViewHolder(
     fun bindView(link: Link) {
         showText("link", link.author)
 
-        containerView.setOnClickListener {
+        itemView.setOnClickListener {
             link.isBlocked = false
             blockListener(adapterPosition)
         }
@@ -58,7 +55,7 @@ class BlockedViewHolder(
     fun bindView(linkComment: LinkComment) {
         showText("komentarz", linkComment.author)
 
-        containerView.setOnClickListener {
+        itemView.setOnClickListener {
             linkComment.isBlocked = false
             blockListener(adapterPosition)
         }

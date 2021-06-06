@@ -1,8 +1,9 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
-abstract class RecyclableViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+abstract class RecyclableViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     companion object {
         const val SEPARATOR_SMALL = "SEP_SMALL"

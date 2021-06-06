@@ -1,40 +1,38 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.favorite
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import kotlinx.android.synthetic.main.activity_mywykop.*
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityMywykopBinding
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 
-class FavoriteFragment : BaseFragment() {
+class FavoriteFragment : BaseFragment(R.layout.activity_mywykop) {
 
     companion object {
         fun newInstance() = FavoriteFragment()
     }
 
+    private val binding by viewBinding(ActivityMywykopBinding::bind)
+
     lateinit var pagerAdapter: FavoritePagerAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.activity_mywykop, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        pagerAdapter = FavoritePagerAdapter(resources, childFragmentManager)
-        pager.adapter = pagerAdapter
-        tabLayout.setupWithViewPager(pager)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.favourite)
+        pagerAdapter = FavoritePagerAdapter(resources, childFragmentManager)
+        binding.pager.adapter = pagerAdapter
+        binding.tabLayout.setupWithViewPager(binding.pager)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

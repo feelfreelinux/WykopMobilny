@@ -1,12 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.observedtags
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityConversationsListBinding
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
 import io.github.feelfreelinux.wykopmobilny.models.fragments.getDataFragmentInstance
 import io.github.feelfreelinux.wykopmobilny.models.fragments.removeDataFragment
@@ -14,13 +14,13 @@ import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTag
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ObservedTagsAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop.MyWykopNotifier
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.activity_conversations_list.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
 class MyWykopObservedTagsFragment :
-    BaseFragment(),
+    BaseFragment(R.layout.activity_conversations_list),
     MyWykopObservedTagsView,
-    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
+    SwipeRefreshLayout.OnRefreshListener,
     MyWykopNotifier {
 
     companion object {
@@ -35,38 +35,39 @@ class MyWykopObservedTagsFragment :
     @Inject
     lateinit var presenter: MyWykopObservedTagsPresenter
 
+    private val binding by viewBinding(ActivityConversationsListBinding::bind)
+
     lateinit var dataFragment: DataFragment<List<ObservedTagResponse>>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.activity_conversations_list, container, false)
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         dataFragment = childFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
         presenter.subscribe(this)
-        swiperefresh.setOnRefreshListener(this)
-        recyclerView?.prepare()
-        recyclerView?.adapter = adapter
+        binding.swiperefresh.setOnRefreshListener(this)
+        binding.recyclerView.prepare()
+        binding.recyclerView.adapter = adapter
 
         if (dataFragment.data != null) {
             adapter.items.clear()
             adapter.items.addAll(dataFragment.data!!)
             adapter.notifyDataSetChanged()
         } else {
-            loadingView.isVisible = true
+            binding.loadingView.isVisible = true
             presenter.loadTags()
         }
     }
 
     override fun onRefresh() {
-        if (!swiperefresh.isRefreshing) swiperefresh?.isRefreshing = true
+        if (!binding.swiperefresh.isRefreshing) {
+            binding.swiperefresh.isRefreshing = true
+        }
         presenter.loadTags()
     }
 
     override fun showTags(tags: List<ObservedTagResponse>) {
-        loadingView.isVisible = false
-        swiperefresh?.isRefreshing = false
+        binding.loadingView.isVisible = false
+        binding.swiperefresh.isRefreshing = false
         adapter.items.clear()
         adapter.items.addAll(tags)
         adapter.notifyDataSetChanged()
@@ -83,7 +84,9 @@ class MyWykopObservedTagsFragment :
     }
 
     override fun onPause() {
-        if (isRemoving) childFragmentManager.removeDataFragment(dataFragment)
+        if (isRemoving) {
+            childFragmentManager.removeDataFragment(dataFragment)
+        }
         super.onPause()
     }
 

@@ -1,11 +1,11 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.ConversationListItemBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Conversation
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.ConversationViewHolder
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 
 class ConversationsListAdapter : RecyclerView.Adapter<ConversationViewHolder>() {
 
@@ -18,5 +18,5 @@ class ConversationsListAdapter : RecyclerView.Adapter<ConversationViewHolder>() 
     override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder =
-        ConversationViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.conversation_list_item, parent, false))
+        ConversationViewHolder(ConversationListItemBinding.inflate(parent.layoutInflater, parent, false))
 }

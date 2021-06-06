@@ -1,12 +1,14 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.databinding.DialogVotersBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.EntriesFragmentBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.EntryLink
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
@@ -16,23 +18,21 @@ import io.github.feelfreelinux.wykopmobilny.ui.dialogs.VotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.createVotersDialogListener
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entrylink.EntryLinkFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.entries_fragment.*
-import kotlinx.android.synthetic.main.search_empty_view.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-open class BaseEntryLinkFragment :
-    BaseFragment(),
-    EntryLinkFragmentView,
-    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+open class BaseEntryLinkFragment : BaseFragment(R.layout.entries_fragment), EntryLinkFragmentView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var entriesAdapter: EntryLinksAdapter
     lateinit var votersDialogListener: VotersDialogListener
 
+    protected val binding by viewBinding(EntriesFragmentBinding::bind)
+
     var showSearchEmptyView: Boolean
-        get() = searchEmptyView.isVisible
+        get() = binding.empty.searchEmptyView.isVisible
         set(value) {
-            searchEmptyView.isVisible = value
+            binding.empty.searchEmptyView.isVisible = value
             if (value) {
                 entriesAdapter.addData(emptyList(), true)
                 entriesAdapter.disableLoading()
@@ -41,22 +41,18 @@ open class BaseEntryLinkFragment :
 
     open var loadDataListener: (Boolean) -> Unit = {}
 
-    // Inflate view
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-        inflater.inflate(R.layout.entries_fragment, container, false)
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }
 
         // Setup views
-        swipeRefresh.setOnRefreshListener(this)
-        recyclerView.run {
+        binding.swipeRefresh.setOnRefreshListener(this)
+        binding.recyclerView.run {
             prepare()
             adapter = entriesAdapter
         }
 
-        loadingView.isVisible = true
+        binding.loadingView.isVisible = true
     }
 
     override fun onRefresh() = loadDataListener(true)
@@ -73,12 +69,12 @@ open class BaseEntryLinkFragment :
      */
     override fun addItems(items: List<EntryLink>, shouldRefresh: Boolean) {
         entriesAdapter.addData(items, shouldRefresh)
-        swipeRefresh?.isRefreshing = false
-        loadingView?.isVisible = false
+        binding.swipeRefresh.isRefreshing = false
+        binding.loadingView.isVisible = false
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView?.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
+            (binding.recyclerView.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
         }
     }
 
@@ -89,7 +85,7 @@ open class BaseEntryLinkFragment :
     override fun showVoters(voters: List<Voter>) = votersDialogListener(voters)
 
     override fun openVotersMenu() {
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(requireActivity())
+        val dialog = BottomSheetDialog(requireActivity())
         val votersDialogView = DialogVotersBinding.inflate(layoutInflater)
         votersDialogView.votersTextView.isVisible = false
         dialog.setContentView(votersDialogView.root)

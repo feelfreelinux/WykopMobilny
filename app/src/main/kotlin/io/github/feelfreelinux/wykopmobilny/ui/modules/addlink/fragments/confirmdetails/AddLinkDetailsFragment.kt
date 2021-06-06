@@ -1,22 +1,22 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.confirmdetails
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
+import io.github.feelfreelinux.wykopmobilny.databinding.AddlinkDetailsFragmentBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.AddlinkPreviewImageBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.AddLinkPreviewImage
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.AddlinkActivity
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
-import kotlinx.android.synthetic.main.addlink_details_fragment.*
-import kotlinx.android.synthetic.main.addlink_preview_image.view.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-class AddLinkDetailsFragment : BaseFragment(), AddLinkDetailsFragmentView {
+class AddLinkDetailsFragment : BaseFragment(R.layout.addlink_details_fragment), AddLinkDetailsFragmentView {
 
     companion object {
         fun newInstance() = AddLinkDetailsFragment()
@@ -28,24 +28,21 @@ class AddLinkDetailsFragment : BaseFragment(), AddLinkDetailsFragmentView {
     @Inject
     lateinit var navigator: NavigatorApi
 
-    var imageKey: String = ""
+    private val binding by viewBinding(AddlinkDetailsFragmentBinding::bind)
+
+    private var imageKey: String = ""
     private val draftInformation by lazy { (activity as AddlinkActivity).draft.data }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.addlink_details_fragment, container, false)
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         draftInformation?.apply {
-            input_description.setText(description)
-            input_link_title.setText(title)
+            binding.inputDescription.setText(description)
+            binding.inputLinkTitle.setText(title)
             presenter.getImages(key)
         }
 
-        submit.setOnClickListener {
-            validate()
-        }
+        binding.submit.setOnClickListener { validate() }
     }
 
     override fun openLinkScreen(link: Link) {
@@ -55,14 +52,14 @@ class AddLinkDetailsFragment : BaseFragment(), AddLinkDetailsFragmentView {
 
     override fun showImages(images: List<AddLinkPreviewImage>) {
         images.forEach {
-            val view = layoutInflater.inflate(R.layout.addlink_preview_image, imagesList, false)
+            val view = AddlinkPreviewImageBinding.inflate(layoutInflater, binding.imagesList, false)
             view.previewImage.loadImage(it.sourceUrl)
-            imagesList.addView(view)
+            binding.imagesList.addView(view.root)
             imageKey = it.key
-            view.setOnClickListener {
-                (0 until imagesList.childCount).forEach {
-                    imagesList.getChildAt(it).tick.isVisible = false
-                }
+            view.root.setOnClickListener {
+                binding.imagesList.children
+                    .map(AddlinkPreviewImageBinding::bind)
+                    .forEach { image -> image.tick.isVisible = false }
                 view.tick.isVisible = true
             }
         }
@@ -74,43 +71,43 @@ class AddLinkDetailsFragment : BaseFragment(), AddLinkDetailsFragmentView {
     }
 
     private fun validate() {
-        if (input_description.text.isEmpty()) {
-            input_description_layout.error = getString(R.string.addlink_no_description)
+        if (binding.inputDescription.text.isEmpty()) {
+            binding.inputDescriptionLayout.error = getString(R.string.addlink_no_description)
             return
         }
 
-        if (input_link_title.text.isEmpty()) {
-            input_link_title_layout.error = getString(R.string.add_link_no_title)
+        if (binding.inputLinkTitle.text.isEmpty()) {
+            binding.inputLinkTitleLayout.error = getString(R.string.add_link_no_title)
             return
         }
 
-        if (input_tags.text.isEmpty()) {
-            input_tags_layout.error = getString(R.string.add_link_no_tags)
+        if (binding.inputTags.text.isEmpty()) {
+            binding.inputTagsLayout.error = getString(R.string.add_link_no_tags)
             return
         }
 
         presenter.publishLink(
             draftInformation!!.key,
-            input_link_title.text.toString(),
+            binding.inputLinkTitle.text.toString(),
             draftInformation!!.sourceUrl,
-            input_description.text.toString(),
-            input_tags.text.toString(),
-            plus18_checkbox.isChecked,
+            binding.inputDescription.text.toString(),
+            binding.inputTags.text.toString(),
+            binding.plus18Checkbox.isChecked,
             imageKey
         )
     }
 
     override fun showImagesLoading(visibility: Boolean) {
-        imagesLoadingView.isVisible = visibility
+        binding.imagesLoadingView.isVisible = visibility
     }
 
     override fun showLinkUploading(visibility: Boolean) {
-        previewTitle.isVisible = !visibility
-        input_tags.isVisible = !visibility
-        input_link_title.isVisible = !visibility
-        input_description.isVisible = !visibility
-        progressBar.isVisible = visibility
-        progressBarTitle.isVisible = visibility
-        imagesLoadingView.isVisible = !visibility
+        binding.previewTitle.isVisible = !visibility
+        binding.inputTags.isVisible = !visibility
+        binding.inputLinkTitle.isVisible = !visibility
+        binding.inputDescription.isVisible = !visibility
+        binding.progressBar.isVisible = visibility
+        binding.progressBarTitle.isVisible = visibility
+        binding.imagesLoadingView.isVisible = !visibility
     }
 }

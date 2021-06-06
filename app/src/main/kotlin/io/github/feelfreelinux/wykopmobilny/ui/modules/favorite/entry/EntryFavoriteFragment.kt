@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.favorite.entry
 
 import android.os.Bundle
+import android.view.View
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntriesFragment
 import javax.inject.Inject
 
@@ -14,8 +15,8 @@ class EntryFavoriteFragment : BaseEntriesFragment(), EntryFavoriteView {
     lateinit var presenter: EntryFavoritePresenter
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         entriesAdapter.entryActionListener = presenter
         entriesAdapter.loadNewDataListener = { loadDataListener(false) }

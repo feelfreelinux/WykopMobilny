@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.microblog.comments
 
 import android.os.Bundle
+import android.view.View
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntryCommentFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import javax.inject.Inject
@@ -17,8 +18,8 @@ class MicroblogCommentsFragment : BaseEntryCommentFragment(), MicroblogCommentsV
     override var loadDataListener: (Boolean) -> Unit = { presenter.loadData(it) }
     private val username by lazy { (activity as ProfileActivity).username }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         presenter.username = username
         entryCommentsAdapter.entryCommentActionListener = presenter

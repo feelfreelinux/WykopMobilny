@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     >
 
     <View
@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/separator_normal"
         android:background="?attr/lineColor"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <MultiAutoCompleteTextView
@@ -24,33 +24,33 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_dp_normal"
         android:layout_marginRight="@dimen/margin_dp_normal"
-        android:paddingTop="@dimen/padding_dp_small"
-        android:paddingBottom="@dimen/padding_dp_small"
-        android:textSize="?attr/textSizeLarge"
-        android:hint="@string/write_comment"
-        android:minLines="1"
-        android:maxLines="5"
         android:background="@null"
         android:dropDownWidth="wrap_content"
+        android:hint="@string/write_comment"
         android:inputType="text|textMultiLine|textCapSentences|textAutoCorrect"
+        android:maxLines="5"
+        android:minLines="1"
+        android:paddingTop="@dimen/padding_dp_small"
+        android:paddingBottom="@dimen/padding_dp_small"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/separator"
+        android:textSize="?attr/textSizeLarge"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator"
         />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.markdown_toolbar.MarkdownToolbar
         android:id="@+id/markdownToolbar"
         android:layout_width="0dp"
         android:layout_height="42dp"
-        android:paddingTop="@dimen/padding_dp_mini"
-        android:paddingLeft="@dimen/padding_dp_small"
-        android:paddingRight="@dimen/padding_dp_large"
-        android:visibility="gone"
         android:alpha="0.6"
-        app:layout_constraintTop_toBottomOf="@id/body"
+        android:paddingStart="@dimen/padding_dp_small"
+        android:paddingTop="@dimen/padding_dp_mini"
+        android:paddingEnd="@dimen/padding_dp_large"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/separatorButton"
+        app:layout_constraintTop_toBottomOf="@id/body"
         tools:visibility="visible"
         />
 
@@ -62,9 +62,9 @@
         android:layout_marginBottom="@dimen/margin_dp_large"
         android:background="?attr/lineColor"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/body"
         app:layout_constraintBottom_toBottomOf="@id/markdownToolbar"
         app:layout_constraintRight_toLeftOf="@id/send"
+        app:layout_constraintTop_toBottomOf="@id/body"
         tools:visibility="visible"
         />
 
@@ -72,14 +72,14 @@
         android:id="@+id/send"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:paddingTop="@dimen/padding_dp_mini"
-        android:paddingBottom="@dimen/padding_dp_tiny"
         android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingTop="@dimen/padding_dp_mini"
         android:paddingRight="@dimen/padding_dp_large"
+        android:paddingBottom="@dimen/padding_dp_tiny"
         android:src="?attr/markdownSend"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/body"
         app:layout_constraintRight_toLeftOf="@id/progressBar"
+        app:layout_constraintTop_toBottomOf="@id/body"
         tools:visibility="visible"
         />
 
@@ -90,17 +90,17 @@
         android:paddingTop="@dimen/padding_dp_mini"
         android:paddingBottom="@dimen/padding_dp_tiny"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/body"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/body"
         />
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.FloatingImageView
         android:id="@+id/floatingImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/markdownToolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/markdownToolbar"
         />
 
 </merge>

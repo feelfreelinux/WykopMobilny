@@ -6,8 +6,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.use
 import androidx.core.view.isVisible
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.LinkCommentMenuBottomsheetBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentActionListener
@@ -23,19 +27,17 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.link_comment_menu_bottomsheet.view.*
 import kotlin.math.absoluteValue
 
 abstract class BaseLinkCommentViewHolder(
-    override val containerView: View,
-    internal val userManagerApi: UserManagerApi,
-    internal val settingsPreferencesApi: SettingsPreferencesApi,
-    internal val navigatorApi: NewNavigatorApi,
-    internal val linkHandlerApi: WykopLinkHandlerApi,
-    internal val commentViewListener: LinkCommentViewListener?,
+    view: View,
+    private val userManagerApi: UserManagerApi,
+    private val settingsPreferencesApi: SettingsPreferencesApi,
+    protected val navigatorApi: NewNavigatorApi,
+    private val linkHandlerApi: WykopLinkHandlerApi,
+    protected val commentViewListener: LinkCommentViewListener?,
     private val commentActionListener: LinkCommentActionListener
-) : RecyclableViewHolder(containerView), LayoutContainer {
+) : RecyclableViewHolder(view) {
 
     companion object {
         fun getViewTypeForComment(comment: LinkComment, forceTop: Boolean = false): Int {
@@ -55,26 +57,14 @@ abstract class BaseLinkCommentViewHolder(
         }
     }
 
-    val collapseDrawable: Drawable? by lazy {
-        val typedArray = containerView.context.obtainStyledAttributes(
-            arrayOf(
-                R.attr.collapseDrawable
-            ).toIntArray()
-        )
-        val drawable = typedArray.getDrawable(0)
-        typedArray.recycle()
-        drawable
+    private val collapseDrawable: Drawable? by lazy {
+        itemView.context.obtainStyledAttributes(arrayOf(R.attr.collapseDrawable).toIntArray())
+            .use { it.getDrawable(0) }
     }
 
-    val expandDrawable: Drawable? by lazy {
-        val typedArray = containerView.context.obtainStyledAttributes(
-            arrayOf(
-                R.attr.expandDrawable
-            ).toIntArray()
-        )
-        val drawable = typedArray.getDrawable(0)
-        typedArray.recycle()
-        drawable
+    private val expandDrawable: Drawable? by lazy {
+        itemView.context.obtainStyledAttributes(arrayOf(R.attr.expandDrawable).toIntArray())
+            .use { it.getDrawable(0) }
     }
 
     var type: Int = 0
@@ -110,7 +100,7 @@ abstract class BaseLinkCommentViewHolder(
             )
         }
 
-        containerView.setOnClickListener { handleClick(comment) }
+        itemView.setOnClickListener { handleClick(comment) }
 
         commentContent.isVisible = !comment.body.isNullOrEmpty()
         collapseButton.isVisible =
@@ -128,32 +118,17 @@ abstract class BaseLinkCommentViewHolder(
         val credentials = userManagerApi.getUserCredentials()
         if (credentials != null && credentials.login == comment.author.nick) {
             authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(
-                ContextCompat.getColor(
-                    containerView.context,
-                    R.color.colorBadgeOwn
-                )
-            )
+            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorBadgeOwn))
         } else if (isAuthorComment) {
             authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(
-                ContextCompat.getColor(
-                    containerView.context,
-                    R.color.colorBadgeAuthors
-                )
-            )
+            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorBadgeAuthors))
         } else {
             authorBadgeStrip.isVisible = false
         }
 
         if (commentId == comment.id) {
             authorBadgeStrip.isVisible = true
-            authorBadgeStrip.setBackgroundColor(
-                ContextCompat.getColor(
-                    containerView.context,
-                    R.color.plusPressedColor
-                )
-            )
+            authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.plusPressedColor))
         }
     }
 
@@ -227,55 +202,49 @@ abstract class BaseLinkCommentViewHolder(
     }
 
     private fun openLinkCommentMenu(comment: LinkComment) {
-        val activityContext = containerView.getActivityContext()!!
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(activityContext)
-        val bottomSheetView = activityContext.layoutInflater.inflate(R.layout.link_comment_menu_bottomsheet, null)
-        dialog.setContentView(bottomSheetView)
-        (bottomSheetView.parent as View).setBackgroundColor(Color.TRANSPARENT)
+        val activityContext = itemView.getActivityContext()!!
+        val dialog = BottomSheetDialog(activityContext)
+        val bottomSheetView = LinkCommentMenuBottomsheetBinding.inflate(activityContext.layoutInflater)
+        dialog.setContentView(bottomSheetView.root)
+        (bottomSheetView.root.parent as View).setBackgroundColor(Color.TRANSPARENT)
 
         bottomSheetView.apply {
             author.text = comment.author.nick
-            date.text = comment.fullDate
-            comment.app?.let {
-                date.text =
-                    context.getString(R.string.date_with_user_app, comment.fullDate, comment.app)
-            }
+            date.text = comment.app?.let { root.context.getString(R.string.date_with_user_app, comment.fullDate, comment.app) }
+                ?: comment.fullDate
 
-            comment_menu_copy.setOnClickListener {
-                context.copyText(comment.body?.stripWykopFormatting() ?: "", "entry-body")
+            commentMenuCopy.setOnClickListener {
+                it.context.copyText(comment.body?.stripWykopFormatting() ?: "", "entry-body")
 
                 dialog.dismiss()
             }
 
-            comment_menu_delete.setOnClickListener {
-                confirmationDialog(getActivityContext()!!) {
-                    commentActionListener.deleteComment(comment)
-                }.show()
+            commentMenuDelete.setOnClickListener {
+                confirmationDialog(it.getActivityContext()!!) { commentActionListener.deleteComment(comment) }
+                    .show()
                 dialog.dismiss()
             }
 
-            comment_menu_report.setOnClickListener {
+            commentMenuReport.setOnClickListener {
                 navigatorApi.openReportScreen(comment.violationUrl)
                 dialog.dismiss()
             }
 
-            comment_menu_edit.setOnClickListener {
+            commentMenuEdit.setOnClickListener {
                 navigatorApi.openEditLinkCommentActivity(comment.linkId, comment.body!!, comment.id)
                 dialog.dismiss()
             }
 
-            comment_menu_report.isVisible = userManagerApi.isUserAuthorized()
+            commentMenuReport.isVisible = userManagerApi.isUserAuthorized()
 
             val canUserEdit =
                 userManagerApi.isUserAuthorized() && comment.author.nick == userManagerApi.getUserCredentials()!!.login
-            comment_menu_delete.isVisible = canUserEdit
-            comment_menu_edit.isVisible = canUserEdit
+            commentMenuDelete.isVisible = canUserEdit
+            commentMenuEdit.isVisible = canUserEdit
         }
 
-        val mBehavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetView.parent as View)
-        dialog.setOnShowListener {
-            mBehavior.peekHeight = bottomSheetView.height
-        }
+        val mBehavior = BottomSheetBehavior.from(bottomSheetView.root.parent as View)
+        dialog.setOnShowListener { mBehavior.peekHeight = bottomSheetView.root.height }
         dialog.show()
     }
 }

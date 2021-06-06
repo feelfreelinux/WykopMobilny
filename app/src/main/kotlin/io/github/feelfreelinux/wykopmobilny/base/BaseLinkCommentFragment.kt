@@ -1,28 +1,33 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.EntriesFragmentBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinkCommentAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.linkcomments.LinkCommentsFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.entries_fragment.*
-import kotlinx.android.synthetic.main.search_empty_view.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView, SwipeRefreshLayout.OnRefreshListener {
+open class BaseLinkCommentFragment :
+    BaseFragment(R.layout.entries_fragment),
+    LinkCommentsFragmentView,
+    SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var linkCommentsAdapter: LinkCommentAdapter
 
+    protected val binding by viewBinding(EntriesFragmentBinding::bind)
+
     var showSearchEmptyView: Boolean
-        get() = searchEmptyView.isVisible
+        get() = binding.empty.searchEmptyView.isVisible
         set(value) {
-            searchEmptyView.isVisible = value
+            binding.empty.searchEmptyView.isVisible = value
             if (value) {
                 linkCommentsAdapter.addData(emptyList(), true)
                 linkCommentsAdapter.disableLoading()
@@ -31,22 +36,18 @@ open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView, S
 
     open var loadDataListener: (Boolean) -> Unit = {}
 
-    // Inflate view
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-        inflater.inflate(R.layout.entries_fragment, container, false)
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         linkCommentsAdapter.loadNewDataListener = { loadDataListener(true) }
 
         // Setup views
-        swipeRefresh.setOnRefreshListener(this)
-        recyclerView.run {
+        binding.swipeRefresh.setOnRefreshListener(this)
+        binding.recyclerView.run {
             prepare()
             adapter = linkCommentsAdapter
         }
 
-        loadingView.isVisible = true
+        binding.loadingView.isVisible = true
     }
 
     /**
@@ -61,12 +62,12 @@ open class BaseLinkCommentFragment : BaseFragment(), LinkCommentsFragmentView, S
      */
     override fun addItems(items: List<LinkComment>, shouldRefresh: Boolean) {
         linkCommentsAdapter.addData(items, shouldRefresh)
-        swipeRefresh?.isRefreshing = false
-        loadingView?.isVisible = false
+        binding.swipeRefresh.isRefreshing = false
+        binding.loadingView.isVisible = false
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
+            (binding.recyclerView.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
         }
     }
 

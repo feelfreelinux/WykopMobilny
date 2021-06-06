@@ -1,13 +1,13 @@
 package io.github.feelfreelinux.wykopmobilny.base.adapter
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.github.feelfreelinux.wykopmobilny.databinding.ProgressItemBinding
 import io.github.feelfreelinux.wykopmobilny.ui.helpers.EndlessScrollListener
 import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 
-abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val ITEM_PROGRESS = 0
@@ -29,11 +29,14 @@ abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
     // Attach EndlessScrollListener
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        if (recyclerView.layoutManager is androidx.recyclerview.widget.LinearLayoutManager) {
+        val layoutManager = recyclerView.layoutManager
+        if (layoutManager is LinearLayoutManager) {
             recyclerView.addOnScrollListener(
-                EndlessScrollListener(recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager) {
+                EndlessScrollListener(layoutManager) {
                     if (dataset.isNotEmpty() && dataset.last() == null) {
-                        if (!isLoading) loadNewDataListener()
+                        if (!isLoading) {
+                            loadNewDataListener()
+                        }
                         isLoading = true
                     }
                 }
@@ -93,5 +96,5 @@ abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> :
             createViewHolder(parent, viewType)
         }
 
-    class ProgressViewHolder(val binding: ProgressItemBinding) : RecyclerView.ViewHolder(binding.root)
+    class ProgressViewHolder(binding: ProgressItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

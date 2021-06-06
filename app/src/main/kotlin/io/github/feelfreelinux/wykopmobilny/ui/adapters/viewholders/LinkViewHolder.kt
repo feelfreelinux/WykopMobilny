@@ -12,7 +12,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.loadImage
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferences
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.extensions.LayoutContainer
 
 class LinkViewHolder(
     private val binding: LinkLayoutBinding,
@@ -20,7 +19,7 @@ class LinkViewHolder(
     private val navigatorApi: NewNavigatorApi,
     private val userManagerApi: UserManagerApi,
     private val linkActionListener: LinkActionListener
-) : RecyclableViewHolder(binding.root), LayoutContainer {
+) : RecyclableViewHolder(binding.root) {
 
     companion object {
         const val ALPHA_VISITED = 0.6f
@@ -63,10 +62,9 @@ class LinkViewHolder(
         }
     }
 
-    override val containerView = binding.root
     private var type: Int = TYPE_IMAGE
     private lateinit var previewImageView: ImageView
-    private val linksPreferences by lazy { LinksPreferences(containerView.context) }
+    private val linksPreferences by lazy { LinksPreferences(itemView.context) }
 
     fun inflateCorrectImageView() {
         previewImageView = when (settingsApi.linkImagePosition) {
@@ -142,7 +140,7 @@ class LinkViewHolder(
         }
         binding.shareTextView.setOnClickListener {
         }
-        containerView.setOnClickListener {
+        itemView.setOnClickListener {
             openLinkDetail(link)
         }
     }
