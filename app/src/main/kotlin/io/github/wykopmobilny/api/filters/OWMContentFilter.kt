@@ -1,12 +1,11 @@
 package io.github.wykopmobilny.api.filters
 
 import io.github.wykopmobilny.api.patrons.PatronsApi
-import io.github.wykopmobilny.models.dataclass.Author
+import io.github.wykopmobilny.api.patrons.getBadgeFor
 import io.github.wykopmobilny.models.dataclass.Entry
 import io.github.wykopmobilny.models.dataclass.EntryComment
 import io.github.wykopmobilny.models.dataclass.Link
 import io.github.wykopmobilny.models.dataclass.LinkComment
-import io.github.wykopmobilny.models.pojo.apiv2.patrons.PatronBadge
 import io.github.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.github.wykopmobilny.utils.preferences.LinksPreferencesApi
 import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
@@ -15,23 +14,15 @@ import java.util.Collections
 import javax.inject.Inject
 
 class OWMContentFilter @Inject constructor(
-    val blacklistPreferences: BlacklistPreferencesApi,
-    val settingsPreferencesApi: SettingsPreferencesApi,
+    private val blacklistPreferences: BlacklistPreferencesApi,
+    private val settingsPreferencesApi: SettingsPreferencesApi,
     private val linksPreferencesApi: LinksPreferencesApi,
-    val patronsApi: PatronsApi
+    private val patronsApi: PatronsApi
 ) {
-
-    fun getBadgeFor(author: Author): PatronBadge? {
-        return try {
-            patronsApi.patrons.firstOrNull { it.username == author.nick }?.badge
-        } catch (e: Throwable) {
-            null
-        }
-    }
 
     fun filterEntry(entry: Entry) =
         entry.apply {
-            author.badge = getBadgeFor(author)
+            author.badge = patronsApi.getBadgeFor(author)
             isBlocked =
                 isBlocked ||
                 body.bodyContainsBlockedTags() ||
@@ -42,7 +33,7 @@ class OWMContentFilter @Inject constructor(
 
     fun filterEntryComment(comment: EntryComment) =
         comment.apply {
-            author.badge = getBadgeFor(author)
+            author.badge = patronsApi.getBadgeFor(author)
             isBlocked =
                 isBlocked ||
                 body.bodyContainsBlockedTags() ||
@@ -52,7 +43,7 @@ class OWMContentFilter @Inject constructor(
 
     fun filterLinkComment(comment: LinkComment) =
         comment.apply {
-            author.badge = getBadgeFor(author)
+            author.badge = patronsApi.getBadgeFor(author)
             isBlocked =
                 isBlocked ||
                 body?.bodyContainsBlockedTags() ?: false ||

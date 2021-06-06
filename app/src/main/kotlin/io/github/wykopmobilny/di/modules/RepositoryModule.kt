@@ -19,7 +19,6 @@ import io.github.wykopmobilny.api.notifications.NotificationsApi
 import io.github.wykopmobilny.api.notifications.NotificationsRepository
 import io.github.wykopmobilny.api.patrons.PatronsApi
 import io.github.wykopmobilny.api.patrons.PatronsRepository
-import io.github.wykopmobilny.api.patrons.PatronsRetrofitApi
 import io.github.wykopmobilny.api.pm.PMApi
 import io.github.wykopmobilny.api.pm.PMRepository
 import io.github.wykopmobilny.api.profile.ProfileApi
@@ -38,7 +37,6 @@ import okhttp3.OkHttpClient
 import pl.droidsonroids.retrofit2.JspoonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -84,6 +82,9 @@ class RepositoryModule {
     fun AddLinkRepository.addLink(): AddLinkApi = this
 
     @Provides
+    fun PatronsRepository.patrons(patronsApi: PatronsRepository): PatronsApi = this
+
+    @Provides
     @Singleton
     fun provideScraperApi(okHttpClient: OkHttpClient): ScraperApi = ScraperRepository(createScraperRetrofit(okHttpClient))
 
@@ -94,21 +95,6 @@ class RepositoryModule {
             .client(client)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(JspoonConverterFactory.create())
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun patrons(okHttpClient: OkHttpClient): PatronsApi = PatronsRepository(
-        patronsApi = patronsRetrofit(okHttpClient).create(PatronsRetrofitApi::class.java),
-    )
-
-    private fun patronsRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://this.will.be/ignored?i=guess")
-            .client(okHttpClient)
-            .addConverterFactory(JacksonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 }

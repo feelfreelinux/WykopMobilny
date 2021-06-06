@@ -5,5 +5,7 @@ plugins {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include ":app",
-    ":wykop:remote",
-    ":wykop:api"
+    "data:wykop:remote",
+    "data:wykop:api",
+    "data:patrons:remote",
+    "data:patrons:api"

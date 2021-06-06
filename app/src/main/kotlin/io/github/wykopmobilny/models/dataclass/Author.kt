@@ -5,23 +5,23 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Parcel
 import android.os.Parcelable
 import android.widget.TextView
-import io.github.wykopmobilny.models.pojo.apiv2.patrons.PatronBadge
 import io.github.wykopmobilny.utils.getActivityContext
 import io.github.wykopmobilny.utils.openBrowser
+import kotlinx.parcelize.Parcelize
 
 class Author(
     val nick: String,
     val avatarUrl: String,
     val group: Int,
     val sex: String,
-    var badge: PatronBadge? = null
+    var badge: AndroidPatronBadge? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readInt(),
         parcel.readString()!!,
-        parcel.readParcelable(PatronBadge::class.java.classLoader)
+        parcel.readParcelable(AndroidPatronBadge::class.java.classLoader)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -47,7 +47,7 @@ class Author(
     }
 }
 
-fun PatronBadge.drawBadge(view: TextView) {
+fun AndroidPatronBadge.drawBadge(view: TextView) {
     val shape = GradientDrawable(
         GradientDrawable.Orientation.LEFT_RIGHT,
         intArrayOf(Color.parseColor(hexColor), Color.parseColor(hexColor))
@@ -59,3 +59,9 @@ fun PatronBadge.drawBadge(view: TextView) {
     view.text = text
     view.background = shape
 }
+
+@Parcelize
+data class AndroidPatronBadge(
+    val hexColor: String,
+    val text: String
+) : Parcelable

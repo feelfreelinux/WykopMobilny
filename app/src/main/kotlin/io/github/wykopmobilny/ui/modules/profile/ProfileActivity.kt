@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.api.patrons.PatronsApi
+import io.github.wykopmobilny.api.patrons.getBadgeFor
 import io.github.wykopmobilny.api.responses.BadgeResponse
 import io.github.wykopmobilny.api.responses.ObserveStateResponse
 import io.github.wykopmobilny.api.responses.ProfileResponse
@@ -19,7 +20,6 @@ import io.github.wykopmobilny.databinding.BadgesBottomsheetBinding
 import io.github.wykopmobilny.models.dataclass.drawBadge
 import io.github.wykopmobilny.models.fragments.DataFragment
 import io.github.wykopmobilny.models.fragments.getDataFragmentInstance
-import io.github.wykopmobilny.models.pojo.apiv2.patrons.PatronBadge
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.api.getGenderStripResource
 import io.github.wykopmobilny.utils.api.getGroupColor
@@ -91,19 +91,11 @@ class ProfileActivity : BaseActivity(), ProfileView {
         }
     }
 
-    fun getBadgeFor(nick: String): PatronBadge? {
-        return try {
-            patronsApi.patrons.firstOrNull { it.username == nick }?.badge
-        } catch (e: Throwable) {
-            null
-        }
-    }
-
     override fun showProfile(profileResponse: ProfileResponse) {
         dataFragment.data = profileResponse
         binding.pager.offscreenPageLimit = 2
         binding.pager.adapter = pagerAdapter
-        getBadgeFor(profileResponse.login)?.drawBadge(binding.patronBadgeTextView)
+        patronsApi.getBadgeFor(profileResponse.login)?.drawBadge(binding.patronBadgeTextView)
         binding.tabLayout.setupWithViewPager(binding.pager)
         binding.profilePicture.loadImage(profileResponse.avatar)
         binding.signup.text = profileResponse.signupAt.toDurationPrettyDate()

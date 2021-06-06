@@ -8,6 +8,7 @@ import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.github.wykopmobilny.api.ApiSignInterceptor
 import io.github.wykopmobilny.di.DaggerAppComponent
+import io.github.wykopmobilny.patrons.remote.DaggerPatronsComponent
 import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationJobCreator
 import io.github.wykopmobilny.utils.usermanager.SimpleUserManagerApi
 import io.github.wykopmobilny.utils.usermanager.UserCredentials
@@ -48,6 +49,15 @@ class WykopApp : DaggerApplication() {
             instance = this,
             okHttpClient = okHttpClient,
             wykop = createWykop(),
+            patrons = createPatrons(),
+        )
+
+    private fun createPatrons() =
+        DaggerPatronsComponent.factory().create(
+            okHttpClient = okHttpClient.newBuilder()
+                .cache(Cache(cacheDir.resolve("okhttp/patrons"), maxSize = 5 * 1024 * 1024L))
+                .build(),
+            baseUrl = "https://raw.githubusercontent.com/",
         )
 
     private fun createWykop() =
@@ -63,7 +73,7 @@ class WykopApp : DaggerApplication() {
                         }
                     )
                 )
-                .cache(Cache(cacheDir, maxSize = 10 * 1024 * 1024L))
+                .cache(Cache(cacheDir.resolve("okhttp/wykop"), maxSize = 10 * 1024 * 1024L))
                 .protocols(listOf(Protocol.HTTP_1_1))
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)

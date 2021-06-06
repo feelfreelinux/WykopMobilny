@@ -5,6 +5,7 @@ plugins {
     id("com.starter.application.android")
     id("com.starter.easylauncher")
     id("org.jetbrains.kotlin.kapt")
+    id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 projectConfig {
@@ -70,7 +71,8 @@ repositories {
 }
 
 dependencies {
-    implementation projects.wykop.remote
+    implementation projects.data.wykop.remote
+    implementation projects.data.patrons.remote
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'androidx.core:core-ktx:1.5.0'
     def lifecycleVersion = "2.3.1"

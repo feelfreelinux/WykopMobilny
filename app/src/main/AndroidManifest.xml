@@ -310,12 +310,12 @@
 
         <provider
             android:name=".ui.modules.search.SearchSuggestionAdapter"
-            android:authorities="io.github.feelfreelinux.SearchSuggestionAdapter"
+            android:authorities="${applicationId}.SearchSuggestionAdapter"
             />
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="io.github.wykopmobilny.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
             >

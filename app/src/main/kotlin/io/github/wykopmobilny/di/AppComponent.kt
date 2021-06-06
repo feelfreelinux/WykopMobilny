@@ -7,6 +7,7 @@ import dagger.android.support.AndroidSupportInjectionModule
 import io.github.wykopmobilny.WykopApp
 import io.github.wykopmobilny.di.modules.NetworkModule
 import io.github.wykopmobilny.di.modules.RepositoryModule
+import io.github.wykopmobilny.patrons.remote.PatronsComponent
 import io.github.wykopmobilny.wykop.remote.WykopComponent
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
@@ -20,7 +21,10 @@ import javax.inject.Singleton
         NetworkModule::class,
         RepositoryModule::class,
     ],
-    dependencies = [WykopComponent::class],
+    dependencies = [
+        WykopComponent::class,
+        PatronsComponent::class,
+    ],
 )
 
 internal interface AppComponent : AndroidInjector<WykopApp> {
@@ -32,6 +36,7 @@ internal interface AppComponent : AndroidInjector<WykopApp> {
             @BindsInstance instance: WykopApp,
             @BindsInstance okHttpClient: OkHttpClient,
             wykop: WykopComponent,
+            patrons: PatronsComponent,
         ): AppComponent
     }
 }

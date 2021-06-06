@@ -1,7 +1,8 @@
 package io.github.wykopmobilny.api.patrons
 
 import io.github.wykopmobilny.base.WykopSchedulers
-import io.github.wykopmobilny.models.pojo.apiv2.patrons.Patron
+import io.github.wykopmobilny.patrons.api.Patron
+import io.github.wykopmobilny.patrons.api.PatronsRetrofitApi
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
