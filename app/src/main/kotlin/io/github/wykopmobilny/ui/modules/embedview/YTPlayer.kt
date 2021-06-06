@@ -27,7 +27,7 @@ object YouTubeUrlParser {
     private val consentRegex = "consent.youtube.com/.+[?&]continue=([a-z0-9-_.~%]+[^&\\n])".toRegex(RegexOption.IGNORE_CASE)
     private val videoRegex =
         "(?:youtube(?:-nocookie)?\\.com/(?:[^/\\n\\s]+/\\S+/|(?:v|e(?:mbed)?)/|\\S*?[?&]v=)|youtu\\.be/)([a-z0-9_-]{11})".toRegex(
-            RegexOption.IGNORE_CASE
+            RegexOption.IGNORE_CASE,
         )
     private val timestampRegex = "t=([^#&\\n\\r]+)".toRegex(RegexOption.IGNORE_CASE)
 
@@ -123,13 +123,7 @@ class YTPlayer :
         playerView = YouTubePlayerView(this)
         playerView!!.initialize(googleApiKey, this)
 
-        addContentView(
-            playerView,
-            LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT
-            )
-        )
+        addContentView(playerView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
 
         playerView!!.setBackgroundResource(android.R.color.black)
 
@@ -168,7 +162,7 @@ class YTPlayer :
     override fun onInitializationSuccess(
         provider: YouTubePlayer.Provider,
         player: YouTubePlayer,
-        wasRestored: Boolean
+        wasRestored: Boolean,
     ) {
         this.player = player
         player.setOnFullscreenListener(this)
@@ -218,15 +212,12 @@ class YTPlayer :
 
     override fun onInitializationFailure(
         provider: YouTubePlayer.Provider,
-        errorReason: YouTubeInitializationResult
+        errorReason: YouTubeInitializationResult,
     ) {
         if (errorReason.isUserRecoverableError) {
             errorReason.getErrorDialog(this, RECOVERY_DIALOG_REQUEST).show()
         } else {
-            val errorMessage = String.format(
-                "There was an error initializing the YouTubePlayer (%1\$s)",
-                errorReason.toString()
-            )
+            val errorMessage = "There was an error initializing the YouTubePlayer ($errorReason)"
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         }
     }
@@ -249,20 +240,19 @@ class YTPlayer :
             } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT && player != null) {
                 player!!.setFullscreen(false)
             }
-            Orientation.ONLY_LANDSCAPE, Orientation.ONLY_PORTRAIT -> {
-            }
+            Orientation.ONLY_LANDSCAPE, Orientation.ONLY_PORTRAIT -> Unit
         }
     }
 
     override fun onFullscreen(fullScreen: Boolean) {
         when (orientation) {
-            Orientation.AUTO, Orientation.AUTO_START_WITH_LANDSCAPE -> requestedOrientation = if (fullScreen) {
-                LANDSCAPE_ORIENTATION
-            } else {
-                PORTRAIT_ORIENTATION
-            }
-            Orientation.ONLY_LANDSCAPE, Orientation.ONLY_PORTRAIT -> {
-            }
+            Orientation.AUTO, Orientation.AUTO_START_WITH_LANDSCAPE ->
+                requestedOrientation = if (fullScreen) {
+                    LANDSCAPE_ORIENTATION
+                } else {
+                    PORTRAIT_ORIENTATION
+                }
+            Orientation.ONLY_LANDSCAPE, Orientation.ONLY_PORTRAIT -> Unit
         }
     }
 
@@ -274,7 +264,7 @@ class YTPlayer :
             var intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
             val list = packageManager.queryIntentActivities(
                 intent,
-                PackageManager.MATCH_DEFAULT_ONLY
+                PackageManager.MATCH_DEFAULT_ONLY,
             )
 
             if (list.isEmpty()) {

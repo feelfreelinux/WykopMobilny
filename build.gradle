@@ -10,7 +10,7 @@ plugins {
 }
 
 autoManifest {
-    packageName.set("io.github.feelfreelinux.wykopmobilny")
+    packageName.set("io.github.wykopmobilny")
 }
 
 commonConfig {
