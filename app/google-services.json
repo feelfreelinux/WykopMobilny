@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "798573876421",
+    "project_id": "otwarty-wykop-mobilny",
+    "storage_bucket": "otwarty-wykop-mobilny.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798573876421:android:5b88c36a29784ad276ccac",
+        "android_client_info": {
+          "package_name": "io.github.wykopmobilny"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798573876421-1024551f1rd6gjrch8f1kjad8knrld7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMF1hkym2Ln7_NJ7tTEg-YteMGVxXV7dw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798573876421-1024551f1rd6gjrch8f1kjad8knrld7r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798573876421:android:b27e4ab81937a5fc76ccac",
+        "android_client_info": {
+          "package_name": "io.github.wykopmobilny.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798573876421-sia90tooua0tm9jd13jj28aarvvos936.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.wykopmobilny.debug",
+            "certificate_hash": "b9a2ef68fc75cdad6bc20b17f66c2521bed5ee6a"
+          }
+        },
+        {
+          "client_id": "798573876421-1024551f1rd6gjrch8f1kjad8knrld7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMF1hkym2Ln7_NJ7tTEg-YteMGVxXV7dw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798573876421-1024551f1rd6gjrch8f1kjad8knrld7r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
