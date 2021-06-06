@@ -7,7 +7,6 @@ import io.github.wykopmobilny.blacklist.api.ScraperRetrofitApi
 import okhttp3.OkHttpClient
 import pl.droidsonroids.retrofit2.JspoonConverterFactory
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.create
 
 @Module
@@ -31,7 +30,6 @@ internal class ScraperModule {
         return Retrofit.Builder()
             .baseUrl(url)
             .client(client)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(JspoonConverterFactory.create())
             .build()
     }

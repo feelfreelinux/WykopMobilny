@@ -4,7 +4,6 @@ import io.github.wykopmobilny.api.errorhandler.WykopExceptionParser
 import io.github.wykopmobilny.api.user.LoginApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.reactivex.Flowable
-import io.reactivex.Single
 import io.reactivex.functions.Function
 import org.reactivestreams.Publisher
 import retrofit2.HttpException
@@ -35,8 +34,6 @@ class UserTokenRefresher(
         }
 
     private fun getSaveUserSessionFlowable() =
-        userApi.getUserSessionToken().flatMap {
-            userManagerApi.saveCredentials(it)
-            Single.just(it)
-        }.toFlowable()
+        userApi.getUserSessionToken().map { userManagerApi.saveCredentials(it) }
+            .toFlowable()
 }

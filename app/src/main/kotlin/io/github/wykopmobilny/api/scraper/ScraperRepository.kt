@@ -3,6 +3,7 @@ package io.github.wykopmobilny.api.scraper
 import io.github.wykopmobilny.blacklist.api.Blacklist
 import io.github.wykopmobilny.blacklist.api.ScraperRetrofitApi
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 
 class ScraperRepository @Inject constructor(
@@ -10,5 +11,5 @@ class ScraperRepository @Inject constructor(
 ) : ScraperApi {
 
     override fun getBlacklist(): Single<Blacklist> =
-        scraperApi.getBlacklist()
+        rxSingle { scraperApi.getBlacklist() }
 }

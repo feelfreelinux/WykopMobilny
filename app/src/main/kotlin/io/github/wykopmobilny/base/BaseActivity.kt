@@ -22,7 +22,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     open val isActivityTransfluent: Boolean = false
     var isRunning = false
     lateinit var rxPermissions: RxPermissions
-    private val themeSettingsPreferences by lazy { SettingsPreferences(this) as SettingsPreferencesApi }
+    private val themeSettingsPreferences: SettingsPreferencesApi by lazy { SettingsPreferences(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initTheme()

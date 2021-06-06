@@ -8,6 +8,7 @@ import io.github.wykopmobilny.api.patrons.PatronsApi
 import io.github.wykopmobilny.models.dataclass.EntryLink
 import io.github.wykopmobilny.models.mapper.apiv2.EntryLinkMapper
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 
 class MyWykopRepository @Inject constructor(
@@ -18,21 +19,21 @@ class MyWykopRepository @Inject constructor(
 ) : MyWykopApi {
 
     override fun getIndex(page: Int): Single<List<EntryLink>> =
-        myWykopApi.getIndex(page)
+        rxSingle { myWykopApi.getIndex(page) }
             .retryWhen(userTokenRefresher)
             .flatMap { patronsApi.ensurePatrons(it) }
             .compose(ErrorHandlerTransformer())
             .map { it.map { response -> EntryLinkMapper.map(response, owmContentFilter) } }
 
     override fun byUsers(page: Int): Single<List<EntryLink>> =
-        myWykopApi.byUsers(page)
+        rxSingle { myWykopApi.byUsers(page) }
             .retryWhen(userTokenRefresher)
             .flatMap { patronsApi.ensurePatrons(it) }
             .compose(ErrorHandlerTransformer())
             .map { it.map { response -> EntryLinkMapper.map(response, owmContentFilter) } }
 
     override fun byTags(page: Int): Single<List<EntryLink>> =
-        myWykopApi.byTags(page)
+        rxSingle { myWykopApi.byTags(page) }
             .retryWhen(userTokenRefresher)
             .flatMap { patronsApi.ensurePatrons(it) }
             .compose(ErrorHandlerTransformer())

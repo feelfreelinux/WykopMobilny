@@ -12,39 +12,40 @@ import io.github.wykopmobilny.models.mapper.apiv2.TagEntriesMapper
 import io.github.wykopmobilny.models.mapper.apiv2.TagLinksMapper
 import io.github.wykopmobilny.utils.preferences.BlacklistPreferencesApi
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 
 class TagRepository @Inject constructor(
     private val tagApi: TagRetrofitApi,
     private val userTokenRefresher: UserTokenRefresher,
     private val owmContentFilter: OWMContentFilter,
-    private val blacklistPreferencesApi: BlacklistPreferencesApi
+    private val blacklistPreferencesApi: BlacklistPreferencesApi,
 ) : TagApi {
 
-    override fun getTagEntries(tag: String, page: Int) = tagApi.getTagEntries(tag, page)
+    override fun getTagEntries(tag: String, page: Int) = rxSingle { tagApi.getTagEntries(tag, page) }
         .retryWhen(userTokenRefresher)
         .flatMap(ErrorHandler<TagEntriesResponse>())
         .map { TagEntriesMapper.map(it, owmContentFilter) }
 
-    override fun getTagLinks(tag: String, page: Int) = tagApi.getTagLinks(tag, page)
+    override fun getTagLinks(tag: String, page: Int) = rxSingle { tagApi.getTagLinks(tag, page) }
         .retryWhen(userTokenRefresher)
         .flatMap(ErrorHandler<TagLinksResponse>())
         .map { TagLinksMapper.map(it, owmContentFilter) }
 
     override fun getObservedTags(): Single<List<ObservedTagResponse>> =
-        tagApi.getObservedTags()
+        rxSingle { tagApi.getObservedTags() }
             .retryWhen(userTokenRefresher)
             .compose(ErrorHandlerTransformer())
 
-    override fun observe(tag: String) = tagApi.observe(tag)
+    override fun observe(tag: String) = rxSingle { tagApi.observe(tag) }
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
 
-    override fun unobserve(tag: String) = tagApi.unobserve(tag)
+    override fun unobserve(tag: String) = rxSingle { tagApi.unobserve(tag) }
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
 
-    override fun block(tag: String) = tagApi.block(tag)
+    override fun block(tag: String) = rxSingle { tagApi.block(tag) }
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
         .doOnSuccess {
@@ -53,7 +54,7 @@ class TagRepository @Inject constructor(
             }
         }
 
-    override fun unblock(tag: String) = tagApi.unblock(tag)
+    override fun unblock(tag: String) = rxSingle { tagApi.unblock(tag) }
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
         .doOnSuccess {
