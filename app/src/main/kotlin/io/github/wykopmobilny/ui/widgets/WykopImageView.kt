@@ -10,15 +10,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.signature.ObjectKey
+import io.github.wykopmobilny.WykopApp
 import io.github.wykopmobilny.glide.GlideApp
 import io.github.wykopmobilny.utils.getActivityContext
-import io.github.wykopmobilny.utils.preferences.SettingsPreferences
 
-class WykopImageView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : AppCompatImageView(context, attrs, defStyleAttr) {
+class WykopImageView(context: Context, attrs: AttributeSet?,) : AppCompatImageView(context, attrs) {
 
     init {
         setOnClickListener { openImageListener() }
@@ -31,7 +27,7 @@ class WykopImageView @JvmOverloads constructor(
     var onResizedListener: (Boolean) -> Unit = {}
     var showResizeView: (Boolean) -> Unit = {}
 
-    private val settingsPreferencesApi by lazy { SettingsPreferences(context) }
+    private val settingsPreferencesApi by lazy { (context.applicationContext as WykopApp).settingsPreferencesApi.get() }
     private val screenMetrics by lazy {
         val metrics = DisplayMetrics()
         getActivityContext()!!.windowManager.defaultDisplay.getMetrics(metrics)

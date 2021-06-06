@@ -6,7 +6,7 @@ import io.github.wykopmobilny.models.dataclass.EntryLink
 import io.github.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.wykopmobilny.ui.adapters.viewholders.LinkViewHolder
 import io.github.wykopmobilny.ui.adapters.viewholders.SimpleLinkViewHolder
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 

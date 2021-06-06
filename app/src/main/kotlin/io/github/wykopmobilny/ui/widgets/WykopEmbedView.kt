@@ -12,7 +12,7 @@ import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.getActivityContext
 import io.github.wykopmobilny.utils.layoutInflater
 import io.github.wykopmobilny.utils.openBrowser
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import java.lang.ref.WeakReference
 import java.net.URI
 
@@ -138,7 +138,7 @@ class WykopEmbedView(context: Context, attrs: AttributeSet) : FrameLayout(contex
                             getActivityContext()!!.openBrowser(image.url)
                         }
                     }
-                    else -> navigator.openBrowser(image.url)
+                    else -> navigator.openBrowser(settingsPreferences, image.url)
                 }
             }
         }

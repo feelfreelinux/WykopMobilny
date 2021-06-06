@@ -2,8 +2,8 @@ package io.github.wykopmobilny.utils.usermanager
 
 import android.content.Context
 import io.github.wykopmobilny.api.responses.LoginResponse
+import io.github.wykopmobilny.storage.api.CredentialsPreferencesApi
 import io.github.wykopmobilny.ui.dialogs.userNotLoggedInDialog
-import io.github.wykopmobilny.utils.api.CredentialsPreferencesApi
 
 data class LoginCredentials(val login: String, val token: String)
 
@@ -51,17 +51,20 @@ class UserManager(private val credentialsPreferencesApi: CredentialsPreferencesA
         }
     }
 
-    override fun getUserCredentials(): UserCredentials? {
+    override fun getUserCredentials(): UserCredentials? =
         credentialsPreferencesApi.run {
-            return if (!login.isNullOrEmpty() || !avatarUrl.isNullOrEmpty() || !userToken.isNullOrEmpty()) {
+            if (!login.isNullOrEmpty() || !avatarUrl.isNullOrEmpty() || !userToken.isNullOrEmpty()) {
                 UserCredentials(login!!, avatarUrl!!, backgroundUrl, userToken!!)
-            } else null
+            } else {
+                null
+            }
         }
-    }
 
     override fun runIfLoggedIn(context: Context, callback: () -> Unit) {
         if (isUserAuthorized()) {
             callback.invoke()
-        } else userNotLoggedInDialog(context)?.show()
+        } else {
+            userNotLoggedInDialog(context)?.show()
+        }
     }
 }

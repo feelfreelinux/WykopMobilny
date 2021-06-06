@@ -14,7 +14,7 @@ import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandler
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import java.util.concurrent.TimeUnit
 
 class WykopNotificationsJob(

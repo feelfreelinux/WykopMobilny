@@ -1,5 +1,6 @@
 package io.github.wykopmobilny.utils.textview
 
+import android.app.AlertDialog
 import android.text.ParcelableSpan
 import android.text.Spannable
 import android.text.SpannableString
@@ -8,7 +9,6 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.util.Linkify
 import android.widget.TextView
-import io.github.wykopmobilny.ui.dialogs.createAlertBuilder
 import io.github.wykopmobilny.utils.api.convertMarkdownToHtml
 import java.net.URLDecoder
 
@@ -39,15 +39,21 @@ fun TextView.prepareBody(
             if (!shouldOpenSpoilerDialog) {
                 openSpoilers(url.span(), url.text())
             } else {
-                val spoiler = SpannableString(URLDecoder.decode(url.text().substringAfter("spoiler:"), "UTF-8"))
+                val spoiler = SpannableString(
+                    URLDecoder.decode(
+                        url.text().substringAfter("spoiler:"),
+                        "UTF-8"
+                    )
+                )
                 Linkify.addLinks(spoiler, Linkify.WEB_URLS)
-                context.createAlertBuilder().apply {
+                AlertDialog.Builder(context).apply {
                     setTitle("Spoiler")
                     setMessage(spoiler)
                     setPositiveButton(android.R.string.ok, null)
                     val dialog = create()
                     dialog.show()
-                    dialog.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+                    dialog.findViewById<TextView>(android.R.id.message)?.movementMethod =
+                        LinkMovementMethod.getInstance()
                 }
             }
         } else urlClickListener(url.text())

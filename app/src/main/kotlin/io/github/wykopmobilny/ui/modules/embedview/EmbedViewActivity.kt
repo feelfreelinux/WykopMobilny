@@ -35,7 +35,7 @@ import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.ui.modules.photoview.PhotoViewActions
 import io.github.wykopmobilny.utils.ClipboardHelperApi
 import io.github.wykopmobilny.utils.openBrowser
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.viewBinding
 import io.github.wykopmobilny.utils.wykopLog
 import io.reactivex.Single

@@ -1,16 +1,13 @@
-package io.github.wykopmobilny.utils.preferences
+package io.github.wykopmobilny.storage.android
 
 import android.content.Context
+import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import javax.inject.Inject
 
-interface BlacklistPreferencesApi {
-    var blockedTags: Set<String>
-    var blockedUsers: Set<String>
-    var scraperSession: String?
-    var blockedImported: Boolean
-}
+internal class BlacklistPreferences @Inject constructor(
+    context: Context
+) : Preferences(context), BlacklistPreferencesApi {
 
-class BlacklistPreferences @Inject constructor(context: Context) : Preferences(context), BlacklistPreferencesApi {
     override var blockedTags: Set<String> by stringSetPref("blockedTagsSet")
     override var blockedUsers: Set<String> by stringSetPref("blockedUsersSet")
     override var scraperSession: String? by stringPref("sessionString", "nosession")

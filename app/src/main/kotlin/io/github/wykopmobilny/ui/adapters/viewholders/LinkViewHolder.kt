@@ -5,12 +5,12 @@ import android.widget.ImageView
 import androidx.core.view.isVisible
 import io.github.wykopmobilny.databinding.LinkLayoutBinding
 import io.github.wykopmobilny.models.dataclass.Link
+import io.github.wykopmobilny.storage.api.LinksPreferencesApi
 import io.github.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.layoutInflater
 import io.github.wykopmobilny.utils.loadImage
-import io.github.wykopmobilny.utils.preferences.LinksPreferences
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 
 class LinkViewHolder(
@@ -18,7 +18,8 @@ class LinkViewHolder(
     private val settingsApi: SettingsPreferencesApi,
     private val navigatorApi: NewNavigatorApi,
     private val userManagerApi: UserManagerApi,
-    private val linkActionListener: LinkActionListener
+    private val linkActionListener: LinkActionListener,
+    private val linksPreferences: LinksPreferencesApi,
 ) : RecyclableViewHolder(binding.root) {
 
     companion object {
@@ -37,14 +38,16 @@ class LinkViewHolder(
             userManagerApi: UserManagerApi,
             settingsPreferencesApi: SettingsPreferencesApi,
             navigatorApi: NewNavigatorApi,
-            linkActionListener: LinkActionListener
+            linkActionListener: LinkActionListener,
+            linksPreferences: LinksPreferencesApi,
         ): LinkViewHolder {
             val view = LinkViewHolder(
                 LinkLayoutBinding.inflate(parent.layoutInflater, parent, false),
                 settingsPreferencesApi,
                 navigatorApi,
                 userManagerApi,
-                linkActionListener
+                linkActionListener,
+                linksPreferences,
             )
             if (viewType == TYPE_IMAGE) view.inflateCorrectImageView()
             view.type = viewType
@@ -64,7 +67,6 @@ class LinkViewHolder(
 
     private var type: Int = TYPE_IMAGE
     private lateinit var previewImageView: ImageView
-    private val linksPreferences by lazy { LinksPreferences(itemView.context) }
 
     fun inflateCorrectImageView() {
         previewImageView = when (settingsApi.linkImagePosition) {

@@ -94,6 +94,7 @@
         <item name="textSizeNormal">@dimen/text_normal_size_normal</item>
         <item name="textSizeLarge">@dimen/text_normal_size_large</item>
         <item name="textSizeHuge">@dimen/text_normal_size_huge</item>
+        <item name="alertDialogTheme">@android:style/Theme.DeviceDefault.Light.Dialog</item>
     </style>
 
     <style name="WykopAppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
@@ -194,6 +195,7 @@
         <item name="textSizeNormal">@dimen/text_normal_size_normal</item>
         <item name="textSizeLarge">@dimen/text_normal_size_large</item>
         <item name="textSizeHuge">@dimen/text_normal_size_huge</item>
+        <item name="alertDialogTheme">@android:style/Theme.DeviceDefault.Dialog</item>
     </style>
 
     <style name="WykopAppTheme.Amoled" parent="WykopAppTheme.Dark">
@@ -227,6 +229,7 @@
         <item name="markdownInsertLink">@drawable/ic_markdowntoolbar_link_amoled</item>
         <item name="markdownInsertPhoto">@drawable/ic_markdowntoolbar_photo_amoled</item>
         <item name="markdownInsertSpoiler">@drawable/ic_markdowntoolbar_spoiler_amoled</item>
+        <item name="alertDialogTheme">@android:style/Theme.DeviceDefault.Dialog</item>
     </style>
 
     <style name="NavigationDrawerStyle" parent="">

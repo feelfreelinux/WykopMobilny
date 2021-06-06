@@ -2,6 +2,7 @@ package io.github.wykopmobilny.ui.modules.addlink
 
 import dagger.Module
 import dagger.Provides
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigator
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandler
@@ -15,6 +16,10 @@ class AddlinkModule {
         NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity: AddlinkActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi =
-        WykopLinkHandler(activity, navigator)
+    fun provideLinkHandler(
+        activity: AddlinkActivity,
+        navigator: NewNavigatorApi,
+        settingsPreferences: SettingsPreferencesApi,
+    ): WykopLinkHandlerApi =
+        WykopLinkHandler(activity, navigator, settingsPreferences)
 }

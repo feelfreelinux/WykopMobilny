@@ -3,7 +3,7 @@ package io.github.wykopmobilny.ui.modules.notifications.notificationsservice
 import android.content.Context
 import android.content.Intent
 import dagger.android.DaggerBroadcastReceiver
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import javax.inject.Inject
 
 class WykopNotificationsBroadcastReceiver : DaggerBroadcastReceiver() {

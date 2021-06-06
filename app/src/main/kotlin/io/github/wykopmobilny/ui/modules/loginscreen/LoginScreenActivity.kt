@@ -1,6 +1,7 @@
 package io.github.wykopmobilny.ui.modules.loginscreen
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -12,9 +13,8 @@ import io.github.wykopmobilny.R
 import io.github.wykopmobilny.base.BaseActivity
 import io.github.wykopmobilny.databinding.ActivityWebviewBinding
 import io.github.wykopmobilny.blacklist.api.Blacklist
-import io.github.wykopmobilny.ui.dialogs.createAlertBuilder
+import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
@@ -34,7 +34,7 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     lateinit var presenter: LoginScreenPresenter
 
     @Inject
-    lateinit var blacklistPreferences: BlacklistPreferences
+    lateinit var blacklistPreferences: BlacklistPreferencesApi
 
     private val binding by viewBinding(ActivityWebviewBinding::inflate)
 
@@ -61,7 +61,7 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
     }
 
     override fun goBackToSplashScreen() {
-        val builder = createAlertBuilder()
+        val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.blacklist_import_title))
         builder.setMessage(getString(R.string.blacklist_import_ask))
         builder.setPositiveButton(getString(R.string.blacklist_import_action)) { _, _ ->

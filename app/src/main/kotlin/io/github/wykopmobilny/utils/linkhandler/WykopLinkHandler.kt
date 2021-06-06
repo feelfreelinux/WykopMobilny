@@ -3,6 +3,7 @@ package io.github.wykopmobilny.utils.linkhandler
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigator
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.ui.modules.embedview.EmbedViewActivity
@@ -25,7 +26,8 @@ interface WykopLinkHandlerApi {
 
 class WykopLinkHandler(
     private val context: Activity,
-    private val navigatorApi: NewNavigatorApi
+    private val navigatorApi: NewNavigatorApi,
+    private val settingsPreferences: SettingsPreferencesApi,
 ) : WykopLinkHandlerApi {
 
     companion object {
@@ -96,11 +98,11 @@ class WykopLinkHandler(
                 if (refreshNotifications) context.startActivityForResult(intent, NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE)
                 else context.startActivity(intent)
             } else {
-                navigatorApi.openBrowser(url)
+                navigatorApi.openBrowser(settingsPreferences, url)
             }
-        } catch (e: Throwable) {
+        } catch (_: Throwable) {
             // Something went wrong while parsing url, fallback to browser
-            navigatorApi.openBrowser(url)
+            navigatorApi.openBrowser(settingsPreferences, url)
         }
     }
 }

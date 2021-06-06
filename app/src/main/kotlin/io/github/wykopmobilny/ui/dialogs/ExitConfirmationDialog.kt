@@ -5,7 +5,7 @@ import android.content.Context
 import io.github.wykopmobilny.R
 
 fun exitConfirmationDialog(context: Context, callback: () -> Unit): AlertDialog? =
-    context.createAlertBuilder().run {
+    AlertDialog.Builder(context).run {
         setTitle(R.string.confirm_exit)
         setPositiveButton(android.R.string.ok) { _, _ -> callback.invoke() }
         setNeutralButton(android.R.string.cancel, null)

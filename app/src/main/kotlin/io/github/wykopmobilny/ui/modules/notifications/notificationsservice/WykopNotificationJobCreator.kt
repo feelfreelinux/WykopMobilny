@@ -1,8 +1,8 @@
 package io.github.wykopmobilny.ui.modules.notifications.notificationsservice
 
 import com.evernote.android.job.JobCreator
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import javax.inject.Inject
 
 class WykopNotificationJobCreator @Inject constructor(

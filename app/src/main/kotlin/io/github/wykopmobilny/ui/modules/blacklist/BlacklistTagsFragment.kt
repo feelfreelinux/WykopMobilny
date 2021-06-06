@@ -5,8 +5,8 @@ import android.view.View
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.base.BaseFragment
 import io.github.wykopmobilny.databinding.BlacklistFragmentBinding
+import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.ui.adapters.BlacklistAdapter
-import io.github.wykopmobilny.utils.preferences.BlacklistPreferences
 import io.github.wykopmobilny.utils.prepare
 import io.github.wykopmobilny.utils.viewBinding
 import io.reactivex.disposables.CompositeDisposable
@@ -22,7 +22,7 @@ class BlacklistTagsFragment : BaseFragment(R.layout.blacklist_fragment) {
     lateinit var adapter: BlacklistAdapter
 
     @Inject
-    lateinit var blacklistPreferences: BlacklistPreferences
+    lateinit var blacklistPreferences: BlacklistPreferencesApi
 
     private val binding by viewBinding(BlacklistFragmentBinding::bind)
 

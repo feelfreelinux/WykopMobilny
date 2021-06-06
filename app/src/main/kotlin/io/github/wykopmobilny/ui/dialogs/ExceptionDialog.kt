@@ -19,7 +19,7 @@ private fun exceptionDialog(context: Context, e: Throwable): AlertDialog? {
         }
         else -> if (e.message.isNullOrEmpty()) e.toString() else e.message
     }
-    context.createAlertBuilder().run {
+    AlertDialog.Builder(context).run {
         setTitle(context.getString(R.string.error_occured))
         setMessage(message)
         setPositiveButton(android.R.string.ok, null)

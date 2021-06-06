@@ -18,7 +18,7 @@ import io.github.wykopmobilny.models.mapper.apiv2.EntryMapper
 import io.github.wykopmobilny.models.mapper.apiv2.LinkCommentMapper
 import io.github.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.wykopmobilny.models.mapper.apiv2.RelatedMapper
-import io.github.wykopmobilny.utils.preferences.BlacklistPreferencesApi
+import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.reactivex.Single
 import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject

@@ -7,7 +7,7 @@ import io.github.wykopmobilny.models.dataclass.PMMessage
 import io.github.wykopmobilny.ui.adapters.viewholders.PMMessageViewHolder
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.layoutInflater
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 import javax.inject.Inject
 

@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.wykopmobilny.api.tag.TagApi
 import io.github.wykopmobilny.base.Schedulers
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigator
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandler
@@ -19,5 +20,9 @@ class TagActivityModule {
     fun provideNavigator(activity: TagActivity): NewNavigatorApi = NewNavigator(activity)
 
     @Provides
-    fun provideLinkHandler(activity: TagActivity, navigator: NewNavigatorApi): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator)
+    fun provideLinkHandler(
+        activity: TagActivity,
+        navigator: NewNavigatorApi,
+        settingsPreferences: SettingsPreferencesApi,
+    ): WykopLinkHandlerApi = WykopLinkHandler(activity, navigator, settingsPreferences)
 }

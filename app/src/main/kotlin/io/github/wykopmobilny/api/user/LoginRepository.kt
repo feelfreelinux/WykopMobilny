@@ -2,7 +2,7 @@ package io.github.wykopmobilny.api.user
 
 import io.github.wykopmobilny.api.endpoints.LoginRetrofitApi
 import io.github.wykopmobilny.api.errorhandler.ErrorHandlerTransformer
-import io.github.wykopmobilny.utils.api.CredentialsPreferencesApi
+import io.github.wykopmobilny.storage.api.CredentialsPreferencesApi
 import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 

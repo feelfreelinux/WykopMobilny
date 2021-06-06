@@ -7,12 +7,12 @@ import androidx.core.view.isVisible
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.databinding.SimpleLinkLayoutBinding
 import io.github.wykopmobilny.models.dataclass.Link
+import io.github.wykopmobilny.storage.api.LinksPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.layoutInflater
 import io.github.wykopmobilny.utils.loadImage
-import io.github.wykopmobilny.utils.preferences.LinksPreferences
-import io.github.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 
 class SimpleLinkViewHolder(
@@ -20,7 +20,8 @@ class SimpleLinkViewHolder(
     private val settingsApi: SettingsPreferencesApi,
     private val navigatorApi: NewNavigatorApi,
     private val userManagerApi: UserManagerApi,
-    private val linkActionListener: LinkActionListener
+    private val linkActionListener: LinkActionListener,
+    private val linksPreferences: LinksPreferencesApi,
 ) : RecyclableViewHolder(binding.root) {
 
     companion object {
@@ -37,13 +38,15 @@ class SimpleLinkViewHolder(
             userManagerApi: UserManagerApi,
             settingsPreferencesApi: SettingsPreferencesApi,
             navigatorApi: NewNavigatorApi,
-            linkActionListener: LinkActionListener
+            linkActionListener: LinkActionListener,
+            linksPreferences: LinksPreferencesApi,
         ) = SimpleLinkViewHolder(
-            SimpleLinkLayoutBinding.inflate(parent.layoutInflater, parent, false),
-            settingsPreferencesApi,
-            navigatorApi,
-            userManagerApi,
-            linkActionListener
+            binding = SimpleLinkLayoutBinding.inflate(parent.layoutInflater, parent, false),
+            settingsApi = settingsPreferencesApi,
+            navigatorApi = navigatorApi,
+            userManagerApi = userManagerApi,
+            linkActionListener = linkActionListener,
+            linksPreferences = linksPreferences,
         )
 
         fun getViewTypeForLink(link: Link): Int =
@@ -54,7 +57,6 @@ class SimpleLinkViewHolder(
             }
     }
 
-    private val linkPreferences by lazy { LinksPreferences(itemView.context) }
     private val digCountDrawable by lazy {
         itemView.context.obtainStyledAttributes(arrayOf(R.attr.digCountDrawable).toIntArray())
             .use { it.getDrawable(0) }
@@ -91,7 +93,7 @@ class SimpleLinkViewHolder(
             if (!link.gotSelected) {
                 setWidgetAlpha(ALPHA_VISITED)
                 link.gotSelected = true
-                linkPreferences.readLinksIds = linkPreferences.readLinksIds.plusElement("link_${link.id}")
+                linksPreferences.readLinksIds = linksPreferences.readLinksIds.plusElement("link_${link.id}")
             }
         }
     }

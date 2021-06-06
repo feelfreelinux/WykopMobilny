@@ -5,6 +5,8 @@ plugins {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include ":app",
+    "data:storage:api",
+    "data:storage:android",
     "data:wykop:remote",
     "data:wykop:api",
     "data:scraper:remote",
