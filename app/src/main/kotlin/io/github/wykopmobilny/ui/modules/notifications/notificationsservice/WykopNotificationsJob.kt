@@ -10,11 +10,11 @@ import com.evernote.android.job.Job
 import com.evernote.android.job.JobManager
 import com.evernote.android.job.JobRequest
 import io.github.wykopmobilny.R
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManager
 import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandler
-import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import java.util.concurrent.TimeUnit
 
 class WykopNotificationsJob(
@@ -26,12 +26,14 @@ class WykopNotificationsJob(
     companion object {
         const val TAG = "wykop_notifications_job"
         const val NOTIFICATION_ID = 15
+        private const val DEFAULT_INTERVAL = "15"
 
         fun schedule(settingsPreferencesApi: SettingsPreferencesApi) {
             var build: JobRequest? = null
             if (settingsPreferencesApi.showNotifications) {
+                val interval = settingsPreferencesApi.notificationsSchedulerDelay ?: DEFAULT_INTERVAL
                 build = JobRequest.Builder(TAG)
-                    .setPeriodic(TimeUnit.MINUTES.toMillis(15.toLong()), TimeUnit.MINUTES.toMillis(5))
+                    .setPeriodic(TimeUnit.MINUTES.toMillis(interval.toLong()), TimeUnit.MINUTES.toMillis(5))
                     .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                     .setRequirementsEnforced(true)
                     .setUpdateCurrent(true)

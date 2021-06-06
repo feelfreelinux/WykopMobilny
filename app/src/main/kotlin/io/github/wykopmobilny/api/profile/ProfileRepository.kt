@@ -106,8 +106,9 @@ class ProfileRepository @Inject constructor(
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
         .doOnSuccess {
-            if (!blacklistPreferencesApi.blockedUsers.contains(tag.removePrefix("@"))) {
-                blacklistPreferencesApi.blockedUsers = blacklistPreferencesApi.blockedUsers.plus(tag.removePrefix("@"))
+            val blockedUsers = blacklistPreferencesApi.blockedUsers.orEmpty()
+            if (!blockedUsers.contains(tag.removePrefix("@"))) {
+                blacklistPreferencesApi.blockedUsers = blockedUsers.plus(tag.removePrefix("@"))
             }
         }
 
@@ -115,8 +116,9 @@ class ProfileRepository @Inject constructor(
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
         .doOnSuccess {
-            if (blacklistPreferencesApi.blockedUsers.contains(tag.removePrefix("@"))) {
-                blacklistPreferencesApi.blockedUsers = blacklistPreferencesApi.blockedUsers.minus(tag.removePrefix("@"))
+            val blockedUsers = blacklistPreferencesApi.blockedUsers.orEmpty()
+            if (blockedUsers.contains(tag.removePrefix("@"))) {
+                blacklistPreferencesApi.blockedUsers = blockedUsers.minus(tag.removePrefix("@"))
             }
         }
 }

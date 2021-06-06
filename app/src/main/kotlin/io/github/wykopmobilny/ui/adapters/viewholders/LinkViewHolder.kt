@@ -94,7 +94,7 @@ class LinkViewHolder(
         if (!link.gotSelected) {
             setWidgetAlpha(ALPHA_VISITED)
             link.gotSelected = true
-            linksPreferences.readLinksIds = linksPreferences.readLinksIds.plusElement("link_${link.id}")
+            linksPreferences.readLinksIds = linksPreferences.readLinksIds.orEmpty().plusElement("link_${link.id}")
         }
     }
 

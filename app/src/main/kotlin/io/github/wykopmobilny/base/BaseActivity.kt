@@ -77,9 +77,11 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
         when (themeSettingsPreferences.fontSize) {
             "tiny" -> theme.applyStyle(R.style.TextSizeTiny, true)
             "small" -> theme.applyStyle(R.style.TextSizeSmall, true)
-            "normal" -> theme.applyStyle(R.style.TextSizeNormal, true)
             "large" -> theme.applyStyle(R.style.TextSizeLarge, true)
             "huge" -> theme.applyStyle(R.style.TextSizeHuge, true)
+            "normal",
+            null
+            -> theme.applyStyle(R.style.TextSizeNormal, true)
         }
     }
 

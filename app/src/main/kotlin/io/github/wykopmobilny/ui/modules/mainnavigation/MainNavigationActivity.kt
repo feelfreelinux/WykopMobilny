@@ -34,6 +34,8 @@ import io.github.wykopmobilny.databinding.AppAboutBottomsheetBinding
 import io.github.wykopmobilny.databinding.DrawerHeaderViewLayoutBinding
 import io.github.wykopmobilny.databinding.PatronListItemBinding
 import io.github.wykopmobilny.databinding.PatronsBottomsheetBinding
+import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.wykopmobilny.ui.modules.NewNavigator
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
@@ -55,8 +57,6 @@ import io.github.wykopmobilny.ui.widgets.BadgeDrawerDrawable
 import io.github.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderWidget
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 import io.github.wykopmobilny.utils.openBrowser
-import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
-import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.shortcuts.ShortcutsDispatcher
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.wykopmobilny.utils.viewBinding
@@ -280,8 +280,8 @@ class MainNavigationActivity :
     }
 
     private fun openMainFragment() {
-        when (settingsApi.defaultScreen!!) {
-            "mainpage" -> openFragment(PromotedFragment.newInstance())
+        when (settingsApi.defaultScreen) {
+            "mainpage", null -> openFragment(PromotedFragment.newInstance())
             "mikroblog" -> openFragment(HotFragment.newInstance())
             "mywykop" -> openFragment(MyWykopFragment.newInstance())
             "hits" -> openFragment(HitsFragment.newInstance())
@@ -476,12 +476,7 @@ class MainNavigationActivity :
     }
 
     private fun checkBlacklist() {
-        if (
-            userManagerApi.isUserAuthorized() &&
-            !blacklistPreferencesApi.blockedImported &&
-            blacklistPreferencesApi.blockedUsers.isEmpty() &&
-            blacklistPreferencesApi.blockedTags.isEmpty()
-        ) {
+        if (canCheckBlacklist()) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(getString(R.string.blacklist_import_title))
             builder.setMessage(getString(R.string.blacklist_import_ask))
@@ -496,6 +491,12 @@ class MainNavigationActivity :
             builder.show()
         }
     }
+
+    private fun canCheckBlacklist() =
+        userManagerApi.isUserAuthorized() &&
+            !blacklistPreferencesApi.blockedImported &&
+            blacklistPreferencesApi.blockedUsers.isNullOrEmpty() &&
+            blacklistPreferencesApi.blockedTags.isNullOrEmpty()
 
     private fun openLoginScreen() {
         navigator.openLoginScreen(LOGIN_REQUEST_CODE)

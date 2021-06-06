@@ -49,8 +49,9 @@ class TagRepository @Inject constructor(
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
         .doOnSuccess {
-            if (!blacklistPreferencesApi.blockedTags.contains(tag.removePrefix("#"))) {
-                blacklistPreferencesApi.blockedTags = blacklistPreferencesApi.blockedTags.plus(tag.removePrefix("#"))
+            val blockedTags = blacklistPreferencesApi.blockedTags.orEmpty()
+            if (!blockedTags.contains(tag.removePrefix("#"))) {
+                blacklistPreferencesApi.blockedTags = blockedTags.plus(tag.removePrefix("#"))
             }
         }
 
@@ -58,8 +59,9 @@ class TagRepository @Inject constructor(
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
         .doOnSuccess {
-            if (blacklistPreferencesApi.blockedTags.contains(tag.removePrefix("#"))) {
-                blacklistPreferencesApi.blockedTags = blacklistPreferencesApi.blockedTags.minus(tag.removePrefix("#"))
+            val blockedTags = blacklistPreferencesApi.blockedTags.orEmpty()
+            if (blockedTags.contains(tag.removePrefix("#"))) {
+                blacklistPreferencesApi.blockedTags = blockedTags.minus(tag.removePrefix("#"))
             }
         }
 }

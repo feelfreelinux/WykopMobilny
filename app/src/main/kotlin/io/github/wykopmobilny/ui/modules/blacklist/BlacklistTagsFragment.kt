@@ -40,7 +40,7 @@ class BlacklistTagsFragment : BaseFragment(R.layout.blacklist_fragment) {
 
     private fun updateData() {
         adapter.items.clear()
-        adapter.items.addAll(blacklistPreferences.blockedTags)
+        adapter.items.addAll(blacklistPreferences.blockedTags.orEmpty())
         adapter.notifyDataSetChanged()
     }
 

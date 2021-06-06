@@ -20,7 +20,7 @@ interface SettingsPreferencesApi {
     var openSpoilersDialog: Boolean
     var hideLowRangeAuthors: Boolean
     var hideContentWithoutTags: Boolean
-    var cutImageProportion: Int
+    var cutImageProportion: Int?
     var fontSize: String?
     var hideLinkCommentsByDefault: Boolean
     var hideBlacklistedViews: Boolean
