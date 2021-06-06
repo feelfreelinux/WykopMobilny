@@ -2,12 +2,13 @@ package io.github.wykopmobilny
 
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
-import io.github.wykopmobilny.blacklist.remote.DaggerScraperComponent
 import io.github.wykopmobilny.di.DaggerTestAppComponent
 import io.github.wykopmobilny.fakes.FakeCookieProvider
-import io.github.wykopmobilny.patrons.remote.DaggerPatronsComponent
+import io.github.wykopmobilny.phuckdagger.daggerPatrons
+import io.github.wykopmobilny.phuckdagger.daggerScraper
+import io.github.wykopmobilny.phuckdagger.daggerWykop
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
-import io.github.wykopmobilny.wykop.remote.DaggerWykopComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import javax.inject.Inject
 
@@ -27,15 +28,18 @@ class TestApp : WykopApp() {
             .create(
                 instance = this,
                 okHttpClient = okHttpClient,
-                wykop = DaggerWykopComponent.factory().create(
+                wykop = daggerWykop().create(
                     okHttpClient = okHttpClient,
-                    apiUrl = "http://localhost:8000",
+                    baseUrl = "http://localhost:8000",
+                    appKey = "fixture-app-key",
+                    signingInterceptor = Interceptor { it.proceed(it.request()) },
+                    cacheDir = cacheDir.resolve("tests/okhttp-cache"),
                 ),
-                patrons = DaggerPatronsComponent.factory().create(
+                patrons = daggerPatrons().create(
                     okHttpClient = okHttpClient,
                     baseUrl = "http://localhost:8000",
                 ),
-                scraper = DaggerScraperComponent.factory().create(
+                scraper = daggerScraper().create(
                     okHttpClient = okHttpClient,
                     baseUrl = "http://localhost:8000",
                     cookieProvider = { cookieProvider.cookieForSite(it) },

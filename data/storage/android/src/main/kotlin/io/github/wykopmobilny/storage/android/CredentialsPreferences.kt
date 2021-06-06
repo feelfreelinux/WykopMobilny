@@ -62,7 +62,7 @@ internal class CredentialsPreferences @Inject constructor(
             .stateIn(
                 scope = coroutineScope,
                 started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
-                initialValue = null
+                initialValue = userSession
             )
 
     override suspend fun updateSession(value: UserSession?) = withContext(Dispatchers.IO) {
@@ -72,11 +72,10 @@ internal class CredentialsPreferences @Inject constructor(
     override val loggedUser: StateFlow<LoggedUserInfo?>
         get() = preferences.filter { it in userInfoKeys }
             .map { userInfo }
-            .onStart { emit(userInfo) }
             .stateIn(
                 scope = coroutineScope,
                 started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
-                initialValue = null
+                initialValue = userInfo
             )
 
     override suspend fun updateLoggedUser(value: LoggedUserInfo?) = withContext(Dispatchers.IO) {

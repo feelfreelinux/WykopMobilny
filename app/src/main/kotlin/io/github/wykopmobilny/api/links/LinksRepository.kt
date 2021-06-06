@@ -29,7 +29,11 @@ class LinksRepository @Inject constructor(
     override val burySubject = PublishSubject.create<LinkVoteResponsePublishModel>()
 
     override fun getPromoted(page: Int) =
-        rxSingle { linksApi.getPromoted(page) }
+        rxSingle {
+//            val body = linksApi.getPromotedCallback(page).execute()
+//            println(body)
+            linksApi.getPromoted(page)
+        }
             .retryWhen(userTokenRefresher)
             .flatMap { patronsApi.ensurePatrons(it) }
             .compose(ErrorHandlerTransformer())

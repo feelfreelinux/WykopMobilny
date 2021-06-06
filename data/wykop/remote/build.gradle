@@ -2,6 +2,7 @@ plugins {
     id("com.starter.library.kotlin")
     id("org.jetbrains.kotlin.kapt")
 }
+repositories.jcenter()
 
 dependencies {
     api(projects.data.wykop.api)

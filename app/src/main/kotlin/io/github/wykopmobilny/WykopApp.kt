@@ -9,20 +9,18 @@ import dagger.Lazy
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.github.wykopmobilny.api.ApiSignInterceptor
-import io.github.wykopmobilny.blacklist.remote.DaggerScraperComponent
 import io.github.wykopmobilny.di.DaggerAppComponent
-import io.github.wykopmobilny.patrons.remote.DaggerPatronsComponent
+import io.github.wykopmobilny.phuckdagger.daggerPatrons
+import io.github.wykopmobilny.phuckdagger.daggerScraper
+import io.github.wykopmobilny.phuckdagger.daggerWykop
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationJobCreator
 import io.github.wykopmobilny.utils.usermanager.SimpleUserManagerApi
 import io.github.wykopmobilny.utils.usermanager.UserCredentials
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
-import io.github.wykopmobilny.wykop.remote.DaggerWykopComponent
 import okhttp3.Cache
 import okhttp3.OkHttpClient
-import okhttp3.Protocol
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class WykopApp : DaggerApplication() {
@@ -70,14 +68,14 @@ open class WykopApp : DaggerApplication() {
         )
 
     private fun createScraper() =
-        DaggerScraperComponent.factory().create(
+        daggerScraper().create(
             okHttpClient = okHttpClient,
             baseUrl = "https://wykop.pl",
             cookieProvider = { webPage -> CookieManager.getInstance().getCookie(webPage) },
         )
 
     private fun createPatrons() =
-        DaggerPatronsComponent.factory().create(
+        daggerPatrons().create(
             okHttpClient = okHttpClient.newBuilder()
                 .cache(Cache(cacheDir.resolve("okhttp/patrons"), maxSize = 5 * 1024 * 1024L))
                 .build(),
@@ -85,24 +83,18 @@ open class WykopApp : DaggerApplication() {
         )
 
     private fun createWykop() =
-        DaggerWykopComponent.factory().create(
-            okHttpClient = okHttpClient.newBuilder()
-                .addInterceptor(
-                    ApiSignInterceptor(
-                        object : SimpleUserManagerApi {
+        daggerWykop().create(
+            okHttpClient = okHttpClient,
+            baseUrl = WYKOP_API_URL,
+            appKey = APP_KEY,
+            cacheDir = cacheDir.resolve("okhttp/wykop"),
+            signingInterceptor = ApiSignInterceptor(
+                object : SimpleUserManagerApi {
 
-                            override fun isUserAuthorized(): Boolean = userManagerApi.get().isUserAuthorized()
+                    override fun isUserAuthorized(): Boolean = userManagerApi.get().isUserAuthorized()
 
-                            override fun getUserCredentials(): UserCredentials? = userManagerApi.get().getUserCredentials()
-                        }
-                    )
-                )
-                .cache(Cache(cacheDir.resolve("okhttp/wykop"), maxSize = 10 * 1024 * 1024L))
-                .protocols(listOf(Protocol.HTTP_1_1))
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .build(),
-            apiUrl = WYKOP_API_URL,
+                    override fun getUserCredentials(): UserCredentials? = userManagerApi.get().getUserCredentials()
+                },
+            ),
         )
 }
