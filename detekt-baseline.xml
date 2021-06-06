@@ -14,7 +14,7 @@
     <ID>LongParameterList:AddLinkApi.kt$AddLinkApi$( key: String, title: String, description: String, tags: String, photo: String, url: String, plus18: Boolean )</ID>
     <ID>LongParameterList:AddLinkDetailsFragmentPresenter.kt$AddLinkDetailsFragmentPresenter$( key: String, title: String, sourceUrl: String, description: String, tags: String, plus18: Boolean, imageKey: String )</ID>
     <ID>LongParameterList:AddLinkRetrofitApi.kt$AddLinkRetrofitApi$( @Path("key") key: String, @Field("title") title: String, @Field("description") description: String, @Field("tags") tags: String, @Field("photo") photo: String? = null, @Field("url") url: String, @Field("plus18") plus18: Int )</ID>
-    <ID>LongParameterList:BaseLinkCommentViewHolder.kt$BaseLinkCommentViewHolder$( override val containerView: View, internal val userManagerApi: UserManagerApi, internal val settingsPreferencesApi: SettingsPreferencesApi, internal val navigatorApi: NewNavigatorApi, internal val linkHandlerApi: WykopLinkHandlerApi, internal val commentViewListener: LinkCommentViewListener?, private val commentActionListener: LinkCommentActionListener )</ID>
+    <ID>LongParameterList:BaseLinkCommentViewHolder.kt$BaseLinkCommentViewHolder$( view: View, private val userManagerApi: UserManagerApi, private val settingsPreferencesApi: SettingsPreferencesApi, protected val navigatorApi: NewNavigatorApi, private val linkHandlerApi: WykopLinkHandlerApi, protected val commentViewListener: LinkCommentViewListener?, private val commentActionListener: LinkCommentActionListener )</ID>
     <ID>LongParameterList:Embed.kt$Embed$( val type: String, val preview: String, val url: String, val plus18: Boolean, val source: String?, val isAnimated: Boolean, val size: String, var isResize: Boolean = false, var isRevealed: Boolean = false )</ID>
     <ID>LongParameterList:Entry.kt$Entry$( val id: Int, val author: Author, var body: String, val fullDate: String, var isVoted: Boolean, var isFavorite: Boolean, var survey: Survey?, var embed: Embed?, var voteCount: Int, val commentsCount: Int, val comments: MutableList&lt;EntryComment&gt;, val app: String?, val violationUrl: String, var isNsfw: Boolean = false, var isBlocked: Boolean = false, var collapsed: Boolean = true, val isCommentingPossible: Boolean )</ID>
     <ID>LongParameterList:EntryComment.kt$EntryComment$( val id: Int, var entryId: Int, val author: Author, var body: String, val fullDate: String, var isVoted: Boolean, var embed: Embed?, var voteCount: Int, val app: String?, val violationUrl: String, var isNsfw: Boolean = false, var isBlocked: Boolean = false )</ID>
@@ -43,7 +43,6 @@
     <ID>MagicNumber:BaseInputActivity.kt$BaseInputActivity$3</ID>
     <ID>MagicNumber:BlacklistBlockViewHolder.kt$BlacklistBlockViewHolder$3</ID>
     <ID>MagicNumber:EmbedLinkPresenter.kt$EmbedLinkPresenter$4</ID>
-    <ID>MagicNumber:EmbedViewActivity.kt$EmbedViewActivity$17</ID>
     <ID>MagicNumber:Extensions.kt$20</ID>
     <ID>MagicNumber:GlideModule.kt$GlideModule$30</ID>
     <ID>MagicNumber:HashTagsNotificationsListPresenter.kt$HashTagsNotificationsListPresenter$325</ID>
@@ -56,7 +55,6 @@
     <ID>MagicNumber:LinkViewHolder.kt$LinkViewHolder$8</ID>
     <ID>MagicNumber:LinksPagerAdapter.kt$LinksPagerAdapter$3</ID>
     <ID>MagicNumber:LinksPagerAdapter.kt$LinksPagerAdapter$4</ID>
-    <ID>MagicNumber:LoginScreenActivity.kt$LoginScreenActivity$21</ID>
     <ID>MagicNumber:MainNavigationActivity.kt$MainNavigationActivity$2000L</ID>
     <ID>MagicNumber:MainNavigationActivity.kt$MainNavigationActivity$333</ID>
     <ID>MagicNumber:MainNavigationPresenter.kt$MainNavigationPresenter$300000L</ID>
@@ -97,7 +95,7 @@
     <ID>MemberNameEqualsClassName:BlockedTags.kt$BlockedTags$@Selector("div.tagcard") var blockedTags: List&lt;BlockedTag&gt;? = null</ID>
     <ID>MemberNameEqualsClassName:BlockedUsers.kt$BlockedUsers$@Selector("div.usercard") var blockedUsers: List&lt;BlockedUser&gt;? = null</ID>
     <ID>NestedBlockDepth:CodeTagHandler.kt$CodeTagHandler$override fun handleTag(opening: Boolean, tag: String?, output: Editable?, reader: XMLReader?)</ID>
-    <ID>NestedBlockDepth:LinkDetailsAdapter.kt$LinkDetailsAdapter$override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int)</ID>
+    <ID>NestedBlockDepth:LinkDetailsAdapter.kt$LinkDetailsAdapter$override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int)</ID>
     <ID>NestedBlockDepth:SettingsFragment.kt$SettingsFragment$override fun onSharedPreferenceChanged(sharedPrefs: SharedPreferences, key: String)</ID>
     <ID>NestedBlockDepth:TagActivity.kt$TagActivity$override fun onCreateOptionsMenu(menu: Menu): Boolean</ID>
     <ID>NestedBlockDepth:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State)</ID>
@@ -165,8 +163,6 @@
     <ID>UseIfInsteadOfWhen:FavoritePagerAdapter.kt$FavoritePagerAdapter$when (position) { 0 -&gt; resources.getString(R.string.links) else -&gt; resources.getString(R.string.entries) }</ID>
     <ID>UseIfInsteadOfWhen:LinkAdapter.kt$LinkAdapter$when { dataset[position] == null -&gt; AdvancedProgressAdapter.VIEWTYPE_PROGRESS else -&gt; if (settingsPreferencesApi.linkSimpleList) SIMPLE_LINK_VIEWTYPE else LINK_VIEWTYPE }</ID>
     <ID>UseIfInsteadOfWhen:MicroblogPagerAdapter.kt$MicroblogPagerAdapter$when (position) { 0 -&gt; MicroblogEntriesFragment.newInstance() else -&gt; MicroblogCommentsFragment.newInstance() }</ID>
-    <ID>UseIfInsteadOfWhen:NotificationsListAdapter.kt$NotificationsListAdapter$when (viewType) { TYPE_HEADER -&gt; NotificationHeaderViewHolder( LayoutInflater.from(parent.context).inflate( R.layout.hashtag_notification_header_list_item, parent, false ), navigatorApi, collapseListener ) else -&gt; NotificationViewHolder( LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, parent, false), linkHandlerApi, updateHeader ) }</ID>
-    <ID>UseIfInsteadOfWhen:NotificationsListAdapter.kt$NotificationsListAdapter$when { items[position] is NotificationHeader -&gt; TYPE_HEADER else -&gt; TYPE_ITEM }</ID>
     <ID>UseIfInsteadOfWhen:NotificationsListViewPagerAdapter.kt$NotificationsListViewPagerAdapter$when (position) { 0 -&gt; NotificationsListFragment.newInstance() else -&gt; HashTagsNotificationsListFragment.newInstance() }</ID>
     <ID>UseIfInsteadOfWhen:NotificationsListViewPagerAdapter.kt$NotificationsListViewPagerAdapter$when (position) { 0 -&gt; resources.getString(R.string.notifications_directed) else -&gt; resources.getString(R.string.hashtags_notifications_title) }</ID>
     <ID>UtilityClassWithPublicConstructor:AnswerMapper.kt$AnswerMapper</ID>

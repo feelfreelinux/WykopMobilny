@@ -1,19 +1,17 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import io.github.feelfreelinux.wykopmobilny.databinding.ObservedTagListItemBinding
 import io.github.feelfreelinux.wykopmobilny.models.pojo.apiv2.models.ObservedTagResponse
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
-import kotlinx.android.synthetic.main.observed_tag_list_item.view.*
 
 class ObservedTagViewHolder(
-    val view: View,
-    val navigatorApi: NewNavigatorApi
-) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    private val binding: ObservedTagListItemBinding,
+    private val navigatorApi: NewNavigatorApi
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindView(tag: ObservedTagResponse) {
-        view.blockedTextView.text = tag.tag
-        view.setOnClickListener {
-            navigatorApi.openTagActivity(tag.tag.removePrefix("#"))
-        }
+        binding.blockedTextView.text = tag.tag
+        binding.root.setOnClickListener { navigatorApi.openTagActivity(tag.tag.removePrefix("#")) }
     }
 }

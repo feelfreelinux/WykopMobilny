@@ -1,22 +1,22 @@
 package io.github.feelfreelinux.wykopmobilny.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.links.LinksApi
+import io.github.feelfreelinux.wykopmobilny.databinding.EntriesFragmentBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.LinksAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinksFragmentView
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.entries_fragment.*
-import kotlinx.android.synthetic.main.search_empty_view.*
 import javax.inject.Inject
 
-open class BaseLinksFragment : BaseFragment(), LinksFragmentView, SwipeRefreshLayout.OnRefreshListener {
+open class BaseLinksFragment : BaseFragment(R.layout.entries_fragment), LinksFragmentView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var linksApi: LinksApi
@@ -24,32 +24,30 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView, SwipeRefreshLa
     @Inject
     lateinit var linksAdapter: LinksAdapter
 
+    protected val binding by viewBinding(EntriesFragmentBinding::bind)
+
     var showSearchEmptyView: Boolean
-        get() = searchEmptyView.isVisible
+        get() = binding.empty.searchEmptyView.isVisible
         set(value) {
-            searchEmptyView.isVisible = value
+            binding.empty.searchEmptyView.isVisible = value
         }
 
     open var loadDataListener: (Boolean) -> Unit = {}
 
     private val subjectDisposable by lazy { CompositeDisposable() }
 
-    // Inflate view
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-        inflater.inflate(R.layout.entries_fragment, container, false)
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         linksAdapter.loadNewDataListener = { loadDataListener(false) }
 
         // Setup views
-        swipeRefresh.setOnRefreshListener(this)
-        recyclerView.run {
+        binding.swipeRefresh.setOnRefreshListener(this)
+        binding.recyclerView.run {
             prepare()
             adapter = linksAdapter
         }
 
-        loadingView.isVisible = true
+        binding.loadingView.isVisible = true
 
         val schedulers = WykopSchedulers()
         subjectDisposable.addAll(
@@ -89,12 +87,12 @@ open class BaseLinksFragment : BaseFragment(), LinksFragmentView, SwipeRefreshLa
      */
     override fun addItems(items: List<Link>, shouldRefresh: Boolean) {
         linksAdapter.addData(items, shouldRefresh)
-        swipeRefresh?.isRefreshing = false
-        loadingView?.isVisible = false
+        binding.swipeRefresh.isRefreshing = false
+        binding.loadingView.isVisible = false
 
         // Scroll to top if refreshing list
         if (shouldRefresh) {
-            (recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
+            (binding.recyclerView.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(0, 0)
         }
     }
 

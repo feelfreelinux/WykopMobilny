@@ -13,7 +13,6 @@ import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.LinksPreferencesApi
-import kotlinx.android.synthetic.main.entries_fragment.*
 import javax.inject.Inject
 
 class UpcomingFragment : BaseLinksFragment(), UpcomingView {
@@ -30,7 +29,7 @@ class UpcomingFragment : BaseLinksFragment(), UpcomingView {
 
     override var loadDataListener: (Boolean) -> Unit = { presenter.getUpcomingLinks(it) }
 
-    val navigation by lazy { activity as MainNavigationInterface }
+    private val navigation by lazy { activity as MainNavigationInterface }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -46,43 +45,43 @@ class UpcomingFragment : BaseLinksFragment(), UpcomingView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.refresh -> {
-                swipeRefresh.isRefreshing = true
+                binding.swipeRefresh.isRefreshing = true
                 loadDataListener(true)
             }
             R.id.sortByComments -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_COMMENTS
                 linksPreferencesApi.upcomingDefaultSort = UpcomingPresenter.SORTBY_COMMENTS
                 setSubtitle()
-                swipeRefresh.isRefreshing = true
+                binding.swipeRefresh.isRefreshing = true
                 loadDataListener(true)
             }
             R.id.sortByVotes -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_VOTES
                 linksPreferencesApi.upcomingDefaultSort = UpcomingPresenter.SORTBY_VOTES
                 setSubtitle()
-                swipeRefresh.isRefreshing = true
+                binding.swipeRefresh.isRefreshing = true
                 loadDataListener(true)
             }
             R.id.sortByDate -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_DATE
                 linksPreferencesApi.upcomingDefaultSort = UpcomingPresenter.SORTBY_DATE
                 setSubtitle()
-                swipeRefresh.isRefreshing = true
+                binding.swipeRefresh.isRefreshing = true
                 loadDataListener(true)
             }
             R.id.sortByActive -> {
                 presenter.sortBy = UpcomingPresenter.SORTBY_ACTIVE
                 linksPreferencesApi.upcomingDefaultSort = UpcomingPresenter.SORTBY_ACTIVE
                 setSubtitle()
-                swipeRefresh.isRefreshing = true
+                binding.swipeRefresh.isRefreshing = true
                 loadDataListener(true)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.wykopalisko)
         presenter.subscribe(this)
         presenter.sortBy = linksPreferencesApi.upcomingDefaultSort!!

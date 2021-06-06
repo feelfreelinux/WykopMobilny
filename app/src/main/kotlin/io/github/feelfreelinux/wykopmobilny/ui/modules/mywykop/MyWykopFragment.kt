@@ -1,19 +1,18 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.mywykop
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
-import kotlinx.android.synthetic.main.activity_mywykop.*
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityMywykopBinding
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 
-class MyWykopFragment : BaseFragment() {
+class MyWykopFragment : BaseFragment(R.layout.activity_mywykop) {
 
     companion object {
         fun newInstance() = MyWykopFragment()
@@ -21,9 +20,21 @@ class MyWykopFragment : BaseFragment() {
 
     lateinit var pagerAdapter: MyWykopPagerAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private val binding by viewBinding(ActivityMywykopBinding::bind)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.activity_mywykop, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        pagerAdapter = MyWykopPagerAdapter(resources, childFragmentManager)
+        binding.pager.offscreenPageLimit = 4
+        binding.pager.adapter = pagerAdapter
+        binding.tabLayout.setupWithViewPager(binding.pager)
+
+        (activity as BaseActivity).supportActionBar?.setTitle(R.string.mywykop)
     }
 
     fun onRefresh() {
@@ -41,17 +52,5 @@ class MyWykopFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.refresh_layout, menu)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        pagerAdapter = MyWykopPagerAdapter(resources, childFragmentManager)
-        pager.offscreenPageLimit = 4
-        pager.adapter = pagerAdapter
-        tabLayout.setupWithViewPager(pager)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (activity as BaseActivity).supportActionBar?.setTitle(R.string.mywykop)
     }
 }

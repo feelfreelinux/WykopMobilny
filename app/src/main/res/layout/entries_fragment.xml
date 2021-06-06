@@ -33,6 +33,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
+        android:id="@+id/empty"
         layout="@layout/search_empty_view"
         android:visibility="gone"
         />

@@ -12,6 +12,7 @@ import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.WykopImageFile
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivityConversationBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.FullConversation
 import io.github.feelfreelinux.wykopmobilny.models.fragments.DataFragment
@@ -24,8 +25,7 @@ import io.github.feelfreelinux.wykopmobilny.ui.widgets.InputToolbarListener
 import io.github.feelfreelinux.wykopmobilny.utils.getActivityContext
 import io.github.feelfreelinux.wykopmobilny.utils.prepareNoDivider
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.activity_conversation.*
-import kotlinx.android.synthetic.main.activity_conversation.view.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
 class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListener {
@@ -39,6 +39,8 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
                 putExtra(EXTRA_USER, user)
             }
     }
+
+    private val binding by viewBinding(ActivityConversationBinding::inflate)
 
     @Inject
     lateinit var conversationAdapter: PMMessageAdapter
@@ -63,17 +65,16 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_conversation)
         conversationDataFragment = supportFragmentManager.getDataFragmentInstance(DATA_FRAGMENT_TAG)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = user
-        swiperefresh.setOnRefreshListener { presenter.loadConversation() }
-        inputToolbar.setCustomHint(getString(R.string.reply))
+        binding.swiperefresh.setOnRefreshListener { presenter.loadConversation() }
+        binding.inputToolbar.setCustomHint(getString(R.string.reply))
 
         presenter.subscribe(this)
         presenter.user = user
-        recyclerView?.apply {
+        binding.recyclerView?.apply {
             prepareNoDivider()
             adapter = conversationAdapter
             (layoutManager as androidx.recyclerview.widget.LinearLayoutManager).reverseLayout = true
@@ -81,27 +82,27 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         }
 
         if (conversationDataFragment.data == null) {
-            toolbar.avatarview.isVisible = false
-            loadingView.isVisible = true
+            binding.avatarview.isVisible = false
+            binding.loadingView.isVisible = true
             presenter.loadConversation()
         } else {
             showConversation(conversationDataFragment.data!!)
         }
 
-        inputToolbar.inputToolbarListener = this
-        inputToolbar.setup(userManagerApi, suggestionApi)
+        binding.inputToolbar.inputToolbarListener = this
+        binding.inputToolbar.setup(userManagerApi, suggestionApi)
     }
 
     override fun showConversation(conversation: FullConversation) {
-        loadingView.isVisible = false
-        swiperefresh?.isRefreshing = false
+        binding.loadingView.isVisible = false
+        binding.swiperefresh.isRefreshing = false
         receiver = conversation.receiver
-        toolbar.apply {
+        binding.toolbar.apply {
             subtitle =
                 if (conversation.messages.isNotEmpty()) conversation.messages.last().date else null
-            avatarview.setAuthor(conversation.receiver)
-            avatarview.isVisible = true
-            avatarview.setOnClickListener {
+            binding.avatarview.setAuthor(conversation.receiver)
+            binding.avatarview.isVisible = true
+            binding.avatarview.setOnClickListener {
                 getActivityContext()!!.startActivity(
                     ProfileActivity.createIntent(
                         getActivityContext()!!,
@@ -111,16 +112,14 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
             }
         }
 
-        avatarview.setOnClickListener {
-            startActivity(ProfileActivity.createIntent(this, receiver?.nick!!))
-        }
+        binding.avatarview.setOnClickListener { startActivity(ProfileActivity.createIntent(this, receiver?.nick!!)) }
 
         conversationAdapter.apply {
             messages.clear()
             messages.addAll(conversation.messages.reversed())
             notifyDataSetChanged()
         }
-        recyclerView?.invalidate()
+        binding.recyclerView.invalidate()
     }
 
     override fun onDestroy() {
@@ -156,7 +155,7 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
     }
 
     override fun onBackPressed() {
-        if (inputToolbar.hasUserEditedContent()) {
+        if (binding.inputToolbar.hasUserEditedContent()) {
             exitConfirmationDialog(this) { finish() }?.show()
         } else {
             finish()
@@ -173,19 +172,19 @@ class ConversationActivity : BaseActivity(), ConversationView, InputToolbarListe
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                BaseInputActivity.USER_ACTION_INSERT_PHOTO -> inputToolbar.setPhoto(data?.data)
-                BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA -> inputToolbar.setPhoto(contentUri)
+                BaseInputActivity.USER_ACTION_INSERT_PHOTO -> binding.inputToolbar.setPhoto(data?.data)
+                BaseInputActivity.USER_ACTION_INSERT_PHOTO_CAMERA -> binding.inputToolbar.setPhoto(contentUri)
             }
         }
     }
 
     override fun hideInputToolbar() {
-        inputToolbar.isVisible = false
+        binding.inputToolbar.isVisible = false
     }
 
-    override fun hideInputbarProgress() = inputToolbar.showProgress(false)
+    override fun hideInputbarProgress() = binding.inputToolbar.showProgress(false)
 
-    override fun resetInputbarState() = inputToolbar.resetState()
+    override fun resetInputbarState() = binding.inputToolbar.resetState()
 
     override fun openCamera(uri: Uri) {
         contentUri = uri

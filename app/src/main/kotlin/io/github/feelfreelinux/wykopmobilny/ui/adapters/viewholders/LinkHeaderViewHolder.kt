@@ -22,7 +22,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.extensions.LayoutContainer
 import java.net.URL
 
 class LinkHeaderViewHolder(
@@ -31,7 +30,7 @@ class LinkHeaderViewHolder(
     val navigatorApi: NewNavigatorApi,
     val linkHandlerApi: WykopLinkHandlerApi,
     val userManagerApi: UserManagerApi
-) : RecyclableViewHolder(binding.root), LayoutContainer {
+) : RecyclableViewHolder(binding.root) {
 
     companion object {
         const val TYPE_HEADER = 64
@@ -56,8 +55,6 @@ class LinkHeaderViewHolder(
         }
     }
 
-    override val containerView = binding.root
-
     fun bindView(link: Link) {
         when (link.userVote) {
             "dig" -> showDigged(link)
@@ -80,7 +77,7 @@ class LinkHeaderViewHolder(
             binding.avatarView.setOnClickListener { navigatorApi.openProfileActivity(link.author.nick) }
             binding.avatarView.setAuthor(link.author)
             binding.userTextView.text = link.author.nick
-            binding.userTextView.setTextColor(containerView.context.getGroupColor(link.author.group))
+            binding.userTextView.setTextColor(itemView.context.getGroupColor(link.author.group))
         } else {
             binding.avatarView.isVisible = false
             binding.userTextView.isVisible = false
@@ -122,7 +119,7 @@ class LinkHeaderViewHolder(
         binding.relatedCountTextView.setOnClickListener {
             navigatorApi.openLinkRelatedActivity(link.id)
         }
-        containerView.setOnClickListener {
+        itemView.setOnClickListener {
             linkHandlerApi.handleUrl(link.sourceUrl)
         }
     }
@@ -161,7 +158,7 @@ class LinkHeaderViewHolder(
     }
 
     private fun openOptionsMenu(link: Link) {
-        val activityContext = containerView.getActivityContext()!!
+        val activityContext = itemView.getActivityContext()!!
         val dialog = BottomSheetDialog(activityContext)
         val bottomSheetView = LinkMenuBottomsheetBinding.inflate(activityContext.layoutInflater)
         dialog.setContentView(bottomSheetView.root)
@@ -199,7 +196,7 @@ class LinkHeaderViewHolder(
     }
 
     private fun openBuryReasonMenu(link: Link) {
-        val activityContext = containerView.getActivityContext()!!
+        val activityContext = itemView.getActivityContext()!!
         val dialog = BottomSheetDialog(activityContext)
         val bottomSheetView = LinkBuryMenuBottomsheetBinding.inflate(activityContext.layoutInflater)
         dialog.setContentView(bottomSheetView.root)

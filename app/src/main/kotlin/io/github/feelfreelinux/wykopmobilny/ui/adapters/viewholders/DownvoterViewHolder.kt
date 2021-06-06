@@ -1,12 +1,12 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.DownvotersListItemBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Downvoter
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
-import kotlinx.android.synthetic.main.downvoters_list_item.view.*
 
-class DownvoterViewHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+class DownvoterViewHolder(private val binding: DownvotersListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
         const val BURY_REASON_DUPLICATE = 1
@@ -17,14 +17,14 @@ class DownvoterViewHolder(val view: View) : androidx.recyclerview.widget.Recycle
     }
 
     fun bindView(downvoter: Downvoter) {
-        view.authorHeaderView.setAuthorData(downvoter.author, downvoter.date.toPrettyDate())
-        view.reason_textview.text = when (downvoter.reason) {
-            BURY_REASON_DUPLICATE -> view.resources.getString(R.string.reason_duplicate)
-            BURY_REASON_SPAM -> view.resources.getString(R.string.reason_spam)
-            BURY_REASON_FAKE_INFO -> view.resources.getString(R.string.reason_fake_info)
-            BURY_REASON_WRONG_CONTENT -> view.resources.getString(R.string.reason_wrong_content)
-            BURY_REASON_UNSUITABLE_CONTENT -> view.resources.getString(R.string.reason_unsuitable_content)
-            else -> ""
-        }
+        binding.authorHeaderView.setAuthorData(downvoter.author, downvoter.date.toPrettyDate())
+        binding.reasonTextview.text = when (downvoter.reason) {
+            BURY_REASON_DUPLICATE -> R.string.reason_duplicate
+            BURY_REASON_SPAM -> R.string.reason_spam
+            BURY_REASON_FAKE_INFO -> R.string.reason_fake_info
+            BURY_REASON_WRONG_CONTENT -> R.string.reason_wrong_content
+            BURY_REASON_UNSUITABLE_CONTENT -> R.string.reason_unsuitable_content
+            else -> null
+        }?.let(binding.root.resources::getString).orEmpty()
     }
 }

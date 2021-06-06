@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/padding_dp_small"
-    android:paddingBottom="@dimen/padding_dp_small"
-    android:paddingLeft="@dimen/padding_dp_large"
-    android:paddingRight="@dimen/padding_dp_large"
-    android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/padding_dp_large"
+    android:paddingVertical="@dimen/padding_dp_small"
     >
 
     <io.github.feelfreelinux.wykopmobilny.ui.widgets.AvatarView
@@ -22,10 +20,9 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="@dimen/padding_dp_large"
         android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingRight="@dimen/padding_dp_large"
         android:textSize="?attr/textSizeNormal"
         tools:text="Kroguc"
         />
-
 </LinearLayout>

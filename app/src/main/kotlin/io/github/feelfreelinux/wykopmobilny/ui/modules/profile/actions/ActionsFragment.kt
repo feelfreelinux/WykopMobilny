@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.actions
 
 import android.os.Bundle
+import android.view.View
 import io.github.feelfreelinux.wykopmobilny.base.BaseEntryLinkFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -21,8 +22,8 @@ class ActionsFragment : BaseEntryLinkFragment(), ActionsView {
     override var loadDataListener: (Boolean) -> Unit = { presenter.getActions() }
     private val username by lazy { (activity as ProfileActivity).username }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         presenter.username = username
         entriesAdapter.entryActionListener = presenter

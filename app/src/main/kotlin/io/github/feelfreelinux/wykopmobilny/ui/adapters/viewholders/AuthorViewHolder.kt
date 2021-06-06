@@ -1,27 +1,21 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
-import android.view.View
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
+import io.github.feelfreelinux.wykopmobilny.databinding.ConversationListItemBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import kotlinx.android.synthetic.main.conversation_list_item.view.*
 
-class AuthorViewHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+class AuthorViewHolder(private val binding: ConversationListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
     fun bindView(author: Author) {
-        view.authorAvatarView.setAuthor(author)
-        view.userNameTextView.apply {
+        binding.authorAvatarView.setAuthor(author)
+        binding.userNameTextView.apply {
             text = author.nick
             setTextColor(context.getGroupColor(author.group))
         }
-        view.entryDateTextView.isVisible = false
-        view.setOnClickListener {
-            view.context.startActivity(
-                ProfileActivity.createIntent(
-                    view.context,
-                    author.nick
-                )
-            )
-        }
+        binding.entryDateTextView.isVisible = false
+        binding.root.setOnClickListener { it.context.startActivity(ProfileActivity.createIntent(it.context, author.nick)) }
     }
 }

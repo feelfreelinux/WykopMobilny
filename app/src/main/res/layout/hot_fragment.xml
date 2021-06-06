@@ -6,13 +6,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/entriesFragment"
         android:name="io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/entries_fragment"
-        >
-
-    </fragment>
+        />
 </FrameLayout>

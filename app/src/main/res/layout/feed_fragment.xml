@@ -24,16 +24,17 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:scrollbars="vertical"
             android:layout_height="match_parent"
             android:animationCache="true"
-            android:drawingCacheQuality="high"
             android:clipToPadding="false"
+            android:drawingCacheQuality="high"
+            android:scrollbars="vertical"
             />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
+        android:id="@+id/empty"
         layout="@layout/search_empty_view"
         android:visibility="gone"
         />

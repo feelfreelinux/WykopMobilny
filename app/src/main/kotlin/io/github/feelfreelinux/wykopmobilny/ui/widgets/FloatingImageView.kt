@@ -3,24 +3,20 @@ package io.github.feelfreelinux.wykopmobilny.ui.widgets
 import android.content.Context
 import android.net.Uri
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
-import io.github.feelfreelinux.wykopmobilny.R
+import io.github.feelfreelinux.wykopmobilny.databinding.FloatingImageViewLayoutBinding
 import io.github.feelfreelinux.wykopmobilny.glide.GlideApp
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.loadImage
-import kotlinx.android.synthetic.main.floating_image_view_layout.view.*
 
-class FloatingImageView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+class FloatingImageView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
+
+    private val binding = FloatingImageViewLayoutBinding.inflate(layoutInflater, this)
 
     init {
-        View.inflate(context, R.layout.floating_image_view_layout, this)
         this.isVisible = false
-        deleteButton.setOnClickListener { removeImage() }
+        binding.deleteButton.setOnClickListener { removeImage() }
     }
 
     var photo: Uri? = null
@@ -36,14 +32,14 @@ class FloatingImageView @JvmOverloads constructor(
         isVisible = true
         photo = null
         this.photoUrl = photoUrl
-        imageView.loadImage(photoUrl)
+        binding.imageView.loadImage(photoUrl)
     }
 
     fun setImage(photo: Uri?) {
         this.photo = photo
         photo?.let {
             isVisible = true
-            GlideApp.with(context).load(photo).into(imageView)
+            GlideApp.with(context).load(photo).into(binding.imageView)
         }
     }
 }

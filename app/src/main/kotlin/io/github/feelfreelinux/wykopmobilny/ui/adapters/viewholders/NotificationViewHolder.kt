@@ -2,24 +2,23 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders
 
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
-import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
+import io.github.feelfreelinux.wykopmobilny.databinding.NotificationsListItemBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
 import io.github.feelfreelinux.wykopmobilny.utils.textview.removeHtml
 import io.github.feelfreelinux.wykopmobilny.utils.toPrettyDate
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.synthetic.main.notifications_list_item.view.*
 
 class NotificationViewHolder(
-    val view: View,
-    val linkHandlerApi: WykopLinkHandlerApi,
-    val updateHeader: (String) -> Unit
-) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    private val binding: NotificationsListItemBinding,
+    private val linkHandlerApi: WykopLinkHandlerApi,
+    private val updateHeader: (String) -> Unit
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
 
     fun bindNotification(notification: Notification) {
-        view.apply {
+        binding.apply {
             // Setup widgets
             body.setText(notification.body.removeHtml(), TextView.BufferType.SPANNABLE)
             date.text = notification.date.toPrettyDate()

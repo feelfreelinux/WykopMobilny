@@ -9,13 +9,14 @@ import android.widget.Filterable
 import androidx.core.view.isVisible
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.suggest.SuggestApi
+import io.github.feelfreelinux.wykopmobilny.databinding.AutosuggestItemBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Author
 import io.github.feelfreelinux.wykopmobilny.utils.api.getGroupColor
-import kotlinx.android.synthetic.main.autosuggest_item.view.*
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 
 class UsersSuggestionsAdapter(
     context: Context,
-    val suggestionApi: SuggestApi
+    private val suggestionApi: SuggestApi
 ) : ArrayAdapter<Author>(context, R.layout.autosuggest_item), Filterable {
 
     val items = arrayListOf<Author>()
@@ -52,12 +53,12 @@ class UsersSuggestionsAdapter(
     override fun getFilter() = itemsFilter
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: View.inflate(context, R.layout.autosuggest_item, null)
+        val view = convertView?.let(AutosuggestItemBinding::bind) ?: AutosuggestItemBinding.inflate(context.layoutInflater)
         val item = items[position]
         view.textView.setTextColor(getGroupColor(item.group, false))
         view.textView.text = item.nick
         view.avatarView.isVisible = true
         view.avatarView.setAuthor(item)
-        return view
+        return view.root
     }
 }

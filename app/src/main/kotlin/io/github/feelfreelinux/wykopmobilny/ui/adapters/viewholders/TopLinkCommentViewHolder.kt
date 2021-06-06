@@ -17,7 +17,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.extensions.LayoutContainer
 
 class TopLinkCommentViewHolder(
     private val binding: TopLinkCommentLayoutBinding,
@@ -35,8 +34,7 @@ class TopLinkCommentViewHolder(
     linkHandlerApi,
     commentViewListener,
     commentActionListener
-),
-    LayoutContainer {
+) {
 
     override lateinit var embedView: WykopEmbedView
 
@@ -86,8 +84,6 @@ class TopLinkCommentViewHolder(
             return view
         }
     }
-
-    override val containerView = binding.root
 
     override fun bindView(linkComment: LinkComment, isAuthorComment: Boolean, commentId: Int) {
         super.bindView(linkComment, isAuthorComment, commentId)

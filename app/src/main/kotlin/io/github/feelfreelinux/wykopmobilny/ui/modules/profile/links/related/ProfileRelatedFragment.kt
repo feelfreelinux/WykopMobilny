@@ -1,19 +1,18 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.related
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
+import io.github.feelfreelinux.wykopmobilny.databinding.FeedFragmentBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Related
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.ProfileRelatedAdapter
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.entries_fragment.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-class ProfileRelatedFragment : BaseFragment(), ProfileRelatedView {
+class ProfileRelatedFragment : BaseFragment(R.layout.feed_fragment), ProfileRelatedView {
 
     companion object {
         fun newInstance() = ProfileRelatedFragment()
@@ -27,18 +26,15 @@ class ProfileRelatedFragment : BaseFragment(), ProfileRelatedView {
     @Inject
     lateinit var presenter: ProfileRelatedPresenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.feed_fragment, container, false)
+    private val binding by viewBinding(FeedFragmentBinding::bind)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         presenter.username = username
-        recyclerView.prepare()
-        feedAdapter.loadNewDataListener = {
-            presenter.loadData(false)
-        }
-        recyclerView.adapter = feedAdapter
+        binding.recyclerView.prepare()
+        feedAdapter.loadNewDataListener = { presenter.loadData(false) }
+        binding.recyclerView.adapter = feedAdapter
         presenter.loadData(true)
     }
 

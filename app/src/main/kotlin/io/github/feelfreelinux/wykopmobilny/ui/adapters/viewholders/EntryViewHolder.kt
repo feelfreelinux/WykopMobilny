@@ -25,7 +25,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.textview.prepareBody
 import io.github.feelfreelinux.wykopmobilny.utils.textview.stripWykopFormatting
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.extensions.LayoutContainer
 
 typealias EntryListener = (Entry) -> Unit
 
@@ -37,7 +36,7 @@ class EntryViewHolder(
     private val linkHandlerApi: WykopLinkHandlerApi,
     private val entryActionListener: EntryActionListener,
     private val replyListener: EntryListener?
-) : RecyclableViewHolder(binding.root), LayoutContainer {
+) : RecyclableViewHolder(binding.root) {
 
     companion object {
         const val TYPE_SURVEY = 4
@@ -69,7 +68,7 @@ class EntryViewHolder(
                 replyListener,
             )
 
-            view.containerView.tag = if (replyListener == null) {
+            view.itemView.tag = if (replyListener == null) {
                 SEPARATOR_SMALL
             } else {
                 SEPARATOR_NORMAL
@@ -96,8 +95,6 @@ class EntryViewHolder(
             else TYPE_NORMAL
         }
     }
-
-    override val containerView = binding.root
 
     var type: Int = TYPE_NORMAL
     lateinit var embedView: WykopEmbedView
@@ -133,7 +130,7 @@ class EntryViewHolder(
             replyListener != null && userManagerApi.isUserAuthorized() && entry.isCommentingPossible
         binding.replyTextView.setOnClickListener { replyListener?.invoke(entry) }
 
-        containerView.setOnClickListener {
+        itemView.setOnClickListener {
             handleClick(entry)
         }
 
@@ -195,7 +192,7 @@ class EntryViewHolder(
             binding.entryContentTextView.isVisible = false
         }
 
-        containerView.setOnClickListener { handleClick(entry) }
+        itemView.setOnClickListener { handleClick(entry) }
 
         if (type == TYPE_EMBED_SURVEY || type == TYPE_EMBED) {
             embedView.setEmbed(entry.embed!!, settingsPreferencesApi, navigatorApi, entry.isNsfw)
@@ -213,7 +210,7 @@ class EntryViewHolder(
     }
 
     private fun openOptionsMenu(entry: Entry) {
-        val activityContext = containerView.getActivityContext()!!
+        val activityContext = itemView.getActivityContext()!!
         val dialog = BottomSheetDialog(activityContext)
         val bottomSheetView = EntryMenuBottomsheetBinding.inflate(activityContext.layoutInflater)
         dialog.setContentView(bottomSheetView.root)

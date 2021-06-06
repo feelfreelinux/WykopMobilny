@@ -3,7 +3,6 @@ plugins {
     id("com.starter.easylauncher") version("4.0.0")
     id("org.jetbrains.kotlin.kapt") version("1.5.10")
 }
-apply plugin: 'kotlin-android-extensions'
 
 android {
     defaultConfig {

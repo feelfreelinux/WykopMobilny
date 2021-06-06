@@ -11,7 +11,7 @@ import androidx.core.view.isVisible
 import com.devbrackets.android.exomedia.ui.widget.VideoControls
 import com.devbrackets.android.exomedia.util.TimeFormatUtil
 import io.github.feelfreelinux.wykopmobilny.R
-import kotlinx.android.synthetic.main.media_controls.view.*
+import io.github.feelfreelinux.wykopmobilny.databinding.MediaControlsBinding
 import java.util.LinkedList
 
 class WykopMediaControls : VideoControls {
@@ -84,9 +84,10 @@ class WykopMediaControls : VideoControls {
 
     override fun retrieveViews() {
         super.retrieveViews()
-        controlsView = controls_layout
-        seekBar = player_seekbar
-        extraViewsContainer = test
+        val binding = MediaControlsBinding.bind(this)
+        controlsView = binding.controlsLayout
+        seekBar = binding.playerSeekbar
+        extraViewsContainer = binding.test
     }
 
     override fun registerListeners() {

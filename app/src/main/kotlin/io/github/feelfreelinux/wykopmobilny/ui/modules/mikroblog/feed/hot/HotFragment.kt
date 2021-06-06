@@ -3,16 +3,16 @@ package io.github.feelfreelinux.wykopmobilny.ui.modules.mikroblog.feed.hot
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.base.BaseNavigationView
+import io.github.feelfreelinux.wykopmobilny.databinding.HotFragmentBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Entry
 import io.github.feelfreelinux.wykopmobilny.ui.fragments.entries.EntriesFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NavigatorApi
@@ -20,10 +20,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.modules.input.BaseInputActivity
 import io.github.feelfreelinux.wykopmobilny.ui.modules.mainnavigation.MainNavigationInterface
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
-import kotlinx.android.synthetic.main.entries_fragment.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-class HotFragment : BaseFragment(), BaseNavigationView, HotView {
+class HotFragment : BaseFragment(R.layout.hot_fragment), BaseNavigationView, HotView {
 
     companion object {
         fun newInstance() = HotFragment()
@@ -41,19 +41,22 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     @Inject
     lateinit var userManagerApi: UserManagerApi
 
-    val fab by lazy { navigation.floatingButton }
-    val entriesFragment by lazy { childFragmentManager.findFragmentById(R.id.entriesFragment) as EntriesFragment }
-    val navigation by lazy { activity as MainNavigationInterface }
+    private val binding by viewBinding(HotFragmentBinding::bind)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private val fab by lazy { navigation.floatingButton }
+    private val entriesFragment by lazy { childFragmentManager.findFragmentById(R.id.entriesFragment) as EntriesFragment }
+    private val navigation by lazy { activity as MainNavigationInterface }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        fab.setOnClickListener { navigatorApi.openAddEntryActivity(requireActivity()) }
-        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_hot)
-        return inflater.inflate(R.layout.hot_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fab.setOnClickListener { navigatorApi.openAddEntryActivity(requireActivity()) }
+        navigation.activityToolbar.overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_hot)
+
         presenter.subscribe(this)
         presenter.period = settingsPreferences.hotEntriesScreen ?: "24"
         entriesFragment.loadDataListener = { presenter.loadData(it) }
@@ -84,7 +87,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.period6 -> {
                 presenter.period = "6"
                 navigation.activityToolbar.setTitle(R.string.period6)
@@ -107,7 +110,7 @@ class HotFragment : BaseFragment(), BaseNavigationView, HotView {
             }
         }
 
-        swipeRefresh.isRefreshing = true
+        view?.findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)?.isRefreshing = true
         presenter.loadData(true)
         return true
     }

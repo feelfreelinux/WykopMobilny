@@ -1,8 +1,8 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.fragments.duplicateslist
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
+import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.api.filters.OWMContentFilter
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
 import io.github.feelfreelinux.wykopmobilny.databinding.AddlinkDuplicatesFragmentBinding
@@ -13,10 +13,10 @@ import io.github.feelfreelinux.wykopmobilny.ui.fragments.links.LinkActionListene
 import io.github.feelfreelinux.wykopmobilny.ui.modules.addlink.AddlinkActivity
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.prepare
-import kotlinx.android.synthetic.main.addlink_duplicates_fragment.*
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
-class AddLinkDuplicatesListFragment : BaseFragment(), LinkActionListener {
+class AddLinkDuplicatesListFragment : BaseFragment(R.layout.addlink_duplicates_fragment), LinkActionListener {
 
     companion object {
         fun newInstance() = AddLinkDuplicatesListFragment()
@@ -31,18 +31,16 @@ class AddLinkDuplicatesListFragment : BaseFragment(), LinkActionListener {
     @Inject
     lateinit var linksAdapter: LinksAdapter
 
+    private val binding by viewBinding(AddlinkDuplicatesFragmentBinding::bind)
+
     override fun dig(link: Link) = Unit
 
     override fun removeVote(link: Link) = Unit
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-        AddlinkDuplicatesFragmentBinding.inflate(inflater, container, false).root
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val duplicates = (activity as AddlinkActivity).draft.duplicates?.map { LinkMapper.map(it, owmContentFilter) } ?: emptyList()
-        duplicates_list.run {
+        binding.duplicatesList.run {
             prepare()
             adapter = linksAdapter
         }
@@ -51,8 +49,6 @@ class AddLinkDuplicatesListFragment : BaseFragment(), LinkActionListener {
         linksAdapter.addData(duplicates, true)
         linksAdapter.disableLoading()
 
-        confirm_duplicates.setOnClickListener {
-            (activity as AddlinkActivity).openDetailsScreen()
-        }
+        binding.confirmDuplicates.setOnClickListener { (activity as AddlinkActivity).openDetailsScreen() }
     }
 }

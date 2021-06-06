@@ -21,7 +21,6 @@ import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreferencesApi
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
-import kotlinx.android.extensions.LayoutContainer
 
 class LinkCommentViewHolder(
     private val binding: LinkCommentLayoutBinding,
@@ -39,8 +38,7 @@ class LinkCommentViewHolder(
     linkHandlerApi,
     commentViewListener,
     commentActionListener
-),
-    LayoutContainer {
+) {
 
     companion object {
         const val TYPE_EMBED = 17
@@ -79,7 +77,6 @@ class LinkCommentViewHolder(
         }
     }
 
-    override val containerView = binding.root
     override lateinit var embedView: WykopEmbedView
 
     // Bind correct views
@@ -115,7 +112,7 @@ class LinkCommentViewHolder(
             binding.dateTextView.text = linkComment.date.replace(" temu", "")
             linkComment.app?.let {
                 binding.dateTextView.text =
-                    containerView.context.getString(R.string.date_with_user_app, linkComment.date.replace(" temu", ""), linkComment.app)
+                    itemView.context.getString(R.string.date_with_user_app, linkComment.date.replace(" temu", ""), linkComment.app)
             }
         }
     }

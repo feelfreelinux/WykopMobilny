@@ -1,21 +1,23 @@
 package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.github.feelfreelinux.wykopmobilny.R
+import androidx.recyclerview.widget.RecyclerView
 import io.github.feelfreelinux.wykopmobilny.base.adapter.EndlessProgressAdapter
+import io.github.feelfreelinux.wykopmobilny.databinding.HashtagNotificationHeaderListItemBinding
+import io.github.feelfreelinux.wykopmobilny.databinding.NotificationsListItemBinding
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Notification
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.NotificationHeader
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.NotificationHeaderViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.NotificationViewHolder
 import io.github.feelfreelinux.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.feelfreelinux.wykopmobilny.utils.layoutInflater
 import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHandlerApi
 import javax.inject.Inject
 
 class NotificationsListAdapter @Inject constructor(
     val navigatorApi: NewNavigatorApi,
     val linkHandlerApi: WykopLinkHandlerApi
-) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, Notification>() {
+) : EndlessProgressAdapter<RecyclerView.ViewHolder, Notification>() {
 
     companion object {
         const val TYPE_HEADER = 2123
@@ -42,10 +44,8 @@ class NotificationsListAdapter @Inject constructor(
         notifyDataSetChanged()
     }
 
-    override fun getViewType(position: Int) = when {
-        items[position] is NotificationHeader -> TYPE_HEADER
-        else -> TYPE_ITEM
-    }
+    override fun getViewType(position: Int) = if (items[position] is NotificationHeader) TYPE_HEADER
+    else TYPE_ITEM
 
     fun collapseAll() {
         dataset.forEach { it?.visible = false }
@@ -57,25 +57,22 @@ class NotificationsListAdapter @Inject constructor(
         notifyDataSetChanged()
     }
 
-    override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        return when (viewType) {
+    override fun constructViewHolder(parent: ViewGroup, viewType: Int) =
+        when (viewType) {
             TYPE_HEADER -> NotificationHeaderViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.hashtag_notification_header_list_item,
-                    parent,
-                    false
-                ),
-                navigatorApi, collapseListener
+                HashtagNotificationHeaderListItemBinding.inflate(parent.layoutInflater, parent, false),
+                navigatorApi,
+                collapseListener,
             )
-            else -> NotificationViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.notifications_list_item, parent, false),
+            TYPE_ITEM -> NotificationViewHolder(
+                NotificationsListItemBinding.inflate(parent.layoutInflater, parent, false),
                 linkHandlerApi,
-                updateHeader
+                updateHeader,
             )
+            else -> error("unsupported type")
         }
-    }
 
-    override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is NotificationViewHolder -> holder.bindNotification(items[position]!!)
             is NotificationHeaderViewHolder -> holder.bindView(items[position] as NotificationHeader)

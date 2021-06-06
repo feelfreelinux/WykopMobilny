@@ -2,6 +2,7 @@ package io.github.feelfreelinux.wykopmobilny.ui.adapters
 
 import android.util.Log
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.Link
 import io.github.feelfreelinux.wykopmobilny.models.dataclass.LinkComment
 import io.github.feelfreelinux.wykopmobilny.ui.adapters.viewholders.BaseLinkCommentViewHolder
@@ -20,11 +21,11 @@ import io.github.feelfreelinux.wykopmobilny.utils.wykop_link_handler.WykopLinkHa
 import javax.inject.Inject
 
 class LinkDetailsAdapter @Inject constructor(
-    val userManagerApi: UserManagerApi,
-    val navigatorApi: NewNavigatorApi,
-    val linkHandlerApi: WykopLinkHandlerApi,
-    val settingsPreferencesApi: SettingsPreferencesApi
-) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+    private val userManagerApi: UserManagerApi,
+    private val navigatorApi: NewNavigatorApi,
+    private val linkHandlerApi: WykopLinkHandlerApi,
+    private val settingsPreferencesApi: SettingsPreferencesApi
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var link: Link? = null
     var highlightCommentId = -1
@@ -36,7 +37,7 @@ class LinkDetailsAdapter @Inject constructor(
             it.isParentCollapsed || (it.isBlocked && settingsPreferencesApi.hideBlacklistedViews)
         }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try { // Suppresing, need more information to reproduce this crash.
             if (holder.itemViewType == LinkHeaderViewHolder.TYPE_HEADER) {
                 link?.let { (holder as LinkHeaderViewHolder).bindView(link!!) }
@@ -46,7 +47,7 @@ class LinkDetailsAdapter @Inject constructor(
                 val comment = commentsList!![position - 1]
                 if (holder is TopLinkCommentViewHolder) {
                     holder.bindView(comment, link!!.author?.nick == comment.author.nick, highlightCommentId)
-                    holder.containerView.tag =
+                    holder.itemView.tag =
                         if (comment.childCommentCount > 0 && !comment.isCollapsed) {
                             RecyclableViewHolder.SEPARATOR_SMALL
                         } else {
@@ -81,7 +82,7 @@ class LinkDetailsAdapter @Inject constructor(
         return 1
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             LinkHeaderViewHolder.TYPE_HEADER -> LinkHeaderViewHolder.inflateView(
                 parent,

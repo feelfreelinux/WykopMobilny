@@ -1,6 +1,7 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.profile.links.added
 
 import android.os.Bundle
+import android.view.View
 import io.github.feelfreelinux.wykopmobilny.base.BaseLinksFragment
 import io.github.feelfreelinux.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.feelfreelinux.wykopmobilny.utils.usermanager.UserManagerApi
@@ -46,8 +47,8 @@ class ProfileLinksFragment : BaseLinksFragment(), ProfileLinksView {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.subscribe(this)
         presenter.username = username
         linksAdapter.linksActionListener = presenter

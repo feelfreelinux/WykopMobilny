@@ -16,10 +16,7 @@ import io.github.feelfreelinux.wykopmobilny.utils.preferences.SettingsPreference
 import java.lang.ref.WeakReference
 import java.net.URI
 
-class WykopEmbedView(
-    context: Context,
-    attrs: AttributeSet,
-) : FrameLayout(context, attrs) {
+class WykopEmbedView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
     companion object {
         const val NSFW_IMAGE_PLACEHOLDER = "https://www.wykop.pl/cdn/c2526412/nsfw.jpg"
@@ -35,7 +32,7 @@ class WykopEmbedView(
     }
 
     var resized = false
-    var hiddenPreview: String? = null
+    private var hiddenPreview: String? = null
     lateinit var mEmbed: WeakReference<Embed>
     lateinit var navigator: NewNavigatorApi
     lateinit var settingsPreferences: SettingsPreferencesApi

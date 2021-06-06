@@ -1,21 +1,20 @@
 package io.github.feelfreelinux.wykopmobilny.ui.modules.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import io.github.feelfreelinux.wykopmobilny.R
 import io.github.feelfreelinux.wykopmobilny.base.BaseActivity
 import io.github.feelfreelinux.wykopmobilny.base.BaseFragment
+import io.github.feelfreelinux.wykopmobilny.databinding.ActivitySearchBinding
 import io.github.feelfreelinux.wykopmobilny.utils.hideKeyboard
+import io.github.feelfreelinux.wykopmobilny.utils.viewBinding
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_search.*
 
-class SearchFragment : BaseFragment() {
+class SearchFragment : BaseFragment(R.layout.activity_search) {
 
     companion object {
         fun newInstance() = SearchFragment()
@@ -25,21 +24,20 @@ class SearchFragment : BaseFragment() {
 
     private lateinit var viewPagerAdapter: SearchPagerAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private val binding by viewBinding(ActivitySearchBinding::bind)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.activity_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewPagerAdapter = SearchPagerAdapter(resources, childFragmentManager)
-        pager.adapter = viewPagerAdapter
-        pager.offscreenPageLimit = 3
-        tabLayout.setupWithViewPager(pager)
-    }
+        binding.pager.adapter = viewPagerAdapter
+        binding.pager.offscreenPageLimit = 3
+        binding.tabLayout.setupWithViewPager(binding.pager)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         (activity as BaseActivity).supportActionBar?.setTitle(R.string.search)
     }
 
