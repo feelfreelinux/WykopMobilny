@@ -1,6 +1,7 @@
 plugins {
     id("com.starter.config")
     id("com.starter.versioning")
+    id("com.osacky.doctor") version("0.7.0")
 
     id("com.starter.easylauncher") version("4.0.0") apply(false)
 }
@@ -8,7 +9,9 @@ plugins {
 commonConfig {
     javaFilesAllowed false
 }
-
+doctor {
+    warnWhenJetifierEnabled = false
+}
 allprojects {
     pluginManager.withPlugin("kotlin") { plugin ->
         def kotlinVersion = "1.5.10" // plugins.getPlugin("kotlin").kotlinPluginVersion
