@@ -3,10 +3,10 @@ package io.github.wykopmobilny.ui.widgets.link.related
 import android.content.Context
 import android.util.AttributeSet
 import android.util.TypedValue
+import androidx.cardview.widget.CardView
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.google.android.material.card.MaterialCardView
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.databinding.LinkRelatedLayoutBinding
 import io.github.wykopmobilny.models.dataclass.Related
@@ -17,7 +17,7 @@ import io.github.wykopmobilny.utils.getActivityContext
 import io.github.wykopmobilny.utils.layoutInflater
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 
-class RelatedWidget(context: Context, attrs: AttributeSet) : MaterialCardView(context, attrs), RelatedWidgetView {
+class RelatedWidget(context: Context, attrs: AttributeSet) : CardView(context, attrs), RelatedWidgetView {
 
     private val binding = LinkRelatedLayoutBinding.inflate(layoutInflater, this)
 
@@ -38,7 +38,7 @@ class RelatedWidget(context: Context, attrs: AttributeSet) : MaterialCardView(co
     fun setRelatedData(
         related: Related,
         userManagerApi: UserManagerApi,
-        relatedWidgetPresenter: RelatedWidgetPresenter
+        relatedWidgetPresenter: RelatedWidgetPresenter,
     ) {
         relatedItem = related
         presenter = relatedWidgetPresenter

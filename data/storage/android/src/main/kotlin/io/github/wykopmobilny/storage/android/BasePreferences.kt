@@ -16,7 +16,7 @@ import kotlin.reflect.KProperty
 @Suppress("UnnecessaryAbstractClass")
 internal abstract class BasePreferences(
     private val context: Context,
-    useDefaultFile: Boolean = false
+    useDefaultFile: Boolean = false,
 ) {
 
     protected val coroutineScope = CoroutineScope(Job() + Dispatchers.IO)
@@ -29,7 +29,9 @@ internal abstract class BasePreferences(
         }
     }
     protected val preferences = callbackFlow<String> {
-        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key -> trySend(key) }
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            check(trySend(key).isSuccess)
+        }
 
         prefs.registerOnSharedPreferenceChangeListener(listener)
 

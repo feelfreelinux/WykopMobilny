@@ -7,12 +7,9 @@ import io.github.wykopmobilny.storage.api.SessionStorage
 import io.github.wykopmobilny.storage.api.UserInfoStorage
 import io.github.wykopmobilny.storage.api.UserSession
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -45,7 +42,7 @@ internal class CredentialsPreferences @Inject constructor(
                 userName = login ?: return null,
                 userToken = userToken ?: return null,
                 avatarUrl = avatarUrl ?: return null,
-                backgroundUrl = backgroundUrl ?: return null,
+                backgroundUrl = backgroundUrl,
             )
         }
         set(value) {
@@ -55,28 +52,18 @@ internal class CredentialsPreferences @Inject constructor(
             backgroundUrl = value?.backgroundUrl
         }
 
-    override val session: StateFlow<UserSession?> =
+    override val session =
         preferences.filter { it == "login" || it == "userKey" }
+            .onStart { emit("") }
             .map { userSession }
-            .onStart { emit(userSession) }
-            .stateIn(
-                scope = coroutineScope,
-                started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
-                initialValue = userSession
-            )
 
     override suspend fun updateSession(value: UserSession?) = withContext(Dispatchers.IO) {
         userSession = value
     }
 
-    override val loggedUser: StateFlow<LoggedUserInfo?>
-        get() = preferences.filter { it in userInfoKeys }
-            .map { userInfo }
-            .stateIn(
-                scope = coroutineScope,
-                started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
-                initialValue = userInfo
-            )
+    override val loggedUser = preferences.filter { it in userInfoKeys }
+        .onStart { emit("") }
+        .map { userInfo }
 
     override suspend fun updateLoggedUser(value: LoggedUserInfo?) = withContext(Dispatchers.IO) {
         userInfo = value
