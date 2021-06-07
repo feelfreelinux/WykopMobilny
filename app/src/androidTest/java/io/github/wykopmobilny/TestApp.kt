@@ -8,7 +8,6 @@ import io.github.wykopmobilny.phuckdagger.daggerPatrons
 import io.github.wykopmobilny.phuckdagger.daggerScraper
 import io.github.wykopmobilny.phuckdagger.daggerWykop
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import javax.inject.Inject
 
@@ -21,6 +20,7 @@ class TestApp : WykopApp() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
@@ -32,7 +32,7 @@ class TestApp : WykopApp() {
                     okHttpClient = okHttpClient,
                     baseUrl = "http://localhost:8000",
                     appKey = "fixture-app-key",
-                    signingInterceptor = Interceptor { it.proceed(it.request()) },
+                    signingInterceptor = { it.proceed(it.request()) },
                     cacheDir = cacheDir.resolve("tests/okhttp-cache"),
                 ),
                 patrons = daggerPatrons().create(
@@ -46,4 +46,8 @@ class TestApp : WykopApp() {
                 ),
                 storages = DaggerStoragesComponent.factory().create(this),
             )
+
+    companion object {
+        lateinit var instance: TestApp
+    }
 }
