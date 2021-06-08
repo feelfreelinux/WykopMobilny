@@ -82,6 +82,9 @@ jobs:
           job-id: uitests-jdk11
           gradle-distribution-sha-256-sum-warning: false
 
+      - name: compile ui tests
+        run: ./gradlew assembleDebugAndroidTest
+
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
