@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
@@ -11,76 +10,76 @@
     <io.github.wykopmobilny.ui.widgets.AuthorHeaderView
         android:id="@+id/authorHeaderView"
         style="@style/AuthorHeaderView"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <io.github.wykopmobilny.utils.textview.EllipsizingTextView
         android:id="@+id/entryContentTextView"
         style="@style/ContentTextView"
-        app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
         tools:text="Treść wpisy na mikroblogu"
         />
 
     <ViewStub
         android:id="@+id/surveyStub"
-        android:inflatedId="@id/surveyStub"
-        android:layout="@layout/stub_survey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/padding_dp_small"
+        android:inflatedId="@id/surveyStub"
+        android:layout="@layout/stub_survey"
         android:paddingLeft="@dimen/padding_dp_large"
+        android:paddingTop="@dimen/padding_dp_small"
         android:paddingRight="@dimen/padding_dp_large"
-        app:layout_constraintTop_toBottomOf="@id/entryContentTextView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entryContentTextView"
         />
 
     <ViewStub
         android:id="@+id/entryImageViewStub"
-        android:inflatedId="@id/entryImageViewStub"
-        android:layout="@layout/stub_embed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_dp_normal"
-        app:layout_constraintTop_toBottomOf="@id/surveyStub"
+        android:inflatedId="@id/entryImageViewStub"
+        android:layout="@layout/stub_embed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/surveyStub"
         />
 
     <TextView
         android:id="@+id/shareTextView"
         style="@style/ButtonTextView"
-        android:drawableStart="?attr/sharebtnDrawable"
-        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:drawableStartCompat="?attr/sharebtnDrawable"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
         />
 
     <io.github.wykopmobilny.ui.widgets.buttons.FavoriteButton
         android:id="@+id/favoriteButton"
         style="@style/ButtonTextView"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
         app:layout_constraintLeft_toRightOf="@id/shareTextView"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
         />
 
     <TextView
         android:id="@+id/replyTextView"
         style="@style/ButtonTextView"
-        android:drawableStart="?attr/replyDrawable"
-        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:drawableStartCompat="?attr/replyDrawable"
         app:layout_constraintLeft_toRightOf="@id/favoriteButton"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
         />
 
     <TextView
         android:id="@+id/commentsCountTextView"
         style="@style/CommentButtonTextView"
-        android:drawableStart="?attr/commentDrawable"
-        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:drawableStartCompat="?attr/commentDrawable"
         app:layout_constraintRight_toLeftOf="@+id/voteButton"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
         tools:text="3"
         />
 
@@ -88,16 +87,16 @@
         android:id="@+id/voteButton"
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/plusDrawable"
-        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
         app:layout_constraintRight_toLeftOf="@+id/moreOptionsTextView"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
         tools:text="2"
         />
 
     <TextView
         android:id="@+id/moreOptionsTextView"
         style="@style/ButtonTextView"
-        android:drawableStart="?attr/dotsDrawable"
-        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
+        app:drawableStartCompat="?attr/dotsDrawable"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/entryImageViewStub"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

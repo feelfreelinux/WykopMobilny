@@ -1,6 +1,7 @@
 package io.github.wykopmobilny.ui.adapters
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import io.github.wykopmobilny.base.adapter.EndlessProgressAdapter
 import io.github.wykopmobilny.models.dataclass.Link
 import io.github.wykopmobilny.storage.api.LinksPreferencesApi
@@ -18,7 +19,7 @@ class LinksAdapter @Inject constructor(
     private val settingsPreferencesApi: SettingsPreferencesApi,
     private val navigatorApi: NewNavigatorApi,
     private val linksPreferences: LinksPreferencesApi,
-) : EndlessProgressAdapter<androidx.recyclerview.widget.RecyclerView.ViewHolder, Link>() {
+) : EndlessProgressAdapter<RecyclerView.ViewHolder, Link>() {
 
     // Required field, interacts with presenter. Otherwise will throw exception
     lateinit var linksActionListener: LinkActionListener
@@ -31,7 +32,7 @@ class LinksAdapter @Inject constructor(
         }
     }
 
-    override fun constructViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun constructViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             SimpleLinkViewHolder.TYPE_SIMPLE_LINK ->
                 SimpleLinkViewHolder.inflateView(
@@ -60,7 +61,7 @@ class LinksAdapter @Inject constructor(
         super.addData(items.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }, shouldClearAdapter)
     }
 
-    override fun bindHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is LinkViewHolder -> holder.bindView(dataset[position]!!)
             is SimpleLinkViewHolder -> holder.bindView(dataset[position]!!)

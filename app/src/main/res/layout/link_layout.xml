@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
@@ -14,65 +13,64 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="image_right, image_left, image_bottom, description"
-        app:layout_constraintTop_toTopOf="parent"
         />
 
     <io.github.wykopmobilny.ui.widgets.AuthorHeaderView
         android:id="@+id/authorHeaderView"
         style="@style/AuthorHeaderView"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <ViewStub
         android:id="@+id/image_left"
-        android:inflatedId="@+id/image_left"
-        android:layout_marginTop="@dimen/padding_dp_normal"
-        android:layout_marginLeft="@dimen/padding_dp_normal"
-        android:layout="@layout/link_image_left"
         android:layout_width="@dimen/link_layout_image_width"
         android:layout_height="@dimen/link_layout_image_height"
+        android:layout_marginStart="@dimen/padding_dp_normal"
+        android:layout_marginTop="@dimen/padding_dp_normal"
+        android:inflatedId="@+id/image_left"
+        android:layout="@layout/link_image_left"
         app:layout_constraintBottom_toTopOf="@id/shareTextView"
-        app:layout_constraintTop_toTopOf="@id/titleTextView"
         app:layout_constraintLeft_toLeftOf="@id/shareTextView"
+        app:layout_constraintTop_toTopOf="@id/titleTextView"
         />
 
     <ViewStub
         android:id="@+id/image_right"
-        android:inflatedId="@+id/image_right"
-        android:layout="@layout/link_image_right"
         android:layout_width="@dimen/link_layout_image_width"
         android:layout_height="@dimen/link_layout_image_height"
         android:layout_marginTop="@dimen/padding_dp_normal"
-        android:layout_marginRight="@dimen/padding_dp_normal"
+        android:layout_marginEnd="@dimen/padding_dp_normal"
+        android:inflatedId="@+id/image_right"
+        android:layout="@layout/link_image_right"
         app:layout_constraintBottom_toTopOf="@id/shareTextView"
-        app:layout_constraintTop_toTopOf="@id/titleTextView"
         app:layout_constraintRight_toRightOf="@id/moreOptionsTextView"
+        app:layout_constraintTop_toTopOf="@id/titleTextView"
         />
 
     <ViewStub
         android:id="@+id/image_top"
-        android:inflatedId="@+id/image_top"
         android:layout_width="@dimen/link_layout_image_full_width"
         android:layout_height="@dimen/link_layout_image_full_height"
+        android:inflatedId="@+id/image_top"
         android:layout="@layout/link_vertial_image"
-        app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/authorHeaderView"
         />
 
     <ViewStub
         android:id="@+id/image_bottom"
-        android:inflatedId="@+id/image_bottom"
         android:layout_width="@dimen/link_layout_image_full_width"
         android:layout_height="@dimen/link_layout_image_full_height"
         android:layout_marginTop="10dp"
+        android:inflatedId="@+id/image_bottom"
         android:layout="@layout/link_vertial_image"
-        app:layout_constraintTop_toBottomOf="@id/description"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description"
         />
 
     <TextView
@@ -81,15 +79,15 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:focusable="false"
-        android:paddingTop="@dimen/padding_dp_small"
-        android:paddingBottom="@dimen/padding_dp_mini"
         android:paddingLeft="@dimen/padding_dp_normal"
+        android:paddingTop="@dimen/padding_dp_small"
         android:paddingRight="@dimen/padding_dp_normal"
+        android:paddingBottom="@dimen/padding_dp_mini"
         android:textSize="?attr/textSizeNormal"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/image_top"
         app:layout_constraintLeft_toRightOf="@id/image_left"
         app:layout_constraintRight_toLeftOf="@id/image_right"
+        app:layout_constraintTop_toBottomOf="@id/image_top"
         tools:text="Lorem ipsum dodor sit amdreet Lorem dolofdgr st amet. Lorem ipsum dolor sit amet."
         />
 
@@ -102,18 +100,18 @@
         android:paddingLeft="@dimen/padding_dp_normal"
         android:paddingRight="@dimen/padding_dp_normal"
         android:textSize="?attr/textSizeNormal"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
         app:layout_constraintLeft_toRightOf="@id/image_left"
         app:layout_constraintRight_toLeftOf="@id/image_right"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
         tools:text="Mauris et elementum diam. Nam laoreet nunc ac urna dapibus, porttitor faucibus magna pretium."
         />
 
     <TextView
         android:id="@+id/shareTextView"
         style="@style/ButtonTextView"
-        android:drawableStart="?attr/sharebtnDrawable"
-        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:drawableStartCompat="?attr/sharebtnDrawable"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
         />
 
     <TextView
@@ -122,20 +120,20 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/padding_dp_mini"
         android:paddingRight="@dimen/padding_dp_mini"
-        android:textSize="12sp"
         android:textColor="?attr/textColorButtonToolbar"
-        app:layout_constraintTop_toBottomOf="@id/barrier"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/shareTextView"
         app:layout_constraintLeft_toRightOf="@id/shareTextView"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="3 godz. temu"
         />
 
     <TextView
         android:id="@+id/commentsCountTextView"
         style="@style/CommentButtonTextView"
-        android:drawableStart="?attr/commentDrawable"
-        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:drawableStartCompat="?attr/commentDrawable"
         app:layout_constraintRight_toLeftOf="@+id/diggCountTextView"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="50"
         />
 
@@ -144,29 +142,29 @@
         style="@style/VoteButtonTextView"
         android:drawableStart="?attr/wypokDrawable"
         android:drawablePadding="2dp"
+        app:layout_constraintEnd_toStartOf="@id/moreOptionsTextView"
         app:layout_constraintTop_toBottomOf="@+id/barrier"
-        app:layout_constraintRight_toLeftOf="@id/moreOptionsTextView"
         tools:text="2137"
         />
 
     <TextView
         android:id="@+id/moreOptionsTextView"
         style="@style/ButtonTextView"
-        android:drawableStart="?attr/dotsDrawable"
+        app:drawableStartCompat="?attr/dotsDrawable"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier"
-        app:layout_constraintRight_toRightOf="parent"
         />
 
     <View
         android:id="@+id/hotIcon"
         android:layout_width="11dp"
         android:layout_height="11dp"
+        android:layout_marginStart="@dimen/margin_dp_huge"
         android:layout_marginTop="@dimen/margin_dp_tiny"
-        android:layout_marginLeft="@dimen/margin_dp_huge"
         android:background="?attr/hotOutlineDrawable"
         android:visibility="visible"
-        app:layout_constraintTop_toTopOf="@id/diggCountTextView"
         app:layout_constraintLeft_toLeftOf="@id/diggCountTextView"
+        app:layout_constraintTop_toTopOf="@id/diggCountTextView"
         />
 
     <View
@@ -175,9 +173,9 @@
         android:layout_height="0dp"
         android:background="@color/colorBadgeHot"
         android:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

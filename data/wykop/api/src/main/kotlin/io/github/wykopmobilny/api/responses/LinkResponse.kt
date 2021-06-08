@@ -23,5 +23,5 @@ class LinkResponse(
     @JsonProperty("status") val status: String,
     @JsonProperty("user_vote") val userVote: String?,
     @JsonProperty("user_favorite") val userFavorite: Boolean?,
-    @JsonProperty("app") val app: String?
+    @JsonProperty("app") val app: String?,
 )

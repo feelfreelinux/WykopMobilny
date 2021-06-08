@@ -7,6 +7,7 @@ import io.github.wykopmobilny.storage.api.SessionStorage
 import io.github.wykopmobilny.storage.api.UserInfoStorage
 import io.github.wykopmobilny.storage.api.UserSession
 import io.github.wykopmobilny.ui.dialogs.userNotLoggedInDialog
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -60,16 +61,18 @@ class UserManager @Inject constructor(
         )
     }
 
-    override fun isUserAuthorized(): Boolean = sessionStorage.session.value != null
+    override fun isUserAuthorized(): Boolean = runBlocking { sessionStorage.session.first() } != null
 
     override fun getUserCredentials(): UserCredentials? =
-        userInfoStorage.loggedUser.value?.let {
-            UserCredentials(
-                login = it.userName,
-                avatarUrl = it.avatarUrl,
-                backgroundUrl = it.backgroundUrl,
-                userKey = it.userToken,
-            )
+        runBlocking {
+            userInfoStorage.loggedUser.first()?.let {
+                UserCredentials(
+                    login = it.userName,
+                    avatarUrl = it.avatarUrl,
+                    backgroundUrl = it.backgroundUrl,
+                    userKey = it.userToken,
+                )
+            }
         }
 
     override fun runIfLoggedIn(context: Context, callback: () -> Unit) {

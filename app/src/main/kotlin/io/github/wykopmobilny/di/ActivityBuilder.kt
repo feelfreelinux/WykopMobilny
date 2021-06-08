@@ -2,6 +2,7 @@ package io.github.wykopmobilny.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.github.wykopmobilny.glide.GlideModule
 import io.github.wykopmobilny.ui.modules.addlink.AddlinkActivity
 import io.github.wykopmobilny.ui.modules.addlink.AddlinkFragmentProvider
 import io.github.wykopmobilny.ui.modules.addlink.AddlinkModule
@@ -57,6 +58,9 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract fun bindWykopStartupBroadcastReceiver(): WykopNotificationsBroadcastReceiver
+
+    @ContributesAndroidInjector
+    abstract fun glide(): GlideModule
 
     @ContributesAndroidInjector(modules = [LoginScreenModule::class])
     abstract fun bindLoginActivity(): LoginScreenActivity

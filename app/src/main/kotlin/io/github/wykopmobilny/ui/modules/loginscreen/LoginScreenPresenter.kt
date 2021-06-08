@@ -12,20 +12,28 @@ class LoginScreenPresenter(
     private val schedulers: Schedulers,
     private val userManager: UserManagerApi,
     private val scraperApi: ScraperApi,
-    private val userApi: LoginApi
+    private val userApi: LoginApi,
 ) : BasePresenter<LoginScreenView>() {
 
     fun handleUrl(url: String) {
-        extractToken(url)?.apply {
-            userManager.loginUser(this)
+        val credentials = extractToken(url) ?: return
+        userManager.loginUser(credentials)
 
-            userApi.getUserSessionToken()
-                .subscribeOn(schedulers.backgroundThread())
-                .observeOn(schedulers.mainThread())
-                .doOnSuccess { userManager.saveCredentials(it) }
-                .subscribe({ view?.goBackToSplashScreen() }, { view?.showErrorDialog(it) })
-                .intoComposite(compositeObservable)
-        }
+        userApi.getUserSessionToken()
+            .subscribeOn(schedulers.backgroundThread())
+            .observeOn(schedulers.mainThread())
+            .doOnSuccess {
+                userManager.saveCredentials(it)
+            }
+            .subscribe(
+                {
+                    view?.goBackToSplashScreen()
+                },
+                {
+                    view?.showErrorDialog(it)
+                },
+            )
+            .intoComposite(compositeObservable)
     }
 
     private fun extractToken(url: String): LoginCredentials? {

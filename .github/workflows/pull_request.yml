@@ -49,13 +49,13 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Android Lint
-        run: ./gradlew lint
+        run: ./gradlew projectLint
 
       - uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:
           name: lint-results
-          path: '*/build/**/reports/lint-results-*.html'
+          path: '${{ github.workspace }}/**/build/**/reports/lint-results-*.html'
 
   ui_test:
     runs-on: macos-latest
@@ -97,4 +97,4 @@ jobs:
         if: ${{ always() }}
         with:
           name: uitests-report
-          path: "${{ github.workspace }}/**/build/*AndroidTest/"
+          path: "${{ github.workspace }}/**/build/**/connected/"

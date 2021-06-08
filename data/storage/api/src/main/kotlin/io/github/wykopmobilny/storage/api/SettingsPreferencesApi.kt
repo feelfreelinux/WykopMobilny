@@ -29,5 +29,4 @@ interface SettingsPreferencesApi {
     var useBuiltInBrowser: Boolean
     var groupNotifications: Boolean
     var disableExitConfirmation: Boolean
-    var dialogShown: Boolean
 }

@@ -15,7 +15,9 @@ import io.github.wykopmobilny.api.endpoints.ProfileRetrofitApi
 import io.github.wykopmobilny.api.endpoints.SearchRetrofitApi
 import io.github.wykopmobilny.api.endpoints.SuggestRetrofitApi
 import io.github.wykopmobilny.api.endpoints.TagRetrofitApi
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import java.io.File
 
 @Component(modules = [WykopModule::class])
 interface WykopComponent {
@@ -25,7 +27,13 @@ interface WykopComponent {
 
         fun create(
             @BindsInstance okHttpClient: OkHttpClient,
-            @BindsInstance apiUrl: String,
+            @BindsInstance @BaseUrl
+            baseUrl: String,
+            @BindsInstance @AppKey
+            appKey: String,
+            @BindsInstance @SigningInterceptor
+            signingInterceptor: Interceptor,
+            @BindsInstance cacheDir: File,
         ): WykopComponent
     }
 

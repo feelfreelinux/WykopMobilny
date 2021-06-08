@@ -93,7 +93,7 @@ abstract class EndlessProgressAdapter<T : RecyclerView.ViewHolder, A : Any> : Re
         if (viewType == ITEM_PROGRESS) {
             ProgressViewHolder(ProgressItemBinding.inflate(parent.layoutInflater, parent, false))
         } else {
-            createViewHolder(parent, viewType)
+            constructViewHolder(parent, viewType)
         }
 
     class ProgressViewHolder(binding: ProgressItemBinding) : RecyclerView.ViewHolder(binding.root)

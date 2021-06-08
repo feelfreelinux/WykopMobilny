@@ -6,11 +6,11 @@ import androidx.core.view.isVisible
 import io.github.wykopmobilny.databinding.LinkLayoutBinding
 import io.github.wykopmobilny.models.dataclass.Link
 import io.github.wykopmobilny.storage.api.LinksPreferencesApi
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.fragments.links.LinkActionListener
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.utils.layoutInflater
 import io.github.wykopmobilny.utils.loadImage
-import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 
 class LinkViewHolder(
@@ -49,7 +49,9 @@ class LinkViewHolder(
                 linkActionListener,
                 linksPreferences,
             )
-            if (viewType == TYPE_IMAGE) view.inflateCorrectImageView()
+            if (viewType == TYPE_IMAGE) {
+                view.inflateCorrectImageView()
+            }
             view.type = viewType
             return view
         }
@@ -58,9 +60,13 @@ class LinkViewHolder(
             return if (settingsPreferencesApi.linkSimpleList) {
                 SimpleLinkViewHolder.getViewTypeForLink(link)
             } else {
-                if (link.isBlocked) TYPE_BLOCKED
-                else if (link.preview == null || !settingsPreferencesApi.linkShowImage) TYPE_NOIMAGE
-                else TYPE_IMAGE
+                if (link.isBlocked) {
+                    TYPE_BLOCKED
+                } else if (link.preview == null || !settingsPreferencesApi.linkShowImage) {
+                    TYPE_NOIMAGE
+                } else {
+                    TYPE_IMAGE
+                }
             }
         }
     }
