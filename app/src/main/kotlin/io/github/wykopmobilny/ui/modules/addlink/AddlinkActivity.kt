@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.api.responses.NewLinkResponse
 import io.github.wykopmobilny.base.BaseActivity
@@ -11,6 +12,7 @@ import io.github.wykopmobilny.databinding.ActivityAddlinkBinding
 import io.github.wykopmobilny.ui.modules.addlink.fragments.confirmdetails.AddLinkDetailsFragment
 import io.github.wykopmobilny.ui.modules.addlink.fragments.duplicateslist.AddLinkDuplicatesListFragment
 import io.github.wykopmobilny.ui.modules.addlink.fragments.urlinput.AddlinkUrlInputFragment
+import io.github.wykopmobilny.utils.viewBinding
 
 class AddlinkActivity : BaseActivity() {
 
@@ -20,9 +22,10 @@ class AddlinkActivity : BaseActivity() {
 
     lateinit var draft: NewLinkResponse
 
+    private val binding by viewBinding(ActivityAddlinkBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityAddlinkBinding.inflate(layoutInflater)
         setSupportActionBar(binding.toolbar.toolbar)
         supportActionBar?.title = getString(R.string.add_new_link)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -38,7 +41,7 @@ class AddlinkActivity : BaseActivity() {
         openFragment(AddlinkUrlInputFragment.newInstance(url), "url_input")
     }
 
-    private fun openFragment(fragment: androidx.fragment.app.Fragment, tag: String) {
+    private fun openFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentView, fragment, tag)
             // Add this transaction to the back stack

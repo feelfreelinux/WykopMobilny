@@ -2,11 +2,14 @@ package io.github.wykopmobilny.ui.widgets.markdowntoolbar
 
 import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.wykopmobilny.R
@@ -21,11 +24,7 @@ import io.github.wykopmobilny.utils.CameraUtils
 import io.github.wykopmobilny.utils.getActivityContext
 import io.github.wykopmobilny.utils.layoutInflater
 
-class MarkdownToolbar @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+class MarkdownToolbar(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
     var photoUrl: String?
         get() = floatingImageView?.photoUrl
@@ -69,10 +68,16 @@ class MarkdownToolbar @JvmOverloads constructor(
             binding.insertEmoticon.setOnClickListener { showLennyfaceDialog(formatText) }
             binding.insertPhoto.setOnClickListener {
                 val activity = getActivityContext() as? BaseActivity
-                activity?.let {
-                    if (!activity.rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        activity.rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe {
-                            if (it) {
+                activity?.apply {
+                    if (ContextCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        showUploadPhotoBottomsheet()
+                    } else {
+                        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                            if (isGranted) {
                                 showUploadPhotoBottomsheet()
                             } else {
                                 Toast.makeText(
@@ -82,21 +87,14 @@ class MarkdownToolbar @JvmOverloads constructor(
                                 )
                                     .show()
                             }
-                        }
-                    } else {
-                        showUploadPhotoBottomsheet()
+                        }.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     }
                 }
             }
         }
     }
 
-    fun getWykopImageFile(): WykopImageFile? {
-        photo?.apply {
-            return WykopImageFile(photo!!, context)
-        }
-        return null
-    }
+    fun getWykopImageFile(): WykopImageFile? = photo?.let { WykopImageFile(it, context) }
 
     fun hasUserEditedContent(): Boolean {
         return (
