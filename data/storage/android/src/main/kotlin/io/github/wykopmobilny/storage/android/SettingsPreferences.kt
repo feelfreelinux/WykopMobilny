@@ -36,5 +36,4 @@ internal class SettingsPreferences @Inject constructor(
     override var useBuiltInBrowser by booleanPref(key = "useBuiltInBrowser", defaultValue = true)
     override var groupNotifications by booleanPref(key = "groupNotifications", defaultValue = true)
     override var disableExitConfirmation by booleanPref(key = "disableExitConfirmation", defaultValue = false)
-    override var dialogShown by booleanPref(key = "dialogShown", defaultValue = false)
 }

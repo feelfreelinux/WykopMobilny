@@ -8,12 +8,8 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.SpannableString
-import android.text.method.LinkMovementMethod
-import android.text.util.Linkify
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -181,7 +177,6 @@ class MainNavigationActivity :
             presenter.startListeningForNotifications()
         }
 
-        showFullReleaseDialog()
         (binding.navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
         checkBlacklist()
 
@@ -435,33 +430,6 @@ class MainNavigationActivity :
 
     override fun forceRefreshNotifications() {
         presenter.checkNotifications(true)
-    }
-
-    fun showFullReleaseDialog() {
-        if (!settingsPreferencesApi.dialogShown) {
-            val message = SpannableString(
-                "Po prawie dwóch latach pracy publikuję wersję 1.0 aplikacji. " +
-                    "Jestem wdzięczny wszystkim osobom zaangażowanym w projekt. " +
-                    "Aplikacja nadal pozostaje całkowicie darmowa i wolna od reklam. " +
-                    "Jeżeli chcesz, możesz wesprzeć rozwój aplikacji na https://patronite.pl/wykop-mobilny \n" +
-                    "Dziękuję :)",
-            )
-            Linkify.addLinks(message, Linkify.WEB_URLS)
-            AlertDialog.Builder(this).apply {
-                setTitle("Wersja 1.0")
-                setMessage(message)
-                setPositiveButton(android.R.string.ok) { _, _ ->
-                    settingsPreferencesApi.dialogShown = true
-                }
-
-                val dialog = create()
-                dialog.setOnDismissListener {
-                    settingsPreferencesApi.dialogShown = true
-                }
-                dialog.show()
-                dialog.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
-            }
-        }
     }
 
     override fun importBlacklist(blacklist: Blacklist) {
