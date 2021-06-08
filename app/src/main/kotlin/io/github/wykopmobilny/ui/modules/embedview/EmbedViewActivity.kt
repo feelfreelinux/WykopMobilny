@@ -8,8 +8,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
-import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -19,23 +17,19 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
-import com.devbrackets.android.exomedia.core.source.MediaSourceProvider
-import com.devbrackets.android.exomedia.ui.widget.VideoControlsCore
-import com.google.android.exoplayer2.DefaultLoadControl
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.ui.StyledPlayerView.SHOW_BUFFERING_WHEN_PLAYING
 import io.github.wykopmobilny.R
-import io.github.wykopmobilny.api.responses.Coub
 import io.github.wykopmobilny.base.BaseActivity
 import io.github.wykopmobilny.base.WykopSchedulers
 import io.github.wykopmobilny.databinding.ActivityEmbedviewBinding
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
 import io.github.wykopmobilny.ui.modules.photoview.PhotoViewActions
 import io.github.wykopmobilny.utils.ClipboardHelperApi
 import io.github.wykopmobilny.utils.openBrowser
-import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.utils.viewBinding
 import io.github.wykopmobilny.utils.wykopLog
 import io.reactivex.Single
@@ -44,7 +38,6 @@ import okhttp3.Request
 import okio.buffer
 import okio.sink
 import java.io.File
-import java.net.URL
 import javax.inject.Inject
 
 class EmbedViewActivity : BaseActivity(), EmbedView {
@@ -74,13 +67,6 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
     override val enableSwipeBackLayout: Boolean = true
     override val isActivityTransfluent: Boolean = true
 
-    lateinit var srcAudio: MediaSource
-    private val audioPlayer by lazy {
-        SimpleExoPlayer.Builder(this)
-            .setLoadControl(DefaultLoadControl())
-            .build()
-    }
-    private var usingMixedAudio = false
     private val extraUrl by lazy { intent.getStringExtra(EXTRA_URL)!! }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,9 +80,14 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             presenter.subscribe(this)
             presenter.playUrl(extraUrl)
         }
-        binding.videoView.setControls(WykopMediaControls(this) as VideoControlsCore)
-        binding.videoView.setHandleAudioFocus(false)
-        binding.videoView.isFocusable = false
+        binding.videoView.player = SimpleExoPlayer.Builder(this).build()
+        binding.videoView.controllerAutoShow = false
+        binding.videoView.setShowBuffering(SHOW_BUFFERING_WHEN_PLAYING)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.videoView.player?.release()
     }
 
     override fun checkEmbedSettings() {
@@ -106,53 +97,15 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         }
     }
 
-    override fun playUrl(url: URL) {
-        prepareVideoView()
-        playLoopingSource(Uri.parse(url.toString()))
-    }
+    override fun playUrl(url: String) {
+        val mediaItem: MediaItem = MediaItem.fromUri(url)
 
-    override fun playCoub(coub: Coub) {
-        val coubUrl = coub.fileVersions.mobile.mp4
-        presenter.mp4Url = coubUrl!!
-        prepareVideoView()
-        val videoSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coubUrl), null)
-        srcAudio =
-            MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), Uri.parse(coub.fileVersions.mobile.audio[0]), null)
-        audioPlayer.playWhenReady = true
-        usingMixedAudio = true
-        binding.videoView.setRepeatMode(Player.REPEAT_MODE_ALL)
-        binding.videoView.setVideoURI(null, videoSource)
-        binding.videoView.volume = 0f
-        audioPlayer.repeatMode = Player.REPEAT_MODE_ALL
-        audioPlayer.setMediaSource(srcAudio, true)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (usingMixedAudio) {
-            audioPlayer.stop()
+        binding.videoView.player?.apply {
+            setMediaItem(mediaItem)
+            repeatMode = Player.REPEAT_MODE_ALL
+            prepare()
+            play()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (usingMixedAudio && ::srcAudio.isInitialized) {
-            audioPlayer.setMediaSource(srcAudio, false)
-        }
-    }
-
-    private fun prepareVideoView() {
-        binding.videoView.setOnPreparedListener {
-            binding.videoView.isVisible = true
-            binding.loadingView.isVisible = false
-            binding.videoView.start()
-        }
-    }
-
-    private fun playLoopingSource(url: Uri) {
-        val mediaSource = MediaSourceProvider().generate(this, Handler(Looper.getMainLooper()), url, null)
-        binding.videoView.setRepeatMode(Player.REPEAT_MODE_ALL)
-        binding.videoView.setVideoURI(null, mediaSource)
     }
 
     override fun exitAndOpenYoutubeActivity() {
@@ -192,13 +145,6 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             .startChooser()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (usingMixedAudio) {
-            audioPlayer.release()
-        }
-    }
-
     private fun getFilenameFromResult(response: okhttp3.Response): String {
         val contentDispositionRegex =
             "(?:inline|attachment)(?:;\\s*)filename\\s*=\\s*[\"'](.*)[\"']".toRegex()
@@ -219,7 +165,7 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
             val url = presenter.mp4Url
             val path = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                PhotoViewActions.SAVED_FOLDER
+                PhotoViewActions.SAVED_FOLDER,
             )
             if (!path.exists()) {
                 path.mkdirs()
@@ -252,22 +198,22 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
                 {
                     wykopLog(Log::e, "Exception when trying to save file", it)
                     Toast.makeText(this, R.string.save_file_failed, Toast.LENGTH_SHORT).show()
-                }
+                },
             )
     }
 
     private fun checkForWriteReadPermission(): Boolean {
         ActivityCompat.requestPermissions(
             this,
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 1
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 1,
         )
         val writePermission = ContextCompat.checkSelfPermission(
             this,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
         )
         val readPermission = ContextCompat.checkSelfPermission(
             this,
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE,
         )
         return writePermission != PackageManager.PERMISSION_DENIED && readPermission != PackageManager.PERMISSION_DENIED
     }

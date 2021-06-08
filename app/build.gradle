@@ -111,10 +111,8 @@ dependencies {
     implementation "com.google.firebase:firebase-crashlytics-ktx"
 
     // To remove
-    implementation 'com.devbrackets.android:exomedia:4.3.0'
     implementation 'com.takisoft.preferencex:preferencex:1.1.0'
     implementation "org.ocpsoft.prettytime:prettytime:4.0.4.Final"
-    implementation 'com.pavelsikun:material-seekbar-preference:2.3.0'
     implementation 'com.github.feelfreelinux:Slidr:2.2.1'
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"

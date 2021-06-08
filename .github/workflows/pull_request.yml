@@ -79,8 +79,11 @@ jobs:
       - name: Cache .gradle
         uses: burrunan/gradle-cache-action@v1
         with:
-          job-id: uitests-jdk11
+          job-id: default-jdk11
           gradle-distribution-sha-256-sum-warning: false
+
+      - name: compile ui tests
+        run: ./gradlew assembleDebugAndroidTest
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
