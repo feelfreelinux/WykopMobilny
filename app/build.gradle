@@ -15,7 +15,7 @@ projectConfig {
 }
 
 def findProperty(key) {
-    return System.getenv(key) ?: properties[key] ?: ""
+    return properties[key] ?: System.getenv(key) ?: System.getenv(key.replace(".", "_").toUpperCase()) ?: ""
 }
 
 android {
@@ -36,6 +36,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        register("release") {
+            storeFile rootProject.file("keys/release.keystore")
+            storePassword findProperty("wykop.keystore.password")
+            keyAlias findProperty("wykop.keystore.key.name")
+            keyPassword findProperty("wykop.keystore.key.password")
+        }
     }
 
     buildTypes {
@@ -45,6 +51,7 @@ android {
         }
         named("release") {
             minifyEnabled true
+            signingConfig signingConfigs.getByName("release")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -114,6 +121,7 @@ dependencies {
 
     // To remove
     implementation 'com.takisoft.preferencex:preferencex:1.1.0'
+    //noinspection GradleDependency
     implementation "org.ocpsoft.prettytime:prettytime:4.0.4.Final"
     implementation 'com.github.feelfreelinux:Slidr:2.2.1'
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
