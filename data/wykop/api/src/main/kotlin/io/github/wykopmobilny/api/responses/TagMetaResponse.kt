@@ -1,14 +1,14 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class TagMetaResponse(
-    @JsonProperty("tag") val tag: String,
-    @JsonProperty("is_observed") var isObserved: Boolean,
-    @JsonProperty("is_blocked") var isBlocked: Boolean,
-    @JsonProperty("is_own") val isOwn: Boolean,
-    @JsonProperty("description") val description: String?,
-    @JsonProperty("background") val background: String?
+    @field:Json(name = "tag") val tag: String,
+    @field:Json(name = "is_observed") var isObserved: Boolean,
+    @field:Json(name = "is_blocked") var isBlocked: Boolean,
+    @field:Json(name = "is_own") val isOwn: Boolean,
+    @field:Json(name = "description") val description: String?,
+    @field:Json(name = "background") val background: String?
 )

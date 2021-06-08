@@ -1,11 +1,11 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 class TagLinksResponse(
-    @JsonProperty("data") override val data: List<LinkResponse>?,
-    @JsonProperty("error") override val error: WykopErrorResponse?,
-    @JsonProperty("meta") val meta: TagMetaResponse
+    @field:Json(name = "data") override val data: List<LinkResponse>?,
+    @field:Json(name = "error") override val error: WykopErrorResponse?,
+    @field:Json(name = "meta") val meta: TagMetaResponse
 ) : ApiResponse<List<LinkResponse>>

@@ -1,15 +1,15 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class PMMessageResponse(
-    @JsonProperty("id") val id: Int,
-    @JsonProperty("date") val date: String,
-    @JsonProperty("body") val body: String?,
-    @JsonProperty("status") val status: String,
-    @JsonProperty("direction") val direction: String,
-    @JsonProperty("embed") val embed: EmbedResponse?,
-    @JsonProperty("app") val app: String?
+    @field:Json(name = "id") val id: Int,
+    @field:Json(name = "date") val date: String,
+    @field:Json(name = "body") val body: String?,
+    @field:Json(name = "status") val status: String,
+    @field:Json(name = "direction") val direction: String,
+    @field:Json(name = "embed") val embed: EmbedResponse?,
+    @field:Json(name = "app") val app: String?
 )

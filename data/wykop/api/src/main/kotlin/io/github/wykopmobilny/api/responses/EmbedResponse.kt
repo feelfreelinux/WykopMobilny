@@ -1,15 +1,15 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class EmbedResponse(
-    @JsonProperty("type") val type: String,
-    @JsonProperty("url") val url: String,
-    @JsonProperty("source") val source: String?,
-    @JsonProperty("preview") val preview: String,
-    @JsonProperty("plus18") val plus18: Boolean,
-    @JsonProperty("size") val size: String?,
-    @JsonProperty("animated") val animated: Boolean
+    @field:Json(name = "type") val type: String,
+    @field:Json(name = "url") val url: String,
+    @field:Json(name = "source") val source: String?,
+    @field:Json(name = "preview") val preview: String,
+    @field:Json(name = "plus18") val plus18: Boolean,
+    @field:Json(name = "size") val size: String?,
+    @field:Json(name = "animated") val animated: Boolean
 )

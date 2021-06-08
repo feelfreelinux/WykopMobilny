@@ -1,16 +1,16 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class NotificationResponse(
-    @JsonProperty("id") val id: Long,
-    @JsonProperty("author") val author: AuthorResponse?,
-    @JsonProperty("date") val date: String,
-    @JsonProperty("body") val body: String,
-    @JsonProperty("type") val type: String,
-    @JsonProperty("item_id") val itemId: String?,
-    @JsonProperty("url") val url: String?,
-    @JsonProperty("new") val new: Boolean
+    @field:Json(name = "id") val id: Long,
+    @field:Json(name = "author") val author: AuthorResponse?,
+    @field:Json(name = "date") val date: String,
+    @field:Json(name = "body") val body: String,
+    @field:Json(name = "type") val type: String,
+    @field:Json(name = "item_id") val itemId: String?,
+    @field:Json(name = "url") val url: String?,
+    @field:Json(name = "new") val new: Boolean
 )

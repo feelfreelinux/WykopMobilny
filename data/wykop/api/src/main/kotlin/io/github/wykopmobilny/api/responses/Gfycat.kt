@@ -1,10 +1,9 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-
+@JsonClass(generateAdapter = true)
 data class Gfycat(
-    @JsonProperty("gfyItem") val gfyItem: GfycatItem
+    @field:Json(name = "gfyItem") val gfyItem: GfycatItem
 )

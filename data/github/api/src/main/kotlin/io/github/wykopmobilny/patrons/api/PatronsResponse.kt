@@ -1,7 +1,9 @@
 package io.github.wykopmobilny.patrons.api
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class PatronsResponse(@JsonProperty("patrons") val patrons: List<Patron>)
+@JsonClass(generateAdapter = true)
+data class PatronsResponse(
+    @field:Json(name = "patrons") val patrons: List<Patron>,
+)

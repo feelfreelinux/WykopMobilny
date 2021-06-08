@@ -1,10 +1,10 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-class WykopErrorResponse(
-    @JsonProperty("code") val code: Int,
-    @JsonProperty("message_pl") val messagePl: String
+@JsonClass(generateAdapter = true)
+data class WykopErrorResponse(
+    @field:Json(name = "code") val code: Int,
+    @field:Json(name = "message_pl") val messagePl: String
 )

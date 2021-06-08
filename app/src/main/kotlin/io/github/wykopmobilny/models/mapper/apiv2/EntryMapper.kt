@@ -19,10 +19,10 @@ object EntryMapper {
                 comments = value.comments.orEmpty().map { EntryCommentMapper.map(it, owmContentFilter) }.toMutableList(),
                 app = value.app,
                 violationUrl = value.violationUrl.orEmpty(),
-                isNsfw = value.body?.lowercase()?.contains("#nsfw") ?: false,
+                isNsfw = value.body?.lowercase()?.contains("#nsfw") == true,
                 isBlocked = value.blocked,
                 collapsed = true,
-                isCommentingPossible = value.isCommentingPossible,
-            )
+                isCommentingPossible = value.isCommentingPossible == true,
+            ),
         )
 }

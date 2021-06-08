@@ -1,10 +1,10 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class EntryLinkResponse(
-    @JsonProperty("entry") val entry: EntryResponse?,
-    @JsonProperty("link") val link: LinkResponse?
+    @field:Json(name = "entry") val entry: EntryResponse?,
+    @field:Json(name = "link") val link: LinkResponse?
 )

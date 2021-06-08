@@ -1,11 +1,11 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-class NewLinkResponse(
-    @JsonProperty("data") override val data: NewLinkInformationResponse?,
-    @JsonProperty("error") override val error: WykopErrorResponse?,
-    @JsonProperty("duplicates") val duplicates: List<LinkResponse>? = emptyList()
+@JsonClass(generateAdapter = true)
+data class NewLinkResponse(
+    @field:Json(name = "data") override val data: NewLinkInformationResponse?,
+    @field:Json(name = "error") override val error: WykopErrorResponse?,
+    @field:Json(name = "duplicates") val duplicates: List<LinkResponse>? = emptyList()
 ) : ApiResponse<NewLinkInformationResponse>

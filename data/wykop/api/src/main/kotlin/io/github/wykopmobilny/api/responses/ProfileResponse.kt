@@ -1,23 +1,23 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class ProfileResponse(
-    @JsonProperty("login") val login: String,
-    @JsonProperty("color") val color: Int,
-    @JsonProperty("sex") val sex: String?,
-    @JsonProperty("avatar") val avatar: String,
-    @JsonProperty("signup_at") val signupAt: String,
-    @JsonProperty("is_blocked") val isBlocked: Boolean? = false,
-    @JsonProperty("is_observed") val isObserved: Boolean? = false,
-    @JsonProperty("background") val background: String?,
-    @JsonProperty("links_added_count") val linksAddedCount: Int,
-    @JsonProperty("links_published_count") val linksPublishedCount: Int,
-    @JsonProperty("rank") val rank: Int?,
-    @JsonProperty("followers") val followers: Int,
-    @JsonProperty("about") val description: String?,
-    @JsonProperty("violation_url") val violationUrl: String?,
-    @JsonProperty("ban") val ban: BanResponse?
+    @field:Json(name = "login") val login: String,
+    @field:Json(name = "color") val color: Int,
+    @field:Json(name = "sex") val sex: String?,
+    @field:Json(name = "avatar") val avatar: String,
+    @field:Json(name = "signup_at") val signupAt: String,
+    @field:Json(name = "is_blocked") val isBlocked: Boolean? = false,
+    @field:Json(name = "is_observed") val isObserved: Boolean? = false,
+    @field:Json(name = "background") val background: String?,
+    @field:Json(name = "links_added_count") val linksAddedCount: Int,
+    @field:Json(name = "links_published_count") val linksPublishedCount: Int,
+    @field:Json(name = "rank") val rank: Int?,
+    @field:Json(name = "followers") val followers: Int,
+    @field:Json(name = "about") val description: String?,
+    @field:Json(name = "violation_url") val violationUrl: String?,
+    @field:Json(name = "ban") val ban: BanResponse?
 )

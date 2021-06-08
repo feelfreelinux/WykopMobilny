@@ -1,10 +1,10 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class TagSuggestionResponse(
-    @JsonProperty("tag") val tag: String,
-    @JsonProperty("followers") val followers: Int
+    @field:Json(name = "tag") val tag: String,
+    @field:Json(name = "followers") val followers: Int
 )

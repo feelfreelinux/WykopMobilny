@@ -1,12 +1,12 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class BadgeResponse(
-    @JsonProperty("name") val name: String,
-    @JsonProperty("date") val date: String,
-    @JsonProperty("description") val description: String,
-    @JsonProperty("icon") val icon: String
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "date") val date: String,
+    @field:Json(name = "description") val description: String,
+    @field:Json(name = "icon") val icon: String
 )

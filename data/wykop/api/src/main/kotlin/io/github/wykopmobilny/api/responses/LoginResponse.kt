@@ -1,10 +1,10 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class LoginResponse(
-    @JsonProperty("profile") val profile: ProfileResponse,
-    @JsonProperty("userkey") val userkey: String
+    @field:Json(name = "profile") val profile: ProfileResponse,
+    @field:Json(name = "userkey") val userkey: String
 )

@@ -1,12 +1,12 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-class LinkVoteResponse(
-    @JsonProperty("vote_count_plus") val voteCountPlus: Int,
-    @JsonProperty("vote_count") val voteCount: Int
+@JsonClass(generateAdapter = true)
+data class LinkVoteResponse(
+    @field:Json(name = "vote_count_plus") val voteCountPlus: Int,
+    @field:Json(name = "vote_count") val voteCount: Int
 ) {
     val voteCountMinus: Int get() = voteCount - voteCountPlus
 }
