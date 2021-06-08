@@ -162,7 +162,5 @@
             app:min="20"
             app:showSeekBarValue="true"
             />
-
     </com.takisoft.preferencex.PreferenceCategory>
-
 </androidx.preference.PreferenceScreen>

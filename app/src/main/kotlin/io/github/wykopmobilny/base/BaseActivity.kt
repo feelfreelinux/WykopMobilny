@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrConfig
-import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -24,7 +23,6 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
     open val enableSwipeBackLayout: Boolean = false
     open val isActivityTransfluent: Boolean = false
     var isRunning = false
-    lateinit var rxPermissions: RxPermissions
 
     @Inject
     lateinit var themeSettingsPreferences: SettingsPreferencesApi
@@ -36,11 +34,10 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
         AndroidInjection.inject(this)
         initTheme()
         super.onCreate(savedInstanceState)
-        rxPermissions = RxPermissions(this)
         if (enableSwipeBackLayout) {
             Slidr.attach(
                 this,
-                SlidrConfig.Builder().edge(true).build()
+                SlidrConfig.Builder().edge(true).build(),
             )
         }
     }
@@ -80,7 +77,7 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
             "large" -> theme.applyStyle(R.style.TextSizeLarge, true)
             "huge" -> theme.applyStyle(R.style.TextSizeHuge, true)
             "normal",
-            null
+            null,
             -> theme.applyStyle(R.style.TextSizeNormal, true)
         }
     }
