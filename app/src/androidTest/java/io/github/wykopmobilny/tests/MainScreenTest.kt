@@ -28,7 +28,7 @@ class MainScreenTest : BaseActivityTest() {
         interceptingIntents {
             AboutDialog.tapAppInfo()
 
-            assertLinkHandled("https://github.com/feelfreelinux/WykopMobilny")
+            assertLinkHandled("https://github.com/otwarty-wykop-mobilny/wykop-android")
         }
 
         Espresso.onIdle()
