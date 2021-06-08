@@ -5,11 +5,10 @@ import io.github.wykopmobilny.base.BasePresenter
 import io.github.wykopmobilny.base.Schedulers
 import io.reactivex.Single
 import java.net.URI
-import java.net.URL
 
 class EmbedLinkPresenter(
     val schedulers: Schedulers,
-    private val embedApi: ExternalApi
+    private val embedApi: ExternalApi,
 ) : BasePresenter<EmbedView>() {
 
     companion object {
@@ -38,9 +37,9 @@ class EmbedLinkPresenter(
                     .subscribe(
                         {
                             mp4Url = it.gfyItem.mp4Url
-                            view?.playUrl(URL(it.gfyItem.webmUrl))
+                            view?.playUrl(it.gfyItem.webmUrl)
                         },
-                        { view?.showErrorDialog(it) }
+                        { view?.showErrorDialog(it) },
                     )
             }
 
@@ -49,7 +48,13 @@ class EmbedLinkPresenter(
                 embedApi.getCoub(id)
                     .subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
-                    .subscribe({ view?.playCoub(it) }, { view?.showErrorDialog(it) })
+                    .subscribe(
+                        {
+                            mp4Url = it.fileVersions.mobile.mp4!!
+                            view?.playUrl(mp4Url)
+                        },
+                        { view?.showErrorDialog(it) },
+                    )
             }
 
             STREAMABLE_MATCHER -> {
@@ -60,9 +65,9 @@ class EmbedLinkPresenter(
                     .subscribe(
                         {
                             mp4Url = it.toString()
-                            view?.playUrl(it)
+                            view?.playUrl(mp4Url)
                         },
-                        { view?.showErrorDialog(it) }
+                        { view?.showErrorDialog(it) },
                     )
             }
 

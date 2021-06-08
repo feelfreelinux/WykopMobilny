@@ -1,9 +1,7 @@
 package io.github.wykopmobilny
 
 import android.webkit.CookieManager
-import com.devbrackets.android.exomedia.ExoMedia
 import com.evernote.android.job.JobManager
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.Lazy
 import dagger.android.AndroidInjector
@@ -43,11 +41,6 @@ open class WykopApp : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        ExoMedia.setDataSourceFactoryProvider { userAgent, listener ->
-            DefaultHttpDataSource.Factory()
-                .setUserAgent(userAgent)
-                .setTransferListener(listener)
-        }
         AndroidThreeTen.init(this)
         JobManager.create(this).addJobCreator(jobCreator.get())
     }
