@@ -2,22 +2,30 @@ package io.github.wykopmobilny.tests.rules
 
 import androidx.test.espresso.IdlingResource
 import okhttp3.Dispatcher
-import java.util.UUID
+import java.util.concurrent.CopyOnWriteArrayList
 
 class OkHttp3IdlingResource(private val dispatcher: Dispatcher) : IdlingResource {
 
-    @Volatile
-    var callback: IdlingResource.ResourceCallback? = null
+    private val callbacks = CopyOnWriteArrayList<IdlingResource.ResourceCallback>()
 
     override fun registerIdleTransitionCallback(callback: IdlingResource.ResourceCallback?) {
-        this.callback = callback
+        this.callbacks.add(callback)
     }
 
-    override fun getName() = UUID.randomUUID().toString()
+    override fun getName() = "okhttp-idling-resource"
 
-    override fun isIdleNow() = dispatcher.runningCallsCount() == 0
+    override fun isIdleNow(): Boolean {
+        val isIdle = dispatcher.runningCallsCount() == 0
+        if (isIdle) {
+            transitionToIdle()
+        }
+
+        return isIdle
+    }
+
+    private fun transitionToIdle() = callbacks.forEach { it.onTransitionToIdle() }
 
     init {
-        dispatcher.idleCallback = Runnable { callback?.onTransitionToIdle() }
+        dispatcher.idleCallback = Runnable { transitionToIdle() }
     }
 }
