@@ -39,6 +39,10 @@ jobs:
         run: ./gradlew projectCodestyle -x checkstyle
 
       - name: Assemble
+        env:
+          WYKOP_KEYSTORE_KEY_PASSWORD: ${{ secrets.WYKOP_KEYSTORE_KEY_PASSWORD }}
+          WYKOP_KEYSTORE_KEY_NAME: ${{ secrets.WYKOP_KEYSTORE_KEY_NAME }}
+          WYKOP_KEYSTORE_PASSWORD: ${{ secrets.WYKOP_KEYSTORE_PASSWORD }}
         run: ./gradlew assembleRelease
 
       - name: Unit tests
