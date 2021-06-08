@@ -31,7 +31,7 @@ jobs:
       - name: Cache .gradle
         uses: burrunan/gradle-cache-action@v1
         with:
-          job-id: default-jdk11
+          job-id: jdk11
           gradle-distribution-sha-256-sum-warning: false
 
       - name: Assemble
