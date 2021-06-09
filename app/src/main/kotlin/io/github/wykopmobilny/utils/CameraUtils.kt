@@ -25,6 +25,6 @@ object CameraUtils {
             Log.i(this::class.simpleName, "Couldn't create file", exception)
         }
 
-        return FileProvider.getUriForFile(context, "io.github.feelfreelinux.wykopmobilny.fileprovider", file)
+        return FileProvider.getUriForFile(context, "io.github.wykopmobilny.fileprovider", file)
     }
 }

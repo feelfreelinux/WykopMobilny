@@ -1,11 +1,11 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class GfycatItem(
-    @JsonProperty("mp4Url") val mp4Url: String,
-    @JsonProperty("gifUrl") val gifUrl: String,
-    @JsonProperty("webmUrl") val webmUrl: String
+    @field:Json(name = "mp4Url") val mp4Url: String,
+    @field:Json(name = "gifUrl") val gifUrl: String,
+    @field:Json(name = "webmUrl") val webmUrl: String
 )

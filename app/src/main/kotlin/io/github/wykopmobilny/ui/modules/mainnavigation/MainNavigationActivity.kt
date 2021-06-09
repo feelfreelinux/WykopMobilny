@@ -364,7 +364,7 @@ class MainNavigationActivity :
             val versionName = packageManager.getPackageInfo(packageName, 0).versionName
             appVersionTextview.text = getString(R.string.app_version, versionName)
             appVersion.setOnClickListener {
-                openBrowser("https://github.com/feelfreelinux/WykopMobilny")
+                openBrowser("https://github.com/otwarty-wykop-mobilny/wykop-android")
                 dialog.dismiss()
             }
 
@@ -384,7 +384,7 @@ class MainNavigationActivity :
             }
 
             license.setOnClickListener {
-                openBrowser("https://github.com/feelfreelinux/WykopMobilny/blob/master/LICENSE")
+                openBrowser("https://github.com/otwarty-wykop-mobilny/wykop-android/blob/master/LICENSE")
                 dialog.dismiss()
             }
         }

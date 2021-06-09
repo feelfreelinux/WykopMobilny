@@ -1,10 +1,12 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class AddLinkPreviewImage(
-    @JsonProperty("key") val key: String,
-    @JsonProperty("type") val type: String,
-    @JsonProperty("preview_url") val previewUrl: String,
-    @JsonProperty("source_url") val sourceUrl: String
+    @field:Json(name = "key") val key: String,
+    @field:Json(name = "type") val type: String,
+    @field:Json(name = "preview_url") val previewUrl: String,
+    @field:Json(name = "source_url") val sourceUrl: String
 )

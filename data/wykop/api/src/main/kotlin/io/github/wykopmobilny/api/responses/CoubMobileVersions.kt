@@ -1,10 +1,10 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class CoubMobileVersions(
-    @JsonProperty("video") val mp4: String?,
-    @JsonProperty("audio") val audio: List<String>
+    @field:Json(name = "video") val mp4: String?,
+    @field:Json(name = "audio") val audio: List<String>
 )

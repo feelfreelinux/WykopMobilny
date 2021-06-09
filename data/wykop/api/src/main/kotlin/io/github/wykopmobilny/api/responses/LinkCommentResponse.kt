@@ -1,23 +1,23 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class LinkCommentResponse(
-    @JsonProperty("id") val id: Int,
-    @JsonProperty("author") val author: AuthorResponse?,
-    @JsonProperty("date") val date: String,
-    @JsonProperty("body") val body: String?,
-    @JsonProperty("blocked") val blocked: Boolean,
-    @JsonProperty("favorite") val favorite: Boolean,
-    @JsonProperty("vote_count") val voteCount: Int,
-    @JsonProperty("vote_count_plus") val voteCountPlus: Int,
-    @JsonProperty("user_vote") val userVote: Int,
-    @JsonProperty("parent_id") val parentId: Int,
-    @JsonProperty("can_vote") val canVote: Boolean,
-    @JsonProperty("link_id") val linkId: Int,
-    @JsonProperty("embed") val embed: EmbedResponse?,
-    @JsonProperty("violation_url") val violationUrl: String?,
-    @JsonProperty("app") val app: String?
+    @field:Json(name = "id") val id: Int,
+    @field:Json(name = "author") val author: AuthorResponse?,
+    @field:Json(name = "date") val date: String,
+    @field:Json(name = "body") val body: String?,
+    @field:Json(name = "blocked") val blocked: Boolean,
+    @field:Json(name = "favorite") val favorite: Boolean,
+    @field:Json(name = "vote_count") val voteCount: Int,
+    @field:Json(name = "vote_count_plus") val voteCountPlus: Int,
+    @field:Json(name = "user_vote") val userVote: Int,
+    @field:Json(name = "parent_id") val parentId: Int,
+    @field:Json(name = "can_vote") val canVote: Boolean,
+    @field:Json(name = "link_id") val linkId: Int,
+    @field:Json(name = "embed") val embed: EmbedResponse?,
+    @field:Json(name = "violation_url") val violationUrl: String?,
+    @field:Json(name = "app") val app: String?
 )

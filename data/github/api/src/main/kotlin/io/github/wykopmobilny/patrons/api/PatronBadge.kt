@@ -1,10 +1,10 @@
 package io.github.wykopmobilny.patrons.api
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class PatronBadge(
-    @JsonProperty("color") val hexColor: String,
-    @JsonProperty("text") val text: String
+    @field:Json(name = "color") val hexColor: String,
+    @field:Json(name = "text") val text: String,
 )

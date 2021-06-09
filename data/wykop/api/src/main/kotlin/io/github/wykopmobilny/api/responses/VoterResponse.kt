@@ -1,11 +1,11 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class VoterResponse(
-    @JsonProperty("author") val author: AuthorResponse,
-    @JsonProperty("date") val date: String,
-    @JsonProperty("vote_type") val voteType: Int
+    @field:Json(name = "author") val author: AuthorResponse,
+    @field:Json(name = "date") val date: String,
+    @field:Json(name = "vote_type") val voteType: Int
 )

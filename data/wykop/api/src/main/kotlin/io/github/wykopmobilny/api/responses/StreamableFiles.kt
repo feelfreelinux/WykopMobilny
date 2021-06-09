@@ -1,10 +1,10 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class StreamableFiles(
-    @JsonProperty("mp4") val mp4: StreamableFile,
-    @JsonProperty("mp4-mobile") val mp4Mobile: StreamableFile?
+    @field:Json(name = "mp4") val mp4: StreamableFile,
+    @field:Json(name = "mp4-mobile") val mp4Mobile: StreamableFile?
 )

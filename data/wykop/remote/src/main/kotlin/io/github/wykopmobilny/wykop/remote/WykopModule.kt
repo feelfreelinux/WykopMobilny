@@ -21,7 +21,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
 import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -124,7 +124,7 @@ internal class RetrofitModule {
                     .build(),
             )
             .baseUrl(apiUrl)
-            .addConverterFactory(JacksonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
             .build()
 
     companion object {

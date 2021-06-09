@@ -6,7 +6,7 @@ import android.app.NotificationManager
 import android.os.Build
 import java.util.concurrent.atomic.AtomicInteger
 
-const val NOTIFICATION_TAG = "io.github.com.feelfreelinux.wykopmobilny"
+const val NOTIFICATION_TAG = "io.github.wykopmobilny"
 
 interface WykopNotificationManagerApi {
     fun getNewId(): Int
@@ -28,8 +28,8 @@ class WykopNotificationManager(private val notificationManager: NotificationMana
                 NotificationChannel(
                     NOTIFICATION_CHANNEL_ID,
                     NOTIFICATION_CHANNEL_ID,
-                    NotificationManager.IMPORTANCE_HIGH
-                )
+                    NotificationManager.IMPORTANCE_HIGH,
+                ),
             )
         }
     }

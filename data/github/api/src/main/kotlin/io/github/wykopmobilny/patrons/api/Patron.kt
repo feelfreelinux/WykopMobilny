@@ -1,12 +1,12 @@
 package io.github.wykopmobilny.patrons.api
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class Patron(
-    @JsonProperty("listMention") val listMention: Boolean,
-    @JsonProperty("tier") val tier: String,
-    @JsonProperty("username") val username: String,
-    @JsonProperty("badge") val badge: PatronBadge
+    @get:Json(name = "listMention") val listMention: Boolean,
+    @get:Json(name = "tier") val tier: String,
+    @get:Json(name = "username") val username: String,
+    @get:Json(name = "badge") val badge: PatronBadge,
 )

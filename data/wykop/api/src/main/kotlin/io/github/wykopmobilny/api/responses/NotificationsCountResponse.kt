@@ -1,7 +1,9 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class NotificationsCountResponse(
-    @JsonProperty("count") val count: Int
+    @field:Json(name = "count") val count: Int
 )

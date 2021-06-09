@@ -1,10 +1,10 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class DigResponse(
-    @JsonProperty("digs") val diggs: Int,
-    @JsonProperty("buries") val buries: Int
+    @field:Json(name = "digs") val diggs: Int,
+    @field:Json(name = "buries") val buries: Int
 )

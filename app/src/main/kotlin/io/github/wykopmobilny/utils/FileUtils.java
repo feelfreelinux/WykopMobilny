@@ -51,11 +51,10 @@ public class FileUtils {
 
     /**
      * @param uri The Uri to check.
-     * @return Whether the Uri authority is io.github.feelfreelinux.wykopmobilny.fileprovider
      * @author paulburke
      */
     public static boolean isLocalStorageDocument(Uri uri) {
-        return "io.github.feelfreelinux.wykopmobilny.fileprovider".equals(uri.getAuthority());
+        return "io.github.wykopmobilny.fileprovider".equals(uri.getAuthority());
     }
 
     /**

@@ -1,9 +1,9 @@
 package io.github.wykopmobilny.api.responses
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class Coub(
-    @JsonProperty("file_versions") val fileVersions: CoubFileVersions
+    @field:Json(name = "file_versions") val fileVersions: CoubFileVersions
 )
