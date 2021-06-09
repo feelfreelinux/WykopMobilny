@@ -118,6 +118,7 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:28.1.0")
     implementation "com.google.firebase:firebase-analytics-ktx"
     implementation "com.google.firebase:firebase-crashlytics-ktx"
+    implementation 'com.github.suckgamony.RapidDecoder:library:7cdfca47fa'
 
     // To remove
     implementation 'com.takisoft.preferencex:preferencex:1.1.0'
@@ -152,7 +153,6 @@ dependencies {
 
     // Android-Job
     implementation "com.evernote:android-job:1.4.2"
-    implementation 'com.github.suckgamony.RapidDecoder:library:7cdfca47fa'
 
     // Unit tests
     testImplementation 'junit:junit:4.13.2'
