@@ -1,0 +1,8 @@
+plugins {
+    id("com.starter.library.kotlin")
+}
+
+dependencies {
+    api(projects.ui.base)
+    api("androidx.paging:paging-common-ktx:3.0.0")
+}

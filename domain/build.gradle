@@ -1,0 +1,18 @@
+plugins {
+    id("com.starter.library.kotlin")
+    id("org.jetbrains.kotlin.kapt")
+}
+
+dependencies {
+    implementation projects.data.github.api
+    implementation projects.data.scraper.api
+    implementation projects.data.storage.api
+    implementation projects.data.wykop.api
+    implementation projects.ui.login.api
+    implementation projects.ui.promoted.api
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+    api("androidx.paging:paging-common-ktx:3.0.0")
+    implementation("com.dropbox.mobile.store:store4:4.0.2-KT15")
+    implementation("com.google.dagger:dagger:2.36")
+    kapt "com.google.dagger:dagger-compiler:2.36"
+}
