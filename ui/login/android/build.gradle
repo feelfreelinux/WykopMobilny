@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+    implementation(projects.ui.base.android)
+    implementation("androidx.browser:browser:1.3.0")
 }
