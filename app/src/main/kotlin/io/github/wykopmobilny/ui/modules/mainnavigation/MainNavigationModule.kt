@@ -25,8 +25,7 @@ class MainNavigationModule {
     ) = MainNavigationPresenter(
         schedulers,
         notificationsApi,
-        userManagerApi,
-        scraperApi
+        userManagerApi
     )
 
     @Provides

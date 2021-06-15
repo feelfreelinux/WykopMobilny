@@ -52,16 +52,6 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
 
     private val okHttpClient = OkHttpClient()
 
-    private val domainComponent: DomainComponent by lazy {
-        daggerDomain().create(
-            connectConfig = ConnectConfig(appKey = BuildConfig.APP_KEY),
-            storages = storages,
-            scraper = scraper,
-            wykop = wykopApi,
-            framework = framework,
-        )
-    }
-
     override fun onCreate() {
         super.onCreate()
         AppScopes.applicationScope = this
@@ -82,13 +72,23 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
             storages = storages,
         )
 
-    private val storages by lazy {
+    protected open val domainComponent: DomainComponent by lazy {
+        daggerDomain().create(
+            connectConfig = ConnectConfig(connectUrl = "https://a2.wykop.pl/login/connect/appkey/${BuildConfig.APP_KEY}"),
+            storages = storages,
+            scraper = scraper,
+            wykop = wykopApi,
+            framework = framework,
+        )
+    }
+
+    protected open val storages by lazy {
         DaggerStoragesComponent.factory().create(
             context = this,
         )
     }
 
-    private val scraper by lazy {
+    protected open val scraper by lazy {
         daggerScraper().create(
             okHttpClient = okHttpClient,
             baseUrl = "https://wykop.pl",
@@ -96,7 +96,7 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
         )
     }
 
-    private val patrons by lazy {
+    protected open val patrons by lazy {
         daggerPatrons().create(
             okHttpClient = okHttpClient.newBuilder()
                 .cache(Cache(cacheDir.resolve("okhttp/patrons"), maxSize = 5 * 1024 * 1024L))
@@ -105,7 +105,7 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
         )
     }
 
-    private val wykopApi by lazy {
+    protected open val wykopApi by lazy {
         daggerWykop().create(
             okHttpClient = okHttpClient,
             baseUrl = WYKOP_API_URL,
@@ -120,7 +120,7 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
         )
     }
 
-    private val framework by lazy {
+    protected open val framework by lazy {
         DaggerFrameworkComponent.factory().create(
             application = this,
         )

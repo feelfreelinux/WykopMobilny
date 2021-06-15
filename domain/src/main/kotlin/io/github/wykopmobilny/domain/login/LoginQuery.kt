@@ -30,7 +30,7 @@ class LoginQuery @Inject constructor(
 
     override fun invoke(): Flow<LoginUi> = viewState.state.map { viewState ->
         LoginUi(
-            urlToLoad = connectUrl(),
+            urlToLoad = loginConfig.connectUrl,
             isLoading = viewState.isLoading,
             visibleError = viewState.visibleError?.let {
                 InfoMessageUi(
@@ -77,8 +77,6 @@ class LoginQuery @Inject constructor(
     private fun dismissError() = applicationScope.launch {
         viewState.update { it.copy(visibleError = null) }
     }
-
-    private fun connectUrl() = "https://a2.wykop.pl/login/connect/appkey/${loginConfig.appKey}"
 
     companion object {
         private val loginPattern = "/ConnectSuccess/appkey/.+/login/(.+)/token/(.+)/".toRegex()

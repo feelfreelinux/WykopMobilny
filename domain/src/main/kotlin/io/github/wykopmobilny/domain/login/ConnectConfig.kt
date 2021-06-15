@@ -1,3 +1,3 @@
 package io.github.wykopmobilny.domain.login
 
-data class ConnectConfig(val appKey: String)
+data class ConnectConfig(val connectUrl: String)

@@ -14,7 +14,7 @@ import io.github.wykopmobilny.utils.viewBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class LoginScreenActivity : AppCompatActivity() {
+internal class LoginScreenActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityContainerBinding::inflate)
 
