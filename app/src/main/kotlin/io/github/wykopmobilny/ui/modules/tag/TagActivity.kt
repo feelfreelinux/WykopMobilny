@@ -15,6 +15,7 @@ import io.github.wykopmobilny.databinding.ActivityTagBinding
 import io.github.wykopmobilny.ui.modules.NavigatorApi
 import io.github.wykopmobilny.utils.loadImage
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 import io.github.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 

@@ -8,7 +8,6 @@ import dagger.Module
 import dagger.Provides
 import io.github.wykopmobilny.domain.api.PagingSource
 import io.github.wykopmobilny.domain.api.StoreMediator
-import io.github.wykopmobilny.domain.promoted.GetPromotedQuery
 import io.github.wykopmobilny.promoted.api.GetPromoted
 import io.github.wykopmobilny.promoted.api.Link
 import javax.inject.Provider

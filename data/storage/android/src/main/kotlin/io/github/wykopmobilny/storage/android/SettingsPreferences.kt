@@ -1,11 +1,18 @@
 package io.github.wykopmobilny.storage.android
 
 import android.content.Context
+import androidx.core.content.edit
+import io.github.wykopmobilny.storage.api.AppTheme
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class SettingsPreferences @Inject constructor(
-    context: Context
+    context: Context,
 ) : BasePreferences(context, true), SettingsPreferencesApi {
 
     override var notificationsSchedulerDelay by stringPref(key = "notificationsSchedulerDelay")
@@ -36,4 +43,44 @@ internal class SettingsPreferences @Inject constructor(
     override var useBuiltInBrowser by booleanPref(key = "useBuiltInBrowser", defaultValue = true)
     override var groupNotifications by booleanPref(key = "groupNotifications", defaultValue = true)
     override var disableExitConfirmation by booleanPref(key = "disableExitConfirmation", defaultValue = false)
+
+    override val theme = preferences.filter { it == "useDarkTheme" || it == "useAmoledTheme" }
+        .onStart { emit("") }
+        .map {
+            if (prefs.contains("useDarkTheme")) {
+                if (prefs.getBoolean("useDarkTheme", false)) {
+                    if (prefs.getBoolean("useAmoledTheme", false)) {
+                        AppTheme.DarkAmoled
+                    } else {
+                        AppTheme.Dark
+                    }
+                } else {
+                    AppTheme.Light
+                }
+            } else {
+                null
+            }
+        }
+
+    override suspend fun updateTheme(newValue: AppTheme?) = withContext(Dispatchers.IO) {
+        prefs.edit {
+            when (newValue) {
+                AppTheme.Light -> {
+                    putBoolean("useDarkTheme", false)
+                }
+                AppTheme.Dark -> {
+                    putBoolean("useDarkTheme", true)
+                    putBoolean("useAmoledTheme", false)
+                }
+                AppTheme.DarkAmoled -> {
+                    putBoolean("useDarkTheme", true)
+                    putBoolean("useAmoledTheme", true)
+                }
+                null -> {
+                    remove("useDarkTheme")
+                    remove("useAmoledTheme")
+                }
+            }
+        }
+    }
 }

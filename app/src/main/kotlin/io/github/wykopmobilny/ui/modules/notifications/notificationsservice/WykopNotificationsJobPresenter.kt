@@ -4,6 +4,7 @@ import io.github.wykopmobilny.api.notifications.NotificationsApi
 import io.github.wykopmobilny.base.BasePresenter
 import io.github.wykopmobilny.base.Schedulers
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 import javax.inject.Inject
 
 class WykopNotificationsJobPresenter @Inject constructor(

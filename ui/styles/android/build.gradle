@@ -1,0 +1,10 @@
+plugins {
+    id("com.starter.library.android")
+    id("org.jetbrains.kotlin.kapt")
+}
+
+dependencies {
+    implementation(projects.ui.base.android)
+    api(projects.ui.styles.api)
+    kapt "com.google.dagger:dagger-compiler:2.37"
+}

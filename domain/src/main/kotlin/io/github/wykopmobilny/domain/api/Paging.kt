@@ -57,16 +57,15 @@ class PagingSource<T : Any> @Inject constructor(
     override suspend fun load(
         params: LoadParams<Int>,
     ): LoadResult<Int, T> =
-        try {
+        runCatching {
             val nextPageNumber = params.key ?: 1
             LoadResult.Page(
                 data = store.get(nextPageNumber),
                 prevKey = null,
                 nextKey = nextPageNumber + 1,
             )
-        } catch (e: Exception) {
-            LoadResult.Error(e)
         }
+            .getOrElse { LoadResult.Error(it) }
 
     override fun getRefreshKey(state: PagingState<Int, T>): Int? =
         state.anchorPosition?.let(state::closestPageToPosition).let { anchorPage ->

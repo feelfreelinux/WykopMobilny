@@ -10,10 +10,12 @@ import io.github.wykopmobilny.api.ApiSignInterceptor
 import io.github.wykopmobilny.di.DaggerAppComponent
 import io.github.wykopmobilny.domain.DomainComponent
 import io.github.wykopmobilny.domain.login.ConnectConfig
-import io.github.wykopmobilny.domain.login.LoginScope
+import io.github.wykopmobilny.domain.login.di.LoginScope
 import io.github.wykopmobilny.domain.navigation.android.DaggerFrameworkComponent
+import io.github.wykopmobilny.domain.styles.di.StylesScope
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
+import io.github.wykopmobilny.styles.StylesDependencies
 import io.github.wykopmobilny.ui.base.AppDispatchers
 import io.github.wykopmobilny.ui.base.AppScopes
 import io.github.wykopmobilny.ui.login.LoginDependencies
@@ -112,8 +114,6 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
             signingInterceptor = ApiSignInterceptor(
                 object : SimpleUserManagerApi {
 
-                    override fun isUserAuthorized(): Boolean = userManagerApi.get().isUserAuthorized()
-
                     override fun getUserCredentials(): UserCredentials? = userManagerApi.get().getUserCredentials()
                 },
             ),
@@ -128,9 +128,11 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
 
     private val scopes = mutableMapOf<KClass<out Any>, Any>()
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getDependency(clazz: KClass<T>): T =
         when (clazz) {
             LoginDependencies::class -> scopes.getOrPut(LoginScope::class) { domainComponent.login() } as T
+            StylesDependencies::class -> scopes.getOrPut(StylesScope::class) { domainComponent.styles() } as T
             else -> error("Unknown dependencies for type $clazz")
         }
 }

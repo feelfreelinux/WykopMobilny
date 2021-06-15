@@ -27,6 +27,7 @@ import io.github.wykopmobilny.utils.textview.prepareBody
 import io.github.wykopmobilny.utils.textview.stripWykopFormatting
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
+import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 import kotlin.math.absoluteValue
 
 abstract class BaseLinkCommentViewHolder(

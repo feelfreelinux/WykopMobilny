@@ -21,7 +21,6 @@ data class UserCredentials(
 )
 
 interface SimpleUserManagerApi {
-    fun isUserAuthorized(): Boolean
     fun getUserCredentials(): UserCredentials?
 }
 
@@ -31,6 +30,8 @@ interface UserManagerApi : SimpleUserManagerApi {
     fun saveCredentials(credentials: LoginResponse)
     fun runIfLoggedIn(context: Context, callback: () -> Unit)
 }
+
+fun UserManagerApi.isUserAuthorized() = getUserCredentials() != null
 
 class UserManager @Inject constructor(
     private val sessionStorage: SessionStorage,
@@ -61,7 +62,7 @@ class UserManager @Inject constructor(
         )
     }
 
-    override fun isUserAuthorized(): Boolean = runBlocking { sessionStorage.session.first() } != null
+    private fun isUserAuthorized(): Boolean = runBlocking { sessionStorage.session.first() } != null
 
     override fun getUserCredentials(): UserCredentials? =
         runBlocking {

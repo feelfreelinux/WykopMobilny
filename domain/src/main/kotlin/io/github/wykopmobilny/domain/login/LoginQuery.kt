@@ -61,14 +61,19 @@ class LoginQuery @Inject constructor(
             sessionStorage.updateSession(userSession)
             userInfoStore.fresh(userSession)
             blacklistStore.fresh(Unit)
+            appRestarter.restart()
         }
-            .onFailure { throwable -> viewState.update { it.copy(isLoading = false, visibleError = throwable) } }
+            .onFailure { throwable ->
+                sessionStorage.updateSession(null)
+                userInfoStore.clearAll()
+                blacklistStore.clearAll()
+                viewState.update { it.copy(isLoading = false, visibleError = throwable) }
+            }
             .onSuccess { viewState.update { it.copy(isLoading = false, visibleError = null) } }
-
-        appRestarter.restart()
     }
 
-    private fun dismissError() {
+    private fun dismissError() = applicationScope.launch {
+        viewState.update { it.copy(visibleError = null) }
     }
 
     private fun connectUrl() = "https://a2.wykop.pl/login/connect/appkey/${loginConfig.appKey}"

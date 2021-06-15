@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import io.github.wykopmobilny.R
@@ -13,12 +14,12 @@ import io.github.wykopmobilny.models.dataclass.Answer
 import io.github.wykopmobilny.models.dataclass.Survey
 import io.github.wykopmobilny.utils.layoutInflater
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 
-class SurveyWidget @JvmOverloads constructor(
+class SurveyWidget(
     context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : androidx.constraintlayout.widget.ConstraintLayout(context, attrs, defStyleAttr) {
+    attrs: AttributeSet?,
+) : ConstraintLayout(context, attrs) {
 
     private val binding = SurveyListviewBinding.inflate(layoutInflater, this)
 

@@ -4,4 +4,3 @@ interface AppRestarter {
 
     suspend fun restart()
 }
-

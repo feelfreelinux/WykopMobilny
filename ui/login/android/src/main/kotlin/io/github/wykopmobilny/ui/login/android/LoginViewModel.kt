@@ -23,7 +23,7 @@ internal class LoginViewModel @Inject constructor(
     )
     val url = loginData.filterNotNull().map { it.urlToLoad.toEvent() }
     val isLoading = loginData.filterNotNull().map { it.isLoading }.distinctUntilChanged()
-
+    val error = loginData.filterNotNull().map { it.visibleError }.distinctUntilChanged()
 
     fun onNewUrl(url: String) {
         viewModelScope.launch { loginData.value?.parseUrlAction?.invoke(url) }

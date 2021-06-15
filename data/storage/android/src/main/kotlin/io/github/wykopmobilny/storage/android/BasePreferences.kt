@@ -21,7 +21,7 @@ internal abstract class BasePreferences(
 
     protected val coroutineScope = CoroutineScope(Job() + Dispatchers.IO)
 
-    private val prefs: SharedPreferences by lazy {
+    protected val prefs: SharedPreferences by lazy {
         if (useDefaultFile) {
             PreferenceManager.getDefaultSharedPreferences(context)
         } else {

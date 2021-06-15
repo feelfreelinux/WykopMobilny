@@ -3,8 +3,6 @@ package io.github.wykopmobilny.domain.utils
 import io.github.wykopmobilny.ui.base.AppDispatchers
 import io.github.wykopmobilny.ui.base.ScopedViewState
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext

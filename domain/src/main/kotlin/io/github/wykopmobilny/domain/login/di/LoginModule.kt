@@ -1,4 +1,4 @@
-package io.github.wykopmobilny.domain.login
+package io.github.wykopmobilny.domain.login.di
 
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
@@ -7,11 +7,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import io.github.wykopmobilny.api.endpoints.LoginRetrofitApi
-import io.github.wykopmobilny.blacklist.api.ScraperRetrofitApi
 import io.github.wykopmobilny.domain.api.apiCall
+import io.github.wykopmobilny.domain.login.LoginQuery
 import io.github.wykopmobilny.domain.utils.InMemoryScopedViewState
-import io.github.wykopmobilny.storage.api.Blacklist
-import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.storage.api.LoggedUserInfo
 import io.github.wykopmobilny.storage.api.UserInfoStorage
 import io.github.wykopmobilny.storage.api.UserSession
@@ -54,28 +52,6 @@ internal abstract class LoginModule {
                 writer = { _, newValue -> storage.updateLoggedUser(newValue) },
                 delete = { storage.updateLoggedUser(null) },
                 deleteAll = { storage.updateLoggedUser(null) },
-            ),
-        )
-            .build()
-
-        @LoginScope
-        @Provides
-        fun blacklistStore(
-            retrofitApi: ScraperRetrofitApi,
-            storage: BlacklistPreferencesApi,
-        ) = StoreBuilder.from<Unit, Blacklist, Blacklist>(
-            fetcher = Fetcher.of {
-                val api = retrofitApi.getBlacklist()
-                Blacklist(
-                    tags = api.tags?.tags.orEmpty().map { it.tag.removePrefix("#") }.toSet(),
-                    users = api.users?.users.orEmpty().map { it.nick.removePrefix("@") }.toSet(),
-                )
-            },
-            sourceOfTruth = SourceOfTruth.of(
-                reader = { storage.blacklist },
-                writer = { _, newValue -> storage.updateBlacklist(newValue) },
-                delete = { storage.updateBlacklist(null) },
-                deleteAll = { storage.updateBlacklist(null) },
             ),
         )
             .build()

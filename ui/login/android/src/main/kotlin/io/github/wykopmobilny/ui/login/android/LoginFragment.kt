@@ -1,6 +1,7 @@
 package io.github.wykopmobilny.ui.login.android
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Lazy
 import io.github.wykopmobilny.ui.login.android.databinding.FragmentLoginBinding
 import io.github.wykopmobilny.ui.login.android.di.DaggerLoginUiComponent
@@ -63,6 +65,18 @@ internal class LoginFragment : Fragment(R.layout.fragment_login) {
         }
         lifecycleScope.launchWhenResumed {
             viewModel.isLoading.collect { binding.fullScreenProgress.isVisible = it }
+        }
+        var dialog: Dialog? = null
+        lifecycleScope.launchWhenResumed {
+            viewModel.error.collect { info ->
+                dialog?.dismiss()
+                if (info != null) {
+                    dialog = MaterialAlertDialogBuilder(requireContext())
+                        .setMessage(info.message)
+                        .setPositiveButton(android.R.string.ok) { _, _ -> info.confirmAction() }
+                        .show()
+                }
+            }
         }
     }
 }
