@@ -9,10 +9,11 @@ import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.storage.api.LinksPreferencesApi
 import io.github.wykopmobilny.storage.api.SessionStorage
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
+import io.github.wykopmobilny.storage.api.Storages
 import io.github.wykopmobilny.storage.api.UserInfoStorage
 
 @Component(modules = [StoragesModule::class])
-interface StoragesComponent {
+interface StoragesComponent : Storages {
 
     @Component.Factory
     interface Factory {
@@ -21,16 +22,6 @@ interface StoragesComponent {
             @BindsInstance context: Context,
         ): StoragesComponent
     }
-
-    fun settingsPreferences(): SettingsPreferencesApi
-
-    fun linksPreferences(): LinksPreferencesApi
-
-    fun blacklistPreferences(): BlacklistPreferencesApi
-
-    fun sessionStorage(): SessionStorage
-
-    fun userInfoStorage(): UserInfoStorage
 }
 
 @Module

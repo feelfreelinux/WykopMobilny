@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.base.BaseActivity
-import io.github.wykopmobilny.blacklist.api.Blacklist
+import io.github.wykopmobilny.blacklist.api.ApiBlacklist
 import io.github.wykopmobilny.databinding.ActivityBlacklistBinding
 import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.utils.viewBinding
@@ -31,7 +31,7 @@ class BlacklistActivity : BaseActivity(), BlacklistView {
     private val pagerAdapter by lazy { BlacklistPagerAdapter(supportFragmentManager) }
     private val binding by viewBinding(ActivityBlacklistBinding::inflate)
 
-    override fun importBlacklist(blacklist: Blacklist) {
+    override fun importBlacklist(blacklist: ApiBlacklist) {
         if (blacklist.tags?.tags != null) {
             blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags!!.tags!!.map { it.tag.removePrefix("#") })
         }

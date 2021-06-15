@@ -25,7 +25,7 @@ import io.github.wykopmobilny.R
 import io.github.wykopmobilny.api.patrons.PatronsApi
 import io.github.wykopmobilny.base.BaseActivity
 import io.github.wykopmobilny.base.BaseNavigationView
-import io.github.wykopmobilny.blacklist.api.Blacklist
+import io.github.wykopmobilny.blacklist.api.ApiBlacklist
 import io.github.wykopmobilny.databinding.ActivityNavigationBinding
 import io.github.wykopmobilny.databinding.AppAboutBottomsheetBinding
 import io.github.wykopmobilny.databinding.DrawerHeaderViewLayoutBinding
@@ -138,7 +138,8 @@ class MainNavigationActivity :
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
-            R.id.login -> openLoginScreen()
+            R.id.login_old -> navigator.openLoginScreen(LOGIN_REQUEST_CODE)
+            R.id.login -> navigator.openLoginScreen(LOGIN_REQUEST_CODE, useNewOne = true)
             R.id.messages -> openFragment(ConversationsListFragment.newInstance())
             R.id.nav_settings -> navigator.openSettingsActivity()
             R.id.nav_mojwykop -> openFragment(MyWykopFragment.newInstance())
@@ -200,7 +201,9 @@ class MainNavigationActivity :
         shortcutsDispatcher.dispatchIntent(
             intent,
             this::openFragment,
-            this::openLoginScreen,
+            {
+                this.navigator.openLoginScreen(LOGIN_REQUEST_CODE)
+            },
             userManagerApi.isUserAuthorized(),
         )
     }
@@ -432,7 +435,7 @@ class MainNavigationActivity :
         presenter.checkNotifications(true)
     }
 
-    override fun importBlacklist(blacklist: Blacklist) {
+    override fun importBlacklist(blacklist: ApiBlacklist) {
         if (blacklist.tags?.tags != null) {
             blacklistPreferencesApi.blockedTags = HashSet<String>(blacklist.tags!!.tags!!.map { it.tag.removePrefix("#") })
         }
@@ -465,8 +468,4 @@ class MainNavigationActivity :
             !blacklistPreferencesApi.blockedImported &&
             blacklistPreferencesApi.blockedUsers.isNullOrEmpty() &&
             blacklistPreferencesApi.blockedTags.isNullOrEmpty()
-
-    private fun openLoginScreen() {
-        navigator.openLoginScreen(LOGIN_REQUEST_CODE)
-    }
 }

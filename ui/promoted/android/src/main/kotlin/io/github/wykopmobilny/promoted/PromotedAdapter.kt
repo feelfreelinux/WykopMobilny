@@ -5,9 +5,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wykopmobilny.promoted.api.Link
-import javax.inject.Inject
 
-class PromotedAdapter @Inject constructor() : PagingDataAdapter<Link, RecyclerView.ViewHolder>(
+class PromotedAdapter : PagingDataAdapter<Link, RecyclerView.ViewHolder>(
     diffCallback = LinkDiff(),
 ) {
 

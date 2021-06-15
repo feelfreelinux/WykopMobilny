@@ -2,11 +2,11 @@ package io.github.wykopmobilny.blacklist.remote
 
 import dagger.BindsInstance
 import dagger.Component
-import io.github.wykopmobilny.blacklist.api.ScraperRetrofitApi
+import io.github.wykopmobilny.blacklist.api.Scraper
 import okhttp3.OkHttpClient
 
 @Component(modules = [ScraperModule::class])
-interface ScraperComponent {
+interface ScraperComponent : Scraper {
 
     @Component.Factory
     interface Factory {
@@ -17,6 +17,4 @@ interface ScraperComponent {
             @BindsInstance cookieProvider: (webPage: String) -> String
         ): ScraperComponent
     }
-
-    fun scraper(): ScraperRetrofitApi
 }

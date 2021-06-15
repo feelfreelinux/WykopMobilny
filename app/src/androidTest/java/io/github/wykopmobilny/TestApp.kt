@@ -4,9 +4,6 @@ import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.github.wykopmobilny.di.DaggerTestAppComponent
 import io.github.wykopmobilny.fakes.FakeCookieProvider
-import io.github.wykopmobilny.phuckdagger.daggerPatrons
-import io.github.wykopmobilny.phuckdagger.daggerScraper
-import io.github.wykopmobilny.phuckdagger.daggerWykop
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
 import okhttp3.OkHttpClient
 import javax.inject.Inject

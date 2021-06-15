@@ -61,6 +61,8 @@
         app:layout_constraintLeft_toRightOf="@id/dotTextView"
         app:layout_constraintRight_toLeftOf="@id/collapseButtonImageView"
         app:layout_constraintTop_toTopOf="@id/avatarView"
+        app:layout_constraintWidth_min="60dp"
+        app:layout_constrainedWidth="true"
         tools:text="5 godz."
         />
 

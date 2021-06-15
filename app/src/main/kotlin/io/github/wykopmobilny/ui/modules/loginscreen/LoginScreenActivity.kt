@@ -10,7 +10,7 @@ import android.webkit.CookieManager
 import io.github.wykopmobilny.APP_KEY
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.base.BaseActivity
-import io.github.wykopmobilny.blacklist.api.Blacklist
+import io.github.wykopmobilny.blacklist.api.ApiBlacklist
 import io.github.wykopmobilny.databinding.ActivityWebviewBinding
 import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
@@ -39,7 +39,7 @@ class LoginScreenActivity : BaseActivity(), LoginScreenView {
 
     private val progressDialog by lazy { ProgressDialog(this) }
 
-    override fun importBlacklist(blacklist: Blacklist) {
+    override fun importBlacklist(blacklist: ApiBlacklist) {
         if (blacklist.tags?.tags != null) {
             blacklistPreferences.blockedTags = HashSet<String>(blacklist.tags!!.tags!!.map { it.tag.removePrefix("#") })
         }

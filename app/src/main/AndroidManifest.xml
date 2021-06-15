@@ -27,6 +27,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity
+            android:name="io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenActivityV2"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
+        <activity
             android:name="io.github.wykopmobilny.ui.modules.photoview.PhotoViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/TransparentActivityTheme"

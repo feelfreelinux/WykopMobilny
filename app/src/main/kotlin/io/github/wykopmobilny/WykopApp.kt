@@ -8,20 +8,29 @@ import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.github.wykopmobilny.api.ApiSignInterceptor
 import io.github.wykopmobilny.di.DaggerAppComponent
-import io.github.wykopmobilny.phuckdagger.daggerPatrons
-import io.github.wykopmobilny.phuckdagger.daggerScraper
-import io.github.wykopmobilny.phuckdagger.daggerWykop
+import io.github.wykopmobilny.domain.DomainComponent
+import io.github.wykopmobilny.domain.login.ConnectConfig
+import io.github.wykopmobilny.domain.login.LoginScope
+import io.github.wykopmobilny.domain.navigation.android.DaggerFrameworkComponent
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
+import io.github.wykopmobilny.ui.base.AppDispatchers
+import io.github.wykopmobilny.ui.base.AppScopes
+import io.github.wykopmobilny.ui.login.LoginDependencies
 import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationJobCreator
+import io.github.wykopmobilny.utils.ApplicationInjector
 import io.github.wykopmobilny.utils.usermanager.SimpleUserManagerApi
 import io.github.wykopmobilny.utils.usermanager.UserCredentials
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import javax.inject.Inject
+import kotlin.reflect.KClass
 
-open class WykopApp : DaggerApplication() {
+open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
 
     companion object {
 
@@ -37,10 +46,26 @@ open class WykopApp : DaggerApplication() {
     @Inject
     lateinit var settingsPreferencesApi: Lazy<SettingsPreferencesApi>
 
+    override val coroutineContext = Job() + Dispatchers.Default
+
     private val okHttpClient = OkHttpClient()
+
+    private val domainComponent: DomainComponent by lazy {
+        daggerDomain().create(
+            connectConfig = ConnectConfig(appKey = BuildConfig.APP_KEY),
+            storages = storages,
+            scraper = scraper,
+            wykop = wykopApi,
+            framework = framework,
+        )
+    }
 
     override fun onCreate() {
         super.onCreate()
+        AppScopes.applicationScope = this
+        AppDispatchers.Default = Dispatchers.Default
+        AppDispatchers.Main = Dispatchers.Main
+        AppDispatchers.IO = Dispatchers.IO
         AndroidThreeTen.init(this)
         JobManager.create(this).addJobCreator(jobCreator.get())
     }
@@ -49,37 +74,40 @@ open class WykopApp : DaggerApplication() {
         DaggerAppComponent.factory().create(
             instance = this,
             okHttpClient = okHttpClient,
-            wykop = createWykop(),
-            patrons = createPatrons(),
-            scraper = createScraper(),
-            storages = storages(),
+            wykop = wykopApi,
+            patrons = patrons,
+            scraper = scraper,
+            storages = storages,
         )
 
-    private fun storages() =
+    private val storages by lazy {
         DaggerStoragesComponent.factory().create(
             context = this,
         )
+    }
 
-    private fun createScraper() =
+    private val scraper by lazy {
         daggerScraper().create(
             okHttpClient = okHttpClient,
             baseUrl = "https://wykop.pl",
             cookieProvider = { webPage -> CookieManager.getInstance().getCookie(webPage) },
         )
+    }
 
-    private fun createPatrons() =
+    private val patrons by lazy {
         daggerPatrons().create(
             okHttpClient = okHttpClient.newBuilder()
                 .cache(Cache(cacheDir.resolve("okhttp/patrons"), maxSize = 5 * 1024 * 1024L))
                 .build(),
             baseUrl = "https://raw.githubusercontent.com/",
         )
+    }
 
-    private fun createWykop() =
+    private val wykopApi by lazy {
         daggerWykop().create(
             okHttpClient = okHttpClient,
             baseUrl = WYKOP_API_URL,
-            appKey = APP_KEY,
+            appKey = BuildConfig.APP_KEY,
             cacheDir = cacheDir.resolve("okhttp/wykop"),
             signingInterceptor = ApiSignInterceptor(
                 object : SimpleUserManagerApi {
@@ -90,4 +118,19 @@ open class WykopApp : DaggerApplication() {
                 },
             ),
         )
+    }
+
+    private val framework by lazy {
+        DaggerFrameworkComponent.factory().create(
+            application = this,
+        )
+    }
+
+    private val scopes = mutableMapOf<KClass<out Any>, Any>()
+
+    override fun <T : Any> getDependency(clazz: KClass<T>): T =
+        when (clazz) {
+            LoginDependencies::class -> scopes.getOrPut(LoginScope::class) { domainComponent.login() } as T
+            else -> error("Unknown dependencies for type $clazz")
+        }
 }
