@@ -34,8 +34,10 @@ class LoginQuery @Inject constructor(
             isLoading = viewState.isLoading,
             visibleError = viewState.visibleError?.let {
                 InfoMessageUi(
+                    title = "Oops...",
                     message = it.message ?: it.toString(),
                     confirmAction = ::dismissError,
+                    dismissAction = ::dismissError,
                 )
             },
             parseUrlAction = ::onUrlInvoked,

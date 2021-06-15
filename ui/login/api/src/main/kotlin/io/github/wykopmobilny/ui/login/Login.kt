@@ -12,6 +12,8 @@ data class LoginUi(
 )
 
 data class InfoMessageUi(
+    val title: String,
     val message: String,
     val confirmAction: () -> Unit,
+    val dismissAction: () -> Unit,
 )

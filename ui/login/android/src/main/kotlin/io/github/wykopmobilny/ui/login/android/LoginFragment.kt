@@ -70,11 +70,15 @@ internal class LoginFragment : Fragment(R.layout.fragment_login) {
         lifecycleScope.launchWhenResumed {
             viewModel.error.collect { info ->
                 dialog?.dismiss()
-                if (info != null) {
-                    dialog = MaterialAlertDialogBuilder(requireContext())
+                dialog = if (info != null) {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(info.title)
                         .setMessage(info.message)
                         .setPositiveButton(android.R.string.ok) { _, _ -> info.confirmAction() }
+                        .setOnCancelListener { info.dismissAction() }
                         .show()
+                } else {
+                    null
                 }
             }
         }
