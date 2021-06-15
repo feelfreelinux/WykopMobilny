@@ -22,7 +22,6 @@ import io.github.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
 import io.github.wykopmobilny.ui.modules.links.related.RelatedActivity
 import io.github.wykopmobilny.ui.modules.links.upvoters.UpvotersActivity
 import io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
-import io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenActivityV2
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
@@ -41,7 +40,7 @@ interface NewNavigatorApi {
     fun openConversationListActivity(user: String)
     fun openPhotoViewActivity(url: String)
     fun openSettingsActivity()
-    fun openLoginScreen(requestCode: Int, useNewOne: Boolean = false)
+    fun openLoginScreen()
     fun openAddEntryActivity(receiver: String? = null, extraBody: String? = null)
     fun openEditEntryActivity(body: String, entryId: Int)
     fun openEditLinkCommentActivity(commentId: Int, body: String, linkId: Int)
@@ -70,7 +69,7 @@ class NewNavigator(private val context: Activity) : NewNavigatorApi {
     override fun openMainActivity(targetFragment: String?) {
         context.startActivity(
             MainNavigationActivity.getIntent(context, targetFragment)
-                .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) }
+                .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) },
         )
     }
 
@@ -89,12 +88,8 @@ class NewNavigator(private val context: Activity) : NewNavigatorApi {
     override fun openSettingsActivity() =
         context.startActivity(SettingsActivity.createIntent(context))
 
-    override fun openLoginScreen(requestCode: Int, useNewOne: Boolean) =
-        if (useNewOne) {
-            context.startActivityForResult(LoginScreenActivityV2.createIntent(context), requestCode)
-        } else {
-            context.startActivityForResult(LoginScreenActivity.createIntent(context), requestCode)
-        }
+    override fun openLoginScreen() =
+        context.startActivity(LoginScreenActivity.createIntent(context))
 
     override fun openAddEntryActivity(receiver: String?, extraBody: String?) =
         context.startActivity(AddEntryActivity.createIntent(context, receiver, extraBody))
@@ -116,7 +111,7 @@ class NewNavigator(private val context: Activity) : NewNavigatorApi {
 
     override fun openBrowser(
         settingsPreferences: SettingsPreferencesApi,
-        url: String
+        url: String,
     ) {
         if (settingsPreferences.useBuiltInBrowser) {
             context.openBrowser(url)

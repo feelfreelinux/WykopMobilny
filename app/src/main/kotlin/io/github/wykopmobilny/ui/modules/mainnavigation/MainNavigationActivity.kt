@@ -74,7 +74,6 @@ class MainNavigationActivity :
     MainNavigationInterface {
 
     companion object {
-        const val LOGIN_REQUEST_CODE = 142
         const val TARGET_FRAGMENT_KEY = "TARGET_FRAGMENT"
         const val TARGET_NOTIFICATIONS = "TARGET_NOTIFICATIONS"
 
@@ -139,8 +138,7 @@ class MainNavigationActivity :
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
-            R.id.login_old -> navigator.openLoginScreen(LOGIN_REQUEST_CODE)
-            R.id.login -> navigator.openLoginScreen(LOGIN_REQUEST_CODE, useNewOne = true)
+            R.id.login -> navigator.openLoginScreen()
             R.id.messages -> openFragment(ConversationsListFragment.newInstance())
             R.id.nav_settings -> navigator.openSettingsActivity()
             R.id.nav_mojwykop -> openFragment(MyWykopFragment.newInstance())
@@ -203,7 +201,7 @@ class MainNavigationActivity :
             intent,
             this::openFragment,
             {
-                this.navigator.openLoginScreen(LOGIN_REQUEST_CODE)
+                this.navigator.openLoginScreen()
             },
             userManagerApi.isUserAuthorized(),
         )
@@ -337,12 +335,6 @@ class MainNavigationActivity :
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            LOGIN_REQUEST_CODE -> {
-                if (resultCode == LoginScreenActivity.USER_LOGGED_IN) {
-                    restartActivity()
-                }
-            }
-
             NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE -> {
                 if (!presenter.isSubscribed) {
                     presenter.subscribe(this)

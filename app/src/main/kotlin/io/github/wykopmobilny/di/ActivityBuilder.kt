@@ -27,8 +27,6 @@ import io.github.wykopmobilny.ui.modules.links.related.RelatedActivity
 import io.github.wykopmobilny.ui.modules.links.related.RelatedModule
 import io.github.wykopmobilny.ui.modules.links.upvoters.UpvotersActivity
 import io.github.wykopmobilny.ui.modules.links.upvoters.UpvotersModule
-import io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
-import io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenModule
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationFragmentProvider
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationModule
@@ -61,9 +59,6 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract fun glide(): GlideModule
-
-    @ContributesAndroidInjector(modules = [LoginScreenModule::class])
-    abstract fun bindLoginActivity(): LoginScreenActivity
 
     @ContributesAndroidInjector(modules = [EntryDetailModule::class])
     abstract fun bindEntryDetailsActivity(): EntryActivity

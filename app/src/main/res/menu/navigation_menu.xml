@@ -5,12 +5,6 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/login_old"
-            android:icon="@drawable/ic_navi_login"
-            android:title="@string/login"
-            android:checkable="false"
-            />
-        <item
             android:id="@+id/login"
             android:icon="@drawable/ic_navi_login"
             android:title="@string/login"
