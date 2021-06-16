@@ -1,0 +1,8 @@
+plugins {
+    id("com.starter.library.kotlin")
+}
+
+dependencies {
+    api(projects.ui.base.api)
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+}

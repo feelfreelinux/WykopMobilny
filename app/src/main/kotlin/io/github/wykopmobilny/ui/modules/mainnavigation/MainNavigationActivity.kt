@@ -1,6 +1,5 @@
 package io.github.wykopmobilny.ui.modules.mainnavigation
 
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -25,7 +24,6 @@ import io.github.wykopmobilny.R
 import io.github.wykopmobilny.api.patrons.PatronsApi
 import io.github.wykopmobilny.base.BaseActivity
 import io.github.wykopmobilny.base.BaseNavigationView
-import io.github.wykopmobilny.blacklist.api.Blacklist
 import io.github.wykopmobilny.databinding.ActivityNavigationBinding
 import io.github.wykopmobilny.databinding.AppAboutBottomsheetBinding
 import io.github.wykopmobilny.databinding.DrawerHeaderViewLayoutBinding
@@ -40,7 +38,6 @@ import io.github.wykopmobilny.ui.modules.favorite.FavoriteFragment
 import io.github.wykopmobilny.ui.modules.links.hits.HitsFragment
 import io.github.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.wykopmobilny.ui.modules.links.upcoming.UpcomingFragment
-import io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.wykopmobilny.ui.modules.mywykop.MyWykopFragment
 import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
@@ -56,6 +53,7 @@ import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 import io.github.wykopmobilny.utils.openBrowser
 import io.github.wykopmobilny.utils.shortcuts.ShortcutsDispatcher
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 import io.github.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 
@@ -73,7 +71,6 @@ class MainNavigationActivity :
     MainNavigationInterface {
 
     companion object {
-        const val LOGIN_REQUEST_CODE = 142
         const val TARGET_FRAGMENT_KEY = "TARGET_FRAGMENT"
         const val TARGET_NOTIFICATIONS = "TARGET_NOTIFICATIONS"
 
@@ -138,7 +135,7 @@ class MainNavigationActivity :
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_mikroblog -> openFragment(HotFragment.newInstance())
-            R.id.login -> openLoginScreen()
+            R.id.login -> navigator.openLoginScreen()
             R.id.messages -> openFragment(ConversationsListFragment.newInstance())
             R.id.nav_settings -> navigator.openSettingsActivity()
             R.id.nav_mojwykop -> openFragment(MyWykopFragment.newInstance())
@@ -178,7 +175,6 @@ class MainNavigationActivity :
         }
 
         (binding.navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
-        checkBlacklist()
 
         if (settingsApi.showNotifications) {
             // Schedules notification service
@@ -200,7 +196,9 @@ class MainNavigationActivity :
         shortcutsDispatcher.dispatchIntent(
             intent,
             this::openFragment,
-            this::openLoginScreen,
+            {
+                this.navigator.openLoginScreen()
+            },
             userManagerApi.isUserAuthorized(),
         )
     }
@@ -332,26 +330,14 @@ class MainNavigationActivity :
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            LOGIN_REQUEST_CODE -> {
-                if (resultCode == LoginScreenActivity.USER_LOGGED_IN) {
-                    restartActivity()
-                }
+        if (requestCode == NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE) {
+            if (!presenter.isSubscribed) {
+                presenter.subscribe(this)
+                presenter.startListeningForNotifications()
             }
-
-            NewNavigator.STARTED_FROM_NOTIFICATIONS_CODE -> {
-                if (!presenter.isSubscribed) {
-                    presenter.subscribe(this)
-                    presenter.startListeningForNotifications()
-                }
-                presenter.checkNotifications(true)
-            }
-
-            else -> {
-                if (resultCode == SettingsActivity.THEME_CHANGED_RESULT) {
-                    restartActivity()
-                }
-            }
+            presenter.checkNotifications(true)
+        } else if (resultCode == SettingsActivity.THEME_CHANGED_RESULT) {
+            restartActivity()
         }
     }
 
@@ -430,43 +416,5 @@ class MainNavigationActivity :
 
     override fun forceRefreshNotifications() {
         presenter.checkNotifications(true)
-    }
-
-    override fun importBlacklist(blacklist: Blacklist) {
-        if (blacklist.tags?.tags != null) {
-            blacklistPreferencesApi.blockedTags = HashSet<String>(blacklist.tags!!.tags!!.map { it.tag.removePrefix("#") })
-        }
-        if (blacklist.users?.users != null) {
-            blacklistPreferencesApi.blockedUsers = HashSet<String>(blacklist.users!!.users!!.map { it.nick.removePrefix("@") })
-        }
-        blacklistPreferencesApi.blockedImported = true
-        progressDialog.hide()
-    }
-
-    private fun checkBlacklist() {
-        if (canCheckBlacklist()) {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(getString(R.string.blacklist_import_title))
-            builder.setMessage(getString(R.string.blacklist_import_ask))
-            builder.setPositiveButton(getString(R.string.blacklist_import_action)) { _, _ ->
-                progressDialog.isIndeterminate = true
-                progressDialog.setTitle(getString(R.string.blacklist_import_progress))
-                progressDialog.show()
-                presenter.importBlacklist()
-            }
-            builder.setNegativeButton(android.R.string.cancel, null)
-            builder.setCancelable(false)
-            builder.show()
-        }
-    }
-
-    private fun canCheckBlacklist() =
-        userManagerApi.isUserAuthorized() &&
-            !blacklistPreferencesApi.blockedImported &&
-            blacklistPreferencesApi.blockedUsers.isNullOrEmpty() &&
-            blacklistPreferencesApi.blockedTags.isNullOrEmpty()
-
-    private fun openLoginScreen() {
-        navigator.openLoginScreen(LOGIN_REQUEST_CODE)
     }
 }

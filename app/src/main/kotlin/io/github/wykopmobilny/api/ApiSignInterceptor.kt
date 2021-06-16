@@ -27,8 +27,9 @@ class ApiSignInterceptor(private val userManagerApi: SimpleUserManagerApi) : Int
         var url = request.url.toString()
 
         val customHeaders = request.headers("@")
-        if (userManagerApi.isUserAuthorized() && !customHeaders.contains(REMOVE_USERKEY_HEADER)) {
-            url += "/userkey/${userManagerApi.getUserCredentials()!!.userKey}"
+        val credentials = userManagerApi.getUserCredentials()
+        if (credentials != null && !customHeaders.contains(REMOVE_USERKEY_HEADER)) {
+            url += "/userkey/${credentials.userKey}"
         }
 
         val encodeUrl: String = when (request.body) {

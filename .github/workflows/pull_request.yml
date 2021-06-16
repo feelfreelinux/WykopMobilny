@@ -87,7 +87,7 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
 
       - name: compile ui tests
-        run: ./gradlew assembleDebugAndroidTest
+        run: ./gradlew app:assembleDebugAndroidTest
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
@@ -97,7 +97,7 @@ jobs:
           target: google_apis
           arch: x86_64
           disable-spellchecker: true
-          script: ./gradlew connectedDebugAndroidTest
+          script: ./gradlew app:connectedDebugAndroidTest
 
       - name: Upload ui tests result
         uses: actions/upload-artifact@v2

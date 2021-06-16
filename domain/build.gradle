@@ -1,0 +1,28 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id("com.starter.library.kotlin")
+    id("org.jetbrains.kotlin.kapt")
+}
+
+dependencies {
+    implementation projects.data.github.api
+    implementation projects.data.scraper.api
+    implementation projects.data.storage.api
+    implementation projects.data.wykop.api
+    implementation projects.data.framework.api
+    implementation projects.ui.styles.api
+    implementation projects.ui.login.api
+    implementation projects.ui.promoted.api
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+    implementation("androidx.paging:paging-common-ktx:3.0.0")
+    implementation("com.dropbox.mobile.store:store4:4.0.2-KT15")
+    implementation("com.google.dagger:dagger:2.37")
+    kapt "com.google.dagger:dagger-compiler:2.37"
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=com.dropbox.android.external.store4.ExperimentalStoreApi"
+    }
+}

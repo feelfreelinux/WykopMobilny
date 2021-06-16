@@ -18,6 +18,7 @@ import io.github.wykopmobilny.ui.adapters.RelatedListAdapter
 import io.github.wykopmobilny.ui.dialogs.addRelatedDialog
 import io.github.wykopmobilny.utils.prepare
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 import io.github.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 

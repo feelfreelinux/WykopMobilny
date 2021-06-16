@@ -1,5 +1,7 @@
 package io.github.wykopmobilny.storage.api
 
+import kotlinx.coroutines.flow.Flow
+
 interface SettingsPreferencesApi {
     var notificationsSchedulerDelay: String?
     var hotEntriesScreen: String?
@@ -29,4 +31,14 @@ interface SettingsPreferencesApi {
     var useBuiltInBrowser: Boolean
     var groupNotifications: Boolean
     var disableExitConfirmation: Boolean
+
+    val theme: Flow<AppTheme?>
+
+    suspend fun updateTheme(newValue: AppTheme?)
+}
+
+enum class AppTheme {
+    Light,
+    Dark,
+    DarkAmoled,
 }

@@ -40,7 +40,7 @@ interface NewNavigatorApi {
     fun openConversationListActivity(user: String)
     fun openPhotoViewActivity(url: String)
     fun openSettingsActivity()
-    fun openLoginScreen(requestCode: Int)
+    fun openLoginScreen()
     fun openAddEntryActivity(receiver: String? = null, extraBody: String? = null)
     fun openEditEntryActivity(body: String, entryId: Int)
     fun openEditLinkCommentActivity(commentId: Int, body: String, linkId: Int)
@@ -69,7 +69,7 @@ class NewNavigator(private val context: Activity) : NewNavigatorApi {
     override fun openMainActivity(targetFragment: String?) {
         context.startActivity(
             MainNavigationActivity.getIntent(context, targetFragment)
-                .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) }
+                .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) },
         )
     }
 
@@ -88,8 +88,8 @@ class NewNavigator(private val context: Activity) : NewNavigatorApi {
     override fun openSettingsActivity() =
         context.startActivity(SettingsActivity.createIntent(context))
 
-    override fun openLoginScreen(requestCode: Int) =
-        context.startActivityForResult(LoginScreenActivity.createIntent(context), requestCode)
+    override fun openLoginScreen() =
+        context.startActivity(LoginScreenActivity.createIntent(context))
 
     override fun openAddEntryActivity(receiver: String?, extraBody: String?) =
         context.startActivity(AddEntryActivity.createIntent(context, receiver, extraBody))
@@ -111,7 +111,7 @@ class NewNavigator(private val context: Activity) : NewNavigatorApi {
 
     override fun openBrowser(
         settingsPreferences: SettingsPreferencesApi,
-        url: String
+        url: String,
     ) {
         if (settingsPreferences.useBuiltInBrowser) {
             context.openBrowser(url)

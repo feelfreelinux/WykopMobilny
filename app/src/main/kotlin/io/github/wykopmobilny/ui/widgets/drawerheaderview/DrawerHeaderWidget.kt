@@ -33,9 +33,9 @@ class DrawerHeaderWidget(context: Context, attrs: AttributeSet?) : ConstraintLay
         }
 
     fun showDrawerHeader(isUserAuthorized: Boolean, credentials: UserCredentials?) {
-        if (isUserAuthorized) {
+        if (isUserAuthorized && credentials != null) {
             isVisible = true
-            binding.navProfileImage.loadImage(credentials!!.avatarUrl)
+            binding.navProfileImage.loadImage(credentials.avatarUrl)
             binding.navProfileImage.setOnClickListener {
                 val context = getActivityContext()!!
                 context.startActivity(ProfileActivity.createIntent(context, credentials.login))

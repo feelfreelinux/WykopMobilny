@@ -8,7 +8,6 @@
     <ID>ComplexMethod:WykopEmbedView.kt$WykopEmbedView$private fun setEmbedIcon(embed: Embed)</ID>
     <ID>ConstructorParameterNaming:InputToolbar.kt$InputToolbar.SavedState$`in`: Parcel</ID>
     <ID>EqualsWithHashCodeExist:Link.kt$Link : Parcelable</ID>
-    <ID>ImplicitDefaultLocale:YTPlayer.kt$YTPlayer$String.format( "There was an error initializing the YouTubePlayer (%1\$s)", errorReason.toString() )</ID>
     <ID>MagicNumber:ApiSignInterceptor.kt$ApiSignInterceptor$401</ID>
     <ID>MagicNumber:ApiUtils.kt$1001</ID>
     <ID>MagicNumber:ApiUtils.kt$1002</ID>
@@ -54,10 +53,8 @@
     <ID>MagicNumber:UserTokenRefresher.kt$UserTokenRefresher$11</ID>
     <ID>MagicNumber:UserTokenRefresher.kt$UserTokenRefresher$12</ID>
     <ID>MagicNumber:UserTokenRefresher.kt$UserTokenRefresher$401</ID>
-    <ID>MagicNumber:WykopApp.kt$WykopApp$10</ID>
     <ID>MagicNumber:WykopApp.kt$WykopApp$1024</ID>
     <ID>MagicNumber:WykopApp.kt$WykopApp$1024L</ID>
-    <ID>MagicNumber:WykopApp.kt$WykopApp$30</ID>
     <ID>MagicNumber:WykopApp.kt$WykopApp$5</ID>
     <ID>MagicNumber:WykopEmbedView.kt$WykopEmbedView$6</ID>
     <ID>MagicNumber:WykopImageFile.kt$WykopImageFile$1024</ID>
@@ -65,9 +62,6 @@
     <ID>MagicNumber:WykopImageFile.kt$WykopImageFile$270</ID>
     <ID>MagicNumber:WykopImageFile.kt$WykopImageFile$4</ID>
     <ID>MagicNumber:WykopImageFile.kt$WykopImageFile$90</ID>
-    <ID>MagicNumber:WykopMediaControls.kt$WykopMediaControls$300</ID>
-    <ID>MagicNumber:WykopMediaControls.kt$WykopMediaControls.FadeInListener.Companion$300</ID>
-    <ID>MagicNumber:WykopMediaControls.kt$WykopMediaControls.FadeOutListener.Companion$300</ID>
     <ID>MagicNumber:WykopNotificationsJob.kt$WykopNotificationsJob.Companion$5</ID>
     <ID>TooGenericExceptionCaught:AuthorHeaderView.kt$AuthorHeaderView$exception: Throwable</ID>
     <ID>TooGenericExceptionCaught:EntryCommentViewHolder.kt$EntryCommentViewHolder$exception: Throwable</ID>
@@ -75,5 +69,6 @@
     <ID>TooGenericExceptionCaught:LinkDetailsAdapter.kt$LinkDetailsAdapter$exception: Exception</ID>
     <ID>TooGenericExceptionCaught:NewNavigator.kt$NewNavigator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ViewHolderDependentItemDecorator.kt$ViewHolderDependentItemDecorator$exception: Throwable</ID>
+    <ID>UnnecessaryAbstractClass:BaseActivityTest.kt$BaseActivityTest</ID>
   </CurrentIssues>
 </SmellBaseline>

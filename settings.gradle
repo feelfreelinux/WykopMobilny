@@ -4,12 +4,11 @@ plugins {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include ":app",
-    "data:storage:api",
-    "data:storage:android",
-    "data:wykop:remote",
-    "data:wykop:api",
-    "data:scraper:remote",
-    "data:scraper:api",
-    "data:github:remote",
-    "data:github:api"
+Closure discoverSubprojects = {
+    fileTree(rootDir) { include("**/build.gradle") }
+        .filter { it.parentFile.name != "buildSrc" }
+        .collect { rootDir.relativePath(it.parentFile).replace("/",":") }
+        .toArray(new String[0])
+}
+
+include discoverSubprojects()

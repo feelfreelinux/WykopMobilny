@@ -1,11 +1,11 @@
 package io.github.wykopmobilny.ui.modules.mainnavigation
 
 import io.github.wykopmobilny.api.notifications.NotificationsApi
-import io.github.wykopmobilny.api.scraper.ScraperApi
 import io.github.wykopmobilny.base.BasePresenter
 import io.github.wykopmobilny.base.Schedulers
 import io.github.wykopmobilny.utils.intoComposite
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
@@ -13,8 +13,7 @@ import java.util.concurrent.TimeUnit
 class MainNavigationPresenter(
     private val schedulers: Schedulers,
     private val notificationsApi: NotificationsApi,
-    private val userManagerApi: UserManagerApi,
-    private val scraperApi: ScraperApi
+    private val userManagerApi: UserManagerApi
 ) : BasePresenter<MainNavigationView>() {
 
     private var lastCheckMillis = 0L
@@ -47,13 +46,5 @@ class MainNavigationPresenter(
                 .subscribe({ view?.showHashNotificationsCount(it.count) }, { })
                 .intoComposite(compositeObservable)
         }
-    }
-
-    fun importBlacklist() {
-        scraperApi.getBlacklist()
-            .subscribeOn(schedulers.backgroundThread())
-            .observeOn(schedulers.mainThread())
-            .subscribe({ view?.importBlacklist(it) }, { view?.showErrorDialog(it) })
-            .intoComposite(compositeObservable)
     }
 }

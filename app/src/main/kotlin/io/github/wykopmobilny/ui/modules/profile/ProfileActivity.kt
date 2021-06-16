@@ -27,6 +27,7 @@ import io.github.wykopmobilny.utils.loadImage
 import io.github.wykopmobilny.utils.toDurationPrettyDate
 import io.github.wykopmobilny.utils.toPrettyDate
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 import io.github.wykopmobilny.utils.viewBinding
 import javax.inject.Inject
 

@@ -85,6 +85,11 @@ class EmbedViewActivity : BaseActivity(), EmbedView {
         binding.videoView.setShowBuffering(SHOW_BUFFERING_WHEN_PLAYING)
     }
 
+    override fun onPause() {
+        super.onPause()
+        binding.videoView.player?.pause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         binding.videoView.player?.release()

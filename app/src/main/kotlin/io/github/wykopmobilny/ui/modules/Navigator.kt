@@ -10,7 +10,6 @@ import io.github.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
 import io.github.wykopmobilny.ui.modules.input.entry.comment.EditEntryCommentActivity
 import io.github.wykopmobilny.ui.modules.input.entry.edit.EditEntryActivity
 import io.github.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity
-import io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.wykopmobilny.ui.modules.photoview.PhotoViewActivity
@@ -26,7 +25,6 @@ interface NavigatorApi {
     fun openConversationListActivity(context: Activity, user: String)
     fun openPhotoViewActivity(context: Activity, url: String)
     fun openSettingsActivity(context: Activity)
-    fun openLoginScreen(context: Activity, requestCode: Int)
     fun openAddEntryActivity(context: Activity, receiver: String? = null, extraBody: String? = null)
     fun openEditEntryActivity(context: Activity, body: String, entryId: Int)
     fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int)
@@ -59,9 +57,6 @@ class Navigator : NavigatorApi {
 
     override fun openSettingsActivity(context: Activity) =
         context.startActivity(SettingsActivity.createIntent(context))
-
-    override fun openLoginScreen(context: Activity, requestCode: Int) =
-        context.startActivityForResult(LoginScreenActivity.createIntent(context), requestCode)
 
     override fun openAddEntryActivity(context: Activity, receiver: String?, extraBody: String?) =
         context.startActivity(AddEntryActivity.createIntent(context, receiver, extraBody))

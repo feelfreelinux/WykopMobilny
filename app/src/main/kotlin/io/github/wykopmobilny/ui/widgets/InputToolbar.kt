@@ -23,6 +23,7 @@ import io.github.wykopmobilny.utils.getActivityContext
 import io.github.wykopmobilny.utils.layoutInflater
 import io.github.wykopmobilny.utils.textview.removeHtml
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
+import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 
 const val ZERO_WIDTH_SPACE = "\u200B\u200B\u200B\u200B\u200B"
 

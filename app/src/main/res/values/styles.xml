@@ -94,7 +94,8 @@
         <item name="textSizeNormal">@dimen/text_normal_size_normal</item>
         <item name="textSizeLarge">@dimen/text_normal_size_large</item>
         <item name="textSizeHuge">@dimen/text_normal_size_huge</item>
-        <item name="alertDialogTheme">@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar</item>
+        <item name="alertDialogTheme">@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar
+        </item>
     </style>
 
     <style name="WykopAppTheme.Dark" parent="Theme.AppCompat.NoActionBar">

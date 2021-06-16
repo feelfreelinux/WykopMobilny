@@ -22,9 +22,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/WykopAppTheme"
         >
+
         <activity
             android:name="io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.App"
             />
         <activity
             android:name="io.github.wykopmobilny.ui.modules.photoview.PhotoViewActivity"
