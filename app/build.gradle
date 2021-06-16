@@ -8,6 +8,13 @@ plugins {
     id("org.jetbrains.kotlin.plugin.parcelize")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("com.slack.keeper")
+}
+
+keeper {
+    variantFilter {
+        setIgnore(name != "releaseTest")
+    }
 }
 
 projectConfig {
@@ -28,6 +35,7 @@ android {
         buildConfigField "String", "GOOGLE_KEY", "\"${findProperty("wykop.googleKey")}\""
         resValue "string", "GOOGLE_API_KEY", "\"${findProperty("wykop.googleKey")}\""
     }
+    testBuildType findProperty("testBuildType") ?: "debug"
 
     signingConfigs {
         named("debug") {
@@ -53,6 +61,13 @@ android {
             minifyEnabled true
             signingConfig signingConfigs.getByName("release")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            firebaseCrashlytics.mappingFileUploadEnabled findProperty("uploadMapping") == "true"
+        }
+        register("releaseTest") {
+            initWith getByName("release")
+            signingConfig signingConfigs.getByName("debug")
+            testProguardFile "proguard-rules-test.pro"
+            firebaseCrashlytics.mappingFileUploadEnabled false
         }
     }
 
@@ -122,6 +137,7 @@ dependencies {
     implementation 'com.github.feelfreelinux:Slidr:2.2.1'
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"
+    implementation "com.evernote:android-job:1.4.2"
 
     def jspoonVersion = "1.3.2"
     implementation "pl.droidsonroids:jspoon:$jspoonVersion"
@@ -143,9 +159,6 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide"
     kaptAndroidTest "com.github.bumptech.glide:compiler:$glide"
     implementation "com.github.bumptech.glide:okhttp3-integration:$glide"
-
-    // Android-Job
-    implementation "com.evernote:android-job:1.4.2"
 
     // Unit tests
     testImplementation 'junit:junit:4.13.2'

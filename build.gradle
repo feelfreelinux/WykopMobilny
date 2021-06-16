@@ -38,4 +38,14 @@ allprojects {
             }
         }
     }
+    pluginManager.withPlugin("com.android.library") {
+        android.variantFilter {
+            ignore = buildType.name != "debug"
+        }
+    }
+    pluginManager.withPlugin("com.android.application") {
+        android.buildTypes.configureEach {
+            setMatchingFallbacks("debug")
+        }
+    }
 }

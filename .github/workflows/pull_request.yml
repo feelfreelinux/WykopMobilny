@@ -63,11 +63,14 @@ jobs:
 
   ui_test:
     runs-on: macos-latest
+    env:
+      WYKOP_KEYSTORE_KEY_PASSWORD: ${{ secrets.WYKOP_KEYSTORE_KEY_PASSWORD }}
+      WYKOP_KEYSTORE_KEY_NAME: ${{ secrets.WYKOP_KEYSTORE_KEY_NAME }}
+      WYKOP_KEYSTORE_PASSWORD: ${{ secrets.WYKOP_KEYSTORE_PASSWORD }}
     strategy:
       fail-fast: false
       matrix:
         apiVersion: [ 25, 28 ]
-
 
     steps:
       - uses: actions/checkout@v2
@@ -87,7 +90,7 @@ jobs:
           gradle-distribution-sha-256-sum-warning: false
 
       - name: compile ui tests
-        run: ./gradlew app:assembleDebugAndroidTest
+        run: ./gradlew app:assembleReleaseTestAndroidTest -PtestBuildType=releaseTest
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
@@ -97,7 +100,7 @@ jobs:
           target: google_apis
           arch: x86_64
           disable-spellchecker: true
-          script: ./gradlew app:connectedDebugAndroidTest
+          script: ./gradlew app:connectedReleaseTestAndroidTest -PtestBuildType=releaseTest
 
       - name: Upload ui tests result
         uses: actions/upload-artifact@v2
