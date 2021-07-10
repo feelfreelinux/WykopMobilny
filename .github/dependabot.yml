@@ -1,4 +1,5 @@
 version: 2
+
 updates:
   - package-ecosystem: "gradle"
     directory: "/"
@@ -6,12 +7,14 @@ updates:
       interval: "daily"
     assignees:
       - "mateuszkwiecinski"
+      
   - package-ecosystem: "gradle"
     directory: "buildSrc"
     schedule:
       interval: "daily"
     assignees:
       - "mateuszkwiecinski"
+      
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
