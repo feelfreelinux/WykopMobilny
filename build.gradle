@@ -31,4 +31,9 @@ allprojects {
                 "-Xopt-in=kotlinx.coroutines.FlowPreview"
         }
     }
+    pluginManager.withPlugin("com.android.library") {
+        android.packagingOptions {
+            exclude 'META-INF/*.kotlin_module'
+        }
+    }
 }
