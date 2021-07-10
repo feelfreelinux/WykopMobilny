@@ -63,7 +63,6 @@ android {
 
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
-        exclude 'META-INF/*.kotlin_module'
         exclude 'META-INF/*.version'
         exclude '*.properties'
         exclude 'DebugProbesKt.bin'
