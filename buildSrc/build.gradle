@@ -3,8 +3,7 @@ repositories {
     google()
 }
 dependencies {
-    implementation("com.project.starter:android:0.28.2")
-    implementation("org.jmailen.gradle:kotlinter-gradle:3.4.5") // todo remove
+    implementation("com.project.starter:android:0.29.0")
     implementation("com.gradleup:auto-manifest-plugin:1.0.4")
     implementation("com.google.gms:google-services:4.3.8")
     implementation("com.google.firebase:firebase-crashlytics-gradle:2.7.0")
