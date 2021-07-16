@@ -7,3 +7,6 @@ fun MockWebServerRule.promotedEmpty() =
 
 fun MockWebServerRule.promoted() =
     enqueue { successfulResponse("promoted.json") }
+
+fun MockWebServerRule.login() =
+    enqueue { successfulResponse("promoted.json") }

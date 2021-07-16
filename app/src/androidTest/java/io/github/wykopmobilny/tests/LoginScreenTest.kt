@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wykopmobilny.TestApp
 import io.github.wykopmobilny.tests.pages.DrawerRegion
 import io.github.wykopmobilny.tests.pages.MainPage
+import io.github.wykopmobilny.tests.responses.login
 import io.github.wykopmobilny.tests.responses.promotedEmpty
 import io.github.wykopmobilny.ui.login.LoginDependencies
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
@@ -29,6 +30,7 @@ class LoginScreenTest : BaseActivityTest() {
 
         Espresso.onIdle()
 
+        mockWebServerRule.login()
         triggerArtificialLogin()
         Espresso.onIdle()
     }

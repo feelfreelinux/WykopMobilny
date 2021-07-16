@@ -6,4 +6,9 @@
 
     <!-- LeakCanary -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
+        />
 </manifest>

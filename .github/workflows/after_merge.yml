@@ -42,7 +42,11 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Assemble
-        run: ./gradlew assembleDebugAndroidTest
+        env:
+          WYKOP_KEYSTORE_KEY_PASSWORD: ${{ secrets.WYKOP_KEYSTORE_KEY_PASSWORD }}
+          WYKOP_KEYSTORE_KEY_NAME: ${{ secrets.WYKOP_KEYSTORE_KEY_NAME }}
+          WYKOP_KEYSTORE_PASSWORD: ${{ secrets.WYKOP_KEYSTORE_PASSWORD }}
+        run: ./gradlew app:assembleReleaseTestAndroidTest -PtestBuildType=releaseTest
 
       - name: Unit tests
         run: ./gradlew projectCoverage
