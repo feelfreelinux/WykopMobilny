@@ -113,7 +113,7 @@ class YTPlayer :
     private var animEnter: Int = 0
     private var animExit: Int = 0
 
-    private var playerView: YouTubePlayerView? = null
+    private lateinit var playerView: YouTubePlayerView
     private var player: YouTubePlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,11 +121,11 @@ class YTPlayer :
         initialize()
 
         playerView = YouTubePlayerView(this)
-        playerView!!.initialize(googleApiKey, this)
+        playerView.initialize(googleApiKey, this)
 
         addContentView(playerView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
 
-        playerView!!.setBackgroundResource(android.R.color.black)
+        playerView.setBackgroundResource(android.R.color.black)
 
         StatusBarUtil.hide(this)
     }
@@ -148,11 +148,7 @@ class YTPlayer :
 
         playerStyle = YouTubePlayer.PlayerStyle.DEFAULT
         orientation = Orientation.AUTO
-
-        intent.getStringExtra(EXTRA_TIMESTAMP)?.let { t ->
-            timestampMs = t.youtubeTimestampToMsOrNull()
-        }
-
+        timestampMs = intent.getStringExtra(EXTRA_TIMESTAMP)?.youtubeTimestampToMsOrNull()
         showAudioUi = intent.getBooleanExtra(EXTRA_SHOW_AUDIO_UI, true)
         handleError = intent.getBooleanExtra(EXTRA_HANDLE_ERROR, true)
         animEnter = intent.getIntExtra(EXTRA_ANIM_ENTER, 0)
@@ -225,7 +221,7 @@ class YTPlayer :
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         if (requestCode == RECOVERY_DIALOG_REQUEST) {
             // Retry initialization if user performed a recovery action
-            playerView!!.initialize(googleApiKey, this)
+            playerView.initialize(googleApiKey, this)
         }
     }
 
@@ -259,19 +255,17 @@ class YTPlayer :
     // YouTubePlayer.PlayerStateChangeListener
     override fun onError(reason: ErrorReason) {
         Log.e("onError", "onError : " + reason.name)
-        if (handleError && ErrorReason.NOT_PLAYABLE == reason) {
+        if (ErrorReason.NOT_PLAYABLE == reason) {
             val videoUri = Uri.parse(YouTubeUrlParser.getVideoUrl(videoId!!))
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
-            val list = packageManager.queryIntentActivities(
-                intent,
-                PackageManager.MATCH_DEFAULT_ONLY,
-            )
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
+                .takeIf { packageManager.queryIntentActivities(it, PackageManager.MATCH_DEFAULT_ONLY).isNotEmpty() }
+                ?: Intent(Intent.ACTION_VIEW, videoUri)
 
-            if (list.isEmpty()) {
-                intent = Intent(Intent.ACTION_VIEW, videoUri)
+            if (handleError) {
+                startActivity(intent)
             }
-
-            startActivity(intent)
+            intent.putExtra(EXTRA_HANDLE_ERROR, false)
+            handleError = false
         }
     }
 

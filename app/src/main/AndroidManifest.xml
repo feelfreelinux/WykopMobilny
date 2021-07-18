@@ -38,6 +38,7 @@
             android:name="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.DayNight"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -46,8 +46,6 @@ fun View.getActivityContext(): Activity? {
 
 fun RecyclerView.prepare() {
     setItemViewCacheSize(20)
-    drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
-    isDrawingCacheEnabled = true
     layoutManager = LinearLayoutManager(context)
     (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     addItemDecoration(ViewHolderDependentItemDecorator(context))
@@ -55,8 +53,6 @@ fun RecyclerView.prepare() {
 
 fun RecyclerView.prepareNoDivider() {
     setItemViewCacheSize(20)
-    drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
-    isDrawingCacheEnabled = true
     layoutManager = LinearLayoutManager(context)
 }
 
@@ -70,7 +66,7 @@ fun ImageView.loadImage(url: String, signature: Int? = null) {
             .load(url)
             .apply(
                 RequestOptions()
-                    .signature(ObjectKey(signature))
+                    .signature(ObjectKey(signature)),
             )
             .into(this)
     }

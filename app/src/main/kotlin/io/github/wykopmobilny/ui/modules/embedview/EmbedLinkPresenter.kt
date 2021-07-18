@@ -3,7 +3,6 @@ package io.github.wykopmobilny.ui.modules.embedview
 import io.github.wykopmobilny.api.embed.ExternalApi
 import io.github.wykopmobilny.base.BasePresenter
 import io.github.wykopmobilny.base.Schedulers
-import io.reactivex.Single
 import java.net.URI
 
 class EmbedLinkPresenter(
@@ -16,6 +15,7 @@ class EmbedLinkPresenter(
         const val COUB_MATCHER = "coub.com"
         const val STREAMABLE_MATCHER = "streamable.com"
         const val YOUTUBE_MATCHER = "youtube.com"
+        const val MOBILE_YOUTUBE_MATCHER = "m.youtube.com"
         const val SIMPLE_YOUTUBE_MATCHER = "youtu.be"
     }
 
@@ -71,10 +71,7 @@ class EmbedLinkPresenter(
                     )
             }
 
-            SIMPLE_YOUTUBE_MATCHER, YOUTUBE_MATCHER -> view?.exitAndOpenYoutubeActivity()
-            else -> {
-                Single.just(url)
-            }
+            MOBILE_YOUTUBE_MATCHER, SIMPLE_YOUTUBE_MATCHER, YOUTUBE_MATCHER -> view?.exitAndOpenYoutubeActivity()
         }
     }
 
