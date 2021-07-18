@@ -365,6 +365,11 @@ class MainNavigationActivity :
                 openBrowser("https://github.com/otwarty-wykop-mobilny/wykop-android/blob/master/LICENSE")
                 dialog.dismiss()
             }
+
+            privacyPolicy.setOnClickListener {
+                openBrowser("https://sites.google.com/view/otwarty-wykop-mobilny-v2")
+                dialog.dismiss()
+            }
         }
 
         val mBehavior = BottomSheetBehavior.from(bottomSheetView.root.parent as View)

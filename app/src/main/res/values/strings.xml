@@ -27,6 +27,7 @@
     <string name="entries">Wpisy</string>
 
     <string name="license">Publikacja aplikacji na licencji MIT</string>
+    <string name="privacy_policy">Privacy policy/Licencja prywatności</string>
     <string name="report_bug">Zgłoś błąd pod tagiem #owmbugi</string>
     <string name="observe_otwartywykopmobilny">Obserwuj tag #otwartywykopmobilny</string>
     <string name="app_version">Wykop Mobilny (%1$s)</string>
