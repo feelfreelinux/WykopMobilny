@@ -20,3 +20,5 @@
 |![general](screenshots/general.png)|![appearance](screenshots/appearance.png)|
 
 ## How to contribute
+
+See [Contributing](CONTRIBUTING.md) guidelines
