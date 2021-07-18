@@ -9,6 +9,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.slack.keeper")
+    id("com.google.firebase.firebase-perf")
 }
 
 keeper {
@@ -128,6 +129,8 @@ dependencies {
     implementation "com.google.firebase:firebase-analytics-ktx"
     implementation "com.google.firebase:firebase-crashlytics-ktx"
     implementation 'com.github.suckgamony.RapidDecoder:library:7cdfca47fa'
+    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+    implementation 'com.google.firebase:firebase-perf-ktx'
 
     //noinspection GradleDependency
     implementation "org.ocpsoft.prettytime:prettytime:4.0.4.Final"
