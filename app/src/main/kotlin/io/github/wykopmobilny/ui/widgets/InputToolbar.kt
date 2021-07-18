@@ -95,7 +95,7 @@ class InputToolbar(context: Context, attrs: AttributeSet) : ConstraintLayout(con
             )
         )
         binding.body.threshold = 3
-        binding.body.doOnTextChanged { text, start, before, count ->
+        binding.body.doOnTextChanged { _, _, _, _ ->
             if ((textBody.length > 2 || binding.markdownToolbar.photo != null || binding.markdownToolbar.photoUrl != null)) {
                 if (!binding.send.isEnabled) {
                     enableSendButton()
