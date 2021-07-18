@@ -9,11 +9,11 @@
 
 |Entries/Links|Details|Profile|
 |---|---|---|
-|![entries](screenshots/entries.png)|![details](screenshots/details.png)|![profile](screenshots/profile.png)|
+|<img src="screenshots/entries.png" width="300">|<img src="screenshots/details.png" width="300">|<img src="screenshots/profile.png" width="300">|
 
 |Light|Dark|Amoled|
 |---|---|---|
-|![light](screenshots/light.png)|![dark](screenshots/dark.png)|![amoled](screenshots/amoled.png)|
+|<img src="screenshots/light.png" width="300">|<img src="screenshots/dark.png" width="300">|<img src="screenshots/amoled.png" width="300">|
 
 |Customize Behavior|Customize Appearance|
 |---|---|
