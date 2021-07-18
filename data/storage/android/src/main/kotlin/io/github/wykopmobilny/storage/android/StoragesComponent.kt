@@ -8,9 +8,9 @@ import dagger.Module
 import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.storage.api.LinksPreferencesApi
 import io.github.wykopmobilny.storage.api.SessionStorage
-import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.storage.api.Storages
 import io.github.wykopmobilny.storage.api.UserInfoStorage
+import io.github.wykopmobilny.storage.api.UserPreferenceApi
 
 @Component(modules = [StoragesModule::class])
 interface StoragesComponent : Storages {
@@ -28,9 +28,6 @@ interface StoragesComponent : Storages {
 internal abstract class StoragesModule {
 
     @Binds
-    abstract fun SettingsPreferences.provideSettingsPreferences(): SettingsPreferencesApi
-
-    @Binds
     abstract fun LinksPreferences.provideLinksPreferencesApi(): LinksPreferencesApi
 
     @Binds
@@ -41,4 +38,7 @@ internal abstract class StoragesModule {
 
     @Binds
     abstract fun CredentialsPreferences.userInfoStorage(): UserInfoStorage
+
+    @Binds
+    abstract fun UserPreferences.userPreferences(): UserPreferenceApi
 }

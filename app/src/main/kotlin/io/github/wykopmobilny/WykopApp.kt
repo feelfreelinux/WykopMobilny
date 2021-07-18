@@ -1,17 +1,21 @@
 package io.github.wykopmobilny
 
+import android.app.Activity
+import android.os.Bundle
 import android.webkit.CookieManager
-import com.evernote.android.job.JobManager
+import android.widget.Toast
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.Lazy
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.github.wykopmobilny.api.ApiSignInterceptor
 import io.github.wykopmobilny.di.DaggerAppComponent
-import io.github.wykopmobilny.domain.DomainComponent
+import io.github.wykopmobilny.domain.di.DomainComponent
 import io.github.wykopmobilny.domain.login.ConnectConfig
 import io.github.wykopmobilny.domain.login.di.LoginScope
+import io.github.wykopmobilny.domain.navigation.InteropRequest
 import io.github.wykopmobilny.domain.navigation.android.DaggerFrameworkComponent
+import io.github.wykopmobilny.domain.settings.di.SettingsScope
 import io.github.wykopmobilny.domain.styles.di.StylesScope
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
@@ -19,7 +23,9 @@ import io.github.wykopmobilny.styles.StylesDependencies
 import io.github.wykopmobilny.ui.base.AppDispatchers
 import io.github.wykopmobilny.ui.base.AppScopes
 import io.github.wykopmobilny.ui.login.LoginDependencies
-import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationJobCreator
+import io.github.wykopmobilny.ui.modules.blacklist.BlacklistActivity
+import io.github.wykopmobilny.ui.modules.search.SuggestionDatabase
+import io.github.wykopmobilny.ui.settings.SettingsDependencies
 import io.github.wykopmobilny.utils.ApplicationInjector
 import io.github.wykopmobilny.utils.usermanager.SimpleUserManagerApi
 import io.github.wykopmobilny.utils.usermanager.UserCredentials
@@ -27,6 +33,9 @@ import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import javax.inject.Inject
@@ -38,9 +47,6 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
 
         const val WYKOP_API_URL = "https://a2.wykop.pl"
     }
-
-    @Inject
-    lateinit var jobCreator: Lazy<WykopNotificationJobCreator>
 
     @Inject
     lateinit var userManagerApi: Lazy<UserManagerApi>
@@ -59,7 +65,7 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
         AppDispatchers.Main = Dispatchers.Main
         AppDispatchers.IO = Dispatchers.IO
         AndroidThreeTen.init(this)
-        JobManager.create(this).addJobCreator(jobCreator.get())
+        doInterop()
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
@@ -70,6 +76,7 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
             patrons = patrons,
             scraper = scraper,
             storages = storages,
+            settingsInterop = domainComponent.settingsApiInterop(),
         )
 
     protected open val domainComponent: DomainComponent by lazy {
@@ -133,6 +140,46 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
         when (clazz) {
             LoginDependencies::class -> scopes.getOrPut(LoginScope::class) { domainComponent.login() } as T
             StylesDependencies::class -> scopes.getOrPut(StylesScope::class) { domainComponent.styles() } as T
+            SettingsDependencies::class -> scopes.getOrPut(SettingsScope::class) { domainComponent.settings() } as T
             else -> error("Unknown dependencies for type $clazz")
         }
+
+    private fun doInterop() {
+        launch {
+            var currentActivity: Activity? = null
+            registerActivityLifecycleCallbacks(
+                object : ActivityLifecycleCallbacks {
+                    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
+
+                    override fun onActivityStarted(activity: Activity) = Unit
+
+                    override fun onActivityResumed(activity: Activity) {
+                        currentActivity = activity
+                    }
+
+                    override fun onActivityPaused(activity: Activity) {
+                        currentActivity = null
+                    }
+
+                    override fun onActivityStopped(activity: Activity) = Unit
+
+                    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
+
+                    override fun onActivityDestroyed(activity: Activity) = Unit
+                },
+            )
+            domainComponent.navigation().request.collect {
+                val context = currentActivity ?: return@collect
+                when (it) {
+                    InteropRequest.BlackListScreen -> context.startActivity(BlacklistActivity.createIntent(context))
+                    InteropRequest.ClearSuggestionDatabase -> {
+                        SuggestionDatabase(context).clearDb()
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "Wyczyszczono historię wyszukiwarki", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

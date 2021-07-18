@@ -1,21 +1,23 @@
 package io.github.wykopmobilny.tests.pages
 
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import io.github.wykopmobilny.tests.base.Page
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.allOf
 
 object DrawerRegion : Page {
 
     private val root =
-        ViewMatchers.isDescendantOfA(ViewMatchers.isAssignableFrom(DrawerLayout::class.java))
+        isDescendantOfA(isAssignableFrom(DrawerLayout::class.java))
 
     private fun option(label: String) =
-        Matchers.allOf(ViewMatchers.isDescendantOfA(root), ViewMatchers.withText(label))
+        allOf(isDescendantOfA(root), withText(label))
 
     fun tapOption(label: String) {
-        Espresso.onView(option(label)).perform(ViewActions.click())
+        onView(option(label)).perform(click())
     }
 }

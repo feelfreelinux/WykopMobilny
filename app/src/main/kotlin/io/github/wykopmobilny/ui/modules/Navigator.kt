@@ -14,7 +14,6 @@ import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import io.github.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.wykopmobilny.ui.modules.photoview.PhotoViewActivity
 import io.github.wykopmobilny.ui.modules.pm.conversation.ConversationActivity
-import io.github.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.wykopmobilny.utils.openBrowser
 
@@ -24,7 +23,6 @@ interface NavigatorApi {
     fun openTagActivity(context: Activity, tag: String)
     fun openConversationListActivity(context: Activity, user: String)
     fun openPhotoViewActivity(context: Activity, url: String)
-    fun openSettingsActivity(context: Activity)
     fun openAddEntryActivity(context: Activity, receiver: String? = null, extraBody: String? = null)
     fun openEditEntryActivity(context: Activity, body: String, entryId: Int)
     fun openEditEntryCommentActivity(context: Activity, body: String, entryId: Int, commentId: Int)
@@ -39,7 +37,7 @@ class Navigator : NavigatorApi {
     override fun openMainActivity(context: Activity, targetFragment: String?) {
         context.startActivity(
             MainNavigationActivity.getIntent(context, targetFragment)
-                .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) }
+                .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) },
         )
     }
 
@@ -54,9 +52,6 @@ class Navigator : NavigatorApi {
 
     override fun openPhotoViewActivity(context: Activity, url: String) =
         context.startActivity(PhotoViewActivity.createIntent(context, url))
-
-    override fun openSettingsActivity(context: Activity) =
-        context.startActivity(SettingsActivity.createIntent(context))
 
     override fun openAddEntryActivity(context: Activity, receiver: String?, extraBody: String?) =
         context.startActivity(AddEntryActivity.createIntent(context, receiver, extraBody))

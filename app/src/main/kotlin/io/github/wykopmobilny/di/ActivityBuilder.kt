@@ -32,9 +32,6 @@ import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationFragmentPr
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationModule
 import io.github.wykopmobilny.ui.modules.mikroblog.entry.EntryActivity
 import io.github.wykopmobilny.ui.modules.mikroblog.entry.EntryDetailModule
-import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.NotificationPiggyback
-import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.ReadNotificationsBroadcastReceiver
-import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver
 import io.github.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.wykopmobilny.ui.modules.notificationslist.NotificationsListFragmentProvider
 import io.github.wykopmobilny.ui.modules.notificationslist.NotificationsListModule
@@ -44,18 +41,12 @@ import io.github.wykopmobilny.ui.modules.pm.conversation.ConversationActivityMod
 import io.github.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.wykopmobilny.ui.modules.profile.ProfileFragmentProvider
 import io.github.wykopmobilny.ui.modules.profile.ProfileModule
-import io.github.wykopmobilny.ui.modules.settings.SettingsActivity
-import io.github.wykopmobilny.ui.modules.settings.SettingsActivityModule
-import io.github.wykopmobilny.ui.modules.settings.SettingsFragmentProvider
 import io.github.wykopmobilny.ui.modules.tag.TagActivity
 import io.github.wykopmobilny.ui.modules.tag.TagActivityFragmentProvider
 import io.github.wykopmobilny.ui.modules.tag.TagActivityModule
 
 @Module
 abstract class ActivityBuilder {
-
-    @ContributesAndroidInjector
-    abstract fun bindWykopStartupBroadcastReceiver(): WykopNotificationsBroadcastReceiver
 
     @ContributesAndroidInjector
     abstract fun glide(): GlideModule
@@ -65,9 +56,6 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [MainNavigationModule::class, MainNavigationFragmentProvider::class])
     abstract fun bindMainNavigationActivity(): MainNavigationActivity
-
-    @ContributesAndroidInjector(modules = [SettingsActivityModule::class, SettingsFragmentProvider::class])
-    abstract fun bindSettingsActivity(): SettingsActivity
 
     @ContributesAndroidInjector(modules = [ConversationActivityModule::class])
     abstract fun bindConversationActivity(): ConversationActivity
@@ -116,10 +104,4 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [AddlinkModule::class, AddlinkFragmentProvider::class])
     abstract fun bindAddLinkActivity(): AddlinkActivity
-
-    @ContributesAndroidInjector
-    abstract fun bindReadNotificationsReceiver(): ReadNotificationsBroadcastReceiver
-
-    @ContributesAndroidInjector
-    abstract fun service(): NotificationPiggyback
 }

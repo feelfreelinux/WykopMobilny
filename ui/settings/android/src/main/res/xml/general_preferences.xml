@@ -1,0 +1,114 @@
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <androidx.preference.Preference
+        android:key="appearance"
+        android:persistent="false"
+        android:title="@string/pref_appearance_settings"
+        app:iconSpaceReserved="false"
+        />
+
+    <androidx.preference.PreferenceCategory
+        android:title="@string/pref_notifications"
+        app:iconSpaceReserved="false"
+        >
+
+        <androidx.preference.CheckBoxPreference
+            android:key="showNotifications"
+            android:persistent="false"
+            android:title="@string/pref_notifications_enable"
+            app:iconSpaceReserved="false"
+            app:isPreferenceVisible="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="piggyBackPushNotifications"
+            android:persistent="false"
+            android:summary="@string/pref_notifications_piggyback_summary"
+            android:title="@string/pref_notifications_piggyback"
+            app:iconSpaceReserved="false"
+            app:isPreferenceVisible="false"
+            />
+
+        <androidx.preference.ListPreference
+            android:key="notificationsSchedulerDelay"
+            android:persistent="false"
+            android:title="@string/pref_notifications_frequency"
+            app:iconSpaceReserved="false"
+            app:isPreferenceVisible="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="disableExitConfirmation"
+            android:persistent="false"
+            android:title="@string/pref_disable_exit_confirmation"
+            app:iconSpaceReserved="false"
+            />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        android:title="@string/pref_content_filter"
+        app:iconSpaceReserved="false"
+        >
+
+        <androidx.preference.CheckBoxPreference
+            android:key="showAdultContent"
+            android:persistent="false"
+            android:title="@string/pref_content_plus18"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="hideNsfw"
+            android:persistent="false"
+            android:title="@string/pref_content_filter_nsfw"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="hideLowRangeAuthors"
+            android:persistent="false"
+            android:title="@string/pref_content_filter_low_range_authors"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="hideContentWithoutTags"
+            android:persistent="false"
+            android:title="@string/pref_content_filter_without_tags"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="hideBlacklistedViews"
+            android:persistent="false"
+            android:title="@string/pref_content_hide_blacklisted"
+            app:iconSpaceReserved="false"
+            />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.Preference
+        android:key="blacklist"
+        android:persistent="false"
+        android:title="@string/pref_manage_blacklist"
+        app:iconSpaceReserved="false"
+        />
+
+    <androidx.preference.CheckBoxPreference
+        android:key="useBuiltInBrowser"
+        android:persistent="false"
+        android:title="@string/pref_use_built_in_browser"
+        app:iconSpaceReserved="false"
+        />
+
+    <androidx.preference.Preference
+        android:key="clearhistory"
+        android:persistent="false"
+        android:title="@string/pref_clear_history"
+        app:iconSpaceReserved="false"
+        />
+</androidx.preference.PreferenceScreen>

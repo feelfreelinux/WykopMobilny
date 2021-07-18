@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar">
 
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
-    </style>
-
-    <style name="Theme.App.Light">
-
+    <style name="Theme.App.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">#ffffff</item>
         <item name="colorSurface">#ffffff</item>
         <item name="colorOnSurface">#000000</item>
@@ -15,10 +11,12 @@
         <item name="colorAccent">#3a80ba</item>
         <item name="colorOnPrimary">#ffffff</item>
         <item name="colorPrimaryDark">#3677ae</item>
+        <item name="colorControlHighlightOnSurface">#33ffffff</item>
+        <item name="android:navigationBarColor">?colorPrimaryDark</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
     </style>
 
-    <style name="Theme.App.Dark">
-
+    <style name="Theme.App.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:windowBackground">#2c2c2c</item>
         <item name="colorSurface">#2c2c2c</item>
         <item name="colorOnSurface">#ffffff</item>
@@ -28,22 +26,27 @@
         <item name="colorPrimaryDark">#212121</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog.Dark
         </item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog.Dark</item>
+        <item name="colorControlHighlightOnSurface">#33ffffff</item>
+        <item name="android:navigationBarColor">?colorPrimaryDark</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
     </style>
 
-    <style name="Theme.App.Amoled">
-
+    <style name="Theme.App.Amoled" parent="Theme.App.Dark">
         <item name="android:windowBackground">#000000</item>
         <item name="colorSurface">#000000</item>
         <item name="colorOnSurface">#deffffff</item>
         <item name="colorPrimary">#000000</item>
         <item name="colorOnPrimary">#d9ffffff</item>
-        <item name="colorAccent">#3a80bc</item>
         <item name="colorPrimaryDark">#000000</item>
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog.Dark
-        </item>
+        <item name="android:textColorPrimary">@color/text_color_dark</item>
     </style>
 
     <style name="ThemeOverlay.App.MaterialAlertDialog.Dark" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">?colorOnSurface</item>
+    </style>
+
+    <style name="ThemeOverlay.App.AlertDialog.Dark" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
         <item name="colorPrimary">?colorOnSurface</item>
     </style>
 </resources>

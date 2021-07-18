@@ -5,7 +5,7 @@ import io.github.wykopmobilny.storage.api.LinksPreferencesApi
 import javax.inject.Inject
 
 internal class LinksPreferences @Inject constructor(
-    context: Context
+    context: Context,
 ) : BasePreferences(context), LinksPreferencesApi {
 
     override var readLinksIds by stringSetPref(key = "readLinksIds")

@@ -10,6 +10,7 @@ import io.github.wykopmobilny.di.modules.RepositoryModule
 import io.github.wykopmobilny.fakes.FakeCookieProvider
 import io.github.wykopmobilny.patrons.remote.PatronsComponent
 import io.github.wykopmobilny.storage.android.StoragesComponent
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.wykop.remote.WykopComponent
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
@@ -30,7 +31,7 @@ import javax.inject.Singleton
         StoragesComponent::class,
     ],
 )
-interface TestAppComponent : AppComponent {
+internal interface TestAppComponent : AppComponent {
 
     @Component.Factory
     interface Factory {
@@ -42,6 +43,7 @@ interface TestAppComponent : AppComponent {
             patrons: PatronsComponent,
             scraper: ScraperComponent,
             storages: StoragesComponent,
+            @BindsInstance settingsInterop: SettingsPreferencesApi,
         ): TestAppComponent
     }
 

@@ -1,0 +1,158 @@
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <androidx.preference.PreferenceCategory
+        android:title="@string/pref_appearance"
+        app:iconSpaceReserved="false"
+        >
+
+        <androidx.preference.CheckBoxPreference
+            android:key="useDarkTheme"
+            android:persistent="false"
+            android:title="@string/pref_dark_style"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="useAmoledTheme"
+            android:persistent="false"
+            android:title="@string/useAmoledTheme"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.ListPreference
+            android:key="defaultScreen"
+            android:persistent="false"
+            android:title="@string/defaultScreen"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.ListPreference
+            android:key="fontSize"
+            android:persistent="false"
+            android:title="@string/pref_fontsize"
+            app:iconSpaceReserved="false"
+            />
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        android:title="Ustawienia odtwarzacza"
+        app:iconSpaceReserved="false"
+        >
+
+        <androidx.preference.CheckBoxPreference
+            android:key="enableYoutubePlayer"
+            android:persistent="false"
+            android:title="Użyj odtwarzacza YouTube"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="enableEmbedPlayer"
+            android:persistent="false"
+            android:title="Użyj playera dla innych mediów"
+            app:iconSpaceReserved="false"
+            />
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        android:title="Mikroblog"
+        app:iconSpaceReserved="false"
+        >
+        <androidx.preference.ListPreference
+            android:key="hotEntriesScreen"
+            android:persistent="false"
+            android:title="@string/defaultHotScreen"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="cutLongEntries"
+            android:persistent="false"
+            android:title="Przycinaj długie wpisy"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="openSpoilersDialog"
+            android:persistent="false"
+            android:title="@string/open_spoilers_in_dialog"
+            app:iconSpaceReserved="false"
+            />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        android:title="Znaleziska"
+        app:iconSpaceReserved="false"
+        >
+
+        <androidx.preference.CheckBoxPreference
+            android:key="linkSimpleList"
+            android:persistent="false"
+            android:title="@string/link_simple_list"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="linkShowImage"
+            android:persistent="false"
+            android:title="@string/link_show_image"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.ListPreference
+            android:key="linkImagePosition"
+            android:persistent="false"
+            android:title="@string/linkImagePosition"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="linkShowAuthor"
+            android:persistent="false"
+            android:title="@string/link_show_author"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="hideLinkCommentsByDefault"
+            android:persistent="false"
+            android:title="Zwijaj wszystkie komentarze"
+            app:iconSpaceReserved="false"
+            />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        android:title="@string/app_config_images"
+        app:iconSpaceReserved="false"
+        >
+
+        <androidx.preference.CheckBoxPreference
+            android:key="showMinifiedImages"
+            android:persistent="false"
+            android:title="@string/app_config_images_minified"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.CheckBoxPreference
+            android:key="cutImages"
+            android:persistent="false"
+            android:title="@string/app_config_images_cut"
+            app:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.SeekBarPreference
+            android:key="cutImageProportion"
+            android:max="150"
+            android:persistent="false"
+            android:title="@string/app_config_images_cut_image_proportion"
+            app:iconSpaceReserved="false"
+            app:min="20"
+            app:showSeekBarValue="true"
+            />
+    </androidx.preference.PreferenceCategory>
+</androidx.preference.PreferenceScreen>

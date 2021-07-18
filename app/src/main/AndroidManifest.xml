@@ -26,7 +26,7 @@
         <activity
             android:name="io.github.wykopmobilny.ui.modules.loginscreen.LoginScreenActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Theme.App"
+            android:theme="@style/Theme.App.Dark"
             />
         <activity
             android:name="io.github.wykopmobilny.ui.modules.photoview.PhotoViewActivity"
@@ -94,7 +94,7 @@
         <activity
             android:name=".ui.modules.settings.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/TransparentActivityTheme"
+            android:theme="@style/Theme.App.Dark"
             />
         <activity
             android:name="io.github.wykopmobilny.ui.modules.links.linkdetails.LinkDetailsActivity"
@@ -298,18 +298,6 @@
             </intent-filter>
         </activity>
 
-
-        <receiver android:name=".ui.modules.notifications.notificationsservice.WykopNotificationsBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".ui.modules.notifications.notificationsservice.ReadNotificationsBroadcastReceiver"
-            android:exported="false"
-            />
-
         <provider
             android:name=".ui.modules.search.SearchSuggestionAdapter"
             android:authorities="${applicationId}.SearchSuggestionAdapter"
@@ -327,20 +315,6 @@
                 />
         </provider>
 
-        <service
-            android:name="com.evernote.android.job.gcm.PlatformGcmService"
-            android:enabled="true"
-            tools:replace="android:enabled"
-            />
-
-        <service
-            android:name=".ui.modules.notifications.notificationsservice.NotificationPiggyback"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-            >
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
 
         <activity
             android:name=".ui.modules.embedview.YTPlayer"
