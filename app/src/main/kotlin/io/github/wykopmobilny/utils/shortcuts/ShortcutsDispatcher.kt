@@ -13,17 +13,17 @@ class ShortcutsDispatcher {
         intent: Intent,
         startFragment: (fragment: Fragment) -> (Unit),
         startActivity: () -> (Unit),
-        isUserAuthorized: Boolean
+        isUserAuthorized: Boolean,
     ) {
         when (intent.action) {
-            HotFragment::class.java.canonicalName -> startFragment.invoke(HotFragment.newInstance())
-            SearchFragment::class.java.canonicalName -> startFragment.invoke(SearchFragment.newInstance())
-            MyWykopFragment::class.java.canonicalName -> if (isUserAuthorized) {
+            "hot" -> startFragment.invoke(HotFragment.newInstance())
+            "search" -> startFragment.invoke(SearchFragment.newInstance())
+            "mywykop" -> if (isUserAuthorized) {
                 startFragment.invoke(MyWykopFragment.newInstance())
             } else {
                 startActivity.invoke()
             }
-            HitsFragment::class.java.canonicalName -> startFragment.invoke(HitsFragment.newInstance())
+            "hits" -> startFragment.invoke(HitsFragment.newInstance())
         }
     }
 }
