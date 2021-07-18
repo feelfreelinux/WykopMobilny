@@ -3,7 +3,6 @@ package io.github.wykopmobilny.ui.modules.embedview
 import io.github.wykopmobilny.api.embed.ExternalApi
 import io.github.wykopmobilny.base.BasePresenter
 import io.github.wykopmobilny.base.Schedulers
-import io.reactivex.Single
 import java.net.URI
 
 class EmbedLinkPresenter(
