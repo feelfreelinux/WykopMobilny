@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.App.SettingsItem" parent="TextAppearance.MaterialComponents.Headline5">
+
+    </style>
+</resources>

@@ -16,8 +16,11 @@ class MockWebServerRule : TestRule {
             override fun evaluate() {
                 mockWebServer.dispatcher = QueueDispatcher().apply { setFailFast(true) }
                 mockWebServer.start(port = 8000)
-                base.evaluate()
-                mockWebServer.shutdown()
+                try {
+                    base.evaluate()
+                } finally {
+                    mockWebServer.shutdown()
+                }
             }
         }
 

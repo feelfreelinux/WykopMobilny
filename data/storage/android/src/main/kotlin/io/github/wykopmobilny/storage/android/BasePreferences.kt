@@ -29,10 +29,7 @@ internal abstract class BasePreferences(
         }
     }
     protected val preferences = callbackFlow<String> {
-        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            check(trySend(key).isSuccess)
-        }
-
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key -> trySend(key) }
         prefs.registerOnSharedPreferenceChangeListener(listener)
 
         awaitClose { prefs.unregisterOnSharedPreferenceChangeListener(listener) }

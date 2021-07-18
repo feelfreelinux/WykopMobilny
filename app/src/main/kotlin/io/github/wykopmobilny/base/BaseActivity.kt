@@ -5,8 +5,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.r0adkll.slidr.Slidr
-import com.r0adkll.slidr.model.SlidrConfig
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -34,12 +32,6 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
         AndroidInjection.inject(this)
         initTheme()
         super.onCreate(savedInstanceState)
-        if (enableSwipeBackLayout) {
-            Slidr.attach(
-                this,
-                SlidrConfig.Builder().edge(true).build(),
-            )
-        }
     }
 
     override fun onResume() {

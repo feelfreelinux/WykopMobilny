@@ -3,76 +3,28 @@ package io.github.wykopmobilny.ui.modules.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.preference.PreferenceFragmentCompat
-import io.github.wykopmobilny.R
-import io.github.wykopmobilny.base.BaseActivity
-import io.github.wykopmobilny.databinding.ActivitySettingsBinding
-import io.github.wykopmobilny.ui.modules.NewNavigatorApi
+import io.github.wykopmobilny.base.ThemableActivity
+import io.github.wykopmobilny.databinding.ActivityContainerBinding
+import io.github.wykopmobilny.ui.settings.android.preferencesMainFragment
 import io.github.wykopmobilny.utils.viewBinding
-import javax.inject.Inject
 
-class SettingsActivity : BaseActivity() {
+internal class SettingsActivity : ThemableActivity() {
 
-    companion object {
-        const val THEME_CHANGED_EXTRA = "THEME_CHANGED"
-        const val THEME_CHANGED_RESULT = 154
-        const val EXTRA_SCREEN = "SCREEN"
-        const val SCREEN_MAIN = "MAIN"
-        const val SCREEN_APPEARANCE = "APPEREANCE"
-
-        fun createIntent(context: Context) = Intent(context, SettingsActivity::class.java)
-    }
-
-    @Inject
-    lateinit var navigatorApi: NewNavigatorApi
-
-    private val binding by viewBinding(ActivitySettingsBinding::inflate)
-
-    override val enableSwipeBackLayout: Boolean = true
-    var shouldRestartMainScreen = false
-    override val isActivityTransfluent = true
+    private val binding by viewBinding(ActivityContainerBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setSupportActionBar(binding.toolbar.toolbar)
-        supportActionBar?.title = "Ustawienia"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        if (supportFragmentManager.backStackEntryCount == 0) {
-            if (intent.hasExtra(EXTRA_SCREEN) && intent.getStringExtra(EXTRA_SCREEN) != SCREEN_MAIN) {
-                when (intent.getStringExtra(EXTRA_SCREEN)) {
-                    SCREEN_APPEARANCE -> openFragment(SettingsAppearance(), "appearance")
-                }
-            } else {
-                openFragment(SettingsFragment(), "main")
-            }
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(binding.fragmentContainer.id, preferencesMainFragment())
+                .commit()
         }
     }
 
-    fun openFragment(fragment: PreferenceFragmentCompat, tag: String) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.settings_fragment, fragment, tag)
-            .addToBackStack(null)
-            .commit()
-    }
+    companion object {
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> onBackPressed()
-        }
-
-        return true
-    }
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1) {
-            if (intent.hasExtra(THEME_CHANGED_EXTRA) || shouldRestartMainScreen) {
-                setResult(THEME_CHANGED_RESULT)
-                navigatorApi.openMainActivity()
-            }
-            finish()
-        } else {
-            super.onBackPressed()
-        }
+        fun createIntent(context: Context) = Intent(context, SettingsActivity::class.java)
     }
 }

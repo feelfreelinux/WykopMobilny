@@ -5,18 +5,12 @@ import androidx.paging.LoadType
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.Store
-import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
-
-fun <T : Any> buildStore(promoted: suspend (page: Int) -> T) =
-    StoreBuilder.from(fetcher = Fetcher.of(promoted))
-        .build()
 
 @OptIn(ExperimentalPagingApi::class)
 class StoreMediator<T : Any> @Inject constructor(

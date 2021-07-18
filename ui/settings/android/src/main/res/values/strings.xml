@@ -1,0 +1,66 @@
+<resources>
+
+    <string name="settings">Ustawienia</string>
+
+    <string name="pref_appearance_settings">Ustawienia wyglądu aplikacji</string>
+    <string name="pref_appearance">Wygląd</string>
+    <string name="pref_dark_style">Styl nocny</string>
+    <string name="useAmoledTheme">Tryb AMOLED dla stylu nocnego</string>
+    <string name="defaultScreen">Domyślny ekran aplikacji</string>
+    <string name="defaultHotScreen">Domyślny ekran w mikroblogu</string>
+    <string name="open_spoilers_in_dialog">Otwieraj spoilery w okienku</string>
+    <string name="app_config_images">Ustawienia obrazków</string>
+    <string name="app_config_images_minified">Obrazki w trybie miniaturki</string>
+    <string name="app_config_images_cut">Zwijaj długie obrazki</string>
+    <string name="app_config_images_cut_image_proportion">Wysokość obrazka względem ekranu</string>
+    <string name="pref_notifications">Powiadomienia</string>
+    <string name="pref_notifications_piggyback">Przechwyć powiadomienie push oficjalnej aplikacji</string>
+    <string name="pref_notifications_piggyback_summary">Wymaga zainstalowania oficjalnej aplikacji Wykop.pl</string>
+    <string name="pref_notifications_enable">Włącz powiadomienia</string>
+    <string name="pref_notifications_frequency">Częstotliwość sprawdzania</string>
+    <string name="pref_content_filter">Filtrowanie treści</string>
+    <string name="pref_content_plus18">Pokazuj treści 18+</string>
+    <string name="pref_content_filter_nsfw">Ukryj treści z tagiem #nsfw</string>
+    <string name="pref_content_filter_low_range_authors">Ukrywaj treści zielonek</string>
+    <string name="pref_content_filter_without_tags">Ukrywaj treści bez tagów (tylko mirko)</string>
+    <string name="pref_content_hide_blacklisted">Nie pokazuj ukrytych treści</string>
+    <string name="pref_manage_blacklist">Zarządzaj czarną listą</string>
+    <string name="pref_use_built_in_browser">Użyj wbudowanej przeglądarki</string>
+    <string name="pref_clear_history">Wyczyść historię wyszukiwarki</string>
+    <string name="pref_disable_exit_confirmation">Wyłącz potwierdzenie wyjścia z aplikacji</string>
+    <string name="link_simple_list">Prosta lista znalezisk</string>
+    <string name="link_show_author">Pokaż autora znaleziska</string>
+    <string name="link_show_image">Pokaż miniaturkę znaleziska</string>
+    <string name="linkImagePosition">Styl miniaturki znaleziska</string>
+
+    <string name="main_page">Strona Główna</string>
+    <string name="wykopalisko">Wykopalisko</string>
+    <string name="hits">Hity</string>
+    <string name="mikroblog">Mikroblog</string>
+    <string name="mywykop">Mój Wykop</string>
+
+    <string name="period24">Gorące wpisy 24h</string>
+    <string name="period12">Gorące wpisy 12h</string>
+    <string name="period6">Gorące wpisy 6h</string>
+    <string name="active_entries">Aktywne wpisy</string>
+    <string name="newest_entries">Najnowsze wpisy</string>
+
+    <string name="fontsize_small">Mała</string>
+    <string name="fontsize_tiny">Bardzo mała</string>
+    <string name="fontsize_normal">Standardowa</string>
+    <string name="fontsize_large">Duża</string>
+    <string name="fontsize_huge">Bardzo duża</string>
+    <string name="pref_fontsize">Wielkość czcionki</string>
+
+    <string name="link_image_position_left">Mała po lewej stronie</string>
+    <string name="link_image_position_right">Mała po prawej stronie</string>
+    <string name="link_image_position_top">Duża nad tekstem</string>
+    <string name="link_image_position_bottom">Duża pod tekstem</string>
+
+    <string name="preferences_notification_period_15_minutes">15 minut</string>
+    <string name="preferences_notification_period_30_minutes">30 minut</string>
+    <string name="preferences_notification_period_1_hour">1 godzina</string>
+    <string name="preferences_notification_period_2_hours">2 godziny</string>
+    <string name="preferences_notification_period_4_hours">4 godziny</string>
+    <string name="preferences_notification_period_8_hours">8 godzin</string>
+</resources>

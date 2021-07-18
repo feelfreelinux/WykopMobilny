@@ -9,13 +9,10 @@ import io.github.wykopmobilny.api.user.LoginApi
 import io.github.wykopmobilny.base.WykopSchedulers
 import io.github.wykopmobilny.ui.modules.Navigator
 import io.github.wykopmobilny.ui.modules.NavigatorApi
-import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManager
-import io.github.wykopmobilny.ui.modules.notifications.WykopNotificationManagerApi
 import io.github.wykopmobilny.utils.ClipboardHelper
 import io.github.wykopmobilny.utils.ClipboardHelperApi
 import io.github.wykopmobilny.utils.usermanager.UserManager
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
-import javax.inject.Singleton
 
 @Module
 class NetworkModule {
@@ -29,11 +26,6 @@ class NetworkModule {
     @Provides
     fun provideNotificationManager(context: Context): NotificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    @Provides
-    @Singleton
-    fun provideWykopNotificationManager(mgr: NotificationManager): WykopNotificationManagerApi =
-        WykopNotificationManager(mgr)
 
     @Provides
     fun provideUserTokenRefresher(userApi: LoginApi, userManagerApi: UserManagerApi) =

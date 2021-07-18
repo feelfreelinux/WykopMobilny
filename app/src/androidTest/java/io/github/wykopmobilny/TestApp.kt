@@ -9,9 +9,9 @@ import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
 import okhttp3.OkHttpClient
 import javax.inject.Inject
 
-class TestApp : WykopApp() {
+internal class TestApp : WykopApp() {
 
-    private val okHttpClient = OkHttpClient()
+    val okHttpClient = OkHttpClient()
 
     @Inject
     lateinit var cookieProvider: FakeCookieProvider
@@ -30,6 +30,7 @@ class TestApp : WykopApp() {
                 patrons = patrons,
                 scraper = scraper,
                 storages = storages,
+                settingsInterop = domainComponent.settingsApiInterop(),
             )
 
     override val wykopApi by lazy {

@@ -40,13 +40,11 @@ import io.github.wykopmobilny.ui.modules.links.promoted.PromotedFragment
 import io.github.wykopmobilny.ui.modules.links.upcoming.UpcomingFragment
 import io.github.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment
 import io.github.wykopmobilny.ui.modules.mywykop.MyWykopFragment
-import io.github.wykopmobilny.ui.modules.notifications.notificationsservice.WykopNotificationsJob
 import io.github.wykopmobilny.ui.modules.notificationslist.NotificationsListActivity
 import io.github.wykopmobilny.ui.modules.notificationslist.notification.NotificationsListFragment
 import io.github.wykopmobilny.ui.modules.pm.conversationslist.ConversationsListFragment
 import io.github.wykopmobilny.ui.modules.profile.ProfileActivity
 import io.github.wykopmobilny.ui.modules.search.SearchFragment
-import io.github.wykopmobilny.ui.modules.settings.SettingsActivity
 import io.github.wykopmobilny.ui.widgets.BadgeDrawerDrawable
 import io.github.wykopmobilny.ui.widgets.drawerheaderview.DrawerHeaderWidget
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
@@ -176,10 +174,6 @@ class MainNavigationActivity :
 
         (binding.navigationView.getChildAt(0) as NavigationMenuView).isVerticalScrollBarEnabled = false
 
-        if (settingsApi.showNotifications) {
-            // Schedules notification service
-            WykopNotificationsJob.schedule(settingsApi)
-        }
         actionBarToggle.drawerArrowDrawable = badgeDrawable
         binding.toolbar.toolbar.tag = binding.toolbar.toolbar.overflowIcon // We want to save original overflow icon drawable into memory.
         navHeader.showDrawerHeader(userManagerApi.isUserAuthorized(), userManagerApi.getUserCredentials())
@@ -336,8 +330,6 @@ class MainNavigationActivity :
                 presenter.startListeningForNotifications()
             }
             presenter.checkNotifications(true)
-        } else if (resultCode == SettingsActivity.THEME_CHANGED_RESULT) {
-            restartActivity()
         }
     }
 

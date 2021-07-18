@@ -2,8 +2,6 @@ package io.github.wykopmobilny.storage.api
 
 interface Storages {
 
-    fun settingsPreferences(): SettingsPreferencesApi
-
     fun linksPreferences(): LinksPreferencesApi
 
     fun blacklistPreferences(): BlacklistPreferencesApi
@@ -11,4 +9,6 @@ interface Storages {
     fun sessionStorage(): SessionStorage
 
     fun userInfoStorage(): UserInfoStorage
+
+    fun userPreferences(): UserPreferenceApi
 }
