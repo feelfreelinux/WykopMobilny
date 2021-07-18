@@ -10,7 +10,6 @@ import io.github.wykopmobilny.domain.settings.get
 import io.github.wykopmobilny.domain.settings.prefs.MainScreen
 import io.github.wykopmobilny.domain.settings.prefs.MikroblogScreen
 import io.github.wykopmobilny.domain.settings.update
-import io.github.wykopmobilny.domain.styles.AppTheme
 import io.github.wykopmobilny.domain.styles.GetAppTheme
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.storage.api.UserPreferenceApi
@@ -73,22 +72,6 @@ internal class InteropSettingPreferencesApi @Inject constructor(
         get() = (interop(UserSettings.hidePlus18Content) ?: true).not()
     override val hideNsfw: Boolean
         get() = interop(UserSettings.hideNsfwContent) ?: true
-    override val useDarkTheme: Boolean
-        get() = runBlocking {
-            when (getAppTheme().first()) {
-                AppTheme.Light -> false
-                AppTheme.Dark -> true
-                AppTheme.DarkAmoled -> true
-            }
-        }
-    override val useAmoledTheme: Boolean
-        get() = runBlocking {
-            when (getAppTheme().first()) {
-                AppTheme.Light -> false
-                AppTheme.Dark -> false
-                AppTheme.DarkAmoled -> true
-            }
-        }
     override val showMinifiedImages: Boolean
         get() = interop(UserSettings.showMinifiedImages) ?: false
     override val cutLongEntries: Boolean

@@ -5,12 +5,22 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import io.github.wykopmobilny.R
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
+import io.github.wykopmobilny.styles.AppThemeUi
+import io.github.wykopmobilny.styles.StyleUi
+import io.github.wykopmobilny.styles.StylesDependencies
 import io.github.wykopmobilny.ui.dialogs.showExceptionDialog
+import io.github.wykopmobilny.utils.requireDependency
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 /**
@@ -25,6 +35,8 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
     @Inject
     lateinit var themeSettingsPreferences: SettingsPreferencesApi
 
+    private val getAppStyle by lazy { application.requireDependency<StylesDependencies>().getAppStyle() }
+
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
@@ -32,6 +44,13 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
         AndroidInjection.inject(this)
         initTheme()
         super.onCreate(savedInstanceState)
+
+        lifecycleScope.launchWhenResumed {
+            getAppStyle().distinctUntilChanged().drop(1).collect {
+                updateTheme(it)
+                recreate()
+            }
+        }
     }
 
     override fun onResume() {
@@ -46,18 +65,7 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
 
     // This function initializes activity theme based on settings
     private fun initTheme() {
-        if (themeSettingsPreferences.useDarkTheme) {
-            if (themeSettingsPreferences.useAmoledTheme) {
-                setTheme(R.style.WykopAppTheme_Amoled)
-                window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark_Amoled)
-            } else {
-                setTheme(R.style.WykopAppTheme_Dark)
-                window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark_Dark)
-            }
-        } else {
-            setTheme(R.style.WykopAppTheme)
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
-        }
+        updateTheme(runBlocking { getAppStyle().first() })
         if (isActivityTransfluent || enableSwipeBackLayout) {
             theme.applyStyle(R.style.TransparentActivityTheme, true)
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -72,6 +80,18 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
             null,
             -> theme.applyStyle(R.style.TextSizeNormal, true)
         }
+    }
+
+    private fun updateTheme(appStyle: StyleUi) {
+        val (appTheme, navColor) = runBlocking {
+            when (appStyle.theme) {
+                AppThemeUi.Light -> R.style.WykopAppTheme to R.color.colorPrimaryDark
+                AppThemeUi.Dark -> R.style.WykopAppTheme_Dark to R.color.colorPrimaryDark_Dark
+                AppThemeUi.DarkAmoled -> R.style.WykopAppTheme_Amoled to R.color.colorPrimaryDark_Amoled
+            }
+        }
+        setTheme(appTheme)
+        window.navigationBarColor = ContextCompat.getColor(this@BaseActivity, navColor)
     }
 
     fun showErrorDialog(e: Throwable) {
