@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
 
-    <!--TODO: make path more specific-->
-    <!--    <external-path-->
-    <!--        name="external_files"-->
-    <!--        path="/"/>-->
     <external-path
         name="external_files"
         path="."
@@ -21,5 +17,4 @@
         name="external_files"
         path="."
         />
-
 </paths>

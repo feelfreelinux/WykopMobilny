@@ -9,8 +9,6 @@ interface SettingsPreferencesApi {
     val linkShowAuthor: Boolean
     val showAdultContent: Boolean
     val hideNsfw: Boolean
-    val useDarkTheme: Boolean
-    val useAmoledTheme: Boolean
     val showMinifiedImages: Boolean
     val cutLongEntries: Boolean
     val cutImages: Boolean

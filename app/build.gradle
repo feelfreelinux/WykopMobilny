@@ -33,7 +33,7 @@ android {
         buildConfigField 'String', 'APP_SECRET', "\"${findProperty("wykop.secretKey")}\""
         buildConfigField 'String', 'APP_KEY', "\"${findProperty("wykop.appKey")}\""
         buildConfigField "String", "GOOGLE_KEY", "\"${findProperty("wykop.googleKey")}\""
-        resValue "string", "GOOGLE_API_KEY", "\"${findProperty("wykop.googleKey")}\""
+        resValue "string", "GOOGLE_API_KEY", "${findProperty("wykop.googleKey")}"
     }
     testBuildType findProperty("testBuildType") ?: "debug"
 
@@ -83,7 +83,6 @@ android {
         exclude 'DebugProbesKt.bin'
     }
     lintOptions {
-        checkReleaseBuilds false
         disable("UnknownNullness")
         disable("Range")
     }

@@ -1,5 +1,8 @@
 <shortcuts
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:targetApi="n_mr1"
+    >
     <shortcut
         android:enabled="true"
         android:icon="@drawable/ic_shortcut_mywkop"
@@ -8,9 +11,9 @@
         android:shortcutShortLabel="@string/mywykop"
         >
         <intent
-            android:action="io.github.wykopmobilny.ui.modules.mywykop.MyWykopFragment"
+            android:action="mywykop"
             android:targetClass="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.wykopmobilny"
+            android:targetPackage="io.github.wykopmobilny.debug"
             />
     </shortcut>
 
@@ -22,9 +25,9 @@
         android:shortcutShortLabel="@string/mikroblog"
         >
         <intent
-            android:action="io.github.wykopmobilny.ui.modules.mikroblog.feed.hot.HotFragment"
+            android:action="hot"
             android:targetClass="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.wykopmobilny"
+            android:targetPackage="io.github.wykopmobilny.debug"
             />
 
     </shortcut>
@@ -36,9 +39,9 @@
         android:shortcutShortLabel="@string/hits"
         >
         <intent
-            android:action="io.github.wykopmobilny.ui.modules.links.hits.HitsFragment"
+            android:action="hits"
             android:targetClass="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.wykopmobilny"
+            android:targetPackage="io.github.wykopmobilny.debug"
             />
     </shortcut>
 
@@ -50,10 +53,9 @@
         android:shortcutShortLabel="@string/search"
         >
         <intent
-            android:action="io.github.wykopmobilny.ui.modules.search.SearchFragment"
+            android:action="search"
             android:targetClass="io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity"
-            android:targetPackage="io.github.wykopmobilny"
+            android:targetPackage="io.github.wykopmobilny.debug"
             />
     </shortcut>
-
 </shortcuts>

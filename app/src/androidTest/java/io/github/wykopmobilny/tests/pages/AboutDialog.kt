@@ -1,16 +1,16 @@
 package io.github.wykopmobilny.tests.pages
 
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import io.github.wykopmobilny.tests.base.Page
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.startsWith
 
 object AboutDialog : Page {
 
-    private val appInfo = ViewMatchers.withText(Matchers.startsWith("Wykop Mobilny"))
+    private val appInfo = withText(startsWith("Wykop Mobilny"))
 
     fun tapAppInfo() {
-        Espresso.onView(appInfo).perform(ViewActions.click())
+        onView(appInfo).perform(click())
     }
 }
