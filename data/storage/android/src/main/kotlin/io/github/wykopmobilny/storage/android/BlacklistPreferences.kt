@@ -18,7 +18,6 @@ internal class BlacklistPreferences @Inject constructor(
 
     override var blockedTags by stringSetPref("blockedTagsSet")
     override var blockedUsers by stringSetPref("blockedUsersSet")
-    override var blockedImported by booleanPref(key = "blockedImported")
 
     override val blacklist: Flow<Blacklist?> =
         preferences.filter { it == "blockedTagsSet" || it == "blockedUsersSet" }
@@ -34,6 +33,5 @@ internal class BlacklistPreferences @Inject constructor(
     override suspend fun updateBlacklist(newValue: Blacklist?) = withContext(Dispatchers.Default) {
         blockedTags = newValue?.tags
         blockedUsers = newValue?.users
-        blockedImported = newValue != null
     }
 }
