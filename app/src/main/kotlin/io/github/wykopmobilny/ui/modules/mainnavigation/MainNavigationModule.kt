@@ -3,7 +3,6 @@ package io.github.wykopmobilny.ui.modules.mainnavigation
 import dagger.Module
 import dagger.Provides
 import io.github.wykopmobilny.api.notifications.NotificationsApi
-import io.github.wykopmobilny.api.scraper.ScraperApi
 import io.github.wykopmobilny.base.Schedulers
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.modules.NewNavigator
@@ -21,11 +20,10 @@ class MainNavigationModule {
         schedulers: Schedulers,
         notificationsApi: NotificationsApi,
         userManagerApi: UserManagerApi,
-        scraperApi: ScraperApi
     ) = MainNavigationPresenter(
         schedulers,
         notificationsApi,
-        userManagerApi
+        userManagerApi,
     )
 
     @Provides

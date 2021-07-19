@@ -2,20 +2,21 @@ package io.github.wykopmobilny.domain.login
 
 import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.fresh
+import io.github.wykopmobilny.domain.login.di.LoginScope
 import io.github.wykopmobilny.domain.navigation.AppRestarter
 import io.github.wykopmobilny.storage.api.Blacklist
 import io.github.wykopmobilny.storage.api.LoggedUserInfo
 import io.github.wykopmobilny.storage.api.SessionStorage
 import io.github.wykopmobilny.storage.api.UserSession
-import io.github.wykopmobilny.ui.base.AppScopes.applicationScope
-import io.github.wykopmobilny.ui.base.ScopedViewState
+import io.github.wykopmobilny.ui.base.AppScopes
+import io.github.wykopmobilny.ui.base.SimpleViewStateStorage
+import io.github.wykopmobilny.ui.base.launchIn
 import io.github.wykopmobilny.ui.login.InfoMessageUi
 import io.github.wykopmobilny.ui.login.Login
 import io.github.wykopmobilny.ui.login.LoginUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -25,10 +26,11 @@ class LoginQuery @Inject constructor(
     private val blacklistStore: Store<Unit, Blacklist>,
     private val loginConfig: ConnectConfig,
     private val appRestarter: AppRestarter,
-    private val viewState: ScopedViewState,
+    private val viewStateStorage: SimpleViewStateStorage,
+    private val appScopes: AppScopes,
 ) : Login {
 
-    override fun invoke(): Flow<LoginUi> = viewState.state.map { viewState ->
+    override fun invoke(): Flow<LoginUi> = viewStateStorage.state.map { viewState ->
         LoginUi(
             urlToLoad = loginConfig.connectUrl,
             isLoading = viewState.isLoading,
@@ -44,7 +46,7 @@ class LoginQuery @Inject constructor(
         )
     }
 
-    private fun onUrlInvoked(url: String) = applicationScope.launch {
+    private fun onUrlInvoked(url: String) = appScopes.launchIn<LoginScope> {
         val userSession = withContext(Dispatchers.Default) {
             val match = loginPattern.find(url) ?: return@withContext null
 
@@ -56,8 +58,8 @@ class LoginQuery @Inject constructor(
             } else {
                 UserSession(login, token)
             }
-        } ?: return@launch
-        viewState.update { it.copy(isLoading = true) }
+        } ?: return@launchIn
+        viewStateStorage.update { it.copy(isLoading = true) }
 
         runCatching {
             sessionStorage.updateSession(userSession)
@@ -69,13 +71,13 @@ class LoginQuery @Inject constructor(
                 sessionStorage.updateSession(null)
                 userInfoStore.clearAll()
                 blacklistStore.clearAll()
-                viewState.update { it.copy(isLoading = false, visibleError = throwable) }
+                viewStateStorage.update { it.copy(isLoading = false, visibleError = throwable) }
             }
-            .onSuccess { viewState.update { it.copy(isLoading = false, visibleError = null) } }
+            .onSuccess { viewStateStorage.update { it.copy(isLoading = false, visibleError = null) } }
     }
 
-    private fun dismissError() = applicationScope.launch {
-        viewState.update { it.copy(visibleError = null) }
+    private fun dismissError() = appScopes.launchIn<LoginScope> {
+        viewStateStorage.update { it.copy(visibleError = null) }
     }
 
     companion object {

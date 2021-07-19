@@ -2,6 +2,7 @@ package io.github.wykopmobilny.storage.android
 
 import android.content.Context
 import androidx.core.content.edit
+import dagger.Reusable
 import io.github.wykopmobilny.storage.api.UserPreferenceApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@Reusable
 internal class UserPreferences @Inject constructor(
     context: Context,
 ) : BasePreferences(context, true), UserPreferenceApi {

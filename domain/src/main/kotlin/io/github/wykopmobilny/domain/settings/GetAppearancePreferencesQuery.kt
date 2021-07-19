@@ -1,5 +1,6 @@
 package io.github.wykopmobilny.domain.settings
 
+import io.github.wykopmobilny.domain.settings.di.SettingsScope
 import io.github.wykopmobilny.domain.settings.prefs.GetAppearanceSectionPreferences
 import io.github.wykopmobilny.domain.settings.prefs.GetImagesPreferences
 import io.github.wykopmobilny.domain.settings.prefs.GetImagesPreferences.Companion.CUT_IMAGES_RANGE_FROM
@@ -11,6 +12,7 @@ import io.github.wykopmobilny.domain.settings.prefs.MainScreen
 import io.github.wykopmobilny.domain.settings.prefs.MikroblogScreen
 import io.github.wykopmobilny.storage.api.UserPreferenceApi
 import io.github.wykopmobilny.ui.base.AppScopes
+import io.github.wykopmobilny.ui.base.launchIn
 import io.github.wykopmobilny.ui.settings.AppearancePreferencesUi
 import io.github.wykopmobilny.ui.settings.AppearancePreferencesUi.AppearanceSectionUi
 import io.github.wykopmobilny.ui.settings.AppearancePreferencesUi.ImagesSectionUi
@@ -28,7 +30,6 @@ import io.github.wykopmobilny.ui.settings.SliderSetting
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GetAppearancePreferencesQuery @Inject internal constructor(
@@ -38,6 +39,7 @@ class GetAppearancePreferencesQuery @Inject internal constructor(
     private val getAppearanceSectionPreferences: GetAppearanceSectionPreferences,
     private val getLinksPreferences: GetLinksPreferences,
     private val getImagesPreferences: GetImagesPreferences,
+    private val appScopes: AppScopes,
 ) : GetAppearancePreferences {
 
     override fun invoke() =
@@ -165,7 +167,7 @@ class GetAppearancePreferencesQuery @Inject internal constructor(
         }
 
     private fun <T> updateUserSetting(key: UserSetting<T>, value: T) {
-        AppScopes.applicationScope.launch { userPreferences.update(key, value) }
+        appScopes.launchIn<SettingsScope> { userPreferences.update(key, value) }
     }
 }
 

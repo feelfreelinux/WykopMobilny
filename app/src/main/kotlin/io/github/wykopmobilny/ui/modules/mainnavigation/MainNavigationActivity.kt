@@ -53,6 +53,7 @@ import io.github.wykopmobilny.utils.shortcuts.ShortcutsDispatcher
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 import io.github.wykopmobilny.utils.viewBinding
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 interface MainNavigationInterface {
@@ -146,8 +147,7 @@ class MainNavigationActivity :
             R.id.about -> openAboutSheet()
             R.id.logout -> {
                 confirmationDialog(this) {
-                    blacklistPreferencesApi.blockedTags = emptySet()
-                    blacklistPreferencesApi.blockedUsers = emptySet()
+                    runBlocking { blacklistPreferencesApi.clear() }
                     userManagerApi.logoutUser()
                     restartActivity()
                 }.show()

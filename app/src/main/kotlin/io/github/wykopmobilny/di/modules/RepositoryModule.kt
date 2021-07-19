@@ -22,8 +22,6 @@ import io.github.wykopmobilny.api.pm.PMApi
 import io.github.wykopmobilny.api.pm.PMRepository
 import io.github.wykopmobilny.api.profile.ProfileApi
 import io.github.wykopmobilny.api.profile.ProfileRepository
-import io.github.wykopmobilny.api.scraper.ScraperApi
-import io.github.wykopmobilny.api.scraper.ScraperRepository
 import io.github.wykopmobilny.api.search.SearchApi
 import io.github.wykopmobilny.api.search.SearchRepository
 import io.github.wykopmobilny.api.suggest.SuggestApi
@@ -77,7 +75,4 @@ class RepositoryModule {
 
     @Provides
     fun PatronsRepository.patrons(): PatronsApi = this
-
-    @Provides
-    fun ScraperRepository.provideScraperApi(): ScraperApi = this
 }

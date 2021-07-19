@@ -3,12 +3,14 @@ package io.github.wykopmobilny.domain.settings
 import io.github.wykopmobilny.domain.navigation.InteropRequestsProvider
 import io.github.wykopmobilny.domain.navigation.InteropRequest
 import io.github.wykopmobilny.domain.navigation.InteropRequest.ClearSuggestionDatabase
+import io.github.wykopmobilny.domain.settings.di.SettingsScope
 import io.github.wykopmobilny.domain.settings.prefs.GetFilteringPreferences
 import io.github.wykopmobilny.domain.settings.prefs.GetNotificationPreferences
 import io.github.wykopmobilny.domain.settings.prefs.NotificationsPreferences.RefreshPeriod
 import io.github.wykopmobilny.storage.api.UserInfoStorage
 import io.github.wykopmobilny.storage.api.UserPreferenceApi
 import io.github.wykopmobilny.ui.base.AppScopes
+import io.github.wykopmobilny.ui.base.launchIn
 import io.github.wykopmobilny.ui.settings.FilteringUi
 import io.github.wykopmobilny.ui.settings.GeneralPreferencesUi
 import io.github.wykopmobilny.ui.settings.GeneralPreferencesUi.NotificationsUi.RefreshPeriodUi
@@ -17,7 +19,6 @@ import io.github.wykopmobilny.ui.settings.ListSetting
 import io.github.wykopmobilny.ui.settings.Setting
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GetGeneralPreferencesQuery @Inject internal constructor(
@@ -26,6 +27,7 @@ class GetGeneralPreferencesQuery @Inject internal constructor(
     private val userPreferences: UserPreferenceApi,
     private val userInfoStorage: UserInfoStorage,
     private val interopRequests: InteropRequestsProvider,
+    private val appScopes: AppScopes,
 ) : GetGeneralPreferences {
 
     override fun invoke() =
@@ -68,7 +70,7 @@ class GetGeneralPreferencesQuery @Inject internal constructor(
             val manageBlackList: (() -> Unit)? = if (loggedUser == null) {
                 null
             } else {
-                { AppScopes.applicationScope.launch { interopRequests.request(InteropRequest.BlackListScreen) } }
+                { appScopes.launchIn<SettingsScope> { interopRequests.request(InteropRequest.BlackListScreen) } }
             }
             FilteringUi(
                 showPlus18Content = Setting(
@@ -96,12 +98,12 @@ class GetGeneralPreferencesQuery @Inject internal constructor(
                     currentValue = filtering.useEmbeddedBrowser,
                     onClicked = { updateUserSetting(UserSettings.useEmbeddedBrowser, !filtering.useEmbeddedBrowser) },
                 ),
-                clearSearchHistory = { AppScopes.applicationScope.launch { interopRequests.request(ClearSuggestionDatabase) } },
+                clearSearchHistory = { appScopes.launchIn<SettingsScope> { interopRequests.request(ClearSuggestionDatabase) } },
             )
         }
 
     private fun <T> updateUserSetting(key: UserSetting<T>, value: T) {
-        AppScopes.applicationScope.launch { userPreferences.update(key, value) }
+        appScopes.launchIn<SettingsScope> { userPreferences.update(key, value) }
     }
 }
 

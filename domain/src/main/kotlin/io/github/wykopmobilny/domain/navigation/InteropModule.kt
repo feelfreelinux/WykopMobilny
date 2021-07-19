@@ -10,7 +10,6 @@ import io.github.wykopmobilny.domain.settings.get
 import io.github.wykopmobilny.domain.settings.prefs.MainScreen
 import io.github.wykopmobilny.domain.settings.prefs.MikroblogScreen
 import io.github.wykopmobilny.domain.settings.update
-import io.github.wykopmobilny.domain.styles.GetAppTheme
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.storage.api.UserPreferenceApi
 import kotlinx.coroutines.flow.first
@@ -34,7 +33,6 @@ internal abstract class InteropModule {
 @Singleton
 internal class InteropSettingPreferencesApi @Inject constructor(
     private val userPreferenceApi: UserPreferenceApi,
-    private val getAppTheme: GetAppTheme,
 ) : SettingsPreferencesApi {
 
     override val hotEntriesScreen: String?

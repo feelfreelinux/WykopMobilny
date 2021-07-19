@@ -94,6 +94,7 @@
     <androidx.preference.Preference
         android:key="blacklist"
         android:persistent="false"
+        app:isPreferenceVisible="false"
         android:title="@string/pref_manage_blacklist"
         app:iconSpaceReserved="false"
         />

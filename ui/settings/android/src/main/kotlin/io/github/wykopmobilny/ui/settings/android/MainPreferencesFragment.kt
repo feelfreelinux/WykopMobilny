@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import io.github.wykopmobilny.ui.settings.SettingsDependencies
 import io.github.wykopmobilny.ui.settings.android.databinding.FragmentSettingsBinding
 import io.github.wykopmobilny.ui.settings.android.di.DaggerSettingsUiComponent
+import io.github.wykopmobilny.utils.destroyDependency
 import io.github.wykopmobilny.utils.requireDependency
 import io.github.wykopmobilny.utils.viewBinding
 
@@ -38,8 +40,13 @@ internal class MainPreferencesFragment : Fragment(R.layout.fragment_settings) {
 
         if (savedInstanceState == null) {
             childFragmentManager.beginTransaction()
-                .replace(R.id.container, GeneralPreferencesFragment())
+                .replace(binding.container.id, GeneralPreferencesFragment())
                 .commit()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        requireContext().destroyDependency<SettingsDependencies>()
     }
 }

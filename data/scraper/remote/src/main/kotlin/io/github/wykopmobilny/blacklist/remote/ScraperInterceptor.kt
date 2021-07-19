@@ -6,12 +6,13 @@ import javax.inject.Inject
 
 internal class ScraperInterceptor @Inject constructor(
     private val baseUrl: String,
-    private val cookiesProvider: (String) -> String
+    private val cookiesProvider: (String) -> String?
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         cookiesProvider(baseUrl)
+            .orEmpty()
             .split(";")
             .forEach { builder.addHeader("Cookie", it) }
 
