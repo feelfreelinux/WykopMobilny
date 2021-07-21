@@ -12,6 +12,7 @@ import io.github.wykopmobilny.models.mapper.apiv2.TagEntriesMapper
 import io.github.wykopmobilny.models.mapper.apiv2.TagLinksMapper
 import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.reactivex.Single
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 
@@ -48,20 +49,10 @@ class TagRepository @Inject constructor(
     override fun block(tag: String) = rxSingle { tagApi.block(tag) }
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
-        .doOnSuccess {
-            val blockedTags = blacklistPreferencesApi.blockedTags.orEmpty()
-            if (!blockedTags.contains(tag.removePrefix("#"))) {
-                blacklistPreferencesApi.blockedTags = blockedTags.plus(tag.removePrefix("#"))
-            }
-        }
+        .doOnSuccess { runBlocking { blacklistPreferencesApi.update { it.copy(tags = it.tags + tag.removePrefix("#")) } } }
 
     override fun unblock(tag: String) = rxSingle { tagApi.unblock(tag) }
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
-        .doOnSuccess {
-            val blockedTags = blacklistPreferencesApi.blockedTags.orEmpty()
-            if (blockedTags.contains(tag.removePrefix("#"))) {
-                blacklistPreferencesApi.blockedTags = blockedTags.minus(tag.removePrefix("#"))
-            }
-        }
+        .doOnSuccess { runBlocking { blacklistPreferencesApi.update { it.copy(tags = it.tags - tag.removePrefix("#")) } } }
 }

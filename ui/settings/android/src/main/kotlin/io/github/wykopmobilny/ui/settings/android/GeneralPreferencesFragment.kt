@@ -34,7 +34,7 @@ internal class GeneralPreferencesFragment : PreferenceFragmentCompat() {
                 bindCheckbox("showNotifications", it.notifications.notificationsEnabled)
                 bindCheckbox("disableExitConfirmation", it.notifications.exitConfirmation)
                 bindCheckbox("showAdultContent", it.filtering.showPlus18Content)
-                bindCheckbox("hideNsfw", it.filtering.showNsfwContent)
+                bindCheckbox("hideNsfw", it.filtering.hideNsfwContent)
                 bindCheckbox("hideLowRangeAuthors", it.filtering.hideNewUserContent)
                 bindCheckbox("hideContentWithoutTags", it.filtering.hideContentWithNoTags)
                 bindCheckbox("hideBlacklistedViews", it.filtering.hideBlacklistedContent)

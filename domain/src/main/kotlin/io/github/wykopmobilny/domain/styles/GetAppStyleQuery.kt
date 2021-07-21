@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 internal class GetAppStyleQuery @Inject constructor(
     private val getAppTheme: GetAppTheme,
+    private val appScopes: AppScopes,
 ) : GetAppStyle {
 
     override fun invoke() =
@@ -22,7 +23,7 @@ internal class GetAppStyleQuery @Inject constructor(
                 )
             }
             .distinctUntilChanged()
-            .shareIn(AppScopes.applicationScope, SharingStarted.Eagerly, replay = 1)
+            .shareIn(appScopes.applicationScope, SharingStarted.Eagerly, replay = 1)
 }
 
 private fun AppTheme.toUi() = when (this) {

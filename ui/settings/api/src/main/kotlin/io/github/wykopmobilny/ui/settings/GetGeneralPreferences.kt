@@ -28,7 +28,7 @@ data class GeneralPreferencesUi(
 
 class FilteringUi(
     val showPlus18Content: Setting,
-    val showNsfwContent: Setting,
+    val hideNsfwContent: Setting,
     val hideNewUserContent: Setting,
     val hideContentWithNoTags: Setting,
     val hideBlacklistedContent: Setting,

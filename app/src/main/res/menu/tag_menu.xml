@@ -37,7 +37,7 @@
 
     <item
         android:id="@+id/action_unblock"
-        android:icon="@drawable/ic_lock_open_dark"
+        android:icon="@drawable/ic_lock_open"
         android:visible="false"
         android:title="@string/unblock_tag"
         app:showAsAction="never"

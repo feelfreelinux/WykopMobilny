@@ -8,14 +8,14 @@ import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 
 class LoginRepository @Inject constructor(
-    private val tagApi: LoginRetrofitApi,
+    private val loginApi: LoginRetrofitApi,
     private val apiPreferences: SessionStorage,
 ) : LoginApi {
 
     override fun getUserSessionToken() =
         rxSingle {
             val session = apiPreferences.session.first().let(::checkNotNull)
-            tagApi.getUserSessionToken(login = session.login, accountKey = session.token)
+            loginApi.getUserSessionToken(login = session.login, accountKey = session.token)
         }
             .compose(ErrorHandlerTransformer())
 }

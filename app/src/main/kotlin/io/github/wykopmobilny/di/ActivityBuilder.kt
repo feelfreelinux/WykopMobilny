@@ -6,9 +6,6 @@ import io.github.wykopmobilny.glide.GlideModule
 import io.github.wykopmobilny.ui.modules.addlink.AddlinkActivity
 import io.github.wykopmobilny.ui.modules.addlink.AddlinkFragmentProvider
 import io.github.wykopmobilny.ui.modules.addlink.AddlinkModule
-import io.github.wykopmobilny.ui.modules.blacklist.BlacklistActivity
-import io.github.wykopmobilny.ui.modules.blacklist.BlacklistFragmentProvider
-import io.github.wykopmobilny.ui.modules.blacklist.BlacklistModule
 import io.github.wykopmobilny.ui.modules.embedview.EmbedViewActivity
 import io.github.wykopmobilny.ui.modules.embedview.EmbedViewModule
 import io.github.wykopmobilny.ui.modules.input.entry.add.AddEntryActivity
@@ -98,9 +95,6 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [EmbedViewModule::class])
     abstract fun bindEmbedActivity(): EmbedViewActivity
-
-    @ContributesAndroidInjector(modules = [BlacklistModule::class, BlacklistFragmentProvider::class])
-    abstract fun bindBlacklistActivity(): BlacklistActivity
 
     @ContributesAndroidInjector(modules = [AddlinkModule::class, AddlinkFragmentProvider::class])
     abstract fun bindAddLinkActivity(): AddlinkActivity

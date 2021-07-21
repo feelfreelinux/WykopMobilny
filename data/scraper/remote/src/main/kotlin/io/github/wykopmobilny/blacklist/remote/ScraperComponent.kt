@@ -14,7 +14,7 @@ interface ScraperComponent : Scraper {
         fun create(
             @BindsInstance okHttpClient: OkHttpClient,
             @BindsInstance baseUrl: String,
-            @BindsInstance cookieProvider: (webPage: String) -> String
+            @BindsInstance cookieProvider: (webPage: String) -> String?
         ): ScraperComponent
     }
 }

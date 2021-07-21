@@ -20,6 +20,7 @@ import io.github.wykopmobilny.models.mapper.apiv2.LinkMapper
 import io.github.wykopmobilny.models.mapper.apiv2.RelatedMapper
 import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.reactivex.Single
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class ProfileRepository @Inject constructor(
     private val profileApi: ProfileRetrofitApi,
     private val userTokenRefresher: UserTokenRefresher,
     private val owmContentFilter: OWMContentFilter,
-    private val blacklistPreferencesApi: BlacklistPreferencesApi
+    private val blacklistPreferencesApi: BlacklistPreferencesApi,
 ) : ProfileApi {
 
     override fun getIndex(username: String): Single<ProfileResponse> =
@@ -105,20 +106,10 @@ class ProfileRepository @Inject constructor(
     override fun block(tag: String) = rxSingle { profileApi.block(tag) }
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
-        .doOnSuccess {
-            val blockedUsers = blacklistPreferencesApi.blockedUsers.orEmpty()
-            if (!blockedUsers.contains(tag.removePrefix("@"))) {
-                blacklistPreferencesApi.blockedUsers = blockedUsers.plus(tag.removePrefix("@"))
-            }
-        }
+        .doOnSuccess { runBlocking { blacklistPreferencesApi.update { it.copy(users = it.users + tag.removePrefix("@")) } } }
 
     override fun unblock(tag: String) = rxSingle { profileApi.unblock(tag) }
         .retryWhen(userTokenRefresher)
         .compose(ErrorHandlerTransformer())
-        .doOnSuccess {
-            val blockedUsers = blacklistPreferencesApi.blockedUsers.orEmpty()
-            if (blockedUsers.contains(tag.removePrefix("@"))) {
-                blacklistPreferencesApi.blockedUsers = blockedUsers.minus(tag.removePrefix("@"))
-            }
-        }
+        .doOnSuccess { runBlocking { blacklistPreferencesApi.update { it.copy(users = it.users - tag.removePrefix("@")) } } }
 }

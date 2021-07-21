@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wykopmobilny.models.dataclass.Entry
 import io.github.wykopmobilny.models.dataclass.EntryComment
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.adapters.viewholders.BlockedViewHolder
 import io.github.wykopmobilny.ui.adapters.viewholders.EntryCommentViewHolder
 import io.github.wykopmobilny.ui.adapters.viewholders.EntryListener
@@ -12,16 +13,15 @@ import io.github.wykopmobilny.ui.fragments.entries.EntryActionListener
 import io.github.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
 import io.github.wykopmobilny.ui.modules.NewNavigatorApi
-import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
-import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
+import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import javax.inject.Inject
 
 class EntryAdapter @Inject constructor(
     private val userManagerApi: UserManagerApi,
     private val settingsPreferencesApi: SettingsPreferencesApi,
     private val navigatorApi: NewNavigatorApi,
-    private val linkHandlerApi: WykopLinkHandlerApi
+    private val linkHandlerApi: WykopLinkHandlerApi,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var entryActionListener: EntryActionListener
@@ -31,6 +31,7 @@ class EntryAdapter @Inject constructor(
 
     var entry: Entry? = null
     var commentId: Int? = null
+    private val hideBlacklistedViews by lazy { settingsPreferencesApi.hideBlacklistedViews }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
@@ -38,7 +39,7 @@ class EntryAdapter @Inject constructor(
                 holder.bindView(entry!!)
             }
             is EntryCommentViewHolder -> {
-                val comment = entry!!.comments.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }[position - 1]
+                val comment = entry!!.comments.filterNot { hideBlacklistedViews && it.isBlocked }[position - 1]
                 holder.bindView(comment, entry?.author, commentId ?: 0)
             }
             is BlockedViewHolder -> {
@@ -57,7 +58,7 @@ class EntryAdapter @Inject constructor(
     }
 
     override fun getItemCount(): Int {
-        entry?.comments?.filterNot { settingsPreferencesApi.hideBlacklistedViews && it.isBlocked }?.let {
+        entry?.comments?.filterNot { hideBlacklistedViews && it.isBlocked }?.let {
             return it.size + 1
         }
         return 0
@@ -66,9 +67,11 @@ class EntryAdapter @Inject constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             EntryCommentViewHolder.TYPE_BLOCKED,
-            EntryViewHolder.TYPE_BLOCKED -> BlockedViewHolder.inflateView(parent, ::notifyItemChanged)
+            EntryViewHolder.TYPE_BLOCKED,
+            -> BlockedViewHolder.inflateView(parent, ::notifyItemChanged)
             EntryCommentViewHolder.TYPE_NORMAL,
-            EntryCommentViewHolder.TYPE_EMBED -> EntryCommentViewHolder.inflateView(
+            EntryCommentViewHolder.TYPE_EMBED,
+            -> EntryCommentViewHolder.inflateView(
                 parent,
                 viewType,
                 userManagerApi,
@@ -87,7 +90,7 @@ class EntryAdapter @Inject constructor(
                 navigatorApi,
                 linkHandlerApi,
                 entryActionListener,
-                replyListener
+                replyListener,
             )
         }
     }

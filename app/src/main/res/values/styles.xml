@@ -180,7 +180,7 @@
         <item name="bottomSheetObserve">@drawable/ic_observe_dark</item>
         <item name="bottomSheetUnobserve">@drawable/ic_unobserve_dark</item>
         <item name="bottomSheetLock">@drawable/ic_lock_dark</item>
-        <item name="bottomSheetUnlock">@drawable/ic_lock_open_dark</item>
+        <item name="bottomSheetUnlock">@drawable/ic_lock_open</item>
         <item name="bottomSheetEdit">@drawable/ic_pen_dark</item>
         <item name="bottomSheetCopy">@drawable/ic_copy_content</item>
         <item name="bottomSheetReport">@drawable/ic_report_dark</item>

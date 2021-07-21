@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="blacklist_title">Zarządzaj czarną listą</string>
+    <string name="blacklist_tab_title_tags">Tagi</string>
+    <string name="blacklist_tab_title_users">Użytkownicy</string>
+    <string name="blacklist_not_loaded">Wygląda na to że czarna lista nie została jeszcze zaimportowana.</string>
+    <string name="blacklist_load">Zaimportuj</string>
+    <string name="retry">Spróbuj ponownie</string>
+    <string name="cancel">OK</string>
+</resources>
+

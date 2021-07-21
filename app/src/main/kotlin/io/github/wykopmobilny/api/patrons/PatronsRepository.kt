@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PatronsRepository @Inject constructor(
-    private val patronsApi: PatronsRetrofitApi
+    private val patronsApi: PatronsRetrofitApi,
 ) : PatronsApi {
 
     private var _patrons: List<Patron>? = null

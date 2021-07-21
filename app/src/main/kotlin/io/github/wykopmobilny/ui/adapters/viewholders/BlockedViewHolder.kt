@@ -30,7 +30,7 @@ class BlockedViewHolder(
 
         itemView.setOnClickListener {
             entry.isBlocked = false
-            blockListener(adapterPosition)
+            blockListener(bindingAdapterPosition)
         }
     }
 
@@ -39,7 +39,7 @@ class BlockedViewHolder(
 
         itemView.setOnClickListener {
             comment.isBlocked = false
-            blockListener(adapterPosition)
+            blockListener(bindingAdapterPosition)
         }
     }
 
@@ -48,7 +48,7 @@ class BlockedViewHolder(
 
         itemView.setOnClickListener {
             link.isBlocked = false
-            blockListener(adapterPosition)
+            blockListener(bindingAdapterPosition)
         }
     }
 
@@ -57,11 +57,11 @@ class BlockedViewHolder(
 
         itemView.setOnClickListener {
             linkComment.isBlocked = false
-            blockListener(adapterPosition)
+            blockListener(bindingAdapterPosition)
         }
     }
 
-    fun showText(type: String, author: Author?) {
+    private fun showText(type: String, author: Author?) {
         val text = SpannableString("Pokaż ukryty $type od @" + author?.nick)
         text.setSpan(
             ForegroundColorSpan(getGroupColor(author?.group ?: 1)),

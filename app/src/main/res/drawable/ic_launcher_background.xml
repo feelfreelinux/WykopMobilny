@@ -6,13 +6,8 @@
     android:viewportWidth="108"
     android:viewportHeight="108"
     >
-    <group
-        android:scaleX="0.027"
-        android:scaleY="0.027"
-        >
-        <path
-            android:fillColor="@color/gradient"
-            android:pathData="M0,0h4000v4000h-4000z"
-            />
-    </group>
+    <path
+        android:fillColor="@color/gradient"
+        android:pathData="M0,0h108v108h-108z"
+        />
 </vector>

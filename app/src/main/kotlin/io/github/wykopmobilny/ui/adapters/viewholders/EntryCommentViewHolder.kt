@@ -14,6 +14,7 @@ import io.github.wykopmobilny.databinding.EntryCommentMenuBottomsheetBinding
 import io.github.wykopmobilny.models.dataclass.Author
 import io.github.wykopmobilny.models.dataclass.EntryComment
 import io.github.wykopmobilny.models.dataclass.drawBadge
+import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.ui.dialogs.confirmationDialog
 import io.github.wykopmobilny.ui.fragments.entrycomments.EntryCommentActionListener
 import io.github.wykopmobilny.ui.fragments.entrycomments.EntryCommentViewListener
@@ -23,12 +24,10 @@ import io.github.wykopmobilny.utils.api.getGroupColor
 import io.github.wykopmobilny.utils.copyText
 import io.github.wykopmobilny.utils.getActivityContext
 import io.github.wykopmobilny.utils.layoutInflater
-import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
+import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
 import io.github.wykopmobilny.utils.textview.prepareBody
 import io.github.wykopmobilny.utils.textview.stripWykopFormatting
 import io.github.wykopmobilny.utils.usermanager.UserManagerApi
-import io.github.wykopmobilny.utils.linkhandler.WykopLinkHandlerApi
-import io.github.wykopmobilny.utils.usermanager.isUserAuthorized
 
 class EntryCommentViewHolder(
     private val binding: CommentListItemBinding,
@@ -38,7 +37,7 @@ class EntryCommentViewHolder(
     private val linkHandlerApi: WykopLinkHandlerApi,
     private val commentActionListener: EntryCommentActionListener,
     private val commentViewListener: EntryCommentViewListener?,
-    private val enableClickListener: Boolean
+    private val enableClickListener: Boolean,
 ) : RecyclableViewHolder(binding.root) {
 
     companion object {
@@ -58,7 +57,7 @@ class EntryCommentViewHolder(
             linkHandlerApi: WykopLinkHandlerApi,
             commentActionListener: EntryCommentActionListener,
             commentViewListener: EntryCommentViewListener?,
-            enableClickListener: Boolean
+            enableClickListener: Boolean,
         ): EntryCommentViewHolder {
             val view = EntryCommentViewHolder(
                 CommentListItemBinding.inflate(parent.layoutInflater, parent, false),
@@ -87,6 +86,9 @@ class EntryCommentViewHolder(
         }
     }
 
+    private val userCredentials = userManagerApi.getUserCredentials()
+    private val openSpoilersDialog = settingsPreferencesApi.openSpoilersDialog
+    private val isUserAuthorized = userCredentials != null
     var type: Int = TYPE_NORMAL
     private var isAuthorComment: Boolean = false
     private var isOwnEntry: Boolean = false
@@ -99,7 +101,7 @@ class EntryCommentViewHolder(
         setupHeader(comment)
         setupButtons(comment)
         setupBody(comment)
-        isOwnEntry = entryAuthor?.nick == userManagerApi.getUserCredentials()?.login
+        isOwnEntry = entryAuthor?.nick == userCredentials?.login
         isAuthorComment = entryAuthor?.nick == comment.author.nick
         setStyleForComment(comment, highlightCommentId)
     }
@@ -127,7 +129,7 @@ class EntryCommentViewHolder(
                     itemView.context.getString(
                         R.string.date_with_user_app,
                         comment.date.replace(" temu", ""),
-                        comment.app
+                        comment.app,
                     )
             }
         }
@@ -139,8 +141,7 @@ class EntryCommentViewHolder(
         }
 
         // Only show reply view in entry details
-        binding.replyTextView.isVisible =
-            userManagerApi.isUserAuthorized() && commentViewListener != null
+        binding.replyTextView.isVisible = isUserAuthorized && commentViewListener != null
         binding.replyTextView.setOnClickListener { commentViewListener?.addReply(comment.author) }
 
         // Setup vote button
@@ -165,9 +166,9 @@ class EntryCommentViewHolder(
 
     private fun setupBody(comment: EntryComment) {
         // Add URL and click handler if body is not empty
-        binding.replyTextView.isVisible = userManagerApi.isUserAuthorized()
+        binding.replyTextView.isVisible = isUserAuthorized
         binding.replyTextView.setOnClickListener { commentViewListener?.addReply(comment.author) }
-        binding.quoteTextView.isVisible = userManagerApi.isUserAuthorized()
+        binding.quoteTextView.isVisible = isUserAuthorized
         binding.quoteTextView.setOnClickListener { commentViewListener?.quoteComment(comment) }
         if (comment.body.isNotEmpty()) {
             binding.entryContentTextView.isVisible = true
@@ -175,7 +176,7 @@ class EntryCommentViewHolder(
                 comment.body,
                 { linkHandlerApi.handleUrl(it) },
                 { handleClick(comment) },
-                settingsPreferencesApi.openSpoilersDialog
+                openSpoilersDialog,
             )
         } else binding.entryContentTextView.isVisible = false
 
@@ -201,7 +202,7 @@ class EntryCommentViewHolder(
                 date.text = root.context.getString(
                     R.string.date_with_user_app,
                     comment.fullDate,
-                    comment.app
+                    comment.app,
                 )
             }
 
@@ -232,10 +233,10 @@ class EntryCommentViewHolder(
                 dialog.dismiss()
             }
 
-            entryCommentMenuReport.isVisible = userManagerApi.isUserAuthorized()
+            entryCommentMenuReport.isVisible = isUserAuthorized
 
-            val canUserEdit = userManagerApi.isUserAuthorized() &&
-                comment.author.nick == userManagerApi.getUserCredentials()?.login
+            val canUserEdit = isUserAuthorized &&
+                comment.author.nick == userCredentials?.login
             entryCommentMenuDelete.isVisible = canUserEdit || isOwnEntry
             entryCommentMenuEdit.isVisible = canUserEdit
         }
@@ -258,7 +259,7 @@ class EntryCommentViewHolder(
     }
 
     private fun setStyleForComment(comment: EntryComment, commentId: Int = -1) {
-        val credentials = userManagerApi.getUserCredentials()
+        val credentials = userCredentials
         if (credentials != null && credentials.login == comment.author.nick) {
             binding.authorBadgeStrip.isVisible = true
             binding.authorBadgeStrip.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorBadgeOwn))

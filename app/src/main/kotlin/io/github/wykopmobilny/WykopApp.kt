@@ -10,6 +10,7 @@ import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import io.github.wykopmobilny.api.ApiSignInterceptor
 import io.github.wykopmobilny.di.DaggerAppComponent
+import io.github.wykopmobilny.domain.blacklist.di.BlacklistScope
 import io.github.wykopmobilny.domain.di.DomainComponent
 import io.github.wykopmobilny.domain.login.ConnectConfig
 import io.github.wykopmobilny.domain.login.di.LoginScope
@@ -20,8 +21,8 @@ import io.github.wykopmobilny.domain.styles.di.StylesScope
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.styles.StylesDependencies
-import io.github.wykopmobilny.ui.base.AppDispatchers
 import io.github.wykopmobilny.ui.base.AppScopes
+import io.github.wykopmobilny.ui.blacklist.BlacklistDependencies
 import io.github.wykopmobilny.ui.login.LoginDependencies
 import io.github.wykopmobilny.ui.modules.blacklist.BlacklistActivity
 import io.github.wykopmobilny.ui.modules.search.SuggestionDatabase
@@ -33,6 +34,7 @@ import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -41,7 +43,7 @@ import okhttp3.OkHttpClient
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
+open class WykopApp : DaggerApplication(), ApplicationInjector, AppScopes {
 
     companion object {
 
@@ -54,16 +56,12 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
     @Inject
     lateinit var settingsPreferencesApi: Lazy<SettingsPreferencesApi>
 
-    override val coroutineContext = Job() + Dispatchers.Default
+    override val applicationScope = CoroutineScope(Job() + Dispatchers.Default)
 
     private val okHttpClient = OkHttpClient()
 
     override fun onCreate() {
         super.onCreate()
-        AppScopes.applicationScope = this
-        AppDispatchers.Default = Dispatchers.Default
-        AppDispatchers.Main = Dispatchers.Main
-        AppDispatchers.IO = Dispatchers.IO
         AndroidThreeTen.init(this)
         doInterop()
     }
@@ -81,6 +79,7 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
 
     protected open val domainComponent: DomainComponent by lazy {
         daggerDomain().create(
+            appScopes = this,
             connectConfig = ConnectConfig(connectUrl = "https://a2.wykop.pl/login/connect/appkey/${BuildConfig.APP_KEY}"),
             storages = storages,
             scraper = scraper,
@@ -133,19 +132,40 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, CoroutineScope {
         )
     }
 
-    private val scopes = mutableMapOf<KClass<out Any>, Any>()
+    private val scopes = mutableMapOf<KClass<out Any>, SubScope<Any>>()
+
+    data class SubScope<T>(
+        val dependencyContainer: T,
+        val coroutineScope: CoroutineScope,
+    )
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getDependency(clazz: KClass<T>): T =
         when (clazz) {
-            LoginDependencies::class -> scopes.getOrPut(LoginScope::class) { domainComponent.login() } as T
-            StylesDependencies::class -> scopes.getOrPut(StylesScope::class) { domainComponent.styles() } as T
-            SettingsDependencies::class -> scopes.getOrPut(SettingsScope::class) { domainComponent.settings() } as T
-            else -> error("Unknown dependencies for type $clazz")
-        }
+            LoginDependencies::class -> scopes.getOrPut(LoginScope::class) { SubScope(domainComponent.login(), newScope()) }
+            StylesDependencies::class -> scopes.getOrPut(StylesScope::class) { SubScope(domainComponent.styles(), newScope()) }
+            SettingsDependencies::class -> scopes.getOrPut(SettingsScope::class) { SubScope(domainComponent.settings(), newScope()) }
+            BlacklistDependencies::class -> scopes.getOrPut(BlacklistScope::class) { SubScope(domainComponent.blacklist(), newScope()) }
+            else -> error("Unknown dependency type $clazz")
+        }.dependencyContainer as T
+
+    private fun newScope() = CoroutineScope(Job(applicationScope.coroutineContext[Job]) + Dispatchers.Default)
+
+    override fun <T : Any> destroyDependency(clazz: KClass<T>) {
+        when (clazz) {
+            LoginDependencies::class -> scopes.remove(LoginScope::class)
+            StylesDependencies::class -> scopes.remove(StylesScope::class)
+            SettingsDependencies::class -> scopes.remove(SettingsScope::class)
+            BlacklistDependencies::class -> scopes.remove(BlacklistScope::class)
+            else -> error("Unknown dependency type $clazz")
+        }?.coroutineScope?.cancel()
+    }
+
+    override fun <T : Any> launchScoped(clazz: KClass<T>, block: suspend CoroutineScope.() -> Unit) =
+        scopes.getValue(clazz).coroutineScope.launch(block = block)
 
     private fun doInterop() {
-        launch {
+        applicationScope.launch {
             var currentActivity: Activity? = null
             registerActivityLifecycleCallbacks(
                 object : ActivityLifecycleCallbacks {

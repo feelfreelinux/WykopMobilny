@@ -61,6 +61,7 @@ internal class TestApp : WykopApp() {
 
     override val domainComponent by lazy {
         daggerDomain().create(
+            appScopes = this,
             connectConfig = ConnectConfig("http://localhost:8000/login"),
             storages = storages,
             scraper = scraper,
