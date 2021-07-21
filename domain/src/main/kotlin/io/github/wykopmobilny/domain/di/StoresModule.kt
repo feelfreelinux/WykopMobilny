@@ -33,7 +33,7 @@ internal class StoresModule {
             )
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { storage.blacklist.map { it ?: Blacklist.empty() } },
+            reader = { storage.blacklist },
             writer = { _, newValue -> storage.update { newValue } },
             delete = { storage.clear() },
             deleteAll = { storage.clear() },

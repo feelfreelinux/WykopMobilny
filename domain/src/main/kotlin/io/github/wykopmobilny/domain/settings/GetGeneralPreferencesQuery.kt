@@ -77,8 +77,8 @@ class GetGeneralPreferencesQuery @Inject internal constructor(
                     currentValue = !filtering.hidePlus18Content,
                     onClicked = { updateUserSetting(UserSettings.hidePlus18Content, !filtering.hidePlus18Content) },
                 ),
-                showNsfwContent = Setting(
-                    currentValue = !filtering.hideNsfwContent,
+                hideNsfwContent = Setting(
+                    currentValue = filtering.hideNsfwContent,
                     onClicked = { updateUserSetting(UserSettings.hideNsfwContent, !filtering.hideNsfwContent) },
                 ),
                 hideNewUserContent = Setting(
