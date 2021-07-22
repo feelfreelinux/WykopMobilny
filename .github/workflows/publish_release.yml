@@ -34,6 +34,7 @@ jobs:
           WYKOP_KEYSTORE_PASSWORD: ${{ secrets.WYKOP_KEYSTORE_PASSWORD }}
           WYKOP_APPKEY: ${{ secrets.WYKOP_APPKEY }}
           WYKOP_SECRETKEY: ${{ secrets.WYKOP_SECRETKEY }}
+          WYKOP_GOOGLEKEY: ${{ secrets.WYKOP_GOOGLEKEY }}
         run: ./gradlew bundleRelease -PuploadMapping=true
 
       - uses: r0adkll/upload-google-play@v1
