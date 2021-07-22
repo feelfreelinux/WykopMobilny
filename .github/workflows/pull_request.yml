@@ -45,6 +45,7 @@ jobs:
           WYKOP_KEYSTORE_PASSWORD: ${{ secrets.WYKOP_KEYSTORE_PASSWORD }}
           WYKOP_APPKEY: ${{ secrets.WYKOP_APPKEY }}
           WYKOP_SECRETKEY: ${{ secrets.WYKOP_SECRETKEY }}
+          WYKOP_GOOGLEKEY: ${{ secrets.WYKOP_GOOGLEKEY }}
         run: ./gradlew assembleRelease
 
       - name: Unit tests
@@ -71,6 +72,7 @@ jobs:
       WYKOP_KEYSTORE_PASSWORD: ${{ secrets.WYKOP_KEYSTORE_PASSWORD }}
       WYKOP_APPKEY: ${{ secrets.WYKOP_APPKEY }}
       WYKOP_SECRETKEY: ${{ secrets.WYKOP_SECRETKEY }}
+      WYKOP_GOOGLEKEY: ${{ secrets.WYKOP_GOOGLEKEY }}
     strategy:
       fail-fast: false
       matrix:
