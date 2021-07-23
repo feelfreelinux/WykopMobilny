@@ -1,0 +1,22 @@
+{
+  "data": {
+    "profile": {
+      "login": "fixture-login",
+      "color": 1,
+      "sex": "male",
+      "avatar": "https://fixture-avatar.png",
+      "signup_at": "",
+      "is_blocked": false,
+      "is_observed": false,
+      "background": null,
+      "links_added_count": 0,
+      "links_published_count": 0,
+      "rank": null,
+      "followers": 0,
+      "about": null,
+      "violation_url": null,
+      "ban": null
+    },
+    "userkey": "fixture-user-key"
+  }
+}

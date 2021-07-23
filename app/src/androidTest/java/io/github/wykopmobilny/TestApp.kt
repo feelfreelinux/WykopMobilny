@@ -7,14 +7,11 @@ import io.github.wykopmobilny.domain.login.ConnectConfig
 import io.github.wykopmobilny.fakes.FakeCookieProvider
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
 import okhttp3.OkHttpClient
-import javax.inject.Inject
 
 internal class TestApp : WykopApp() {
 
     val okHttpClient = OkHttpClient()
-
-    @Inject
-    lateinit var cookieProvider: FakeCookieProvider
+    val cookieProvider = FakeCookieProvider()
 
     override fun onCreate() {
         super.onCreate()
@@ -53,7 +50,7 @@ internal class TestApp : WykopApp() {
         daggerScraper().create(
             okHttpClient = okHttpClient,
             baseUrl = "http://localhost:8000",
-            cookieProvider = { cookieProvider.cookieForSite(it) },
+            cookieProvider = cookieProvider::cookieForSite,
         )
     }
 

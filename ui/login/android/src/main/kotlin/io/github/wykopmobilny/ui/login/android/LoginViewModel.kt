@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class LoginViewModel @Inject constructor(
@@ -21,11 +20,11 @@ internal class LoginViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(),
         initialValue = null,
     )
-    val url = loginData.filterNotNull().map { it.urlToLoad.toEvent() }
+    val url = loginData.filterNotNull().map { it.urlToLoad.toEvent() }.distinctUntilChanged()
     val isLoading = loginData.filterNotNull().map { it.isLoading }.distinctUntilChanged()
     val error = loginData.filterNotNull().map { it.visibleError }.distinctUntilChanged()
 
     fun onNewUrl(url: String) {
-        viewModelScope.launch { loginData.value?.parseUrlAction?.invoke(url) }
+        loginData.value?.parseUrlAction?.invoke(url)
     }
 }

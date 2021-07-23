@@ -114,6 +114,9 @@ class LinkViewHolder(
         if (settingsApi.linkImagePosition == "left" || settingsApi.linkImagePosition == "right") {
             binding.titleTextView.maxLines = 2
             binding.description.maxLines = 3
+        } else {
+            binding.titleTextView.maxLines = Integer.MAX_VALUE
+            binding.description.maxLines = Integer.MAX_VALUE
         }
 
         if (type == TYPE_IMAGE) {

@@ -7,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import io.github.wykopmobilny.R
 import io.github.wykopmobilny.tests.matchers.onPreference
 import io.github.wykopmobilny.tests.matchers.tapPreference
 
@@ -18,16 +19,20 @@ object SettingsPage {
         tapPreference(confirmationOption)
     }
 
+    fun tapAppearance() {
+        onView(withText("Ustawienia wyglądu aplikacji")).perform(click())
+    }
+
+    fun tapBlacklistSettings() {
+        onView(withText(R.string.pref_manage_blacklist)).perform(click())
+    }
+
     fun assertConfirmationOptionChecked() {
         onPreference(confirmationOption).check(matches(isChecked()))
     }
 
     fun assertConfirmationOptionNotChecked() {
         onPreference(confirmationOption).check(matches(isNotChecked()))
-    }
-
-    fun tapAppearance() {
-        onView(withText("Ustawienia wyglądu aplikacji")).perform(click())
     }
 
     fun assertVisible() {
