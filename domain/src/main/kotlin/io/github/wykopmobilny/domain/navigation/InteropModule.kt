@@ -52,13 +52,12 @@ internal class InteropSettingPreferencesApi @Inject constructor(
             MainScreen.Hits -> "hits"
             null -> null
         }
-    override val linkImagePosition: String?
+    override val linkImagePosition: String
         get() = when (interop(UserSettings.imagePosition)) {
-            LinkImagePosition.Left -> "left"
+            LinkImagePosition.Left, null -> "left"
             LinkImagePosition.Right -> "right"
             LinkImagePosition.Top -> "top"
             LinkImagePosition.Bottom -> "bottom"
-            null -> null
         }
     override val linkShowImage: Boolean
         get() = interop(UserSettings.showLinkThumbnail) ?: true

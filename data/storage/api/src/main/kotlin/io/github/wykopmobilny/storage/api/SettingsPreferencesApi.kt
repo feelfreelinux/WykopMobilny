@@ -3,7 +3,7 @@ package io.github.wykopmobilny.storage.api
 interface SettingsPreferencesApi {
     val hotEntriesScreen: String?
     val defaultScreen: String?
-    val linkImagePosition: String?
+    val linkImagePosition: String
     val linkShowImage: Boolean
     val linkSimpleList: Boolean
     val linkShowAuthor: Boolean
