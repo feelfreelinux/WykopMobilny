@@ -19,26 +19,23 @@ internal class GetAppTheme @Inject constructor(
             userPreferenceApi.get(UserSettings.darkTheme),
             userPreferenceApi.get(UserSettings.useAmoledTheme),
         ) { darkTheme, amoledTheme ->
-            if (darkTheme == null) {
-                findDefaultAppTheme()
-            } else {
-                if (darkTheme == true) {
-                    if (amoledTheme == true) {
-                        AppTheme.DarkAmoled
-                    } else {
-                        AppTheme.Dark
-                    }
+            if (darkTheme ?: shouldBeDarkByDefault()) {
+                if (amoledTheme == true) {
+                    AppTheme.DarkAmoled
                 } else {
-                    AppTheme.Light
+                    AppTheme.Dark
                 }
+            } else {
+                AppTheme.Light
             }
         }
             .distinctUntilChanged()
 
-    private suspend fun findDefaultAppTheme() =
+    private suspend fun shouldBeDarkByDefault() =
         when (nightModeDetector.getNightModeState()) {
-            NightModeState.Enabled -> AppTheme.Dark
-            NightModeState.Disabled -> AppTheme.Light
-            NightModeState.Unknown -> AppTheme.Light
+            NightModeState.Enabled -> true
+            NightModeState.Disabled,
+            NightModeState.Unknown,
+            -> false
         }
 }
