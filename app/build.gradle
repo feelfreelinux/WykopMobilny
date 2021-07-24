@@ -144,7 +144,7 @@ dependencies {
     implementation 'org.jetbrains:markdown:0.2.4'
 
     // Dagger 2
-    def daggerVersion = "2.37"
+    def daggerVersion = "2.38"
     implementation("com.google.dagger:dagger-android-support:$daggerVersion")
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
