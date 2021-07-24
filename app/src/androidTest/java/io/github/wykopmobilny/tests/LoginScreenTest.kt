@@ -7,6 +7,7 @@ import io.github.wykopmobilny.TestApp
 import io.github.wykopmobilny.tests.pages.DrawerRegion
 import io.github.wykopmobilny.tests.pages.MainPage
 import io.github.wykopmobilny.tests.responses.blacklist
+import io.github.wykopmobilny.tests.responses.callsOnAppStart
 import io.github.wykopmobilny.tests.responses.connectPage
 import io.github.wykopmobilny.tests.responses.profile
 import io.github.wykopmobilny.tests.responses.promoted
@@ -20,6 +21,7 @@ class LoginScreenTest : BaseActivityTest() {
     @Test
     fun navigation() {
         mockWebServerRule.promoted()
+        mockWebServerRule.callsOnAppStart()
         launchActivity<MainNavigationActivity>()
         Espresso.onIdle()
 
@@ -29,7 +31,7 @@ class LoginScreenTest : BaseActivityTest() {
         mockWebServerRule.profile()
         TestApp.instance.cookieProvider.cookies += "http://localhost:8000" to ""
         mockWebServerRule.blacklist()
-        mockWebServerRule.promoted()
+        mockWebServerRule.callsOnAppStart()
         DrawerRegion.tapOption("Zaloguj się")
         Espresso.onIdle()
 

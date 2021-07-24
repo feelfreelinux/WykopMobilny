@@ -5,10 +5,6 @@ import dagger.android.support.DaggerApplication
 import io.github.wykopmobilny.di.DaggerTestAppComponent
 import io.github.wykopmobilny.domain.login.ConnectConfig
 import io.github.wykopmobilny.fakes.FakeCookieProvider
-import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
-import io.github.wykopmobilny.storage.android.StoragesComponent
-import io.github.wykopmobilny.ui.base.AppDispatchers
-import kotlinx.coroutines.asExecutor
 import okhttp3.OkHttpClient
 
 internal class TestApp : WykopApp() {
@@ -60,7 +56,7 @@ internal class TestApp : WykopApp() {
     override val domainComponent by lazy {
         daggerDomain().create(
             appScopes = this,
-            connectConfig = ConnectConfig("http://localhost:8000/login"),
+            connectConfig = ConnectConfig("http://localhost:8000/Login/Connect"),
             storages = storages,
             scraper = scraper,
             wykop = wykopApi,

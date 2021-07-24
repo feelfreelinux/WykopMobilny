@@ -20,7 +20,9 @@ internal class LoginViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(),
         initialValue = null,
     )
-    val url = loginData.filterNotNull().map { it.urlToLoad.toEvent() }.distinctUntilChanged()
+    val url = loginData.filterNotNull().map {
+        it.urlToLoad.toEvent()
+    }.distinctUntilChanged()
     val isLoading = loginData.filterNotNull().map { it.isLoading }.distinctUntilChanged()
     val error = loginData.filterNotNull().map { it.visibleError }.distinctUntilChanged()
 
