@@ -21,8 +21,9 @@ class MockWebServerRule : TestRule {
                 mockWebServer.dispatcher = dispatcher
                 mockWebServer.start(port = 8000)
                 try {
-                    base.evaluate()
+                    val result = runCatching { base.evaluate() }
                     dispatcher.unmatchedRequest?.let { error("Failed to match response at path=${dispatcher.unmatchedRequest?.path}") }
+                    result.getOrThrow()
                 } finally {
                     mockWebServer.shutdown()
                 }

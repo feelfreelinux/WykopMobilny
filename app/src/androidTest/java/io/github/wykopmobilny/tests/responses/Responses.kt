@@ -22,6 +22,12 @@ fun MockWebServerRule.profile() =
 fun MockWebServerRule.blacklist() =
     enqueue("/ustawienia/czarne-listy/") { successfulResponse("blacklist.html") }
 
+fun MockWebServerRule.unblockTag(tag: String) =
+    enqueue("/tags/unblock/$tag") { successfulResponse("tagsunblock.json") }
+
+fun MockWebServerRule.unblockUser(user: String) =
+    enqueue("/profiles/unblock/$user") { successfulResponse("profileunblock.json") }
+
 fun MockWebServerRule.connectPage() {
     enqueue("/Login/Connect") {
         MockResponse()

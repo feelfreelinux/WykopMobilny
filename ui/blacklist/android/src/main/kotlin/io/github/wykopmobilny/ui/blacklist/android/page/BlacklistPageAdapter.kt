@@ -3,14 +3,22 @@ package io.github.wykopmobilny.ui.blacklist.android.page
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import io.github.wykopmobilny.ui.base.AppDispatchers
 import io.github.wykopmobilny.ui.blacklist.BlacklistedElementUi
 import io.github.wykopmobilny.ui.blacklist.android.R
 import io.github.wykopmobilny.ui.blacklist.android.databinding.ItemBlockedElementBinding
+import kotlinx.coroutines.asExecutor
 
-internal class BlacklistPageAdapter : ListAdapter<BlacklistedElementUi, BlacklistPageAdapter.DefaultViewHolder>(BlacklistElementDiff()) {
+internal class BlacklistPageAdapter :
+    ListAdapter<BlacklistedElementUi, BlacklistPageAdapter.DefaultViewHolder>(
+        AsyncDifferConfig.Builder(BlacklistElementDiff())
+            .setBackgroundThreadExecutor(AppDispatchers.Default.asExecutor())
+            .build(),
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DefaultViewHolder {
         val binding = ItemBlockedElementBinding.inflate(LayoutInflater.from(parent.context), parent, false)

@@ -1,6 +1,6 @@
 package io.github.wykopmobilny.domain.blacklist.actions
 
-import io.github.wykopmobilny.api.endpoints.TagRetrofitApi
+import io.github.wykopmobilny.api.endpoints.ProfileRetrofitApi
 import io.github.wykopmobilny.api.responses.ObserveStateResponse
 import io.github.wykopmobilny.domain.api.ApiClient
 import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 internal class UsersRepository @Inject constructor(
     private val api: ApiClient,
-    private val usersApi: TagRetrofitApi,
+    private val usersApi: ProfileRetrofitApi,
     private val blacklistPreferencesApi: BlacklistPreferencesApi,
 ) {
 

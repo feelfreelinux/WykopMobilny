@@ -7,6 +7,7 @@ import io.github.wykopmobilny.tests.pages.AppearanceSettingsPage
 import io.github.wykopmobilny.tests.pages.DrawerRegion
 import io.github.wykopmobilny.tests.pages.MainPage
 import io.github.wykopmobilny.tests.pages.SettingsPage
+import io.github.wykopmobilny.tests.responses.githubPatronsEmpty
 import io.github.wykopmobilny.tests.responses.promoted
 import io.github.wykopmobilny.ui.modules.mainnavigation.MainNavigationActivity
 import org.junit.Before
@@ -19,6 +20,7 @@ class SettingsTest : BaseActivityTest() {
     @Before
     fun setUp() {
         mockWebServerRule.promoted()
+        mockWebServerRule.githubPatronsEmpty()
         launchActivity<MainNavigationActivity>()
         MainPage.openDrawer()
         DrawerRegion.tapOption("Ustawienia")
