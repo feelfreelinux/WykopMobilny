@@ -7,7 +7,6 @@ import io.github.wykopmobilny.TestApp
 import io.github.wykopmobilny.blacklist.remote.ScraperComponent
 import io.github.wykopmobilny.di.modules.NetworkModule
 import io.github.wykopmobilny.di.modules.RepositoryModule
-import io.github.wykopmobilny.fakes.FakeCookieProvider
 import io.github.wykopmobilny.patrons.remote.PatronsComponent
 import io.github.wykopmobilny.storage.android.StoragesComponent
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
@@ -46,6 +45,4 @@ internal interface TestAppComponent : AppComponent {
             @BindsInstance settingsInterop: SettingsPreferencesApi,
         ): TestAppComponent
     }
-
-    fun cookieProvider(): FakeCookieProvider
 }

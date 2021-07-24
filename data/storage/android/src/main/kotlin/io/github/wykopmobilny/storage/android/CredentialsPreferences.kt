@@ -11,12 +11,14 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
+import java.util.concurrent.Executor
 import javax.inject.Inject
 
 @Reusable
 internal class CredentialsPreferences @Inject constructor(
     context: Context,
-) : BasePreferences(context), SessionStorage, UserInfoStorage {
+    executor: Executor,
+) : BasePreferences(context, executor), SessionStorage, UserInfoStorage {
 
     private var login by stringPref(key = "login")
     private var userKey by stringPref(key = "userKey")

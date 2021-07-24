@@ -10,12 +10,14 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
+import java.util.concurrent.Executor
 import javax.inject.Inject
 
 @Reusable
 internal class UserPreferences @Inject constructor(
     context: Context,
-) : BasePreferences(context, true), UserPreferenceApi {
+    executor: Executor,
+) : BasePreferences(context, executor, true), UserPreferenceApi {
 
     override fun get(key: String): Flow<String?> =
         preferences

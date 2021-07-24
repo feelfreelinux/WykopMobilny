@@ -21,6 +21,7 @@ import io.github.wykopmobilny.domain.styles.di.StylesScope
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
 import io.github.wykopmobilny.storage.api.SettingsPreferencesApi
 import io.github.wykopmobilny.styles.StylesDependencies
+import io.github.wykopmobilny.ui.base.AppDispatchers
 import io.github.wykopmobilny.ui.base.AppScopes
 import io.github.wykopmobilny.ui.blacklist.BlacklistDependencies
 import io.github.wykopmobilny.ui.login.LoginDependencies
@@ -34,6 +35,7 @@ import io.github.wykopmobilny.utils.usermanager.UserManagerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -91,6 +93,7 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, AppScopes {
     protected open val storages by lazy {
         DaggerStoragesComponent.factory().create(
             context = this,
+            executor = AppDispatchers.IO.asExecutor(),
         )
     }
 
@@ -194,7 +197,7 @@ open class WykopApp : DaggerApplication(), ApplicationInjector, AppScopes {
                     InteropRequest.BlackListScreen -> context.startActivity(BlacklistActivity.createIntent(context))
                     InteropRequest.ClearSuggestionDatabase -> {
                         SuggestionDatabase(context).clearDb()
-                        withContext(Dispatchers.Main) {
+                        withContext(AppDispatchers.Main) {
                             Toast.makeText(context, "Wyczyszczono historię wyszukiwarki", Toast.LENGTH_LONG).show()
                         }
                     }

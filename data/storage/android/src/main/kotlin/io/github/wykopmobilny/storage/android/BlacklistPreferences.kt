@@ -12,12 +12,14 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
+import java.util.concurrent.Executor
 import javax.inject.Inject
 
 @Reusable
 internal class BlacklistPreferences @Inject constructor(
     context: Context,
-) : BasePreferences(context), BlacklistPreferencesApi {
+    executor: Executor,
+) : BasePreferences(context, executor), BlacklistPreferencesApi {
 
     override var blockedTags by stringSetPref("blockedTagsSet")
     override var blockedUsers by stringSetPref("blockedUsersSet")

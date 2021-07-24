@@ -83,7 +83,7 @@ class SimpleLinkViewHolder(
         binding.hotBadgeStripSimple.isVisible = link.isHot
         binding.simpleDiggHot.isVisible = link.isHot
 
-        val shouldShowSimpleImages = settingsApi.linkShowImage ?: true
+        val shouldShowSimpleImages = settingsApi.linkShowImage
         binding.simpleImage.isVisible = link.preview != null && shouldShowSimpleImages
         if (shouldShowSimpleImages) {
             link.preview?.let { binding.simpleImage.loadImage(link.preview) }

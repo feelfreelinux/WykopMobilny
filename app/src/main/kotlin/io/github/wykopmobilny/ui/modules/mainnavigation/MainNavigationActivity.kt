@@ -1,6 +1,5 @@
 package io.github.wykopmobilny.ui.modules.mainnavigation
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -108,7 +107,6 @@ class MainNavigationActivity :
         )
     }
     private val badgeDrawable by lazy { BadgeDrawerDrawable(supportActionBar!!.themedContext) }
-    private val progressDialog by lazy { ProgressDialog(this) }
 
     override val floatingButton: View
         get() = binding.fab

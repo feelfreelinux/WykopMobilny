@@ -7,5 +7,5 @@ class FakeCookieProvider @Inject constructor() {
     val cookies = mutableMapOf<String, String>()
 
     fun cookieForSite(url: String) =
-        cookies[url].let(::checkNotNull)
+        cookies[url]
 }
