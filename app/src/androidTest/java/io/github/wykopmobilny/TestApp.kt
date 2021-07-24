@@ -6,6 +6,9 @@ import io.github.wykopmobilny.di.DaggerTestAppComponent
 import io.github.wykopmobilny.domain.login.ConnectConfig
 import io.github.wykopmobilny.fakes.FakeCookieProvider
 import io.github.wykopmobilny.storage.android.DaggerStoragesComponent
+import io.github.wykopmobilny.storage.android.StoragesComponent
+import io.github.wykopmobilny.ui.base.AppDispatchers
+import kotlinx.coroutines.asExecutor
 import okhttp3.OkHttpClient
 
 internal class TestApp : WykopApp() {
@@ -53,8 +56,6 @@ internal class TestApp : WykopApp() {
             cookieProvider = cookieProvider::cookieForSite,
         )
     }
-
-    override val storages by lazy { DaggerStoragesComponent.factory().create(this) }
 
     override val domainComponent by lazy {
         daggerDomain().create(

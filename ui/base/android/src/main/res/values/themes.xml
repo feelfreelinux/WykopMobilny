@@ -15,11 +15,10 @@
         <item name="tabStyle">@style/Widget.MaterialComponents.TabLayout</item>
         <item name="android:textColorPrimary">@color/text_color_primary_light</item>
         <item name="android:textColor">?android:textColorPrimary</item>
-        i
     </style>
 
     <style name="Theme.App.Dark" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="android:windowBackground">#3c3c3c</item>
+        <item name="android:windowBackground">#2c2c2c</item>
         <item name="colorSurface">#2c2c2c</item>
         <item name="colorOnSurface">#ffffff</item>
         <item name="colorPrimary">#212121</item>

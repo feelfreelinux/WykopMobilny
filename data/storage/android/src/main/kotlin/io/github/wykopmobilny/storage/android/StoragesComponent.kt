@@ -11,6 +11,7 @@ import io.github.wykopmobilny.storage.api.SessionStorage
 import io.github.wykopmobilny.storage.api.Storages
 import io.github.wykopmobilny.storage.api.UserInfoStorage
 import io.github.wykopmobilny.storage.api.UserPreferenceApi
+import java.util.concurrent.Executor
 
 @Component(modules = [StoragesModule::class])
 interface StoragesComponent : Storages {
@@ -20,6 +21,7 @@ interface StoragesComponent : Storages {
 
         fun create(
             @BindsInstance context: Context,
+            @BindsInstance executor: Executor,
         ): StoragesComponent
     }
 }

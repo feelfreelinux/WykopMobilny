@@ -30,7 +30,6 @@ class LoginScreenTest : BaseActivityTest() {
         TestApp.instance.cookieProvider.cookies += "http://localhost:8000" to ""
         mockWebServerRule.blacklist()
         mockWebServerRule.promoted()
-
         DrawerRegion.tapOption("Zaloguj się")
         Espresso.onIdle()
 

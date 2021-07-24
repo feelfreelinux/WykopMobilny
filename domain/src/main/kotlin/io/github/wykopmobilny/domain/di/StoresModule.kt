@@ -13,7 +13,6 @@ import io.github.wykopmobilny.storage.api.BlacklistPreferencesApi
 import io.github.wykopmobilny.storage.api.LoggedUserInfo
 import io.github.wykopmobilny.storage.api.UserInfoStorage
 import io.github.wykopmobilny.storage.api.UserSession
-import kotlinx.coroutines.flow.map
 import javax.inject.Singleton
 
 @Module
@@ -28,8 +27,8 @@ internal class StoresModule {
         fetcher = Fetcher.of {
             val api = retrofitApi.getBlacklist()
             Blacklist(
-                tags = api.tags?.tags.orEmpty().map { it.tag.removePrefix("#") }.toSet(),
-                users = api.users?.users.orEmpty().map { it.nick.removePrefix("@") }.toSet(),
+                tags = api.tags?.tags?.mapNotNull { it.tag?.removePrefix("#") }?.toSet().orEmpty(),
+                users = api.users?.users?.mapNotNull { it.nick?.removePrefix("@") }?.toSet().orEmpty(),
             )
         },
         sourceOfTruth = SourceOfTruth.of(

@@ -99,7 +99,7 @@ internal class MainBlacklistFragment : Fragment(R.layout.fragment_blacklist_main
                         .setTitle("Sooory")
                         .setMessage(dialogUi.error.message ?: dialogUi.error.toString())
                         .setNegativeButton(R.string.retry) { _, _ -> dialogUi.retryAction() }
-                        .setPositiveButton(R.string.cancel) { dialog, _ -> dialogUi.dismissAction() }
+                        .setPositiveButton(R.string.cancel) { _, _ -> dialogUi.dismissAction() }
                         .setOnCancelListener { dialogUi.dismissAction() }
                         .show()
                 } else {
@@ -117,8 +117,9 @@ internal class MainBlacklistFragment : Fragment(R.layout.fragment_blacklist_main
                 snack = if (message == null) {
                     null
                 } else {
-                    Snackbar.make(binding.root, message, Snackbar.LENGTH_INDEFINITE).also { it.show() }
+                    Snackbar.make(binding.root, message, Snackbar.LENGTH_INDEFINITE)
                 }
+                snack?.show()
             }
     }
 

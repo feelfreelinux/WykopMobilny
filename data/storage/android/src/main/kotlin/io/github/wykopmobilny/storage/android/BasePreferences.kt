@@ -5,21 +5,23 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.shareIn
+import java.util.concurrent.Executor
 import kotlin.reflect.KProperty
 
 @Suppress("UnnecessaryAbstractClass")
 internal abstract class BasePreferences(
     private val context: Context,
+    executor: Executor,
     useDefaultFile: Boolean = false,
 ) {
 
-    protected val coroutineScope = CoroutineScope(Job() + Dispatchers.IO)
+    protected val coroutineScope = CoroutineScope(Job() + executor.asCoroutineDispatcher())
 
     protected val prefs: SharedPreferences by lazy {
         if (useDefaultFile) {
@@ -28,7 +30,7 @@ internal abstract class BasePreferences(
             context.getSharedPreferences("Preferences", Context.MODE_PRIVATE)
         }
     }
-    protected val preferences = callbackFlow<String> {
+    protected val preferences = callbackFlow<String?> {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key -> trySend(key) }
         prefs.registerOnSharedPreferenceChangeListener(listener)
 
