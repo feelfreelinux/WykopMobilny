@@ -13,5 +13,5 @@ dependencies {
     implementation(projects.ui.base.android)
     implementation("androidx.preference:preference-ktx:1.1.1")
     api(projects.ui.settings.api)
-    kapt("com.google.dagger:dagger-compiler:2.37")
+    kapt("com.google.dagger:dagger-compiler:2.38")
 }

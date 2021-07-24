@@ -16,5 +16,5 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     api(projects.ui.blacklist.api)
-    kapt("com.google.dagger:dagger-compiler:2.37")
+    kapt("com.google.dagger:dagger-compiler:2.38")
 }
