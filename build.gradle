@@ -17,10 +17,6 @@ commonConfig {
     javaFilesAllowed false
 }
 
-doctor {
-    warnWhenJetifierEnabled = false
-}
-
 allprojects {
     tasks.withType(KotlinCompile).configureEach {
         kotlinOptions {
