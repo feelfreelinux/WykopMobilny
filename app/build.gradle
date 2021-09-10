@@ -131,7 +131,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-jackson:$versions.retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_interceptor"
-    implementation 'pl.droidsonroids:jspoon:1.3.0'
+    implementation 'pl.droidsonroids:jspoon:1.3.2'
     implementation 'pl.droidsonroids.retrofit2:converter-jspoon:1.3.0'
 
     // RxJava
